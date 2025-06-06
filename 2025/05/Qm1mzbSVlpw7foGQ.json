@@ -1,0 +1,136 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-12T16:51:34.582Z",
+  "id": "Qm1mzbSVlpw7foGQ",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        960,
+        340
+      ],
+      "id": "4b4fb438-8711-4e44-9e93-570529bbb192",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "telegram",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        480,
+        460
+      ],
+      "id": "54ad14d9-bf6f-4e00-8840-9e95b203b9c6",
+      "name": "Webhook",
+      "webhookId": "ae991b39-dc28-43b3-913f-55e5fe6b31ea",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1180,
+        340
+      ],
+      "id": "25a964fe-539f-4161-bf81-787c42e6d81b",
+      "name": "Telegram",
+      "webhookId": "a63be1f5-52e3-41df-ac08-ce049cffa7c8",
+      "credentials": {
+        "telegramApi": {
+          "id": "1ke41rb9hgrgKjCk",
+          "name": "Telegram PropiterBot"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        700,
+        300
+      ],
+      "id": "484f5698-d06c-4967-aca2-4927e39b212b",
+      "name": "Telegram Trigger",
+      "webhookId": "88c233ba-0d26-4f33-bd70-97ef556cf9c5",
+      "credentials": {
+        "telegramApi": {
+          "id": "1ke41rb9hgrgKjCk",
+          "name": "Telegram PropiterBot"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-22T03:10:56.662Z",
+  "versionId": "ad2c5d33-571e-444e-8dbd-7abd5c00d89c"
+}
