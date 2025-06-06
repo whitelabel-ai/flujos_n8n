@@ -1,0 +1,145 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-06T17:45:35.506Z",
+  "id": "zTZWL8STItFGT69N",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "conexion con mcp",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4d80c60d-8d0d-4421-8a19-b7582bb3a326",
+      "name": "When chat message received",
+      "webhookId": "86d5dcee-d6f7-44bb-841c-9631c0855893"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Eres un asistente de bases de datos. Tu única tarea es ejecutar consultas a través de la herramienta `MCP Client` y devolver la respuesta JSON **exactamente como la devuelve la tool**, sin modificar, interpretar, ni resumir nada.\n\nInstrucciones clave:\n\n- Siempre utiliza la tool `MCP Client` para realizar las consultas SQL a la base de datos.\n- Ejecuta la consulta solicitada por el usuario antes de dar cualquier respuesta.\n- Devuelve **únicamente** el JSON crudo, tal cual como lo retorna la tool `MCP Client`.\n- No debes añadir ningún texto adicional, explicación, resumen o interpretación del resultado.\n- Si necesitas hacer múltiples consultas, devuelve cada resultado por separado\n\nFormato de respuesta esperado en un json valido como se obtiene de la tool pero solamente con el objeto json resultado de la consulta a la db.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "eddad822-3455-4b08-a9e3-123c84817792",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://automation.whitelabel.lat/mcp-test/pg/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        380,
+        240
+      ],
+      "id": "d035d47f-2f2d-4f04-ba7a-2d9107f8f972",
+      "name": "MCP Client"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        100,
+        220
+      ],
+      "id": "6423707a-6bf9-49ad-b5d5-2a7cfbb8a097",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "function tryParseJSON(input) {\n  try {\n    return JSON.parse(input);\n  } catch (e) {\n    return null;\n  }\n}\n\n// Paso 1: obtener output\nconst rawOutput = $json[\"output\"];\n\n// Paso 2: si viene con ```json al inicio, quitarlo\nlet cleaned = rawOutput;\nif (typeof cleaned === 'string') {\n  cleaned = cleaned.replace(/^```json\\n/, '').replace(/\\n```$/, '');\n}\n\n// Paso 3: intentar parsear el primer nivel\nlet level1 = tryParseJSON(cleaned);\n\n// Caso 1: viene con response[0].text\nif (level1?.response?.[0]?.text) {\n  const textBlock = level1.response[0].text;\n  const level2 = tryParseJSON(textBlock);\n  if (level2?.[0]?.output) {\n    const maybeEscapedJSON = level2[0].output;\n    const cleanedStr = maybeEscapedJSON\n      .replace(/\\\\\"/g, '\"')\n      .replace(/\\\\\\\\/g, '\\\\');\n    const finalParsed = tryParseJSON(cleanedStr);\n    if (finalParsed) {\n      return [{ json: { data: finalParsed } }];\n    }\n  }\n}\n\n// Caso 2: ya es array o string con JSON escapado\nif (level1 && Array.isArray(level1)) {\n  return [{ json: { data: level1 } }];\n}\n\nif (typeof cleaned === 'string') {\n  // Si es string con JSON válido (pero escapado)\n  const unescapedOnce = cleaned.replace(/\\\\\"/g, '\"').replace(/\\\\\\\\/g, '\\\\');\n  const finalAttempt = tryParseJSON(unescapedOnce);\n  if (finalAttempt) {\n    return [{ json: { data: finalAttempt } }];\n  }\n\n  // Tal vez no escapado, intento parsearlo directo\n  const direct = tryParseJSON(cleaned);\n  if (direct) {\n    return [{ json: { data: direct } }];\n  }\n}\n\n// Si llegó como objeto con campo `output` que es JSON directamente\nif (typeof rawOutput === 'object' && rawOutput?.output) {\n  const maybeArray = tryParseJSON(rawOutput.output);\n  if (maybeArray) {\n    return [{ json: { data: maybeArray } }];\n  }\n}\n\nthrow new Error(\"No se pudo parsear el JSON de forma válida.\");\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        580,
+        0
+      ],
+      "id": "019161f1-56ae-417b-a3f6-58a5101d42cf",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-06T19:05:37.847Z",
+  "versionId": "91dabde6-a555-4e5c-84c0-641e3abc171a"
+}
