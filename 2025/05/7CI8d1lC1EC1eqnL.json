@@ -1,0 +1,282 @@
+{
+  "active": true,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Create Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Message": {
+      "main": [
+        [
+          {
+            "node": "alertas por workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        []
+      ]
+    },
+    "alertas por workflow": {
+      "main": [
+        [
+          {
+            "node": "Send Mail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-13T20:14:46.089Z",
+  "id": "7CI8d1lC1EC1eqnL",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🚨 gestión de errores n8n",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        20
+      ],
+      "id": "6059af95-4733-407d-913f-247766e96a4d",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb1efe51-a4e5-4434-9537-b328d6e291cd",
+              "name": "message",
+              "value": "=se produjo un error en el flujo de trabajo: {{ $json.workflow.name }}\nUrl de la Ejecución: {{ $json.execution.url.replace(\"webhook\", \"automation\") }}\nError: {{ $json.execution.error.message }}\nUltimo nodo ejecutado: {{ $json.execution.lastNodeExecuted }}",
+              "type": "string"
+            },
+            {
+              "id": "71386d4a-f4c9-43a7-a5f3-fcf9540abb62",
+              "name": "asunto",
+              "value": "=Se produjo un error en el flujo: {{ $json.workflow.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        20
+      ],
+      "id": "0c8b1f30-fbfc-43df-9be6-13b3291e3bbf",
+      "name": "Create Message"
+    },
+    {
+      "parameters": {
+        "sendTo": "pro.pedro0413@gmail.com",
+        "subject": "={{ $json.asunto }}",
+        "emailType": "text",
+        "message": "={{ $json.message }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        -80
+      ],
+      "id": "a08b92f6-a47b-44a9-beed-586ca48c306f",
+      "name": "Send Mail",
+      "webhookId": "4ba60e6b-10a6-42bc-b659-435614e98684",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "No30HHponDPtNWfb",
+          "name": "hola@whitelabel.lat"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "1469588614",
+        "text": "={{ $json.message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        120
+      ],
+      "id": "32a0c4fc-7127-400d-8547-deea0592b660",
+      "name": "Telegram",
+      "webhookId": "6db35812-890b-475a-ab0b-81ec3ded17f7",
+      "credentials": {
+        "telegramApi": {
+          "id": "1ke41rb9hgrgKjCk",
+          "name": "Telegram PropiterBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## como activar:\nen el flujo vas a settings y selecciona error workflow:\n### *gestión de errores n8n*\n",
+        "height": 140,
+        "width": 200
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -160
+      ],
+      "id": "fbee9b31-ec6e-4be9-aae9-eb22091c853f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Error Trigger').item.json.workflow.name }}",
+                    "rightValue": "test flujo 1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "2f918b66-d500-454b-a427-1a6aded8678e"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "test flujo 1"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a66c63fe-b877-4940-8212-4cd38edde6b1",
+                    "leftValue": "={{ $('Error Trigger').item.json.workflow.name }}",
+                    "rightValue": "test flujo 2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "test flujo 3"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bfef330d-fc89-4720-a556-c2cec6f715a7",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Otras"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        440,
+        20
+      ],
+      "id": "6f7ef8c4-df24-42ea-b784-3b5235dc4ac2",
+      "name": "alertas por workflow"
+    },
+    {
+      "parameters": {
+        "content": "### alerta personalizada \n\nsetea a donde quiere que le llegue la alerta por el nombre del workflow",
+        "height": 140,
+        "width": 200
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        380,
+        -160
+      ],
+      "id": "aca32cfb-e107-48b1-be5a-9c3c1a830643",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-24T00:38:42.840Z",
+  "versionId": "be6f1b17-da92-4058-8303-46cb3714f38d"
+}
