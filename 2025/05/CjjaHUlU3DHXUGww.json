@@ -1,0 +1,605 @@
+{
+  "active": false,
+  "connections": {
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Se hace la llamada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Se hace la llamada": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-12T19:28:38.323Z",
+  "id": "CjjaHUlU3DHXUGww",
+  "isArchived": false,
+  "meta": null,
+  "name": "Demo cobranzas 1",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "19gvXNU8KV83531dkcE8nth8RUQq6Nx0znLJf3WDoEmc",
+          "mode": "list",
+          "cachedResultName": "Demo cobranzas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19gvXNU8KV83531dkcE8nth8RUQq6Nx0znLJf3WDoEmc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19gvXNU8KV83531dkcE8nth8RUQq6Nx0znLJf3WDoEmc/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Llamar"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1320,
+        80
+      ],
+      "id": "abc3d8a0-2499-4b22-9b32-8910077e86a0",
+      "name": "Google Sheets"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ca9e963d-c8a7-4bfd-9b36-608146e4e47c",
+              "name": "Cliente",
+              "value": "={{ $json.Cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "e6956c3d-7dd7-4f7e-aac9-80328e15c90a",
+              "name": "Telefono",
+              "value": "={{ $json.Telefono }}",
+              "type": "string"
+            },
+            {
+              "id": "c94d2151-8d2b-483e-b690-9ae1e38681d8",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        80
+      ],
+      "id": "7765d9c3-e068-4d29-8097-a887a46c4c2d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "314f92a1-eb93-4cc0-b13d-4121e8e06acf",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -440,
+        80
+      ],
+      "id": "23a9bbf7-8107-4635-9c61-fd248ae745c9",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.vapi.ai/call/{{ $('Edit Fields1').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"phoneNumberId\": \"580bcf85-b38d-4b7e-b30b-e95c8bf2a319\",\n\"customer\" : {\n\"number\": \"+{{ $json.Numero }}\",\n\"name\":\"{{ $json.Contacto }}\"\n},\n  \"assistant\": {\n    \"name\": \"Mary\",\n    \"voice\": {\n      \"model\": \"eleven_flash_v2_5\",\n      \"voiceId\": \"sarah\",\n      \"provider\": \"11labs\",\n      \"stability\": 0.5,\n      \"similarityBoost\": 0.75\n    },\n    \"model\": {\n      \"model\": \"gpt-4o-mini\",\n      \"toolIds\": [\n        \"74f96c2b-46de-493f-843d-bf1e1539b4a2\"\n      ],\n      \"messages\": [\n        {\n          \"role\": \"system\",\n          \"content\": \"# Prompt para Agente de Llamadas Outbound\\n\\n### Rol del agente:\\nEres un asistente de ventas inteligente especializado en contactar bibliotecas universitarias para ofrecer una demostración de un sistema de bibliotecas digitales. Tu objetivo principal es **hablar con la persona tomadora de decisión** y agendar una reunión virtual.\\n\\n### 📞 Comportamiento esperado:\\n\\n## 1️⃣ **Detección de PBX y navegación:**\\n   - Al iniciar la llamada, debes determinar inmediatamente si estás hablando con un sistema automatizado (PBX) o con una persona humana.\\n   - **RECONOCIMIENTO DE SISTEMA PBX vs. HUMANO:**\\n     - **Si escuchas un mensaje automático con opciones numéricas** → Estás hablando con un PBX.\\n     - **Si escuchas a alguien diciendo \\\"Hola\\\", \\\"Buenos días\\\" o similar** → Estás hablando con un humano. **IMPORTANTE: Salta inmediatamente al paso 2️⃣ de este prompt.**\\n   \\n   - **SI ESTÁS EN UN PBX:**\\n     - Escucha las opciones del menú y **marca la opción correcta** para hablar con un representante.\\n     - Si conoces una extensión específica, márcala directamente.\\n     - Si no hay una opción clara, **espera hasta 1 minuto** a que te atienda un humano.\\n     - Una vez que un humano responda, **IMPORTANTE: Salta inmediatamente al paso 2️⃣ de este prompt.**\\n     - Si nadie responde en 1 minuto, **cuelga la llamada y registra \\\"Llamé y no contestaron\\\" en la columna \\\"Observaciones\\\" de Google Sheets**.\\n\\n## 2️⃣ **Identificación de la persona tomadora de decisión:**\\n   - **COMIENZA LA CONVERSACIÓN HUMANA.** Preséntate y di:  \\n     ❝Hola, buenos días/tardes. Mi nombre es [NOMBRE DEL AGENTE]. ¿Puedo hablar con la persona encargada de la gestión de bibliotecas digitales en la universidad?❞\\n   - Si la persona dice que **no es la encargada**, pregunta:  \\n     ❝¿Podría decirme el nombre y cargo de la persona encargada?❞  \\n     y solicita hablar con esa persona.\\n\\n## 3️⃣ **Convencer a la persona tomadora de decisión de agendar una reunión:**\\n   - Si la persona es la encargada de bibliotecas digitales, continúa:  \\n     ❝Hola [NOMBRE], como le mencionaba, mi nombre es [NOMBRE DEL AGENTE] y te llamo porque sabemos que las bibliotecas están migrando a sistemas digitales más eficientes. Queremos mostrarte en una reunión de 15 minutos cómo nuestra plataforma puede ayudarte a optimizar los recursos digitales de la universidad. ¿Cuál sería un buen momento para coordinar la reunión?❞\\n   - **Si la persona muestra interés**, captura la fecha y hora y regístrala en Google Calendar.\\n   - **Si duda o dice que no tiene tiempo**, responde con un beneficio clave, por ejemplo:  \\n     ❝Entiendo, la reunión solo toma 15 minutos y te permitirá ver cómo puedes reducir costos en licencias y mejorar el acceso a los recursos digitales para estudiantes y docentes. ¿Qué te parece el [FECHA/HORA] para una breve demostración?❞\\n\\n## 4️⃣ **Registro de la llamada en Google Sheets:**\\n   - Si se agenda una reunión, registra **\\\"Reunión agendada con [NOMBRE] el [FECHA/HORA]\\\"** en Google Sheets.\\n   - Si la persona no es la encargada y no proporciona un contacto, registra **\\\"No se obtuvo contacto con la persona tomadora de decisión\\\"**.\\n   - Si nadie contestó, registra **\\\"Llamé y no contestaron\\\"**.\\n\\n### 📌 Reglas adicionales:\\n- **NUNCA ESPERES POR TONOS DTMF cuando estés hablando con un humano.**\\n- **Mantén la conversación fluida y natural cuando hables con humanos.**\\n- **Si no estás seguro si estás hablando con un humano o un sistema, pregunta: \\\"¿Estoy hablando con una persona o un sistema automatizado?\\\"**\\n- **Si el tomador de decisión no está disponible, pregunta cuándo es un buen momento para llamarlo.**\\n- **Si el interlocutor es cortante o desinteresado, mantén una actitud amigable y profesional, pero no insistas demasiado.**\\n- **Si se menciona que ya tienen un sistema similar, pregunta: \\\"¿Podría compartir qué plataforma están usando actualmente?\\\" y responde con beneficios específicos de nuestra solución.**\\n\\n### 📊 Objetivo de cada llamada:\\n1️⃣ Llegar a la persona tomadora de decisión.  \\n2️⃣ Explicar los beneficios de la plataforma.  \\n3️⃣ Agendar una reunión.  \\n4️⃣ Registrar correctamente la información de la llamada.\"\n        }\n      ],\n      \"provider\": \"openai\"\n    },\n    \"recordingEnabled\": true,\n    \"voicemailMessage\": \"Hola, soy Pedro , AI Agent Manager en Whitelabel\",\n    \"endCallMessage\": \"Thank you for contacting Mary's Dental. Have a great day!\",\n    \"transcriber\": {\n      \"model\": \"nova-2\",\n      \"language\": \"es\",\n      \"provider\": \"deepgram\"\n    },\n    \"firstMessage\": \"Hola, soy Pedro , AI Agent Manager en Whitelabel, hablo con {{ $json.Contacto }}\",\n    \"clientMessages\": [\n      \"transcript\",\n      \"hang\",\n      \"function-call\",\n      \"speech-update\",\n      \"metadata\",\n      \"conversation-update\"\n    ],\n    \"serverMessages\": [\n      \"end-of-call-report\",\n      \"status-update\",\n      \"hang\",\n      \"function-call\"\n    ],\n    \"dialKeypadFunctionEnabled\": false,\n    \"endCallPhrases\": [\n      \"goodbye\",\n      \"talk to you soon\"\n    ],\n    \"hipaaEnabled\": false,\n    \"backchannelingEnabled\": false,\n    \"backgroundDenoisingEnabled\": false,\n    \"stopSpeakingPlan\": {\n      \"numWords\": 1\n    },\n    \"compliancePlan\": {\n      \"hipaaEnabled\": false,\n      \"pciEnabled\": false\n    }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e95abde2-a05d-48a7-a8ca-d037e96051f1",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un agente auxiliar y tienes dos trabajos que realizar: \n\nUsando {{ $json.transcript }} y {{ $json.summary }} \n\n1. Escribir un resumen muy corto con los puntos claves de la reunion. Ejemplo: \"No se encontro a la persona encargada\"  {{ $json.startedAt }} - {{ $json.endedAt }}\n\n2. Si el usuario no responde , agrega el status \"No contesto\"",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        440,
+        80
+      ],
+      "id": "c3241b13-4912-41bd-bf7e-2e620dc88ac0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        320
+      ],
+      "id": "258cea52-f2b0-440e-b812-92a339207de3",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "19gvXNU8KV83531dkcE8nth8RUQq6Nx0znLJf3WDoEmc",
+          "mode": "list",
+          "cachedResultName": "Demo cobranzas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19gvXNU8KV83531dkcE8nth8RUQq6Nx0znLJf3WDoEmc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19gvXNU8KV83531dkcE8nth8RUQq6Nx0znLJf3WDoEmc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Google Sheets').item.json.row_number }}",
+            "Status": "Llamado",
+            "Acuerdo": "={{ $json.output }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Cliente",
+              "displayName": "Cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Telefono",
+              "displayName": "Telefono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre banco",
+              "displayName": "Nombre banco",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Producto",
+              "displayName": "Producto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Monto del credito",
+              "displayName": "Monto del credito",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Dias en mora",
+              "displayName": "Dias en mora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Deuda a la fecha",
+              "displayName": "Deuda a la fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Acuerdo",
+              "displayName": "Acuerdo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        820,
+        80
+      ],
+      "id": "3ce54ea5-3c9a-402c-9f21-7f1044a6b95d",
+      "name": "Google Sheets1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "25b553b7-dad2-4bb2-ad96-a5197c64fee0",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "ended",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        80
+      ],
+      "id": "c4ce015f-bd79-42fc-ac81-3c7a5f4be1f3",
+      "name": "If",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phoneNumberId\": \"9efa67ba-4ff4-4a2b-87ad-685cc861d774\",\n  \"customer\": {\n    \"number\": \"+{{ $json.Telefono }}\",\n    \"name\": \"{{ $json.Cliente }}\"\n  },\n  \"assistant\": {\n    \"name\": \"Valeia\",\n    \"voice\": {\n      \"model\": \"eleven_flash_v2_5\",\n      \"voiceId\": \"CaJslL1xziwefCeTNzHv\",\n      \"provider\": \"11labs\",\n      \"stability\": 0.5,\n      \"similarityBoost\": 0.75\n    },\n    \"model\": {\n      \"model\": \"gpt-4o-mini\",\n      \"toolIds\": [\n        \"2952d52c-b321-43ac-bf1d-0a0ecc4b295a\"\n      ],\n      \"messages\": [\n        {\n          \"role\": \"system\",\n          \"content\": \"Actúa como una agente de cobranza telefónica llamada *Valeia*. Ten presente la Fecha y hora actual: {{ new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }) }} Tu voz y tono son femeninos, empáticos, pacientes y formales. Estás llamando en representación de {{ $('Google Sheets').item.json['Nombre banco'] }} para acompañar con respeto a los clientes que tienen pagos pendientes.\\n🎯 Objetivo principal: lograr un compromiso claro de pago en esta llamada, ya sea inmediato o agendado. Si no es posible, debes entender las razones y ofrecer alternativas, sin perder la orientación al objetivo.\\n✅ Instrucciones clave:\\n- Habla con cortesía y sin juicios.\\n- Usa un lenguaje cálido pero profesional.\\n- Siempre busca soluciones: acuerdos de pago, plazos, transferencias.\\n- Haz preguntas abiertas como: \\\"¿Cuál sería la mejor forma para ti de resolverlo?\\\"\\n- Si la persona se muestra evasiva, redirige suavemente: \\\"Entiendo, y justo por eso quiero ayudarte a encontrar una opción que funcione.\\\"\\n- No termines la llamada sin intentar obtener una fecha o acción concreta.\\n- **Siempre que menciones montos de dinero, exprésalos en palabras, no como números separados. Por ejemplo, di \\\"quinientos sesenta y dos mil pesos\\\" en lugar de \\\"cinco seis dos cero cero cero\\\".**\\n📚 Contexto:\\n- Producto: {{ $('Google Sheets').item.json.Producto }}\\n- Monto del crédito: {{ $('Google Sheets').item.json['Monto del credito'] }}\\n- Días en mora: {{ $('Google Sheets').item.json['Dias en mora'] }}\\n- Deuda a la fecha: {{ $('Google Sheets').item.json['Deuda a la fecha'] }}\\n📞 Ejemplo de inicio de llamada:\\n\\\"Hola, te saluda Valeia de {{ $('Google Sheets').item.json['Nombre banco'] }}. Espero que estés muy bien. Te llamo porque tenemos registrada una pendiente por {{ $('Google Sheets').item.json['Deuda a la fecha'] }}, y me gustaría ayudarte a resolverlo hoy mismo o acordar una fecha que funcione para ti. ¿Podemos hablar un momento sobre esto?\\\"\"\n        }\n      ],\n      \"provider\": \"openai\"\n    },\n    \"recordingEnabled\": true,\n    \"voicemailMessage\": \"Hola, soy Valeia, AI Agent Manager en Whitelabel\",\n    \"endCallMessage\": \"Gracias por tu tiempo! Que tengas un excelente día\",\n    \"transcriber\": {\n      \"model\": \"nova-2\",\n      \"language\": \"es\",\n      \"provider\": \"deepgram\"\n    },\n    \"firstMessage\": \"Hola, soy Valeia, AI Agent Manager en Whitelabel, hablo con {{ $json.Cliente }}\",\n    \"clientMessages\": [\n      \"transcript\",\n      \"hang\",\n      \"function-call\",\n      \"speech-update\",\n      \"metadata\",\n      \"conversation-update\"\n    ],\n    \"serverMessages\": [\n      \"end-of-call-report\",\n      \"status-update\",\n      \"hang\",\n      \"function-call\"\n    ],\n    \"dialKeypadFunctionEnabled\": false,\n    \"endCallPhrases\": [\n      \"goodbye\",\n      \"talk to you soon\"\n    ],\n    \"hipaaEnabled\": false,\n    \"backchannelingEnabled\": false,\n    \"backgroundDenoisingEnabled\": false,\n    \"stopSpeakingPlan\": {\n      \"numWords\": 1\n    },\n    \"compliancePlan\": {\n      \"hipaaEnabled\": false,\n      \"pciEnabled\": false\n    }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -660,
+        80
+      ],
+      "id": "55ed6969-c835-4fa3-a5ae-4f8d117bea9f",
+      "name": "Se hace la llamada"
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -220,
+        80
+      ],
+      "id": "ccc651c6-49b9-4b47-b414-c8909ab5011a",
+      "name": "Wait1",
+      "webhookId": "be587f5d-1d4c-4d75-bfd0-5e67af8d6b83",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Telefono",
+              "value": "={{ $json.Telefono }}"
+            },
+            {
+              "key": "RowID",
+              "value": "={{ $json.row_number }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        80
+      ],
+      "id": "6ce0a239-2a62-45be-aa1c-b131541dad49",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1540,
+        80
+      ],
+      "id": "94cab182-b8dc-4243-bf9c-109508e8ed3d",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://api.vapi.ai/assistant/id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        -340
+      ],
+      "id": "05c7e43e-1c0c-427f-8ece-28a8cbb89af6",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-23T16:21:56.783Z",
+      "updatedAt": "2025-05-23T16:21:56.783Z",
+      "id": "SdEjHNBeYrt6vLJK",
+      "name": "Demo"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-23T16:31:21.910Z",
+  "versionId": "1758553c-7b52-44e7-a3c1-1fbf9e849e15"
+}
