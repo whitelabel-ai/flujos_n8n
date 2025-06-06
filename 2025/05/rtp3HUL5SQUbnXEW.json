@@ -1,0 +1,91 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-23T15:26:04.303Z",
+  "id": "rtp3HUL5SQUbnXEW",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Valeia",
+  "nodes": [
+    {
+      "parameters": {
+        "to": "573228854498",
+        "message": "hola"
+      },
+      "type": "n8n-nodes-valeia.valeiaSendMessage",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "16b7af0f-3343-4bfc-b8c5-7bfe12968e2f",
+      "name": "Send Message",
+      "credentials": {
+        "valeiaApi": {
+          "id": "3fzXCsou5UOSAJhi",
+          "name": "Valeia jhoneyshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "webhookUrl": "https://automation.whitelabel.lat/webhook/aa37af88-c759-4d9f-8640-c3ed9e3fea8e"
+      },
+      "type": "n8n-nodes-valeia.valeiaSetWebhook",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -200
+      ],
+      "id": "9db66ce4-5982-4274-a564-0d3b1e3d9118",
+      "name": "Set Webhook",
+      "credentials": {
+        "valeiaApi": {
+          "id": "3fzXCsou5UOSAJhi",
+          "name": "Valeia jhoneyshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "aa37af88-c759-4d9f-8640-c3ed9e3fea8e",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "f42f355a-60dc-4bcb-9bff-9d1d6798c969",
+      "name": "Webhook",
+      "webhookId": "aa37af88-c759-4d9f-8640-c3ed9e3fea8e"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-05T16:27:43.187Z",
+  "versionId": "f2210eb2-c50d-4858-8272-1c1c5dfda53a"
+}
