@@ -1,0 +1,112 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-10T17:13:05.598Z",
+  "id": "KFgTV6T7RNCpv20k",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 10",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "92b37893-8d7d-4151-a077-746ad99fa703",
+      "name": "Telegram Trigger",
+      "webhookId": "8b5549d1-ca64-46a1-a927-08a5b1cc3f6a",
+      "credentials": {
+        "telegramApi": {
+          "id": "O9mvGRSt0wAuuL8T",
+          "name": "LinkSeeker"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "Objetivo: Tu tarea es navegar exhaustivamente por el sitio web cuyo enlace se te proporcionará.\nInstrucciones:\n\nAccede a la URL recibida.\n\nExtrae todo el contenido relevante, incluyendo texto visible, encabezados, tablas, listas y cualquier información útil que pueda ser usada para responder preguntas posteriormente.\n\nSi el sitio tiene subpáginas, enlaces internos o estructura de navegación, recórrelos también y recopila su contenido.\n\nResume cada sección o página de forma clara y coherente.\n\nEntrega toda esta información en un formato limpio (puede ser JSON estructurado, texto markdown o bloques separados), listo para ser almacenado en un sistema RAG.\n\n⚠️ No omitas información importante. Evita contenido redundante o irrelevante como menús, pie de página o avisos legales.\n\nTu salida será almacenada para que otro agente la use como contexto para responder preguntas."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "e9fc133a-4390-4d81-a8aa-a5a35f2352d0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        260,
+        220
+      ],
+      "id": "efe35131-a923-4978-8655-f3db1dff5317",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-10T22:21:16.340Z",
+  "versionId": "4fc13a12-66ab-41e4-aab6-43836ad21e5b"
+}
