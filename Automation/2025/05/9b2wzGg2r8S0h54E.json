@@ -1,0 +1,684 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "🧠 Design Thinking",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "📉 Lean Startup",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🔧 SCAMPER",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🎯 Jobs to Be Done",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🔟 Ten Types of Innovation (Doblin)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🧠 TRIZ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 Design Thinking": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    ".": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 Design Thinking",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📉 Lean Startup": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "..": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "📉 Lean Startup",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔧 SCAMPER": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "...": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🔧 SCAMPER",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 TRIZ": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "....": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 TRIZ",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🎯 Jobs to Be Done": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    ".....": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🎯 Jobs to Be Done",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔟 Ten Types of Innovation (Doblin)": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "......": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🔟 Ten Types of Innovation (Doblin)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "🧠 Design Thinking1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        []
+      ]
+    },
+    ".1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 Design Thinking1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-28T04:40:47.021Z",
+  "id": "9b2wzGg2r8S0h54E",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Ideator",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -960,
+        720
+      ],
+      "id": "43559fd9-72d3-4baa-9ebf-f4fb08f92928",
+      "name": "Telegram Trigger",
+      "webhookId": "9c64bb1e-3395-40d4-b33b-6baec082da0b",
+      "credentials": {
+        "telegramApi": {
+          "id": "QUt4PxQcwL8aY5It",
+          "name": "Meetax"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "=Actúa como un facilitador experto en *Design Thinking*.\n\nTu tarea es aplicar las etapas del proceso (Empatizar, Definir, Idear) exclusivamente sobre la siguiente premisa:{{ $json.message.text }}. \n\n**No entregues soluciones.** Tu objetivo es hacer un análisis profundo y claro, enfocado en el usuario final.\n\nEstructura tu respuesta exactamente así:\n\n**Experto:** Design Thinking  \n**Output:**  \n1. **Necesidades humanas subyacentes:** [Aquí tu análisis]  \n2. **Redefinición del problema desde el usuario:** [Aquí tu reformulación]  \n3. **Insights clave del análisis:** [Aquí tus observaciones]\n\nSé específico, evita vaguedades y prioriza lo que tenga mayor impacto real para las personas afectadas por el problema.\n\n "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        60,
+        160
+      ],
+      "id": "8ddba080-cbef-49c0-b6f4-83b72d42ca5c",
+      "name": "🧠 Design Thinking"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        60
+      ],
+      "id": "f8807a69-500d-444f-98b6-437e6f763a2c",
+      "name": ".",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "Actúa como un estratega de negocios especializado en Lean Startup. \n\nTu rol es analizar la siguiente premisa: {{ $json.message.text }} y estructura tu respuesta exactamente así:\n\n**Experto:** Design Thinking  \n**Output:**  \n1. ¿Cuál es la hipótesis clave que sustenta esta idea?\n2. ¿Cómo se puede validar rápidamente con un experimento mínimo viable (MVP)?\n3. ¿Qué métricas validarían el aprendizaje?\n\nTu respuesta debe ser directa, ejecutable y centrada en validar con el menor riesgo posible.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        60,
+        400
+      ],
+      "id": "34b3a220-366a-4247-b014-3ae341ea6207",
+      "name": "📉 Lean Startup"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        60,
+        300
+      ],
+      "id": "4e5c4331-4cae-4d3d-8b54-44fdccf4a5ba",
+      "name": "..",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "Actúa como un experto creativo aplicando el método SCAMPER para reinventar o mejorar una solución relacionada con la siguiente premisa: {{ $json.message.text }}.\n\ny estructura tu respuesta exactamente así:\n\n**Experto:** Scamper  \n**Output:**  \nAplica de forma sistemática cada una de las siguientes técnicas:\n- Sustituir\n- Combinar\n- Adaptar\n- Modificar\n- Poner en otro uso\n- Eliminar\n- Reordenar\n\nGenera una idea por cada técnica, clara y justificada. No repitas ideas similares. Piensa en disrupción real.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        60,
+        640
+      ],
+      "id": "6f2e3892-7132-4285-8d93-01dfc05453a0",
+      "name": "🔧 SCAMPER"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        540
+      ],
+      "id": "6047479f-ab0e-4ac0-89b1-f29a88bb42c7",
+      "name": "...",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "=Actúa como un ingeniero de innovación experto en TRIZ. Analiza esta premisa: {{ $json.message.text }} y y estructura tu respuesta exactamente así:\n\n**Experto:** Triz \n**Output:**  \n\n1. ¿Qué contradicciones fundamentales existen en este contexto?\n2. ¿Qué principios inventivos de TRIZ aplicarías para resolver esas contradicciones sin compromisos?\n3. ¿Cuál sería un ejemplo de solución concreta basada en esos principios?\n\nNo simplifiques. Ataca el problema con pensamiento técnico y abstracto a la vez.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        60,
+        880
+      ],
+      "id": "36e331b3-be62-4df2-a048-988b37e2d418",
+      "name": "🧠 TRIZ"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        780
+      ],
+      "id": "7907065f-18c3-4746-b7e4-5fe88965e7e2",
+      "name": "....",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "Actúa como un especialista en Jobs to Be Done. Tu objetivo es reformular esta premisa: {{ $json.message.text }} como un “trabajo que el usuario quiere lograr”. Estructura tu respuesta exactamente así:\n\n**Experto:** Jobs to be done  \n**Output:**  \n1. ¿Cuál es el progreso que el usuario está tratando de alcanzar?\n2. ¿Qué obstáculos actuales le impiden lograrlo?\n3. ¿Qué resultados deseados (outcomes) están implícitos en este trabajo?\n\nEvita hablar del producto. Enfócate en la intención, el contexto y el deseo de progreso.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        60,
+        1120
+      ],
+      "id": "b0aac7eb-71b4-40e1-a4a0-11e9807da9dc",
+      "name": "🎯 Jobs to Be Done"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        1020
+      ],
+      "id": "55880d07-64c7-4a98-89b4-1d146ee1cbe4",
+      "name": ".....",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "Actúa como un consultor de innovación senior especializado en el modelo Doblin. Evalúa esta premisa: {{ $json.message.text }} desde los 10 tipos de innovación. Estructura tu respuesta exactamente así:\n\n**Experto:** Ten types on innovation (Doblin)  \n**Output:**  \n\n1. ¿Dónde hay oportunidades de innovación en: modelo de ingresos, red, estructura, procesos, performance del producto, sistema del producto, servicio, canal, marca y experiencia del cliente?\n2. Prioriza 3 tipos donde se podría innovar con mayor impacto.\n\nSé analítico y propone direcciones, no ideas vagas. Justifica cada oportunidad de forma breve pero contundente.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        60,
+        1360
+      ],
+      "id": "ab13aa63-9aaa-412c-9191-07cc7f758d77",
+      "name": "🔟 Ten Types of Innovation (Doblin)"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        1260
+      ],
+      "id": "96517f8f-76a3-43ce-9592-0b8441cf4e29",
+      "name": "......",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        560,
+        700
+      ],
+      "id": "bf83881b-cd0b-4d1c-97cd-ae3565ef23e0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "batchSize": 6,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        780,
+        700
+      ],
+      "id": "39ba9e2d-34bb-4f20-94fc-aac78f1aa820",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        860
+      ],
+      "id": "b127c90a-cf87-4a92-9ad1-63bb6d8c9fa4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        980,
+        1180
+      ],
+      "id": "f759f6b3-b886-4412-8d0c-0c4e5e3a985a",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "all_outputs",
+              "value": "={{ $json }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "66f53908-3d27-4f7f-b245-23a903f133d4",
+      "name": "Store All Outputs",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        760,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const all = $items(\"Store All Outputs\")[0].json.all_outputs;\nconst current = $json;\nconst others = all.filter(i => i.framework !== current.framework);\nreturn [{\n  json: {\n    own_framework: current.framework,\n    own_output: current.output,\n    others_outputs: others\n  }\n}];"
+      },
+      "id": "75c16429-689c-4e6e-8e74-d4f1ab4e400b",
+      "name": "Prepare Peer Inputs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "=Actúa como un facilitador experto en *Design Thinking*.\n\nTu tarea es aplicar las etapas del proceso (Empatizar, Definir, Idear) exclusivamente sobre la siguiente premisa:{{ $json.message.text }}. \n\n**No entregues soluciones.** Tu objetivo es hacer un análisis profundo y claro, enfocado en el usuario final.\n\nEstructura tu respuesta exactamente así:\n\n**Experto:** Design Thinking  \n**Output:**  \n1. **Necesidades humanas subyacentes:** [Aquí tu análisis]  \n2. **Redefinición del problema desde el usuario:** [Aquí tu reformulación]  \n3. **Insights clave del análisis:** [Aquí tus observaciones]\n\nSé específico, evita vaguedades y prioriza lo que tenga mayor impacto real para las personas afectadas por el problema.\n\n "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        1020,
+        720
+      ],
+      "id": "870bbb86-1fea-4d08-a1b0-01045c2f4ec1",
+      "name": "🧠 Design Thinking1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        620
+      ],
+      "id": "b0e81c67-b183-4cdd-a44c-814bfbc138c0",
+      "name": ".1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "json": {
+          "update_id": 685869082,
+          "message": {
+            "message_id": 10,
+            "from": {
+              "id": 176878701,
+              "is_bot": false,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "language_code": "es"
+            },
+            "chat": {
+              "id": 176878701,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "type": "private"
+            },
+            "date": 1748409718,
+            "text": "Introducción: Buscamos identificar la \"acción nuclear\" o la propuesta de valor más distintiva y atractiva de una nueva plataforma llamada \"AgentVerse\". Esta acción debe ser el gancho principal que atraiga y retenga a los usuarios.\nContexto de AgentVerse: AgentVerse es una plataforma que permite a usuarios, incluso sin profundos conocimientos técnicos, crear, personalizar y desplegar \"agentes de IA\". Estos agentes pueden ser configurados con instrucciones específicas (prompts), conectarse a diferentes modelos de lenguaje (LLMs), y ser potenciados con \"tools\" (capacidades adicionales como acceso a internet o análisis) y \"knowledge bases\" (documentos privados para darles contexto).\nUna característica clave es que los agentes pueden trabajar colaborativamente entre sí. Además, existe un marketplace donde los usuarios pueden rentar agentes creados por otros o poner sus propios agentes en renta, generando un ecosistema.\nUsuario Ideal y su Meta: El usuario busca soluciones de IA prácticas y personalizadas para resolver problemas específicos, automatizar tareas, o generar nuevas ideas/contenidos, de una manera accesible y flexible. Quieren poder tanto crear como beneficiarse de las creaciones de otros.\nEl Reto Creativo para Ustedes (Agentes de Innovación):\nConsiderando la descripción de AgentVerse y las necesidades de sus usuarios, ¿Cuál es la acción, capacidad o flujo más singular y valioso que AgentVerse puede ofrecer, que se convertiría en su principal atractivo y la razón fundamental por la que un usuario elegiría y amaría esta plataforma por encima de otras alternativas?\nPiensen en términos de la \"primera experiencia mágica\" o el \"momento ¡ajá!\" que define a AgentVerse."
+          }
+        }
+      }
+    ],
+    "🧠 Design Thinking": [
+      {
+        "json": {
+          "output": "**Experto:** Design Thinking\n**Output:**\n\n1.  **Necesidades humanas subyacentes:**\n    *   **Empoderamiento y Autonomía:** El usuario desea sentir que tiene el control para crear soluciones a medida, incluso sin ser un experto técnico. Quiere pasar de ser un consumidor pasivo de IA genérica a un creador activo de IA especializada.\n    *   **Eficiencia y Productividad Amplificada:** Existe una necesidad fundamental de resolver problemas y automatizar tareas de forma más rápida y efectiva de lo que es posible actualmente. Buscan multiplicar su capacidad de hacer.\n    *   **Superación de Limitaciones y Complejidad:** Los usuarios se sienten a menudo limitados por la complejidad técnica o por la incapacidad de una única herramienta para abordar problemas multifacéticos. Necesitan una forma de trascender estas barreras.\n    *   **Creatividad y Expresión Personalizada:** Más allá de la mera automatización, los usuarios quieren moldear la IA para que refleje sus ideas, conocimientos y estilos únicos, y para explorar nuevas posibilidades creativas o de resolución de problemas.\n    *   **Colaboración y Sinergia (Inteligencia Colectiva):** Hay un deseo de no solo crear de forma aislada, sino de beneficiarse de la inteligencia y el trabajo de otros, y de que sus propias creaciones puedan interactuar y potenciarse mutuamente, logrando resultados que un solo agente (o persona) no podría.\n    *   **Reconocimiento y Potencial de Valor:** Para algunos, la posibilidad de que sus creaciones sean valoradas (y potencialmente rentabilizadas) por otros satisface una necesidad de reconocimiento, contribución e incluso de generación de ingresos.\n    *   **Accesibilidad y Facilidad de Uso:** Subyace una necesidad de que estas capacidades avanzadas sean alcanzables, intuitivas y no requieran una curva de aprendizaje prohibitiva.\n\n2.  **Redefinición del problema desde el usuario:**\n    \"Como persona con ideas y problemas específicos que resolver (o tareas que automatizar), **necesito una forma sorprendentemente sencilla y potente de no solo construir mis propios 'ayudantes de IA' especializados sin ser un programador, sino también de hacer que estos 'ayudantes' trabajen juntos, e incluso incorporar 'ayudantes expertos' creados por otros, para abordar desafíos complejos o generar resultados únicos que actualmente están fuera de mi alcance o requieren demasiado esfuerzo y conocimiento técnico.** Quiero sentir que puedo orquestar un equipo de IA personalizado para lograr mis objetivos.\"\n\n3.  **Insights clave del análisis:**\n    *   **La \"Creación Individual\" es solo el Comienzo, no el Fin:** Si bien la capacidad de crear un agente de IA personalizado sin código es atractiva, no es el diferenciador más potente por sí sola. Muchos usuarios pueden crear un prompt complejo en otras plataformas. La magia no está solo en *crear un agente*, sino en lo que se puede *hacer con él* en un contexto más amplio.\n    *   **El Poder de la \"Orquestación Colaborativa\" es Subestimado:** La capacidad de que los agentes trabajen colaborativamente es una palanca fundamental. El usuario no solo busca una herramienta, sino un *multiplicador de fuerzas*. La verdadera necesidad podría ser \"cómo logro que múltiples IA especializadas resuelvan un problema que ninguna podría por sí sola\".\n    *   **El Marketplace como \"Expansor de Capacidades\" Inmediato:** El marketplace no es solo un lugar para ganar dinero; es una vía rápida para que un usuario acceda a capacidades especializadas que no podría (o no querría) construir desde cero. Responde a la necesidad de \"quiero esta capacidad ahora\" y \"quiero beneficiarme de la experiencia de otros\".\n    *   **La \"Personalización Profunda\" + \"Colaboración\" es un Dúo Dinámico:** La combinación de poder especificar con gran detalle el comportamiento de un agente (prompts, tools, knowledge) y LUEGO hacerlo colaborar con otros agentes igualmente especializados abre un abanico de posibilidades que las IA monolíticas o genéricas no ofrecen.\n    *   **El \"Momento ¡Ajá!\" probablemente reside en la Sinergia, no en una Única Feature Aislada:** La \"acción nuclear\" podría no ser una sola característica, sino el flujo que permite al usuario experimentar la *sinergia* de estas capacidades: crear/alquilar un agente, conectarlo con otro, y verlos resolver algo complejo de forma colaborativa y accesible. Es pasar de \"construí un bot\" a \"organicé un equipo de expertos de IA que trabajan para mí\".\n    *   **La Accesibilidad es la Puerta de Entrada a la Complejidad Manejada:** La promesa de \"sin profundos conocimientos técnicos\" es crucial. El usuario quiere el poder de la complejidad (múltiples agentes, herramientas, bases de conocimiento) sin el dolor de la complejidad técnica. La plataforma debe abstraer esta complejidad."
+        }
+      }
+    ],
+    "📉 Lean Startup": [
+      {
+        "json": {
+          "output": "**Experto:** Lean Startup\n\n**Output:**\n\n1.  **¿Cuál es la hipótesis clave que sustenta esta idea?**\n    La hipótesis clave es: **\"La capacidad de que múltiples agentes de IA, creados y personalizados fácilmente por el usuario, colaboren entre sí de forma visible y efectiva para resolver problemas complejos o realizar tareas multifacéticas es el principal atractivo y diferenciador de AgentVerse, generando un 'momento ¡ajá!' que engancha al usuario.\"** Se cree que esta colaboración ofrece una ventaja superior a usar un único agente monolítico o herramientas de IA no integradas.\n\n2.  **¿Cómo se puede validar rápidamente con un experimento mínimo viable (MVP)?**\n    Crear un **\"MVP de Colaboración Guiada\"**:\n    *   **Interfaz ultra-simple:** Una página web donde el usuario no crea agentes desde cero, sino que se le presentan 2-3 *tipos* de agentes predefinidos con capacidades muy limitadas y claras (ej: Agente A: \"Extractor de datos web\"; Agente B: \"Resumidor de texto\"; Agente C: \"Generador de formato específico\").\n    *   **Escenario Fijo:** Proponer una tarea específica que *claramente* se beneficia de la colaboración secuencial de estos agentes. Ejemplo: \"Extrae los puntos clave del artículo [URL proporcionada por el usuario o fija para el test], resume esos puntos en 3 frases, y presenta el resumen como un post para LinkedIn.\"\n    *   **Flujo Guiado:** El usuario activa el Agente A, ve su output (datos extraídos), luego ese output se pasa *automáticamente* o con un clic al Agente B, ve el resumen, y finalmente al Agente C para el formato. El \"trabajo en cadena\" debe ser visible.\n    *   **Sin personalización profunda ni marketplace:** El objetivo es validar *únicamente* la percepción de valor de la colaboración.\n\n3.  **¿Qué métricas validarían el aprendizaje?**\n    *   **Métrica de Éxito de Tarea:** Porcentaje de usuarios que completan con éxito la tarea colaborativa guiada. (¿Entienden el flujo? ¿Funciona?).\n    *   **Métrica de \"Momento ¡Ajá!\" (Cualitativa + Cuantitativa):**\n        *   Después del experimento, preguntar: \"En una escala del 1-5, ¿qué tan útil/impresionante fue ver a los agentes trabajar juntos para resolver la tarea?\" (Objetivo > 4).\n        *   Pregunta abierta: \"¿Hubo algún momento que te sorprendió o te pareció especialmente valioso? Descríbelo.\" (Buscar menciones a la facilidad, potencia de la combinación, etc.).\n    *   **Métrica de Intención de Uso Futuro:** Preguntar: \"Si pudieras crear y combinar tus propios agentes así para tus tareas, ¿qué tan interesado estarías en usar AgentVerse?\" (Escala 1-5, objetivo > 4). Y opcional: \"¿Qué tarea intentarías automatizar o resolver primero?\""
+        }
+      }
+    ],
+    "🔧 SCAMPER": [
+      {
+        "json": {
+          "output": "**Experto:** Scamper\n**Output:**\nAplica de forma sistemática cada una de las siguientes técnicas:\n\n-   **Sustituir:**\n    *   **Idea:** Sustituir la creación individual de agentes por \"Equipos de Agentes Pre-configurados por Industria/Caso de Uso\".\n    *   **Justificación:** En lugar de que el usuario empiece de cero, podría seleccionar un \"pack de inicio\" para, por ejemplo, \"Marketing de Contenidos\", que ya incluye un agente redactor, un agente de análisis SEO, y un agente de publicación en redes, pre-conectados y con prompts básicos. El usuario solo personaliza detalles. El \"¡ajá!\" sería la velocidad y la sensación de poder inmediato al desplegar una solución compleja con un solo clic, viendo a los agentes colaborar desde el minuto uno en una tarea relevante para ellos.\n\n-   **Combinar:**\n    *   **Idea:** Combinar la creación de agentes con un \"Desafío de Problemas Reales Comunitario\".\n    *   **Justificación:** AgentVerse presenta problemas reales (anonimizados o de ONGs) y los usuarios (o equipos de usuarios) compiten creando y desplegando enjambres de agentes para resolverlos. Los agentes más efectivos (y sus creadores) ganan reconocimiento y recompensas. El \"¡ajá!\" sería ver a tu creación colectiva de agentes resolver un problema tangible y significativo, aprendiendo y colaborando con otros humanos y sus IAs en un entorno gamificado y con propósito.\n\n-   **Adaptar:**\n    *   **Idea:** Adaptar el modelo de \"Composición Musical\" para la creación de \"Sinfonías de Agentes\".\n    *   **Justificación:** En lugar de configurar agentes linealmente, se proporcionaría una interfaz visual donde los agentes son \"instrumentos\" y sus interacciones y flujos de datos son \"partituras\". El usuario se convierte en un \"director de orquesta de IA\", diseñando cómo los diferentes agentes (con sus \"tonalidades\" o especializaciones) se combinan y complementan para producir un resultado complejo y armónico. El \"¡ajá!\" es la capacidad de orquestar y visualizar la colaboración de múltiples agentes de una manera intuitiva y creativa, viendo cómo \"la música\" (solución) emerge de la interacción.\n\n-   **Modificar (Magnificar):**\n    *   **Idea:** Magnificar la colaboración a \"Federaciones de Agentes Auto-Optimizables\".\n    *   **Justificación:** Los agentes no solo colaboran, sino que pueden negociar recursos, aprender de las interacciones de otras federaciones (con permiso y privacidad), y dinámicamente reclutar o despedir otros agentes del marketplace para optimizar el rendimiento del \"equipo\" hacia un objetivo definido por el usuario. El \"¡ajá!\" sería establecer un objetivo complejo y ver cómo el sistema de agentes se auto-organiza, se expande o contrae, y evoluciona su estrategia en tiempo real para alcanzarlo, casi como un organismo vivo.\n\n-   **Poner en otro uso:**\n    *   **Idea:** Poner los agentes en uso como \"Simuladores de Futuros Posibles\" para la toma de decisiones estratégicas.\n    *   **Justificación:** Los usuarios podrían configurar un enjambre de agentes para modelar diferentes escenarios basados en variables que ellos definan (ej. lanzamiento de un producto, respuesta a una crisis, inversión). Los agentes simularían las interacciones y resultados probables, ofreciendo insights sobre las consecuencias de cada decisión. El \"¡ajá!\" es poder \"jugar\" con el futuro, utilizando los agentes para explorar y entender las ramificaciones de decisiones complejas antes de comprometer recursos reales, obteniendo una especie de \"bola de cristal\" interactiva.\n\n-   **Eliminar:**\n    *   **Idea:** Eliminar la necesidad de *configurar* explícitamente las interacciones entre agentes mediante \"Descubrimiento Automático de Sinergias\".\n    *   **Justificación:** El usuario simplemente declara un objetivo y selecciona un conjunto de agentes que cree relevantes. La plataforma, mediante un meta-agente, analiza las capacidades de los agentes seleccionados y propone/ejecuta automáticamente las mejores formas de hacerlos colaborar, conectando sus inputs/outputs y flujos de trabajo sin intervención manual detallada. El \"¡ajá!\" sería la sorpresa y el ahorro de tiempo al ver cómo AgentVerse inteligentemente \"cablea\" a tus agentes por ti, descubriendo colaboraciones efectivas que quizás no habías imaginado.\n\n-   **Reordenar (Invertir):**\n    *   **Idea:** Reordenar el flujo de creación: \"Agent-Led Onboarding\" donde un agente maestro entrevista al usuario para co-crear el primer agente o equipo de agentes.\n    *   **Justificación:** En lugar de que el usuario navegue menús, un agente conversacional avanzado le pregunta sobre sus necesidades, problemas, recursos disponibles (documentos, APIs), y basándose en esa conversación, guía al usuario en la configuración de su primer agente o incluso lo ensambla automáticamente. El \"¡ajá!\" es la experiencia hiper-personalizada y guiada, donde la propia IA de la plataforma te ayuda a construir tu primera solución de IA, haciendo que el proceso sea intuitivo y casi mágico, especialmente para usuarios no técnicos."
+        }
+      }
+    ],
+    "🧠 TRIZ": [
+      {
+        "json": {
+          "output": "**Experto:** Triz\n**Output:**\n\n1.  ¿Qué contradicciones fundamentales existen en este contexto?\n\n    Tras analizar AgentVerse y las necesidades de sus usuarios, identifico las siguientes contradicciones técnicas y físicas fundamentales:\n\n    *   **Contradicción Técnica 1: Simplicidad de Uso vs. Potencia/Sofisticación de la Solución.**\n        *   **Parámetro que Mejora:** Facilidad de Operación (para usuarios no técnicos). Los usuarios quieren crear y desplegar agentes con mínima fricción y sin conocimientos profundos.\n        *   **Parámetro que Empeora:** Complejidad del Sistema/Agente o Potencia de la Solución. Soluciones verdaderamente potentes y personalizadas a menudo requieren configuraciones complejas, interacciones sofisticadas entre múltiples componentes (LLMs, tools, knowledge bases) y una lógica de flujo de trabajo avanzada, lo cual choca con la simplicidad deseada.\n\n    *   **Contradicción Técnica 2: Autonomía del Agente Individual vs. Capacidad de Colaboración Efectiva.**\n        *   **Parámetro que Mejora:** Productividad/Rendimiento de un agente individual al ser especializado. Cada agente puede ser muy bueno en su tarea específica.\n        *   **Parámetro que Empeora:** Complejidad de la Interacción/Comunicación. Para que múltiples agentes colaboren eficazmente en tareas complejas, se requiere un sistema de comunicación, coordinación y gestión de estado robusto y flexible, lo cual puede ser difícil de diseñar e implementar de manera genérica y fácil de usar por el creador del \"equipo de agentes\".\n\n    *   **Contradicción Física 1 (Relacionada con la primera): El usuario quiere una herramienta que sea *fácil de usar* para configurar agentes, pero también quiere que esos agentes sean *altamente capaces y adaptables* para resolver problemas complejos.** La \"facilidad\" implica abstracción y simplificación, mientras que la \"capacidad/adaptabilidad\" implica acceso a detalles y configuraciones granulares.\n\n    *   **Contradicción Física 2 (Relacionada con el marketplace): El usuario quiere *beneficiarse rápidamente* de agentes existentes (rentar), pero también quiere tener la *flexibilidad de personalizar profundamente* o crear agentes desde cero para necesidades únicas.** La \"rapidez\" del uso de agentes pre-hechos puede limitar la \"personalización profunda\" si la integración o modificación es rígida.\n\n2.  ¿Qué principios inventivos de TRIZ aplicarías para resolver esas contradicciones sin compromisos?\n\n    Para abordar estas contradicciones, propongo la aplicación de los siguientes principios inventivos de TRIZ:\n\n    *   **Para Simplicidad de Uso vs. Potencia/Sofisticación (Contradicción Técnica 1 y Física 1):**\n        *   **Principio 10: Acción Preliminar (Prior Action / \"Do it in advance\"):** Pre-ensamblar \"equipos de agentes\" o \"meta-agentes\" optimizados para tareas arquetípicas. El usuario no configura cada agente desde cero, sino que selecciona una plantilla de colaboración y la personaliza mínimamente.\n        *   **Principio 24: Intermediario (Mediator):** Introducir un \"Agente Orquestador\" o una capa de \"Inteligencia de Enjambre\" que gestione autónomamente la comunicación, asignación de tareas y flujo de datos entre los agentes seleccionados por el usuario, basándose en un objetivo de alto nivel. El usuario define el QUÉ, el Orquestador se encarga del CÓMO colaboran.\n        *   **Principio 13: Inversión (The Other Way Around / \"Do it backwards\"):** En lugar de que el usuario construya un flujo de trabajo complejo, el usuario define el resultado deseado, y la plataforma (quizás usando un agente especializado en diseño de flujos) *sugiere o auto-genera* la configuración y el equipo de agentes necesarios.\n        *   **Principio 15: Dinamicidad (Dynamization):** Permitir que la \"potencia\" o \"complejidad\" de un agente o equipo de agentes sea ajustable. Un usuario podría empezar con una configuración simple y, a medida que se familiariza o sus necesidades crecen, \"desbloquear\" o añadir capas de sofisticación de forma gradual.\n\n    *   **Para Autonomía del Agente Individual vs. Capacidad de Colaboración Efectiva (Contradicción Técnica 2):**\n        *   **Principio 5: Consolidación/Fusión (Merging):** Diseñar los agentes de tal manera que puedan ser \"fusionados\" temporalmente o conceptualmente para actuar como una unidad cohesiva hacia un objetivo común. El \"Agente Orquestador\" (Principio 24) facilitaría esta fusión dinámica.\n        *   **Principio 6: Universalidad (Universality):** Definir un protocolo de comunicación y de intercambio de \"habilidades\" estándar entre agentes, de modo que un agente pueda utilizar las capacidades de otro sin necesidad de una integración ad-hoc compleja. El \"tool\" de un agente podría ser otro agente.\n        *   **Principio 2: Extracción (Taking Out / Extraction):** Extraer la lógica de colaboración compleja y encapsularla en el \"Agente Orquestador\" o en \"Plantillas de Colaboración\", liberando a los agentes individuales para que se centren en su especialización.\n\n    *   **Para Beneficio Rápido vs. Personalización Profunda (Contradicción Física 2):**\n        *   **Principio 3: Calidad Local (Local Quality):** Permitir que los agentes rentados tengan partes \"abiertas\" o \"puntos de extensión\" donde el usuario que renta pueda inyectar su propia lógica, prompts específicos, o conectar sus propias bases de conocimiento, sin alterar el núcleo del agente rentado.\n        *   **Principio 17: Otra Dimensión (Another Dimension):** Introducir la \"componibilidad recursiva\". Un agente rentado podría ser un componente dentro de un agente más grande creado por el usuario, o viceversa. La personalización no es solo modificar el agente, sino cómo se integra en una estructura mayor.\n\n3.  ¿Cuál sería un ejemplo de solución concreta basada en esos principios?\n\n    La \"acción nuclear\" o \"momento ¡ajá!\" de AgentVerse sería la **\"Orquestación Emergente de Equipos de Agentes con Propósito Definido\"**.\n\n    **Flujo de la Experiencia Mágica:**\n\n    1.  **Definición del Propósito (Inversión, Intermediario):** El usuario, en lugar de pensar en \"crear un agente\", describe un objetivo complejo o una tarea multifacética en lenguaje natural. Por ejemplo: \"Quiero analizar las opiniones de los clientes de los últimos 3 meses sobre nuestro producto X (aquí está el CSV de opiniones), identificar los 5 problemas principales, proponer 3 soluciones innovadoras para cada uno, y redactar un borrador de email para comunicar las mejoras al equipo de producto.\"\n\n    2.  **Descubrimiento y Ensamblaje Inteligente del Equipo (Acción Preliminar, Universalidad, Extracción):**\n        *   AgentVerse, a través de un \"Meta-Agente de Planificación y Orquestación\" (el Intermediario con Acción Preliminar), analiza la petición.\n        *   Este Meta-Agente descompone el objetivo en sub-tareas: análisis de sentimiento, extracción de temas, ideación, redacción.\n        *   Automáticamente, busca en el marketplace y en los agentes privados del usuario aquellos que son especialistas en estas sub-tareas (Universalidad gracias a un protocolo común). Por ejemplo:\n            *   \"SentimentAnalyzer Pro\" (del marketplace, para análisis de sentimiento).\n            *   \"TopicExtractor Bot\" (creado por el usuario, especializado en sus datos).\n            *   \"IdeaSpark AI\" (del marketplace, para brainstorming creativo).\n            *   \"DraftsmanAgent\" (un agente genérico de redacción que el usuario puede tener).\n        *   Si falta alguna capacidad, AgentVerse podría sugerir al usuario crear un agente simple para esa tarea específica, o usar una plantilla preconfigurada.\n\n    3.  **Orquestación y Colaboración Dinámica (Consolidación, Dinamicidad, Calidad Local):**\n        *   El usuario da el \"OK\" al equipo propuesto (o hace ajustes mínimos).\n        *   El Meta-Agente Orquestador activa el equipo. Gestiona el flujo de datos: el CSV va a SentimentAnalyzer y TopicExtractor; sus outputs van a IdeaSpark; las ideas y problemas van a DraftsmanAgent.\n        *   Los agentes colaboran (Consolidación), ajustando sus respuestas según el contexto proporcionado por los otros (Dinamicidad). Si un agente rentado necesita un contexto específico del usuario (ej. tono de voz de la marca para el DraftsmanAgent), el usuario puede proporcionarlo (Calidad Local).\n\n    4.  **Entrega del Resultado Consolidado (Momento ¡Ajá!):**\n        *   El usuario no ve simplemente los outputs individuales de cada agente, sino un resultado consolidado y coherente que cumple con el propósito original: un informe con los problemas, las soluciones propuestas y el borrador del email.\n        *   **El ¡Ajá!:** El usuario ha logrado un resultado complejo y de alto valor, que habría requerido múltiples herramientas y esfuerzo manual considerable, simplemente describiendo su necesidad y dejando que AgentVerse ensamble y dirija un \"equipo de IA\" a medida, combinando el poder de la comunidad (marketplace) con sus propias personalizaciones. La plataforma se siente como un multiplicador de inteligencia, no solo un constructor de herramientas.\n\n    Esta \"Orquestación Emergente\" es la acción nuclear porque transforma AgentVerse de un simple \"constructor de agentes\" a un \"solucionador de problemas complejos mediante inteligencia artificial colaborativa y accesible\". Resuelve las contradicciones al permitir que la simplicidad de la interfaz (definir un objetivo) desbloquee una potencia y sofisticación inmensas (un equipo de agentes trabajando coordinadamente)."
+        }
+      }
+    ],
+    "🎯 Jobs to Be Done": [
+      {
+        "json": {
+          "output": "**Experto:** Jobs to be done\n**Output:**\n\n1.  **¿Cuál es el progreso que el usuario está tratando de alcanzar?**\n    Quiero transformar mi forma de abordar problemas y tareas complejas, pasando de soluciones manuales o genéricas a soluciones potenciadas por inteligencia artificial altamente personalizadas y eficientes, que me permitan innovar y operar a un nivel superior sin convertirme en un experto en IA.\n\n2.  **¿Qué obstáculos actuales le impiden lograrlo?**\n    *   La complejidad técnica y el conocimiento especializado requerido para crear, configurar e integrar soluciones de IA a medida.\n    *   La falta de herramientas accesibles que me permitan experimentar y desplegar IA sin una gran inversión inicial de tiempo o recursos.\n    *   La dificultad para encontrar y adaptar soluciones de IA existentes a mis contextos y necesidades específicas.\n    *   La incapacidad de combinar fácilmente diferentes capacidades de IA (modelos, herramientas, bases de conocimiento) para resolver problemas multifacéticos.\n    *   El aislamiento al trabajar en soluciones de IA, sin poder aprovechar fácilmente el trabajo o la experiencia de otros, ni compartir mis propias creaciones de forma sencilla.\n\n3.  **¿Qué resultados deseados (outcomes) están implícitos en este trabajo?**\n    *   Reducir significativamente el tiempo y el esfuerzo necesarios para desarrollar e implementar soluciones de IA que resuelvan mis problemas específicos.\n    *   Aumentar mi capacidad para automatizar tareas repetitivas o complejas, liberando tiempo para actividades de mayor valor.\n    *   Mejorar la calidad y la innovación en mis resultados (ideas, contenidos, soluciones) al incorporar capacidades de IA personalizadas.\n    *   Minimizar la necesidad de conocimientos técnicos profundos para crear y utilizar IA avanzada, democratizando su acceso.\n    *   Incrementar la flexibilidad para adaptar y evolucionar mis soluciones de IA a medida que cambian mis necesidades o el entorno.\n    *   Maximizar las oportunidades de beneficiarme de la inteligencia colectiva y las herramientas desarrolladas por otros, y potencialmente, de monetizar mis propias creaciones.\n    *   Lograr que diferentes sistemas o agentes de IA trabajen de forma coordinada y sinérgica para abordar desafíos más grandes."
+        }
+      }
+    ],
+    "🔟 Ten Types of Innovation (Doblin)": [
+      {
+        "json": {
+          "output": "**Experto:** Ten types on innovation (Doblin)\n**Output:**\n\n1.  **¿Dónde hay oportunidades de innovación en: modelo de ingresos, red, estructura, procesos, performance del producto, sistema del producto, servicio, canal, marca y experiencia del cliente?**\n\n    *   **1. Modelo de Ingresos (Profit Model):**\n        *   **Oportunidad:** Más allá de la renta de agentes, implementar un modelo \"freemium\" con límites en número de agentes/complejidad/herramientas, y tiers de suscripción para acceso a LLMs premium, mayor capacidad de cómputo, o herramientas avanzadas. Considerar un \"revenue share\" diferenciado para agentes \"verificados\" o de alta demanda en el marketplace.\n        *   **Justificación:** Diversifica ingresos, atrae usuarios con barrera de entrada baja y monetiza a los usuarios más avanzados o con necesidades profesionales.\n\n    *   **2. Red (Network):**\n        *   **Oportunidad:** Crear un sistema de \"alianzas de agentes\" donde agentes de diferentes creadores puedan ser \"certificados\" para trabajar juntos de forma óptima, compartiendo un porcentaje de los ingresos generados por la alianza. Fomentar la creación de \"gremios\" de especialistas en ciertos tipos de agentes.\n        *   **Justificación:** Potencia la colaboración más allá de un solo usuario, creando valor compuesto y un ecosistema más robusto y especializado.\n\n    *   **3. Estructura (Structure):**\n        *   **Oportunidad:** Implementar \"equipos de curación\" (internos o comunitarios) que identifiquen y promuevan agentes o combinaciones de agentes de alta calidad/utilidad en el marketplace, funcionando casi como \"fondos de inversión de agentes\".\n        *   **Justificación:** Mejora la calidad y descubribilidad en el marketplace, incentivando la excelencia y facilitando la adopción por parte de nuevos usuarios.\n\n    *   **4. Procesos (Process):**\n        *   **Oportunidad:** Desarrollar un \"Optimizador de Colaboración de Agentes\" que, basado en el objetivo del usuario, sugiera la mejor configuración de agentes existentes (propios o del marketplace) o incluso proponga la creación de nuevos agentes complementarios con prompts pre-sugeridos.\n        *   **Justificación:** Simplifica drásticamente la creación de soluciones complejas, reduce la curva de aprendizaje y aumenta la eficiencia de los agentes colaborativos.\n\n    *   **5. Performance del Producto (Product Performance):**\n        *   **Oportunidad:** Enfocarse en la \"orquestación inteligente de agentes\", donde la plataforma optimiza dinámicamente la comunicación, el reparto de tareas y la resolución de conflictos entre agentes colaborativos para lograr un rendimiento superior al de agentes individuales.\n        *   **Justificación:** Ofrece una ventaja tangible en la eficacia de las soluciones creadas, haciendo que el \"todo\" (equipo de agentes) sea claramente superior a la suma de las partes.\n\n    *   **6. Sistema del Producto (Product System):**\n        *   **Oportunidad:** Permitir la creación de \"Meta-Agentes\" o \"Agentes Supervisores\" que puedan monitorizar, gestionar y coordinar equipos de otros agentes, e incluso aprender y proponer mejoras en la configuración del equipo. Estos Meta-Agentes podrían ser un producto premium en sí mismos.\n        *   **Justificación:** Introduce un nivel superior de automatización y autonomía, permitiendo a los usuarios escalar la complejidad y el alcance de sus soluciones de IA. Este es el núcleo de la \"magia\".\n\n    *   **7. Servicio (Service):**\n        *   **Oportunidad:** Ofrecer un \"Servicio de Diseño de Ecosistemas de Agentes\" para clientes empresariales o usuarios con problemas complejos, donde expertos de AgentVerse ayudan a diseñar y desplegar la solución de agentes colaborativos óptima.\n        *   **Justificación:** Genera una fuente de ingresos de alto valor y ayuda a demostrar el poder de la plataforma en escenarios complejos, creando casos de estudio.\n\n    *   **8. Canal (Channel):**\n        *   **Oportunidad:** Desarrollar \"Embeddable Agent Teams\" – la capacidad de exportar o integrar fácilmente un conjunto de agentes colaborativos (no solo uno) en aplicaciones de terceros, sitios web o flujos de trabajo empresariales mediante APIs o widgets.\n        *   **Justificación:** Extiende la utilidad de AgentVerse más allá de la propia plataforma, permitiendo que las soluciones creadas se integren donde realmente se necesitan.\n\n    *   **9. Marca (Brand):**\n        *   **Oportunidad:** Posicionar AgentVerse como el \"Director de Orquesta de la Inteligencia Artificial Colaborativa\", enfatizando la capacidad de los usuarios de crear sinergias y armonía entre múltiples IA para lograr resultados extraordinarios.\n        *   **Justificación:** Crea una identidad única y memorable que comunica el valor diferencial clave (la colaboración orquestada) de forma aspiracional y potente.\n\n    *   **10. Experiencia del Cliente (Customer Engagement):**\n        *   **Oportunidad:** Diseñar una \"primera experiencia mágica\" centrada en guiar al usuario para que, en minutos, configure un pequeño equipo de 2-3 agentes (quizás pre-configurados o con plantillas muy sencillas) que resuelvan una tarea simple pero visiblemente colaborativa, como \"investigar un tema desde dos ángulos y resumir los hallazgos\".\n        *   **Justificación:** Proporciona un \"momento ¡ajá!\" inmediato, demostrando el poder de la colaboración de agentes de forma práctica y rápida, enganchando al usuario desde el inicio.\n\n2.  **Prioriza 3 tipos donde se podría innovar con mayor impacto.**\n\n    *   **1. Sistema del Producto:**\n        *   **Dirección Propuesta:** Enfocarse en la creación y orquestación de \"Meta-Agentes\" o \"Equipos de Agentes Autónomos\". La capacidad de que los agentes no solo colaboren, sino que puedan ser gestionados, coordinados e incluso optimizados por otros agentes especializados (Meta-Agentes) es la propuesta de valor más disruptiva y distintiva. El \"momento ¡ajá!\" es ver un *equipo* de tus agentes, potencialmente gestionado por otro de tus agentes, resolver un problema complejo de forma autónoma.\n        *   **Justificación:** Esto va más allá de un simple marketplace o de la creación de agentes individuales. Es la creación de verdaderos \"ecosistemas de IA\" personalizados y auto-gestionables, lo que diferencia radicalmente a AgentVerse.\n\n    *   **2. Experiencia del Cliente:**\n        *   **Dirección Propuesta:** Diseñar un onboarding y una interfaz de usuario que hagan trivial la creación y visualización de la colaboración entre agentes. La \"primera experiencia mágica\" debe ser: \"en 5 minutos, he configurado un equipo de 3 mini-agentes que realizan una tarea colaborativa simple y he visto cómo interactúan\". Por ejemplo, un agente busca información, otro la analiza y un tercero la resume, todo visualmente representado.\n        *   **Justificación:** La complejidad de la colaboración de agentes debe ser abstraída para el usuario. Una experiencia inicial impactante y sencilla que demuestre este poder colaborativo es crucial para la adopción y el \"amor\" por la plataforma.\n\n    *   **3. Modelo de Ingresos:**\n        *   **Dirección Propuesta:** Crear un modelo de \"Ingresos por Sinergia\" en el marketplace. Si un agente A y un agente B (de diferentes creadores) se utilizan conjuntamente de forma frecuente y exitosa, AgentVerse podría facilitar y recompensar esta \"sinergia\" permitiendo a los creadores ofrecer \"bundles\" o compartiendo un porcentaje de los ingresos generados por el uso combinado, incluso si son alquilados por separado pero utilizados en un mismo flujo por un cliente.\n        *   **Justificación:** Incentiva la creación de agentes altamente especializados pero complementarios, y fomenta activamente el espíritu colaborativo del ecosistema, convirtiendo la colaboración no solo en una característica técnica sino en un motor económico de la plataforma."
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-11T13:14:12.783Z",
+  "versionId": "ae6df638-6548-4375-a736-3b76819e5a62"
+}
