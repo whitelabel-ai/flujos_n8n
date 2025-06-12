@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Merge": {
       "main": [
@@ -87,7 +87,7 @@
         [],
         [
           {
-            "node": "Send Order",
+            "node": "Wait3",
             "type": "main",
             "index": 0
           }
@@ -109,11 +109,6 @@
           },
           {
             "node": "Code",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Code1",
             "type": "main",
             "index": 0
           }
@@ -232,17 +227,6 @@
         ]
       ]
     },
-    "Code1": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Mensaje": {
       "main": [
         [
@@ -299,7 +283,197 @@
         ]
       ]
     },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Send Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "add Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add Pedido": {
+      "main": [
+        [
+          {
+            "node": "Get Orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "solicitud a proveedores para actualizar",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Actualizaciones",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agregar nuevo producto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "Get Proveedores1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get Proveedores1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Cancelacion Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Loop Over Items4": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Order1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Send Order1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancelacion Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Productos Solicitados1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items5": {
       "main": [
         [],
         [
@@ -311,11 +485,210 @@
         ]
       ]
     },
+    "Productos Solicitados1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Status1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Wait2": {
       "main": [
         [
           {
-            "node": "Google Sheets2",
+            "node": "Update Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items6": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "Status Cancelar Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status Cancelar Pedido": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "solicitud a proveedores para actualizar": {
+      "main": [
+        [
+          {
+            "node": "Solicitudes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Solicitudes": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizaciones": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items7": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Order2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code5",
             "type": "main",
             "index": 0
           }
@@ -326,30 +699,97 @@
       "main": [
         [
           {
-            "node": "Loop Over Items4",
+            "node": "Loop Over Items8",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Schedule Trigger1": {
-      "main": [
-        [
-          {
-            "node": "Get Orders",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
+    "Loop Over Items8": {
       "main": [
         [],
         [
           {
-            "node": "No Operation, do nothing",
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets4": {
+      "main": [
+        [
+          {
+            "node": "Send Order2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Status2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets6": {
+      "main": [
+        [
+          {
+            "node": "Update Status2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items9": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Google Sheets6",
             "type": "main",
             "index": 0
           }
@@ -374,21 +814,21 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        480,
-        240
+        -820,
+        415
       ],
       "id": "d205e797-897a-482b-a746-050d8aa579c9",
       "name": "Merge"
     },
     {
       "parameters": {
-        "jsCode": "// Paso 1: eliminar duplicados (por row_number)\nconst uniqueRows = [];\nconst seen = new Set();\n\nfor (const item of items) {\n  const key = `${item.json.row_number}-${item.json.ID}-${item.json[\"N SOLICITUD\"]}`;\n  if (!seen.has(key)) {\n    uniqueRows.push(item.json);\n    seen.add(key);\n  }\n}\n\n// Paso 2: preparar pedidos por proveedor y por solicitud\nconst pedidosPorProveedor = {};\n\nfor (const row of uniqueRows) {\n  const cantidadTotal = row[\"CANT_PALETS\"];\n  const numPedido  = row[\"NUM_PEDIDO\"];\n\n  if (cantidadTotal === 0) continue;\n\n  const proveedores = Object.keys(row)\n    .filter(key => key.startsWith(\"PROVEEDOR\"))\n    .map(key => row[key]?.toString())\n    .filter(prov => prov && prov.trim() !== \"\");\n\n  if (proveedores.length === 0) continue;\n\n  const cantidadPorProveedor = Math.floor(cantidadTotal / proveedores.length);\n  let resto = cantidadTotal % proveedores.length;\n\n  for (const proveedor of proveedores) {\n    const proveedorId = proveedor.toString();\n    const cantidadAsignada = cantidadPorProveedor + (resto > 0 ? 1 : 0);\n    if (resto > 0) resto--;\n\n    if (cantidadAsignada === 0) continue;\n\n    if (!pedidosPorProveedor[proveedorId]) {\n      pedidosPorProveedor[proveedorId] = [];\n    }\n\n    pedidosPorProveedor[proveedorId].push({\n      row_number: row.row_number,\n      ID_PRODUCTO: row.ID,\n      NUM_PEDIDO: numPedido,\n      PRODUCTO: row[\"PRODUCTOS\"],\n      CANT_PALETS: cantidadAsignada,\n      CAJAS: row[\"CAJAS\"],\n      CANT_CAJAS: row[\"CANT_CAJAS\"],\n      PALET: row[\"PALET\"],\n      CLIENTE: row[\"NOMBRE_CLIENTE\"],\n      CIF_CLIENTE: row[\"CIF_CLIENTE\"],\n      FECHA: row[\"FECHA\"],\n    });\n  }\n}\n\n// Paso 3: construir resultados\nconst results = [];\n\nfor (const [proveedorId, productos] of Object.entries(pedidosPorProveedor)) {\n  if (productos.length > 0) {\n    results.push({\n      json: {\n        PROVEEDOR_ID: proveedorId,\n        PRODUCTOS: productos\n      }\n    });\n  }\n}\n\nreturn results;\n"
+        "jsCode": "// Paso 1: eliminar duplicados (por row_number)\nconst uniqueRows = [];\nconst seen = new Set();\n\nfor (const item of items) {\n  const key = `${item.json.row_number}-${item.json.ID}-${item.json[\"N SOLICITUD\"]}`;\n  if (!seen.has(key)) {\n    uniqueRows.push(item.json);\n    seen.add(key);\n  }\n}\n\n// Paso 2: preparar pedidos por proveedor y por solicitud\nconst pedidosPorProveedor = {};\n\nfor (const row of uniqueRows) {\n  const cantidadTotal = parseInt(row[\"CANT_PALETS\"]) || 0;\n  const numPedido = row[\"NUM_PEDIDO\"];\n\n  if (cantidadTotal === 0) continue;\n\n  // Obtener proveedores y sus porcentajes\n  const proveedores = [];\n\n  for (const key of Object.keys(row)) {\n    const keyNormalized = key.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n    if (keyNormalized.startsWith(\"PROVEEDOR\")) {\n      const indexMatch = keyNormalized.match(/PROVEEDOR\\s*(\\d+)/);\n      if (indexMatch) {\n        const index = indexMatch[1];\n        const proveedorId = row[key]?.toString().trim();\n        if (proveedorId) {\n          const porcentajeKey = Object.keys(row).find(k => {\n            const kNorm = k.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n            return kNorm === `% ${index}` || kNorm === `%${index}`;\n          });\n          const porcentaje = porcentajeKey ? parseFloat(row[porcentajeKey]) : null;\n          proveedores.push({\n            proveedorId,\n            porcentaje: isNaN(porcentaje) ? null : porcentaje,\n            orden: parseInt(index) || 0  // Para mantener orden original\n          });\n        }\n      }\n    }\n  }\n\n  if (proveedores.length === 0) continue;\n\n  const conPorcentaje = proveedores.filter(p => p.porcentaje !== null);\n  const sinPorcentaje = proveedores.filter(p => p.porcentaje === null);\n\n  let asignaciones = [];\n\n  if (conPorcentaje.length > 0) {\n    // Asignar palets según porcentaje (inicialmente truncado)\n    let totalAsignado = 0;\n\n    for (const p of conPorcentaje) {\n      p.cantidad = Math.floor((cantidadTotal * p.porcentaje) / 100);\n      totalAsignado += p.cantidad;\n    }\n\n    const restante = cantidadTotal - totalAsignado;\n\n    // Ordenar por mayor porcentaje y menor orden (si empate)\n    const ordenPrioridad = [...conPorcentaje]\n      .sort((a, b) => b.porcentaje - a.porcentaje || a.orden - b.orden);\n\n    // Asignar el sobrante\n    for (let i = 0; i < restante; i++) {\n      ordenPrioridad[i % ordenPrioridad.length].cantidad += 1;\n    }\n\n    asignaciones = [...conPorcentaje];\n\n    // Repartir a los sin porcentaje (si hay)\n    if (sinPorcentaje.length > 0) {\n      const restanteLibre = cantidadTotal - asignaciones.reduce((s, p) => s + p.cantidad, 0);\n      const cantPorProveedor = Math.floor(restanteLibre / sinPorcentaje.length);\n      let sobrante = restanteLibre % sinPorcentaje.length;\n\n      for (const p of sinPorcentaje) {\n        p.cantidad = cantPorProveedor + (sobrante > 0 ? 1 : 0);\n        if (sobrante > 0) sobrante--;\n      }\n\n      asignaciones = [...asignaciones, ...sinPorcentaje];\n    }\n\n  } else {\n    // Reparto equitativo\n    const cantidadPorProveedor = Math.floor(cantidadTotal / proveedores.length);\n    let resto = cantidadTotal % proveedores.length;\n\n    for (const p of proveedores) {\n      p.cantidad = cantidadPorProveedor + (resto > 0 ? 1 : 0);\n      if (resto > 0) resto--;\n    }\n\n    asignaciones = [...proveedores];\n  }\n\n  // Agregar a pedidosPorProveedor\n  for (const asignacion of asignaciones) {\n    const { proveedorId, cantidad } = asignacion;\n\n    if (cantidad === 0) continue;\n\n    if (!pedidosPorProveedor[proveedorId]) {\n      pedidosPorProveedor[proveedorId] = [];\n    }\n\n    pedidosPorProveedor[proveedorId].push({\n      row_number: row.row_number,\n      ID_PRODUCTO: row.ID,\n      NUM_PEDIDO: numPedido,\n      PRODUCTO: row[\"PRODUCTOS\"],\n      CANT_PALETS: cantidad,\n      CAJAS: row[\"CAJAS\"],\n      CANT_CAJAS: row[\"CANT_CAJAS\"],\n      PALET: row[\"PALET\"],\n      CLIENTE: row[\"NOMBRE_CLIENTE\"],\n      CIF_CLIENTE: row[\"CIF_CLIENTE\"],\n      FECHA: row[\"FECHA\"],\n    });\n  }\n}\n\n// Paso 3: construir resultados\nconst results = [];\n\nfor (const [proveedorId, productos] of Object.entries(pedidosPorProveedor)) {\n  if (productos.length > 0) {\n    results.push({\n      json: {\n        PROVEEDOR_ID: proveedorId,\n        PRODUCTOS: productos\n      }\n    });\n  }\n}\n\nreturn results;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        700,
-        240
+        -600,
+        415
       ],
       "id": "324de7a6-ed57-413b-8e5b-2473c8b48c7b",
       "name": "Pedidos"
@@ -422,8 +862,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        280,
-        240
+        -1040,
+        340
       ],
       "id": "bd627dc4-c8f0-45e2-8181-66172489e187",
       "name": "Get Products",
@@ -464,11 +904,12 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        40,
-        240
+        -1260,
+        415
       ],
       "id": "e8d3ccfa-3f84-41da-bb89-b87e96649706",
       "name": "Get Orders",
+      "executeOnce": false,
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "CM7JsKen8ouMDNPD",
@@ -505,8 +946,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        920,
-        240
+        -380,
+        265
       ],
       "id": "7412f75c-fb4e-476d-8b8c-eaa6b692476b",
       "name": "Get Proveedores",
@@ -526,8 +967,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        1140,
-        240
+        -160,
+        340
       ],
       "id": "99e68bd7-758a-47f3-b94f-46af13653e8f",
       "name": "Merge1"
@@ -539,21 +980,21 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1660,
-        -60
+        500,
+        -35
       ],
       "id": "f064d339-cf54-480e-b341-96d1fce3caee",
       "name": "Loop Over Items1"
     },
     {
       "parameters": {
-        "jsCode": "const results = [];\nconst zonaHoraria = 'America/Bogota'; //cambiar el pais\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\n\n// Función para formatear fecha como \"DD/MM/YYYY\"\nfunction formatearFecha(fecha) {\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const año = fecha.getFullYear();\n  return `${dia}/${mes}/${año}`;\n}\n\n// Fecha de hoy\nconst fechaHoy = formatearFecha(ahora);\n\n// Fecha de mañana (hoy + 1 día)\nconst manana = new Date(ahora);\nmanana.setDate(manana.getDate() + 1);\nconst fechaManana = formatearFecha(manana);\n\n// Determinar saludo y entrega\nconst hora = ahora.getHours();\nconst esTarde = hora >= 17;\n\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\nconst entrega = esTarde ? `mañana - (${fechaManana})` : `hoy - (${fechaHoy})`;\nconst fechaentrega = esTarde ? `${fechaManana}` : `${fechaHoy}`;\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const productosPorPedido = {};\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      const numPedido = prod.NUM_PEDIDO || 'SIN_PEDIDO';\n      if (!productosPorPedido[numPedido]) {\n        productosPorPedido[numPedido] = [];\n      }\n\n      productosPorPedido[numPedido].push(\n        `- ${prod.CANT_PALETS} x ${prod.CANT_CAJAS} - ${prod.PRODUCTO} - ${prod.PALET} - ${prod.CAJAS}`\n      );\n    }\n  }\n\n  if (Object.keys(productosPorPedido).length > 0) {\n    let mensajeProductos = `${saludo}, para ${entrega}\\n\\n`;\n\n    for (const [numPedido, listaProductos] of Object.entries(productosPorPedido)) {\n      mensajeProductos += `➡️ *pedido N°: ${numPedido}*\\n`;\n      mensajeProductos += listaProductos.join('\\n') + '\\n\\n';\n    }\n\n    mensajeProductos = mensajeProductos.trim();\n\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: mensajeProductos,\n        FECHA: fechaentrega,\n        ENTREGA: entrega\n      }\n    });\n  } else {\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: '',\n        FECHA: fechaHoy\n      }\n    });\n  }\n}\n\nreturn results;\n"
+        "jsCode": "const results = [];\nconst zonaHoraria = 'America/Bogota'; //cambiar el pais\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\n\n// Función para formatear fecha como \"DD/MM/YYYY\"\nfunction formatearFecha(fecha) {\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const año = fecha.getFullYear();\n  return `${dia}/${mes}/${año}`;\n}\n\n// Fecha de hoy\nconst fechaHoy = formatearFecha(ahora);\n\n// Fecha de mañana (hoy + 1 día)\nconst manana = new Date(ahora);\nmanana.setDate(manana.getDate() + 1);\nconst fechaManana = formatearFecha(manana);\n\n// Determinar saludo y entrega\nconst hora = ahora.getHours();\nconst esTarde = hora >= 17;\n\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\nconst entrega = esTarde ? `mañana - (${fechaManana})` : `hoy - (${fechaHoy})`;\nconst fechaentrega = esTarde ? `${fechaManana}` : `${fechaHoy}`;\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const productosPorPedido = {};\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      const numPedido = prod.NUM_PEDIDO || 'SIN_PEDIDO';\n      if (!productosPorPedido[numPedido]) {\n        productosPorPedido[numPedido] = [];\n      }\n\n      productosPorPedido[numPedido].push(\n        `- ${prod.CANT_PALETS} x ${prod.CANT_CAJAS} - ${prod.PRODUCTO} - ${prod.PALET} - ${prod.CAJAS}`\n      );\n    }\n  }\n\n  if (Object.keys(productosPorPedido).length > 0) {\n    let mensajeProductos = `${saludo}, para ${entrega}\\n\\n`;\n\n    for (const [numPedido, listaProductos] of Object.entries(productosPorPedido)) {\n      mensajeProductos += `➡️ *pedido N°: ${numPedido}*\\n`;\n      mensajeProductos += listaProductos.join('\\n\\n') + '\\n\\n';\n    }\n\n    mensajeProductos = mensajeProductos.trim();\n\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: mensajeProductos,\n        FECHA: fechaentrega,\n        ENTREGA: entrega\n      }\n    });\n  } else {\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: '',\n        FECHA: fechaHoy\n      }\n    });\n  }\n}\n\nreturn results;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1360,
-        240
+        280,
+        340
       ],
       "id": "8ac00661-0a4e-4767-8ab9-fadbcd699554",
       "name": "MENSAJE_PRODUCTOS"
@@ -567,8 +1008,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1840,
-        240
+        720,
+        265
       ],
       "id": "64366952-5984-42a3-9086-42b9d310a810",
       "name": "Loop Over Items"
@@ -580,8 +1021,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1620,
-        240
+        500,
+        265
       ],
       "id": "1707438f-7a46-40d2-9655-4df6e8c89646",
       "name": "Productos Solicitados"
@@ -782,8 +1223,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        2280,
-        240
+        1160,
+        265
       ],
       "id": "bd9bad2c-c87c-4bc5-87d6-23a198529b87",
       "name": "Update Status",
@@ -807,8 +1248,8 @@
       "type": "n8n-nodes-evolution-api.evolutionApi",
       "typeVersion": 1,
       "position": [
-        1880,
-        -60
+        940,
+        -35
       ],
       "id": "a9b0af60-a491-4d1e-9c22-1a12fbb81c08",
       "name": "Send Order",
@@ -826,8 +1267,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        800,
-        1000
+        -820,
+        2710
       ],
       "id": "29725714-83d7-4af9-84ca-f9519ea81597",
       "name": "Loop Over Items2"
@@ -845,8 +1286,8 @@
       "type": "n8n-nodes-evolution-api.evolutionApi",
       "typeVersion": 1,
       "position": [
-        1020,
-        1000
+        -600,
+        2710
       ],
       "id": "47fe1267-9245-4c91-b8c8-92a1106e5a1f",
       "name": "Send David",
@@ -855,8 +1296,7 @@
           "id": "OFo9A7x3qE1W1DKN",
           "name": "Evolution account Pedro"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -867,8 +1307,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1580,
-        -120
+        300,
+        -135
       ],
       "id": "2bc06a75-8cae-4876-a763-71201726cecd",
       "name": "Sticky Note"
@@ -882,8 +1322,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1580,
-        180
+        340,
+        165
       ],
       "id": "1f3e66b0-9f57-4fb2-a7c8-d7fc12ec6b43",
       "name": "Sticky Note1"
@@ -897,8 +1337,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        700,
-        940
+        -910,
+        2610
       ],
       "id": "83d16269-98ba-4f92-8a85-d912f4432c92",
       "name": "Sticky Note2"
@@ -910,8 +1350,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1620,
-        540
+        500,
+        565
       ],
       "id": "d74158ea-2491-4118-96b4-d3dcfddf6fa7",
       "name": "Code"
@@ -1058,8 +1498,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        2280,
-        540
+        1160,
+        565
       ],
       "id": "1461f4aa-fb3d-4398-99ad-51d8350b771a",
       "name": "Google Sheets",
@@ -1079,8 +1519,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1580,
-        460
+        290,
+        465
       ],
       "id": "60141390-30cf-40af-b979-a1fe8bd34a03",
       "name": "Sticky Note3"
@@ -1098,8 +1538,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -180,
-        1000
+        -1700,
+        2710
       ],
       "id": "2d9097cf-3f0e-4cf1-b77a-a731176cc3d2",
       "name": "Schedule Trigger"
@@ -1133,8 +1573,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        280,
-        1000
+        -1260,
+        2710
       ],
       "id": "8d12c7a9-28ab-44bd-b1fe-05aa6e3d320d",
       "name": "Google Sheets1",
@@ -1155,128 +1595,11 @@
       "type": "n8n-nodes-base.dateTime",
       "typeVersion": 2,
       "position": [
-        40,
-        1000
+        -1480,
+        2710
       ],
       "id": "919eeb7b-eb97-4148-90d5-560fb1f9496f",
       "name": "Date & Time"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Nodo Code para N8N - Extractor de pedidos únicos\n// Extrae NUM_PEDIDO únicos con CIF_CLIENTE, STATUS y FECHA\n\nconst inputData = $input.all();\nconst pedidosUnicos = new Map();\n\n// Procesar cada item de entrada\ninputData.forEach(item => {\n  const data = item.json;\n  const fechaPedido = data.FECHA; // Fecha del pedido principal (fuera de PRODUCTOS)\n  \n  // Procesar cada producto para extraer los pedidos\n  if (data.PRODUCTOS && Array.isArray(data.PRODUCTOS)) {\n    data.PRODUCTOS.forEach(producto => {\n      const numPedido = producto.NUM_PEDIDO;\n      const cifCliente = producto.CIF_CLIENTE;\n      \n      // Solo agregar si no existe ya en el Map\n      if (numPedido && !pedidosUnicos.has(numPedido)) {\n        pedidosUnicos.set(numPedido, {\n          NUM_PEDIDO: numPedido,\n          FECHA: fechaPedido,\n          CIF_CLIENTE: cifCliente,\n          STATUS: \"Solicitado\" // Status por defecto según tu requerimiento\n        });\n      }\n    });\n  }\n});\n\n// Convertir el Map a array de objetos\nconst resultado = Array.from(pedidosUnicos.values());\n\n// Retornar los resultados\nreturn resultado.map(pedido => ({\n  json: pedido\n}));"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1640,
-        860
-      ],
-      "id": "c681c1ec-861c-4a7b-98b3-c70fa29ac719",
-      "name": "Code1"
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
-          "mode": "list",
-          "cachedResultName": "SOLICITUD DE PEDIDOS",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1306082699,
-          "mode": "list",
-          "cachedResultName": "Resumen",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1306082699"
-        },
-        "columns": {
-          "mappingMode": "autoMapInputData",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "NUM_PEDIDO",
-              "displayName": "NUM_PEDIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "FECHA",
-              "displayName": "FECHA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "CIF_CLIENTE",
-              "displayName": "CIF_CLIENTE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "STATUS",
-              "displayName": "STATUS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NOTAS",
-              "displayName": "NOTAS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        2300,
-        860
-      ],
-      "id": "7a801262-d82c-463e-ad61-de6f97bffeb8",
-      "name": "Google Sheets2",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
-          "name": "hola@whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## ADD SUMMARY",
-        "height": 260,
-        "width": 520
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1600,
-        780
-      ],
-      "id": "44e6d2f5-2a2b-4f4d-bf3b-dc6d18084c23",
-      "name": "Sticky Note4"
     },
     {
       "parameters": {
@@ -1285,21 +1608,21 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        500,
-        1000
+        -1040,
+        2710
       ],
       "id": "010c1c09-1b9d-4977-b893-bc0b1e92f793",
       "name": "Mensaje"
     },
     {
       "parameters": {
-        "amount": 1
+        "amount": 3
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2080,
-        260
+        940,
+        265
       ],
       "id": "c4ad6b4c-edd3-4439-ab87-3457015fbe6b",
       "name": "Wait",
@@ -1314,74 +1637,25 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1840,
-        540
+        720,
+        565
       ],
       "id": "89030fa0-3929-4cc6-93c2-b42d28c97ed5",
       "name": "Loop Over Items3"
     },
     {
       "parameters": {
-        "amount": 1
+        "amount": 3
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2060,
-        540
+        940,
+        565
       ],
       "id": "3be68e3f-f139-4ae2-861b-0be047e24ce4",
       "name": "Wait1",
       "webhookId": "76dbbe67-0287-425f-8299-bef21be90c71"
-    },
-    {
-      "parameters": {
-        "options": {
-          "reset": false
-        }
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        1840,
-        860
-      ],
-      "id": "c3ba8435-24c1-4295-adea-55e2443537c5",
-      "name": "Loop Over Items4"
-    },
-    {
-      "parameters": {
-        "amount": 1
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        2060,
-        860
-      ],
-      "id": "a559f4e8-af19-428d-a6c1-bd398c8c5627",
-      "name": "Wait2",
-      "webhookId": "76dbbe67-0287-425f-8299-bef21be90c71"
-    },
-    {
-      "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "minutes",
-              "minutesInterval": 20
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -200,
-        240
-      ],
-      "id": "66be278a-0c60-46b9-a9d3-06a2d78b3ab6",
-      "name": "Schedule Trigger1"
     },
     {
       "parameters": {
@@ -1411,8 +1685,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        900,
-        440
+        -380,
+        590
       ],
       "id": "9d94153f-bbe2-4215-9999-0f28c8186058",
       "name": "If"
@@ -1422,8 +1696,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        900,
-        580
+        -160,
+        590
       ],
       "id": "80315bc2-2f75-4c96-ae48-56d836df8b11",
       "name": "No Operation, do nothing"
@@ -1438,8 +1712,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -880,
-        180
+        -820,
+        -220
       ],
       "id": "5083c9f2-1abf-407c-b4e2-f7f8a71bddc4",
       "name": "Sticky Note5"
@@ -1454,8 +1728,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -880,
-        900
+        -1840,
+        2530
       ],
       "id": "97838b49-757e-416a-a5a8-052dbf55c477",
       "name": "Sticky Note6"
@@ -1474,9 +1748,1850 @@
       ],
       "id": "bad5a787-9842-4a1b-8d80-580514f5c73f",
       "name": "Sticky Note7"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        -60
+      ],
+      "id": "4ed0d7eb-5e48-4a95-9ae7-ef113f2e7817",
+      "name": "Wait3",
+      "webhookId": "b2cca949-bbbb-4ac2-a65b-c5cad2698fbb"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 1,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1700,
+        415
+      ],
+      "id": "7fe64891-145a-42e5-8091-9ef4457afe25",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "JuzCfzrGaEijmft3",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return {status: true};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1480,
+        415
+      ],
+      "id": "5552ed94-7114-4254-aeae-afa53dd4e659",
+      "name": "add Pedido"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order-update",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1700,
+        2200
+      ],
+      "id": "1d52224c-91e3-4aa9-9a97-77e10d648648",
+      "name": "Webhook1",
+      "webhookId": "589fc230-8dbc-4987-8d13-eee96159157a"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = items[0].json.body;\n\nconst prev = body.previousOrder.products;\nconst updated = body.updatedOrder.products;\n\n// Función para formatear fecha\nfunction formatearFecha(fechaISO) {\n  const fecha = new Date(fechaISO);\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const año = fecha.getFullYear();\n  const horas = String(fecha.getHours()).padStart(2, '0');\n  const minutos = String(fecha.getMinutes()).padStart(2, '0');\n  const segundos = String(fecha.getSeconds()).padStart(2, '0');\n  return `${dia}/${mes}/${año}, ${horas}:${minutos}:${segundos}`;\n}\n\nconst fechaFormateada = formatearFecha(body.updatedOrder.createdAt);\nlet resultados = [];\n\n// Recorremos productos actualizados\nfor (let i = 0; i < updated.length; i++) {\n  const productoNuevo = updated[i];\n  const productoPrevio = prev.find(p =>\n    p.product.name === productoNuevo.product.name &&\n    p.palet.name === productoNuevo.palet.name\n  );\n\n  if (!productoPrevio) {\n    const mismoProductoOtroPalet = prev.find(p =>\n      p.product.name === productoNuevo.product.name &&\n      p.palet.name !== productoNuevo.palet.name\n    );\n\n    if (mismoProductoOtroPalet) {\n      resultados.push({\n        tipo: 'Delete',\n        NUM_PEDIDO: body.updatedOrder.receptionNumber,\n        CIF_CLIENTE: body.updatedOrder.clientCIF,\n        NOMBRE_CLIENTE: body.updatedOrder.clientName,\n        PRODUCTOS: mismoProductoOtroPalet.product.name,\n        PALET: mismoProductoOtroPalet.palet.name,\n        CANT_PALETS: mismoProductoOtroPalet.paletQuantity,\n        CAJAS: mismoProductoOtroPalet.caja.name,\n        CANT_CAJAS: mismoProductoOtroPalet.cajaQuantity,\n        STATUS: body.updatedOrder.status,\n        FECHA: fechaFormateada\n      });\n\n      resultados.push({\n        tipo: 'New',\n        NUM_PEDIDO: body.updatedOrder.receptionNumber,\n        CIF_CLIENTE: body.updatedOrder.clientCIF,\n        NOMBRE_CLIENTE: body.updatedOrder.clientName,\n        PRODUCTOS: productoNuevo.product.name,\n        PALET: productoNuevo.palet.name,\n        CANT_PALETS: productoNuevo.paletQuantity,\n        CAJAS: productoNuevo.caja.name,\n        CANT_CAJAS: productoNuevo.cajaQuantity,\n        STATUS: body.updatedOrder.status,\n        FECHA: fechaFormateada\n      });\n    } else {\n      resultados.push({\n        tipo: 'New',\n        NUM_PEDIDO: body.updatedOrder.receptionNumber,\n        CIF_CLIENTE: body.updatedOrder.clientCIF,\n        NOMBRE_CLIENTE: body.updatedOrder.clientName,\n        PRODUCTOS: productoNuevo.product.name,\n        PALET: productoNuevo.palet.name,\n        CANT_PALETS: productoNuevo.paletQuantity,\n        CAJAS: productoNuevo.caja.name,\n        CANT_CAJAS: productoNuevo.cajaQuantity,\n        STATUS: body.updatedOrder.status,\n        FECHA: fechaFormateada\n      });\n    }\n    continue;\n  }\n\n  const cambios = [];\n\n  // Verificamos cambios y preparamos el entry solo si hay cambios reales\n  if (productoNuevo.paletQuantity !== productoPrevio.paletQuantity) {\n    cambios.push(`CANT_PALETS: ${productoPrevio.paletQuantity} → ${productoNuevo.paletQuantity}`);\n  }\n\n  if (productoNuevo.cajaQuantity !== productoPrevio.cajaQuantity) {\n    cambios.push(`CANT_CAJAS: ${productoPrevio.cajaQuantity} → ${productoNuevo.cajaQuantity}`);\n  }\n\n  if (productoNuevo.caja.name !== productoPrevio.caja.name) {\n    cambios.push(`CAJAS: ${productoPrevio.caja.name} → ${productoNuevo.caja.name}`);\n  }\n\n  if (cambios.length > 0) {\n    resultados.push({\n      tipo: 'Update',\n      NUM_PEDIDO: body.updatedOrder.receptionNumber,\n      CIF_CLIENTE: body.updatedOrder.clientCIF,\n      NOMBRE_CLIENTE: body.updatedOrder.clientName,\n      PRODUCTOS: productoNuevo.product.name,\n      PALET: productoNuevo.palet.name,\n      CANT_PALETS: productoNuevo.paletQuantity,\n      CANT_PALETS_ANTES: productoPrevio.paletQuantity,\n      CAJAS: productoNuevo.caja.name,\n      CAJAS_ANTES: productoPrevio.caja.name,\n      CANT_CAJAS: productoNuevo.cajaQuantity,\n      CANT_CAJAS_ANTES: productoPrevio.cajaQuantity,\n      CAMBIOS: cambios.join(' | '),\n      STATUS: body.updatedOrder.status,\n      FECHA: fechaFormateada\n    });\n  }\n}\n\n// Verificar eliminados\nfor (let i = 0; i < prev.length; i++) {\n  const pPrev = prev[i];\n  const existe = updated.find(p =>\n    p.product.name === pPrev.product.name &&\n    p.palet.name === pPrev.palet.name\n  );\n  if (!existe) {\n    resultados.push({\n      tipo: 'Delete',\n      NUM_PEDIDO: body.updatedOrder.receptionNumber,\n      CIF_CLIENTE: body.updatedOrder.clientCIF,\n      NOMBRE_CLIENTE: body.updatedOrder.clientName,\n      PRODUCTOS: pPrev.product.name,\n      PALET: pPrev.palet.name,\n      CANT_PALETS: pPrev.paletQuantity,\n      CAJAS: pPrev.caja.name,\n      CANT_CAJAS: pPrev.cajaQuantity,\n      STATUS: body.updatedOrder.status,\n      FECHA: fechaFormateada\n    });\n  }\n}\n\n// Eliminar duplicados exactos\nfunction deduplicar(array) {\n  const seen = new Set();\n  return array.filter(item => {\n    const clave = `${item.tipo}|${item.PRODUCTOS}|${item.PALET}|${item.CAJAS}|${item.CANT_CAJAS}|${item.CANT_PALETS}`;\n    if (seen.has(clave)) {\n      return false;\n    }\n    seen.add(clave);\n    return true;\n  });\n}\n\nconst resultadosUnicos = deduplicar(resultados);\n\nreturn resultadosUnicos.map(r => ({ json: r }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1480,
+        2200
+      ],
+      "id": "5ba98924-9761-42bb-b6e3-cb0b6004b58e",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8b7e7eed-e35c-4067-8889-8972d8b0e4a8",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "Delete",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Eliminar Producto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6388165d-4c6e-4855-8e67-cbfae97af8d7",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "Update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Actualizar Producto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "New",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "454cdc57-e42b-4a5e-bb4c-1335cff03519"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Nuevo producto"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1260,
+        2200
+      ],
+      "id": "76a53ef5-6026-4e1e-8013-3922b750ef38",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "={{ $json.NUM_PEDIDO }}"
+            },
+            {
+              "lookupColumn": "PRODUCTO",
+              "lookupValue": "={{ $json.PRODUCTOS }}"
+            },
+            {
+              "lookupColumn": "PALET",
+              "lookupValue": "={{ $json.PALET }}"
+            },
+            {
+              "lookupColumn": "CAJAS",
+              "lookupValue": "={{ $json.CAJAS }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "=Solicitado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1040,
+        1250
+      ],
+      "id": "eaecb50d-1159-4671-9ead-b59bd835c445",
+      "name": "Google Sheets3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -820,
+        1175
+      ],
+      "id": "09cbdf58-5ced-41d7-900a-97ee1b735b5b",
+      "name": "Get Proveedores1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -600,
+        1250
+      ],
+      "id": "84d185d5-cbe7-4259-a67e-26b01f2daaf4",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nconst zonaHoraria = 'America/Bogota';\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\n\n// Función para formatear fecha como \"DD/MM/YYYY, HH:mm:ss\"\nfunction formatearFechaCompleta(fecha) {\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const año = fecha.getFullYear();\n  const horas = String(fecha.getHours()).padStart(2, '0');\n  const minutos = String(fecha.getMinutes()).padStart(2, '0');\n  const segundos = String(fecha.getSeconds()).padStart(2, '0');\n  return `${dia}/${mes}/${año}, ${horas}:${minutos}:${segundos}`;\n}\n\n// Función para solo la fecha\nfunction formatearFecha(fecha) {\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const año = fecha.getFullYear();\n  return `${dia}/${mes}/${año}`;\n}\n\nconst fechaCompleta = formatearFechaCompleta(ahora);\nconst fechaSimple = formatearFecha(ahora);\nconst saludo = ahora.getHours() < 12 ? 'Buen día' : 'Buena tarde';\nconst entrega = `hoy - (${fechaSimple})`;\n\n// Agrupar productos por proveedor\nconst proveedores = {};\n\nfor (const item of items) {\n  const prod = item.json;\n  const proveedorId = prod.PROVEEDOR_ID;\n\n  if (!proveedores[proveedorId]) {\n    proveedores[proveedorId] = {\n      ...prod,\n      PRODUCTOS: [],\n      FECHA: fechaSimple,\n      ENTREGA: entrega\n    };\n    delete proveedores[proveedorId].ID_PRODUCTO;\n    delete proveedores[proveedorId].PRODUCTO;\n    delete proveedores[proveedorId].CANT_PALETS;\n    delete proveedores[proveedorId].CANT_CAJAS;\n    delete proveedores[proveedorId].PALET;\n    delete proveedores[proveedorId].CAJAS;\n    delete proveedores[proveedorId].NUM_PEDIDO;\n    delete proveedores[proveedorId].STATUS;\n    delete proveedores[proveedorId].comentarios;\n    delete proveedores[proveedorId].MENSAJE_PROVEEDOR;\n    delete proveedores[proveedorId].FECHA_CANCELACION;\n  }\n\n  proveedores[proveedorId].PRODUCTOS.push({\n    ...prod,\n    STATUS: \"Cancelado\",\n    FECHA: fechaCompleta,\n    FECHA_CANCELACION: fechaCompleta\n  });\n}\n\n// Crear mensaje para cada proveedor\nfor (const proveedor of Object.values(proveedores)) {\n  const productosPorPedido = {};\n\n  for (const prod of proveedor.PRODUCTOS) {\n    const numPedido = prod.NUM_PEDIDO || 'SIN_PEDIDO';\n    if (!productosPorPedido[numPedido]) {\n      productosPorPedido[numPedido] = [];\n    }\n    productosPorPedido[numPedido].push(\n      `- ${prod.CANT_PALETS} x ${prod.CANT_CAJAS} - ${prod.PRODUCTO} - ${prod.PALET} - ${prod.CAJAS}`\n    );\n  }\n\n  let mensaje = `🚫 *Cancelación de pedido*\\n${saludo}, le informamos que el siguiente pedido para ${entrega} ha sido cancelado:\\n\\n`;\n  for (const [numPedido, lineas] of Object.entries(productosPorPedido)) {\n    mensaje += `➡️ *pedido N°: ${numPedido}*\\n`;\n    mensaje += lineas.join('\\n\\n') + '\\n\\n';\n  }\n\n  proveedor.MENSAJE_PROVEEDOR = mensaje.trim();\n  results.push({ json: proveedor });\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -302,
+        1250
+      ],
+      "id": "7c8d9483-4be9-4d90-84bf-81b6dd5a208d",
+      "name": "Cancelacion Mensaje"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -4,
+        925
+      ],
+      "id": "da2df684-fe7f-4317-83bf-8d765be0b79e",
+      "name": "Loop Over Items4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Pedro",
+        "remoteJid": "=+{{ $json[\"Nº DE TELÉFONO\"] }}",
+        "messageText": "={{ $json.MENSAJE_PROVEEDOR }}",
+        "options_message": {
+          "delay": 1000
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        436,
+        925
+      ],
+      "id": "978f756c-4208-4964-9226-8274a50d06a5",
+      "name": "Send Order1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "OFo9A7x3qE1W1DKN",
+          "name": "Evolution account Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        216,
+        850
+      ],
+      "id": "8e07c33d-2e78-48fe-914a-f3232f313565",
+      "name": "Wait5",
+      "webhookId": "b2cca949-bbbb-4ac2-a65b-c5cad2698fbb"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        216,
+        1225
+      ],
+      "id": "a97e655f-39d4-470a-8416-f1fac836d9ac",
+      "name": "Loop Over Items5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Extraer y unir todos los productos válidos (CANT_PALETS > 0)\nlet productosValidos = [];\n\nfor (const item of items) {\n  const proveedor = item.json;\n  const productos = proveedor.PRODUCTOS || [];\n  const status = \"Cancelado\";\n\n  const filtrados = productos\n    .filter(p => p.CANT_PALETS > 0)\n    .map(p => ({\n      row_number: p.row_number,\n      ID_PRODUCTO: p.ID_PRODUCTO,\n      PROVEEDOR_ID: proveedor.PROVEEDOR_ID,\n      FINCA: proveedor.FINCA,\n      N_SOLICITUD: p.N_SOLICITUD,\n      PRODUCTO: p.PRODUCTO,\n      STATUS: status,\n    }));\n\n  productosValidos.push(...filtrados);\n}\n\n// 2. Eliminar duplicados por combinación ID_PRODUCTO + N_SOLICITUD + numero de fila\nconst vistos = new Set();\nconst productosUnicos = productosValidos.filter(p => {\n  const clave = `${p.N_SOLICITUD}-${p.row_number}`;\n  if (vistos.has(clave)) return false;\n  vistos.add(clave);\n  return true;\n});\n\n// 3. Devolver los productos únicos\nreturn productosUnicos.map(p => ({ json: p }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4,
+        1225
+      ],
+      "id": "6e6ce19f-2a63-452b-975a-f6ee29a90b56",
+      "name": "Productos Solicitados1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number }}",
+            "STATUS": "={{ $json.STATUS }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIF_CLIENTE",
+              "displayName": "CIF_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOMBRE_CLIENTE",
+              "displayName": "NOMBRE_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Stock",
+              "displayName": "Stock",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID_PRODUCTO",
+              "displayName": "ID_PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PROVEEDOR_ID",
+              "displayName": "PROVEEDOR_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "FINCA",
+              "displayName": "FINCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        656,
+        1225
+      ],
+      "id": "195e8c6f-60ea-4a80-92c8-7a18f21ed7f9",
+      "name": "Update Status1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nconst status = \"Cancelado\";\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const finca = item.json.FINCA;\n  const proveedorId = item.json.PROVEEDOR_ID;\n  const fecha = item.json.FECHA;\n  const entrega = item.json.ENTREGA;\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      results.push({\n        json: {\n          NUM_PEDIDO: prod.NUM_PEDIDO,\n          FECHA: fecha,\n          PROVEEDOR_ID: proveedorId,\n          FINCA: finca,\n          ID_PRODUCTO: prod.ID_PRODUCTO,\n          PRODUCTO: prod.PRODUCTO,\n          CANT_PALETS: prod.CANT_PALETS,\n          CANT_CAJAS: prod.CANT_CAJAS,\n          PALET: prod.PALET,\n          CAJAS: prod.CAJAS,\n          ENTREGA: entrega,\n          STATUS: status,\n        }\n      });\n    }\n  }\n}\n\n// Eliminar duplicados por NUM_PEDIDO, PRODUCTO, PALET, CAJAS\nconst uniqueResultsMap = new Map();\n\nfor (const entry of results) {\n  const j = entry.json;\n  const key = `${j.NUM_PEDIDO}|${j.PRODUCTO}|${j.PALET}|${j.CAJAS}`;\n  if (!uniqueResultsMap.has(key)) {\n    uniqueResultsMap.set(key, entry);\n  }\n}\n\nreturn Array.from(uniqueResultsMap.values());\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4,
+        1525
+      ],
+      "id": "7baa93f2-5b9f-43fe-9ce8-ed7144336655",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        436,
+        1175
+      ],
+      "id": "85807094-b717-4f75-9ee9-90319892562f",
+      "name": "Wait2",
+      "webhookId": "76dbbe67-0287-425f-8299-bef21be90c71"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        436,
+        1525
+      ],
+      "id": "d487d9d1-9d77-4f34-ab89-a85cc46dfeb3",
+      "name": "Loop Over Items6"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        656,
+        1500
+      ],
+      "id": "8b611b60-655e-4ad7-a24a-f270b4249e1b",
+      "name": "Wait6",
+      "webhookId": "76dbbe67-0287-425f-8299-bef21be90c71"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "={{ $json.NUM_PEDIDO }}"
+            },
+            {
+              "lookupColumn": "PRODUCTOS",
+              "lookupValue": "={{ $json.PRODUCTO }}"
+            },
+            {
+              "lookupColumn": "PALET",
+              "lookupValue": "={{ $json.PALET }}"
+            },
+            {
+              "lookupColumn": "CAJAS",
+              "lookupValue": "={{ $json.CAJAS }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        216,
+        1525
+      ],
+      "id": "568b1ee7-8b43-4e84-9861-b05eaa6f389c",
+      "name": "Google Sheets5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number }}",
+            "STATUS": "Cancelado"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIF_CLIENTE",
+              "displayName": "CIF_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOMBRE_CLIENTE",
+              "displayName": "NOMBRE_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        876,
+        1525
+      ],
+      "id": "ac2da3ca-1e6a-4b58-9696-1bf4932bc20a",
+      "name": "Status Cancelar Pedido",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "={{ $json.NUM_PEDIDO }}"
+            },
+            {
+              "lookupColumn": "PRODUCTO",
+              "lookupValue": "={{ $json.PRODUCTOS }}"
+            },
+            {
+              "lookupColumn": "PALET",
+              "lookupValue": "={{ $json.PALET }}"
+            },
+            {
+              "lookupColumn": "CAJAS",
+              "lookupValue": "={{ $json.CAJAS_ANTES }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1040,
+        1750
+      ],
+      "id": "9bc933c5-29f7-49d2-8685-885707884d7f",
+      "name": "solicitud a proveedores para actualizar",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=solicitudes: {{ JSON.stringify($json.Solicitudes) }},\nactualizaciones: {{ JSON.stringify($json.Actualizaciones) }},",
+        "options": {
+          "systemMessage": "=Eres un **agente experto en análisis logístico automatizado y validación de pedidos**. Tu responsabilidad es comparar las **solicitudes originales** con las **actualizaciones del pedido**, detectando cambios por proveedor y generando un **mensaje claro, completo y único por proveedor**. Este mensaje debe permitirles ajustar su preparación logística **sin errores ni ambigüedades**, **evitando notificaciones innecesarias**.\n\n---\n\n### 🧩 ENTRADAS:\n\nRecibirás dos bloques de datos en formato JSON:\n\n* solicitudes: distribución original de productos por proveedor, incluyendo:\n\n  * PRODUCTO\n  * PALET\n  * CAJAS (tipo de caja)\n  * CANT_PALETS\n  * CANT_CAJAS\n  * PROVEEDOR_ID\n  * NUM_PEDIDO\n\n* actualizaciones: nueva distribución deseada, en el mismo formato.\n\n---\n\n### 🎯 OBJETIVO:\n\nGenerar **un mensaje por proveedor** que detalle **únicamente los cambios necesarios**, agrupados por producto. Estos pueden ser:\n\n1. **Aumentos o reducciones de cantidad** (CANT_PALETS, CANT_CAJAS)\n2. **Cambios en tipo de caja** (CAJAS)\n3. **Cancelaciones** (si CANT_PALETS = 0, sin importar CANT_CAJAS)\n4. **Altas nuevas** (producto presente en actualizaciones, pero no en solicitudes)\n\n---\n\n### 🔍 LÓGICA DE COMPARACIÓN Y DISTRIBUCIÓN:\n\n#### 1. **Identificación única de un producto**:\n\nBasada en: NUM_PEDIDO, PRODUCTO, PALET, PROVEEDOR_ID.\n\n#### 2. **Distribución racional de cambios entre proveedores**:\n\n**Objetivo: minimizar la cantidad de modificaciones notificadas a proveedores.**\n\nAplica estas reglas:\n\n* En **aumentos**: asigna la diferencia **al proveedor que ya tenía más cantidad** del producto.\n* En **reducciones**: En reducciones:\n- Aplica la reducción al proveedor con más palets del producto.\n- Si un proveedor queda con 0 palets, debe notificarse como Cancelación y agregar el STATUS: \"Cancelado\".\n- Nunca omitir a un proveedor que tenía el producto originalmente, aunque termine en 0. Siempre debe recibir notificación si hubo cambio.\n- Si un proveedor ya tiene exactamente la cantidad final requerida, no se le notifica.\nNo se debe mencionar que un producto fue reasignado a otro proveedor.\nNo se deben generar instrucciones si no hay cambios efectivos en CANT_PALETS o CAJAS, excepto si hay cambio de tipo de caja.\n\n* Si un proveedor ya tiene la cantidad que se necesita según el pedido actualizado, **no se le informa ningún cambio**.\n* No se debe mencionar que se reasignó un producto de un proveedor a otro.\n* **No se generan instrucciones si no hay cambios efectivos** en palets o tipo de caja.\n\n#### 3. **Cambios de tipo de caja**:\n\nSi cambia CAJAS, aunque las cantidades permanezcan iguales, **sí se notifica el cambio, siempre a todos los proveedores implicados**.\n\n#### 4. **Cancelaciones y altas nuevas**:\n\n* Si un producto se reduce a CANT_PALETS = 0, se considera **cancelado**, y se siempre se notifica al proveedor la cancelacion y el STATUS: Cancelado.\n* Si aparece en actualizaciones pero no en solicitudes, se trata como **alta nueva**.\n\n---\n\n### ✅ VALIDACIONES CRÍTICAS:\n\n* [ ] ¿La suma final de palets por producto coincide con la actualización?\n* [ ] ¿Se evitó duplicar aumentos en más de un proveedor?\n* [ ] ¿Se aplicaron reducciones solo a los proveedores necesarios?\n* [ ] ¿Se notificaron solo los cambios reales?\n* [ ] ¿Se evitaron notificaciones de redistribución entre proveedores?\n* [ ] ¿Se notificaron cambios de tipo de caja aunque no haya cambios en cantidad?\n* [ ] ¿Se detectaron y notificaron cancelaciones y altas nuevas?\n* [ ] ¿No se omitieron proveedores que tenían productos originalmente y ahora se redujeron a 0?\n\n\n\n---\n📤 FORMATO DE SALIDA POR PROVEEDOR:\n\n{\n  \"PROVEEDOR_ID\": 2580,\n  \"NUM_PEDIDO\": \"PED-XXXX\",\n  \"CAMBIOS\": [\n    {\n      \"PRODUCTO\": \"PIMIENTO CALIFORNIA NARANJA I GG\",\n      \"row_number\": \"numero de fila de la solisitud a actualizar\",\n      \"comentarios\": \"descripcion corta y detallada del cambio realizado\",\n      \"STATUS\": \"Solicitado\",\n      \"ANTES\": {\n        \"CANT_PALETS\": 11,\n        \"CANT_CAJAS\": 220,\n        \"CAJAS\": \"BANDEJA GENERICA 60X40X20 S/N ETIQ\",\n        \"PALET\": \"BOX FRUVECO\"\n      },\n      \"DESPUES\": {\n        \"CANT_PALETS\": 16,\n        \"CANT_CAJAS\": 320,\n        \"CAJAS\": \"BANDEJA GENERICA 60X40X20 S/N ETIQ\",\n        \"PALET\": \"BOX FRUVECO\"\n      },\n      \"TIPO_CAMBIO\": [\"Aumento\"]\n    },\n    {\n      \"PRODUCTO\": \"PIMIENTO CALIFORNIA ROJO I G\",\n      \"row_number\": \"numero de fila de la solisitud a actualizar\",\n      \"comentarios\": \"descripcion corta y detallada del cambio realizado\",\n      \"STATUS\": \"Cancelado\", //siempre que la cantidad de cajas sea 0 se debe informar al proveedor la cancelacion y el STATUS Cancelado\n      \"ANTES\": {\n        \"CANT_PALETS\": 1,\n        \"CANT_CAJAS\": 20,\n        \"CAJAS\": \"GENÉRICA\",\n        \"PALET\": \"BOX FRUVECO\"\n      },\n      \"DESPUES\": {\n        \"CANT_PALETS\": 0,\n        \"CANT_CAJAS\": 0,\n        \"CAJAS\": \"GENÉRICA\",\n        \"PALET\": \"BOX FRUVECO\"\n      },\n      \"TIPO_CAMBIO\": [\"Cancelación\"]\n    },\n    {\n      \"PRODUCTO\": \"PIMIENTO LAMUYO VERDE\",\n      \"row_number\": \"numero de fila de la solisitud a actualizar\",\n      \"comentarios\": \"descripcion corta y detallada del cambio realizado\",\n      \"STATUS\": \"Solicitado\",\n      \"ANTES\": {\n        \"CANT_PALETS\": 2,\n        \"CANT_CAJAS\": 40,\n        \"CAJAS\": \"CAJA ABIERTA 40X30\",\n        \"PALET\": \"BOX FRUVECO\"\n      },\n      \"DESPUES\": {\n        \"CANT_PALETS\": 2,\n        \"CANT_CAJAS\": 40,\n        \"CAJAS\": \"BANDEJA TERMOSELLADA 40X30\",\n        \"PALET\": \"BOX FRUVECO\"\n      },\n      \"TIPO_CAMBIO\": [\"Cambio de tipo de caja\"]\n  ],\n  \"MENSAJE_PROVEEDOR\": \"Respecto al *pedido PED-XXXX*, ten en cuenta los siguientes cambios:\\n\\n- El producto **PIMIENTO CALIFORNIA NARANJA I GG** en palet *BOX FRUVECO* pasa de 11 a 16 palets. \\n\\n- El producto **PIMIENTO CALIFORNIA ROJO I G** en palet *BOX FRUVECO* ha sido **cancelado**. \\n\\n- El producto **PIMIENTO LAMUYO VERDE** mantiene cantidades, pero cambia el tipo de caja: antes *CAJA ABIERTA 40X30*, ahora *BANDEJA TERMOSELLADA 40X30*.\\n\\n\\nGracias por tu colaboración.\"\n}\n\nIMPORTANTE, si no hay cambios en un producto, no se notifica al proveedor, Siempre que un producto se reduzca a 0 palets en un proveedor, se debe informar como cancelado, incluso si otro proveedor asume el total del pedido. No se debe omitir al proveedor cancelado bajo ningún motivo.\nMUY IMPORTANTE Y NO OLVIDAR:\n\"STATUS\": \"Cancelado\", si se reduce a 0 la catidad de Palets o cancela el pedido,\n\"STATUS\": \"Solicitado\", para cualquier otra actualizacion\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -380,
+        2200
+      ],
+      "id": "973a2278-ae42-4f72-b5c7-5677999c0427",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite-preview-02-05",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -292,
+        2420
+      ],
+      "id": "d0d93eee-50d7-445e-b488-f47d062fc2a3",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Solicitudes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -820,
+        1750
+      ],
+      "id": "02247c0c-6836-4738-9289-0efdba55b33a",
+      "name": "Solicitudes"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Actualizaciones",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -820,
+        2300
+      ],
+      "id": "151f0ac1-1aa1-412f-b1cc-857f5bd8b48c",
+      "name": "Actualizaciones"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -600,
+        2200
+      ],
+      "id": "0c745fa8-46e8-488a-9679-a89f45a52fcc",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el texto plano del agente\nconst raw = items[0].json.output;\n\n// Intentar extraer el JSON entre los delimitadores ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\n// Si no encuentra un bloque válido, intentar parsear como JSON directo\nconst cleanJsonString = match ? match[1] : raw;\n\n// Intentar parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(cleanJsonString);\n} catch (error) {\n  throw new Error(\"No se pudo parsear el JSON: \" + error.message);\n}\n\n// Verificamos que sea un array\nif (!Array.isArray(parsed)) {\n  throw new Error(\"El JSON parseado no es un array.\");\n}\n\n// Devolvemos cada objeto como item independiente\nreturn parsed.map(obj => ({ json: obj }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4,
+        2200
+      ],
+      "id": "d67a7c87-9826-436e-88cd-866174a4da66",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        216,
+        1825
+      ],
+      "id": "b6f4b3f7-43a6-483b-af0e-4c3744363542",
+      "name": "Loop Over Items7"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Pedro",
+        "remoteJid": "=+{{ $json[\"Nº DE TELÉFONO\"] }}",
+        "messageText": "=Hola, {{ $json[\"ENCARGADO \"].split(' ')[0] }}, {{ $('Wait7').item.json.MENSAJE_PROVEEDOR }}",
+        "options_message": {
+          "delay": 1000
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        876,
+        1825
+      ],
+      "id": "fde4a766-ef1b-4fbe-9d41-696f1c9ad91d",
+      "name": "Send Order2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "OFo9A7x3qE1W1DKN",
+          "name": "Evolution account Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        436,
+        1825
+      ],
+      "id": "3bcaeac8-d955-4eda-afab-7416a232358b",
+      "name": "Wait7",
+      "webhookId": "b2cca949-bbbb-4ac2-a65b-c5cad2698fbb"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PROVEEDOR_ID",
+              "displayName": "PROVEEDOR_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FINCA",
+              "displayName": "FINCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID_PRODUCTO",
+              "displayName": "ID_PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ENTREGA",
+              "displayName": "ENTREGA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "comentarios",
+              "displayName": "comentarios",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        876,
+        2125
+      ],
+      "id": "1c7a9f66-d38c-4835-9ff1-7925f0cf0827",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## UPDATE REQUEST TO SUPPLIER",
+        "height": 280,
+        "width": 920
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        136,
+        2005
+      ],
+      "id": "bf448726-6811-4851-91e1-8ca5c73200dd",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        216,
+        2125
+      ],
+      "id": "edd07c1f-8f6e-47dd-b676-52e752628fa8",
+      "name": "Loop Over Items8"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        656,
+        2125
+      ],
+      "id": "14a711c9-3c61-46d0-8b46-2a83ee609aac",
+      "name": "Wait8",
+      "webhookId": "76dbbe67-0287-425f-8299-bef21be90c71"
+    },
+    {
+      "parameters": {
+        "jsCode": "const proveedor = items[0].json;\n\nconst salida = [];\n\nfor (const cambio of proveedor.CAMBIOS) {\n  // Verificar si hay \"Cancelación\" en TIPO_CAMBIO\n  const esCancelacion = cambio.TIPO_CAMBIO.includes(\"Cancelación\");\n\n  salida.push({\n    row_number: cambio.row_number,\n    STATUS: esCancelacion ? \"Cancelado\" : cambio.STATUS,\n    CANT_PALETS: cambio.DESPUES.CANT_PALETS,\n    CANT_CAJAS: cambio.DESPUES.CANT_CAJAS,\n    CAJAS: cambio.DESPUES.CAJAS,\n    PALET: cambio.DESPUES.PALET,\n    comentarios: cambio.comentarios\n  });\n}\n\nreturn salida.map(item => ({ json: item }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        436,
+        2125
+      ],
+      "id": "a013e33b-7e4d-4de3-b9f9-911689b327d8",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        656,
+        1825
+      ],
+      "id": "09dd6e17-2e7d-4972-8389-8102759d2b29",
+      "name": "Google Sheets4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NUM_PEDIDO": "={{ $json.NUM_PEDIDO }}",
+            "CIF_CLIENTE": "={{ $json.CIF_CLIENTE }}",
+            "NOMBRE_CLIENTE": "={{ $json.NOMBRE_CLIENTE }}",
+            "PRODUCTOS": "={{ $json.PRODUCTOS }}",
+            "PALET": "={{ $json.PALET }}",
+            "CANT_PALETS": "={{ $json.CANT_PALETS }}",
+            "CAJAS": "={{ $json.CAJAS }}",
+            "CANT_CAJAS": "={{ $json.CANT_CAJAS }}",
+            "STATUS": "=Pendiente",
+            "FECHA": "={{ $json.FECHA }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CIF_CLIENTE",
+              "displayName": "CIF_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NOMBRE_CLIENTE",
+              "displayName": "NOMBRE_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1040,
+        2450
+      ],
+      "id": "72eadf2c-658c-415d-990a-a87e0d4aa3cb",
+      "name": "Agregar nuevo producto",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number }}",
+            "PRODUCTOS": "={{ $('Code5').item.json.PRODUCTO }}",
+            "PALET": "={{ $('Code5').item.json.PALET }}",
+            "CAJAS": "={{ $('Code5').item.json.CAJAS }}",
+            "CANT_PALETS": "={{ $('Code5').item.json.CANT_PALETS }}",
+            "CANT_CAJAS": "={{ $('Code5').item.json.CANT_CAJAS }}",
+            "CAMBIOS": "={{ $('Code5').item.json.COMENTARIOS }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIF_CLIENTE",
+              "displayName": "CIF_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOMBRE_CLIENTE",
+              "displayName": "NOMBRE_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMBIOS",
+              "displayName": "CAMBIOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        876,
+        2425
+      ],
+      "id": "2b06a10f-fd89-423d-aeab-4a6cc4b87f5d",
+      "name": "Update Status2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const resumen = {};\n\nfor (const item of items) {\n  const data = item.json;\n  const num_pedido = data.NUM_PEDIDO;\n\n  for (const cambio of data.CAMBIOS) {\n    const producto = cambio.PRODUCTO;\n    const despues = cambio.DESPUES;\n    const antes = cambio.ANTES;\n    const proveedor = data.PROVEEDOR_ID;\n\n    const palet = despues.PALET;\n    const cajas = despues.CAJAS;\n    const cant_palets = despues.CANT_PALETS;\n    const cant_cajas = despues.CANT_CAJAS;\n\n    const clave = `${num_pedido}||${producto}||${palet}||${cajas}`;\n\n    if (!resumen[clave]) {\n      resumen[clave] = {\n        NUM_PEDIDO: num_pedido,\n        PRODUCTO: producto,\n        PALET: palet,\n        CAJAS: cajas,\n        CANT_PALETS: 0,\n        CANT_CAJAS: 0,\n        CAMBIOS_PROVEEDOR: [],\n        COMENTARIOS: []\n      };\n    }\n\n    resumen[clave].CANT_PALETS += cant_palets;\n    resumen[clave].CANT_CAJAS = cant_cajas; // asumimos homogéneo\n\n    // Comentario individual por proveedor\n    const comentario = `Proveedor ${proveedor} - palets: ${antes.CANT_PALETS} → ${despues.CANT_PALETS}`;\n    resumen[clave].COMENTARIOS.push(comentario);\n\n    resumen[clave].CAMBIOS_PROVEEDOR.push({\n      PROVEEDOR_ID: proveedor,\n      ANTES: antes.CANT_PALETS,\n      DESPUES: despues.CANT_PALETS\n    });\n  }\n}\n\n// Armar salida con trazabilidad\nconst salida = Object.values(resumen).map(r => {\n  const comentario = \n    `Palets finales: ${r.CANT_PALETS}, cajas: ${r.CANT_CAJAS}, ` +\n    `palet: ${r.PALET}, cajas: ${r.CAJAS}. Cambios por proveedor:\\n- ` +\n    r.COMENTARIOS.join('\\n- ');\n\n  return {\n    json: {\n      NUM_PEDIDO: r.NUM_PEDIDO,\n      PRODUCTO: r.PRODUCTO,\n      PALET: r.PALET,\n      CAJAS: r.CAJAS,\n      CANT_PALETS: r.CANT_PALETS,\n      CANT_CAJAS: r.CANT_CAJAS,\n      COMENTARIOS: comentario\n    }\n  };\n});\n\nreturn salida;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        216,
+        2425
+      ],
+      "id": "7857330c-d6c2-48c6-ac70-51f0f71bda4a",
+      "name": "Code5"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "={{ $json.NUM_PEDIDO }}"
+            },
+            {
+              "lookupColumn": "PRODUCTOS",
+              "lookupValue": "={{ $json.PRODUCTO }}"
+            },
+            {
+              "lookupColumn": "PALET",
+              "lookupValue": "={{ $json.PALET }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Solicitado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        656,
+        2425
+      ],
+      "id": "8f4d04ed-b757-4d03-915b-88db5865ba25",
+      "name": "Google Sheets6",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        436,
+        2425
+      ],
+      "id": "af4e2909-a4ec-439d-8854-1aaceedea87e",
+      "name": "Loop Over Items9"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+            "content-length": "870",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "es-ES,es;q=0.5",
+            "content-type": "application/json",
+            "origin": "https://godoy.whitelabel.lat",
+            "priority": "u=1, i",
+            "referer": "https://godoy.whitelabel.lat/",
+            "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-site",
+            "sec-gpc": "1",
+            "x-forwarded-for": "38.199.29.35",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "11f8f8370bcd",
+            "x-real-ip": "38.199.29.35"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "previousOrder": {
+              "receptionNumber": "PED-6638",
+              "clientCIF": "B04627915",
+              "clientName": "OXAL EJIDO EXP DE FRUTAS",
+              "products": [
+                {
+                  "product": {
+                    "id": "169",
+                    "name": "PIMIENTO CALIFORNIA AMARILLO I M",
+                    "category": "AMARILLO"
+                  },
+                  "palet": {
+                    "id": "5",
+                    "name": "BOX FRUVECO"
+                  },
+                  "paletQuantity": 55,
+                  "caja": {
+                    "id": "10",
+                    "name": "BANDEJA GODOY 60X40X11.5"
+                  },
+                  "cajaQuantity": 55
+                }
+              ],
+              "status": "Solicitado",
+              "orderNumber": "",
+              "provider": "",
+              "createdAt": "2025-06-12T02:38:56.000Z"
+            },
+            "updatedOrder": {
+              "receptionNumber": "PED-6638",
+              "clientCIF": "B04627915",
+              "clientName": "OXAL EJIDO EXP DE FRUTAS",
+              "products": [
+                {
+                  "product": {
+                    "id": "169",
+                    "name": "PIMIENTO CALIFORNIA AMARILLO I M",
+                    "category": "AMARILLO"
+                  },
+                  "palet": {
+                    "id": "5",
+                    "name": "BOX FRUVECO"
+                  },
+                  "paletQuantity": 10,
+                  "caja": {
+                    "id": "10",
+                    "name": "BANDEJA GODOY 60X40X11.5"
+                  },
+                  "cajaQuantity": 55
+                }
+              ],
+              "status": "Solicitado",
+              "orderNumber": "",
+              "provider": "",
+              "createdAt": "2025-06-12T00:53:06.830Z"
+            }
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook/order-update",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "",
@@ -1485,9 +3600,18 @@
     "saveManualExecutions": false,
     "callerPolicy": "workflowsFromSameOwner"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Google Sheets Trigger": {
+      "documentId": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+      "sheetId": 88857449,
+      "lastIndexChecked": 4
+    }
+  },
   "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2025-06-05T18:09:53.664Z",
-  "versionId": "bc1cceee-23bb-4f98-8c47-dcaaf4df03ef"
+  "triggerCount": 3,
+  "updatedAt": "2025-06-12T04:05:34.492Z",
+  "versionId": "37072caf-324b-4e93-b9a4-10bd84bebde8"
 }
