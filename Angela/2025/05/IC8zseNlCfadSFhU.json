@@ -1,0 +1,1069 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Maestro de Agentes",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Unir Mensajes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Push Message": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Data": {
+      "main": [
+        [
+          {
+            "node": "Push Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Maestro de Agentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unir Mensajes": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Maestro de Agentes": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transferir a un asesor": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Obtener Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminders": {
+      "ai_tool": [
+        [
+          {
+            "node": "Maestro de Agentes",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Maestro de Agentes",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Send Content1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Content1": {
+      "main": [
+        [
+          {
+            "node": "Redis5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait11": {
+      "main": [
+        [
+          {
+            "node": "If13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait12": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [
+          {
+            "node": "Send Content12",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If13": {
+      "main": [
+        [
+          {
+            "node": "Send Content11",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait13": {
+      "main": [
+        [
+          {
+            "node": "If14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If14": {
+      "main": [
+        [
+          {
+            "node": "Send Content13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-21T15:34:30.395Z",
+  "id": "IC8zseNlCfadSFhU",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Main :: Multiagent - REMINDER",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reminders",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        20,
+        1720
+      ],
+      "id": "3a11b718-74a8-47a6-9794-d76ec2b99015",
+      "name": "Webhook",
+      "webhookId": "a9ffe031-acc2-4ba9-8173-9785494b0a22"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2376,
+        1840
+      ],
+      "id": "f0661b59-50d9-430f-b868-a69594903345",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "7B9Ztbhb2FvSX13q",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a7fe6665-ef0d-4ec2-9800-88004951e528",
+              "leftValue": "={{ $json.message.last() }}",
+              "rightValue": "={{ $('Obtener Data').item.json.text }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1340,
+        1720
+      ],
+      "id": "b71caa81-047e-4d68-b11f-6d89a55d321e",
+      "name": "If1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        1820
+      ],
+      "id": "9f35fc8e-9fdc-4c61-8947-30eac698b7bc",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "=reminder-{{ $json.user_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        1720
+      ],
+      "id": "410f8758-2f02-4ebb-abfd-3624d2e8642f",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "uWV0MhLpyH9aUXMq",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Corrige mensajes de usuarios quitando caracteres raros, errores ortográficos y signos innecesarios como acentos mal puestos, pero sin cambiar el sentido original del mensaje",
+              "role": "system"
+            },
+            {
+              "content": "=Corrige el siguiente mensaje:\\n\\n{{ $json.message }}\\n\\nDevuelve solo el mensaje corregido"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 200,
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1780,
+        1620
+      ],
+      "id": "28fda30a-07e1-4726-ae42-157ec3c9fb6a",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "n0YNBr6r2ZQqJ11H",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        900,
+        1720
+      ],
+      "id": "39d46a6d-84f4-4e4b-9e09-88d6ee899bc0",
+      "name": "Wait",
+      "webhookId": "d49737b5-a16e-4357-bf12-0bc77e86f37c"
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "=reminder-{{ $json.user_id }}",
+        "messageData": "={{ $json.text }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        680,
+        1720
+      ],
+      "id": "aa09f812-3891-4dbb-9624-b32401b17c81",
+      "name": "Push Message",
+      "credentials": {
+        "redis": {
+          "id": "uWV0MhLpyH9aUXMq",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+              "name": "text",
+              "value": "={{ $json.body.last_input_text }}",
+              "type": "string"
+            },
+            {
+              "id": "425dbe0f-2e54-4c26-93c5-d5f00402f0a8",
+              "name": "user_id",
+              "value": "={{ $json.body.id }}",
+              "type": "string"
+            },
+            {
+              "id": "3ad6b384-fe6a-4a06-8c4d-3b8aef4e5619",
+              "name": "first_name",
+              "value": "={{ $json.body.first_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4cac4793-b8cf-49fb-b14e-2b5daf26a95b",
+      "name": "Obtener Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        1720
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b89d5418-df60-419b-84f6-5bc7bc0dd09b",
+              "name": "message",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "f312aa42-4354-4954-92ff-9549a49c1d5b",
+              "name": "user_id",
+              "value": "={{ $('Wait').item.json.user_id }}",
+              "type": "string"
+            },
+            {
+              "id": "4e6ed31c-2d8f-4415-bdaf-404a870f1cc2",
+              "name": "first_name",
+              "value": "={{ $('Wait').item.json.first_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2156,
+        1620
+      ],
+      "id": "5e5b9b61-2911-457c-a10e-4bfb48b0975d",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b89d5418-df60-419b-84f6-5bc7bc0dd09b",
+              "name": "message",
+              "value": "={{ $('Redis').item.json.message.join('\\n').replace(/test/gi, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1560,
+        1620
+      ],
+      "id": "83c01512-d26f-4d4d-b233-fe4d98a5194a",
+      "name": "Unir Mensajes"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=message:{{ $json.message }},\nuser_id:{{ $json.user_id }},\nfirst_name: {{ $json.first_name }}",
+        "options": {
+          "systemMessage": "=# Agente de Recordatorios para Angela Care\n\n## 📌 Resumen\nEres un asistente especializado **exclusivamente en la gestión de recordatorios de medicamentos** para Angela Care. Tu única función es crear, modificar, consultar o cancelar recordatorios utilizando el *Reminder_Agent*. No debes responder a ninguna otra consulta que no esté directamente relacionada con recordatorios, siempre usa la tool  *Reminder_Agent*, tu no creas los recordatorios ni los consultas, siempre es la tool  *Reminder_Agent*.\nnunca confirmes al usuario que se creo un recordatorio sin verificarlo con la tool  *Reminder_Agent* ni tampoco lo que tengas en memoria, siempre usa la tool \n\n\n**📅 Fecha y hora actual:** {{ new Date().toLocaleString('es-CO', { timeZone: 'America/Mexico_City' }) }}\n\n## 🔔 Funciones Exclusivas\n1. **Crear recordatorios**\n2. **Consultar recordatorios existentes**\n3. **Modificar recordatorios**\n4. **Cancelar recordatorios**\n\n## 🚫 Restricciones Estrictas\n- ❌ **No responder preguntas sobre la empresa**\n- ❌ **No proporcionar información sobre servicios**\n- ❌ **No gestionar cotizaciones de medicamentos**\n- ❌ **No transferir a asesores (excepto fallas técnicas)**\n- ❌ **No responder consultas no relacionadas con recordatorios**\n\n## 🔄 Flujo de Trabajo\n\n### 1️⃣ Creación de Recordatorios\n**Entrada del usuario:** Cualquier solicitud para crear un recordatorio.\n\n**Acciones:**\n1. Solicitar información obligatoria:\n   - 📌 Nombre del medicamento\n   - 💊 Dosis (ejemplo: 2 pastillas, 5 ml, 1 cucharada)\n   - ⏰ Frecuencia (ejemplo: diario, lunes y miércoles)\n   - ⏰ Hora exacta (con AM/PM)\n   - 📅 Días específicos (si aplica)\n\n2. **Regla importante:** solo Si el usuario envía una hora sin AM o PM, pedir confirmación, pero debes detectar si el usuario dio a entender si es en la mañana(am) o tarde (pm):\n   ```\n   Por favor confirma si es AM o PM para la hora [hora indicada].\n   ```\nsi llega la hora completa y se entiende si es am o pm no preguntaras, ejemplo si te dicen las 14:00, entiendes que hora es.\n\n3. Enviar todos los datos al *Reminder_Agent* en un solo mensaje, jamas le envies esto al usuario, solo a la tool para crear los recordatorios:\n   ```\n   Crear un recordatorio para [first_name], user_id: [user_id], Medicamento: [Medicamento], Dosis: [Dosis], Horario: [frecuencia y Horario]\n   ```\n\n**Ejemplo completo:**\n```\nCrear un recordatorio para María, user_id: 1966609775, Medicamento: Metformina, Dosis: 1 tableta, Horario: Lunes, Miércoles y Viernes a las 8 AM\n```\n\n### 2️⃣ Consulta de Recordatorios\n**Entrada del usuario:** Solicitud para ver sus recordatorios actuales.\n\n**Acción:**\n1. Enviar al *Reminder_Agent*:\n   ```\n   Consultar todos los medicamentos del user_id: [user_id]\n   ```\n\n2. Mostrar al usuario la lista recibida del *Reminder_Agent*.\n\n### 3️⃣ Cancelación de Recordatorios\n**Entrada del usuario:** Solicitud para cancelar un recordatorio.\n\n**Proceso:**\n1. Extraer datos del mensaje (medicamento, dosis, horario)\n2. Si faltan datos, consultar con *Reminder_Agent*:\n   ```\n   Consultar medicamentos del user_id: [user_id] que coincidan con: [datos disponibles]\n   ```\n3. Confirmar con el usuario el recordatorio a cancelar\n4. Enviar comando de cancelación:\n   ```\n   Cancelar recordatorio para user_id: [user_id], Medicamento: [Medicamento], Dosis: [Dosis], Horario: [horario exacto]\n   ```\n\n### 4️⃣ Modificación de Recordatorios\n**Entrada del usuario:** Solicitud para cambiar un recordatorio existente.\n\n**Proceso:**\n1. Primero cancelar el recordatorio existente (seguir proceso de cancelación)\n2. Luego crear el nuevo recordatorio (seguir proceso de creación)\n\n## 📝 Respuestas Estándar\n\n### Para consultas no relacionadas:\nCuando el usuario haga una pregunta que no esté relacionada con recordatorios de medicamentos, responde de forma amable, directa y sin formalidades como “lo siento”.\nComunica que solo puedes ayudar con recordatorios de medicamentos, pero varía tu respuesta cada vez para no sonar repetitivo.\nUsa un tono natural, cercano y evita frases exactas o rígidas.\nEjemplos válidos incluyen:\n\n- \"Solo manejo temas de recordatorios de medicamentos, ¿te ayudo con eso?\"\n\n- \"Estoy aquí para ayudarte con tus medicinas, ¿quieres agendar un recordatorio?\"\n\n- \"Mi tarea es recordarte tus medicamentos. ¿Empezamos?\"\nNo uses exactamente estos ejemplos, pero sigue esa línea.\n\n\n### Para datos incompletos:\n```\nPara crear/cambiar tu recordatorio, necesito:\n1. Nombre exacto del medicamento\n2. Dosis (ej: 1 tableta, 2 cucharadas)\n3. Frecuencia (diario, días específicos)\n4. Hora exacta (incluyendo AM/PM)\n\n¿Podrías proporcionarme esta información?\n```\n\n### Para confirmaciones:\n```\n✅ Recordatorio creado/modificado/cancelado correctamente:\n- Medicamento: [nombre]\n- Dosis: [dosis]\n- Horario: [horario]\n```\n\n## ⚠️ Reglas Críticas\n1. **Nunca asumas información** - Siempre confirmar AM/PM en horarios\n2. **Siempre enviar todos los datos necesarios** al Reminder_Agent\n3. **No dividir la información** - Todo debe ir en un solo mensaje al Reminder_Agent\n4. **No gestionar nada más que recordatorios**\n5. **Siempre incluir user_id** en todas las comunicaciones con Reminder_Agent\n6. **la frecuencia si da a entender que es diario, envias a la tool *todos los días*.**\n\n## 🔄 Ejemplo de Conversación Completa\n\n**Usuario:** Necesito recordarme tomar mi medicamento los lunes y jueves a las 10\n\n**Agente:** Para crear tu recordatorio, necesito:\n1. Nombre exacto del medicamento\n2. Dosis (por ejemplo: 1 tableta, 2 cucharadas)\n3. Confirmación si las 10 son AM o PM\n\n**Usuario:** Es la Metformina, 1 tableta a las 10 AM\n\n**Agente:** (Envía a Reminder_Agent)\n```\nCrear un recordatorio para Juan, user_id: 1966609776, Medicamento: Metformina, Dosis: 1 tableta, Horario: Lunes y Jueves a las 10 AM\n```\n\n**Agente al usuario:**\n```\n✅ Recordatorio creado correctamente:\n- Medicamento: Metformina\n- Dosis: 1 tableta\n- Horario: Lunes y Jueves a las 10 AM\n```"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        2460,
+        1620
+      ],
+      "id": "de837a63-f484-4bd6-adbe-80127b27618d",
+      "name": "Maestro de Agentes",
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "toolDescription": "=**Descripción para la tool \"Transferir a un asesor\":**  \n\nUsa esta herramienta para transferir la conversación a un asesor humano solo si la solicitud del usuario **no** está dentro de estos tres temas principales:  \n\n- **Preguntas frecuentes sobre la empresa (FAQ)**  \n- **Crear, editar o eliminar recordatorios de medicamentos**  \n- **Solicitar cotización de medicamentos**  \n\n**Reglas importantes antes de transferir:**  \n1. **Indaga primero sobre la necesidad del usuario.** No transfieras de inmediato sin antes entender su solicitud.  \n2. **Si la consulta puede resolverse con una de las herramientas disponibles, úsala en lugar de transferir.**  \n3. **Si la solicitud es ajena a los temas principales o no puede resolverse con las herramientas, entonces transfiere.**  \n4. **Envía siempre el `user_id` como `subscriber_id`.**  \n\n**Ejemplo de uso:**  \nSi el `user_id` del usuario es **123456**, la transferencia debe realizarse así:  \n```\nTransferir a un asesor con subscriber_id: 123456.\n```",
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/subscriber/addTag",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "parametersBody": {
+          "values": [
+            {
+              "name": "subscriber_id"
+            },
+            {
+              "name": "tag_id",
+              "valueProvider": "fieldValue",
+              "value": "61061540"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        2420,
+        2020
+      ],
+      "id": "8b01809b-236d-474c-934d-6388b6de5dba",
+      "name": "Transferir a un asesor",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "8Fw9Aneg063bvcsJ",
+          "name": "Manychat"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "text",
+              "value": "={{ $json.body.last_input_text }}"
+            },
+            {
+              "key": "user_id",
+              "value": "={{ $json.body.id }}"
+            },
+            {
+              "key": "name",
+              "value": "={{ $json.body.first_name }}"
+            },
+            {
+              "key": "phone",
+              "value": "={{ $json.body.whatsapp_phone }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        240,
+        1720
+      ],
+      "id": "63592b65-0946-442d-a9e1-b65957efb2a6",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "name": "Reminder_Agent",
+        "description": "Usa esta herramienta cuando el usuario quiera gestionar recordatorios para tomar sus medicamentos.\npara crear, consultar, editar, eliminar recordatorios, debe siempre usar esta herramienta. Si el usuario solicita mas de un recordatorio en el mismo mensaje, debes enviar la descripción de todos pero en el mismo mensaje\n",
+        "workflowId": {
+          "__rl": true,
+          "value": "AeS5ZbUX8owdNwrw",
+          "mode": "list",
+          "cachedResultName": "Reminder_Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        2660,
+        1840
+      ],
+      "id": "8e3dc325-d18b-4dc0-ad7c-0fe63d0985c5",
+      "name": "Reminders"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=user_{{ $('Obtener Data').item.json.user_id }}",
+        "tableName": "reminder_chat_history",
+        "contextWindowLength": 4
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        2520,
+        1840
+      ],
+      "id": "2ded4335-15e7-4cf2-91c2-6eabc4538c94",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "a1cqjsRZKit72vEz",
+          "name": "Supabase"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores o listas** para mantener la coherencia. \n- **las listas siempre envielas en un solo mensaje**\n- **No incluyas datos sensibles** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2936,
+        1620
+      ],
+      "id": "2b443fbe-150c-48a8-b283-41ad97c03ab1",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "n0YNBr6r2ZQqJ11H",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/sending/sendContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"subscriber_id\": {{ $('Obtener Data').item.json.user_id }},\n  \"data\": {\n  \"version\": \"v2\",\n  \"content\": {\n    \"type\": \"whatsapp\",\n    \"messages\": [\n      {\n        \"type\": \"text\",\n        \"text\": {{ JSON.stringify($json.message.content.parte1) }} \n\n\n      }\n    ]\n  }\n}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3312,
+        1220
+      ],
+      "id": "cbb09b29-a03c-41bd-b123-97da1d07dab6",
+      "name": "Send Content1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "8Fw9Aneg063bvcsJ",
+          "name": "Manychat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=reminder-{{ $('Wait').item.json.user_id }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3540,
+        1220
+      ],
+      "id": "90717572-a289-4aa9-8e07-267c3954b71a",
+      "name": "Redis5",
+      "credentials": {
+        "redis": {
+          "id": "uWV0MhLpyH9aUXMq",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3312,
+        1420
+      ],
+      "id": "ac9db5d0-eaa6-4724-b222-097bbcdea3f9",
+      "name": "Wait11",
+      "webhookId": "421fa124-d19b-4b79-99dc-a3a3b6a82453"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/sending/sendContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"subscriber_id\": {{ $('Obtener Data').item.json.user_id }},\n  \"data\": {\n  \"version\": \"v2\",\n  \"content\": {\n    \"type\": \"whatsapp\",\n    \"messages\": [\n      {\n        \"type\": \"text\",\n        \"text\": {{ JSON.stringify($json.message.content.parte2) }}\n      }\n    ]\n  }\n}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3752,
+        1320
+      ],
+      "id": "df076732-1dc8-4190-a91d-dda3464c6dfb",
+      "name": "Send Content11",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "8Fw9Aneg063bvcsJ",
+          "name": "Manychat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3312,
+        1820
+      ],
+      "id": "31f48907-e1b3-4e69-864e-42ea77dbdc65",
+      "name": "Wait12",
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/sending/sendContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"subscriber_id\": {{ $('Obtener Data').item.json.user_id }},\n  \"data\": {\n  \"version\": \"v2\",\n  \"content\": {\n    \"type\": \"whatsapp\",\n    \"messages\": [\n      {\n        \"type\": \"text\",\n        \"text\": {{ JSON.stringify($json.message.content.parte3) }}\n      }\n    ]\n  }\n}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3752,
+        1720
+      ],
+      "id": "1a3fb657-e57b-496b-ae1b-eaf4f217de18",
+      "name": "Send Content12",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "8Fw9Aneg063bvcsJ",
+          "name": "Manychat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
+              "leftValue": "={{ $json.message.content.parte3}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3532,
+        1820
+      ],
+      "id": "808d2014-8154-423d-90fe-1c17c6d3d124",
+      "name": "If12"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3752,
+        1920
+      ],
+      "id": "0cd2ac36-ce1b-449c-8bc9-9eb886c50937",
+      "name": "No Operation, do nothing11"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "709f4717-003f-4f9f-b841-18d2f2f4ddb4",
+              "leftValue": "={{ $json.message.content.parte2}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3532,
+        1420
+      ],
+      "id": "31cdd1e5-1513-4f05-adcd-069f63a9061d",
+      "name": "If13"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3752,
+        1520
+      ],
+      "id": "ec3195b4-08fe-4447-b6fe-ec263185dad8",
+      "name": "No Operation, do nothing12"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3312,
+        2220
+      ],
+      "id": "64ac034f-2161-4c93-94f2-a501767a759f",
+      "name": "Wait13",
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/sending/sendContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"subscriber_id\": {{ $('Obtener Data').item.json.user_id }},\n  \"data\": {\n  \"version\": \"v2\",\n  \"content\": {\n    \"type\": \"whatsapp\",\n    \"messages\": [\n      {\n        \"type\": \"text\",\n        \"text\": {{ JSON.stringify($json.message.content.parte4) }}\n      }\n    ]\n  }\n}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3752,
+        2120
+      ],
+      "id": "6c8f0b80-905e-4cdf-b2e7-8dabf9945261",
+      "name": "Send Content13",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "8Fw9Aneg063bvcsJ",
+          "name": "Manychat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
+              "leftValue": "={{ $json.message.content.parte4}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3532,
+        2220
+      ],
+      "id": "f8bc047b-43ca-416c-8785-d97b6676126d",
+      "name": "If14"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3752,
+        2320
+      ],
+      "id": "c18325b1-067a-4e28-982f-d0520a772ce8",
+      "name": "No Operation, do nothing13"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Angela/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-02T21:00:25.027Z",
+      "updatedAt": "2025-04-02T21:00:25.027Z",
+      "id": "4Z9BlXLNysnGHcBB",
+      "name": "Produccion"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-12T05:12:56.469Z",
+  "versionId": "0133fde6-f602-4d9d-9ade-320e3da026c5"
+}
