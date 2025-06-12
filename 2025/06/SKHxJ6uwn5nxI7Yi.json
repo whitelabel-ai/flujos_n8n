@@ -1,0 +1,231 @@
+{
+  "active": true,
+  "connections": {
+    "Telegram2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "audio": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-12T18:56:52.874Z",
+  "id": "SKHxJ6uwn5nxI7Yi",
+  "isArchived": false,
+  "meta": null,
+  "name": "Transcriptor Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -780,
+        180
+      ],
+      "id": "1d4cf096-27f1-4ecc-930c-3037655cab3d",
+      "name": "Telegram Trigger",
+      "webhookId": "d41e24c8-b148-40c1-8a67-7b9d08e2d7e8",
+      "credentials": {
+        "telegramApi": {
+          "id": "UYLu84YrLuqvAdMv",
+          "name": "Trancriptor Agent"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -620,
+        180
+      ],
+      "id": "817fb5d0-5295-4ec3-99a8-294f3cd62e17",
+      "name": "Telegram2",
+      "webhookId": "82e2e760-7d7e-4588-9ab9-5abb13635da7",
+      "credentials": {
+        "telegramApi": {
+          "id": "UYLu84YrLuqvAdMv",
+          "name": "Trancriptor Agent"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-1"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "languaje",
+              "value": "es"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -420,
+        180
+      ],
+      "id": "5c8c72c2-5983-4c54-aab5-50f5be796466",
+      "name": "HTTP Request",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "Resumen",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -220,
+        180
+      ],
+      "id": "b976d117-d8e2-438a-b058-bf5baef9415e",
+      "name": "audio"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.Resumen }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        180
+      ],
+      "id": "4f2eb307-67f3-4fc7-b7f0-d19225c8a8ad",
+      "name": "Telegram",
+      "webhookId": "bd507924-6679-482c-abe7-97eecd6cd80e",
+      "credentials": {
+        "telegramApi": {
+          "id": "UYLu84YrLuqvAdMv",
+          "name": "Trancriptor Agent"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "https://docs.google.com/document/d/1ZxfrYYrp6u8sGzi0ytfEBZTFhRPuU9Rm_vcZ2YkBb1c/edit?tab=t.0",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "=Quien:  {{ $('Telegram Trigger').item.json.message.from.first_name }}\n\nIdea: {{ $json.Resumen }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "116df336-17b5-44e1-aa6a-9b961d232ebf",
+      "name": "Google Docs",
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-12T18:57:02.882Z",
+  "versionId": "14742968-5465-42f6-870c-225b609a57ec"
+}
