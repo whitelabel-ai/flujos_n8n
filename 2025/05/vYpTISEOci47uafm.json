@@ -629,6 +629,28 @@
           }
         ]
       ]
+    },
+    "Append Idea": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "Get Ideas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-05-12T19:28:00.679Z",
@@ -881,7 +903,7 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
       "position": [
-        -140,
+        -120,
         420
       ],
       "id": "6a86b5d3-ee3b-4ab2-898a-bbf7ece1d911",
@@ -1199,7 +1221,7 @@
           "interval": [
             {
               "field": "hours",
-              "hoursInterval": 5
+              "hoursInterval": 2
             }
           ]
         }
@@ -2060,8 +2082,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
       "position": [
-        -140,
-        600
+        -120,
+        580
       ],
       "id": "0768e493-9f93-470e-9542-d70e96746f18",
       "name": "Generar Idea Url/Text"
@@ -3105,6 +3127,28 @@
       ],
       "id": "0a0955a3-f527-449f-820c-36cfb62380da",
       "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "chatId": "176878701",
+        "text": "=->Nueva idea:\n{{ $json.IDEA }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        600,
+        600
+      ],
+      "id": "7639f7bc-af8e-41cd-b442-a8d473cbfda2",
+      "name": "Telegram",
+      "webhookId": "429f816c-b762-4605-baf6-c1daeace2cec",
+      "credentials": {
+        "telegramApi": {
+          "id": "xrf1D2O5qOceQaVy",
+          "name": "Valeia_Transcriber"
+        }
+      }
     }
   ],
   "pinData": {
@@ -3123,7 +3167,7 @@
     },
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        12
+        0
       ]
     },
     "node:Schedule Trigger1": {
@@ -3142,6 +3186,6 @@
     }
   ],
   "triggerCount": 5,
-  "updatedAt": "2025-06-05T22:47:58.496Z",
-  "versionId": "0f3163e8-c9fd-4a57-a7d6-6d06eceaf90e"
+  "updatedAt": "2025-06-11T13:27:40.431Z",
+  "versionId": "53299321-2951-4287-86cb-e4d35217cdf8"
 }
