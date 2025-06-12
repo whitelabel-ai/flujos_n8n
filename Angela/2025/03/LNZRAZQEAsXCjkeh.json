@@ -1,0 +1,205 @@
+{
+  "active": false,
+  "connections": {
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-03-17T15:47:19.369Z",
+  "id": "LNZRAZQEAsXCjkeh",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RAG",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1g_qWZ3m21HE-NCMSRzZAjsLkklYSXzpvn3prWJP67vE",
+          "mode": "list",
+          "cachedResultName": "Ángela Care",
+          "cachedResultUrl": "https://docs.google.com/document/d/1g_qWZ3m21HE-NCMSRzZAjsLkklYSXzpvn3prWJP67vE/edit?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        220,
+        0
+      ],
+      "id": "8de9ffa4-d983-4dbb-90d2-1b8c945b6324",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E9YIiYMQh8SnOL3H",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "rag-n8n",
+          "mode": "list",
+          "cachedResultName": "rag-n8n"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "c58330d7-9665-4463-8d72-43e760f42e84",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "wU5pmUBrwYAvBJ34",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        220
+      ],
+      "id": "e37c0ea3-aba0-4f58-8b61-4a3b9703d7aa",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "n0YNBr6r2ZQqJ11H",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        600,
+        240
+      ],
+      "id": "95bd67f9-0bdc-45fd-8006-4893f903d8ba",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 1500,
+        "chunkOverlap": 150
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        620,
+        460
+      ],
+      "id": "fa3d1a8c-1889-494b-bdc7-61987c0c6161",
+      "name": "Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "010869c5-50d7-4f8d-b4a2-02401a12c348",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9ed15de1-013f-478f-a5f1-d77dfdb68cb8",
+      "name": "Webhook",
+      "webhookId": "010869c5-50d7-4f8d-b4a2-02401a12c348"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Angela/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-02T21:00:25.027Z",
+      "updatedAt": "2025-04-02T21:00:25.027Z",
+      "id": "4Z9BlXLNysnGHcBB",
+      "name": "Produccion"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-11T18:19:05.100Z",
+  "versionId": "e3042f78-54ea-48a4-b7ed-b1c5f7ea34df"
+}
