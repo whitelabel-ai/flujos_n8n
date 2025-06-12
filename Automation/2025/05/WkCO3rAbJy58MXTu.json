@@ -1,0 +1,559 @@
+{
+  "active": false,
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "audio1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Texto1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Texto1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "whisper Transcriber": {
+      "main": [
+        [
+          {
+            "node": "audio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "S3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "whisper Transcriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "generate audio names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate audio names": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-12T16:48:32.161Z",
+  "id": "WkCO3rAbJy58MXTu",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "English Teacher dev",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        360
+      ],
+      "id": "18716bf4-06a4-4e4f-ae3e-cc82260d7a4d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "text",
+              "value": "={{ $json.body.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        240
+      ],
+      "id": "780705ec-116c-4b80-8fc7-7d24ddf390a4",
+      "name": "audio1"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json }}",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        600,
+        360
+      ],
+      "id": "6793b0cc-ae45-4a01-a10d-b8575679e2a6",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Texto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fca12b29-d100-4465-86cc-525774a3ce65",
+                    "leftValue": "={{ $json.body.message.document.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
+                    "leftValue": "={{ $json.body.file }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -440,
+        140
+      ],
+      "id": "3c8c75b9-afc6-4214-bf0b-db31c168d92d",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "text",
+              "value": "={{$json.body.message.text}}",
+              "type": "string"
+            },
+            {
+              "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
+              "name": "prompt",
+              "value": "={{$json.body.message.prompt}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        40
+      ],
+      "id": "4e3593e6-bcce-4f4c-80ab-6a964c8d79f7",
+      "name": "Texto1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-1"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "languaje",
+              "value": "es"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        240
+      ],
+      "id": "81ef2eb5-7abc-4ed0-9fe5-02b0a96588d1",
+      "name": "whisper Transcriber",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/speech",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"tts-1-hd\",\n  \"input\": \"{{ $('Code').item.json.text }}\",\n  \"voice\": \"coral\"\n}\n",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1260,
+        140
+      ],
+      "id": "83a29b5f-248a-42ce-abf3-10e87cc972dd",
+      "name": "HTTP Request",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=message:{{ $json.text }}\nfirst_name: {{ json.email }}\naudio: {{$json.result.file_path}}",
+        "options": {
+          "systemMessage": "={{ $('Webhook').item.json.body.prompt || $('Webhook').item.json.body.message[\"system-prompt\"] }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        440,
+        140
+      ],
+      "id": "edf5043e-f128-43f9-8bb3-6e6f7ad2871d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dev",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        140
+      ],
+      "id": "44ff51bf-e5e5-4ad0-8075-a267f7d8d36f",
+      "name": "Webhook",
+      "webhookId": "cb18b7d4-2f24-42bb-ae2c-06bd2dd1e2ed"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"text\": {{ JSON.stringify($('AI Agent').item.json.output) }},\n  \"audio\": \"https://education-conversation-audios.s3.us-west-2.amazonaws.com/{{ $('generate audio names').item.json.name }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1700,
+        140
+      ],
+      "id": "df0e9ef4-acf8-4604-8566-4f4c8a30afa1",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "body.file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -220,
+        240
+      ],
+      "id": "d1a7c0c4-8a9c-4edc-b742-dbbede70ca71",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "jsCode": "$json.text = $input.first().json.output\n  .replace(/\\\\\\\\/g, \"\\\\\")  // Escapar backslashes dobles\n  .replace(/\\\\r/g, '\\r')   // Reemplazar '\\r' por su carácter real\n  .replace(/\\\\\\\\/g, '\\\\')  // Escapar dobles backslashes nuevamente\n  .replace(/\\\\\"/g, '\"')    // Reemplazar comillas escapadas\n  .replace(/[\\u200B-\\u200D\\uFEFF]/g, \"\") // Elimina espacios invisibles (Zero Width)\n  .replace(/\\n/g, \"\") // Elimina TODOS los saltos de línea\n  .replace(/\"/g, \"\"); // Elimina todas las comillas dobles\n\nreturn [{\n  json: $json\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        820,
+        140
+      ],
+      "id": "29e61c0b-29da-4f6f-a7b8-4e01b22dad3a",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "education-conversation-audios",
+        "fileName": "={{ $('generate audio names').item.json.name }}",
+        "binaryPropertyName": "=data",
+        "additionalFields": {
+          "grantRead": false
+        }
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        140
+      ],
+      "id": "8ed2e031-149b-4f56-a168-cd21f76d8cb3",
+      "name": "S3",
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "credentials": {
+        "s3": {
+          "id": "iQ1otocSkl7CBOiI",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"name\": \"{{(+new Date).toString(36).slice(-5) + Math.random().toString(36).substr(2, 5)}}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        140
+      ],
+      "id": "6fcc0831-d97c-4cd8-91b3-ec9c081540a5",
+      "name": "generate audio names"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-05T16:50:50.017Z",
+  "versionId": "59bdb277-80b0-4d32-8138-2c100f7cc9b8"
+}
