@@ -349,19 +349,8 @@
       "parameters": {
         "method": "POST",
         "url": "https://api.vapi.ai/call",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"assistantId\": \"2922a01b-f91d-4f57-80e5-50b2212faff1\",\n  \"assistantOverrides\": {\n    \"variableValues\": {\n      \"Company\": \"{{ $json.Empresa }}\",\n      \"name\": \"{{ $json.Client }}\",\n      \"Phone\": \"{{ $json.Phone }}\",\n      \"row_number\": \"{{ $json.row_number }}\",\n      \"Quote_ID\": \"{{ $json['Quote ID'] }}\",\n      \"Quote_Sent_Date\": \"{{ $json['Quote Sent Date'] }}\",\n      \"Amount_USD\": \"{{ $json['Amount (USD)'] }}\",\n      \"Product\": \"{{ $json.Product }}\",\n      \"Quote_Details\": \"{{ $json['Quote Details'] }}\",\n      \"Call_Summary\": {{ JSON.stringify ($json['Call Summary']) }},\n      \"Next_Step\": {{ JSON.stringify ($json['Next Step']) }}\n    }\n  },\n  \"customer\": {\n    \"number\": \"+{{ $json.Phone }}\"\n  },\n  \"phoneNumberId\": \"9efa67ba-4ff4-4a2b-87ad-685cc861d774\"\n}\n",
@@ -374,7 +363,13 @@
         -100
       ],
       "id": "787471cd-8919-4441-8cf9-63e6ca04a795",
-      "name": "Call Vapi"
+      "name": "Call Vapi",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "lZ0efOUQUlbFdSMe",
+          "name": "Vapi"
+        }
+      }
     },
     {
       "parameters": {
@@ -446,19 +441,8 @@
       "parameters": {
         "method": "POST",
         "url": "https://api.vapi.ai/call",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"assistantId\": \"2922a01b-f91d-4f57-80e5-50b2212faff1\",\n  \"phoneNumberId\": \"9efa67ba-4ff4-4a2b-87ad-685cc861d774\",\n  \"assistantOverrides\": {\n    \"variableValues\": {\n      \"Company\": \"{{ $json.Empresa }}\",\n      \"Client\": \"{{ $json.Client }}\",\n      \"Phone\": \"{{ $json.Phone }}\",\n      \"row_number\": \"{{ $json.row_number }}\",\n      \"Quote_ID\": \"{{ $json['Quote ID'] }}\",\n      \"Quote_Sent_Date\": \"{{ $json['Quote Sent Date'] }}\",\n      \"Amount_USD\": \"{{ $json['Amount (USD)'] }}\",\n      \"Product\": \"{{ $json.Product }}\",\n      \"Quote_Details\": \"{{ $json['Quote Details'] }}\",\n      \"Call_Summary\": {{ JSON.stringify ($json['Call Summary']) }},\n      \"Next_Step\": {{ JSON.stringify ($json['Next Step']) }}\n    }\n  },\n  \"customer\": {\n    \"number\": \"+{{ $json.Phone }}\"\n  },\n    \"schedulePlan\": {\n        \"earliestAt\": \"{{ $json['Next Call'] }}\"\n    }\n}\n",
@@ -471,7 +455,13 @@
         100
       ],
       "id": "8874a61f-2565-4326-9679-6355ec5d264f",
-      "name": "Call Vapi1"
+      "name": "Call Vapi1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "lZ0efOUQUlbFdSMe",
+          "name": "Vapi"
+        }
+      }
     },
     {
       "parameters": {
@@ -1186,6 +1176,6 @@
     }
   ],
   "triggerCount": 2,
-  "updatedAt": "2025-05-24T15:17:15.615Z",
-  "versionId": "05afe970-4200-409d-8437-dcea7dc9915a"
+  "updatedAt": "2025-06-12T06:38:41.519Z",
+  "versionId": "c9cf58a9-2500-4068-b395-0ef35b8fb417"
 }
