@@ -1,0 +1,406 @@
+{
+  "active": true,
+  "connections": {
+    "Get Table Definition": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat History": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute SQL Query": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get DB Schema and Tables List": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-06-06T17:39:24.824Z",
+  "id": "9DETAVgGds0060R5",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Consulta Agents DB",
+  "nodes": [
+    {
+      "parameters": {
+        "agent": "openAiFunctionsAgent",
+        "promptType": "define",
+        "text": "={{ $json.body.query }}",
+        "options": {
+          "systemMessage": "= You are DB assistant. Your sole task is to execute SQL queries on the database and return the exact, raw JSON output from the tool(s) used. You should not interpret, summarize, transform, or explain the data.\n\n    Always:\n    - Use `Execute SQL query` to run the final query.\n    - Use `Get Table Definition` if you need to understand table structure.\n    \n    Critically:\n    - Return **only** the raw JSON data **exactly as returned** from the tool(s) you used.\n    - Do **not** write any explanations, summaries, or human-friendly responses.\n    - If multiple queries are needed, return each result separately and clearly marked.\n  \n\n\n    Your job is to faithfully reproduce exactly what the tool returns.\n"
+        }
+      },
+      "id": "e62d5b42-7325-4482-a939-ba2d7c252a9f",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        0,
+        20
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get table definition to find all columns and types",
+        "operation": "executeQuery",
+        "query": "select\n  c.column_name,\n  c.data_type,\n  c.is_nullable,\n  c.column_default,\n  tc.constraint_type,\n  ccu.table_name AS referenced_table,\n  ccu.column_name AS referenced_column\nfrom\n  information_schema.columns c\nLEFT join\n  information_schema.key_column_usage kcu\n  ON c.table_name = kcu.table_name\n  AND c.column_name = kcu.column_name\nLEFT join\n  information_schema.table_constraints tc\n  ON kcu.constraint_name = tc.constraint_name\n  AND tc.constraint_type = 'FOREIGN KEY'\nLEFT join\n  information_schema.constraint_column_usage ccu\n  ON tc.constraint_name = ccu.constraint_name\nwhere\n  c.table_name = '{{ $fromAI(\"table_name\") }}'\n  AND c.table_schema = '{{ $fromAI(\"schema_name\") }}'\norder by\n  c.ordinal_position",
+        "options": {}
+      },
+      "id": "5839e38f-c06c-43d1-88d9-1e97e907e867",
+      "name": "Get Table Definition",
+      "type": "n8n-nodes-base.postgresTool",
+      "position": [
+        780,
+        240
+      ],
+      "typeVersion": 2.5,
+      "credentials": {
+        "postgres": {
+          "id": "A69A8flgYjsSxHFY",
+          "name": "Agent DB: whitelabel_platform"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "consultas_db_111"
+      },
+      "id": "1fd7a643-62b9-4980-88c3-6342e6fbd6f9",
+      "name": "Chat History",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        120,
+        260
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get all the data from Postgres, make sure you append the tables with public schema.",
+        "operation": "executeQuery",
+        "query": "{{ $fromAI(\"sql_query\", \"SQL Query\") }}",
+        "options": {}
+      },
+      "id": "d5aa14ae-3462-4ba6-b288-e10d4b4ea710",
+      "name": "Execute SQL Query",
+      "type": "n8n-nodes-base.postgresTool",
+      "position": [
+        360,
+        240
+      ],
+      "typeVersion": 2.5,
+      "credentials": {
+        "postgres": {
+          "id": "A69A8flgYjsSxHFY",
+          "name": "Agent DB: whitelabel_platform"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get list of all tables with their schema in the database",
+        "operation": "executeQuery",
+        "query": "SELECT \n    table_schema,\n    table_name\nFROM information_schema.tables\nWHERE table_type = 'BASE TABLE'\n    AND table_schema NOT IN ('pg_catalog', 'information_schema')\nORDER BY table_schema, table_name;",
+        "options": {}
+      },
+      "id": "cee9f330-8f31-4c93-81fe-8bced853d588",
+      "name": "Get DB Schema and Tables List",
+      "type": "n8n-nodes-base.postgresTool",
+      "position": [
+        580,
+        240
+      ],
+      "typeVersion": 2.5,
+      "credentials": {
+        "postgres": {
+          "id": "A69A8flgYjsSxHFY",
+          "name": "Agent DB: whitelabel_platform"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "a425c37d-aef0-44ab-bfdd-21a11107846b",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -60,
+        260
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### 👨‍🎤 Setup\n1. Add your **postgresql** and **OpenAI** credentials.\n2. Click **Chat** button and start asking questions to your database.\n3. Activate the workflow and you can make the chat publicly available.",
+        "height": 120,
+        "width": 560,
+        "color": 5
+      },
+      "id": "030ad170-8e2c-41bc-8827-dfa92ae6bca9",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -520,
+        -140
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "🛠️ Tools Used:\n1. Execute SQL Query: Used to execute any query generated by the agent.\n2. Get DB Schema and Tables List: It returns the list of all the tables with its schema name.\n3. Get Table Definition: It returns table details like column names, foreign keys and more of a particular table in a schema.",
+        "height": 156,
+        "width": 562,
+        "color": 7
+      },
+      "id": "c0ccddac-8f64-47f4-9f8a-e6f48423d357",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        140,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "👆 You can exchange this with any other chat model of your choice.",
+        "height": 99,
+        "width": 162,
+        "color": 7
+      },
+      "id": "c8cf63db-969d-4a03-9e92-950603bd5c82",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -320,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "👆 You can change how many number of messages to keep using `Context Window Length` option. It's 5 by default.",
+        "height": 159,
+        "width": 162,
+        "color": 7
+      },
+      "id": "162750b0-eb11-4c04-afe2-dfc119e2f99d",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -120,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## CONSULTA LA DB DE AGENTS",
+        "height": 820,
+        "width": 1580,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        -200
+      ],
+      "id": "cbd5af0d-7d64-4a08-a8b5-cf53e2cb2a73",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agents",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        20
+      ],
+      "id": "9a2cf0e2-4c95-4817-80e9-c90651b8bc1a",
+      "name": "Webhook",
+      "webhookId": "791bc7cc-43e6-4d04-9b7b-12046cc23f65"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        400,
+        20
+      ],
+      "id": "53be5244-1406-49f9-8f12-f0be96975dc6",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -920,
+        340
+      ],
+      "id": "b98aec4f-6524-4a27-9e5e-d17f0bbb2aba",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM agents",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        340,
+        -340
+      ],
+      "id": "b9b7c89b-2f6f-4b23-8a4c-baddca54d12e",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "A69A8flgYjsSxHFY",
+          "name": "Agent DB: whitelabel_platform"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "PostmanRuntime/7.44.0",
+            "content-length": "45",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br",
+            "cache-control": "no-cache",
+            "content-type": "application/json",
+            "postman-token": "eb8d5d71-dead-4dab-9870-c5c501c9b23a",
+            "x-forwarded-for": "179.19.102.170",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "11f8f8370bcd",
+            "x-real-ip": "179.19.102.170"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "query": "que agents hay en la db?"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook/agents",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-06T21:25:46.255Z",
+  "versionId": "2b9a4579-ed06-4539-a9ea-5d6e691abb23"
+}
