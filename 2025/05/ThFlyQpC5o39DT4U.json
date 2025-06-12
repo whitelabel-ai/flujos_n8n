@@ -160,15 +160,8 @@
     {
       "parameters": {
         "url": "=https://api.vapi.ai/call/{{ $('Call Vapi').item.json.id }}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
-            }
-          ]
-        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -178,7 +171,17 @@
         0
       ],
       "id": "439d5a9f-116e-4e7b-9568-abf60ac6d512",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "yLx52BGMmGydvSlW",
+          "name": "Bearer Auth account"
+        },
+        "httpBasicAuth": {
+          "id": "lZ0efOUQUlbFdSMe",
+          "name": "Vapi"
+        }
+      }
     },
     {
       "parameters": {
@@ -363,13 +366,11 @@
       "parameters": {
         "method": "POST",
         "url": "https://api.vapi.ai/call",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
-            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -388,7 +389,13 @@
         75
       ],
       "id": "7649edf4-7008-4617-a32a-a72d204f1efc",
-      "name": "Call Vapi"
+      "name": "Call Vapi",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "lZ0efOUQUlbFdSMe",
+          "name": "Vapi"
+        }
+      }
     },
     {
       "parameters": {
@@ -534,6 +541,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-25T18:45:32.433Z",
-  "versionId": "0e248452-de91-4569-b821-75023490ed97"
+  "updatedAt": "2025-06-12T06:17:01.156Z",
+  "versionId": "d5989fd7-19cb-43d2-8443-7fc13e881838"
 }
