@@ -1,0 +1,218 @@
+{
+  "active": false,
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Wait1 load file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1 load file": {
+      "main": [
+        [
+          {
+            "node": "GET audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET audio": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-24T03:37:11.965Z",
+  "id": "7KOr1cqh3KAysV2J",
+  "isArchived": false,
+  "meta": null,
+  "name": "BOT TRANSCRIBER chatwoot",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.conversation.messages[0].attachments[0].file_type }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "fb69dbca-1881-422b-92ef-c52cc9858742"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        240,
+        0
+      ],
+      "id": "19d83578-7fad-4e2e-b5dd-248587a00460",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        0
+      ],
+      "id": "12c78dc9-74f1-47f1-bbce-521c7e55fbf0",
+      "name": "Wait1 load file",
+      "webhookId": "8db1e5cf-e6fc-4c8a-ba15-4d2dd977b18a"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.conversation.messages[0].attachments[0].data_url }}",
+        "options": {
+          "allowUnauthorizedCerts": false
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        0
+      ],
+      "id": "d54669ac-7248-47c2-a61f-d1d1549c62d8",
+      "name": "GET audio"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        900,
+        0
+      ],
+      "id": "69d77cf5-7849-4049-99dc-ab3de0ef0185",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.whitelabel.lat/api/v1/accounts/{{ $('Webhook').item.json.body.account.id }}/conversations/{{ $('Webhook').item.json.body.conversation.messages[0].conversation_id }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "iBk8qBMpRbbFVdSWurg36arD"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.text) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"true\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        0
+      ],
+      "id": "002b4e22-a660-43de-b781-a1b300fe722c",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "transcriber",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "84183fe8-f22b-41bf-b536-849f7e71abaf",
+      "name": "Webhook",
+      "webhookId": "e5c97b17-19ee-406e-9dcf-3cdcde1945ec"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-24T16:37:22.366Z",
+  "versionId": "aba0f8ee-fb4f-45fc-8941-404568d85f4c"
+}
