@@ -1,0 +1,693 @@
+{
+  "active": false,
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Retrieve Documents",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Documents": {
+      "ai_tool": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Extract Document Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Created": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Document Text": {
+      "main": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Old Doc Rows": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set File ID": {
+      "main": [
+        [
+          {
+            "node": "Delete Old Doc Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Updated": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Retrieve Documents",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T15:28:13.152Z",
+  "id": "AyPqmpeqTA4O824T",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RAG SUPABASE",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0b240ae3-aecc-43cd-9215-2a11d48a08fc",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        360
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "95aaad22-61e4-402f-83ff-219e9b3d7a0e",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        400,
+        300
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.data }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "=file_id",
+                "value": "={{ $('Set File ID').item.json.file_id }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "28e33fcc-22dd-4977-897c-9ef2314e0139",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        540,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "423559a1-6ae0-4dbc-84de-27c1afdc4aa6",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        380,
+        840
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "user_documents",
+        "description": "Contains all the user's documents that you can check for context to answer user questions."
+      },
+      "id": "8c7ce458-38ad-49e4-a794-63624d8f0db0",
+      "name": "Retrieve Documents",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        180,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Agent Tools for RAG",
+        "height": 528.85546469693,
+        "width": 583.4552380860637,
+        "color": 4
+      },
+      "id": "a681c6f2-0041-4dee-8c66-7be34bf202f2",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## agregar un archivo de Google Drive a Vector DB",
+        "height": 671.8877842322804,
+        "width": 2070.8894079025763,
+        "color": 5
+      },
+      "id": "75dd792f-bac0-4f74-a493-fe1160f4385b",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1220,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Set File ID').item.json.file_id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "2eb935a5-e1ab-41b1-9e19-de382e64e6a3",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -120,
+        720
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zaV2y8aJFPAFMtmH",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1Pq7SShL22J013cE2tx-1T1d8wuNW6mE8",
+          "mode": "list",
+          "cachedResultName": "RAG",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Pq7SShL22J013cE2tx-1T1d8wuNW6mE8"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "919d064a-80e8-42c4-aea5-cdfe658b82b9",
+      "name": "File Created",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1160,
+        620
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zaV2y8aJFPAFMtmH",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1Pq7SShL22J013cE2tx-1T1d8wuNW6mE8",
+          "mode": "list",
+          "cachedResultName": "RAG",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Pq7SShL22J013cE2tx-1T1d8wuNW6mE8"
+        },
+        "event": "fileUpdated",
+        "options": {}
+      },
+      "id": "3d95c6d6-ff29-406a-b242-033810be3e2e",
+      "name": "File Updated",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1160,
+        840
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zaV2y8aJFPAFMtmH",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "id": "6297c3d4-4458-4362-a1b2-97fdbd8b77ff",
+      "name": "Extract Document Text",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        140,
+        720
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "5cbada65-b53e-4411-82fb-dc713f3e17ec",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        220,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "a62593d3-942a-465b-be1a-9b83f68f8018",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        360
+      ],
+      "notesInFlow": false,
+      "credentials": {
+        "postgres": {
+          "id": "ATXomISxdQhilDKw",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "73f94dc7-c4ea-455a-abbd-7f8659ad2d6e",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        540,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "documents",
+        "filterType": "string",
+        "filterString": "=metadata->>file_id=like.*{{ $json.file_id }}*"
+      },
+      "id": "f91402a8-5e9f-4379-bdd7-34f90a965034",
+      "name": "Delete Old Doc Rows",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        720
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "WOovBXIQKQRRL9tN",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "10646eae-ae46-4327-a4dc-9987c2d76173",
+              "name": "file_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "53451ac7-99f6-48ca-8522-42ba7262593f",
+      "name": "Set File ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -740,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## RAG AI Agent with Chat",
+        "height": 464.8027193303974,
+        "width": 692.7866482806627
+      },
+      "id": "f8d530f1-849a-4d3d-beed-e389bba32054",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "id": "8af908a1-b061-4e01-ba4f-695c38e201f2",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -640,
+        140
+      ],
+      "webhookId": "e985d15f-b2f6-456d-be15-97e0b1544a40"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "You are a personal assistant who helps answer questions from a corpus of documents when you don't know the answer yourself."
+        }
+      },
+      "id": "13566174-0a8c-4695-b89c-4b7d9e451d69",
+      "name": "RAG AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -320,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "007201fa-fcba-4ca1-ae90-0bab2a6a7c43",
+      "name": "Supabase Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        60,
+        280
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "WOovBXIQKQRRL9tN",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "a78ab639-b99d-47c4-ae50-27b4b18f33fd",
+      "name": "Insert into Supabase Vectorstore",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        420,
+        620
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "WOovBXIQKQRRL9tN",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# RAG",
+        "height": 1280,
+        "width": 2140,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1260,
+        -20
+      ],
+      "id": "f420bc39-f3d4-49c9-8408-d3eefa26a760",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 ¿Qué es esto?\n\nEste flujo implementa un sistema RAG (Retrieval-Augmented Generation) para responder preguntas usando documentos cargados en Google Drive. Utiliza OpenAI para el modelo de chat y generación de embeddings, y Supabase como base de datos vectorial.\n\n## 📁 Flujo: Agregar archivos desde Google Drive a Supabase\n\n**Automatiza el ingreso de archivos de texto a una base vectorial:**\n\n1. Detecta archivos nuevos o actualizados en Google Drive.\n2. Elimina versiones anteriores del documento en la base vectorial.\n3. Descarga el archivo.\n4. Extrae el texto y lo fragmenta (chunking).\n5. Genera embeddings (OpenAI).\n6. Inserta en Supabase (vector DB).\n\n> 💡 Este proceso asegura que los archivos siempre estén actualizados y listos para consulta en el agente de chat.\n\n\n## 💬 Flujo: RAG AI Agent with Chat\n\nResponde mensajes de usuario usando:\n\n* **Modelo de chat de OpenAI** (GPT).\n* **Memoria de chat** en PostgreSQL.\n* **Documentos relacionados** desde Supabase vía embeddings.\n\n> 💡 El agente busca fragmentos relevantes del vector DB antes de generar la respuesta.\n\n\n## ✅ ¿Por qué usar esta plantilla?\n\n* Automatiza el ingreso de documentos (sin necesidad de subir manualmente).\n* Permite consultas conversacionales basadas en tu contenido.\n* Se integra fácilmente con Google Drive, OpenAI y Supabase.\n* Adaptable a distintos dominios (soporte, legal, ventas, etc.).\n\n\n## 🔧 Cómo personalizarla:\n\n* Cambia el origen (Google Drive) por otra fuente si es necesario.\n* Ajusta el tamaño de los chunks en el Text Splitter.\n* Cambia Supabase por otro vector DB si lo prefieres (ej: Pinecone).\n* Agrega control de acceso por usuario o tipo de documento.\n\n¿Quieres que te genere las notas directamente en formato para pegarlas en los nodos específicos de n8n (como descripciones de cada nodo)? Puedo ayudarte con eso también.\n",
+        "height": 1180,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1940,
+        -20
+      ],
+      "id": "1288f6ec-93df-47c3-9c6c-f8913aed445c",
+      "name": "Sticky Note4"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:File Created": {
+      "lastTimeChecked": "2025-05-27T23:13:05Z"
+    },
+    "node:File Updated": {
+      "lastTimeChecked": "2025-05-27T23:13:06Z"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-05-14T18:42:23.744Z",
+      "updatedAt": "2025-05-14T18:42:23.744Z",
+      "id": "uOfW65HU5nk8rvHu",
+      "name": "tools"
+    }
+  ],
+  "triggerCount": 3,
+  "updatedAt": "2025-05-27T23:13:17.770Z",
+  "versionId": "fac1ddf2-52c4-4e92-8348-5d981a4a4d26"
+}
