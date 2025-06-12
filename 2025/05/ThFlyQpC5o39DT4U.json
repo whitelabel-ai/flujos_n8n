@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Google Sheets": {
       "main": [
@@ -262,9 +262,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 4,
-              "triggerAtMinute": 30
+              "field": "minutes",
+              "minutesInterval": 30
             }
           ]
         }
@@ -366,11 +365,13 @@
       "parameters": {
         "method": "POST",
         "url": "https://api.vapi.ai/call",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpBasicAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
+            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -389,13 +390,7 @@
         75
       ],
       "id": "7649edf4-7008-4617-a32a-a72d204f1efc",
-      "name": "Call Vapi",
-      "credentials": {
-        "httpBasicAuth": {
-          "id": "lZ0efOUQUlbFdSMe",
-          "name": "Vapi"
-        }
-      }
+      "name": "Call Vapi"
     },
     {
       "parameters": {
@@ -523,12 +518,14 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        0
+        8
       ]
     }
   },
@@ -541,6 +538,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-06-12T06:17:01.156Z",
-  "versionId": "d5989fd7-19cb-43d2-8443-7fc13e881838"
+  "updatedAt": "2025-06-12T17:31:13.994Z",
+  "versionId": "a32e103e-8faa-439a-90da-e43362ee073f"
 }
