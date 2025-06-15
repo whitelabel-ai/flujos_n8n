@@ -1,0 +1,254 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        []
+      ]
+    },
+    "consultaDB": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-15T01:32:23.639Z",
+  "id": "Hx3bemxSu6WAMD69",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "neo4j",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        20,
+        -140
+      ],
+      "id": "3f428e0d-1627-4517-b5f0-d36a8c39d0af",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://44.195.58.80:7474/db/neo4j/tx/commit",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"statements\": [\n    {\n      \"statement\": \"MATCH (e:Empleado {nombre: $nombre})-[r:REPORTA_A]->(m:Manager) RETURN m.nombre as managerName\",\n      \"parameters\": {\n        \"nombre\": \"{{ $json['employeeName'] }}\"\n      }\n    }\n  ]\n}",
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        -140
+      ],
+      "id": "525deb66-ba00-4369-9e5f-2ddfe235d558",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "x7RbBk6XLo6g7okv",
+          "name": "neo4j"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90d3ac48-c296-4963-b5a7-c8f102c48761",
+              "name": "nombreTarea",
+              "value": "Firmar contrato",
+              "type": "string"
+            },
+            {
+              "id": "a0bc1cd4-28de-4037-8850-668dbdcc0773",
+              "name": "employeeName",
+              "value": "Ana Gómez",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -140
+      ],
+      "id": "821043fb-128b-4fdf-99ea-d57d834ba652",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        100
+      ],
+      "id": "52af20b1-5bac-4941-ac99-3d08586f3711",
+      "name": "When chat message received",
+      "webhookId": "022fe751-fe4a-4a71-af2c-48c6999834b1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Eres un agente experto en bases de datos Neo4j y Cypher. Tu función es convertir cualquier pregunta del usuario en una consulta Cypher, ejecutarla usando la herramienta `consultaDB`, y devolver los resultados de forma clara y útil. \n\nTu conocimiento incluye:\n- Sintaxis avanzada de Cypher.\n- Relaciones, nodos, propiedades, índices y constraints.\n- Modelado de grafos orientado a procesos empresariales (como onboarding, RRHH, tareas, responsabilidades).\n- Cómo navegar jerarquías, responsabilidades, dependencias y trazabilidad en grafos.\n\nTu comportamiento:\n- Nunca asumes: siempre verificas nodos, relaciones y propiedades antes de armar una consulta.\n- Si el usuario hace una pregunta ambigua, primero clarificas lo necesario antes de consultar.\n- Si no hay resultados, explicas por qué y sugieres cómo corregir los datos o modelo.\n- Eres claro y profesional al explicar tanto la consulta como su resultado.\n\nFormato que debes seguir en cada interacción:\n1. Analiza brevemente la pregunta.\n2. Muestra el query Cypher que vas a ejecutar.\n4. Devuelve los resultados interpretados.\n5. Si es útil, resume o propone siguientes pasos.\n\nempieza consultando el schema, luego vas viendo como esta la db y quqe debe consultar \n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        300,
+        100
+      ],
+      "id": "8ad055c5-170e-448f-be90-eadb0ced4a8c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-06-05",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        180,
+        320
+      ],
+      "id": "edc65239-8f31-424f-9f49-19539f5d4acf",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        400,
+        320
+      ],
+      "id": "16baa0a7-9a13-4f56-9884-73d704768f0c",
+      "name": "Simple Memory",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "toolDescription": "={\n  \"name\": \"consultaDB\",\n  \"description\": \"Ejecuta consultas Cypher en la base de datos Neo4j y devuelve los resultados como JSON estructurado.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"query\": {\n        \"type\": \"string\",\n        \"description\": \"La consulta Cypher que se debe ejecutar.\"\n      }\n    },\n    \"required\": [\"query\"]\n  }\n}\n",
+        "method": "POST",
+        "url": "=http://44.195.58.80:7474/db/neo4j/tx/commit",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"statements\": [\n    {\n      \"statement\": \"query Cypher\",\n      \"parameters\": { \"atributo\": \"parametro\"\n      }\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        320
+      ],
+      "id": "68cb22c2-b51a-4646-99f5-489204cdba05",
+      "name": "consultaDB",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "x7RbBk6XLo6g7okv",
+          "name": "neo4j"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-15T03:03:50.881Z",
+  "versionId": "852b93f6-d4e3-4897-8279-b93148cd6096"
+}
