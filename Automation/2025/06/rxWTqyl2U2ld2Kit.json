@@ -1,0 +1,1357 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Group/chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get suplier": {
+      "main": [
+        [
+          {
+            "node": "S3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "quoteMessage": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Get suplier1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get suplier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "whisper Transcriber": {
+      "main": [
+        [
+          {
+            "node": "audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3": {
+      "main": [
+        [
+          {
+            "node": "whisper Transcriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Texto": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "audio": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get suplier1": {
+      "main": [
+        [
+          {
+            "node": "Texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Group/chat": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Workflow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enviar confirmacion Pedido": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "quoteMessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "confirmacion pedido": {
+      "main": [
+        [
+          {
+            "node": "Send Order1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "enviar confirmacion Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets6": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "confirmacion pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-20T16:46:46.208Z",
+  "id": "rxWTqyl2U2ld2Kit",
+  "isArchived": false,
+  "meta": null,
+  "name": "1. recibir confirmacion",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "godoy",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -2860,
+        260
+      ],
+      "id": "cb376857-316c-4033-b135-f74808e162a5",
+      "name": "Webhook",
+      "webhookId": "632e2cfd-ff2c-449e-8020-99774d5807f6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "762bc065-3bfd-4dd4-984b-9655acc99631",
+              "name": "Message",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            },
+            {
+              "id": "464d2010-cc03-471f-9373-8ae771bdd7c8",
+              "name": "quotedMessage.conversation",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.quotedMessage.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "6c980848-43f4-49e7-b159-6b54f8a22149",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bb12cd5-d419-4618-a3af-86bed40d25a2",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "fb039b84-777b-4b0e-ba05-b794521ce090",
+              "name": "FINCA",
+              "value": "={{ $json.FINCA }}",
+              "type": "string"
+            },
+            {
+              "id": "750d6acb-efbd-48a6-89f9-f5e0ac68e612",
+              "name": "FECHA",
+              "value": "={{ $('Webhook').item.json.body.date_time.toDateTime().format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "70ce485c-53b6-4e68-87e9-c46b197233cc",
+              "name": "fecha mañana",
+              "value": "={{ DateTime.fromISO($('Webhook').item.json.body.date_time).plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1320,
+        160
+      ],
+      "id": "42be8f11-cbc1-4aa6-9da3-69ba5efdc645",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Nº DE TELÉFONO",
+              "lookupValue": "={{ $('Webhook').item.json.body.data.key.remoteJid.split('@')[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -2200,
+        260
+      ],
+      "id": "9d1cc4fa-1b5c-4393-9054-d5464694a4eb",
+      "name": "Get suplier",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensaje = $json[\"quotedMessage\"].conversation;\n\n// Extraer fecha del pedido\nconst fechaRegex = /\\((\\d{2}\\/\\d{2}\\/\\d{4})\\)/;\nconst fechaMatch = mensaje.match(fechaRegex);\nconst fechaPedido = fechaMatch ? fechaMatch[1] : null;\n\n// Extraer bloques de pedidos\nconst pedidos = [];\nconst bloquesPedidos = mensaje.split(/➡️ \\*?pedido N°: ([\\w-]+)\\*?/i);\n\nfor (let i = 1; i < bloquesPedidos.length; i += 2) {\n    const numeroPedido = bloquesPedidos[i].trim();\n    const contenido = bloquesPedidos[i + 1];\n  \n\n    const productos = contenido\n        .split(/\\r?\\n/)\n        .filter(linea => linea.trim().startsWith('-'))\n        .map(linea => {\n            const itemMatch = linea.match(/^- (\\d+) x (\\d+) - ([^-]+) - ([^-]+) - (.+)$/);\n          // con decimales: (\\d+(?:\\.\\d+)?) x (\\d+(?:\\.\\d+)?)\n            if (itemMatch) {\n                return {\n                    NUM_PEDIDO: numeroPedido,\n                    PRODUCTO: itemMatch[3].trim(),\n                    CANT_PALETS: parseInt(itemMatch[1]),\n                    CANT_CAJAS: parseInt(itemMatch[2]),\n                    PALET: itemMatch[4].trim(),\n                    CAJAS: itemMatch[5].trim(),\n                };\n            }\n            return null;\n        })\n        .filter(Boolean); // Elimina null\n\n    pedidos.push(...productos);\n}\n\nreturn {\n    productos: pedidos,\n    totalRegistros: pedidos.length,\n    telefono: $json[\"Nº DE TELÉFONO\"],\n    FECHA: fechaPedido,\n    PROVEEDOR_ID: $input.first().json.PROVEEDOR_ID,\n    FINCA: $input.first().json.FINCA\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -440,
+        260
+      ],
+      "id": "8cb72fd1-4806-4bc6-8628-52ad5e180c9f",
+      "name": "quoteMessage"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=📦 PEDIDO ORIGINAL:\n{{ JSON.stringify ($json.data) }}\n\n📨 MENSAJE DEL ENCARGADO:\n{{ $('Data').item.json.Message }}\n\nFECHA: {{ $('quoteMessage').item.json.FECHA }}\nPROVEEDOR_ID: {{ $('quoteMessage').item.json.PROVEEDOR_ID }}\nFINCA: {{ $('quoteMessage').item.json.FINCA }}\nTELEFONO: {{ $('quoteMessage').item.json.telefono }}",
+        "options": {
+          "systemMessage": "= Eres un sistema de validación de pedidos agrícolas. Tu tarea es analizar si el proveedor ha confirmado correctamente todos los productos del pedido, comparando el mensaje del encargado con la lista original de productos solicitados.\n\n ### Instrucciones importantes:\n\n * Los nombres de los campos en la respuesta JSON deben **mantenerse exactamente iguales**, incluyendo mayúsculas y guiones bajos. **No debes cambiar nunca ningún nombre de atributo.**\n\n   * Por ejemplo: `row_number`,  `PROVEEDOR_ID`, `NUM_PEDIDO`, `CANT_PALETS`, `CANT_CAJAS`, `PALET`, `CAJAS`, `FECHA`, `PRODUCTO`, `STATUS`, `comentarios`, `comentarios_adicionales`.\n   * Es obligatorio respetar estos nombres sin alteraciones ortográficas o estilísticas.\n\n ### Reglas de interpretación:\n\n * El formato del pedido es una lista de productos, cada uno con un número de pedido, descripción del producto, cantidad de palets, cantidad de cajas por palet, tipo de palet y tipo de caja.\n * En el mensaje del encargado, cuando menciona “X palets x Y” significa X palets con Y cajas por cada palet.\n * Si el mensaje indica solo “X palets” o “X x Y” pero no especifica cajas, debes asumir que cada palet tiene la misma cantidad de cajas solicitadas originalmente.\n * Si el mensaje dice menos o más palets o cajas que las solicitadas, debes marcar el producto como \"faltante\" o \"sobrante\", según sea el caso y \"confirmado\" solo la cantidad que confirma.\n * Si no menciona un producto en absoluto, se considera faltante, salvo que el mensaje dé a entender que el resto están confirmados (por ejemplo, si dice \"solo falta X\", \"ok\", etc.).\n * Si menciona más palets o más cajas que las solicitadas, se considera que hay sobrantes.\n * Debes ser tolerante con descripciones similares o nombres abreviados del producto.\n * Siempre que sea posible, haz coincidir los productos basándote en la descripción, aunque el nombre no coincida exactamente.\n\n ### Salida esperada:\n\n Devuelve una **respuesta en formato JSON válido** con la siguiente estructura exacta:\nincluyendo la cantidad de tokens consumidos en la consulta\n{\n  \"pedido_completo\": true | false,\n  \"PROVEEDOR_ID\": \"...\",\n  \"faltantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", \n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo la cantidad faltante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Solicitado\",\n      \"comentarios\": \"...\" //  de la novedad\n    }\n  ],\n  \"sobrantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\",\n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ...,  // solo la cantidad sobrante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\"\n    }\n  ],\n  \"confirmados\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", // siempre se debe enviar\n      \"PROVEEDOR_ID\": \"...\",  //siempre se debe enviar\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo los confirmados\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Confirmado\",\n      \"comentarios\": \"...\" este valor solo se envia si hay novedades con el producto, si hay faltantes, si no se omite.\n    }\n  ],\n  \"comentarios_adicionales\": \"...\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        440,
+        260
+      ],
+      "id": "51dcef4b-9b88-4b69-adb0-ce3e131f9862",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        528,
+        480
+      ],
+      "id": "49eae035-e23b-43f2-a7f5-9edb2071e8c7",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Suponiendo que estás trabajando con una entrada tipo JSON del nodo anterior:\nconst raw = items[0].json.output;\n\n// Extraemos el bloque que está entre las etiquetas ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\nif (!match) {\n  throw new Error(\"No se encontró un bloque JSON válido.\");\n}\n\nconst cleanJsonString = match[1];\nconst parsed = JSON.parse(cleanJsonString);\n\n// Devolver como nuevo item\nreturn [{ json: parsed }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1192,
+        260
+      ],
+      "id": "cdb69b05-3b1f-475a-8ddc-02d4224f18b9",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4fdeb343-54a3-4338-b002-60acb12c2b6d",
+              "leftValue": "={{ $json.pedido_completo }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1412,
+        260
+      ],
+      "id": "cb0069ac-bbfe-4afc-9a85-30c365055f96",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Texto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
+                    "leftValue": "={{ $json.body.data.message.base64 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -2420,
+        160
+      ],
+      "id": "172dbea5-6b0b-4b9c-9994-7608d30c4efc",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-1"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "languaje",
+              "value": "es"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1760,
+        260
+      ],
+      "id": "1fb69f7d-4d1a-49c6-a1c4-a7233a0cb4b2",
+      "name": "whisper Transcriber",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "bucketName": "evolution",
+        "fileKey": "={{ decodeURIComponent($('Webhook').item.json.body.data.message.mediaUrl.match(/https:\\/\\/[^\\/]+\\/evolution\\/(.+?)\\?/)[1]) }}"
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        -1980,
+        260
+      ],
+      "id": "7daa5d6c-c63d-43e4-8d1b-65208ee6b263",
+      "name": "S3",
+      "credentials": {
+        "s3": {
+          "id": "iQ1otocSkl7CBOiI",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "5fc779b6-3524-4152-a1e4-5c0f094e1f05",
+              "name": "quotedMessage",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.quotedMessage.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "596b4cf4-4f36-4866-ba6b-634ada561da2",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "97bc2ddd-9cb9-4e04-9d22-26b3cb00529e",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "1b5eed95-6e43-4fc1-9fe7-44aad49eb987",
+              "name": "FINCA",
+              "value": "={{ $json.FINCA }}",
+              "type": "string"
+            },
+            {
+              "id": "5996d872-ff68-44d5-b749-908248fc309d",
+              "name": "ENCARGADO ",
+              "value": "={{ $json[\"ENCARGADO \"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1540,
+        60
+      ],
+      "id": "d89548a0-d839-47a8-88ef-6ed0a76649cd",
+      "name": "Texto"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "message",
+              "value": "={{ $json.body.text }}",
+              "type": "string"
+            },
+            {
+              "id": "5fc779b6-3524-4152-a1e4-5c0f094e1f05",
+              "name": "quotedMessage",
+              "value": "={{ $('Webhook').item.json.body.data.message.audioMessage.contextInfo.quotedMessage.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "596b4cf4-4f36-4866-ba6b-634ada561da2",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $('Get suplier').item.json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f2f1490f-caf5-4310-80f8-c14e6aad0ccf",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $('Get suplier').item.json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "f1334743-e4aa-4cc9-ac63-00f5d08004ee",
+              "name": "FINCA",
+              "value": "={{ $('Get suplier').item.json.FINCA }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1540,
+        260
+      ],
+      "id": "912bef95-e6d4-4342-89b7-20b044c7185f",
+      "name": "audio"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Nº DE TELÉFONO",
+              "lookupValue": "={{ $('Webhook').item.json.body.data.key.remoteJid.split('@')[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1760,
+        60
+      ],
+      "id": "6dcce38b-169d-425b-a7cf-958caab23f63",
+      "name": "Get suplier1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# CONFIRMACION DE PEDIDO POR AUDIO O TEXTO.\n \n## SIEMPRE SE DEBE RESPONDER AL MENSAJE DE PEDIDO SOLICITADO\n\n## *Se confirma por el Whatsapp personal, donde se le hace el pedido al encargado, para que pueda responder a ese pedido*",
+        "height": 340,
+        "width": 600,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3680,
+        120
+      ],
+      "id": "bf68eea3-4ba8-4768-b487-23b8692bb202",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8a7bd759-bdf2-4cc3-a2d8-c7d587c3f272",
+              "leftValue": "={{ $json.body.data.key.remoteJid }}",
+              "rightValue": "@s.whatsapp.net",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2640,
+        260
+      ],
+      "id": "b4d4976c-f906-4acd-be8e-1e96fa47b03a",
+      "name": "Group/chat"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a9acea2b-5e7a-4f61-973b-dcc29ff57aa0",
+              "leftValue": "={{ $json.Message.toLowerCase() }}",
+              "rightValue": "resumen",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "64b22c6e-5062-453f-b74f-c731c622b869",
+              "leftValue": "={{ $json.quotedMessage.conversation }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -660,
+        60
+      ],
+      "id": "f71d6063-3641-4d20-bb39-1078033ca6fa",
+      "name": "enviar confirmacion Pedido"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $('Data').item.json.FECHA }}"
+            },
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Solicitado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -440,
+        -140
+      ],
+      "id": "a8e9fe50-c018-47a0-9bb6-40e87f82cad0",
+      "name": "Google Sheets3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener fecha y hora actuales con zona horaria\nconst zonaHoraria = 'America/Bogota';\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Filtrar items válidos: deben tener un producto definido (ajusta según tu caso)\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTO);\n\n// Si no hay productos válidos, devolver mensaje bonito\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos para confirmar el día de hoy. ¡Que tengas un excelente día! ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: $('If4').first().json['Nº DE TELÉFONO']\n      }\n    }\n  ];\n}\n\n// Agrupar productos por finca y por número de pedido\nconst agrupados = {};\nlet fechaEntrega = '';\nlet entregaTexto = '';\nlet encargado = $('Get suplier1').first().json['ENCARGADO '];\n\nfor (const item of itemsValidos) {\n  const finca = item.json.FINCA;\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  if (!agrupados[finca]) agrupados[finca] = {};\n  if (!agrupados[finca][numPedido]) agrupados[finca][numPedido] = [];\n\n  agrupados[finca][numPedido].push(\n    `- ${item.json.CANT_PALETS} x ${item.json.CANT_CAJAS} - ${item.json.PRODUCTO} - ${item.json.PALET} - ${item.json.CAJAS}`\n  );\n\n  fechaEntrega = item.json.FECHA;\n  entregaTexto = item.json.ENTREGA;\n}\n\n// Construir mensajes para cada finca\nconst mensajes = [];\n\nfor (const finca in agrupados) {\n  let mensaje = `${saludo} - *${encargado}*\\nSe envía resumen de pedidos solicitados para el ${fechaEntrega}.\\nPor favor responder sobre este mensaje las novedades o confirmar el status del pedido.\\n\\n`;\n\n  for (const numPedido in agrupados[finca]) {\n    mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n    mensaje += agrupados[finca][numPedido].join('\\n\\n') + '\\n\\n';\n  }\n\n  mensaje = mensaje.trim();\n\n  mensajes.push({\n    json: {\n      FINCA: finca,\n      MENSAJE_RESUMEN: mensaje,\n      FECHA: fechaEntrega,\n      ENTREGA: entregaTexto,\n      TELEFONO: $('If4').first().json['Nº DE TELÉFONO']\n    }\n  });\n}\n\nreturn mensajes;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -140
+      ],
+      "id": "857396d2-7ef8-4f10-917f-857a6fa3bc9b",
+      "name": "confirmacion pedido"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Pedro",
+        "remoteJid": "=+{{ $json.TELEFONO }}",
+        "messageText": "={{ $json.MENSAJE_RESUMEN }}",
+        "options_message": {
+          "delay": 1000
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -140
+      ],
+      "id": "95f85613-ac10-42e4-ac6e-7a21569c3c33",
+      "name": "Send Order1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "OFo9A7x3qE1W1DKN",
+          "name": "Evolution account Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "37d7de3c-cfea-4d2f-ac71-829ef510e978",
+              "leftValue": "={{ $json.Message }}",
+              "rightValue": ". .",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -880,
+        160
+      ],
+      "id": "df981b22-0b47-4f44-baf5-c67540bf0a26",
+      "name": "If4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        260
+      ],
+      "id": "f23f87a8-02c1-4c32-80c0-3507baa6f485",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "=Eres un sistema de validación de integridad de atributos en respuestas JSON de pedidos agrícolas.\n\n### Objetivo:\nTu única responsabilidad es verificar que todos los objetos dentro de las listas (`faltantes`, `confirmados`, `sobrantes`) y atributos de nivel superior tengan los **nombres de atributos correctos**, completos y normalizados.\n\n### Instrucciones estrictas:\n\n- **No debes cambiar la lógica, contenido o clasificación de los productos.**\n- No debes agregar, eliminar ni mover productos entre listas. Solo debes corregir atributos incorrectos.\n- Asegúrate de que los nombres de los atributos coincidan exactamente con estos:\n\n```\nrow_number\nPROVEEDOR_ID\nNUM_PEDIDO\nFECHA\nPRODUCTO\nCANT_PALETS\nCANT_CAJAS\nPALET\nCAJAS\nSTATUS\ncomentarios\ncomentarios_adicionales\n\n````\n\n- Si hay atributos mal escritos (por ejemplo: `PROVEVEEDOR_ID`, `CANT_PALET`), debes corregirlos por su forma exacta.\n- Si algún atributo obligatorio está faltando (por ejemplo: `FECHA`, `PROVEEDOR_ID`), intenta completarlo utilizando un valor global presente en el JSON principal.\n- **Mantén el mismo orden de listas y elementos**, solo corrige los nombres y completa valores faltantes si es posible.\n- Los valores pueden ser string o numéricos según el agente 1. No modifiques el tipo, solo asegura que existan y estén bien nombrados.\n- Devuelve únicamente el JSON corregido (no uses markdown, ni comillas, ni etiquetas como ```json).\n\n### Entrada esperada:\nUn JSON generado por otro agente, que puede contener errores ortográficos o estructurales en los atributos.\n\n### Salida esperada:\nEl mismo JSON, corregido solo a nivel de nombres de atributos, asegurando la estructura correcta según el estándar definido.\n````\n\n---\n\n### Ejemplo de error que corregiría el agente:\n\n**Entrada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALET\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n\n\n**Salida esperada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALETS\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        816,
+        260
+      ],
+      "id": "3616c384-944c-4aac-947c-3b24d8b1c90e",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "productos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -220,
+        260
+      ],
+      "id": "99ce4f54-eed2-4a8b-8654-e4824b15a471",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        220,
+        260
+      ],
+      "id": "627bc655-29d5-40ff-a53f-162d973af1d0",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $('Data').item.json['fecha mañana'] }}"
+            },
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Solicitado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -440,
+        60
+      ],
+      "id": "c60a3368-8c54-494f-a398-ba9dae87310d",
+      "name": "Google Sheets6",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -220,
+        -140
+      ],
+      "id": "3c0e7941-f3ed-4207-a8c7-7cfcae974d84",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "={{ $json.NUM_PEDIDO }}"
+            },
+            {
+              "lookupColumn": "PRODUCTO",
+              "lookupValue": "={{ $json.PRODUCTO }}"
+            },
+            {
+              "lookupColumn": "CANT_PALETS",
+              "lookupValue": "={{ $json.CANT_PALETS }}"
+            },
+            {
+              "lookupColumn": "CANT_CAJAS",
+              "lookupValue": "={{ $json.CANT_CAJAS }}"
+            },
+            {
+              "lookupColumn": "PALET",
+              "lookupValue": "={{ $json.PALET }}"
+            },
+            {
+              "lookupColumn": "CAJAS",
+              "lookupValue": "={{ $json.CAJAS }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Solicitado"
+            },
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $('quoteMessage').item.json.PROVEEDOR_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        0,
+        260
+      ],
+      "id": "26a2ebb4-5f97-4bf3-821d-489f1500a157",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Message",
+              "value": "={{ $json.Message }}"
+            },
+            {
+              "key": "Telefono",
+              "value": "={{ $json[\"Nº DE TELÉFONO\"] }}"
+            },
+            {
+              "key": "Finca",
+              "value": "={{ $json.FINCA }}"
+            },
+            {
+              "key": "Fecha",
+              "value": "={{ $json.FECHA }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        160
+      ],
+      "id": "c8b3469b-2171-40ee-9c3a-cd9869f6e60c",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "2pQvd4LUR7A9gHPK",
+          "mode": "list",
+          "cachedResultName": "2. Procesar Pedido Completo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1632,
+        260
+      ],
+      "id": "df3a6d69-8eed-4555-9493-44bdc2e63794",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ZRx85aibJKH9c6NJ",
+          "mode": "list",
+          "cachedResultName": "3. Procesar Pedido Incompleto"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1632,
+        460
+      ],
+      "id": "6d4f1325-c010-4e32-baf1-86cfb7b3d73c",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "H7GbWimJ8UuAFFYz",
+          "mode": "list",
+          "cachedResultName": "1. Recibir Reporte de Domingo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -2420,
+        360
+      ],
+      "id": "3cc264c7-e27f-4197-bda3-efcddda63e5c",
+      "name": "Execute Workflow2"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-20T17:39:37.928Z",
+  "versionId": "f4d21abe-5ec1-4d05-a9c4-5376258c9662"
+}
