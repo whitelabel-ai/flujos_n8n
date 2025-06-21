@@ -1,0 +1,253 @@
+{
+  "active": true,
+  "connections": {
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send David",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send David": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-20T17:00:45.006Z",
+  "id": "u1U5vf6ieVctnTKS",
+  "isArchived": false,
+  "meta": null,
+  "name": "2. Enviar Reporte al Jefe",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1460,
+        100
+      ],
+      "id": "8936b5b4-56d6-4984-aa6b-8f1e7b5376eb",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Pedro",
+        "remoteJid": "=+573045809637",
+        "messageText": "={{ $json.MENSAJE_RESUMEN }}",
+        "options_message": {
+          "delay": 1000
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        100
+      ],
+      "id": "3b408ee9-ce09-404d-bf14-c5637aba0f69",
+      "name": "Send David",
+      "credentials": {
+        "evolutionApi": {
+          "id": "OFo9A7x3qE1W1DKN",
+          "name": "Evolution account Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## SEND MESSAGE BOSS",
+        "height": 260,
+        "width": 500
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        -20
+      ],
+      "id": "b631a9e8-7f1c-4ed0-8824-611ff2a6d160",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 18
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        580,
+        100
+      ],
+      "id": "18986ea4-66ea-47f2-8b35-79cbad4ad202",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json.formattedDate }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1020,
+        100
+      ],
+      "id": "d9784811-a857-4535-9d50-92d312f41d12",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json[\"Day of month\"] }}/{{ $json.Month }}/{{ $json.Year }}",
+        "format": "=dd/MM/yyyy",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        800,
+        100
+      ],
+      "id": "9e409e83-3a89-4ebe-b643-d11a464b0448",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Agrupar por finca y concatenar mensaje\nconst agrupados = {};\n\nconst zonaHoraria = 'America/Bogota'; // cambiar el país según tu zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\n\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\nfor (const item of items) {\n  const finca = item.json.FINCA;\n  if (!agrupados[finca]) agrupados[finca] = [];\n\n  agrupados[finca].push(\n    `- ${item.json.CANT_PALETS} x ${item.json.CANT_CAJAS} - ${item.json.PRODUCTO.toLowerCase()} - ${item.json.PALET.toLowerCase()} - ${item.json.CAJAS.toLowerCase()}`\n  );\n}\n\n// Luego construyes mensajes:\nconst mensajes = [];\n\nfor (const finca in agrupados) {\n  const productos = agrupados[finca].join('\\n\\n');\n  const entrega = items.find(i => i.json.FINCA === finca)?.json.ENTREGA;\n\n  mensajes.push({\n    json: {\n      FINCA: finca,\n      MENSAJE_RESUMEN: `${saludo} - ${finca} - pedido para ${entrega}\\n\\n${productos}`\n    }\n  });\n}\n\nreturn mensajes;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        100
+      ],
+      "id": "cf5089c1-241f-40e9-bcf4-3f68c6ca0596",
+      "name": "Mensaje"
+    },
+    {
+      "parameters": {
+        "content": "# AL FINAL DEL DIA SE ENVIA RESUMEN AL JEFE CON TODOS LOS PEDIDOS QUE SE HICIERON A CADA FINCA",
+        "height": 340,
+        "width": 600,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -60
+      ],
+      "id": "11131e0b-fd16-457d-a159-a03a571c0db2",
+      "name": "Sticky Note6"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-20T17:40:51.400Z",
+  "versionId": "f734b358-c675-430b-b424-9cfb77f61834"
+}
