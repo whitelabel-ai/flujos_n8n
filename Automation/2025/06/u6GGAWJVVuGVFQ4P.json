@@ -1,0 +1,231 @@
+{
+  "active": false,
+  "connections": {
+    "Get Order": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Products": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Product": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-20T20:19:34.908Z",
+  "id": "u6GGAWJVVuGVFQ4P",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🍕 Pizza Ordering Chatbot with GPT-3.5: Menu, Orders & Status Tracking",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d47debab-52ae-4b92-b625-7d0767e64d00",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "position": [
+        840,
+        200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d862e546-c751-4d69-a6e1-777bd414b741",
+      "name": "Chat OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        120,
+        200
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "bcdfdbd1-6ece-4266-bfb0-f4f8d815e95c",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        280,
+        200
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "toolDescription": "Retrieve detailed information about the product menu.",
+        "url": "https://n8n.io/webhook/get-products"
+      },
+      "id": "0c968d80-3a1c-4889-b805-f2455788caf8",
+      "name": "Get Products",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        440,
+        200
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "toolDescription": "Process product orders.",
+        "method": "POST",
+        "url": "https://n8n.io/webhook/order-product",
+        "sendBody": true,
+        "parametersBody": {
+          "values": [
+            {
+              "name": "message",
+              "valueProvider": "fieldValue",
+              "value": "={{ $json.chatInput }}"
+            }
+          ]
+        }
+      },
+      "id": "566851f6-2ade-4f38-9b08-cecf7026e322",
+      "name": "Order Product",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        580,
+        200
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "toolDescription": "Get the order status.",
+        "url": "https://n8n.io/webhook/get-orders"
+      },
+      "id": "274ef1b5-8655-4646-aa2a-301ddd9bb21a",
+      "name": "Get Order",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        700,
+        200
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hellooo! 👋 My name is Pizzaro 🍕. I'm here to help with your pizza order. How can I assist you?\n\n📣 INFO: If you’d like to order a pizza, please include your name + pizza type + quantity. Thank you!",
+        "options": {}
+      },
+      "id": "9b02b040-872c-460b-83d9-c2cfe9c7c2ef",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -80,
+        -120
+      ],
+      "webhookId": "d925cc6e-6dd7-4459-a917-e68d57ab0e2a",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "=Your name is Pizzaro, and you are an assistant for handling customer pizza orders.\n\n1. If a customer asks about the menu, provide information on the available products.\n2. If a customer is placing an order, confirm the order details, inform them that the order is being processed, and thank them.\n3. If a customer inquires about their order status, provide the order date, pizza type, and quantity."
+        }
+      },
+      "id": "957fed65-fb01-45aa-8278-77d2dc04fd09",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        160,
+        -120
+      ],
+      "executeOnce": false,
+      "typeVersion": 1.6
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-20T20:29:10.887Z",
+  "versionId": "0d288ecd-1a92-4305-a80b-75b3dbeca58b"
+}
