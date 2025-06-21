@@ -1,0 +1,96 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create a short URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-19T17:24:59.313Z",
+  "id": "ZWxPgVmxCsOphSWI",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "shlink",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "917e2d55-4671-4d66-a219-13e8ee344b1c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jump.whitelabel.lat/rest/v3/short-urls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"longUrl\": \"https://ejemplo.com\",\n  \"customSlug\": \"opcional\",\n  \"domain\": \"jump.whitelabel.lat\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "1685f8ec-6662-4894-be84-c2d486ce66ff",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "lBmDBKRAyDIgBZk6",
+          "name": "ShLink jump"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "longUrl": "https://automation.whitelabel.lat/workflow/ZWxPgVmxCsOphSWI/844c42",
+        "additionalFields": {
+          "customSlug": "n8n"
+        }
+      },
+      "type": "n8n-nodes-shlink-io.shlink",
+      "typeVersion": 1,
+      "position": [
+        160,
+        160
+      ],
+      "id": "844c42c0-08de-4b32-b27b-5be92df1c76d",
+      "name": "Create a short URL",
+      "credentials": {
+        "shlinkApi": {
+          "id": "FPhfZ8w2G5aYqCZb",
+          "name": "Shlink account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-19T17:35:23.079Z",
+  "versionId": "e67de5ad-e488-410d-b002-1e6f054c4c5c"
+}
