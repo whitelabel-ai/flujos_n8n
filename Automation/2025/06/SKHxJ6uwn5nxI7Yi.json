@@ -38,12 +38,23 @@
       "main": [
         [
           {
-            "node": "Telegram",
+            "node": "Google Docs",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Google Docs",
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
             "type": "main",
             "index": 0
           }
@@ -179,7 +190,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        0,
+        300,
         180
       ],
       "id": "4f2eb307-67f3-4fc7-b7f0-d19225c8a8ad",
@@ -208,12 +219,25 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        0,
+        220,
         0
       ],
       "id": "116df336-17b5-44e1-aa6a-9b961d232ebf",
       "name": "Google Docs",
       "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const maxLength = 4000;\nconst result = [];\n\nfor (const item of items) {\n  const resumen = item.json.Resumen;\n\n  if (typeof resumen === 'string' && resumen.length > maxLength) {\n    // Dividir en partes de 4000 caracteres\n    for (let i = 0; i < resumen.length; i += maxLength) {\n      result.push({\n        json: {\n          ...item.json,\n          Resumen: resumen.slice(i, i + maxLength)\n        }\n      });\n    }\n  } else {\n    // Si no excede el límite, dejar igual\n    result.push(item);\n  }\n}\n\nreturn result;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        180
+      ],
+      "id": "343d82d2-f302-4cd7-a5f0-51250e094a49",
+      "name": "Code"
     }
   ],
   "pinData": {},
@@ -226,6 +250,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-12T18:57:02.882Z",
-  "versionId": "14742968-5465-42f6-870c-225b609a57ec"
+  "updatedAt": "2025-06-24T03:38:18.116Z",
+  "versionId": "51f0fd38-f994-429b-9207-7eff20337b0f"
 }
