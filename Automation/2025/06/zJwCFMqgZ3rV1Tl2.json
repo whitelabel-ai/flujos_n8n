@@ -99,22 +99,6 @@
         ]
       ]
     },
-    "Set Visited URLs": {
-      "main": [
-        []
-      ]
-    },
-    "Filter Unvisited URLs": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "HTTP Request2": {
       "main": [
         [
@@ -131,118 +115,6 @@
         [
           {
             "node": "1. Initialize State1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items1": {
-      "main": [
-        [],
-        [
-          {
-            "node": "Filter Unvisited URLs",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request3": {
-      "main": [
-        [
-          {
-            "node": "Code5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code5": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Code4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Initialize1": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "1. Initialize State": {
-      "main": [
-        [
-          {
-            "node": "2. Is Queue Empty?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "2. Is Queue Empty?": {
-      "main": [
-        [
-          {
-            "node": "3. Get Next URL from Queue",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "6. Final Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "3. Get Next URL from Queue": {
-      "main": [
-        [
-          {
-            "node": "4. HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "4. HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "5. Extract Content & Find New Links",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "5. Extract Content & Find New Links": {
-      "main": [
-        [
-          {
-            "node": "2. Is Queue Empty?",
             "type": "main",
             "index": 0
           }
@@ -269,7 +141,13 @@
             "index": 0
           }
         ],
-        []
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "3. Get Next URL from Queue1": {
@@ -298,7 +176,7 @@
       "main": [
         [
           {
-            "node": "Pinecone Vector Store",
+            "node": "2. Is Queue Empty?1",
             "type": "main",
             "index": 0
           }
@@ -307,13 +185,7 @@
     },
     "Pinecone Vector Store": {
       "main": [
-        [
-          {
-            "node": "2. Is Queue Empty?1",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Embeddings OpenAI": {
@@ -359,6 +231,12 @@
           }
         ]
       ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        []
+      ]
     }
   },
   "createdAt": "2025-06-13T03:39:21.763Z",
@@ -375,7 +253,7 @@
       "typeVersion": 1,
       "position": [
         -820,
-        -740
+        -780
       ],
       "id": "23650202-0b98-47fa-a121-72e36a209b6c",
       "name": "When clicking ‘Execute workflow’"
@@ -515,40 +393,6 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "name": "Set Visited URLs",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "id": "0515ada7-79ee-4c7f-b312-d5c7f5e75b6a",
-      "position": [
-        1860,
-        320
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.url }}",
-              "operation": "notContains",
-              "value2": "={{ $items('Set Visited URLs')[0].json.value }}"
-            }
-          ]
-        }
-      },
-      "name": "Filter Unvisited URLs",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "id": "ff5f886c-31f2-42d7-b4a7-93e7c95b5e71",
-      "position": [
-        2520,
-        220
-      ]
-    },
-    {
-      "parameters": {
         "url": "https://tailwindcss.com/docs",
         "options": {}
       },
@@ -556,7 +400,7 @@
       "typeVersion": 4.2,
       "position": [
         -640,
-        -740
+        -780
       ],
       "id": "c72ffa12-fa84-4752-9df7-d05fca0c227f",
       "name": "HTTP Request2"
@@ -569,162 +413,10 @@
       "typeVersion": 2,
       "position": [
         -480,
-        -740
+        -780
       ],
       "id": "b41efa80-12bc-4c33-a1d8-bb91afe43920",
       "name": "Code2"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        2300,
-        200
-      ],
-      "id": "c482ed9f-f23d-4cc0-978e-7e565da47aa0",
-      "name": "Loop Over Items1"
-    },
-    {
-      "parameters": {
-        "url": "=https://tailwindcss.com{{ $json.urls[0].url }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        2740,
-        220
-      ],
-      "id": "9ee54f1e-add5-4574-8903-fd4c49f9f1a8",
-      "name": "HTTP Request3"
-    },
-    {
-      "parameters": {
-        "jsCode": "const textContent = $input.first().json.contenido\nconst originUrl =  'https://tailwindcss.com' + $input.first().json.urls[1].url\n\nreturn [{\n  json: {\n    sourceUrl: originUrl,\n    content: textContent,\n  }\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3140,
-        0
-      ],
-      "id": "64b75982-4bfd-4606-ac5e-6071e0d3637f",
-      "name": "Code4"
-    },
-    {
-      "parameters": {
-        "jsCode": "const htmlString = $input.first().json.data;\n\n// Paso 1: Eliminar etiquetas no deseadas\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(//g, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, '')\n  .replace(/<meta[^>]*>/gi, '')\n  .replace(/<link[^>]*>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n'); // Quita todas las etiquetas restantes, dejando texto plano\n\n// Paso 2: Extraer texto plano limpio\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')  // Quita líneas vacías múltiples\n  .replace(/\\s{2,}/g, ' ')    // Espacios múltiples -> uno\n  .replace(/^\\s+|\\s+$/g, '')  // Quita espacios iniciales/finales\n  .trim();\n\n// Paso 3: Extraer enlaces válidos\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)<\\/a>/gi;\n\nconst isExcluded = (url) => {\n  const excludeExtensions = [\n    '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp',\n    '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip', '.rar', '.csv', '.woff2', '.ttf'\n  ];\n  const lower = url.toLowerCase();\n  return (\n    lower.startsWith('#') ||\n    lower.startsWith('javascript:') ||\n    excludeExtensions.some(ext => lower.includes(ext))\n  );\n};\n\nconst matches = [...htmlString.matchAll(urlRegex)];\nconst urls = matches\n  .map(([_, href, text]) => ({ nombre: text.trim(), url: href.trim() }))\n  .filter(link => link.url && link.nombre && !isExcluded(link.url));\n\nreturn [\n  {\n    json: {\n      contenido: plainText,\n      urls\n    }\n  }\n];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2920,
-        220
-      ],
-      "id": "84db60e0-3e54-4fd7-8822-1715fe6342c7",
-      "name": "Code5"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Iniciar el proceso con la URL semilla\n\nconst startUrl = 'https://tailwindcss.com/docs';\n\n// Inicializar las variables que mantendrán el estado\n$vars.urlsToVisit = [{ url: startUrl }]; // La cola de URLs a visitar\n$vars.visitedUrls = new Set(); // Un conjunto para las URLs ya visitadas\n\n// Devolver la lista inicial para que el bucle comience\nreturn $vars.urlsToVisit;"
-      },
-      "name": "Initialize1",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2120,
-        200
-      ],
-      "id": "18192f43-2af1-43a5-b39a-2b7de2143509"
-    },
-    {
-      "parameters": {
-        "jsCode": "/*\n  Este nodo prepara todo para empezar.\n  Crea un 'estado' inicial que se pasará a través del flujo.\n*/\n\nconst startUrl = 'https://tailwindcss.com/docs';\n\nconst initialState = {\n  // La lista de URLs que faltan por visitar (nuestra cola de trabajo)\n  urls_to_visit: [startUrl],\n  \n  // Un array de URLs que ya hemos procesado para no repetirlas\n  visited_urls: [], // <-- ESTE ES EL CAMBIO MÁS IMPORTANTE\n  \n  // Aquí guardaremos todo el contenido que extraigamos\n  all_content: [],\n\n  // La URL que estamos procesando en la iteración actual\n  current_url: null\n};\n\nreturn initialState;"
-      },
-      "name": "1. Initialize State",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2460,
-        -420
-      ],
-      "id": "72b8cf07-3c2d-48e8-b379-219c71d713d8"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $json.urls_to_visit.length }}",
-              "operation": "larger"
-            }
-          ]
-        }
-      },
-      "name": "2. Is Queue Empty?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        2740,
-        -440
-      ],
-      "id": "a60cc59a-6cd2-448e-82e0-24408efb2722"
-    },
-    {
-      "parameters": {
-        "jsCode": "/*\n  Este nodo actúa como el gestor de la cola.\n  1. Toma la siguiente URL de la lista 'urls_to_visit'.\n  2. La elimina de la cola.\n  3. La añade a la lista 'visited_urls' para no volver a procesarla.\n  4. Pasa la URL actual al siguiente nodo para la petición HTTP.\n*/\n\nconst state = $input.first().json;\n\n// Sacamos la primera URL de la cola de trabajo\nconst nextUrl = state.urls_to_visit.shift();\n\n// La añadimos al registro de visitadas (usando .push() para el array)\nstate.visited_urls.push(nextUrl);\n\n// La establecemos como la URL actual para esta iteración\nstate.current_url = nextUrl;\n\nreturn state;"
-      },
-      "name": "3. Get Next URL from Queue",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2920,
-        -440
-      ],
-      "id": "bcfb4580-9621-4ea1-a054-11d34f1708a2"
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.current_url }}",
-        "options": {
-          "response": {}
-        }
-      },
-      "name": "4. HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3140,
-        -440
-      ],
-      "id": "ef81ea77-bb14-4ef7-9884-4446d4830b75"
-    },
-    {
-      "parameters": {
-        "jsCode": "/*\n  Este es el corazón del scraper.\n  1. Procesa el HTML de la página actual.\n  2. Extrae el contenido y lo guarda en 'all_content'.\n  3. Extrae todos los enlaces nuevos.\n  4. Filtra los enlaces para quedarse solo con los válidos y nuevos.\n  5. Añade los enlaces nuevos a la cola 'urls_to_visit' para procesarlos después.\n*/\n\n// FIX 1: Leemos el estado del nodo ANTERIOR al HTTP Request para no perder las listas.\nconst state = $items(\"3. Get Next URL from Queue\")[0].json;\n\n// Leemos el resultado del HTTP Request (el input directo a este nodo).\nconst htmlString = $input.first().json.data;\n\n// Si la petición HTTP falló, el htmlString no existirá. En ese caso, solo devolvemos el estado.\nif (!htmlString) {\n  return state;\n}\n\n// --- EXTRACCIÓN DE CONTENIDO ---\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n');\n\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\n// Ahora 'state.all_content' sí existe, porque lo recuperamos al principio del código.\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText\n});\n\n// --- EXTRACCIÓN Y FILTRADO DE ENLACES ---\nconst BASE_URL = 'https://tailwindcss.com';\nconst urlRegex = /<a[^>]*href=[\\\"']([^\\\"']+)[\\\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst newLinks = matches\n  .map(([_, href]) => {\n    // FIX 2: Validamos que el 'href' no esté vacío antes de crear la URL.\n    if (!href) {\n      return null;\n    }\n    try {\n      return new URL(href, BASE_URL).href; // Convierte a URL absoluta\n    } catch (e) {\n      return null; // Descarta URLs mal formadas\n    }\n  })\n  .filter(url => {\n    if (!url) return false;\n    const excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\n    const lowerUrl = url.toLowerCase();\n    // Debe ser del mismo dominio y no ser un archivo\n    return url.startsWith(BASE_URL) && !excludeExtensions.some(ext => lowerUrl.endsWith(ext));\n  });\n\n// --- ACTUALIZACIÓN DE LA COLA DE TRABAJO ---\nfor (const link of newLinks) {\n  // Solo añadimos la URL si NUNCA la hemos visto antes (usando .includes() para el array)\n  if (!state.visited_urls.includes(link) && !state.urls_to_visit.includes(link)) {\n    state.urls_to_visit.push(link);\n  }\n}\n\nreturn state;"
-      },
-      "name": "5. Extract Content & Find New Links",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3360,
-        -440
-      ],
-      "id": "19bcac94-8222-469a-91e0-9cd49d42d670"
-    },
-    {
-      "parameters": {},
-      "name": "6. Final Result",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3140,
-        -200
-      ],
-      "id": "af3af537-d201-45b1-8358-391bce3ccfc3"
     },
     {
       "parameters": {
@@ -756,7 +448,7 @@
       "typeVersion": 2,
       "position": [
         -320,
-        -740
+        -780
       ],
       "id": "fc921187-c6e6-461e-86c9-511bd3223d96"
     },
@@ -776,7 +468,7 @@
       "typeVersion": 1,
       "position": [
         -140,
-        -740
+        -780
       ],
       "id": "cb6124d0-b691-41f3-9d59-1851fa971ea6"
     },
@@ -789,7 +481,7 @@
       "typeVersion": 2,
       "position": [
         80,
-        -760
+        -800
       ],
       "id": "55a7c213-7205-4fea-a5cb-16a20459cb0f"
     },
@@ -811,7 +503,7 @@
     },
     {
       "parameters": {
-        "jsCode": "/*\n  Este es el corazón del scraper.\n  1. Procesa el HTML de la página actual.\n  2. Extrae el contenido y lo guarda en 'all_content'.\n  3. Extrae todos los enlaces nuevos.\n  4. Filtra los enlaces para quedarse solo con los válidos y nuevos.\n  5. Añade los enlaces nuevos a la cola 'urls_to_visit' para procesarlos después.\n*/\n\n// Leemos el estado del nodo ANTERIOR al HTTP Request para no perder las listas.\nconst state = $items(\"3. Get Next URL from Queue1\")[0].json;\n\n// Leemos el resultado del HTTP Request (el input directo a este nodo).\nconst htmlString = $input.first().json.data;\n\n// Si la petición HTTP falló, el htmlString no existirá. En ese caso, solo devolvemos el estado.\nif (!htmlString) {\n  return state;\n}\n\n// --- EXTRACCIÓN DE CONTENIDO ---\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n');\n\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\n// Ahora 'state.all_content' sí existe, porque lo recuperamos al principio del código.\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText\n});\n\n// --- EXTRACCIÓN Y FILTRADO DE ENLACES ---\nconst BASE_URL = 'https://tailwindcss.com';\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst newLinks = matches\n  .map(([_, href]) => {\n    // Validamos que el 'href' no esté vacío antes de crear la URL.\n    if (!href) {\n      return null;\n    }\n    try {\n      return new URL(href, BASE_URL).href; // Convierte a URL absoluta\n    } catch (e) {\n      return null; // Descarta URLs mal formadas\n    }\n  })\n  .filter(url => {\n    if (!url) return false;\n    const excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\n    const lowerUrl = url.toLowerCase();\n    // Debe ser del mismo dominio y no ser un archivo\n    return url.startsWith(BASE_URL) && !excludeExtensions.some(ext => lowerUrl.endsWith(ext));\n  });\n\n// --- ACTUALIZACIÓN DE LA COLA DE TRABAJO ---\nfor (const link of newLinks) {\n  // Solo añadimos la URL si NUNCA la hemos visto antes (usando .includes() para el array)\n  if (!state.visited_urls.includes(link) && !state.urls_to_visit.includes(link)) {\n    state.urls_to_visit.push(link);\n  }\n}\n\nreturn state;\n"
+        "jsCode": "/*\n  Este es el corazón del scraper.\n  1. Procesa el HTML de la página actual.\n  2. Extrae el contenido y lo guarda en 'all_content'.\n  3. Extrae todos los enlaces nuevos.\n  4. Filtra los enlaces para quedarse solo con los válidos y nuevos.\n  5. Añade los enlaces nuevos a la cola 'urls_to_visit' para procesarlos después.\n*/\n\n// Leemos el estado del nodo ANTERIOR al HTTP Request para no perder las listas.\nconst state = $items(\"3. Get Next URL from Queue1\")[0].json;\n\n// Leemos el resultado del HTTP Request (el input directo a este nodo).\nconst htmlString = $input.first().json.data;\n\n// Si la petición HTTP falló, el htmlString no existirá. En ese caso, solo devolvemos el estado.\nif (!htmlString) {\n  return state;\n}\n\n// --- EXTRACCIÓN DE CONTENIDO ---\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n');\n\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\n// Ahora 'state.all_content' sí existe, porque lo recuperamos al principio del código.\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText\n});\n\n// --- EXTRACCIÓN Y FILTRADO DE ENLACES ---\nconst BASE_URL = 'https://tailwindcss.com/docs';\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst newLinks = matches\n  .map(([_, href]) => {\n    // Validamos que el 'href' no esté vacío antes de crear la URL.\n    if (!href) {\n      return null;\n    }\n    try {\n      return new URL(href, BASE_URL).href; // Convierte a URL absoluta\n    } catch (e) {\n      return null; // Descarta URLs mal formadas\n    }\n  })\n  .filter(url => {\n    if (!url) return false;\n    const excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\n    const lowerUrl = url.toLowerCase();\n    // Debe ser del mismo dominio y no ser un archivo\n    return url.startsWith(BASE_URL) && !excludeExtensions.some(ext => lowerUrl.endsWith(ext));\n  });\n\n// --- ACTUALIZACIÓN DE LA COLA DE TRABAJO ---\nfor (const link of newLinks) {\n  // Solo añadimos la URL si NUNCA la hemos visto antes (usando .includes() para el array)\n  if (!state.visited_urls.includes(link) && !state.urls_to_visit.includes(link)) {\n    state.urls_to_visit.push(link);\n  }\n}\n\nreturn state;\n"
       },
       "name": "5. Extract Content & Find New Links1",
       "type": "n8n-nodes-base.code",
@@ -836,8 +528,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.2,
       "position": [
-        720,
-        -760
+        220,
+        -540
       ],
       "id": "97be25f0-f5c2-4db1-a1c3-0862a8b41f1d",
       "name": "Pinecone Vector Store",
@@ -855,8 +547,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        780,
-        -540
+        220,
+        -300
       ],
       "id": "635d6d15-34bc-4ab3-aaaf-7fef7b7af3bc",
       "name": "Embeddings OpenAI",
@@ -874,8 +566,8 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        960,
-        -540
+        440,
+        -380
       ],
       "id": "e2e0a1fe-445e-42a7-8b30-0f541330b578",
       "name": "Default Data Loader"
@@ -888,8 +580,8 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        980,
-        -400
+        460,
+        -220
       ],
       "id": "d03d74c4-be6a-4443-8c86-0170ee49a45f",
       "name": "Character Text Splitter"
@@ -918,6 +610,19 @@
           "name": "hola@whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -660,
+        40
+      ],
+      "id": "97c0b177-0327-4d83-82c9-0eef49acc54c",
+      "name": "Loop Over Items2"
     }
   ],
   "pinData": {},
@@ -930,6 +635,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-18T06:37:30.802Z",
-  "versionId": "7fc441a5-ff7f-4a4d-8050-bad57609a921"
+  "updatedAt": "2025-06-26T21:50:30.576Z",
+  "versionId": "b4e10b52-b365-4ec8-ac9c-c44d40a723b7"
 }
