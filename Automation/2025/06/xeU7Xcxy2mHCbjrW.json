@@ -274,7 +274,35 @@
     "Switch1": {
       "main": [
         [],
-        []
+        [
+          {
+            "node": "Get many child blocks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many child blocks": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Reply to a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -896,7 +924,7 @@
       "parameters": {
         "pageId": {
           "__rl": true,
-          "value": "={{ $('Search Projet').item.json.url || $('Create Projet').item.json.url }}",
+          "value": "={{  $('Create Projet').item.json.url || $('If Projet').item.json.url }}",
           "mode": "url"
         },
         "title": "=📄 Preguntas aclaratorias",
@@ -1184,6 +1212,69 @@
       ],
       "id": "d8c40eda-829c-47d3-9181-30b1f22f16e2",
       "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "resource": "block",
+        "operation": "getAll",
+        "blockId": {
+          "__rl": true,
+          "value": "={{ $json[\"Preguntas aclaratorias\"] }}",
+          "mode": "url"
+        },
+        "returnAll": true,
+        "fetchNestedBlocks": true
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        40,
+        420
+      ],
+      "id": "48d2a2af-48e1-4c77-a8cb-4623dd55557c",
+      "name": "Get many child blocks",
+      "credentials": {
+        "notionApi": {
+          "id": "jWWM1rTAyxYomO7Y",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get data from previous Notion Trigger node\nconst notionData = $('Notion Trigger').first().json;\n\nif (!notionData) {\n  throw new Error('No data received from Notion Trigger node');\n}\n\nconst projectName = notionData.Proyecto || 'Proyecto sin nombre';\nconst companyName = notionData.Empresa || 'Empresa no especificada';\nconst clientEmail = notionData.Correo || '';\nconst clientName = notionData.Cliente || 'Cliente';\nconst questionsLink = notionData['Preguntas aclaratorias'] || '';\nconst currentStatus = notionData['Estado actual'] || 'Estado no especificado';\nconst logoUrl = notionData['Logo'] || '';\n\n// Bloques de preguntas\nconst blocks = $input.all()?.flatMap(item => item.json) || [];\n\nlet emailContent = '';\nlet sectionTitle = '';\nlet inToggle = false;\nlet toggleId = '';\nlet questionNumber = 1;\n\nif (blocks && blocks.length > 0) {\n  for (const block of blocks) {\n    if (!block.content) continue;\n\n    if (block.type === 'heading_1') {\n      emailContent += `<h2 style=\"color: #2c3e50; margin-top: 30px;\">${block.content}</h2>`;\n    } else if (block.type === 'heading_2') {\n      sectionTitle = block.content;\n      questionNumber = 1;\n      emailContent += `\n        <div style=\"margin-top: 25px;\">\n          <h3 style=\"color: #1f3b57; border-bottom: 1px solid #ccc; padding-bottom: 5px;\">📌 ${sectionTitle}</h3>\n        </div>\n      `;\n    } else if (block.type === 'toggle') {\n      inToggle = true;\n      toggleId = block.id;\n    } else if (inToggle && block.parent?.type === 'block_id') {\n      emailContent += `\n        <div style=\"margin: 20px 0; padding: 16px 20px; background: #f0f8ff; border-left: 4px solid #3498db; border-radius: 8px;\">\n          <p style=\"margin: 0 0 8px; font-weight: 500; color: #1f3b57;\">\n            ${questionNumber}. ${block.content}\n          </p>\n          <div style=\"border: 1px dashed #3498db; background: #ffffff; padding: 12px; border-radius: 6px; margin-top: 10px;\">\n            <p style=\"color: #888; margin: 0;\">\n              ✍️ <i>Responde debajo de esta línea:</i>\n            </p>\n            <p style=\"color: #3498db;\"><br><br><br></p>\n          </div>\n        </div>\n      `;\n      questionNumber++;\n    } else if (inToggle && (!block.parent || block.parent?.type !== 'block_id')) {\n      inToggle = false;\n      toggleId = '';\n    }\n  }\n\n  if (inToggle) {\n    inToggle = false;\n    toggleId = '';\n  }\n} else {\n  emailContent += `<p style=\"color: #e74c3c;\">No se encontraron preguntas en la página de Notion.</p>`;\n}\n\n\n// HTML final\nconst htmlEmail = `\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>${projectName} - ${companyName}</title>\n  <style>\n    body {\n      font-family: 'Segoe UI', sans-serif;\n      background: #f4f6f8;\n      padding: 0;\n      margin: 0;\n    }\n    .container {\n      max-width: 800px;\n      margin: auto;\n      background: #ffffff;\n      padding: 30px;\n      border-radius: 12px;\n      box-shadow: 0 5px 20px rgba(0,0,0,0.08);\n    }\n    .header {\n      text-align: center;\n      margin-bottom: 20px;\n    }\n    .header img {\n      max-height: 60px;\n      margin-bottom: 10px;\n    }\n    .header h1 {\n      margin: 0;\n      font-size: 24px;\n      color: #1f3b57;\n    }\n    .instructions {\n      background: #eaf4ff;\n      border-left: 4px solid #3498db;\n      padding: 15px;\n      border-radius: 8px;\n      color: #2c3e50;\n      margin-top: 10px;\n      margin-bottom: 30px;\n    }\n    .instructions p {\n      margin: 8px 0 0 0;\n      font-size: 14px;\n    }\n    .meta {\n      background-color: #f1f3f5;\n      padding: 15px;\n      border-radius: 8px;\n      font-size: 14px;\n      margin-bottom: 25px;\n    }\n    .meta div {\n      margin-bottom: 6px;\n    }\n    .meta span {\n      font-weight: bold;\n      color: #2c3e50;\n    }\n    .footer {\n      text-align: center;\n      font-size: 12px;\n      color: #7f8c8d;\n      margin-top: 30px;\n    }\n    a {\n      color: #3498db;\n      text-decoration: none;\n    }\n    .cta-button {\n      margin-top: 40px;\n      text-align: center;\n    }\n    .cta-button a {\n      background-color: #3498db;\n      color: white;\n      padding: 12px 24px;\n      border-radius: 6px;\n      text-decoration: none;\n      font-weight: 500;\n      display: inline-block;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      ${logoUrl ? `<img src=\"${logoUrl}\" alt=\"Logo de ${companyName}\"/>` : ''}\n      <h1>${projectName}</h1>\n    </div>\n\n    <div class=\"instructions\">\n      <strong>📩 ¿Cómo responder?</strong>\n      <p>\n        Haz clic en <strong>“Responder”</strong> a este correo y escribe tus respuestas justo debajo de cada pregunta.<br>\n        No es necesario adjuntar ningún archivo. ¡Gracias por tu colaboración! 🙌\n      </p>\n    </div>\n\n    <div class=\"meta\">\n      <div><span>Cliente:</span> ${clientName}</div>\n      <div><span>Empresa:</span> ${companyName}</div>\n      <div><span>Estado actual:</span> ${currentStatus}</div>\n      ${questionsLink ? `<div><span>Ver en Notion:</span> <a href=\"${questionsLink}\" target=\"_blank\">Enlace</a></div>` : ''}\n    </div>\n\n    ${emailContent}\n\n    ${questionsLink ? `\n      <div class=\"cta-button\">\n        <p style=\"color: #7f8c8d;\">¿Prefieres responder desde un formulario?</p>\n        <a href=\"${questionsLink}\" target=\"_blank\">Completar formulario en línea</a>\n      </div>\n    ` : ''}\n\n    <div class=\"footer\">\n      <p>Este mensaje fue generado automáticamente el ${new Date().toLocaleString()}.</p>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn [{\n  json: {\n    messageID: $('Notion Trigger').first().json.threadId,\n    subject: `${projectName} - Preguntas para completar`,\n    html: htmlEmail,\n    text: `Resumen de preguntas para ${projectName}. Por favor responde desde el modo HTML.`,\n    to: clientEmail,\n    cc: \"\",\n    bcc: \"\"\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        420
+      ],
+      "id": "79ae6655-3609-4a41-8327-e16b3cf36256",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $json.messageID }}",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        500,
+        440
+      ],
+      "id": "dd77a6dc-64f6-442f-9c5d-309ef4aeab6e",
+      "name": "Reply to a message",
+      "webhookId": "37a3ea6f-4281-45c1-971b-df2066736730",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "No30HHponDPtNWfb",
+          "name": "hola@whitelabel.lat"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1271,6 +1362,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-25T19:55:49.656Z",
-  "versionId": "78cbfc81-77a9-4437-aaca-e1cf75b86577"
+  "updatedAt": "2025-06-26T01:23:59.755Z",
+  "versionId": "5c1e1e26-a70f-42a8-b205-ac8a14c62776"
 }
