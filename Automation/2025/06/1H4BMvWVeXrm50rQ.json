@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Enviar texto",
             "type": "main",
             "index": 0
           }
@@ -18,17 +18,6 @@
           {
             "node": "AI Agent",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Microsoft Outlook": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -244,8 +233,19 @@
       "main": [
         [
           {
-            "node": "Zoom: Get data of last meeting",
+            "node": "AI Agent",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agenda Adoreal": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -270,7 +270,7 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        0,
+        -460,
         0
       ],
       "id": "d6a46e04-d1dd-4d03-8566-441e86477098",
@@ -281,11 +281,16 @@
           "id": "xrf1D2O5qOceQaVy",
           "name": "Valeia_Transcriber"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
-        "options": {}
+        "promptType": "define",
+        "text": "Que eventos tengo?",
+        "options": {
+          "systemMessage": "=Eres el asistente personal de Andrés. Tu función es informarle sobre todos los eventos que tiene usando la herramienta \"Agenda Adoreal\"\n\n## CONTEXTO TEMPORAL\nFecha y hora actual: {{ $now.format('cccc, yyyy-MM-dd HH:mm') }}\nZona horaria: {{ $now.format('z') }}"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
@@ -318,30 +323,6 @@
     },
     {
       "parameters": {
-        "resource": "event",
-        "limit": 10,
-        "filters": {
-          "custom": ""
-        }
-      },
-      "type": "n8n-nodes-base.microsoftOutlookTool",
-      "typeVersion": 2,
-      "position": [
-        380,
-        220
-      ],
-      "id": "10d386a2-a598-4dc1-abb2-95a9a5c9bc56",
-      "name": "Microsoft Outlook",
-      "webhookId": "491316bf-70ef-4f64-b3a3-385a48a86f50",
-      "credentials": {
-        "microsoftOutlookOAuth2Api": {
-          "id": "GkZE7g6pqvN5dLci",
-          "name": "Microsoft Outlook account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "model": "gpt-4o",
         "options": {}
       },
@@ -360,8 +341,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -1560,
-        940
+        -20,
+        0
       ],
       "typeVersion": 1
     },
@@ -789,6 +770,52 @@
       ],
       "typeVersion": 4.2,
       "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "limit": 10,
+        "filters": {
+          "custom": ""
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlookTool",
+      "typeVersion": 2,
+      "position": [
+        380,
+        220
+      ],
+      "id": "10d386a2-a598-4dc1-abb2-95a9a5c9bc56",
+      "name": "Agenda Adoreal",
+      "webhookId": "491316bf-70ef-4f64-b3a3-385a48a86f50",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "GkZE7g6pqvN5dLci",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "remoteJid": "57304580963",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        -180
+      ],
+      "id": "5cb33384-264c-40f7-8f0c-47284f575340",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "OFo9A7x3qE1W1DKN",
+          "name": "Evolution account Pedro"
+        }
+      },
+      "disabled": true
     }
   ],
   "pinData": {
@@ -819,6 +846,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-10T16:23:07.828Z",
-  "versionId": "62b6b403-86e5-4210-bfdc-9ea7ba113441"
+  "updatedAt": "2025-06-26T05:33:46.365Z",
+  "versionId": "408e1215-456c-47be-88b3-333c11b9e07f"
 }
