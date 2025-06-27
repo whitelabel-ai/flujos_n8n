@@ -1238,8 +1238,8 @@
       "name": "Create Document Metadata Table",
       "credentials": {
         "postgres": {
-          "id": "ElxPjsmHZmtqJ1PV",
-          "name": "pg supabase"
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
         }
       }
     },
@@ -1259,8 +1259,8 @@
       "name": "Create Document Rows Table (for Tabular Data)",
       "credentials": {
         "postgres": {
-          "id": "ElxPjsmHZmtqJ1PV",
-          "name": "pg supabase"
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
         }
       }
     },
@@ -1413,7 +1413,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "-- Enable the pgvector extension to work with embedding vectors\n-- create extension vector; Ya esta activo\n\n-- Create a table to store your documents\ncreate table {{ $json.tableName }} (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(1536) -- 1536 works for OpenAI embeddings, change if needed\n);\n\n-- Create a function to search for documents\ncreate function match_{{ $json.tableName }} (\n  query_embedding vector(1536),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $$\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - ({{ $json.tableName }}.embedding <=> query_embedding) as similarity\n  from {{ $json.tableName }}\n  where metadata @> filter\n  order by {{ $json.tableName }}.embedding <=> query_embedding\n  limit match_count;\nend;\n$$;",
+        "query": "-- Enable the pgvector extension to work with embedding vectors\ncreate extension vector; --Ya esta activo\n\n-- Create a table to store your documents\ncreate table {{ $json.tableName }} (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(1536) -- 1536 works for OpenAI embeddings, change if needed\n);\n\n-- Create a function to search for documents\ncreate function match_{{ $json.tableName }} (\n  query_embedding vector(1536),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $$\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - ({{ $json.tableName }}.embedding <=> query_embedding) as similarity\n  from {{ $json.tableName }}\n  where metadata @> filter\n  order by {{ $json.tableName }}.embedding <=> query_embedding\n  limit match_count;\nend;\n$$;",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1427,8 +1427,8 @@
       "alwaysOutputData": false,
       "credentials": {
         "postgres": {
-          "id": "ElxPjsmHZmtqJ1PV",
-          "name": "pg supabase"
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
         }
       }
     },
@@ -1757,7 +1757,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1720,
+        -1760,
         340
       ],
       "id": "6b112c30-2b12-49ab-80aa-7f14477c4406",
@@ -1770,7 +1770,7 @@
             {
               "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
               "name": "tableName",
-              "value": "test_rag",
+              "value": "tailwind_documentations",
               "type": "string"
             }
           ]
@@ -1809,7 +1809,7 @@
             {
               "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
               "name": "tableName",
-              "value": "documentos_drive_rag",
+              "value": "tailwind_documentations",
               "type": "string"
             }
           ]
@@ -2219,6 +2219,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-06-06T17:39:13.291Z",
-  "versionId": "613b8c48-a816-4f04-896e-30ffe43b89ec"
+  "updatedAt": "2025-06-27T17:48:47.353Z",
+  "versionId": "d5cafce3-a9e8-4b53-b838-75796ee0f4f6"
 }
