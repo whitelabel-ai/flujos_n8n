@@ -1,104 +1,6 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Markdown": {
-      "main": [
-        []
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
-      "main": [
-        []
-      ]
-    },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Code1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items": {
-      "main": [
-        [],
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "Code3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code3": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Code1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "HTTP Request2": {
       "main": [
         [
@@ -125,25 +27,7 @@
       "main": [
         [
           {
-            "node": "2. Is Queue Empty?1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "2. Is Queue Empty?1": {
-      "main": [
-        [
-          {
             "node": "3. Get Next URL from Queue1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Pinecone Vector Store",
             "type": "main",
             "index": 0
           }
@@ -176,6 +60,61 @@
       "main": [
         [
           {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
             "node": "2. Is Queue Empty?1",
             "type": "main",
             "index": 0
@@ -183,59 +122,261 @@
         ]
       ]
     },
-    "Pinecone Vector Store": {
-      "main": [
-        []
-      ]
-    },
-    "Embeddings OpenAI": {
-      "ai_embedding": [
-        [
-          {
-            "node": "Pinecone Vector Store",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Default Data Loader": {
-      "ai_document": [
-        [
-          {
-            "node": "Pinecone Vector Store",
-            "type": "ai_document",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Character Text Splitter": {
-      "ai_textSplitter": [
-        [
-          {
-            "node": "Default Data Loader",
-            "type": "ai_textSplitter",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "RESULTADO FINAL": {
+    "2. Is Queue Empty?1": {
       "main": [
         [
           {
-            "node": "Get many events",
+            "node": "3. Get Next URL from Queue1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Loop Over Items2": {
+    "Postgres PGVector Store": {
       "main": [
-        [],
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Document Metadata Table": {
+      "main": [
+        [
+          {
+            "node": "Create Document Rows Table (for Tabular Data)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Documents Table and Match Function": {
+      "main": [
+        [
+          {
+            "node": "Create Document Metadata Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table Name": {
+      "main": [
+        [
+          {
+            "node": "search Table name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search Table name": {
+      "main": [
+        [
+          {
+            "node": "Table exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table exist": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Documents Table and Match Function",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Table Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Document Rows Table (for Tabular Data)": {
+      "main": [
+        [
+          {
+            "node": "Insert Document Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Document Metadata": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
         []
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PGVector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "searchTableName": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table Name DELETE": {
+      "main": [
+        [
+          {
+            "node": "DELETE Documents Table and Match Function",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Table Name DELETE",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -248,159 +389,15 @@
   "name": "Documentation Agent",
   "nodes": [
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -820,
-        -780
-      ],
-      "id": "23650202-0b98-47fa-a121-72e36a209b6c",
-      "name": "When clicking ‘Execute workflow’"
-    },
-    {
       "parameters": {
-        "url": "https://tailwindcss.com/docs",
+        "url": "={{ $('Table Name').item.json.url }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        140,
-        0
-      ],
-      "id": "51cea27e-ac39-4d7d-909b-40e17e40d2be",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "html": "={{ $json.data }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.markdown",
-      "typeVersion": 1,
-      "position": [
-        240,
-        420
-      ],
-      "id": "540dbe7e-4665-496e-b4cc-625381d41689",
-      "name": "Markdown"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Te voy a pasar el contenido HTML de una página. Quiero que me devuelvas un JSON con exactamente dos campos:\n\ncontenido: un string con solo el texto plano, es decir, sin etiquetas HTML ni Markdown, sin clases, estilos, saltos de línea innecesarios, ni bloques de código como <pre>, <code>, etc. No debe incluir URLs, imágenes, ni descripciones técnicas de estilo o scripts. El texto debe ser completamente limpio y legible.\n\nurls: un array de objetos con la estructura { nombre: string, url: string }, donde nombre es el texto del enlace y url es la dirección a la que apunta. Incluye únicamente los enlaces que apuntan a vistas navegables de páginas web.\n\n❌ No incluyas en urls:\n\nEnlaces a imágenes (por ejemplo .jpg, .png, .svg, etc.)\n\nEnlaces a archivos descargables (como .pdf, .doc, .docx, .xls, .xlsx, .zip, .rar, .csv, etc.)\n\nEnlaces vacíos o con #\n\n✅ Solo incluye URLs que lleven a otras páginas en el navegador (por ejemplo /contacto, https://ejemplo.com/info, etc.).\n\nEl JSON debe estar correctamente estructurado y no debe contener ningún texto adicional, encabezado o explicación fuera del JSON.\n\nAquí está el contenido HTML que quiero procesar:\n{{ $json.data }}",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2,
-      "position": [
-        780,
-        420
-      ],
-      "id": "7cf0fa45-ae11-4093-9280-15dabffc5c2f",
-      "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4o-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        800,
-        600
-      ],
-      "id": "b6ca7b5d-85b9-4335-bf5e-51923e2e8b4e",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const htmlString = $input.first().json.data;\n\n// Paso 1: Eliminar etiquetas no deseadas\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<!--[\\s\\S]*?-->/g, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, '')\n  .replace(/<meta[^>]*>/gi, '')\n  .replace(/<link[^>]*>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n'); // Quita todas las etiquetas restantes, dejando texto plano\n\n// Paso 2: Extraer texto plano limpio\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')  // Quita líneas vacías múltiples\n  .replace(/\\s{2,}/g, ' ')    // Espacios múltiples -> uno\n  .replace(/^\\s+|\\s+$/g, '')  // Quita espacios iniciales/finales\n  .trim();\n\n// Paso 3: Extraer enlaces válidos\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)<\\/a>/gi;\n\nconst isExcluded = (url) => {\n  const excludeExtensions = [\n    '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp',\n    '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip', '.rar', '.csv', '.woff2', '.ttf'\n  ];\n  const lower = url.toLowerCase();\n  return (\n    lower.startsWith('#') ||\n    lower.startsWith('javascript:') ||\n    excludeExtensions.some(ext => lower.includes(ext))\n  );\n};\n\nconst matches = [...htmlString.matchAll(urlRegex)];\nconst urls = matches\n  .map(([_, href, text]) => ({ nombre: text.trim(), url: href.trim() }))\n  .filter(link => link.url && link.nombre && !isExcluded(link.url));\n\nreturn [\n  {\n    json: {\n      contenido: plainText,\n      urls\n    }\n  }\n];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        360,
-        0
-      ],
-      "id": "aee1a8fb-cd9f-4221-84b0-b18b92401f72",
-      "name": "Code"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        600,
-        60
-      ],
-      "id": "8393c568-58f5-43f2-b84f-7eedce76fb67",
-      "name": "Loop Over Items"
-    },
-    {
-      "parameters": {
-        "url": "=https://tailwindcss.com{{ $json.urls[0].url }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        820,
-        80
-      ],
-      "id": "e091cbdc-27e1-490b-94c9-00a62c2334f6",
-      "name": "HTTP Request1"
-    },
-    {
-      "parameters": {
-        "jsCode": "const textContent = $input.first().json.contenido\nconst originUrl =  'https://tailwindcss.com' + $input.first().json.urls[1].url\n\nreturn [{\n  json: {\n    sourceUrl: originUrl,\n    content: textContent,\n  }\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1160,
-        -120
-      ],
-      "id": "ffd99f20-26c5-4444-9a0a-42fc52d24cda",
-      "name": "Code1"
-    },
-    {
-      "parameters": {
-        "jsCode": "const htmlString = $input.first().json.data;\n\n// Paso 1: Eliminar etiquetas no deseadas\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<!--[\\s\\S]*?-->/g, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, '')\n  .replace(/<meta[^>]*>/gi, '')\n  .replace(/<link[^>]*>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n'); // Quita todas las etiquetas restantes, dejando texto plano\n\n// Paso 2: Extraer texto plano limpio\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')  // Quita líneas vacías múltiples\n  .replace(/\\s{2,}/g, ' ')    // Espacios múltiples -> uno\n  .replace(/^\\s+|\\s+$/g, '')  // Quita espacios iniciales/finales\n  .trim();\n\n// Paso 3: Extraer enlaces válidos\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)<\\/a>/gi;\n\nconst isExcluded = (url) => {\n  const excludeExtensions = [\n    '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp',\n    '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip', '.rar', '.csv', '.woff2', '.ttf'\n  ];\n  const lower = url.toLowerCase();\n  return (\n    lower.startsWith('#') ||\n    lower.startsWith('javascript:') ||\n    excludeExtensions.some(ext => lower.includes(ext))\n  );\n};\n\nconst matches = [...htmlString.matchAll(urlRegex)];\nconst urls = matches\n  .map(([_, href, text]) => ({ nombre: text.trim(), url: href.trim() }))\n  .filter(link => link.url && link.nombre && !isExcluded(link.url));\n\nreturn [\n  {\n    json: {\n      contenido: plainText,\n      urls\n    }\n  }\n];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        980,
-        80
-      ],
-      "id": "80097c11-3000-416e-8d1b-d3dea3b0fa52",
-      "name": "Code3"
-    },
-    {
-      "parameters": {
-        "url": "https://tailwindcss.com/docs",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        -640,
-        -780
+        696,
+        -680
       ],
       "id": "c72ffa12-fa84-4752-9df7-d05fca0c227f",
       "name": "HTTP Request2"
@@ -412,32 +409,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -480,
-        -780
+        916,
+        -680
       ],
       "id": "b41efa80-12bc-4c33-a1d8-bb91afe43920",
       "name": "Code2"
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "all_content",
-              "value": "={{$json.all_content}}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "RESULTADO FINAL",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "position": [
-        -220,
-        0
-      ],
-      "id": "28061e27-6892-4c94-bbb5-5d8420b4d94e"
     },
     {
       "parameters": {
@@ -447,10 +423,151 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -320,
-        -780
+        1136,
+        -680
       ],
       "id": "fc921187-c6e6-461e-86c9-511bd3223d96"
+    },
+    {
+      "parameters": {
+        "jsCode": "/*\n  Este nodo actúa como el gestor de la cola.\n  1. Toma la siguiente URL de la lista 'urls_to_visit'.\n  2. La elimina de la cola.\n  3. La añade a la lista 'visited_urls' para no volver a procesarla.\n  4. Pasa la URL actual al siguiente nodo para la petición HTTP.\n*/\n\nconst state = $input.first().json;\n\n// Sacamos la primera URL de la cola de trabajo\nconst nextUrl = state.urls_to_visit.shift();\n\n// La añadimos al registro de visitadas (usando .push() para el array)\nstate.visited_urls.push(nextUrl);\n\n// La establecemos como la URL actual para esta iteración\nstate.current_url = nextUrl;\n\nreturn state;\n"
+      },
+      "name": "3. Get Next URL from Queue1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1356,
+        -680
+      ],
+      "id": "55a7c213-7205-4fea-a5cb-16a20459cb0f"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.current_url }}",
+        "options": {
+          "response": {}
+        }
+      },
+      "name": "4. HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1576,
+        -855
+      ],
+      "id": "812cde99-5b00-4f22-a1b9-da0ca9cc2b1c"
+    },
+    {
+      "parameters": {
+        "jsCode": "/*\n  Este es el corazón del scraper.\n  Procesa, extrae contenido y encuentra nuevos links.\n*/\n\n// FUNCIÓN DE NORMALIZACIÓN\nconst normalizeUrl = (urlString) => {\n  if (!urlString) return null;\n  try {\n    const url = new URL(urlString);\n    url.hash = ''; // Elimina anclas (#...)\n\n    // Reconstruir sin query ni hash\n    let href = url.origin + url.pathname;\n\n    // Eliminar barra final incluso si pathname es '/'\n    if (href !== url.origin && href.endsWith('/')) {\n      href = href.slice(0, -1);\n    }\n\n    // Si tenía query params, los volvemos a incluir ordenados (opcional)\n    if (url.search) {\n      href += url.search;\n    }\n\n    return href;\n  } catch (e) {\n    return null;\n  }\n};\n\n// Leemos estado del nodo anterior\nconst state = $items(\"3. Get Next URL from Queue1\")[0].json;\n\n// HTML recibido\nconst htmlString = $input.first().json.data;\n\nif (!htmlString) return state;\n\n// --- LIMPIEZA DEL CONTENIDO ---\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n');\n\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText,\n});\n\n// --- EXTRACCIÓN Y FILTRADO DE ENLACES ---\nconst BASE_URL = 'https://tailwindcss.com/docs';\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\n\nconst newLinksSet = new Set(); // Para evitar duplicados\n\nfor (const [, href] of matches) {\n  if (!href) continue;\n  try {\n    const fullUrl = new URL(href, BASE_URL).href;\n    const normalized = normalizeUrl(fullUrl);\n    if (\n      normalized &&\n      normalized.startsWith(BASE_URL) &&\n      !excludeExtensions.some(ext => normalized.toLowerCase().endsWith(ext)) &&\n      !state.visited_urls.includes(normalized)\n    ) {\n      newLinksSet.add(normalized);\n    }\n  } catch (e) {\n    continue; // URL inválida, se ignora\n  }\n}\n\n// Unir las nuevas URLs con las que ya están en la cola, eliminando duplicados\nconst combinedUrls = [...state.urls_to_visit, ...newLinksSet];\nconst uniqueUrlsToVisit = [...new Set(combinedUrls)];\n\n// Filtramos por si alguna ya fue visitada (por seguridad)\nstate.urls_to_visit = uniqueUrlsToVisit.filter(url => !state.visited_urls.includes(url));\n\nreturn state;\n"
+      },
+      "name": "5. Extract Content & Find New Links1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1796,
+        -855
+      ],
+      "id": "88efe2a7-82be-4bf7-953a-f9efb8586ca6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2ac4b4dd-91ef-4a72-9edc-9e1578b731fd",
+              "name": "Url",
+              "value": "={{ $json.all_content[0].source }}",
+              "type": "string"
+            },
+            {
+              "id": "7ec1af15-21f2-4412-a736-62442e97b9b5",
+              "name": "Content",
+              "value": "={{ $json.all_content[0].content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2016,
+        -855
+      ],
+      "id": "f7a17c7a-a765-4631-8c5c-98a3637052d9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst state = $('5. Extract Content & Find New Links1').first().json;\n\nif ($('5. Extract Content & Find New Links1').first().json.all_content[0]) {\n  state.all_content = [];\n}\n\nreturn state;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2732,
+        -855
+      ],
+      "id": "6a315a35-014e-4f44-977c-1e1c56d3f85c",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "911de3db-e9aa-4032-b278-d0e8fb3a61a6",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        2236,
+        -635
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "def5c467-e949-4660-91b4-10221e4f6329",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2444,
+        -435
+      ]
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.Content }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "file_id",
+                "value": "={{ $json.Url }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "f30fcda5-c22d-43b0-adef-241a413d8e3a",
+      "name": "Default Data Loader1",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        2356,
+        -632.5
+      ]
     },
     {
       "parameters": {
@@ -467,162 +584,645 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -140,
-        -780
+        2952,
+        -680
       ],
-      "id": "cb6124d0-b691-41f3-9d59-1851fa971ea6"
-    },
-    {
-      "parameters": {
-        "jsCode": "/*\n  Este nodo actúa como el gestor de la cola.\n  1. Toma la siguiente URL de la lista 'urls_to_visit'.\n  2. La elimina de la cola.\n  3. La añade a la lista 'visited_urls' para no volver a procesarla.\n  4. Pasa la URL actual al siguiente nodo para la petición HTTP.\n*/\n\nconst state = $input.first().json;\n\n// Sacamos la primera URL de la cola de trabajo\nconst nextUrl = state.urls_to_visit.shift();\n\n// La añadimos al registro de visitadas (usando .push() para el array)\nstate.visited_urls.push(nextUrl);\n\n// La establecemos como la URL actual para esta iteración\nstate.current_url = nextUrl;\n\nreturn state;\n"
-      },
-      "name": "3. Get Next URL from Queue1",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        80,
-        -800
-      ],
-      "id": "55a7c213-7205-4fea-a5cb-16a20459cb0f"
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.current_url }}",
-        "options": {
-          "response": {}
-        }
-      },
-      "name": "4. HTTP Request1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        300,
-        -760
-      ],
-      "id": "812cde99-5b00-4f22-a1b9-da0ca9cc2b1c"
-    },
-    {
-      "parameters": {
-        "jsCode": "/*\n  Este es el corazón del scraper.\n  1. Procesa el HTML de la página actual.\n  2. Extrae el contenido y lo guarda en 'all_content'.\n  3. Extrae todos los enlaces nuevos.\n  4. Filtra los enlaces para quedarse solo con los válidos y nuevos.\n  5. Añade los enlaces nuevos a la cola 'urls_to_visit' para procesarlos después.\n*/\n\n// Leemos el estado del nodo ANTERIOR al HTTP Request para no perder las listas.\nconst state = $items(\"3. Get Next URL from Queue1\")[0].json;\n\n// Leemos el resultado del HTTP Request (el input directo a este nodo).\nconst htmlString = $input.first().json.data;\n\n// Si la petición HTTP falló, el htmlString no existirá. En ese caso, solo devolvemos el estado.\nif (!htmlString) {\n  return state;\n}\n\n// --- EXTRACCIÓN DE CONTENIDO ---\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n');\n\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\n// Ahora 'state.all_content' sí existe, porque lo recuperamos al principio del código.\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText\n});\n\n// --- EXTRACCIÓN Y FILTRADO DE ENLACES ---\nconst BASE_URL = 'https://tailwindcss.com/docs';\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst newLinks = matches\n  .map(([_, href]) => {\n    // Validamos que el 'href' no esté vacío antes de crear la URL.\n    if (!href) {\n      return null;\n    }\n    try {\n      return new URL(href, BASE_URL).href; // Convierte a URL absoluta\n    } catch (e) {\n      return null; // Descarta URLs mal formadas\n    }\n  })\n  .filter(url => {\n    if (!url) return false;\n    const excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\n    const lowerUrl = url.toLowerCase();\n    // Debe ser del mismo dominio y no ser un archivo\n    return url.startsWith(BASE_URL) && !excludeExtensions.some(ext => lowerUrl.endsWith(ext));\n  });\n\n// --- ACTUALIZACIÓN DE LA COLA DE TRABAJO ---\nfor (const link of newLinks) {\n  // Solo añadimos la URL si NUNCA la hemos visto antes (usando .includes() para el array)\n  if (!state.visited_urls.includes(link) && !state.urls_to_visit.includes(link)) {\n    state.urls_to_visit.push(link);\n  }\n}\n\nreturn state;\n"
-      },
-      "name": "5. Extract Content & Find New Links1",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        520,
-        -760
-      ],
-      "id": "88efe2a7-82be-4bf7-953a-f9efb8586ca6"
+      "id": "daac1730-7b8b-4c8a-8b86-ab671cc5f69c"
     },
     {
       "parameters": {
         "mode": "insert",
-        "pineconeIndex": {
-          "__rl": true,
-          "value": "tailwind-documentation",
-          "mode": "list",
-          "cachedResultName": "tailwind-documentation"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
-      "typeVersion": 1.2,
-      "position": [
-        220,
-        -540
-      ],
-      "id": "97be25f0-f5c2-4db1-a1c3-0862a8b41f1d",
-      "name": "Pinecone Vector Store",
-      "credentials": {
-        "pineconeApi": {
-          "id": "TjNb4QvfXePYJ8y9",
-          "name": "PineconeApi account"
+        "tableName": "tailwind_documentations",
+        "options": {
+          "columnNames": {
+            "values": {
+              "contentColumnName": "content"
+            }
+          }
         }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        220,
-        -300
-      ],
-      "id": "635d6d15-34bc-4ab3-aaaf-7fef7b7af3bc",
-      "name": "Embeddings OpenAI",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
-      "typeVersion": 1,
-      "position": [
-        440,
-        -380
-      ],
-      "id": "e2e0a1fe-445e-42a7-8b30-0f541330b578",
-      "name": "Default Data Loader"
-    },
-    {
-      "parameters": {
-        "chunkSize": 1500,
-        "chunkOverlap": 150
-      },
-      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
-      "typeVersion": 1,
-      "position": [
-        460,
-        -220
-      ],
-      "id": "d03d74c4-be6a-4443-8c86-0170ee49a45f",
-      "name": "Character Text Splitter"
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "calendar": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleCalendar",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
       "typeVersion": 1.3,
       "position": [
-        0,
-        0
+        2252,
+        -855
       ],
-      "id": "6f82a0fe-d0ce-4395-b5e1-c110924b48e6",
-      "name": "Get many events",
+      "id": "750f37d9-bddb-4c97-8437-22bb188c9112",
+      "name": "Postgres PGVector Store",
       "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "RMuQyYsn6eGZTZPX",
-          "name": "hola@whitelabel.lat"
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
         }
       }
     },
     {
       "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE {{ $('Table Name').item.json.tableName }}_metadata (\n    id TEXT PRIMARY KEY,\n    title TEXT,\n    url TEXT,\n    created_at TIMESTAMP DEFAULT NOW(),\n    schema TEXT\n);",
         "options": {}
       },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
       "position": [
-        -660,
-        40
+        -222,
+        -680
       ],
-      "id": "97c0b177-0327-4d83-82c9-0eef49acc54c",
-      "name": "Loop Over Items2"
+      "id": "e0a16c98-35e7-4833-a7aa-5f9aaa5ed169",
+      "name": "Create Document Metadata Table",
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE {{ $('Table Name').item.json.tableName }}_rows (\n    id SERIAL PRIMARY KEY,\n    dataset_id TEXT REFERENCES {{ $('Table Name').item.json.tableName }}_metadata(id),\n    row_data JSONB  -- Store the actual row data\n);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        256,
+        -680
+      ],
+      "id": "aae807cb-7ffe-48ea-b3ec-b06b3e9caf5e",
+      "name": "Create Document Rows Table (for Tabular Data)",
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Enable the pgvector extension to work with embedding vectors\n--create extension vector; --Ya esta activo\n\n-- Create a table to store your documents\ncreate table {{ $('Table Name').item.json.tableName }} (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(1536) -- 1536 works for OpenAI embeddings, change if needed\n);\n\n-- Create a function to search for documents\ncreate function match_{{ $('Table Name').item.json.tableName }}(\n  query_embedding vector(1536),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $$\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - ({{ $('Table Name').item.json.tableName }}.embedding <=> query_embedding) as similarity\n  from {{ $json.tableName }}\n  where metadata @> filter\n  order by {{ $('Table Name').item.json.tableName }}.embedding <=> query_embedding\n  limit match_count;\nend;\n$$;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        -700,
+        -680
+      ],
+      "id": "65412e9e-8670-4d92-abdc-92db00643381",
+      "name": "Create Documents Table and Match Function",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2b5fa507-cd73-4fd9-a388-dafb81269682",
+              "name": "message",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "4abdbb12-2f86-4a2f-a650-45b3851ebd92",
+              "name": "url",
+              "value": "={{ $json.message.text.extractUrl() }}",
+              "type": "string"
+            },
+            {
+              "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
+              "name": "=tableName",
+              "value": "={{ $json.message.text.extractUrl().extractDomain().split('.')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1360,
+        -780
+      ],
+      "id": "4d03b177-9ab9-4645-a02f-b9a8ae62710f",
+      "name": "Table Name"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('Table Name').item.json.tableName }}_metadata",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Table Name').item.json.url }}",
+            "url": "={{ $('Table Name').item.json.url }}",
+            "title": "={{ $('Table Name').item.json.tableName }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "schema",
+              "displayName": "schema",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        476,
+        -680
+      ],
+      "id": "0294309e-940b-4e1c-8a21-df3e10c4beb5",
+      "name": "Insert Document Metadata",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1800,
+        -880
+      ],
+      "id": "c0391082-ada3-409f-b96e-45bca27dc723",
+      "name": "Telegram Trigger",
+      "webhookId": "ce32e5c3-6eab-4e57-a34d-c42cde4f3313",
+      "credentials": {
+        "telegramApi": {
+          "id": "O9mvGRSt0wAuuL8T",
+          "name": "LinkSeeker"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT EXISTS (\n  SELECT FROM information_schema.tables \n  WHERE table_schema = 'public' \n    AND table_name = '{{ $json.tableName }}'\n);\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1140,
+        -780
+      ],
+      "id": "f78a13bd-ecc2-4175-b924-64f4a3c3e337",
+      "name": "search Table name",
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7051fee8-02e2-4f0c-8d5a-f3bd091eca69",
+              "leftValue": "={{ $json.exists }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -920,
+        -780
+      ],
+      "id": "7d38dfee-ada5-4214-b0ee-90241ffd1f79",
+      "name": "Table exist"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8f54308d-2a32-49ba-aebd-ec9144ac453d",
+              "leftValue": "={{ $json.message.text.extractUrl() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1580,
+        -880
+      ],
+      "id": "6e34e829-8155-4ffa-8324-1cc55d795107",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "=✨📚 **¡Tu documentación ya está lista!** 🚀\n\nHola 👋, buenas noticias: hemos cargado correctamente la documentación que solicitaste.\nAhora puedes consultarla directamente aquí 🧠💬\n\n🔍 Solo escribe tus preguntas como:\n\n* “¿Cómo se configura el modo oscuro?”\n* “Muéstrame un ejemplo de autenticación”\n* “¿Qué errores comunes hay?”\n\nEstamos listos para ayudarte a explorarla con facilidad y precisión 🤓📖\n\nSi necesitas otra documentación, también puedes compartirnos el enlace oficial para agregarla.\n\n¡Vamos a por ello! 💡🙌",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3172,
+        -680
+      ],
+      "id": "0e79920b-ae10-4a44-a5f2-de90fdceb779",
+      "name": "Send a text message",
+      "webhookId": "a391d488-652d-4e4e-a215-32b1006a1e8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "O9mvGRSt0wAuuL8T",
+          "name": "LinkSeeker"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0e884815-856f-49f7-91f1-67980c2c4e95",
+              "name": "prompt.user",
+              "value": "=user_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\n\ntableName: {{ $('Table Name').item.json.tableName }},\n\nmessage: {{ $('Table Name').item.json.message.replace(/https?:\\/\\/(?:www\\.)?([^\\/\\s]+)/g, '$1').replace(/\\.com|\\.org|\\.io|\\.dev|\\.net|\\.co/gi, '').replace(/\\/.*/g, '').replace('enlace','').replace('url','') }}\n",
+              "type": "string"
+            },
+            {
+              "id": "c6d4f18b-bc68-4a86-8d05-be94948607e4",
+              "name": "prompt.system",
+              "value": "=  Eres un agente experto en documentación técnica. Tu misión es asistir a desarrolladores y usuarios técnicos a consultar, buscar y entender documentación sobre tecnologías específicas, frameworks, librerías, herramientas o estructuras personalizadas.\n\n  Puedes acceder a:\n  - Una base de vectores (PGVector) con fragmentos de documentación, organizados en tablas. Cada tabla representa una documentación distinta.\n  - Una herramienta searchTableName que te permite buscar los nombres de todas las tablas disponibles para determinar qué documentaciones están cargadas.\n\n  Tu objetivo es ayudar al usuario a encontrar y explorar documentación almacenada en el sistema, de forma conversacional y precisa.\n\n  --- 🧠 Flujo general de razonamiento ---\n\n  1. Si el usuario ya mencionó la tecnología o documentación (por ejemplo, \"Tailwind\", \"NextAuth\", \"Stripe API\") y sabes qué tabla contiene esa documentación, puedes usar directamente la herramienta `PGVector Retrieval`.\n\n  2. Si **no conoces aún el `tableName`**:\n     - Ejecuta la herramienta `searchTableName` para obtener todos los nombres de tablas disponibles.\n     - Analiza los nombres y asócialos con las palabras clave que el usuario mencionó.\n     - Si encuentras una tabla relevante, guarda ese nombre como `tableName` y úsalo para la herramienta PGVector.\n     - Si no hay coincidencias, informa al usuario que no tienes esa documentación y solicita el enlace a la **documentación oficial** (no el sitio principal, sino la URL de la documentación técnica).\n\n  3. Mantén el contexto:\n     - Si el usuario ya está consultando una documentación, no preguntes otra vez qué documentación desea.\n     - Usa `tableName` activamente mientras esté en contexto.\n     - Si el usuario cambia de tema o tecnología, analiza y reinicia el flujo según corresponda.\n\n  4. Puedes responder preguntas específicas sobre secciones de la documentación (como instalación, configuración, autenticación, errores comunes, ejemplos, etc.) basándote en los fragmentos obtenidos por PGVector.\n\n  5. Si el usuario solicita documentación que **aún no está cargada**, responde amablemente:\n     - \"Actualmente no contamos con documentación sobre [tecnología mencionada].\"\n     - Pide que proporcione la URL directa de la documentación técnica para poder agregarla al sistema.\n     - Informa que una vez cargada, podrá consultarla aquí.\n\n  --- 🧰 Instrucciones de uso de herramientas ---\n\n  Tool: **searchTableName**\n  - Uso: Cuando el `tableName` aún no ha sido identificado.\n  - No requiere parámetros.\n  - Devuelve una lista de todas las tablas disponibles.\n  - Acción esperada: Analiza los nombres y determina cuál coincide mejor con el término o tecnología mencionada por el usuario.\n  - Guarda el nombre de la tabla como `tableName`.\n\n  Tool: **PGVector Retrieval (As Tool for AI Agent)**\n  - Uso: Solo cuando ya tienes definido un `tableName`.\n  - Parámetros:\n    - `tableName`: nombre exacto de la tabla donde está almacenada la documentación.\n  - El texto actual del usuario se utiliza automáticamente como `query` semántico para buscar en la documentación.\n  - Solo debes pasar el `tableName`. No es necesario pasar el query.\n  - Por ejemplo:\n    - Usuario: \"¿Cómo configuro dark mode en Tailwind?\"\n    - Acción: Si `tableName = tailwindcss`, llama a PGVector con ese nombre.\n\n  --- 🔁 Ejemplos de interacción ---\n\n  Usuario: \"¿Tienen documentación de Tailwind?\"\n  🔹 Acción: Llama a `searchTableName`, encuentra la tabla `tailwindcss`, guarda como `tableName`, y luego usa PGVector con ese tableName.\n\n  Usuario: \"Muéstrame cómo configurar autenticación en NextAuth\"\n  🔹 Acción: Verifica si ya estás trabajando con la documentación de `nextauth`. Si no, usa `searchTableName`, encuentra `nextauth`, y luego consulta esa tabla en PGVector.\n\n  Usuario: \"¿Tienen algo de Supabase?\"\n  🔹 Acción: Si `searchTableName` no devuelve ninguna tabla relevante, responde que no hay documentación cargada. Pide la URL directa de la documentación oficial.\n\n  Usuario: \"¿Qué dice sobre los breakpoints?\"\n  🔹 Acción: Si el `tableName` actual es `tailwindcss`, usa PGVector con ese nombre y deja que la pregunta fluya como query.\n\n  --- ✅ Reglas finales ---\n\n  - Nunca llames PGVector sin un `tableName`.\n  - Nunca pidas al usuario el nombre de la tabla, solo analiza o busca con `searchTableName`.\n  - Si no encuentras tabla coincidente, guía amablemente al usuario para enviar la URL de la documentación oficial.\n  - Siempre responde con claridad y sin tecnicismos innecesarios.\n  - Mantén la conversación centrada en ayudar a explorar la documentación cargada.\n\n--- 🔁 Encadenamiento de herramientas\n\nAntes de responder al usuario:\n\n- Si necesitas identificar el `tableName`, **primero ejecuta `searchTableName`**.\n- Luego analiza los resultados, guarda el `tableName`, y sin responder aún...\n- **Ejecuta directamente `PGVector Retrieval` con ese `tableName`.**\n- Solo después de haber ejecutado todas las herramientas necesarias, responde con el contenido solicitado.\n- No respondas con frases como: “Voy a buscar...”, “Consultando...”, “Usaré la herramienta...”.\n- Solo responde con resultados útiles y directos, como fragmentos de documentación o respuestas concretas.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -700,
+        -980
+      ],
+      "id": "5957dbb9-7ef6-46ce-8f82-1b91aa28bb27",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "81371960-eb65-47dd-8ae1-cf6258075725",
+              "name": "prompt.user",
+              "value": "=\nuser_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\n\nmessage: {{ $('Telegram Trigger').item.json.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "ff0a80e2-8914-4d97-bc7c-8eec215b1597",
+              "name": "prompt.system",
+              "value": "=  Eres un agente experto en documentación técnica. Tu misión es asistir a desarrolladores y usuarios técnicos a consultar, buscar y entender documentación sobre tecnologías específicas, frameworks, librerías, herramientas o estructuras personalizadas.\n\n  Puedes acceder a:\n  - Una base de vectores (PGVector) con fragmentos de documentación, organizados en tablas. Cada tabla representa una documentación distinta.\n  - Una herramienta searchTableName que te permite buscar los nombres de todas las tablas disponibles para determinar qué documentaciones están cargadas.\n\n  Tu objetivo es ayudar al usuario a encontrar y explorar documentación almacenada en el sistema, de forma conversacional y precisa.\n\n  --- 🧠 Flujo general de razonamiento ---\n\n  1. Si el usuario ya mencionó la tecnología o documentación (por ejemplo, \"Tailwind\", \"NextAuth\", \"Stripe API\") y sabes qué tabla contiene esa documentación, puedes usar directamente la herramienta `PGVector Retrieval`.\n\n  2. Si **no conoces aún el `tableName`**:\n     - Ejecuta la herramienta `searchTableName` para obtener todos los nombres de tablas disponibles.\n     - Analiza los nombres y asócialos con las palabras clave que el usuario mencionó.\n     - Si encuentras una tabla relevante, guarda ese nombre como `tableName` y úsalo para la herramienta PGVector.\n     - Si no hay coincidencias, informa al usuario que no tienes esa documentación y solicita el enlace a la **documentación oficial** (no el sitio principal, sino la URL de la documentación técnica).\n\n  3. Mantén el contexto:\n     - Si el usuario ya está consultando una documentación, no preguntes otra vez qué documentación desea.\n     - Usa `tableName` activamente mientras esté en contexto.\n     - Si el usuario cambia de tema o tecnología, analiza y reinicia el flujo según corresponda.\n\n  4. Puedes responder preguntas específicas sobre secciones de la documentación (como instalación, configuración, autenticación, errores comunes, ejemplos, etc.) basándote en los fragmentos obtenidos por PGVector.\n\n  5. Si el usuario solicita documentación que **aún no está cargada**, responde amablemente:\n     - \"Actualmente no contamos con documentación sobre [tecnología mencionada].\"\n     - Pide que proporcione la URL directa de la documentación técnica para poder agregarla al sistema.\n     - Informa que una vez cargada, podrá consultarla aquí.\n\n  --- 🧰 Instrucciones de uso de herramientas ---\n\n  Tool: **searchTableName**\n  - Uso: Cuando el `tableName` aún no ha sido identificado.\n  - No requiere parámetros.\n  - Devuelve una lista de todas las tablas disponibles.\n  - Acción esperada: Analiza los nombres y determina cuál coincide mejor con el término o tecnología mencionada por el usuario.\n  - Guarda el nombre de la tabla como `tableName`.\n\n  Tool: **PGVector Retrieval (As Tool for AI Agent)**\n  - Uso: Solo cuando ya tienes definido un `tableName`.\n  - Parámetros:\n    - `tableName`: nombre exacto de la tabla donde está almacenada la documentación.\n  - El texto actual del usuario se utiliza automáticamente como `query` semántico para buscar en la documentación.\n  - Solo debes pasar el `tableName`. No es necesario pasar el query.\n  - Por ejemplo:\n    - Usuario: \"¿Cómo configuro dark mode en Tailwind?\"\n    - Acción: Si `tableName = tailwindcss`, llama a PGVector con ese nombre.\n\n  --- 🔁 Ejemplos de interacción ---\n\n  Usuario: \"¿Tienen documentación de Tailwind?\"\n  🔹 Acción: Llama a `searchTableName`, encuentra la tabla `tailwindcss`, guarda como `tableName`, y luego usa PGVector con ese tableName.\n\n  Usuario: \"Muéstrame cómo configurar autenticación en NextAuth\"\n  🔹 Acción: Verifica si ya estás trabajando con la documentación de `nextauth`. Si no, usa `searchTableName`, encuentra `nextauth`, y luego consulta esa tabla en PGVector.\n\n  Usuario: \"¿Tienen algo de Supabase?\"\n  🔹 Acción: Si `searchTableName` no devuelve ninguna tabla relevante, responde que no hay documentación cargada. Pide la URL directa de la documentación oficial.\n\n  Usuario: \"¿Qué dice sobre los breakpoints?\"\n  🔹 Acción: Si el `tableName` actual es `tailwindcss`, usa PGVector con ese nombre y deja que la pregunta fluya como query.\n\n  --- ✅ Reglas finales ---\n\n  - Nunca llames PGVector sin un `tableName`.\n  - Nunca pidas al usuario el nombre de la tabla, solo analiza o busca con `searchTableName`.\n  - Si no encuentras tabla coincidente, guía amablemente al usuario para enviar la URL de la documentación oficial.\n  - Siempre responde con claridad y sin tecnicismos innecesarios.\n  - Mantén la conversación centrada en ayudar a explorar la documentación cargada.\n\n--- 🔁 Encadenamiento de herramientas\n\nAntes de responder al usuario:\n\n- Si necesitas identificar el `tableName`, **primero ejecuta `searchTableName`**.\n- Luego analiza los resultados, guarda el `tableName`, y sin responder aún...\n- **Ejecuta directamente `PGVector Retrieval` con ese `tableName`.**\n- Solo después de haber ejecutado todas las herramientas necesarias, responde con el contenido solicitado.\n- No respondas con frases como: “Voy a buscar...”, “Consultando...”, “Usaré la herramienta...”.\n- Solo responde con resultados útiles y directos, como fragmentos de documentación o respuestas concretas.\n\n\n\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -700,
+        -1180
+      ],
+      "id": "1e705b95-d695-42fa-85c2-6189280e9f69",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt.user }}",
+        "options": {
+          "systemMessage": "={{ $json.prompt.system }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -344,
+        -1280
+      ],
+      "id": "c6813e95-a39c-4363-8349-481b497d1116",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -1060
+      ],
+      "id": "2780d847-a1c9-4aa8-bc9c-e5accf1f840e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "tableName": "chat_history_scrapper",
+        "contextWindowLength": 25
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -360,
+        -1060
+      ],
+      "id": "cb536580-1d52-4918-9aef-9f1bcd016684",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        -1080
+      ],
+      "id": "cff3af67-5e8d-43c7-a6cb-b2d0523165a9",
+      "name": "Send a text message1",
+      "webhookId": "a391d488-652d-4e4e-a215-32b1006a1e8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "O9mvGRSt0wAuuL8T",
+          "name": "LinkSeeker"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-embedding-exp-03-07"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -152,
+        -860
+      ],
+      "id": "6ae9e80f-8b36-4771-ac76-2b3bd95481d1",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Use RAG to look up information in the knowledgebase whith tableName.",
+        "tableName": "={{$fromAI(\"tableName\")}}",
+        "options": {
+          "columnNames": {
+            "values": {
+              "contentColumnName": "content"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        -240,
+        -1057.5
+      ],
+      "id": "63c58bec-db5f-4c26-8199-df79d26332a5",
+      "name": "PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT table_schema, table_name\nFROM information_schema.tables\nWHERE table_type = 'BASE TABLE'\n  AND table_schema NOT IN ('pg_catalog', 'information_schema') -- opcional, excluye esquemas del sistema\n  AND table_name NOT LIKE '%\\_metadata'\n  AND table_name NOT LIKE '%\\_rows'\n  AND table_name NOT LIKE '%\\undefined'\n  AND table_name NOT LIKE '%\\_scrapper';\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        56,
+        -1060
+      ],
+      "id": "a8065a64-0fef-4db3-a8a1-e194a212e945",
+      "name": "searchTableName",
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Ejecuta estos Nodo Una Vez para eliminar las tablas configuradas, (ELIMINA TODOS LOS DATOS ALMACENADOS)",
+        "height": 300,
+        "width": 720,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1000,
+        -400
+      ],
+      "typeVersion": 1,
+      "id": "d0061d6b-7a03-47b5-bdb6-9f8669c25c0a",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
+              "name": "tableName",
+              "value": "tailwindcss",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -760,
+        -280
+      ],
+      "id": "1aaf4e0e-c86a-494d-8cec-90663c5efa19",
+      "name": "Table Name DELETE"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP FUNCTION IF EXISTS match_{{ $json.tableName }};\nDROP TABLE IF EXISTS {{ $json.tableName }}_rows;\nDROP TABLE IF EXISTS {{ $json.tableName }}_metadata;\nDROP TABLE IF EXISTS {{ $json.tableName }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        -580,
+        -280
+      ],
+      "id": "68ab090f-d11a-4960-8523-b2b702a66c17",
+      "name": "DELETE Documents Table and Match Function",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        -280
+      ],
+      "id": "7a467a07-2c7b-4058-a148-a1c6ed7c0496",
+      "name": "When clicking ‘Execute workflow’"
     }
   ],
   "pinData": {},
@@ -634,7 +1234,7 @@
   },
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-06-26T21:50:30.576Z",
-  "versionId": "b4e10b52-b365-4ec8-ac9c-c44d40a723b7"
+  "triggerCount": 1,
+  "updatedAt": "2025-06-27T21:59:32.381Z",
+  "versionId": "bf35779d-15f4-4b2b-b4e5-602612500d03"
 }
