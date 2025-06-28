@@ -377,7 +377,7 @@
       "main": [
         [
           {
-            "node": "Table Name",
+            "node": "Select rows from a table",
             "type": "main",
             "index": 0
           }
@@ -1413,7 +1413,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "-- Enable the pgvector extension to work with embedding vectors\ncreate extension vector; --Ya esta activo\n\n-- Create a table to store your documents\ncreate table {{ $json.tableName }} (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(1536) -- 1536 works for OpenAI embeddings, change if needed\n);\n\n-- Create a function to search for documents\ncreate function match_{{ $json.tableName }} (\n  query_embedding vector(1536),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $$\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - ({{ $json.tableName }}.embedding <=> query_embedding) as similarity\n  from {{ $json.tableName }}\n  where metadata @> filter\n  order by {{ $json.tableName }}.embedding <=> query_embedding\n  limit match_count;\nend;\n$$;",
+        "query": "-- Enable the pgvector extension to work with embedding vectors\n--create extension vector; --Ya esta activo\n\n-- Create a table to store your documents\ncreate table {{ $json.tableName }} (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(1536) -- 1536 works for OpenAI embeddings, change if needed\n);\n\n-- Create a function to search for documents\ncreate function match_{{ $json.tableName }} (\n  query_embedding vector(1536),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $$\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - ({{ $json.tableName }}.embedding <=> query_embedding) as similarity\n  from {{ $json.tableName }}\n  where metadata @> filter\n  order by {{ $json.tableName }}.embedding <=> query_embedding\n  limit match_count;\nend;\n$$;",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1757,8 +1757,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1760,
-        340
+        -440,
+        1520
       ],
       "id": "6b112c30-2b12-49ab-80aa-7f14477c4406",
       "name": "When clicking ‘Test workflow’"
@@ -2198,6 +2198,37 @@
           "name": "pg supabase"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "_prisma_migrations",
+          "mode": "list",
+          "cachedResultName": "_prisma_migrations"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -180,
+        1520
+      ],
+      "id": "ff8ead34-b209-49da-b6e6-da5d91cc1ea0",
+      "name": "Select rows from a table",
+      "credentials": {
+        "postgres": {
+          "id": "DCoXctJfby4wsUJP",
+          "name": "pgvector englishTeacher"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -2219,6 +2250,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-06-27T17:48:47.353Z",
-  "versionId": "d5cafce3-a9e8-4b53-b838-75796ee0f4f6"
+  "updatedAt": "2025-06-28T01:22:07.037Z",
+  "versionId": "c99b750c-bb38-4e38-8ed5-4275e551abc1"
 }
