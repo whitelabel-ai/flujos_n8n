@@ -115,6 +115,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Obtener Data",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -176,6 +183,13 @@
           },
           {
             "node": "Wait13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obtener Data",
             "type": "main",
             "index": 0
           }
@@ -470,19 +484,19 @@
             {
               "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
               "name": "text",
-              "value": "={{ $json.body.last_input_text }}",
+              "value": "={{ $('Webhook').item.json.body.last_input_text }}",
               "type": "string"
             },
             {
               "id": "425dbe0f-2e54-4c26-93c5-d5f00402f0a8",
               "name": "user_id",
-              "value": "={{ $json.body.id }}",
+              "value": "={{ $('Webhook').item.json.body.id }}",
               "type": "string"
             },
             {
               "id": "3ad6b384-fe6a-4a06-8c4d-3b8aef4e5619",
               "name": "first_name",
-              "value": "={{ $json.body.first_name }}",
+              "value": "={{ $('Webhook').item.json.body.first_name }}",
               "type": "string"
             }
           ]
@@ -527,8 +541,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2156,
-        1620
+        2200,
+        1600
       ],
       "id": "5e5b9b61-2911-457c-a10e-4bfb48b0975d",
       "name": "Data"
@@ -574,7 +588,9 @@
       "name": "Maestro de Agentes",
       "alwaysOutputData": false,
       "retryOnFail": true,
-      "maxTries": 2
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -628,10 +644,6 @@
             {
               "key": "name",
               "value": "={{ $json.body.first_name }}"
-            },
-            {
-              "key": "phone",
-              "value": "={{ $json.body.whatsapp_phone }}"
             }
           ]
         }
@@ -716,17 +728,20 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2936,
+        2820,
         1620
       ],
       "id": "2b443fbe-150c-48a8-b283-41ad97c03ab1",
       "name": "OpenAI1",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
       "credentials": {
         "openAiApi": {
           "id": "n0YNBr6r2ZQqJ11H",
           "name": "OpenAi account"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -742,7 +757,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3320,
+        3540,
         1220
       ],
       "id": "cbb09b29-a03c-41bd-b123-97da1d07dab6",
@@ -762,7 +777,7 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        3540,
+        3760,
         1220
       ],
       "id": "90717572-a289-4aa9-8e07-267c3954b71a",
@@ -781,7 +796,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3312,
+        3532,
         1420
       ],
       "id": "ac9db5d0-eaa6-4724-b222-097bbcdea3f9",
@@ -802,7 +817,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3760,
+        3980,
         1320
       ],
       "id": "df076732-1dc8-4190-a91d-dda3464c6dfb",
@@ -812,7 +827,8 @@
           "id": "8Fw9Aneg063bvcsJ",
           "name": "Manychat"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -821,7 +837,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3312,
+        3532,
         1820
       ],
       "id": "31f48907-e1b3-4e69-864e-42ea77dbdc65",
@@ -842,7 +858,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3752,
+        3972,
         1720
       ],
       "id": "1a3fb657-e57b-496b-ae1b-eaf4f217de18",
@@ -882,7 +898,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3532,
+        3752,
         1820
       ],
       "id": "808d2014-8154-423d-90fe-1c17c6d3d124",
@@ -893,7 +909,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3752,
+        3972,
         1920
       ],
       "id": "0cd2ac36-ce1b-449c-8bc9-9eb886c50937",
@@ -927,7 +943,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3532,
+        3752,
         1420
       ],
       "id": "31cdd1e5-1513-4f05-adcd-069f63a9061d",
@@ -938,7 +954,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3752,
+        3972,
         1520
       ],
       "id": "ec3195b4-08fe-4447-b6fe-ec263185dad8",
@@ -951,7 +967,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3312,
+        3532,
         2220
       ],
       "id": "64ac034f-2161-4c93-94f2-a501767a759f",
@@ -972,7 +988,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3752,
+        3972,
         2120
       ],
       "id": "6c8f0b80-905e-4cdf-b2e7-8dabf9945261",
@@ -1012,7 +1028,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3532,
+        3752,
         2220
       ],
       "id": "f8bc047b-43ca-416c-8785-d97b6676126d",
@@ -1023,7 +1039,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3752,
+        3972,
         2320
       ],
       "id": "c18325b1-067a-4e28-982f-d0520a772ce8",
@@ -1091,6 +1107,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-06-24T21:46:46.649Z",
-  "versionId": "018b1de6-475e-417e-bb62-8dfed7ccd7e1"
+  "updatedAt": "2025-06-28T17:10:30.959Z",
+  "versionId": "b8a197ab-2f07-43d2-b1e3-c54ef832f507"
 }
