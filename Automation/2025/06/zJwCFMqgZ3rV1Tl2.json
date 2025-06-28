@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "HTTP Request2": {
       "main": [
@@ -372,7 +372,7 @@
       "main": [
         [
           {
-            "node": "Table Name DELETE",
+            "node": "Select rows from a table",
             "type": "main",
             "index": 0
           }
@@ -829,7 +829,8 @@
           "id": "O9mvGRSt0wAuuL8T",
           "name": "LinkSeeker"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1223,6 +1224,37 @@
       ],
       "id": "7a467a07-2c7b-4058-a148-a1c6ed7c0496",
       "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "users",
+          "mode": "list",
+          "cachedResultName": "users"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -740,
+        -40
+      ],
+      "id": "1e5d2c0e-3452-452e-8fb5-f5d5a73789ec",
+      "name": "Select rows from a table",
+      "credentials": {
+        "postgres": {
+          "id": "DCoXctJfby4wsUJP",
+          "name": "pgvector englishTeacher"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1235,6 +1267,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-27T21:59:32.381Z",
-  "versionId": "bf35779d-15f4-4b2b-b4e5-602612500d03"
+  "updatedAt": "2025-06-28T01:59:59.383Z",
+  "versionId": "daaf0f17-263f-465f-9b92-84cc86c12a0a"
 }
