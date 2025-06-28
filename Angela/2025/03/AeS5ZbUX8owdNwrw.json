@@ -226,7 +226,7 @@
       "main": [
         [
           {
-            "node": "response_ok3",
+            "node": "If4",
             "type": "main",
             "index": 0
           }
@@ -392,6 +392,35 @@
           {
             "node": "Reminder_Agent",
             "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "response_ok3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "response_X2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "response_X2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
             "index": 0
           }
         ]
@@ -850,8 +879,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2340,
-        420
+        2360,
+        460
       ],
       "id": "443a0b2c-fa59-4f4f-9ac5-7d959f303ccd",
       "name": "response_X"
@@ -978,8 +1007,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        1960,
-        620
+        1940,
+        640
       ],
       "id": "e1f04a33-429d-4ca3-b55b-313a1ae2587f",
       "name": "Eliminar",
@@ -1264,7 +1293,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        2360,
+        2780,
         620
       ],
       "id": "d5493481-4d88-4797-b7f6-bcd9dabf7475",
@@ -1287,7 +1316,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2600,
+        2980,
         620
       ],
       "id": "30d2621c-1748-4a7a-be16-da50ed1d23cc",
@@ -1366,7 +1395,7 @@
             {
               "id": "433d7d41-fb16-453c-8f26-0ba25ab7ab1b",
               "name": "Medicamentos",
-              "value": "={{ $json.medicamento }},  {{ $json.Cantidad }}, {{ $json.frecuencia }} a las {{ $json[\"hora de inicio\"] }}",
+              "value": "={{ $('Filtrar').item.json.medicamento }},  {{ $('Filtrar').item.json.Cantidad }},  {{ $('Filtrar').item.json.frecuencia }} a las {{ $('Filtrar').item.json['hora de inicio'] }} ",
               "type": "string"
             }
           ]
@@ -1376,8 +1405,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2160,
-        620
+        2380,
+        640
       ],
       "id": "29a4a832-272d-4000-91e2-425a583006d6",
       "name": "response_ok3"
@@ -1418,6 +1447,55 @@
         }
       },
       "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bc842499-0cf5-4488-a643-e80663cd3434",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2140,
+        640
+      ],
+      "id": "0321f707-babf-4e5c-975d-c2318f504503",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"Medicamentos\": \"No se elimino ningun medicamento, confirma cual medicamento exactamente quieres eliminar\",\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2600,
+        660
+      ],
+      "id": "4c9a5f64-8a52-4195-be61-d319fd3749f8",
+      "name": "response_X2"
     }
   ],
   "pinData": {},
@@ -1437,6 +1515,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-06-19T14:46:51.965Z",
-  "versionId": "72af6af6-6142-4b3e-b851-b649884b843b"
+  "updatedAt": "2025-06-28T16:42:02.232Z",
+  "versionId": "39d121bb-aa99-489f-b8d7-0c114dd3f7bb"
 }
