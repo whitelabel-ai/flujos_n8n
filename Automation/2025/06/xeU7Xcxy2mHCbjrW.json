@@ -5,25 +5,7 @@
       "main": [
         [
           {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
             "node": "Data",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing",
             "type": "main",
             "index": 0
           }
@@ -148,7 +130,7 @@
       "main": [
         [
           {
-            "node": "create ask",
+            "node": "projetUrl",
             "type": "main",
             "index": 0
           }
@@ -253,7 +235,7 @@
       "main": [
         [
           {
-            "node": "create ask",
+            "node": "projetUrl1",
             "type": "main",
             "index": 0
           }
@@ -304,6 +286,39 @@
           }
         ]
       ]
+    },
+    "projetUrl": {
+      "main": [
+        [
+          {
+            "node": "create ask",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "projetUrl1": {
+      "main": [
+        [
+          {
+            "node": "create ask",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-24T15:18:35.192Z",
@@ -319,13 +334,13 @@
         "pollTimes": {
           "item": [
             {
-              "mode": "everyMinute"
+              "mode": "everyHour"
             }
           ]
         },
         "simple": false,
         "filters": {
-          "q": "to:(pedro@whitelabel.lat)",
+          "q": "to:(proyectos@whitelabel.lat)",
           "readStatus": "unread"
         },
         "options": {}
@@ -344,51 +359,6 @@
           "name": "hola@whitelabel.lat"
         }
       }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "431d805b-af0f-42be-8edb-274d5451b727",
-              "leftValue": "={{ $json.To || $json.to.value[0].address}}",
-              "rightValue": "pedro@whitelabel.lat",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -80,
-        -110
-      ],
-      "id": "2242749b-2bc6-42e0-ad69-49124f49712d",
-      "name": "If"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        140,
-        -60
-      ],
-      "id": "4493d239-4f85-4eee-801b-a27ea30a69d0",
-      "name": "No Operation, do nothing"
     },
     {
       "parameters": {
@@ -454,7 +424,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        2716,
+        3156,
         -560
       ],
       "id": "aa962bfa-1cdf-48d4-9dfd-5e7b286f3e7b",
@@ -496,7 +466,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Analiza el siguiente correo y responde en formato JSON:\n\n- tipo: \"nuevo_requerimiento\", \"respuesta\", \"no_relevante\"\n- cliente: nombre del remitente si se puede identificar\n- proyecto: nombre del proyecto si se puede inferir en el mensaje o asunto\n- necesita_aclaracion: true o false\n- mensaje: el mensaje completo recibido limpio\n- resumen: breve resumen en una frase (máximo 20 palabras)\n\nCorreo recibido:\nRemitente: {{ $json[\"remitente\"] }}  \nEmail: {{ $json[\"email\"] }}  \nAsunto: {{ $json[\"asunto\"] }}  \nMensaje: {{ $json[\"mensaje\"] }}\n",
+        "text": "=\n Analiza el siguiente correo y responde en **formato JSON válido** con los siguientes campos:\n\n * `tipo`: uno de `\"nuevo_requerimiento\"`, `\"respuesta\"`, `\"no_relevante\"`\n * `cliente`: nombre del remitente si se puede identificar\n * `proyecto`: nombre del proyecto si se puede inferir a partir del asunto o contenido\n * `necesita_aclaracion`: `true` si el mensaje es ambiguo o no tiene suficiente contexto para continuar, `false` en caso contrario\n * `mensaje`: el contenido completo recibido, **limpio y legible**, con estructura clara, sin errores de formato, sin saltos innecesarios, listo para pegar en Notion o un documento profesional. Puedes usar formato tipo Markdown simple si mejora la claridad (por ejemplo, listas, subtítulos, negrilla).\n * `resumen`: un resumen claro del mensaje en **máximo 20 palabras**\n\n Limpia el mensaje recibido: elimina saltos de línea innecesarios, corrige errores de espaciado, codificación o signos mal escritos. Mantén la información clara, con buena estructura visual.\n\n No hagas suposiciones si la información no está clara.\n\n ---\n\n **Correo recibido:**\n Remitente: {{ $json[\"remitente\"] }}\n Email: {{ $json[\"email\"] }}\n Asunto: {{ $json[\"asunto\"] }}\n Mensaje: {{ $json[\"mensaje\"] }}",
         "options": {
           "systemMessage": "=Eres un analista experto en pre-venta. Vas a clasificar correos recibidos para identificar si contienen un requerimiento de proyecto, una respuesta a un requerimiento anterior, o si no son relevantes para cotización. \nTu salida debe ser un JSON válido. \nNo hagas suposiciones si no tienes suficiente información."
         }
@@ -718,8 +688,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2020,
-        -680
+        2040,
+        -340
       ],
       "id": "f3da975e-1227-4ecf-ba21-df92b2b887dc",
       "name": "Create Projet",
@@ -813,7 +783,16 @@
               "textContent": "={{ $('Switch').item.json.proyecto }}"
             },
             {
-              "textContent": "={{ $('Clean Json').item.json.mensaje }}"
+              "textContent": "={{ $('Clean Json').item.json.mensaje.slice(0, 1800) }}"
+            },
+            {
+              "textContent": "={{ $('Clean Json').item.json.mensaje.length > 1800 ? $('Clean Json').item.json.mensaje.slice(1800, 3600) : '' }}"
+            },
+            {
+              "textContent": "={{ $('Clean Json').item.json.mensaje.length > 3600 ? $('Clean Json').item.json.mensaje.slice(3600, 5400) : '' }}"
+            },
+            {
+              "textContent": "={{ $('Clean Json').item.json.mensaje.length > 5400 ? $('Clean Json').item.json.mensaje.slice(5400, 7200) : '' }}"
             }
           ]
         },
@@ -822,8 +801,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2260,
-        -740
+        2220,
+        -340
       ],
       "id": "7b90daf0-1dc3-44a5-8623-ac9913d82c16",
       "name": "create Requirements",
@@ -843,7 +822,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2804,
+        3244,
         -340
       ],
       "id": "a001975e-b7e4-47d1-ac2b-5c1d48daeccf",
@@ -914,7 +893,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2500,
+        2940,
         -560
       ],
       "id": "c76e215f-bd46-4955-8528-bcc668cd32bb",
@@ -924,7 +903,7 @@
       "parameters": {
         "pageId": {
           "__rl": true,
-          "value": "={{  $('Create Projet').item.json.url || $('If Projet').item.json.url }}",
+          "value": "={{ $json.url}}",
           "mode": "url"
         },
         "title": "=📄 Preguntas aclaratorias",
@@ -972,8 +951,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2276,
-        -560
+        2660,
+        -500
       ],
       "id": "6f091273-9fdc-487f-b492-d9fcc2483fe2",
       "name": "create ask",
@@ -993,7 +972,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3092,
+        3532,
         -560
       ],
       "id": "c1920478-c0c4-40e2-9450-cdedaafa87f7",
@@ -1013,7 +992,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3320,
+        3760,
         -560
       ],
       "id": "dbddc886-1952-490d-8bc5-00e6841e9034",
@@ -1033,7 +1012,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        3560,
+        4000,
         -560
       ],
       "id": "ae91a6fd-f7a7-4151-8819-8a4c299aba26",
@@ -1106,8 +1085,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2340,
-        -220
+        2940,
+        -320
       ],
       "id": "88eedb06-ba74-44b0-8ed9-97b67ebc7a8f",
       "name": "Create a database page",
@@ -1275,71 +1254,332 @@
           "name": "hola@whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7c023734-4a21-48ca-bf08-f54c3e9d74af",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2420,
+        -540
+      ],
+      "id": "d7e43286-130f-4304-896b-ddbf996641cb",
+      "name": "projetUrl"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7c023734-4a21-48ca-bf08-f54c3e9d74af",
+              "name": "url",
+              "value": "={{ $('Create Projet').item.json.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2440,
+        -340
+      ],
+      "id": "0f461988-90dd-4aac-9abe-6202171f376c",
+      "name": "projetUrl1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = items[0].json.output;\n\n// Extrae el contenido dentro de ```json ... ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\nif (!match) {\n  throw new Error(\"No se encontró un bloque JSON válido.\");\n}\n\nconst parsed = JSON.parse(match[1]);\n\n// Devuelve cada pregunta como un item separado\nreturn parsed.map(pregunta => ({ json: pregunta }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3620,
+        -400
+      ],
+      "id": "1605fd98-a6de-40af-8570-a4c5e83a3d87",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const LIMITE = 3500; // Límite seguro para texto en Telegram\n\n// Agrupamos primero por relevancia y categoría\nconst agrupado = {};\n\nfor (const item of items) {\n  const { relevancia, categoria, pregunta } = item.json;\n\n  if (!agrupado[relevancia]) agrupado[relevancia] = {};\n  if (!agrupado[relevancia][categoria]) agrupado[relevancia][categoria] = [];\n\n  agrupado[relevancia][categoria].push(pregunta);\n}\n\n// Creamos los mensajes\nconst mensajes = [];\n\nfor (const relevancia of Object.keys(agrupado)) {\n  const categorias = agrupado[relevancia];\n\n  for (const categoria of Object.keys(categorias)) {\n    const preguntas = categorias[categoria];\n\n    let bloque = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n`;\n    let acumulado = bloque;\n\n    for (const pregunta of preguntas) {\n      const linea = `- ${pregunta}\\n`;\n\n      if ((acumulado + linea).length > LIMITE) {\n        mensajes.push({ json: { mensaje: acumulado.trim() } });\n\n        // Comenzamos un nuevo mensaje con el encabezado de categoría\n        acumulado = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n${linea}`;\n      } else {\n        acumulado += linea;\n      }\n    }\n\n    if (acumulado.trim() !== '') {\n      mensajes.push({ json: { mensaje: acumulado.trim() } });\n    }\n  }\n}\n\nreturn mensajes;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        -400
+      ],
+      "id": "8dc8f017-82e3-45d8-a4cd-8dcb9954aabf",
+      "name": "Code4"
     }
   ],
   "pinData": {
-    "Gmail Trigger": [
+    "Code3": [
       {
         "json": {
-          "id": "197a76a3176b8afc",
-          "threadId": "197a76a3176b8afc",
-          "labelIds": [
-            "UNREAD",
-            "IMPORTANT",
-            "CATEGORY_PERSONAL",
-            "INBOX"
-          ],
-          "sizeEstimate": 8158,
-          "headers": {
-            "delivered-to": "Delivered-To: pedro@whitelabel.lat",
-            "received": "Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])\r\n        by mx.google.com with SMTPS id 3f1490d57ef6-e85f5b4df85sor2115094276.13.2025.06.25.07.07.23\r\n        for <pedro@whitelabel.lat>\r\n        (Google Transport Security);\r\n        Wed, 25 Jun 2025 07:07:23 -0700 (PDT)",
-            "x-received": "X-Received: by 2002:a05:6902:18ce:b0:e84:4bf4:dc04 with SMTP id\r\n 3f1490d57ef6-e86017885dcmr3873252276.34.1750860443207; Wed, 25 Jun 2025\r\n 07:07:23 -0700 (PDT)",
-            "arc-seal": "ARC-Seal: i=1; a=rsa-sha256; t=1750860443; cv=none;\r\n        d=google.com; s=arc-20240605;\r\n        b=aUxAQ5BgJHnUG8M2urQIPFkktV7D+/DQRMVf9iSAbIBqDEzYgAStVQ3BU46YlWpJNY\r\n         sARiXDmXzC7uIBxAz9n25dKVrj0mUAlf2quJLru5WNxwNW0r9nYSqRVFWJH2FsCuglXN\r\n         Rx44Q8PMKAIh7sPHuKDzx9H4zWo8RCImKrGttKU4sKUU/6u/c8QvJ+GN9bFVRkTuBnoX\r\n         vFMbVn+ZG8daukf7am2Z+xov4mEsEqYBbeFM0bVzPYDGaujBDWhjB0A62ODgOI3AYn3B\r\n         cBsMTMQd7OD6T+3Vi2qALmL44nuouuTyQCkYF+/GnC1N+4uEp46MViCdfytNqGdAI7iJ\r\n         34ow==",
-            "arc-message-signature": "ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;\r\n        h=to:subject:message-id:date:from:mime-version:dkim-signature;\r\n        bh=66GO79tXvxhP3XVUkGLDHVbU1M+Vk+agITupH9WVPZU=;\r\n        fh=q/hBV4+lzFR0tlHOrZ8+EVjdvyCpuWZ18VoX7bIghfA=;\r\n        b=bfD7BP1lYrngeP6W+Sx5se1a2Jq0RSXsb+b2/K4EL3DJ5Hm7mKtt1zZRFZTtk1I3M8\r\n         SIesLzZN7StLzVN/jSa0NZr8QwshXZk8ph3ue2qTsjo8CUWGfsYMEEU3tDKlp2u2zzCi\r\n         B+y10+3dLtx1fBgflIr+xTmtKTLyrnwUfeIpyOC5R9mqHiW/yl+Vxg6m6CorJuMf2LMF\r\n         2gj8X++b7XRBP21wOrTEuq2+Fqfa+ppWD/GkZztVSoXNyAIa9vLyfabCWkqK52Kq5smS\r\n         3/63lnxFjdoRo7IzL9GYF19qxu+/9uYJt09z9s9upzlPNFacOu3bYlew8oBtkJVMS/sv\r\n         S0CQ==;\r\n        dara=google.com",
-            "arc-authentication-results": "ARC-Authentication-Results: i=1; mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=QBxJG9Xp;\r\n       spf=pass (google.com: domain of pro.pedro0413@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=pro.pedro0413@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@whitelabel.lat",
-            "return-path": "Return-Path: <pro.pedro0413@gmail.com>",
-            "received-spf": "Received-SPF: pass (google.com: domain of pro.pedro0413@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;",
-            "authentication-results": "Authentication-Results: mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=QBxJG9Xp;\r\n       spf=pass (google.com: domain of pro.pedro0413@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=pro.pedro0413@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@whitelabel.lat",
-            "dkim-signature": "DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=gmail.com; s=20230601; t=1750860443; x=1751465243; darn=whitelabel.lat;\r\n        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject\r\n         :date:message-id:reply-to;\r\n        bh=66GO79tXvxhP3XVUkGLDHVbU1M+Vk+agITupH9WVPZU=;\r\n        b=QBxJG9XppXRvTwWW+5dvID2BlgTAi++hLZ+L6BiKdtM2gUKsoC9z9DWv51PPlfcmd6\r\n         ubEYB7wAXpne62RcfLXC51KHC0UfkKIruaA+hnQgki/wjzSb/Cte+s1lcX0RtWgbaByM\r\n         MrgUGrz0/i8U49/ssUUPIthr/geBFTYBU+3jufMId0L7bTYWRWvhmHmpvbr1gdI44fx9\r\n         eetCr5JBAHwyNCAvhdKBFTDxuSP//Qb1ks6vaOklV5KuUYFQxq+IJsk2yq1igf6AXSus\r\n         emtLwFILx5lE4Luxfl72XfLg/sOT5oRpKXFc0WsNky/y2pBLdnZID7MtJgiyhe/i6J8M\r\n         0T4w==",
-            "x-google-dkim-signature": "X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=1e100.net; s=20230601; t=1750860443; x=1751465243;\r\n        h=to:subject:message-id:date:from:mime-version:x-gm-message-state\r\n         :from:to:cc:subject:date:message-id:reply-to;\r\n        bh=66GO79tXvxhP3XVUkGLDHVbU1M+Vk+agITupH9WVPZU=;\r\n        b=YsK9D2rq+zK8nDAyTf+ejq15gqWPvtfws58QGHqkq0Yh46j4QUjyjtSDzeGCg+p7Vj\r\n         +kuMHv04NB5dYnLDHArNtaW2DIH2Zr03UeJYKzTyorj5kHhCJoAf720Nn1Z+SRraE3La\r\n         v/uhN6dF+FHkndoGMtSuuR0gx/xRGzZVwQlxqLy80fHA8E0/BQ5q7VHxhs4XvkFEe5Nt\r\n         MB80EZMcfcAow6k09Ujt4Ba2itpAfDt8KKxu8mBciuyXjPVTc1tZKS/0oViUXP0vBOsP\r\n         wK/u8ok5nkB/fA2omdrystzl3lYt84ds4N5vFjszrf/Gic8qdX5MGKN9sKIda2VPXYEp\r\n         E/dg==",
-            "x-gm-message-state": "X-Gm-Message-State: AOJu0YzhLIsgH2GqxVxW0M922k2QPHlPNbDKeYO0/cHnoTdjq5PI8BhY\r\n\tNd1MZ4yEiYwS3WhwDiPmK68i54QNPa0awu6qbeNreBnPD7OyqFVOdisLGAoMzAjktxxSGULpNxi\r\n\t2zUAgl0T6P8h6S8per0sHp5tcoTkUEGLCvAxZ/5Y=",
-            "x-gm-gg": "X-Gm-Gg: ASbGncuBvjfUS6Vff71JD4QQy3o/N71UmBpIL0pSHmf9EPHoS5MzDsumNMeWYRHdFnH\r\n\tvtC4S+CKg+sja7b/76tvIEpUVELuJxIzXbE47KimKpLIC6+g+s9Gl4C9NJFldBuwp6qiRUCi+mE\r\n\tFZjqpVXuACb9U1976vGSnqFV20QP312teBTRXlsRptaN8=",
-            "x-google-smtp-source": "X-Google-Smtp-Source: AGHT+IF+2TNrcc44FcrWKZHjgYxqy6kn4L0ExIztMIACr4jxJyV3nE9celPwDChI/pPhYw9wmDV/Urn3TlHkhGlhutE=",
-            "mime-version": "MIME-Version: 1.0",
-            "from": "From: Pedro Rodriguez <pro.pedro0413@gmail.com>",
-            "date": "Date: Wed, 25 Jun 2025 09:07:13 -0500",
-            "x-gm-features": "X-Gm-Features: Ac12FXx-pa7U7e3oeKokgiOhx6nooKkORduvDypjfhbdFdJkFYQkPn43RaTUpPo",
-            "message-id": "Message-ID: <CAGu-j9Zj+_ZYpQSRpuUZCHUxqdyERAU46RpZUC0NifqWz81fMw@mail.gmail.com>",
-            "subject": "Subject: Agente IA, de cobranza",
-            "to": "To: \"pedro@whitelabel.lat\" <pedro@whitelabel.lat>",
-            "content-type": "Content-Type: multipart/alternative; boundary=\"000000000000c4cd40063865f66e\""
-          },
-          "html": "<div dir=\"ltr\"><div>Hola Andres, como estas,</div><div><br></div><div>ayudame porfa a cotizar lo siguiente:</div><div><br></div><div>Agente de Gestión de Cobranza, para una base de datos de 150 unidades arrendadas.<br>a través de estos canales:<br><p style=\"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;\"><br></p><p style=\"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;\">Mail</p><p style=\"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;\">Agente WhatsApp </p><p style=\"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;\">Llamada <br><br>Avísame si requieres más información.</p><p style=\"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;\"><br></p><p style=\"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;\">Quedo atento!</p></div><font color=\"#888888\"><div><br></div></font></div>\n",
-          "text": "Hola Andres, como estas,\n\nayudame porfa a cotizar lo siguiente:\n\nAgente de Gestión de Cobranza, para una base de datos de 150 unidades\narrendadas.\na través de estos canales:\n\n\nMail\n\nAgente WhatsApp\n\nLlamada\n\nAvísame si requieres más información.\n\n\nQuedo atento!\n",
-          "textAsHtml": "<p>Hola Andres, como estas,</p><p>ayudame porfa a cotizar lo siguiente:</p><p>Agente de Gesti&oacute;n de Cobranza, para una base de datos de 150 unidades<br/>arrendadas.<br/>a trav&eacute;s de estos canales:</p><p>Mail</p><p>Agente WhatsApp</p><p>Llamada</p><p>Av&iacute;same si requieres m&aacute;s informaci&oacute;n.</p><p>Quedo atento!</p>",
-          "subject": "Agente IA, de cobranza",
-          "date": "2025-06-25T14:07:13.000Z",
-          "to": {
-            "value": [
-              {
-                "address": "pedro@whitelabel.lat",
-                "name": ""
-              }
-            ],
-            "html": "<span class=\"mp_address_group\"><a href=\"mailto:pedro@whitelabel.lat\" class=\"mp_address_email\">pedro@whitelabel.lat</a></span>",
-            "text": "pedro@whitelabel.lat"
-          },
-          "from": {
-            "value": [
-              {
-                "address": "pro.pedro0413@gmail.com",
-                "name": "Pedro Rodriguez"
-              }
-            ],
-            "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Pedro Rodriguez</span> &lt;<a href=\"mailto:pro.pedro0413@gmail.com\" class=\"mp_address_email\">pro.pedro0413@gmail.com</a>&gt;</span>",
-            "text": "\"Pedro Rodriguez\" <pro.pedro0413@gmail.com>"
-          },
-          "messageId": "<CAGu-j9Zj+_ZYpQSRpuUZCHUxqdyERAU46RpZUC0NifqWz81fMw@mail.gmail.com>"
+          "categoria": "Funcional",
+          "pregunta": "¿Cuáles son los flujos de trabajo detallados para el seguimiento de pacientes que no agendaron cita?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Cuál es la estrategia o el flujo de trabajo propuesto para contactar y reprogramar a pacientes que no asistieron a su cita?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Cómo se define y gestiona la regla de prioridad para la distribución de mensajes a los agentes más allá del 'Primero en llegar, primero en salir'?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Se requieren scripts o guiones predefinidos para los agentes según el tipo de consulta (información, costo, post-tratamiento)?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Qué información específica debe registrar el agente durante o después de cada conversación?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Cómo se debe manejar la escalación o gestión de casos post-tratamiento reportados como 'críticos'?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Cuál es el comportamiento esperado del sistema para mensajes recibidos fuera del horario de atención de los agentes?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Existen diferentes tipos de tratamientos o campañas que requieran flujos de manejo o asignación de agentes distintos?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Cómo se deben gestionar contactos duplicados que lleguen por diferentes canales o campañas?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Funcional",
+          "pregunta": "¿Se requiere un módulo de supervisión o reportes para monitorear la productividad de los agentes y las tasas de conversión/ausencia en tiempo real?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Técnica",
+          "pregunta": "¿Existe alguna preferencia o restricción técnica sobre la arquitectura o la plataforma tecnológica (cloud, on-premise, lenguaje)?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Técnica",
+          "pregunta": "¿Cuáles son los requisitos de disponibilidad y rendimiento (ej. % de uptime, tiempo de respuesta)?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Técnica",
+          "pregunta": "¿Cuáles son los requisitos de seguridad y cumplimiento normativo para el manejo de datos de pacientes (ej. HIPAA, GDPR)?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Técnica",
+          "pregunta": "¿Se requiere migración de datos históricos desde la plataforma Fexe? Si es así, ¿qué volumen y qué tipo de datos?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Técnica",
+          "pregunta": "¿Existe infraestructura de telecomunicaciones o telefonía (ej. un PBX) con la que la plataforma deba integrarse?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Volumen de datos",
+          "pregunta": "¿Cuál es el pico máximo de mensajes recibidos por hora o por día esperado?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Volumen de datos",
+          "pregunta": "¿Cuántos agentes utilizarán la plataforma concurrentemente en su pico?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Volumen de datos",
+          "pregunta": "¿Cuál es el crecimiento proyectado del volumen de mensajes o del número de agentes en los próximos 1-3 años?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Volumen de datos",
+          "pregunta": "¿Cuánto tiempo histórico deben estar accesibles las conversaciones y los datos de los pacientes dentro de la plataforma?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Canales",
+          "pregunta": "¿Además de META (WhatsApp, Messenger, Instagram?), ¿qué otros canales de mensajería o comunicación (Web Chat, SMS, Email) deben ser centralizados?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Canales",
+          "pregunta": "¿La llamada de confirmación de cita se gestionará a través de la nueva plataforma o es un proceso telefónico externo?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Canales",
+          "pregunta": "¿Se requieren funcionalidades específicas por canal, como el uso de plantillas, respuestas rápidas o envío de medios?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Canales",
+          "pregunta": "¿Los agentes utilizarán la plataforma para *realizar* llamadas telefónicas además de gestionar mensajes?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Integraciones",
+          "pregunta": "¿Se dispone de acceso a las APIs de META (WhatsApp Business API, Messenger API, Instagram API)?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Integraciones",
+          "pregunta": "¿Se dispone de documentación técnica o acceso a las APIs de Agenda Pro y Odoo para integrar la información de agendamientos y pacientes?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Integraciones",
+          "pregunta": "¿Qué información específica debe intercambiarse con Agenda Pro (ej. Crear cita, consultar estado, cancelar)?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Integraciones",
+          "pregunta": "¿Qué información específica debe intercambiarse con Odoo (ej. Datos del paciente, tratamientos, historial)?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Integraciones",
+          "pregunta": "¿Existen otros sistemas internos (ej. CRM, sistema de historiales médicos) con los que la plataforma deba integrarse?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Soporte",
+          "pregunta": "¿Cuál es el horario de soporte requerido para la plataforma (ej. 8x5, 24x7)?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Soporte",
+          "pregunta": "¿Cuál es el tiempo de respuesta esperado para incidentes críticos?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Soporte",
+          "pregunta": "¿Se requiere monitoreo proactivo de la plataforma y sus integraciones?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Soporte",
+          "pregunta": "¿Se incluye en el alcance el mantenimiento evolutivo y correctivo post-lanzamiento?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Otros",
+          "pregunta": "¿Cuál es el presupuesto estimado o rango de inversión para este proyecto?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Otros",
+          "pregunta": "¿Cuál es el cronograma o fecha límite deseada para la implementación de la nueva plataforma?",
+          "relevancia": "alta"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Otros",
+          "pregunta": "¿Existen roles de usuario específicos con permisos diferenciados (agente, supervisor, administrador)?",
+          "relevancia": "media"
+        }
+      },
+      {
+        "json": {
+          "categoria": "Otros",
+          "pregunta": "¿Además de mejorar las tasas de conversión y asistencia, hay otras funcionalidades deseadas para 'extender' Fexe?",
+          "relevancia": "media"
         }
       }
     ]
@@ -1353,15 +1593,18 @@
   "staticData": {
     "node:Gmail Trigger": {
       "Gmail Trigger": {
-        "lastTimeChecked": 1750814455,
+        "lastTimeChecked": 1751917090,
         "possibleDuplicates": [
           "197a4acaa9ea5f21"
         ]
       }
+    },
+    "node:Notion Trigger": {
+      "lastTimeChecked": "2025-07-07T19:38:00.000Z"
     }
   },
   "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2025-06-26T01:23:59.755Z",
-  "versionId": "5c1e1e26-a70f-42a8-b205-ac8a14c62776"
+  "triggerCount": 2,
+  "updatedAt": "2025-07-07T20:50:15.736Z",
+  "versionId": "017e396c-8130-42a5-8bf8-0ff6c2703b1b"
 }
