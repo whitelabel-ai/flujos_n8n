@@ -1,28 +1,6 @@
 {
   "active": true,
   "connections": {
-    "audio1": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Simple Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Switch1": {
       "main": [
         [
@@ -39,8 +17,7 @@
             "type": "main",
             "index": 0
           }
-        ],
-        []
+        ]
       ]
     },
     "Texto1": {
@@ -48,39 +25,6 @@
         [
           {
             "node": "If2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "whisper Transcriber": {
-      "main": [
-        [
-          {
-            "node": "audio1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "S3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
-      "main": [
-        [
-          {
-            "node": "Code",
             "type": "main",
             "index": 0
           }
@@ -104,50 +48,6 @@
           {
             "node": "promax generate data2",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "generate audio names",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "S3": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "generate audio names": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -294,32 +194,6 @@
         ]
       ]
     },
-    "Upload a file": {
-      "main": [
-        []
-      ]
-    },
-    "Get many files": {
-      "main": [
-        [
-          {
-            "node": "PresignedGetObject object",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "PresignedGetObject object": {
-      "main": [
-        []
-      ]
-    },
-    "promax generate data": {
-      "main": [
-        []
-      ]
-    },
     "promax generate data1": {
       "main": [
         [
@@ -460,6 +334,11 @@
             "node": "AI Agent3",
             "type": "ai_memory",
             "index": 0
+          },
+          {
+            "node": "AI Agent4",
+            "type": "ai_memory",
+            "index": 0
           }
         ]
       ]
@@ -513,17 +392,6 @@
           {
             "node": "Feedback1",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Simple Memory4": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent4",
-            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -650,7 +518,7 @@
       "main": [
         [
           {
-            "node": "Respond to Webhook4",
+            "node": "HTTP Request3",
             "type": "main",
             "index": 0
           }
@@ -667,6 +535,11 @@
           }
         ]
       ]
+    },
+    "HTTP Request3": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-05-12T16:49:30.297Z",
@@ -677,50 +550,6 @@
   },
   "name": "English Teacher",
   "nodes": [
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
-              "name": "text",
-              "value": "={{ $json.body.text }}",
-              "type": "string"
-            },
-            {
-              "id": "d4299f3b-dd75-4a17-93a3-bce292d5f00a",
-              "name": "prompt",
-              "value": "={{ $json.body.message.prompt }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -980,
-        -780
-      ],
-      "id": "64e80470-1477-43f1-a80e-57a75a5a2e28",
-      "name": "audio1"
-    },
-    {
-      "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $json }}",
-        "contextWindowLength": 50
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        -620,
-        -560
-      ],
-      "id": "4d41bf18-86c4-476c-aa82-682adbf45159",
-      "name": "Simple Memory"
-    },
     {
       "parameters": {
         "rules": {
@@ -799,31 +628,6 @@
               },
               "renameOutput": true,
               "outputKey": "Audio"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "44980260-7b9e-4aa4-9b43-38a2df2a4789",
-                    "leftValue": "",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "SpeechSuper API"
             }
           ]
         },
@@ -833,7 +637,7 @@
       "typeVersion": 3.2,
       "position": [
         -760,
-        20
+        40
       ],
       "id": "08bec17b-c344-41c4-ae60-a55c47a3020b",
       "name": "Switch1"
@@ -862,107 +666,10 @@
       "typeVersion": 3.4,
       "position": [
         -100,
-        340
+        290
       ],
       "id": "2aedc763-f136-46c3-bed9-9303ddcd63d0",
       "name": "Texto1"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.openai.com/v1/audio/transcriptions",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "openAiApi",
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "model",
-              "value": "whisper-1"
-            },
-            {
-              "parameterType": "formBinaryData",
-              "name": "file",
-              "inputDataFieldName": "data"
-            },
-            {
-              "name": "languaje",
-              "value": "es"
-            }
-          ]
-        },
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        -1200,
-        -780
-      ],
-      "id": "bf107ee8-6df1-4245-b3a1-9a932c819a18",
-      "name": "whisper Transcriber",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.openai.com/v1/audio/speech",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "openAiApi",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"tts-1-hd\",\n  \"input\": \"{{ $('Code').item.json.text }}\",\n  \"voice\": \"coral\"\n}\n",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        40,
-        -780
-      ],
-      "id": "21da541a-98b7-4efb-a979-a7f297862c90",
-      "name": "HTTP Request",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=message: {{ $json.text }}\nfirst_name: {{ json.email }}\n<audio> {{$json.result.file_path}} </audio> ",
-        "options": {
-          "systemMessage": "={{ $json.prompt }}"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.7,
-      "position": [
-        -760,
-        -780
-      ],
-      "id": "30e9e774-d5c2-49c1-a149-5cb1c781ba7d",
-      "name": "AI Agent"
     },
     {
       "parameters": {
@@ -975,26 +682,11 @@
       "typeVersion": 2,
       "position": [
         -1200,
-        540
+        440
       ],
       "id": "dcd3399a-a4e9-47b0-8421-1f8b1dc54e8f",
       "name": "Webhook",
       "webhookId": "c8f92425-7fb4-4240-8ab9-0eec25d9e790"
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={\n  \"text\": {{ JSON.stringify ($('AI Agent').item.json.output) }},\n  \"audio\": \"https://minios3.whitelabel.lat/education-conversation-audios/{{ $('generate audio names').item.json.name }}\"\n} ",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        480,
-        -780
-      ],
-      "id": "f3ea9a34-cf9d-4bc0-8ceb-4295104ff670",
-      "name": "Respond to Webhook2"
     },
     {
       "parameters": {
@@ -1010,95 +702,6 @@
       ],
       "id": "12442b61-0983-47da-8227-104a9ad3e127",
       "name": "Convert to File"
-    },
-    {
-      "parameters": {
-        "jsCode": "$json.text = $input.first().json.output\n  .replace(/\\\\\\\\/g, \"\\\\\")  // Escapar backslashes dobles\n  .replace(/\\\\r/g, '\\r')   // Reemplazar '\\r' por su carácter real\n  .replace(/\\\\\\\\/g, '\\\\')  // Escapar dobles backslashes nuevamente\n  .replace(/\\\\\"/g, '\"')    // Reemplazar comillas escapadas\n  .replace(/[\\u200B-\\u200D\\uFEFF]/g, \"\") // Elimina espacios invisibles (Zero Width)\n  .replace(/\\n/g, \"\") // Elimina TODOS los saltos de línea\n  .replace(/\"/g, \"\"); // Elimina todas las comillas dobles\n\nreturn [{\n  json: $json\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -400,
-        -780
-      ],
-      "id": "d3431db0-56c8-4b29-85bf-b3759c4160f1",
-      "name": "Code"
-    },
-    {
-      "parameters": {
-        "operation": "upload",
-        "bucketName": "education-conversation-audios",
-        "fileName": "={{ $('generate audio names').item.json.name }}",
-        "additionalFields": {
-          "grantRead": false
-        }
-      },
-      "type": "n8n-nodes-base.s3",
-      "typeVersion": 1,
-      "position": [
-        260,
-        -780
-      ],
-      "id": "30a056a1-353a-4ec1-a37b-68723f9384be",
-      "name": "S3",
-      "alwaysOutputData": true,
-      "executeOnce": false,
-      "credentials": {
-        "s3": {
-          "id": "iQ1otocSkl7CBOiI",
-          "name": "S3 account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "mode": "raw",
-        "jsonOutput": "={\n  \"name\": \"{{(+new Date).toString(36).slice(-5) + Math.random().toString(36).substr(2, 5)}}\"\n}\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -180,
-        -780
-      ],
-      "id": "660940c2-84bd-468e-a723-15a7b2a59e51",
-      "name": "generate audio names"
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.0-flash-lite-preview",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        -740,
-        -560
-      ],
-      "id": "15d5b471-e3ca-42be-bbec-e3a56189571e",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "jQiccHfpS9BFKE4C",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "",
-        "height": 320,
-        "width": 820
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -620,
-        -700
-      ],
-      "typeVersion": 1,
-      "id": "6481c738-33e8-4633-aeaa-be7b5d50c7b2",
-      "name": "Sticky Note"
     },
     {
       "parameters": {
@@ -1134,26 +737,10 @@
       "typeVersion": 4.2,
       "position": [
         -100,
-        1340
+        1190
       ],
       "id": "1b0316e3-6829-4a8e-b2b3-24b19f811dbe",
       "name": "HTTP Request1"
-    },
-    {
-      "parameters": {
-        "content": "",
-        "height": 180,
-        "width": 820,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -1600,
-        -400
-      ],
-      "typeVersion": 1,
-      "id": "51a1bdb8-c6e0-46db-90b1-ced772cfb5cd",
-      "name": "Sticky Note1"
     },
     {
       "parameters": {
@@ -1166,7 +753,7 @@
       "typeVersion": 1.2,
       "position": [
         -1200,
-        740
+        640
       ],
       "id": "c80c9166-e41f-4345-8517-e264320b9f81",
       "name": "Telegram Trigger",
@@ -1207,7 +794,7 @@
       "typeVersion": 2.2,
       "position": [
         -980,
-        640
+        540
       ],
       "id": "08378ce0-8f2b-4b3a-a7c0-4cb7834ebab1",
       "name": "If"
@@ -1299,7 +886,7 @@
       "typeVersion": 3.2,
       "position": [
         -760,
-        1140
+        990
       ],
       "id": "85251fa9-b677-452b-9408-7ab0bde5e533",
       "name": "Switch"
@@ -1328,7 +915,7 @@
       "typeVersion": 3.4,
       "position": [
         340,
-        1040
+        840
       ],
       "id": "2f75ef3b-1777-4f87-b9a0-04368d858989",
       "name": "Texto"
@@ -1357,7 +944,7 @@
       "typeVersion": 3.4,
       "position": [
         340,
-        1240
+        1040
       ],
       "id": "789dc301-73a2-4226-ae05-4b80cbb997b7",
       "name": "audio"
@@ -1372,7 +959,7 @@
       "typeVersion": 1.3,
       "position": [
         700,
-        1160
+        960
       ],
       "id": "ca4f0eef-e45b-4070-b5d9-48ff7e7d11b5",
       "name": "Simple Memory1"
@@ -1398,7 +985,7 @@
       "typeVersion": 4.2,
       "position": [
         1140,
-        1040
+        840
       ],
       "id": "037a0eda-b47a-480d-a4f6-4841298d29d1",
       "name": "HTTP Request2",
@@ -1421,7 +1008,7 @@
       "typeVersion": 1.7,
       "position": [
         560,
-        940
+        740
       ],
       "id": "455eb8c2-d6ca-4552-8d67-bd951fae8869",
       "name": "AI Agent1"
@@ -1434,7 +1021,7 @@
       "typeVersion": 2,
       "position": [
         920,
-        1040
+        840
       ],
       "id": "6963b2ac-8539-49f6-add1-bebd89207549",
       "name": "Code1"
@@ -1448,7 +1035,7 @@
       "typeVersion": 1,
       "position": [
         580,
-        1160
+        960
       ],
       "id": "4c7584fe-f34e-4fd3-87c6-84463c32fbe9",
       "name": "Google Gemini Chat Model1",
@@ -1470,7 +1057,7 @@
       "typeVersion": 1.2,
       "position": [
         1360,
-        1040
+        840
       ],
       "id": "796dadde-65b5-4b77-a6b0-f86df0f54095",
       "name": "Send an audio file",
@@ -1494,7 +1081,7 @@
       "typeVersion": 1.2,
       "position": [
         920,
-        1440
+        1240
       ],
       "id": "846748a7-2b84-4945-a4ba-196bf6e049c8",
       "name": "Send a text message",
@@ -1509,13 +1096,13 @@
     {
       "parameters": {
         "resource": "file",
-        "fileId": "={{ $json.file_id }}"
+        "fileId": "={{ $json.message.voice.file_id }}"
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
         -540,
-        1340
+        1190
       ],
       "id": "11b0d89d-1884-46de-948c-97711a6ebcc1",
       "name": "Get a file",
@@ -1529,96 +1116,13 @@
     },
     {
       "parameters": {
-        "operation": "upload",
-        "bucketName": "education-conversation-audios",
-        "fileName": "={{ $('generate audio names1').item.json.filename }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.s3",
-      "typeVersion": 1,
-      "position": [
-        -1200,
-        2060
-      ],
-      "id": "a2121c7a-25b7-4c05-b521-de5d6dcdf1cb",
-      "name": "Upload a file",
-      "alwaysOutputData": true,
-      "executeOnce": false,
-      "credentials": {
-        "s3": {
-          "id": "iQ1otocSkl7CBOiI",
-          "name": "S3 account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "bucketName": "education-conversation-audios",
-        "limit": 1,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.s3",
-      "typeVersion": 1,
-      "position": [
-        -1200,
-        -420
-      ],
-      "id": "b3458eb0-db7e-4a73-9d7f-8938edd1ee15",
-      "name": "Get many files",
-      "credentials": {
-        "s3": {
-          "id": "iQ1otocSkl7CBOiI",
-          "name": "S3 account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "bucket": {
-          "__rl": true,
-          "value": "education-conversation-audios",
-          "mode": "name"
-        },
-        "key": "={{ $json.Key }}"
-      },
-      "type": "n8n-nodes-minio.minioNode",
-      "typeVersion": 1,
-      "position": [
-        -980,
-        -420
-      ],
-      "id": "24f892a7-729b-4d9d-88d6-e45dff4bac38",
-      "name": "PresignedGetObject object",
-      "credentials": {
-        "minioCredentialsApi": {
-          "id": "VGN0flhMO7e26nTv",
-          "name": "MinIO account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const crypto = require('crypto');\n\n// Parámetros\nconst appKey = \"1750733317000521\";\nconst secretKey = \"532995f1c23cb578cb20527a198d6ed6\";\nconst userId = \"uid\"; // puedes usar el ID de usuario del chat si quieres\n\n// Firmas\nfunction sha1(content) {\n  return crypto.createHash(\"sha1\").update(content).digest(\"hex\");\n}\n\nconst timestampConnect = Date.now().toString();\nconst timestampStart = Date.now().toString();\n\nconst connectSig = sha1(appKey + timestampConnect + secretKey);\nconst startSig = sha1(appKey + timestampStart + userId + secretKey);\n\n// UUID\nfunction uuid() {\n  return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {\n    let r = Math.random() * 16 | 0,\n        v = c == 'x' ? r : (r & 0x3 | 0x8);\n    return v.toString(16);\n  }).toUpperCase();\n}\n\nconst tokenId = uuid();\n\nconst params = {\n  connect: {\n    cmd: \"connect\",\n    param: {\n      sdk: {\n        version: 16777472,\n        source: 9,\n        protocol: 2\n      },\n      app: {\n        applicationId: appKey,\n        sig: connectSig,\n        timestamp: timestampConnect\n      }\n    }\n  },\n  start: {\n    cmd: \"start\",\n    param: {\n      app: {\n        applicationId: appKey,\n        sig: startSig,\n        userId: userId,\n        timestamp: timestampStart\n      },\n      audio: {\n        audioType: \"ogg\",\n        sampleRate: \"16000\",\n        channel: 1,\n        sampleBytes: 2\n      },\n      request: {\n        coreType: \"word.eval.promax\",\n        refText: \"supermarket\",\n        tokenId: tokenId\n      }\n    }\n  }\n};\n\nreturn [\n  {\n    json: {\n      text: JSON.stringify(params)\n    },\n    binary: items[0].binary\n  }\n];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -1200,
-        1800
-      ],
-      "id": "63b5d43d-6dd3-4121-aada-fa08e5134813",
-      "name": "promax generate data"
-    },
-    {
-      "parameters": {
         "jsCode": "const crypto = require('crypto');\n\nconst appKey = \"1750733317000521\";\nconst secretKey = \"532995f1c23cb578cb20527a198d6ed6\";\nconst userId = 'uid';\nconst coreType = 'speak.eval.pro';\nconst questionPrompt = \"Please talk about any topic you like.\";\nconst audioType = 'ogg';\nconst sampleRate = 16000;\n\n// Firmas\nconst timestamp = Date.now().toString();\nconst sigConnect = crypto.createHash('sha1').update(appKey + timestamp + secretKey).digest('hex');\nconst sigStart = crypto.createHash('sha1').update(appKey + timestamp + userId + secretKey).digest('hex');\n\n// UUID\nconst uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n  const r = Math.random() * 16 | 0;\n  const v = c === 'x' ? r : (r & 0x3 | 0x8);\n  return v.toString(16);\n}).toUpperCase();\n\nconst finalPayload = {\n  connect: {\n    cmd: \"connect\",\n    param: {\n      sdk: {\n        version: 16777472,\n        source: 9,\n        protocol: 2\n      },\n      app: {\n        applicationId: appKey,\n        sig: sigConnect,\n        timestamp: timestamp\n      }\n    }\n  },\n  start: {\n    cmd: \"start\",\n    param: {\n      app: {\n        applicationId: appKey,\n        userId: userId,\n        timestamp: timestamp,\n        sig: sigStart\n      },\n      audio: {\n        sampleBytes: 2,\n        sampleRate,\n        audioType,\n        channel: 1\n      },\n      request: {\n        coreType,\n        test_type: \"ielts\",\n        task_type: \"ielts_part1\",\n        question_prompt: questionPrompt,\n        phoneme_output: 1,\n        model: \"non_native\",\n        penalize_offtopic: 1,\n        decimal_point: 0,\n        tokenId: uuid\n      }\n    }\n  }\n};\n\nreturn [\n  {\n    json: {\n      text: JSON.stringify(finalPayload)\n    },\n    binary: items[0].binary  // El archivo .mp3\n  }\n];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         -320,
-        1340
+        1190
       ],
       "id": "81d64cfc-eb99-49fa-b202-524804556706",
       "name": "promax generate data1"
@@ -1631,7 +1135,7 @@
       "typeVersion": 2,
       "position": [
         120,
-        1340
+        1190
       ],
       "id": "be9562e0-db29-472a-b6f1-7f5324e1e695",
       "name": "Code2"
@@ -1646,7 +1150,7 @@
       "typeVersion": 1.3,
       "position": [
         640,
-        1660
+        1460
       ],
       "id": "b80306f6-51bd-4eed-92c7-6ab7c16db60d",
       "name": "Simple Memory2"
@@ -1663,7 +1167,7 @@
       "typeVersion": 1.7,
       "position": [
         560,
-        1440
+        1240
       ],
       "id": "b1e4c950-d180-4c2c-9069-d50dca28c964",
       "name": "AI Agent2"
@@ -1697,7 +1201,7 @@
       "typeVersion": 2.2,
       "position": [
         120,
-        840
+        690
       ],
       "id": "3d8ff3ee-6fd3-42ba-92ba-0e452773e5da",
       "name": "If1"
@@ -1726,7 +1230,7 @@
       "typeVersion": 3.4,
       "position": [
         340,
-        840
+        640
       ],
       "id": "7ee3a65e-af40-4658-b039-9447ccc5f807",
       "name": "start"
@@ -1755,7 +1259,7 @@
       "typeVersion": 3.4,
       "position": [
         340,
-        1440
+        1240
       ],
       "id": "a37ceaf4-147d-4316-8ade-13013e27dc9d",
       "name": "Feedback"
@@ -1806,13 +1310,13 @@
             {
               "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
               "name": "prompt.system",
-              "value": "=# CONTEXTO\nEres \"Lingo\", un avanzado tutor de inglés conversacional basado en IA. Tu propósito es ser un profesor personal, paciente y motivador. Estás conversando con un estudiante que quiere practicar y mejorar su **inglés escrito** a través de un chat. En este modo, no recibirás análisis de audio; tu evaluación se basará únicamente en el texto del estudiante.\n\n# PERSONA Y TONO\n- **Nombre:** Alex.\n- **Personalidad:** Eres amigable, extremadamente paciente, positivo y alentador. Celebras el esfuerzo y el progreso.\n- **Tono:** Tu tono debe ser siempre constructivo y de apoyo. Nunca debes sonar crítico o robótico. Eres un coach de escritura.\n- **Empatía:** Reconoce que escribir correctamente en un nuevo idioma es un desafío. Usa frases como \"That's a great way to put it!\", \"I see what you mean\", \"Writing is great practice!\".\n\n# MISIÓN PRINCIPAL\nTu misión es ayudar al estudiante a mejorar su confianza y habilidad en la comunicación escrita en inglés. Para lograrlo, deberás:\n1.  **Analizar** cuidadosamente el texto del estudiante en busca de errores y áreas de mejora.\n2.  **Proporcionar feedback** claro y enfocado en un solo punto clave por turno (la \"Regla del Uno\").\n3.  **Enseñar** el concepto gramatical, de vocabulario o de estilo detrás del feedback.\n4.  **Crear ejercicios** de escritura prácticos y contextuales.\n5.  **Motivar** al estudiante a seguir escribiendo y practicando.\n\n# ANÁLISIS DEL INPUT DEL USUARIO\nEn cada turno, recibirás un mensaje del usuario con esta estructura simple:\n- `first_name`: El nombre del estudiante. Úsalo para personalizar la conversación.\n- `message`: El texto escrito por el estudiante. **Esta es tu única fuente de información.** Debes analizarla cuidadosamente para identificar:\n    - **Errores de Gramática:** Tiempos verbales, preposiciones, artículos (a/an/the), concordancia sujeto-verbo, etc.\n    - **Errores de Ortografía (Spelling):** Palabras mal escritas.\n    - **Elección de Vocabulario:** ¿La palabra es correcta para el contexto? ¿Podría usarse una palabra más precisa o natural?\n    - **Estructura y Estilo:** Claridad de las frases, uso de puntuación, frases demasiado largas o cortas.\n\n# ESTRUCTURA DE RESPUESTA (FLUJO DE INTERACCIÓN OBLIGATORIO)\nCada una de tus respuestas DEBE seguir esta estructura pedagógica de 5 pasos.\n\n**Paso 1: Saludo y Reconocimiento Positivo**\n- Empieza siempre saludando al estudiante por su nombre (`first_name`).\n- Valora el contenido de su mensaje antes de corregir. Responde a lo que dijo.\n- Ejemplo: \"Hi Ana! It's interesting that you like to read science fiction. That's a great hobby!\"\n\n**Paso 2: Feedback Principal (La Regla del \"Uno\")**\n- **No corrijas todos los errores a la vez**. Elige **UNA SOLA COSA** para trabajar en este turno.\n- Usa la siguiente jerarquía para decidir qué feedback dar:\n    1.  **Prioridad #1 (Errores que afectan la comprensión):** Si un error de gramática u ortografía hace que la frase sea difícil de entender, enfócate en eso.\n    2.  **Prioridad #2 (Errores Gramaticales Frecuentes):** Errores comunes de estructura, como la conjugación de verbos en tercera persona (\"he go\" en lugar de \"he goes\") o el uso de preposiciones (\"listen music\" en lugar de \"listen to music\").\n    3.  **Prioridad #3 (Ortografía y Vocabulario):** Corrige una palabra mal escrita o sugiere un término más adecuado.\n    4.  **Prioridad #4 (Estilo y Puntuación):** Para estudiantes más avanzados, puedes dar consejos sobre el uso de comas, la longitud de las frases, etc.\n- Presenta la corrección de forma amable, mostrando la versión original y la mejorada.\n- Ejemplo: \"I have a small tip to make that sentence flow even better. Instead of 'I like listen music', in English it's more natural to say '**I like to listen to music**'.\"\n\n**Paso 3: Mini-Lección (Micro-learning)**\n- Explica de forma muy simple y breve la regla detrás de tu corrección.\n- Ejemplo: \"That's because the verb 'listen' almost always uses the preposition 'to' before you mention what you are listening to. For example, 'listen **to** a podcast' or 'listen **to** the teacher'.\"\n\n**Paso 4: Ejercicio Práctico y Contextual**\n- Pídele al estudiante que aplique inmediatamente la regla que acaba de aprender.\n- El ejercicio debe ser simple y estar relacionado con los intereses del estudiante.\n- Ejemplo: \"Your turn to practice! What kind of music do you like to listen to? Try to answer using 'I like to listen to...'.\"\n\n**Paso 5: Motivación y Transición a la Siguiente Interacción**\n- Termina con una nota positiva y una pregunta abierta para continuar la conversación.\n- Ejemplo: \"Perfect! You've got it. Writing is one of the best ways to practice grammar. Besides science fiction, what other types of books do you enjoy?\"\n\n# PRINCIPIOS PEDAGÓGICOS CLAVE\n- **Adaptación al Nivel (Inferido):** A diferencia del modo con audio, no tienes un nivel MCER explícito. Debes **inferir el nivel del estudiante** basándote en la complejidad de sus frases y la naturaleza de sus errores. Si usa un lenguaje simple y comete errores básicos, asume que es un principiante (A1/A2) y mantén tu lenguaje igualmente simple.\n- **Enfoque en Comunicación:** El objetivo principal es que el estudiante se comunique de forma clara. La perfección vendrá con el tiempo.\n- **Seguridad Psicológica:** Fomenta un ambiente donde el estudiante se sienta cómodo practicando y cometiendo errores, viéndolos como oportunidades para aprender.",
+              "value": "=# CONTEXTO\nEres \"Lingo\", un avanzado tutor de inglés conversacional basado en IA. Tu propósito es ser un profesor personal, paciente y motivador. Estás conversando con un estudiante que quiere practicar y mejorar su **inglés escrito** a través de un chat. En este modo, no recibirás análisis de audio; tu evaluación se basará únicamente en el texto del estudiante.\n\n# PERSONA Y TONO\n- **Nombre:** Lingo.\n- **Personalidad:** Eres amigable, extremadamente paciente, positivo y alentador. Celebras el esfuerzo y el progreso.\n- **Tono:** Tu tono debe ser siempre constructivo y de apoyo. Nunca debes sonar crítico o robótico. Eres un coach de escritura.\n- **Empatía:** Reconoce que escribir correctamente en un nuevo idioma es un desafío. Usa frases como \"That's a great way to put it!\", \"I see what you mean\", \"Writing is great practice!\".\n\n# MISIÓN PRINCIPAL\nTu misión es ayudar al estudiante a mejorar su confianza y habilidad en la comunicación escrita en inglés. Para lograrlo, deberás:\n1.  **Analizar** cuidadosamente el texto del estudiante en busca de errores y áreas de mejora.\n2.  **Proporcionar feedback** claro y enfocado en un solo punto clave por turno (la \"Regla del Uno\").\n3.  **Enseñar** el concepto gramatical, de vocabulario o de estilo detrás del feedback.\n4.  **Crear ejercicios** de escritura prácticos y contextuales.\n5.  **Motivar** al estudiante a seguir escribiendo y practicando.\n\n# ANÁLISIS DEL INPUT DEL USUARIO\nEn cada turno, recibirás un mensaje del usuario con esta estructura simple:\n- `first_name`: El nombre del estudiante. Úsalo para personalizar la conversación.\n- `message`: El texto escrito por el estudiante. **Esta es tu única fuente de información.** Debes analizarla cuidadosamente para identificar:\n    - **Errores de Gramática:** Tiempos verbales, preposiciones, artículos (a/an/the), concordancia sujeto-verbo, etc.\n    - **Errores de Ortografía (Spelling):** Palabras mal escritas.\n    - **Elección de Vocabulario:** ¿La palabra es correcta para el contexto? ¿Podría usarse una palabra más precisa o natural?\n    - **Estructura y Estilo:** Claridad de las frases, uso de puntuación, frases demasiado largas o cortas.\n\n# ESTRUCTURA DE RESPUESTA (FLUJO DE INTERACCIÓN OBLIGATORIO)\nCada una de tus respuestas DEBE seguir esta estructura pedagógica de 5 pasos.\n\n**Paso 1: Saludo y Reconocimiento Positivo**\n- Empieza siempre saludando al estudiante por su nombre (`first_name`).\n- Valora el contenido de su mensaje antes de corregir. Responde a lo que dijo.\n- Ejemplo: \"Hi Ana! It's interesting that you like to read science fiction. That's a great hobby!\"\n\n**Paso 2: Feedback Principal (La Regla del \"Uno\")**\n- **No corrijas todos los errores a la vez**. Elige **UNA SOLA COSA** para trabajar en este turno.\n- Usa la siguiente jerarquía para decidir qué feedback dar:\n    1.  **Prioridad #1 (Errores que afectan la comprensión):** Si un error de gramática u ortografía hace que la frase sea difícil de entender, enfócate en eso.\n    2.  **Prioridad #2 (Errores Gramaticales Frecuentes):** Errores comunes de estructura, como la conjugación de verbos en tercera persona (\"he go\" en lugar de \"he goes\") o el uso de preposiciones (\"listen music\" en lugar de \"listen to music\").\n    3.  **Prioridad #3 (Ortografía y Vocabulario):** Corrige una palabra mal escrita o sugiere un término más adecuado.\n    4.  **Prioridad #4 (Estilo y Puntuación):** Para estudiantes más avanzados, puedes dar consejos sobre el uso de comas, la longitud de las frases, etc.\n- Presenta la corrección de forma amable, mostrando la versión original y la mejorada.\n- Ejemplo: \"I have a small tip to make that sentence flow even better. Instead of 'I like listen music', in English it's more natural to say '**I like to listen to music**'.\"\n\n**Paso 3: Mini-Lección (Micro-learning)**\n- Explica de forma muy simple y breve la regla detrás de tu corrección.\n- Ejemplo: \"That's because the verb 'listen' almost always uses the preposition 'to' before you mention what you are listening to. For example, 'listen **to** a podcast' or 'listen **to** the teacher'.\"\n\n**Paso 4: Ejercicio Práctico y Contextual**\n- Pídele al estudiante que aplique inmediatamente la regla que acaba de aprender.\n- El ejercicio debe ser simple y estar relacionado con los intereses del estudiante.\n- Ejemplo: \"Your turn to practice! What kind of music do you like to listen to? Try to answer using 'I like to listen to...'.\"\n\n**Paso 5: Motivación y Transición a la Siguiente Interacción**\n- Termina con una nota positiva y una pregunta abierta para continuar la conversación.\n- Ejemplo: \"Perfect! You've got it. Writing is one of the best ways to practice grammar. Besides science fiction, what other types of books do you enjoy?\"\n\n# PRINCIPIOS PEDAGÓGICOS CLAVE\n- **Adaptación al Nivel (Inferido):** A diferencia del modo con audio, no tienes un nivel MCER explícito. Debes **inferir el nivel del estudiante** basándote en la complejidad de sus frases y la naturaleza de sus errores. Si usa un lenguaje simple y comete errores básicos, asume que es un principiante (A1/A2) y mantén tu lenguaje igualmente simple.\n- **Enfoque en Comunicación:** El objetivo principal es que el estudiante se comunique de forma clara. La perfección vendrá con el tiempo.\n- **Seguridad Psicológica:** Fomenta un ambiente donde el estudiante se sienta cómodo practicando y cometiendo errores, viéndolos como oportunidades para aprender.",
               "type": "string"
             },
             {
               "id": "1bd37b0c-cf70-4a66-99e4-aa11d2e184dc",
               "name": "prompt.user",
-              "value": "=first_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\nmessage: {{ $json.message.text }},",
+              "value": "=message: {{ $json.text }}",
               "type": "string"
             }
           ]
@@ -1823,7 +1327,7 @@
       "typeVersion": 3.4,
       "position": [
         340,
-        560
+        440
       ],
       "id": "aaeebb56-1da6-4ec1-be7e-1f19f7ad3ad3",
       "name": "Texto2"
@@ -1897,7 +1401,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        580,
+        560,
         160
       ],
       "id": "38a4f06f-8336-40aa-adfb-cd5fcbae02ac",
@@ -1937,21 +1441,6 @@
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $json }}",
-        "contextWindowLength": 50
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        640,
-        660
-      ],
-      "id": "7ad0978f-8c1a-4fad-8264-7dce7db95464",
-      "name": "Simple Memory4"
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "={{ $json.prompt.user }}",
         "options": {
@@ -1962,7 +1451,7 @@
       "typeVersion": 1.7,
       "position": [
         560,
-        440
+        340
       ],
       "id": "1f2dcb16-cb0a-4bf0-8d65-1b90e5436050",
       "name": "AI Agent4"
@@ -1979,7 +1468,7 @@
           "conditions": [
             {
               "id": "483f59a3-2e18-42d4-b073-8a14ff2b2321",
-              "leftValue": "={{ $json.message.text }}",
+              "leftValue": "={{ $json.text }}",
               "rightValue": "/start",
               "operator": {
                 "type": "string",
@@ -1996,7 +1485,7 @@
       "typeVersion": 2.2,
       "position": [
         120,
-        340
+        290
       ],
       "id": "c1476c33-6feb-4a51-b5a1-c55b92da8bfb",
       "name": "If2"
@@ -2008,13 +1497,13 @@
             {
               "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
               "name": "prompt.system",
-              "value": "=# CONFIGURACIÓN DE MODO\n# Cambia el valor a \"ACTIVE\" para la respuesta bilingüe, o \"INACTIVE\" para solo inglés.\n[BILINGUAL_MODE] = ACTIVE\n\n# ROL Y OBJETIVO\nEres \"Lingo\", un coach de inglés conversacional de IA, y estás saludando a un nuevo usuario por primera vez. Tu objetivo es escribir un mensaje de bienvenida cálido, claro y motivador que explique cómo funciona la herramienta y anime al usuario a enviar su primer audio de práctica.\n\n# INSTRUCCIÓN DE IDIOMA (MUY IMPORTANTE)\n- Revisa el valor de [BILINGUAL_MODE] al inicio de este prompt.\n- **SI [BILINGUAL_MODE] es \"ACTIVE\"**: Tu respuesta DEBE ser bilingüe. Cada oración o frase en inglés debe ser seguida inmediatamente por su traducción precisa y natural al español en la siguiente línea y entre paréntesis.\n  - **Formato Bilingüe Ejemplo:**\n    `This is an English sentence.`\n    `(Esta es una oración en español.)`\n- **SI [BILINGUAL_MODE] es \"INACTIVE\"**: Tu respuesta DEBE ser **solamente en inglés**, siguiendo la estructura descrita más abajo. Ignora completamente el español.\n\n# CONTEXTO\nEl usuario acaba de enviar el comando `/start`. No sabe cómo funciona el proceso. Este es el primer mensaje que verá. Tu misión es hacer que el proceso parezca simple, divertido y seguro.\n\n# TONO Y LENGUAJE\n- **Tono:** Extremadamente amigable, alentador y positivo.\n- **Lenguaje:** Usa un inglés simple y fácil de entender. Evita cualquier jerga técnica. Piensa que estás hablando con alguien que puede tener un nivel de inglés muy básico.\n\n# ESTRUCTURA DEL MENSAJE DE BIENVENIDA (OBLIGATORIO)\nTu respuesta DEBE seguir esta estructura. Aplica la regla de idioma (bilingüe o solo inglés) según la configuración de [BILINGUAL_MODE].\n\n**## 1. Bienvenida Entusiasta**\n- Comienza con un saludo muy cálido.\n- Preséntate como \"Alex\", el coach personal de inglés del usuario.\n- Expresa tu emoción por ayudarle a practicar.\n\n**## 2. Cómo Funciona (Explicado en Pasos Simples)**\n- Usa una lista numerada y emojis para que el proceso sea muy fácil de visualizar.\n- **Paso 1: Tú Hablas.** Explica que solo necesita enviar un mensaje de voz. Para evitar que el usuario se bloquee, dale algunas ideas sencillas sobre qué hablar.\n- **Paso 2: Yo Escucho.** Menciona brevemente que analizarás su audio (pronunciación, gramática, etc.). Enmárcalo como un proceso de \"escucha atenta\" para ayudarle.\n- **Paso 3: Recibes tu Feedback.** Explica de forma muy clara que recibirá **DOS** mensajes de vuelta. Diferéncialos con emojis. Describe el feedback de audio (consejos del profesor) y el resumen en texto (métricas y correcciones).\n\n**## 3. Nuestra Filosofía (Crear un Espacio Seguro)**\n- Añade un párrafo corto para tranquilizar al usuario.\n- Enfatiza que este es un lugar seguro para practicar sin miedo a cometer errores y que los errores son oportunidades para aprender.\n\n**## 4. Llamada a la Acción (¡Tu Turno!)**\n- Termina con una llamada a la acción clara, directa y emocionante para que envíe su primer mensaje de voz.",
+              "value": "=# CONFIGURACIÓN DE MODO\n# Cambia el valor a \"ACTIVE\" para la respuesta bilingüe, o \"INACTIVE\" para solo inglés.\n[BILINGUAL_MODE] = ACTIVE\n\n# ROL Y OBJETIVO\nEres \"Lingo\", un coach de inglés conversacional de IA, y estás saludando a un nuevo usuario por primera vez. Tu objetivo es escribir un mensaje de bienvenida cálido, claro y motivador que explique cómo funciona la herramienta y anime al usuario a enviar su primer audio de práctica.\n\n# INSTRUCCIÓN DE IDIOMA (MUY IMPORTANTE)\n- Revisa el valor de [BILINGUAL_MODE] al inicio de este prompt.\n- **SI [BILINGUAL_MODE] es \"ACTIVE\"**: Tu respuesta DEBE ser bilingüe. Cada oración o frase en inglés debe ser seguida inmediatamente por su traducción precisa y natural al español en la siguiente línea y entre paréntesis.\n  - **Formato Bilingüe Ejemplo:**\n    `This is an English sentence.`\n    `(Esta es una oración en español.)`\n- **SI [BILINGUAL_MODE] es \"INACTIVE\"**: Tu respuesta DEBE ser **solamente en inglés**, siguiendo la estructura descrita más abajo. Ignora completamente el español.\n\n# CONTEXTO\nEl usuario acaba de enviar el comando `/start`. No sabe cómo funciona el proceso. Este es el primer mensaje que verá. Tu misión es hacer que el proceso parezca simple, divertido y seguro.\n\n# TONO Y LENGUAJE\n- **Tono:** Extremadamente amigable, alentador y positivo.\n- **Lenguaje:** Usa un inglés simple y fácil de entender. Evita cualquier jerga técnica. Piensa que estás hablando con alguien que puede tener un nivel de inglés muy básico.\n\n# ESTRUCTURA DEL MENSAJE DE BIENVENIDA (OBLIGATORIO)\nTu respuesta DEBE seguir esta estructura. Aplica la regla de idioma (bilingüe o solo inglés) según la configuración de [BILINGUAL_MODE].\n\n**## 1. Bienvenida Entusiasta**\n- Comienza con un saludo muy cálido.\n- Preséntate como \"Lingo\", el coach personal de inglés del usuario.\n- Expresa tu emoción por ayudarle a practicar.\n\n**## 2. Cómo Funciona (Explicado en Pasos Simples)**\n- Usa una lista numerada y emojis para que el proceso sea muy fácil de visualizar.\n- **Paso 1: Tú Hablas.** Explica que solo necesita enviar un mensaje de voz. Para evitar que el usuario se bloquee, dale algunas ideas sencillas sobre qué hablar.\n- **Paso 2: Yo Escucho.** Menciona brevemente que analizarás su audio (pronunciación, gramática, etc.). Enmárcalo como un proceso de \"escucha atenta\" para ayudarle.\n- **Paso 3: Recibes tu Feedback.** Explica de forma muy clara que recibirá **DOS** mensajes de vuelta. Diferéncialos con emojis. Describe el feedback de audio (consejos del profesor) y el resumen en texto (métricas y correcciones).\n\n**## 3. Nuestra Filosofía (Crear un Espacio Seguro)**\n- Añade un párrafo corto para tranquilizar al usuario.\n- Enfatiza que este es un lugar seguro para practicar sin miedo a cometer errores y que los errores son oportunidades para aprender.\n\n**## 4. Llamada a la Acción (¡Tu Turno!)**\n- Termina con una llamada a la acción clara, directa y emocionante para que envíe su primer mensaje de voz.",
               "type": "string"
             },
             {
               "id": "1bd37b0c-cf70-4a66-99e4-aa11d2e184dc",
               "name": "prompt.user",
-              "value": "=first_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\nmessage: {{ $json.message.text }},",
+              "value": "=message: {{ $json.text }}",
               "type": "string"
             }
           ]
@@ -2025,7 +1514,7 @@
       "typeVersion": 3.4,
       "position": [
         340,
-        340
+        240
       ],
       "id": "afdf0963-1af0-4c9d-be45-1456a32fdd01",
       "name": "start1"
@@ -2054,7 +1543,7 @@
       "typeVersion": 3.4,
       "position": [
         340,
-        140
+        40
       ],
       "id": "5b1afa7b-7b79-41e5-a55a-fffa6db04400",
       "name": "Feedback1"
@@ -2181,7 +1670,7 @@
       "typeVersion": 4.2,
       "position": [
         1360,
-        440
+        340
       ],
       "id": "c2c3e9ed-9f7f-4a6b-97ba-2c255434eed8",
       "name": "HTTP Request6",
@@ -2194,28 +1683,13 @@
     },
     {
       "parameters": {
-        "respondWith": "json",
-        "responseBody": "={\n  \"text\": {{ JSON.stringify ($('AI Agent4').item.json.output) }},\n  \"audio\": \"https://minios3.whitelabel.lat/education-conversation-audios/{{ $('generate audio names3').item.json.name }}\"\n} ",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        1800,
-        440
-      ],
-      "id": "b127147c-0bbe-4a61-ac9d-afa453c9299e",
-      "name": "Respond to Webhook4"
-    },
-    {
-      "parameters": {
         "jsCode": "$json.text = $input.first().json.output\n  .replace(/\\\\\\\\/g, \"\\\\\")  // Escapar backslashes dobles\n  .replace(/\\\\r/g, '\\r')   // Reemplazar '\\r' por su carácter real\n  .replace(/\\\\\\\\/g, '\\\\')  // Escapar dobles backslashes nuevamente\n  .replace(/\\\\\"/g, '\"')    // Reemplazar comillas escapadas\n  .replace(/[\\u200B-\\u200D\\uFEFF]/g, \"\") // Elimina espacios invisibles (Zero Width)\n  .replace(/\\n/g, \"\") // Elimina TODOS los saltos de línea\n  .replace(/\"/g, \"\"); // Elimina todas las comillas dobles\n\nreturn [{\n  json: $json\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         920,
-        440
+        340
       ],
       "id": "7148df34-4975-4e4e-bee8-4fda6058e5a7",
       "name": "Code6"
@@ -2233,7 +1707,7 @@
       "typeVersion": 1,
       "position": [
         1580,
-        440
+        340
       ],
       "id": "572cd772-beeb-47b1-8ff6-507f634a9ed0",
       "name": "S33",
@@ -2256,26 +1730,31 @@
       "typeVersion": 3.4,
       "position": [
         1140,
-        440
+        340
       ],
       "id": "5b342d61-067c-4f23-8c5a-da250f9ef957",
       "name": "generate audio names3"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://backend-whitelabel.vercel.app/conversations ",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"threadId\": \"d251200f-4bb8-4c3c-b4dc-ea4f3d22e80c\",\n    \"message\": {\n        \"content\": {\n        \"audio\": \"https://minios3.whitelabel.lat/education-conversation-audios/{{ $('generate audio names3').item.json.name }}\",\n        \"text\": {{ JSON.stringify ($('AI Agent4').item.json.output) }}\n        }, \n        \"role\": \"system\",\n        \"mimetype\": \"audio\"\n    }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1780,
+        340
+      ],
+      "id": "2d651bb7-6192-4658-9a90-dcf9af7fa146",
+      "name": "HTTP Request3"
     }
   ],
-  "pinData": {
-    "Get many files": [
-      {
-        "json": {
-          "Key": "6cfox56l8w",
-          "LastModified": "2025-06-06T16:07:19.810Z",
-          "ETag": "\"731f651768ffb97fa7800ed9a552d708\"",
-          "Size": "128160",
-          "StorageClass": "STANDARD",
-          "url": "https://minios3.whitelabel.lat/education-conversation-audios/6cfox56l8w?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=wHnYB7ugsyJsvTvUvyzV%2F20250709%2Feu-south%2Fs3%2Faws4_request&X-Amz-Date=20250709T202513Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=465b1f253474f59ecad5dcf445ca396870c7fbedfa994e2110def88b8243e4e9"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -2285,6 +1764,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-07-09T21:04:36.181Z",
-  "versionId": "8c6b9fc6-85aa-4c99-82eb-94b8818c5788"
+  "updatedAt": "2025-07-10T17:22:20.965Z",
+  "versionId": "7496eda5-a155-439d-973b-5e4ea455b1d1"
 }
