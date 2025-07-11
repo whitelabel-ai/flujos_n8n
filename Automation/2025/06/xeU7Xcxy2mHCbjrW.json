@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Gmail Trigger": {
       "main": [
@@ -38,12 +38,12 @@
       "main": [
         [
           {
-            "node": "Code1",
+            "node": "Code3",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Code3",
+            "node": "Code1",
             "type": "main",
             "index": 0
           }
@@ -260,7 +260,13 @@
     },
     "Switch1": {
       "main": [
-        [],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Get many child blocks",
@@ -329,7 +335,7 @@
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -351,6 +357,46 @@
           }
         ]
       ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-24T15:18:35.192Z",
@@ -366,7 +412,7 @@
         "pollTimes": {
           "item": [
             {
-              "mode": "everyHour"
+              "mode": "everyMinute"
             }
           ]
         },
@@ -381,7 +427,7 @@
       "typeVersion": 1.2,
       "position": [
         -400,
-        -210
+        -160
       ],
       "id": "ad94b2eb-3864-4e1f-8cad-2ea9ebdddf01",
       "name": "Gmail Trigger",
@@ -440,7 +486,7 @@
       "typeVersion": 3.4,
       "position": [
         -180,
-        -210
+        -160
       ],
       "id": "12075fdb-d216-418c-a42b-ca930efefbc1",
       "name": "Data"
@@ -457,7 +503,7 @@
       "typeVersion": 2,
       "position": [
         2820,
-        -560
+        -660
       ],
       "id": "aa962bfa-1cdf-48d4-9dfd-5e7b286f3e7b",
       "name": "AI Agent"
@@ -471,7 +517,7 @@
       "typeVersion": 1,
       "position": [
         120,
-        -90
+        -40
       ],
       "id": "024700fa-1c62-49ff-83dc-925c62eb5de0",
       "name": "Google Gemini Chat Model",
@@ -507,7 +553,7 @@
       "typeVersion": 2,
       "position": [
         40,
-        -310
+        -260
       ],
       "id": "a8fa0d4c-8425-456e-a8b8-17e456a96791",
       "name": "AI Agent1"
@@ -520,7 +566,7 @@
       "typeVersion": 2,
       "position": [
         400,
-        -210
+        -160
       ],
       "id": "764499bf-1ef3-4f78-9e51-f68ecae7f99d",
       "name": "Clean Json"
@@ -609,7 +655,7 @@
       "typeVersion": 3.2,
       "position": [
         620,
-        -210
+        -160
       ],
       "id": "cbe321ec-147e-4d3f-9e6e-20aeea6a2db2",
       "name": "Switch"
@@ -620,7 +666,7 @@
       "typeVersion": 1,
       "position": [
         840,
-        -160
+        -110
       ],
       "id": "2ba57301-da90-48cb-853c-4c623e5f149a",
       "name": "No Operation, do nothing1"
@@ -637,7 +683,7 @@
       "typeVersion": 2.2,
       "position": [
         840,
-        -360
+        -310
       ],
       "id": "5b554d39-8b02-4814-8432-57fb444285ee",
       "name": "Search Client",
@@ -664,7 +710,7 @@
       "typeVersion": 2.2,
       "position": [
         1280,
-        -260
+        -210
       ],
       "id": "15960830-dff4-4ccb-9e76-afd01c8609af",
       "name": "Create Client",
@@ -694,7 +740,7 @@
       "typeVersion": 2.2,
       "position": [
         1280,
-        -460
+        -410
       ],
       "id": "c860b0db-1a7e-4966-a53e-75fc2a7d5c15",
       "name": "Search Projet",
@@ -721,7 +767,7 @@
       "typeVersion": 2.2,
       "position": [
         1720,
-        -360
+        -310
       ],
       "id": "f3da975e-1227-4ecf-ba21-df92b2b887dc",
       "name": "Create Projet",
@@ -761,7 +807,7 @@
       "typeVersion": 2.2,
       "position": [
         1060,
-        -360
+        -310
       ],
       "id": "aca443c7-3d20-409c-bb65-66381097677e",
       "name": "If Client"
@@ -794,7 +840,7 @@
       "typeVersion": 2.2,
       "position": [
         1500,
-        -460
+        -410
       ],
       "id": "371286aa-4339-4c0b-b77a-67d3918c443d",
       "name": "If Projet"
@@ -834,7 +880,7 @@
       "typeVersion": 2.2,
       "position": [
         1940,
-        -360
+        -310
       ],
       "id": "7b90daf0-1dc3-44a5-8623-ac9913d82c16",
       "name": "create Requirements",
@@ -855,7 +901,7 @@
       "typeVersion": 1,
       "position": [
         2900,
-        -340
+        -440
       ],
       "id": "a001975e-b7e4-47d1-ac2b-5c1d48daeccf",
       "name": "Google Gemini Chat Model1",
@@ -932,7 +978,7 @@
       "typeVersion": 3.4,
       "position": [
         2600,
-        -560
+        -410
       ],
       "id": "c76e215f-bd46-4955-8528-bcc668cd32bb",
       "name": "Data Projets"
@@ -990,7 +1036,7 @@
       "typeVersion": 2.2,
       "position": [
         2380,
-        -460
+        -410
       ],
       "id": "6f091273-9fdc-487f-b492-d9fcc2483fe2",
       "name": "create ask",
@@ -1010,7 +1056,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3180,
+        3400,
         -660
       ],
       "id": "c1920478-c0c4-40e2-9450-cdedaafa87f7",
@@ -1030,7 +1076,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3400,
+        3620,
         -660
       ],
       "id": "dbddc886-1952-490d-8bc5-00e6841e9034",
@@ -1050,7 +1096,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        3620,
+        3840,
         -660
       ],
       "id": "ae91a6fd-f7a7-4151-8819-8a4c299aba26",
@@ -1123,8 +1169,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2600,
-        -360
+        2890,
+        -260
       ],
       "id": "88eedb06-ba74-44b0-8ed9-97b67ebc7a8f",
       "name": "Create a database page",
@@ -1157,7 +1203,7 @@
       "typeVersion": 1,
       "position": [
         -400,
-        150
+        300
       ],
       "id": "965321e4-dccb-41bc-9f6c-cb25bd639c80",
       "name": "Notion Trigger",
@@ -1225,7 +1271,7 @@
       "typeVersion": 3.2,
       "position": [
         -180,
-        150
+        300
       ],
       "id": "d8c40eda-829c-47d3-9181-30b1f22f16e2",
       "name": "Switch1"
@@ -1246,7 +1292,7 @@
       "typeVersion": 2.2,
       "position": [
         40,
-        150
+        400
       ],
       "id": "48d2a2af-48e1-4c77-a8cb-4623dd55557c",
       "name": "Get many child blocks",
@@ -1265,7 +1311,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        150
+        400
       ],
       "id": "79ae6655-3609-4a41-8327-e16b3cf36256",
       "name": "Code2"
@@ -1281,7 +1327,7 @@
       "typeVersion": 2.1,
       "position": [
         480,
-        150
+        400
       ],
       "id": "dd77a6dc-64f6-442f-9c5d-309ef4aeab6e",
       "name": "Reply to a message",
@@ -1311,7 +1357,7 @@
       "typeVersion": 3.4,
       "position": [
         2160,
-        -560
+        -510
       ],
       "id": "d7e43286-130f-4304-896b-ddbf996641cb",
       "name": "projetUrl"
@@ -1334,7 +1380,7 @@
       "typeVersion": 3.4,
       "position": [
         2160,
-        -360
+        -310
       ],
       "id": "0f461988-90dd-4aac-9abe-6202171f376c",
       "name": "projetUrl1"
@@ -1346,7 +1392,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3180,
+        3280,
         -460
       ],
       "id": "1605fd98-a6de-40af-8570-a4c5e83a3d87",
@@ -1354,12 +1400,12 @@
     },
     {
       "parameters": {
-        "jsCode": "const LIMITE = 3500; // Límite seguro para texto en Telegram\nconst notion = $('create ask').first().json.url; // URL de Notion\n\n// Agrupamos primero por relevancia y categoría\nconst agrupado = {};\n\nfor (const item of items) {\n  const { relevancia, categoria, pregunta } = item.json;\n\n  if (!agrupado[relevancia]) agrupado[relevancia] = {};\n  if (!agrupado[relevancia][categoria]) agrupado[relevancia][categoria] = [];\n\n  agrupado[relevancia][categoria].push(pregunta);\n}\n\n// Creamos los mensajes\nconst mensajes = [];\n\nfor (const relevancia of Object.keys(agrupado)) {\n  const categorias = agrupado[relevancia];\n\n  for (const categoria of Object.keys(categorias)) {\n    const preguntas = categorias[categoria];\n\n    let bloque = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n`;\n    let acumulado = bloque;\n\n    for (const pregunta of preguntas) {\n      const linea = `- ${pregunta}\\n\\n`;\n\n      if ((acumulado + linea).length > LIMITE) {\n        mensajes.push({ json: { mensaje: acumulado.trim() } });\n\n        // Comenzamos un nuevo mensaje con el encabezado de categoría\n        acumulado = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n${linea}`;\n      } else {\n        acumulado += linea;\n      }\n    }\n\n    if (acumulado.trim() !== '') {\n      mensajes.push({ json: { mensaje: acumulado.trim() } });\n    }\n  }\n}\n\n// Agregamos el mensaje final con el link de Notion\nmensajes.push({\n  json: {\n    mensaje: `✅ *Todas las preguntas han sido agrupadas.*\\n\\nPuedes verlas también en Notion aquí:\\n${notion}`,\n  },\n});\n\nreturn mensajes;\n"
+        "jsCode": "const LIMITE = 3500; // Límite seguro para texto en Telegram\nconst notion = $('create ask').first().json.url; // URL de Notion\n\n// Agrupamos primero por relevancia y categoría\nconst agrupado = {};\n\nfor (const item of items) {\n  const { relevancia, categoria, pregunta } = item.json;\n\n  if (!agrupado[relevancia]) agrupado[relevancia] = {};\n  if (!agrupado[relevancia][categoria]) agrupado[relevancia][categoria] = [];\n\n  agrupado[relevancia][categoria].push(pregunta);\n}\n\n// Creamos los mensajes\nconst mensajes = [];\n\nfor (const relevancia of Object.keys(agrupado)) {\n  const categorias = agrupado[relevancia];\n\n  for (const categoria of Object.keys(categorias)) {\n    const preguntas = categorias[categoria];\n\n    let bloque = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n`;\n    let acumulado = bloque;\n\n    for (const pregunta of preguntas) {\n      const linea = `- ${pregunta}\\n\\n`;\n\n      if ((acumulado + linea).length > LIMITE) {\n        mensajes.push({ json: { mensaje: acumulado.trim() } });\n\n        // Comenzamos un nuevo mensaje con el encabezado de categoría\n        acumulado = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n${linea}`;\n      } else {\n        acumulado += linea;\n      }\n    }\n\n    if (acumulado.trim() !== '') {\n      mensajes.push({ json: { mensaje: acumulado.trim() } });\n    }\n  }\n}\n\nconst dbClientes = 'https://www.notion.so/21c3741c09ed809db8e4c2b8a54316a5?v=21c3741c09ed8085899d000c4233e593';\n\nmensajes.push({\n  json: {\n    mensaje: `✅ *Todas las preguntas han sido agrupadas correctamente.*\\n\\n📄 Puedes verlas también en Notion:\\n${notion}\\n\\n🗃️ Base de datos de clientes:\\n${dbClientes}`,\n  },\n});\n\n\nreturn mensajes;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3400,
+        3500,
         -460
       ],
       "id": "8dc8f017-82e3-45d8-a4cd-8dcb9954aabf",
@@ -1374,8 +1420,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3840,
-        -460
+        4800,
+        -640
       ],
       "id": "f66a365b-3bb5-4846-94c1-2a9c3445c943",
       "name": "Send a text message",
@@ -1398,7 +1444,7 @@
       "typeVersion": 1.2,
       "position": [
         -400,
-        460
+        660
       ],
       "id": "3fbddb40-caaa-4e57-b20b-0beda867b3f7",
       "name": "Telegram Trigger",
@@ -1418,12 +1464,120 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3620,
-        -460
+        4580,
+        -640
       ],
       "id": "7ae84efb-b1e2-4bb1-81b4-63d3ec7a0b76",
       "name": "Wait",
       "webhookId": "2589b0bf-9a06-4193-b952-91a69bb4923f"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        40,
+        200
+      ],
+      "id": "1ddb9b4c-3299-4ef1-98fa-5943174afeae",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3720,
+        -460
+      ],
+      "id": "2c8319b2-1204-42fc-85aa-8ce3de06471a",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "176878701",
+        "message": "={{ $json.mensaje }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Aprobación",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "✅ Aprobado"
+                  },
+                  {
+                    "option": "❌ Cambios sugeridos"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Comentarios o cambios sugeridos",
+              "fieldType": "textarea",
+              "placeholder": "Ej. Cambiar enfoque de la segunda pregunta o agregar una sobre seguimiento..."
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4080,
+        -440
+      ],
+      "id": "18529ea8-16ba-4254-9f9e-ccd1f10849d8",
+      "name": "Send message and wait for response",
+      "webhookId": "898e4bf8-0b0e-4754-96f2-e85648df665b",
+      "credentials": {
+        "telegramApi": {
+          "id": "1rKPuRdAUVGVrAiW",
+          "name": "Cotizations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1b85d132-b40a-4d13-a433-12b467ccb140",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4300,
+        -440
+      ],
+      "id": "fb78ebc5-8984-4895-a96b-b1aa1f70ce8a",
+      "name": "If"
     }
   ],
   "pinData": {
@@ -1464,21 +1618,21 @@
   "staticData": {
     "node:Gmail Trigger": {
       "Gmail Trigger": {
-        "lastTimeChecked": 1752165537,
+        "lastTimeChecked": 1752265709,
         "possibleDuplicates": [
           "197a4acaa9ea5f21"
         ]
       }
     },
     "node:Notion Trigger": {
-      "lastTimeChecked": "2025-07-10T16:38:00.000Z",
+      "lastTimeChecked": "2025-07-11T20:28:00.000Z",
       "possibleDuplicates": [
-        "22a3741c-09ed-814c-b7f9-ffc66281c698"
+        "22d3741c-09ed-8120-8c81-eac04faae6c9"
       ]
     }
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-07-10T16:39:00.647Z",
-  "versionId": "447737fa-4827-4778-9032-72de8b843bac"
+  "updatedAt": "2025-07-11T20:28:29.314Z",
+  "versionId": "f7a1848e-2bba-4936-9662-64102b375f69"
 }
