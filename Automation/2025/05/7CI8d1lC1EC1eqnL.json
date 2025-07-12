@@ -44,7 +44,13 @@
             "index": 0
           }
         ],
-        []
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -289,77 +295,7 @@
       }
     }
   ],
-  "pinData": {
-    "Error Trigger": [
-      {
-        "json": {
-          "execution": {
-            "id": "5823",
-            "url": "https://automation.whitelabel.lat/workflow/SOPhipgvMzeUIBy0/executions/5823",
-            "error": {
-              "level": "warning",
-              "tags": {},
-              "context": {},
-              "functionality": "regular",
-              "name": "NodeApiError",
-              "timestamp": 1749705601034,
-              "node": {
-                "parameters": {
-                  "authentication": "accessToken",
-                  "resource": "file",
-                  "operation": "create",
-                  "owner": {
-                    "__rl": true,
-                    "value": "={{ $('Config').item.json.repo_owner }}",
-                    "mode": ""
-                  },
-                  "repository": {
-                    "__rl": true,
-                    "value": "={{ $('Config').item.json.repo_name }}",
-                    "mode": ""
-                  },
-                  "filePath": "={{ $('Config').item.json.repo_path }}{{ $json.subPath }}{{$('Execute Workflow Trigger').first().json.id}}.json",
-                  "binaryData": false,
-                  "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
-                  "commitMessage": "={{$('Execute Workflow Trigger').first().json.name}} ({{$json.github_status}})",
-                  "additionalParameters": {}
-                },
-                "id": "ee9194e5-0d89-4f15-bc51-da73eefc19a1",
-                "name": "Create new file",
-                "type": "n8n-nodes-base.github",
-                "position": [
-                  1480,
-                  1020
-                ],
-                "typeVersion": 1,
-                "webhookId": "bcb66584-4797-4a71-9eaa-f501094e6b0f",
-                "credentials": {
-                  "githubApi": {
-                    "id": "Rf12PFHYB0L1Ta7u",
-                    "name": "GitHub account"
-                  }
-                }
-              },
-              "messages": [
-                "422 - {\"message\":\"Invalid request.\\n\\n\\\"sha\\\" wasn't supplied.\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#create-or-update-file-contents\",\"status\":\"422\"}"
-              ],
-              "httpCode": "422",
-              "description": "Invalid request.\n\n\"sha\" wasn't supplied.",
-              "message": "Your request is invalid or could not be processed by the service",
-              "stack": "NodeApiError: Your request is invalid or could not be processed by the service\n    at ExecuteContext.requestWithAuthentication (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helper-functions.ts:1421:10)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ExecuteContext.requestWithAuthentication (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helper-functions.ts:1707:11)\n    at ExecuteContext.githubApiRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file+packages+nodes-base_@aws-sdk+credential-providers@3.808.0_asn1.js@5_12b981d6b49d407a163f4d5244314033/node_modules/n8n-nodes-base/nodes/Github/GenericFunctions.ts:61:10)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file+packages+nodes-base_@aws-sdk+credential-providers@3.808.0_asn1.js@5_12b981d6b49d407a163f4d5244314033/node_modules/n8n-nodes-base/nodes/Github/Github.node.ts:2757:21)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1185:9)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1534:27\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2098:11"
-            },
-            "lastNodeExecuted": "Create new file",
-            "mode": "retry",
-            "retryOf": "5670"
-          },
-          "workflow": {
-            "id": "SOPhipgvMzeUIBy0",
-            "name": "Backup Workflows"
-          }
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -369,6 +305,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-12T22:39:31.029Z",
-  "versionId": "2724d3f2-7628-45b9-9a34-1a1cde22801b"
+  "updatedAt": "2025-07-12T16:48:39.605Z",
+  "versionId": "09cbe70f-4433-4ad9-8355-1970107a295e"
 }
