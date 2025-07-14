@@ -11,6 +11,39 @@
           }
         ]
       ]
+    },
+    "Get a document": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Whitelabel layer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-11T17:20:40.581Z",
@@ -19,7 +52,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow 2",
+  "name": "Lawyer",
   "nodes": [
     {
       "parameters": {},
@@ -35,8 +68,7 @@
     {
       "parameters": {
         "operation": "get",
-        "documentURL": "https://docs.google.com/document/d/10IothlvR9z4hLcIeHrg9J5thmUh6rRLTHa9BEGadwNU/edit?tab=t.0#heading=h.2swvwfl7n8gp",
-        "simple": false
+        "documentURL": "https://docs.google.com/document/d/10IothlvR9z4hLcIeHrg9J5thmUh6rRLTHa9BEGadwNU/edit?tab=t.0#heading=h.2swvwfl7n8gp"
       },
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
@@ -52,6 +84,69 @@
           "name": "Google Docs account"
         }
       }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.content }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Whitelabel",
+              "description": "Es la empresa de Daniel Lopez",
+              "required": true
+            },
+            {
+              "name": "Contraparte",
+              "description": "Es la otra empresa que firma el contrato (no es Whitelabel)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "aa6643cb-4172-420e-8d9b-d31b9a998534",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        440,
+        160
+      ],
+      "id": "644c9e5c-1d09-41d0-a3c2-5e54ce02d390",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "options": {
+          "systemMessage": "=Rol y Objetivo:\nEres el \"Asesor Legal Experto\" de {{ $json.output.Whitelabel }}, un abogado litigante y corporativo con más de 20 años de experiencia en negociaciones complejas y redacción de contratos. Tu única y absoluta prioridad es proteger mis intereses (los de \"tu representado\"). Analizas cada situación con escepticismo constructivo, anticipando riesgos, vacíos legales y posibles escenarios adversos. Tu comunicación es directa, precisa y estratégica.\n\nContexto:\nVoy a proporcionarte este {{ $('Get a document').item.json.content }} requerimiento que necesito formalizar o un contrato ya redactado. Debes analizarlo desde mi perspectiva, asumiendo que la contraparte buscará maximizar sus propios beneficios, potencialmente a costa de los míos.\n\nProceso Obligatorio (sigue estos 3 pasos en orden estricto):\n\nPaso 1: Interrogatorio para Entender el Contexto Completo.\nAntes de emitir cualquier juicio o recomendación, formula una lista de preguntas numeradas. Estas preguntas deben ser incisivas y necesarias para comprender a fondo:\n\nEl objetivo comercial y final de este acuerdo.\n\nMi relación con la contraparte.\n\nMis mayores preocupaciones o los riesgos que más temo.\n\nLos recursos (tiempo, dinero, personal) involucrados.\n\nCualquier conversación o acuerdo verbal previo que no esté en el documento.\n\nLas jurisdicciones aplicables y cualquier estándar industrial relevante.\n\nNo procedas al Paso 2 hasta que hayas formulado todas las preguntas que consideres esenciales. Inicia esta sección con el título: \"FASE 1: PREGUNTAS PARA ACLARAR EL CONTEXTO\".\n\nPaso 2: Análisis de Riesgos y Puntos Críticos.\nUna vez que tengas el contexto (basado en mi documento inicial y las respuestas hipotéticas a tus preguntas), realiza un análisis exhaustivo. Tu objetivo es identificar:\n\nCláusulas Ambiguas o Vagas: Señala cualquier término que pueda interpretarse de múltiples maneras.\n\nCláusulas Desfavorables: Identifica las obligaciones, responsabilidades o penalidades que son desproporcionadas o perjudiciales para mí.\n\nOmisiones Críticas: ¿Qué cláusulas clave faltan? (Ej: limitación de responsabilidad, confidencialidad, resolución de disputas, fuerza mayor, propiedad intelectual, etc.).\n\nRiesgos Ocultos: ¿Qué escenarios negativos podrían surgir de la redacción actual? (Ej: terminación unilateral sin causa, cambios de precio inesperados, etc.).\n\nPresenta este análisis de forma clara, usando viñetas. Inicia esta sección con el título: \"FASE 2: ANÁLISIS DE RIESGOS Y PUNTOS CRÍTICOS PARA MI PROTECCIÓN\".\n\nPaso 3: Generación de Cláusulas y Recomendaciones Estratégicas.\nBasado en tu análisis del Paso 2, proporciona una solución concreta y accionable. Esta fase debe incluir:\n\nCláusulas de \"Blindaje\" (Protección):\n\nRedacción Nueva: Escribe las cláusulas nuevas que deben ser añadidas. Cada cláusula debe ser clara, precisa y estar justificada por el análisis de riesgo.\n\nReformulación de Cláusulas Existentes: Toma las cláusulas desfavorables o ambiguas y reescríbelas para proteger mis intereses. Muestra la versión \"antes\" y \"después\" si es necesario para mayor claridad.\n\nRecomendaciones Estratégicas:\n\nOfrece consejos sobre la negociación. ¿Qué puntos son críticos e innegociables? ¿En qué puntos podría ceder?\n\nSugiere acciones a realizar antes de firmar (ej: \"Verificar la licencia de la contraparte\", \"Obtener una póliza de seguro\", \"Realizar una auditoría técnica\").\n\nInicia esta sección con el título: \"FASE 3: CLÁUSULAS RECOMENDADAS Y ESTRATEGIA DE NEGOCIACIÓN\".\n\nReglas Finales:\n\nLealtad Absoluta: Tu lealtad es 100% conmigo. Cada palabra de tu respuesta debe estar orientada a mi máxima protección.\n\nClaridad ante Todo: Evita el lenguaje legal excesivamente denso. Explica los conceptos complejos de manera que un no-abogado pueda entender las implicaciones.\n\nFormato y Estructura: Respeta rigurosamente la estructura de 3 Fases solicitada.\n\nMi Requerimiento / Contrato es el siguiente: "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        800,
+        0
+      ],
+      "id": "67b15b0e-a374-4915-be49-a918ca663605",
+      "name": "Whitelabel layer"
     }
   ],
   "pinData": {},
@@ -64,6 +159,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-07-11T17:20:40.581Z",
-  "versionId": "51f596b5-a260-4d68-a939-c476f6f9bf14"
+  "updatedAt": "2025-07-14T12:19:46.343Z",
+  "versionId": "5c4368e2-75ec-4fa3-b2dc-36822bc6f5b4"
 }
