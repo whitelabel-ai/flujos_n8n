@@ -501,13 +501,13 @@
       "credentials": {
         "googlePalmApi": {
           "id": "jQiccHfpS9BFKE4C",
-          "name": "Google Gemini(PaLM) Api account"
+          "name": "automation.whitelabel.lat"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// Suponiendo que estás trabajando con una entrada tipo JSON del nodo anterior:\nconst raw = items[0].json.output;\n\n// Extraemos el bloque que está entre las etiquetas ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\nif (!match) {\n  throw new Error(\"No se encontró un bloque JSON válido.\");\n}\n\nconst cleanJsonString = match[1];\nconst parsed = JSON.parse(cleanJsonString);\n\n// Devolver como nuevo item\nreturn [{ json: parsed }];\n"
+        "jsCode": "let raw = items[0].json.output;\n\n// Si viene con bloques ```json, extraer solo el contenido\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\nif (match) {\n  raw = match[1];\n}\n\n// Intentamos parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch (err) {\n  throw new Error(\"Error al parsear el JSON: \" + err.message);\n}\n\nreturn [{ json: parsed }];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1349,14 +1349,14 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "axios/1.7.9",
-            "content-length": "1103",
+            "content-length": "1248",
             "accept-encoding": "gzip, compress, deflate, br",
             "content-type": "application/json",
             "x-forwarded-for": "44.195.58.80",
             "x-forwarded-host": "automation.whitelabel.lat",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
-            "x-forwarded-server": "8464e29ad254",
+            "x-forwarded-server": "cf065ec4765e",
             "x-real-ip": "44.195.58.80"
           },
           "params": {},
@@ -1366,33 +1366,43 @@
             "instance": "Pedro",
             "data": {
               "key": {
-                "remoteJid": "120363419417686889@g.us",
+                "remoteJid": "573045809637@s.whatsapp.net",
                 "fromMe": false,
-                "id": "A3A169F92BEAEFD7B58D71BB95DF5BB1",
-                "participant": "573167965086@s.whatsapp.net"
+                "id": "3F29C99C043FB94157C0"
               },
-              "pushName": "Dai",
+              "pushName": "Andrés Corral",
               "status": "DELIVERY_ACK",
               "message": {
                 "messageContextInfo": {
-                  "messageSecret": "bOqEasiwcJuN9JYYIW1KSTRHaJBQ4mu8uQqKxqPYcwY="
+                  "deviceListMetadata": {
+                    "senderKeyHash": "NO8nGfImcJlX0A==",
+                    "senderTimestamp": "1751501048",
+                    "recipientKeyHash": "ljmURpJwE0axAw==",
+                    "recipientTimestamp": "1751822280"
+                  },
+                  "deviceListMetadataVersion": 2
                 },
-                "conversation": "Aunque es viejo, ese fue el último que compartió un compañero, enviado, según sé, por el profe. Lo mejor sería que le escribieras un correo de que en el último cuadro compartido, usted no aparece"
+                "conversation": "Si , confirmo todo"
               },
               "contextInfo": {
-                "stanzaId": "9D12E7928C862F1490CFD06222E4AA6D",
-                "participant": "573008996998@s.whatsapp.net",
+                "stanzaId": "3EB0C7F5A9099D0632056EE2241025463BBD085B",
+                "participant": "573228854498@s.whatsapp.net",
                 "quotedMessage": {
-                  "conversation": "Buenas noches, yo no salgo hay 🤔"
+                  "conversation": "Buen día, para hoy - (15/07/2025)\n\n➡️ *pedido N°: PED-9307*\n- 7 x 55 - PIMIENTO CALIFORNIA VERDE I 12 PIEZAS - ALMACENAJE S/C - BANDEJA GENERICA 60X40X18 ETIQUETA"
+                },
+                "expiration": 0,
+                "ephemeralSettingTimestamp": "0",
+                "disappearingMode": {
+                  "initiator": "CHANGED_IN_CHAT"
                 }
               },
               "messageType": "conversation",
-              "messageTimestamp": 1751072943,
+              "messageTimestamp": 1752583754,
               "instanceId": "fd7c2923-936d-4489-98c2-dce8b78ba822",
-              "source": "android"
+              "source": "unknown"
             },
             "destination": "https://automation.whitelabel.lat/webhook/godoy",
-            "date_time": "2025-06-27T22:09:03.821Z",
+            "date_time": "2025-07-15T09:49:15.032Z",
             "sender": "573228854498@s.whatsapp.net",
             "server_url": "https://evolution.whitelabel.lat",
             "apikey": "EC57B89FA47A-4F8A-B4CD-2E2061598742"
@@ -1412,6 +1422,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-28T01:22:58.733Z",
-  "versionId": "126c5cd2-1ad9-43b3-b3cc-806c250ad830"
+  "updatedAt": "2025-07-15T12:55:22.649Z",
+  "versionId": "89a2ffcc-b5da-4d8d-b41b-661d857190f2"
 }
