@@ -1,0 +1,269 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create a window",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a session": {
+      "main": [
+        []
+      ]
+    },
+    "Create a window": {
+      "main": [
+        [
+          {
+            "node": "Load a page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load a page": {
+      "main": [
+        [
+          {
+            "node": "Escribir correo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escribir correo": {
+      "main": [
+        [
+          {
+            "node": "Escribir contraseña",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escribir contraseña": {
+      "main": [
+        [
+          {
+            "node": "Clic en Iniciar sesión",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-15T12:20:01.896Z",
+  "id": "B6PYVyPyz2BVX6VL",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AirTop - WebFlow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        220
+      ],
+      "id": "337abab3-152d-45cf-be5b-f35783f601f4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "profileName": "WebflowSession",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b5843641-1521-454a-a872-092903bb6265",
+      "name": "Create a session",
+      "credentials": {
+        "airtopApi": {
+          "id": "M7YphPvzezgZuu1i",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.airtop.dev/browserless/execute",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"steps\": [\n    { \"action\": \"goto\", \"url\": \"https://webflow.com/login\" },\n    { \"action\": \"type\", \"selector\": \"input[name='email']\", \"text\": \"TU_CORREO_WEBFLOW\" },\n    { \"action\": \"type\", \"selector\": \"input[name='password']\", \"text\": \"TU_CONTRASEÑA_WEBFLOW\" },\n    { \"action\": \"click\", \"selector\": \"button[type='submit']\" },\n    { \"action\": \"waitForNavigation\" },\n    { \"action\": \"waitForSelector\", \"selector\": \"input[placeholder='Search projects']\" },\n    { \"action\": \"type\", \"selector\": \"input[placeholder='Search projects']\", \"text\": \"Web Dev Testing\" },\n    { \"action\": \"wait\", \"ms\": 2000 },\n    { \"action\": \"click\", \"selector\": \"text='Web Dev Testing'\" },\n    { \"action\": \"waitForNavigation\" },\n    { \"action\": \"click\", \"selector\": \"text='CMS'\" },\n    { \"action\": \"click\", \"selector\": \"text='Blogs'\" },\n    { \"action\": \"wait\", \"ms\": 1000 },\n    { \"action\": \"type\", \"selector\": \"input[name='SendKey']\", \"text\": \"test\" }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        -200
+      ],
+      "id": "6bbf6a46-cc47-4271-b879-be945eea20e0",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "lZ0efOUQUlbFdSMe",
+          "name": "Vapi"
+        },
+        "httpBearerAuth": {
+          "id": "HnVbUuxJGxVka1Vc",
+          "name": "AirTop"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "window",
+        "sessionId": "=3f7d95d7-c79b-4931-ba0f-9c5227846570",
+        "url": "https://webflow.com/login",
+        "getLiveView": true,
+        "screenResolution": "1280x720",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        220,
+        220
+      ],
+      "id": "630415c3-48ec-430e-b08d-9626ebc62eee",
+      "name": "Create a window",
+      "credentials": {
+        "airtopApi": {
+          "id": "M7YphPvzezgZuu1i",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "window",
+        "operation": "load",
+        "url": "https://webflow.com/login",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        440,
+        220
+      ],
+      "id": "4bfd7da9-d9a1-4246-8fbf-5fe4f1ba0c51",
+      "name": "Load a page",
+      "credentials": {
+        "airtopApi": {
+          "id": "M7YphPvzezgZuu1i",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "operation": "type",
+        "text": "lflorez@adoreal.com",
+        "elementDescription": "search Email address or username",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        660,
+        220
+      ],
+      "id": "c4cdd5d5-4598-451f-9ee1-aba34ee27d8f",
+      "name": "Escribir correo",
+      "credentials": {
+        "airtopApi": {
+          "id": "M7YphPvzezgZuu1i",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "operation": "type",
+        "text": "Zra!nbx6pnu",
+        "elementDescription": "search Password",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        880,
+        220
+      ],
+      "id": "f259e5c5-52cc-4fb4-b571-42d9d637ae6c",
+      "name": "Escribir contraseña",
+      "credentials": {
+        "airtopApi": {
+          "id": "M7YphPvzezgZuu1i",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "elementDescription": "the button Continue",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        220
+      ],
+      "id": "9706371d-4f96-4cfe-a677-8d122745cb86",
+      "name": "Clic en Iniciar sesión",
+      "credentials": {
+        "airtopApi": {
+          "id": "M7YphPvzezgZuu1i",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Create a session": [
+      {
+        "json": {
+          "sessionId": "3f7d95d7-c79b-4931-ba0f-9c5227846570"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-15T13:09:47.405Z",
+  "versionId": "2714a09b-38c1-47cd-bf0e-d732405fe7b2"
+}
