@@ -1,0 +1,464 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Texto": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [],
+        [],
+        [
+          {
+            "node": "Texto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Telegram send the text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-22T22:19:09.290Z",
+  "id": "RqFMgoTTr3UCHbKR",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Registro de gastos copy",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "cdeadc7c-78af-4920-aa7b-d1940dadef71",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        -576,
+        448
+      ],
+      "webhookId": "7208450a-490b-4c7f-af62-d1a143056b2f",
+      "typeVersion": 1.1,
+      "credentials": {
+        "telegramApi": {
+          "id": "LUAfQoJdPcm7EkIS",
+          "name": "Registro Gastos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "text": "=Datos registrados: \n\n{{ $json.toJsonString() }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "2f84f487-bd9a-4cd7-a2f1-fc6da849ff30",
+      "name": "Telegram send the text",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1504,
+        448
+      ],
+      "typeVersion": 1.2,
+      "webhookId": "e7092ed5-6a28-46b8-a2f8-ac996f66f175",
+      "credentials": {
+        "telegramApi": {
+          "id": "LUAfQoJdPcm7EkIS",
+          "name": "Registro Gastos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.Resumen }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Proveedor",
+              "description": "Es a quien se le pagó el monto que describe el texto",
+              "required": true
+            },
+            {
+              "name": "Monto",
+              "type": "number",
+              "description": "es el monto pagado",
+              "required": true
+            },
+            {
+              "name": "Fecha de compra",
+              "description": "Es la fecha de compra en formato DD/MM/YYYY",
+              "required": true
+            },
+            {
+              "name": "Referencia",
+              "description": "Es un numero o string referente a la compra"
+            },
+            {
+              "name": "Mes",
+              "description": "Es el mes de la compra escrito en letras \"Marzo\"",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=Eres el asistente personal de Andrés y le ayudaras a registrar todos sus gastos. \n\nTen muy en Cuenta la **Fecha y hora actual:** {{ new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }) }} para cualquier consulta"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        944,
+        448
+      ],
+      "id": "7027d2de-2141-4e4a-8b97-89efa222f992",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        960,
+        608
+      ],
+      "id": "e29dd7c0-dd68-4a4a-a819-c248c80e8709",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "Resumen",
+              "value": "={{$json.message.text}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        448
+      ],
+      "id": "f199f099-50eb-4b91-9806-38a792f880c5",
+      "name": "Texto"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "65411751-b3c9-4294-9387-90d3f4310dff",
+                    "leftValue": "={{ $json.message.photo[3].file_unique_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "photo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fca12b29-d100-4465-86cc-525774a3ce65",
+                    "leftValue": "={{ $json.message.document.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Texto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -288,
+        432
+      ],
+      "id": "5dc4883a-01b9-47b0-bbad-dc763342aff7",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "18Rhqb68Ah8UpvQkz-vQuMTQTwqkEd_SJxc8nqBMwFuQ",
+          "mode": "list",
+          "cachedResultName": "Presupuesto mensual",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18Rhqb68Ah8UpvQkz-vQuMTQTwqkEd_SJxc8nqBMwFuQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 175709570,
+          "mode": "list",
+          "cachedResultName": "Gastos Mensuales",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18Rhqb68Ah8UpvQkz-vQuMTQTwqkEd_SJxc8nqBMwFuQ/edit#gid=175709570"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Proveedor": "={{ $json.output.Proveedor }}",
+            "Monto": "={{ $json.output.Monto }}",
+            "Fecha": "={{ $json.output[\"Fecha de compra\"] }}",
+            "Referencia": "={{ $json.output.Referencia }}",
+            "Mes": "={{ $json.output.Mes }}"
+          },
+          "matchingColumns": [
+            "Proveedor"
+          ],
+          "schema": [
+            {
+              "id": "Proveedor",
+              "displayName": "Proveedor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Monto",
+              "displayName": "Monto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mes",
+              "displayName": "Mes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Referencia",
+              "displayName": "Referencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Categoría",
+              "displayName": "Categoría",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Observaciones",
+              "displayName": "Observaciones",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1280,
+        448
+      ],
+      "id": "06f38338-43a4-4b73-8813-22b170f31437",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "niKwqEKRHcLndlSv",
+          "name": "Andres"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-07-22T22:19:30.215Z",
+  "versionId": "c499e7e6-7905-46cd-9dd9-44e083aa274f"
+}
