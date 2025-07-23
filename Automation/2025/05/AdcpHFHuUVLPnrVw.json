@@ -81,17 +81,6 @@
         ]
       ]
     },
-    "OpenAI": {
-      "main": [
-        [
-          {
-            "node": "Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Wait": {
       "main": [
         [
@@ -118,7 +107,7 @@
       "main": [
         [
           {
-            "node": "OpenAI",
+            "node": "Message a model",
             "type": "main",
             "index": 0
           }
@@ -336,6 +325,17 @@
           }
         ]
       ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-05-22T03:11:30.320Z",
@@ -357,8 +357,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        -780,
-        -680
+        -784,
+        -688
       ],
       "id": "780d6e58-de1e-4174-ad6c-0efa44725ac1",
       "name": "AI Agent"
@@ -375,7 +375,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -840,
+        -848,
         -480
       ],
       "id": "833414c8-feaf-4d11-ae4d-9de5fa1bed55",
@@ -396,8 +396,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -980,
-        -1100
+        -976,
+        -1104
       ],
       "id": "45fb24f4-e71c-4d84-8532-93b0a538e06b",
       "name": "Webhook",
@@ -428,8 +428,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1740,
-        -700
+        1744,
+        -704
       ],
       "id": "afb29986-9121-4aac-ab15-61e1c69c7e4d",
       "name": "HTTP Request"
@@ -471,8 +471,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -540,
-        -1100
+        -544,
+        -1104
       ],
       "id": "5e70bc62-c73b-4a07-8a5f-e8b46b618e6a",
       "name": "If"
@@ -483,7 +483,7 @@
       "typeVersion": 1,
       "position": [
         -320,
-        -1000
+        -1008
       ],
       "id": "e0d3b5c5-be7b-45a7-a297-698ea69649f5",
       "name": "No Operation, do nothing"
@@ -516,7 +516,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        340,
+        352,
         -1200
       ],
       "id": "2ed7b594-d8d6-4ff8-93ec-2cdbad15e85c",
@@ -528,7 +528,7 @@
       "typeVersion": 1,
       "position": [
         560,
-        -1100
+        -1104
       ],
       "id": "62cae494-5d34-4849-a703-5860f29f95f7",
       "name": "No Operation, do nothing1"
@@ -543,7 +543,7 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        120,
+        128,
         -1200
       ],
       "id": "4e8a2829-ef54-4928-abfa-66ec6ff5831d",
@@ -557,51 +557,12 @@
     },
     {
       "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Corrige mensajes de usuarios quitando caracteres raros, errores ortográficos y signos innecesarios como acentos mal puestos, pero sin cambiar el sentido original del mensaje",
-              "role": "system"
-            },
-            {
-              "content": "=Corrige el siguiente mensaje:\\n\\n{{ $json.message }}\\n\\nDevuelve solo el mensaje corregido"
-            }
-          ]
-        },
-        "options": {
-          "maxTokens": 200,
-          "temperature": 0.3
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        840,
-        -1300
-      ],
-      "id": "d3135e7e-6234-45ab-8409-41e0f0e87572",
-      "name": "OpenAI",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "amount": 10
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -100,
+        -96,
         -1200
       ],
       "id": "d9208954-04a2-472c-b0a4-f7c949952393",
@@ -659,8 +620,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1000,
-        -680
+        -1008,
+        -688
       ],
       "id": "b1b6b6b2-5d66-45cd-9e62-b29e441ebad1",
       "name": "Data"
@@ -683,7 +644,7 @@
       "typeVersion": 3.4,
       "position": [
         560,
-        -1300
+        -1296
       ],
       "id": "f174fc0c-7a92-445a-bacb-a86de9411ddf",
       "name": "Unir Mensajes"
@@ -741,8 +702,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -760,
-        -1100
+        -768,
+        -1104
       ],
       "id": "e3d967e2-82b6-4b06-8280-931be742cb71",
       "name": "setData"
@@ -768,8 +729,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        1380,
-        -700
+        1392,
+        -704
       ],
       "id": "c7e0a775-e14d-44c0-b699-fadc2da7ce1a",
       "name": "OpenAI1",
@@ -788,8 +749,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        1960,
-        -700
+        1968,
+        -704
       ],
       "id": "19472f08-2efc-4b5c-b6ff-9d0b9c8caf14",
       "name": "Redis5",
@@ -808,7 +769,7 @@
       "typeVersion": 1.1,
       "position": [
         2160,
-        -700
+        -704
       ],
       "id": "58996f25-96bf-4278-b4c7-2fdca2d5e3fa",
       "name": "Wait11",
@@ -821,8 +782,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1740,
-        -520
+        1744,
+        -528
       ],
       "id": "3c092377-e332-4d1b-ba40-40057f05fd12",
       "name": "Wait12",
@@ -856,8 +817,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1960,
-        -520
+        1968,
+        -528
       ],
       "id": "7882b75d-ea32-45a7-9106-987226c39719",
       "name": "If12"
@@ -867,8 +828,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2380,
-        -500
+        2384,
+        -496
       ],
       "id": "d18106e5-691d-41e2-b029-4c9ccb63f103",
       "name": "No Operation, do nothing11"
@@ -901,8 +862,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2360,
-        -700
+        2368,
+        -704
       ],
       "id": "7a98dd55-fe74-4eac-842d-ad5a92736c33",
       "name": "If13"
@@ -913,7 +874,7 @@
       "typeVersion": 1,
       "position": [
         2800,
-        -680
+        -688
       ],
       "id": "ebcf0461-848c-4706-bb62-e13775abd338",
       "name": "No Operation, do nothing12"
@@ -925,8 +886,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1740,
-        -300
+        1744,
+        -304
       ],
       "id": "d0a4cf6d-cb6f-4f34-9a13-37125227b96c",
       "name": "Wait13",
@@ -960,8 +921,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1960,
-        -300
+        1968,
+        -304
       ],
       "id": "2438b06e-494d-4a29-a09b-d5a89c1451a6",
       "name": "If14"
@@ -971,8 +932,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2380,
-        -300
+        2384,
+        -304
       ],
       "id": "3e4403cd-63ec-4dcb-a048-5b91a568c239",
       "name": "No Operation, do nothing13"
@@ -1002,7 +963,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2580,
+        2592,
         -720
       ],
       "id": "9ba8d6aa-34f7-415c-a3c0-0bd96d26fb9d",
@@ -1033,8 +994,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2180,
-        -540
+        2192,
+        -544
       ],
       "id": "6283fae5-1794-4d21-8e7e-560eea1b775b",
       "name": "HTTP Request2"
@@ -1064,7 +1025,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2200,
+        2208,
         -320
       ],
       "id": "1c463418-d576-45a2-9ff5-8dc13d4fb6cc",
@@ -1096,7 +1057,7 @@
       "typeVersion": 1,
       "position": [
         -1040,
-        -760
+        -768
       ],
       "id": "a667c5ad-0e8a-4d70-b2e0-6af205a86454",
       "name": "Sticky Note1"
@@ -1111,8 +1072,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1300,
-        -760
+        1312,
+        -768
       ],
       "id": "f66a9220-eca6-42a3-ba0e-7b6a6a6b8d6e",
       "name": "Sticky Note2"
@@ -1127,7 +1088,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        -680,
+        -688,
         -480
       ],
       "id": "1a0d3769-15de-4b02-b924-6d74c9403242",
@@ -1174,8 +1135,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -980,
-        -1700
+        -976,
+        -1696
       ],
       "id": "3817589c-ce35-4ed3-bc62-14b5bf78d698",
       "name": "Switch"
@@ -1187,8 +1148,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -760,
-        -1700
+        -768,
+        -1696
       ],
       "id": "c9f681b6-7c09-4650-9002-247e6b1a84c1",
       "name": "Wait1 load file",
@@ -1204,8 +1165,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -540,
-        -1700
+        -544,
+        -1696
       ],
       "id": "033a6bd6-845a-442d-b0d8-a571d006ed25",
       "name": "GET audio"
@@ -1220,7 +1181,7 @@
       "typeVersion": 1.8,
       "position": [
         -320,
-        -1700
+        -1696
       ],
       "id": "7233edcc-d29e-4dc2-a271-5e6473337a4f",
       "name": "OpenAI2",
@@ -1240,8 +1201,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -1220,
-        -1700
+        -1216,
+        -1696
       ],
       "id": "f44ec31a-d4c8-460e-9d6f-c2b26db7c5e5",
       "name": "Webhook1",
@@ -1273,11 +1234,50 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -20,
-        -1700
+        -16,
+        -1696
       ],
       "id": "e3af5384-a264-4601-a539-66c1c31ebb08",
       "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Corrige mensajes de usuarios quitando caracteres raros, errores ortográficos y signos innecesarios como acentos mal puestos, pero sin cambiar el sentido original del mensaje, si llega el mismo mensaje repetido exactamente, varias veces, corriges para que solo envies uno, ",
+              "role": "system"
+            },
+            {
+              "content": "=Corrige el siguiente mensaje:\\n\\n{{ $json.message }}\\n\\nDevuelve solo el mensaje corregido"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 200,
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        848,
+        -1296
+      ],
+      "id": "d3135e7e-6234-45ab-8409-41e0f0e87572",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1471,6 +1471,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-28T21:33:46.946Z",
-  "versionId": "3a2789a4-82f3-4030-aae2-8bda9426f9ce"
+  "updatedAt": "2025-07-23T21:19:35.277Z",
+  "versionId": "39c131d2-a27a-4b35-8ac6-9e58c811be97"
 }
