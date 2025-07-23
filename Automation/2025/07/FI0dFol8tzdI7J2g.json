@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Receive the File": {
       "main": [
@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Switch1",
+            "node": "Switch",
             "type": "main",
             "index": 0
           }
@@ -100,38 +100,6 @@
         ]
       ]
     },
-    "Switch1": {
-      "main": [
-        [
-          {
-            "node": "Receive the File1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Receive the File",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Texto",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Telegram2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code4": {
       "main": [
         [
@@ -208,6 +176,38 @@
           }
         ]
       ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Receive the File1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Receive the File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Texto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-15T23:31:50.371Z",
@@ -229,8 +229,8 @@
       "name": "Telegram Trigger",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        -580,
-        440
+        -560,
+        464
       ],
       "webhookId": "6021108f-f0e8-4d7a-918b-f49baa28ba85",
       "typeVersion": 1.1,
@@ -254,8 +254,8 @@
       "name": "Telegram send the text",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1500,
-        440
+        1504,
+        448
       ],
       "typeVersion": 1.2,
       "webhookId": "c6674bde-cd06-4989-b782-3d639a821545",
@@ -284,8 +284,8 @@
       "name": "Get only the text",
       "type": "n8n-nodes-base.set",
       "position": [
-        660,
-        200
+        672,
+        208
       ],
       "typeVersion": 3.4
     },
@@ -298,8 +298,8 @@
       "name": "Receive the File",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        20,
-        200
+        32,
+        208
       ],
       "typeVersion": 1.2,
       "webhookId": "a80a4cb7-f166-4eea-8f28-c23464c37c78",
@@ -349,8 +349,8 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1,
       "position": [
-        940,
-        440
+        944,
+        448
       ],
       "id": "871da0b2-6f2b-4591-b359-3bd9be79edbf",
       "name": "Information Extractor"
@@ -363,7 +363,7 @@
       "typeVersion": 1,
       "position": [
         960,
-        600
+        608
       ],
       "id": "01314a76-5c4c-4e2c-9b0b-1cea2be063d2",
       "name": "Google Gemini Chat Model",
@@ -382,8 +382,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        0,
-        680
+        16,
+        640
       ],
       "id": "47aaa89a-4a6d-4a01-9178-6b11fc69ec3c",
       "name": "Telegram2",
@@ -425,8 +425,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        220,
-        680
+        240,
+        640
       ],
       "id": "092085c0-79cf-4b1d-bafe-21e918394663",
       "name": "HTTP Request",
@@ -454,8 +454,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        640,
-        440
+        672,
+        448
       ],
       "id": "7ce31924-42ad-4166-b41f-c694ee5d574b",
       "name": "Texto"
@@ -477,128 +477,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        640,
-        680
+        672,
+        640
       ],
       "id": "cee52241-975f-48e8-84b8-13ef17b3ee0c",
       "name": "audio"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "65411751-b3c9-4294-9387-90d3f4310dff",
-                    "leftValue": "={{ $json.message.photo[3].file_unique_id }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "photo"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "fca12b29-d100-4465-86cc-525774a3ce65",
-                    "leftValue": "={{ $json.message.document.file_id }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Image"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $json.message.text }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    },
-                    "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Texto"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
-                    "leftValue": "={{ $json.message.voice.file_id }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Audio"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        -280,
-        420
-      ],
-      "id": "89a9eac5-64e8-4dee-b4fe-97833090b95c",
-      "name": "Switch1"
     },
     {
       "parameters": {
@@ -607,8 +490,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        220,
-        200
+        224,
+        208
       ],
       "id": "6081f049-0107-406a-86b1-661228757c83",
       "name": "Code4"
@@ -631,8 +514,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        440,
-        200
+        448,
+        208
       ],
       "id": "189b5afb-be2d-4826-8313-4bbc663597d0",
       "name": "OpenAI1",
@@ -661,8 +544,8 @@
       "name": "Get only the text1",
       "type": "n8n-nodes-base.set",
       "position": [
-        660,
-        -20
+        672,
+        48
       ],
       "typeVersion": 3.4
     },
@@ -675,8 +558,8 @@
       "name": "Receive the File1",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        20,
-        -20
+        32,
+        48
       ],
       "typeVersion": 1.2,
       "webhookId": "a80a4cb7-f166-4eea-8f28-c23464c37c78",
@@ -694,8 +577,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        220,
-        -20
+        224,
+        48
       ],
       "id": "6c32fd64-d149-44cc-ad51-2f24a5c9fe5e",
       "name": "Code"
@@ -718,8 +601,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        440,
-        -20
+        448,
+        48
       ],
       "id": "9983a321-8cdf-4d74-866a-f581b8ffcddc",
       "name": "OpenAI",
@@ -836,7 +719,7 @@
       "typeVersion": 4.5,
       "position": [
         1280,
-        440
+        448
       ],
       "id": "a1408260-2a8b-4a45-bf17-72182fb9de3d",
       "name": "Append row in sheet",
@@ -846,6 +729,123 @@
           "name": "Andres"
         }
       }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "65411751-b3c9-4294-9387-90d3f4310dff",
+                    "leftValue": "={{ $json.message.photo[3].file_unique_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fca12b29-d100-4465-86cc-525774a3ce65",
+                    "leftValue": "={{ $json.message.document.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Document"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Texto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -288,
+        432
+      ],
+      "id": "89a9eac5-64e8-4dee-b4fe-97833090b95c",
+      "name": "Switch"
     }
   ],
   "pinData": {},
@@ -858,6 +858,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-07-16T17:39:50.997Z",
-  "versionId": "0c8facf9-e9e7-4ad2-a054-c095e23dcedc"
+  "updatedAt": "2025-07-22T22:51:57.421Z",
+  "versionId": "34156ead-4b4a-42a5-a58b-c993abc6f704"
 }
