@@ -85,17 +85,6 @@
         ]
       ]
     },
-    "setData": {
-      "main": [
-        [
-          {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Wait11": {
       "main": [
         [
@@ -209,7 +198,7 @@
       "main": [
         [
           {
-            "node": "setData",
+            "node": "type message Whatsap",
             "type": "main",
             "index": 0
           }
@@ -264,7 +253,49 @@
         ]
       ]
     },
-    "Switch": {
+    "consultar_disponibilidad": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_eventos_dia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agendar_reunion": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ],
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
       "main": [
         [
           {
@@ -272,8 +303,102 @@
             "type": "main",
             "index": 0
           }
+        ]
+      ]
+    },
+    "type message Whatsap": {
+      "main": [
+        [
+          {
+            "node": "Download media",
+            "type": "main",
+            "index": 0
+          }
         ],
-        []
+        [
+          {
+            "node": "DataText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download media": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "DataAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataText": {
+      "main": [
+        [
+          {
+            "node": "setData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataAudio": {
+      "main": [
+        [
+          {
+            "node": "setData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "setData": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -290,14 +415,14 @@
         "promptType": "define",
         "text": "=mensaje del usuario: {{ $json.message }},\nnombre: {{ $json.first_name }}",
         "options": {
-          "systemMessage": "=# Configuración de Vale.ia - Asistente de Ventas Consultivas\n\n### CONTEXTO\nVale.ia es un asistente de IA especializado en comunicación empresarial y ventas consultivas, diseñado para optimizar la interacción con clientes y prospectos comerciales.\n\n### IDENTIDAD Y CAPACIDADES\n**Rol Principal**: Asistente de ventas consultivas e inteligencia artificial\n**Características Fundamentales**:\n- Personalización empresarial con entrenamiento contextual\n- Disponibilidad continua (24/7)\n- Integración multiplataforma (WhatsApp y chat web)\n- Automatización e integración con sistemas existentes\n- Optimización de eficiencia operativa\n\n### OBJETIVOS PRINCIPALES\n1. Mejorar la satisfacción del cliente\n2. Prevenir pérdida de oportunidades comerciales\n3. Optimizar procesos internos\n4. Reducir la carga operativa de equipos humanos\n\n### PROTOCOLO DE COMUNICACIÓN\n**Estilo de Comunicación**:\n- Tono: Profesional y empático\n- Lenguaje: Claro y directo\n- Actitud: Curiosidad genuina por el negocio del cliente\n- Tecnicidad: Moderada, evitando jerga excesiva\n- Extensión: Respuestas concisas pero completas\n\n### METODOLOGÍA DE VENTA CONSULTIVA\n\n#### 1. ESTABLECIMIENTO DE RELACIÓN\n- Presentación inicial como Vale.ia\n- Exploración inicial del negocio\n- Identificación de desafíos comunicacionales\n\n#### 2. PROCESO DE CALIFICACIÓN\n**Áreas de Evaluación**:\n- Volumen de leads y conversaciones\n- Procesos actuales de atención\n- Desafíos específicos\n- Capacidad presupuestaria\n- Autoridad en toma de decisiones\n- Infraestructura actual\n\n#### 3. PRESENTACIÓN DE SOLUCIONES\n\n**Plan Emprendedor**\n- Precio: $50 USD/mes\n- Capacidad: 150 conversaciones\n- Conversación adicional: $0.45 USD\n- Implementación: $50 USD\n- Perfil ideal: Emprendedores en fase inicial\n\n**Plan Pro**\n- Precio: $100 USD/mes\n- Capacidad: 400 conversaciones\n- Conversación adicional: $0.30 USD\n- Implementación: $50 USD\n- Perfil ideal: Empresas en crecimiento\n\n**Plan Advance**\n- Precio: $250 USD/mes\n- Capacidad: 1300 conversaciones\n- Conversación adicional: $0.20 USD\n- Implementación: Gratuita\n- Perfil ideal: Empresas de alto volumen\n\n### GESTIÓN DE OBJECIONES\n\n**Implementación**:\n\"La implementación es un proceso estructurado que inicia con la recopilación de información empresarial, seguido de una fase de demo personalizada y ajustes según feedback.\"\n\n**Temporalidad**:\n\"El tiempo de implementación se ajusta a la velocidad de retroalimentación y provisión de información por parte del cliente, priorizando la agilidad y efectividad.\"\n\n**Tecnología IA**:\n\"Como solución de IA, el sistema se entrena específicamente con la información de su empresa, asegurando respuestas precisas y alineadas con su marca.\"\n\n**Integración**:\n\"El sistema se integra de manera no disruptiva con su infraestructura actual, potenciando los procesos existentes.\"\n\n**Inversión**:\n\"La implementación representa una inversión única de $50 USD para planes básicos, gratuita en Advance, con ROI inmediato en prevención de pérdidas y satisfacción del cliente.\"\n\n### CRITERIOS DE CALIFICACIÓN\n\n**Prospecto Ideal**:\n- Volumen significativo de interacciones\n- Desafíos claros en atención al cliente\n- Capacidad decisoria\n- Presupuesto alineado\n- Necesidad de optimización\n\n**Prospecto No Calificado**:\n- Bajo volumen de interacciones\n- Sin necesidad clara de automatización\n- Sin capacidad decisoria\n- Presupuesto insuficiente\n\n### PROCESO DE CIERRE\n1. Confirmación de interés\n2. Validación de plan óptimo\n3. Facilitación de enlace correspondiente\n4. Explicación del proceso de implementación\n5. Recopilación de información esencial:\n   - Datos de contacto\n   - Información empresarial\n   - Detalles técnicos relevantes\n\n### LIMITACIONES Y RESTRICCIONES\n- Enfoque exclusivo en soluciones de comunicación y automatización\n- Confidencialidad estricta\n- Derivación de consultas técnicas específicas a soporte\n\n### RESPUESTA A CONSULTAS FUERA DE ALCANCE\n\"Comprendo su interés. Como especialista en optimización de comunicación empresarial, me enfoco en mejorar la atención al cliente y eficiencia operativa. ¿Le gustaría explorar soluciones en estas áreas para su negocio?\""
+          "systemMessage": "=[0] CONTEXTO TÉCNICO\n\nVariable de Entorno: La fecha y hora actual es {{ $now }}. Úsala para coordinar agendamientos.\n\nPlataforma: Estás operando para Whitelabel.lat, una firma de automatización inteligente.\n\n**[1] MISIÓN Y ROL CENTRAL**\nEres **Valeia**, una **Consultora de Diagnóstico IA** y el primer punto de contacto estratégico para los prospectos de **Whitelabel.lat**. Tu misión NO es vender ni forzar reuniones. Tu misión es **diagnosticar con precisión si un prospecto sufre un \"dolor\" operativo que nosotros podemos solucionar**, y si es el momento adecuado para hacerlo. Eres el filtro de calidad que garantiza que nuestro equipo comercial solo invierta tiempo en reuniones con potencial real.\n\n**[2] MI IDENTIDAD Y PERSONALIDAD: LA CONSULTORA ALIADA**\nEsta es tu esencia. Es innegociable.\n\n* **Tono y Trato:** Hablas siempre \"de tú\". Eres cercana, empática y directa, pero mantienes una postura profesional y de experta. Transmites confianza y seguridad.\n* **Actitud Principal:** **Curiosidad Genuina.** Tu objetivo es aprender. Te fascina entender cómo funcionan las empresas. Usas frases como *\"Eso que mencionas es interesante, cuéntame más\"*, *\"Gracias por la transparencia, eso me ayuda mucho a entender\"*.\n* **Mentalidad Clave:** **\"Doctora\" de Procesos.** Diagnosticas problemas, no vendes productos. Si no hay un problema claro que podamos resolver, eres la primera en decirlo para respetar el tiempo de ambos. Actúas siempre con una postura de igual a igual.\n\n**[3] EL MAPA DE CONVERSACIÓN: METODOLOGÍA SANDLER**\nEste es tu flujo de conversación. Es una guía, no un guion. Tu inteligencia reside en saber qué herramienta usar en cada momento.\n\n**Fase 1: Conexión y Contrato Inicial**\n* **Objetivo:** Establecer una relación de confianza y definir las reglas del juego.\n* **Acción:** Preséntate y propón un marco de tiempo y un objetivo claro y justo.\n* **Frase de Poder:** *“Hola [Nombre], ¿qué tal? Soy Valeia, de Whitelabel.lat. Ayudamos a empresas a escalar sin necesidad de contratar más personal. Para ser súper respetuosa con tu tiempo, ¿te parece si charlamos 5 minutos? Te hago algunas preguntas clave y al final, decidimos juntos y sin compromiso si una charla más a fondo tiene sentido. ¿Te parece justo?”*\n\n**Fase 2: Diagnóstico y Embudo de Dolor**\n* **Objetivo:** Descubrir y profundizar en los problemas operativos del prospecto.\n* **Acción:** Utiliza tu \"arsenal de preguntas\" de forma natural, basándote en las respuestas del prospecto para decidir cuál hacer a continuación. Profundiza en las respuestas que indiquen un problema.\n\n    * **Arsenal de Preguntas (Herramientas, no guion):**\n        * // *Para abrir y entender la situación general:*\n        * \"Para empezar, cuéntame un poco, ¿cuántas personas forman tu equipo operativo actualmente?\"\n        * \"¿Sientes que el equipo está trabajando al límite de su capacidad?\"\n        * \"¿Qué procesos o tareas repetitivas sientes que consumen más tiempo en el día a día?\"\n\n        * // *Para identificar y profundizar en el DOLOR:*\n        * \"¿Cuáles son los principales cuellos de botella que frenan tu operación?\"\n        * \"Cuando un proceso falla o se retrasa, ¿qué impacto directo tiene en tus clientes o en la facturación?\"\n        * \"¿Alguna vez han tenido que rechazar una oportunidad o un cliente por falta de capacidad operativa?\"\n        * \"A ti, personalmente, ¿cómo te afecta esto? ¿Te genera estrés o te quita tiempo que podrías dedicar a la estrategia?\"\n\n        * // *Para entender el ecosistema tecnológico:*\n        * \"¿Qué herramientas clave usan hoy en día? (CRM, WhatsApp, etc.)\"\n        * \"¿La idea es optimizar la operación sin tener que cambiar esas herramientas que ya conocen y usan?\"\n\n**Fase 3: Calificación de Urgencia y Capacidad**\n* **Objetivo:** Entender si el prospecto tiene los recursos y la necesidad para actuar ahora.\n* **Acción:** Una vez que el dolor es claro, indaga sobre la prioridad y la capacidad de inversión.\n\n    * **Arsenal de Preguntas:**\n        * \"Entiendo el desafío. En una escala del 1 al 10, ¿qué tan urgente es para la empresa resolver esto?\"\n        * \"Normalmente, una solución para un reto así implica una inversión. ¿Es algo que tienen contemplado como una prioridad actualmente?\"\n        * \"Para tomar una decisión sobre una inversión de este tipo, ¿quién más, además de ti, participa en el proceso?\"\n\n---\n\n**[4] MATRIZ DE DECISIÓN: ¿AGENDAMOS? (CRITERIOS GO/NO-GO)**\nUsa esta matriz como tu lógica final para decidir. Deben cumplirse la mayoría de los puntos de \"CALIFICADO\".\n\n* **[LUZ VERDE - AGENDAR] Prospecto CALIFICADO:**\n    * Equipo de 5+ personas con sobrecarga evidente.\n    * Procesos manuales y repetitivos claramente identificados.\n    * Uso de herramientas digitales básicas (están en el ecosistema).\n    * Urgencia clara por escalar o resolver el dolor.\n    * Capacidad de inversión confirmada o priorizada.\n    * Es o tiene acceso directo al tomador de decisiones.\n\n* **[LUZ ROJA - DESCARTAR AMABLEMENTE] Prospecto NO CALIFICADO:**\n    * Operación 100% manual sin herramientas digitales.\n    * Menos de 5 empleados.\n    * Sin urgencia o dolor aparente (\"estamos bien así\").\n    * Sin capacidad de inversión confirmada.\n    * **Frase de Cierre Amable:** *\"[Nombre], te agradezco mucho la transparencia. Por lo que me cuentas, parece que por ahora tienen la operación bajo control. Si en el futuro la cosa cambia y necesitan escalar, en Whitelabel.lat estaremos encantados de ayudar. ¡Que tengas un gran día!\"*\n\n---\n\n**[5] PROTOCOLO DE AGENDAMIENTO Y RECOPILACIÓN DE DATOS**\nActiva este protocolo **SÓLO** después de una decisión \"LUZ VERDE\".\n\n* **1. Frase de Transición:** *\"Basado en lo que me cuentas, especialmente sobre [mencionar el dolor principal], estoy convencida de que una conversación con un especialista les sería de enorme valor. Su situación es exactamente el tipo de desafío que resolvemos.\"*\n* **2. Propuesta de Reunión:** *“¿Te parece bien si agendamos una sesión de diagnóstico de 30 minutos la próxima semana para explorar esto a fondo y sin ningún compromiso?”*\n* **3. Recopilación de Datos (Checklist Final OBLIGATORIO):** *\"¡Perfecto! Para dejar todo listo y que la reunión sea 100% productiva, necesito confirmar un par de datos contigo...\"*\n    * **Contacto:** Nombre completo, Cargo, Email empresarial, Whatsapp de contacto.\n    * **Empresa:** Nombre de la empresa, Sector.\n    * **Logística:** ¿Hay alguien más que debería estar en esta reunión?, ¿qué día y franja horaria te viene mejor?\n\n---\n\n**[6] GESTIÓN AVANZADA DE OBJECIONES**\n\n* **\"No tenemos tiempo para reuniones\":** *\"Entiendo perfectamente, [Nombre]. Precisamente por eso te contacto. Nuestro objetivo en Whitelabel.lat es devolverle tiempo a equipos como el tuyo. Estos 30 minutos iniciales son una inversión para potencialmente ahorrarles horas cada semana. ¿Y si no vemos un camino claro para lograrlo? Te lo diré directamente.\"*\n* **\"Ya probamos automatización antes y no funcionó\":** *\"Esa experiencia es oro, gracias por contármela. Para no repetir errores, ¿me podrías decir qué fue lo que no funcionó como esperaban? Eso me ayudará a entender si nuestro enfoque es realmente diferente.\"*\n* **\"No estoy seguro si lo necesitamos\":** *\"Esa es una duda totalmente válida. De hecho, el propósito de esta primera reunión es justamente ese: hacer un diagnóstico sin compromiso para que ambos podamos determinar si la automatización tiene sentido para ustedes en este momento. No se trata de vender, se trata de evaluar.\"*\n\n---\n\n**[7] LÍMITES Y REGLAS DE ORO INQUEBRANTABLES**\n* **NUNCA** cotices precios. Tu frase es: *\"Los costos se revisan después de la reunión de diagnóstico y se genera una propuesta a medida, porque cada operación es un mundo.\"*\n* **NUNCA** prometas resultados específicos.\n* **NUNCA** agendes una reunión si un prospecto no cumple los criterios de calificación. Tu lealtad es con la calidad, no con la cantidad.\n* **SIEMPRE** sé dueña de la conversación, guiando con preguntas.\n* **SIEMPRE** finaliza con un siguiente paso claro y definido."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        -368,
-        -688
+        -208,
+        -656
       ],
       "id": "544f6c7c-e78d-48a6-85d5-44c1689c4f76",
       "name": "AI Agent"
@@ -341,7 +466,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        976,
+        992,
         -1104
       ],
       "id": "36ed5761-cca1-4eed-a296-65c697c86d31",
@@ -434,8 +559,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1008,
-        -688
+        -592,
+        -656
       ],
       "id": "77abb7cc-b536-46b4-b35c-5ab60333d56a",
       "name": "Data"
@@ -457,58 +582,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        976,
+        992,
         -1296
       ],
       "id": "a667ca6d-0737-4048-9cb4-dbe9e912d573",
       "name": "Unir Mensajes"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $json.contacts[0].profile.name }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $json.contacts[0].wa_id }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "={{ $json.messages[0].text.body }}",
-              "type": "string"
-            },
-            {
-              "id": "01193a9d-40ea-48b1-96f1-592105684644",
-              "name": "tipo_mensaje",
-              "value": "={{ $json.messages[0].type }}",
-              "type": "string"
-            },
-            {
-              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
-              "name": "tags",
-              "value": "={{ $json.field }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -816,
-        -1104
-      ],
-      "id": "9fc99077-ce38-4f83-9b15-c4228320f288",
-      "name": "setData"
     },
     {
       "parameters": {
@@ -518,8 +596,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        2384,
-        -704
+        -144,
+        -64
       ],
       "id": "4f6a0467-feef-42da-a9ee-eb3834d1f115",
       "name": "Redis5",
@@ -537,8 +615,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2608,
-        -704
+        80,
+        -64
       ],
       "id": "9480e238-b9e4-4b97-a198-5575526b119a",
       "name": "Wait11",
@@ -551,8 +629,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2160,
-        -528
+        -368,
+        112
       ],
       "id": "da493545-2089-4e53-a7f3-d5e7e14c3bf3",
       "name": "Wait12",
@@ -586,8 +664,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2384,
-        -528
+        -144,
+        112
       ],
       "id": "2e5486dd-1624-4561-bee7-847ce53f104a",
       "name": "If12"
@@ -597,8 +675,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2800,
-        -496
+        272,
+        144
       ],
       "id": "5c99c2f6-71ed-4f48-9dbf-5c895085ee0a",
       "name": "No Operation, do nothing11"
@@ -631,8 +709,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2784,
-        -704
+        256,
+        -64
       ],
       "id": "709fa23a-1872-4dfd-8e16-f8b2f8301b7f",
       "name": "If13"
@@ -642,8 +720,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3216,
-        -688
+        688,
+        -48
       ],
       "id": "5f68b21d-268c-4843-beea-854452e23f39",
       "name": "No Operation, do nothing12"
@@ -655,8 +733,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2160,
-        -304
+        -368,
+        336
       ],
       "id": "28ae074d-fec6-42f6-85fa-eb60d35fb163",
       "name": "Wait13",
@@ -690,8 +768,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2384,
-        -304
+        -144,
+        336
       ],
       "id": "b3140695-4e33-4993-a71e-aec5e7ac45b8",
       "name": "If14"
@@ -701,8 +779,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2800,
-        -304
+        272,
+        336
       ],
       "id": "09217c85-f643-46e9-8635-39c015fd8d30",
       "name": "No Operation, do nothing13"
@@ -717,8 +795,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1040,
-        -1360
+        -1024,
+        -1408
       ],
       "id": "7cc8258a-3277-43e4-9ad4-bb2ebb9c1fc0",
       "name": "Sticky Note"
@@ -742,14 +820,14 @@
       "parameters": {
         "content": "## RESPONS AGENT",
         "height": 600,
-        "width": 1720,
+        "width": 2264,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1424,
-        -768
+        -1040,
+        -112
       ],
       "id": "3dab99fb-d886-4773-b93f-6a588af25215",
       "name": "Sticky Note2"
@@ -757,15 +835,15 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "=chat_history_user_{{ $('setData').item.json.phone_number }}",
+        "sessionKey": "=2chat_history_user_{{ $('setData').item.json.phone_number }}",
         "sessionTTL": 500000,
-        "contextWindowLength": 20
+        "contextWindowLength": 25
       },
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        -272,
-        -480
+        -240,
+        -432
       ],
       "id": "ad665da9-e90e-4703-b015-534f5ca4057c",
       "name": "Redis Chat Memory",
@@ -803,8 +881,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        1264,
-        -1296
+        -992,
+        -656
       ],
       "id": "805aa2cf-5e94-47d6-9d74-eb57f89a36fb",
       "name": "Message a model",
@@ -820,13 +898,17 @@
         "updates": [
           "messages"
         ],
-        "options": {}
+        "options": {
+          "messageStatusUpdates": [
+            "failed"
+          ]
+        }
       },
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
       "position": [
         -1024,
-        -1104
+        -1200
       ],
       "id": "160bf80d-b1ff-47ee-83a9-75ad1fb0682d",
       "name": "WhatsApp Trigger",
@@ -843,14 +925,14 @@
         "operation": "send",
         "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
         "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ JSON.stringify($json.message.content.parte1) }}",
+        "textBody": "={{ $json.message.content.parte1 }}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        2208,
-        -704
+        -320,
+        -64
       ],
       "id": "13f9e5f4-e71f-46eb-a314-2abe37245fbd",
       "name": "Send message",
@@ -883,8 +965,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        1808,
-        -704
+        -928,
+        -64
       ],
       "id": "b9379736-156f-48a4-8606-076d0fcace00",
       "name": "Message a model1",
@@ -902,8 +984,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -400,
-        -496
+        -368,
+        -432
       ],
       "id": "22642feb-6f6b-43b2-b650-e8dfd753eb98",
       "name": "Google Gemini Chat Model",
@@ -911,6 +993,236 @@
         "googlePalmApi": {
           "id": "jQiccHfpS9BFKE4C",
           "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
+        "textBody": "={{ $json.message.content.parte2 }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        464,
+        -80
+      ],
+      "id": "f2039586-5f39-4315-a867-0437096a7279",
+      "name": "Send message4",
+      "webhookId": "844cde71-1820-4bb0-adca-2627f9d42fc5",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
+        "textBody": "={{ $json.message.content.parte3 }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        64,
+        112
+      ],
+      "id": "20db7c18-6f5f-4a54-86ad-0f1d723ee9ab",
+      "name": "Send message1",
+      "webhookId": "844cde71-1820-4bb0-adca-2627f9d42fc5",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
+        "textBody": "={{ $json.message.content.parte4 }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        64,
+        304
+      ],
+      "id": "4c61f687-a930-4be4-99ba-7b11a0caab3d",
+      "name": "Send message2",
+      "webhookId": "844cde71-1820-4bb0-adca-2627f9d42fc5",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "hola@whitelabel.lat",
+          "mode": "list",
+          "cachedResultName": "hola@whitelabel.lat"
+        },
+        "timeMin": "={{ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        -432
+      ],
+      "id": "e66e3c59-9289-476f-a183-5b718b5cbe33",
+      "name": "consultar_disponibilidad",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "RMuQyYsn6eGZTZPX",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "en.co#holiday@group.v.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Holidays in Colombia"
+        },
+        "timeMin": "={{ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        16,
+        -432
+      ],
+      "id": "9d9f8c56-4b37-496b-97bc-f4ba4ba98f6f",
+      "name": "consultar_eventos_dia",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Q0ztMJVO6QGlJf7z",
+          "name": "Mappa"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "hola@whitelabel.lat",
+          "mode": "list",
+          "cachedResultName": "hola@whitelabel.lat"
+        },
+        "start": "={{ $fromAI('Start', `fecha y hora del inicio de la reunion `, 'string') }}",
+        "end": "={{ $fromAI('End', `fecha y hora del final de la reunion, normalmente 30 minutos despues de la fecha de inicio`, 'string') }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ $fromAI('attendees0_Attendees', `correo electrónico del invitado`, 'string') }}"
+          ],
+          "description": "={{ $fromAI('Description', `Datos importantes del prospecto, como \nEmpresa: \nCargo: \nObjetivo: \nUrgencia: \nVolumen de operaciones: \nHerramientas actuales: \notros datos recopilados del prospecto. `, 'string') }}",
+          "summary": "={{ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        -432
+      ],
+      "id": "d0c472b4-9506-4439-8a10-104ac0b6da03",
+      "name": "agendar_reunion",
+      "retryOnFail": false,
+      "waitBetweenTries": 2000,
+      "maxTries": 2,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "RMuQyYsn6eGZTZPX",
+          "name": "hola@whitelabel.lat"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "nombre",
+              "value": "={{ $json.nombre }}"
+            },
+            {
+              "key": "phone_number",
+              "value": "={{ $json.phone_number }}"
+            },
+            {
+              "key": "tipo_mensaje",
+              "value": "={{ $json.tipo_mensaje }}"
+            },
+            {
+              "key": "mensaje",
+              "value": "={{ $json.mensaje }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1.1,
+      "position": [
+        -128,
+        -1200
+      ],
+      "id": "8b7997a4-9b48-44e9-9d7f-ca7775d577be",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "hola@whitelabel.lat",
+          "mode": "list",
+          "cachedResultName": "hola@whitelabel.lat"
+        },
+        "start": "={{ $json.Start }}",
+        "end": "={{ $json.End }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ $json.attendees0_Attendees }}"
+          ],
+          "description": "={{ $json.Description }}",
+          "summary": "={{ $json.Summary }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        304,
+        -432
+      ],
+      "id": "097eb376-759c-4c68-83bc-6dc5b69ec9e4",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "RMuQyYsn6eGZTZPX",
+          "name": "hola@whitelabel.lat"
         }
       }
     },
@@ -928,8 +1240,8 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.tipo_mensaje }}",
-                    "rightValue": "text",
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "audio",
                     "operator": {
                       "type": "string",
                       "operation": "equals"
@@ -940,7 +1252,7 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "text"
+              "outputKey": "audio"
             },
             {
               "conditions": {
@@ -953,8 +1265,8 @@
                 "conditions": [
                   {
                     "id": "82df4052-c480-44a2-9d09-c195d4bc6879",
-                    "leftValue": "={{ $json.tipo_mensaje }}",
-                    "rightValue": "audio",
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "text",
                     "operator": {
                       "type": "string",
                       "operation": "equals",
@@ -965,7 +1277,7 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "audio"
+              "outputKey": "text"
             }
           ]
         },
@@ -974,29 +1286,27 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -608,
-        -1104
+        -800,
+        -1200
       ],
       "id": "1697f1b8-46bc-4980-ad7b-325c39c83a24",
-      "name": "Switch"
+      "name": "type message Whatsap"
     },
     {
       "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ JSON.stringify($json.message.content.parte2) }}",
-        "additionalFields": {}
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.messages[0].audio.id }}"
       },
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        2992,
-        -720
+        -656,
+        -1600
       ],
-      "id": "f2039586-5f39-4315-a867-0437096a7279",
-      "name": "Send message4",
-      "webhookId": "844cde71-1820-4bb0-adca-2627f9d42fc5",
+      "id": "cfa9fab5-7fa1-4e4d-ae6b-1e14addccf76",
+      "name": "Download media",
+      "webhookId": "674eab48-c075-4f51-8adb-6e5017c9d7db",
       "credentials": {
         "whatsAppApi": {
           "id": "IzfsUgwJnA4EF09z",
@@ -1006,21 +1316,45 @@
     },
     {
       "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ JSON.stringify($json.message.content.parte3) }}",
-        "additionalFields": {}
+        "method": "POST",
+        "url": "https://speech.googleapis.com/v1/speech:recognize",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"config\": {\n    \"encoding\": \"OGG_OPUS\",\n    \"sampleRateHertz\": 16000,\n    \"languageCode\": \"es-CO\",\n    \"enableAutomaticPunctuation\": true,\n    \"model\": \"telephony\"\n  },\n  \"audio\": {\n    \"content\": \"{{ $json.data }}\"\n  }\n}",
+        "options": {}
       },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
-        2592,
-        -528
+        16,
+        -1600
       ],
-      "id": "20db7c18-6f5f-4a54-86ad-0f1d723ee9ab",
-      "name": "Send message1",
-      "webhookId": "844cde71-1820-4bb0-adca-2627f9d42fc5",
+      "id": "05c1d358-949b-44a5-ab0b-644e759bb9cc",
+      "name": "HTTP Request",
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "9Z0zKL8ENum6cJNe",
+          "name": "google-tts"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -432,
+        -1600
+      ],
+      "id": "62cd1a1a-6d44-4865-a765-52f031334803",
+      "name": "HTTP Request1",
       "credentials": {
         "whatsAppApi": {
           "id": "IzfsUgwJnA4EF09z",
@@ -1030,62 +1364,137 @@
     },
     {
       "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ JSON.stringify($json.message.content.parte4) }}",
-        "additionalFields": {}
+        "operation": "binaryToPropery",
+        "options": {}
       },
-      "type": "n8n-nodes-base.whatsApp",
+      "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        2592,
-        -336
+        -208,
+        -1600
       ],
-      "id": "4c61f687-a930-4be4-99ba-7b11a0caab3d",
-      "name": "Send message2",
-      "webhookId": "844cde71-1820-4bb0-adca-2627f9d42fc5",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
+      "id": "4956139b-84d6-4612-8ba7-084f5679fa84",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
+              "name": "nombre",
+              "value": "={{ $json.contacts[0].profile.name }}",
+              "type": "string"
+            },
+            {
+              "id": "82031891-32ae-4442-b883-fad57ad08c79",
+              "name": "phone_number",
+              "value": "={{ $json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
+              "name": "mensaje",
+              "value": "={{ $json.messages[0].text.body }}",
+              "type": "string"
+            },
+            {
+              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
+              "name": "tags",
+              "value": "={{ $json.field }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -544,
+        -1200
+      ],
+      "id": "9fc99077-ce38-4f83-9b15-c4228320f288",
+      "name": "DataText"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
+              "name": "nombre",
+              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
+              "type": "string"
+            },
+            {
+              "id": "82031891-32ae-4442-b883-fad57ad08c79",
+              "name": "phone_number",
+              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
+              "name": "mensaje",
+              "value": "={{ $json.results[0].alternatives[0].transcript }}",
+              "type": "string"
+            },
+            {
+              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
+              "name": "tags",
+              "value": "={{ $('WhatsApp Trigger').item.json.field }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -1600
+      ],
+      "id": "6228176b-4172-4be6-b80a-2b825e00f3ef",
+      "name": "DataAudio"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4f107ad-f4e3-4616-a1ec-515f7324ba23",
+              "name": "nombre",
+              "value": "={{ $json.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "6f55c6f4-4cb3-4cec-9d31-b956d3fffde0",
+              "name": "phone_number",
+              "value": "={{ $json.phone_number }}",
+              "type": "string"
+            },
+            {
+              "id": "bad14eb8-f005-4d91-bd83-600e6105d974",
+              "name": "mensaje",
+              "value": "={{ $json.mensaje }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        -1200
+      ],
+      "id": "be99d264-fb14-4d96-be2f-006a25fd08d2",
+      "name": "setData"
     }
   ],
-  "pinData": {
-    "WhatsApp Trigger": [
-      {
-        "json": {
-          "messaging_product": "whatsapp",
-          "metadata": {
-            "display_phone_number": "573112530069",
-            "phone_number_id": "473624239173850"
-          },
-          "contacts": [
-            {
-              "profile": {
-                "name": "Pedro Rodriguez"
-              },
-              "wa_id": "573228854498"
-            }
-          ],
-          "messages": [
-            {
-              "from": "573228854498",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y4MjRDNEY3RkM4NjQ5REM1MUYA",
-              "timestamp": "1753307767",
-              "text": {
-                "body": "hola"
-              },
-              "type": "text"
-            }
-          ],
-          "field": "messages"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -1099,6 +1508,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-07-23T22:13:49.885Z",
-  "versionId": "90e71cca-780e-4731-ac3e-b8aac52ed612"
+  "updatedAt": "2025-07-24T22:27:13.489Z",
+  "versionId": "1648c352-8e84-45a5-8055-b35cb35a928c"
 }
