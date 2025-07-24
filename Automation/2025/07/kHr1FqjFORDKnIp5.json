@@ -1,17 +1,6 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
-    "Telegram Trigger": {
-      "main": [
-        [
-          {
-            "node": "Enviar texto",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
@@ -242,7 +231,13 @@
     },
     "Telegram Trigger1": {
       "main": [
-        []
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Agenda Mappa": {
@@ -288,6 +283,17 @@
           }
         ]
       ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get a board",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-16T17:11:09.576Z",
@@ -300,34 +306,10 @@
   "nodes": [
     {
       "parameters": {
-        "updates": [
-          "message"
-        ],
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegramTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -1904,
-        288
-      ],
-      "id": "01ac38ea-5547-406a-ac52-dfcc00094b95",
-      "name": "Telegram Trigger",
-      "webhookId": "59b698be-b77c-46b0-ab05-61c593ba33c0",
-      "credentials": {
-        "telegramApi": {
-          "id": "xrf1D2O5qOceQaVy",
-          "name": "Valeia_Transcriber"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "Que eventos tengo?",
         "options": {
-          "systemMessage": "=Eres el asistente personal de Andrés. Tu función es gestionar su agenda compilando diferentes agendas e informarle sobre todos los eventos que tiene.\n\nPara lograr tu ejetivo tienes las herramientas: \n\n\"Agenda Adoreal\"\n\"Agenda Mappa\"\n\"Agenda Personal\"\n\"Agenda Whitelabel\"\n\nDebes enviarle el mensaje separando la los eventos por agenda.\n\nIgnora los eventos que tengan como titulo: Busy, busy, out of office, lunch\n\n## CONTEXTO TEMPORAL\nFecha y hora actual: {{ $now.format('cccc, yyyy-MM-dd HH:mm') }}\nZona horaria: {{ $now.format('z') }}"
+          "systemMessage": "=Eres el asistente personal de Andrés. Tu función es gestionar su agenda compilando diferentes agendas e informarle sobre todos los eventos que tiene.\n\nPara lograr tu ejetivo tienes las herramientas: \n\n\"Agenda Adoreal\"\n\"Agenda Mappa\"\n\"Agenda Personal\"\n\"Agenda Whitelabel\"\n\nDebes enviarle el mensaje separando la los eventos por agenda.\n\nIgnora los eventos que tengan como titulo: Busy, busy, out of office, lunch\n\n## CONTEXTO TEMPORAL\nFecha y hora actual: {{ $now.format('cccc, yyyy-MM-dd HH:mm') }}\nZona horaria: {{ $now.format('z') }}\n\n## FORMATO DE RESPUESTA\nResponde siempre en Markdown"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -839,28 +821,6 @@
     },
     {
       "parameters": {
-        "resource": "messages-api",
-        "remoteJid": "57304580963",
-        "options_message": {}
-      },
-      "type": "n8n-nodes-evolution-api.evolutionApi",
-      "typeVersion": 1,
-      "position": [
-        -1664,
-        288
-      ],
-      "id": "3f6d9970-1186-4911-85f0-281eec769352",
-      "name": "Enviar texto",
-      "credentials": {
-        "evolutionApi": {
-          "id": "OFo9A7x3qE1W1DKN",
-          "name": "Evolution account Pedro"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "updates": [
           "message"
         ],
@@ -869,8 +829,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -448,
-        -176
+        -96,
+        -32
       ],
       "id": "5ca96d6e-cb0f-4d83-9d03-a040e37ae57e",
       "name": "Telegram Trigger1",
@@ -941,7 +901,7 @@
         "rule": {
           "interval": [
             {
-              "triggerAtHour": 8
+              "triggerAtHour": 6
             },
             {
               "triggerAtHour": 13
@@ -952,11 +912,12 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        0,
-        0
+        -96,
+        256
       ],
       "id": "98c37e0a-6499-4982-9d64-123417e4a48a",
-      "name": "Schedule Trigger"
+      "name": "Schedule Trigger",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1028,6 +989,43 @@
       "id": "98dee1ca-b111-42df-993b-b3e215d28d79",
       "name": "Get many tasks in Google Tasks",
       "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        832,
+        -672
+      ],
+      "id": "8f2722db-4f07-4cf2-accc-b2cef70f7f87",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "board",
+        "operation": "get",
+        "id": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -672
+      ],
+      "id": "5760c21a-d449-49ea-ad7f-6dfb46fc0be2",
+      "name": "Get a board",
+      "credentials": {
+        "trelloApi": {
+          "id": "KWs0oH8fLsrwUpPC",
+          "name": "Trello account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1043,7 +1041,7 @@
     }
   },
   "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2025-07-19T17:13:18.958Z",
-  "versionId": "d0bf5ebe-c0b9-44ee-830a-a17d56c23463"
+  "triggerCount": 2,
+  "updatedAt": "2025-07-24T04:51:11.716Z",
+  "versionId": "3764c2e1-39dd-4b56-a5c1-a592c0f799a3"
 }
