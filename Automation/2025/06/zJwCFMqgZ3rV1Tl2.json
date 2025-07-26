@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "1. Initialize State1",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -60,18 +60,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "Postgres PGVector Store",
+            "node": "data",
             "type": "main",
             "index": 0
           }
@@ -217,7 +206,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields2",
+            "node": "AI Agent1",
             "type": "main",
             "index": 0
           }
@@ -262,7 +251,7 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "prompts",
             "type": "main",
             "index": 0
           }
@@ -273,7 +262,7 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "prompts",
             "type": "main",
             "index": 0
           }
@@ -287,13 +276,29 @@
             "node": "AI Agent",
             "type": "ai_languageModel",
             "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
           }
         ]
       ]
     },
     "Postgres Chat Memory": {
       "ai_memory": [
-        []
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
       ]
     },
     "AI Agent": {
@@ -334,6 +339,11 @@
         [
           {
             "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -382,6 +392,79 @@
       "ai_embedding": [
         []
       ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompts": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "1. Initialize State1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table Name DELETE1": {
+      "main": [
+        [
+          {
+            "node": "DELETE Documents Table and Match Function1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message2": {
+      "main": [
+        [
+          {
+            "node": "Table Name DELETE1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "data": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-13T03:39:21.763Z",
@@ -400,7 +483,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        704,
+        912,
         -688
       ],
       "id": "c72ffa12-fa84-4752-9df7-d05fca0c227f",
@@ -408,12 +491,12 @@
     },
     {
       "parameters": {
-        "jsCode": "// --- CONFIGURACIÓN ---\n// Define el dominio principal para filtrar enlaces externos.\n// Cambia esto por el dominio del sitio que estás analizando.\nconst MAIN_DOMAIN = 'tailwindcss.com';\n// --------------------\n\nconst htmlString = $input.first().json.data;\n\n// Paso 1: Eliminar etiquetas no deseadas (sin cambios)\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, '')\n  .replace(/<meta[^>]*>/gi, '')\n  .replace(/<link[^>]*>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n'); // Quita todas las etiquetas restantes, dejando texto plano\n\n// Paso 2: Extraer texto plano limpio (sin cambios)\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')  // Quita líneas vacías múltiples\n  .replace(/\\s{2,}/g, ' ')    // Espacios múltiples -> uno\n  .replace(/^\\s+|\\s+$/g, '')  // Quita espacios iniciales/finales\n  .trim();\n\n// Paso 3: Extraer y FILTRAR enlaces válidos\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)<\\/a>/gi;\n\n// Función para excluir archivos, anclas y protocolos especiales\nconst isFileOrSpecialLink = (url) => {\n  const excludeExtensions = [\n    '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp',\n    '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip', '.rar', '.csv', '.woff2', '.ttf'\n  ];\n  const lower = url.toLowerCase();\n  return (\n    lower.startsWith('#') ||\n    lower.startsWith('javascript:') ||\n    lower.startsWith('mailto:') ||\n    lower.startsWith('tel:') ||\n    excludeExtensions.some(ext => lower.endsWith(ext)) // Usamos endsWith para mayor precisión\n  );\n};\n\n// NUEVA FUNCIÓN: Verifica si un enlace es interno al dominio principal\nconst isInternalLink = (url, baseDomain) => {\n  // Si empieza con '/', es una ruta relativa del mismo sitio (ej: /docs/installation) -> VÁLIDO\n  if (url.startsWith('/')) {\n    return true;\n  }\n  \n  try {\n    // Intentamos crear un objeto URL para analizarlo\n    const parsedUrl = new URL(url);\n    // Si el hostname termina con nuestro dominio principal (ej: blog.tailwindcss.com) -> VÁLIDO\n    return parsedUrl.hostname.endsWith(baseDomain);\n  } catch (e) {\n    // Si no es una URL válida (ej: un texto cualquiera), lo descartamos\n    return false;\n  }\n};\n\nconst matches = [...htmlString.matchAll(urlRegex)];\nconst urls = matches\n  .map(([_, href, text]) => ({ nombre: text.trim(), url: href.trim() }))\n  .filter(link =>\n    link.url &&\n    link.nombre &&\n    !isFileOrSpecialLink(link.url) && // Mantiene el filtro original\n    isInternalLink(link.url, MAIN_DOMAIN) // AÑADE el nuevo filtro de dominio\n  );\n\nreturn [\n  {\n    json: {\n      contenido: plainText,\n      urls\n    }\n  }\n];"
+        "jsCode": "// --- CONFIGURACIÓN ---\n// Se usa el módulo 'url', que está permitido en n8n, para manejar las URLs.\nconst urlModule = require('url');\n\nconst MAIN_DOMAIN = String($('Table Name').first().json.dominio || '').trim();\nconst BASE_URL = String($('Table Name').first().json.url || '').trim();\nconst tableName = $('Table Name').first().json.tableName\nconst chat = $('Table Name').first().json.chat\n\nif (!MAIN_DOMAIN || !BASE_URL.startsWith('http')) {\n  throw new Error(`MAIN_DOMAIN (\"${MAIN_DOMAIN}\") o BASE_URL (\"${BASE_URL}\") son inválidos.`);\n}\n\n// --------------------\n\nconst htmlString = $input.first().json.data;\n\nconst cleanText = (text) => {\n  if (!text || typeof text !== 'string') return '';\n  let clean = text.replace(/<[^>]+>/g, '');\n  return clean.replace(/\\s+/g, ' ').trim();\n};\n\nconst plainText = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n')\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)<\\/a>/gis;\n\nconst excludeExtensions = [\n    '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.pdf', '.doc',\n    '.docx', '.xls', '.xlsx', '.zip', '.rar', '.csv', '.woff2', '.ttf'\n];\n\n// --- PROCESAMIENTO CON EL MÓDULO 'url' ---\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst allLinks = matches.map(([_, href, text]) => {\n  if (!href) return null;\n  // Usamos url.resolve(base, ruta) en lugar de new URL(ruta, base)\n  const absoluteUrl = urlModule.resolve(BASE_URL, href.trim());\n  return {\n    nombre: cleanText(text),\n    url: absoluteUrl.split('#')[0],\n  };\n});\n\nconst filteredLinks = allLinks.filter(link => {\n  if (!link || !link.url || !link.nombre || link.url === BASE_URL) {\n    return false;\n  }\n  const lowerUrl = link.url.toLowerCase();\n  const path = lowerUrl.split('?')[0];\n\n  if (lowerUrl.startsWith('mailto:') || lowerUrl.startsWith('tel:') || excludeExtensions.some(ext => path.endsWith(ext))) {\n    return false;\n  }\n  \n  // Usamos url.parse() para obtener las partes de la URL, como el hostname\n  const parsedUrl = urlModule.parse(link.url);\n  return parsedUrl.hostname && parsedUrl.hostname.endsWith(MAIN_DOMAIN);\n});\n\nconst uniqueUrls = Array.from(new Map(filteredLinks.map(item => [item.url, item])).values());\n\nreturn [{\n  json: {\n    MAIN_DOMAIN,\n    BASE_URL,\n    tableName: tableName,\n    chat: chat,\n    total_matches: matches.length,\n    urls_encontradas: uniqueUrls.length,\n    urls: uniqueUrls,\n    contenido: plainText\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        928,
+        1136,
         -688
       ],
       "id": "b41efa80-12bc-4c33-a1d8-bb91afe43920",
@@ -421,13 +504,13 @@
     },
     {
       "parameters": {
-        "jsCode": "/*\n  Este nodo prepara todo para empezar.\n  Crea un 'estado' inicial que se pasará a través del flujo.\n*/\n\nconst startUrl = 'https://tailwindcss.com/docs';\nconst urls = $input.first().json.urls.map((url) => {\n  return `https://tailwindcss.com${url.url}`\n})\n\nconst initialState = {\n  // La lista de URLs que faltan por visitar (nuestra cola de trabajo)\n  urls_to_visit: [startUrl, ...urls],\n  \n  // Un array de URLs que ya hemos procesado para no repetirlas\n  visited_urls: [], // <-- ESTE ES EL CAMBIO MÁS IMPORTANTE\n  \n  // Aquí guardaremos todo el contenido que extraigamos\n  all_content: [],\n\n  // La URL que estamos procesando en la iteración actual\n  current_url: null\n};\n\nreturn initialState;"
+        "jsCode": "/*\n  Este nodo prepara todo para empezar.\n  Crea un 'estado' inicial que se pasará a través del flujo.\n*/\n\nconst startUrl = $('Table Name').first().json.url;\nconst urls = $input.first().json.urls.map((url) => {\n  return `${url.url}`\n})\n\nconst initialState = {\n  // La lista de URLs que faltan por visitar (nuestra cola de trabajo)\n  urls_to_visit: [startUrl, ...urls],\n  \n  // Un array de URLs que ya hemos procesado para no repetirlas\n  visited_urls: [], // <-- ESTE ES EL CAMBIO MÁS IMPORTANTE\n  \n  // Aquí guardaremos todo el contenido que extraigamos\n  all_content: [],\n\n  // La URL que estamos procesando en la iteración actual\n  current_url: null\n};\n\nreturn initialState;"
       },
       "name": "1. Initialize State1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1136,
+        1552,
         -688
       ],
       "id": "fc921187-c6e6-461e-86c9-511bd3223d96"
@@ -440,8 +523,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1360,
-        -688
+        1776,
+        -704
       ],
       "id": "55a7c213-7205-4fea-a5cb-16a20459cb0f"
     },
@@ -456,73 +539,32 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1584,
+        2000,
         -848
       ],
       "id": "812cde99-5b00-4f22-a1b9-da0ca9cc2b1c"
     },
     {
       "parameters": {
-        "jsCode": "/*\n  Este es el corazón del scraper.\n  Procesa, extrae contenido y encuentra nuevos links.\n*/\n\n// FUNCIÓN DE NORMALIZACIÓN\nconst normalizeUrl = (urlString) => {\n  if (!urlString) return null;\n  try {\n    const url = new URL(urlString);\n    url.hash = ''; // Elimina anclas (#...)\n\n    // Reconstruir sin query ni hash\n    let href = url.origin + url.pathname;\n\n    // Eliminar barra final incluso si pathname es '/'\n    if (href !== url.origin && href.endsWith('/')) {\n      href = href.slice(0, -1);\n    }\n\n    // Si tenía query params, los volvemos a incluir ordenados (opcional)\n    if (url.search) {\n      href += url.search;\n    }\n\n    return href;\n  } catch (e) {\n    return null;\n  }\n};\n\n// Leemos estado del nodo anterior\nconst state = $items(\"3. Get Next URL from Queue1\")[0].json;\n\n// HTML recibido\nconst htmlString = $input.first().json.data;\n\nif (!htmlString) return state;\n\n// --- LIMPIEZA DEL CONTENIDO ---\nconst cleanedHtml = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n');\n\nconst plainText = cleanedHtml\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText,\n});\n\n// --- EXTRACCIÓN Y FILTRADO DE ENLACES ---\nconst BASE_URL = 'https://tailwindcss.com/docs';\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\n\nconst newLinksSet = new Set(); // Para evitar duplicados\n\nfor (const [, href] of matches) {\n  if (!href) continue;\n  try {\n    const fullUrl = new URL(href, BASE_URL).href;\n    const normalized = normalizeUrl(fullUrl);\n    if (\n      normalized &&\n      normalized.startsWith(BASE_URL) &&\n      !excludeExtensions.some(ext => normalized.toLowerCase().endsWith(ext)) &&\n      !state.visited_urls.includes(normalized)\n    ) {\n      newLinksSet.add(normalized);\n    }\n  } catch (e) {\n    continue; // URL inválida, se ignora\n  }\n}\n\n// Unir las nuevas URLs con las que ya están en la cola, eliminando duplicados\nconst combinedUrls = [...state.urls_to_visit, ...newLinksSet];\nconst uniqueUrlsToVisit = [...new Set(combinedUrls)];\n\n// Filtramos por si alguna ya fue visitada (por seguridad)\nstate.urls_to_visit = uniqueUrlsToVisit.filter(url => !state.visited_urls.includes(url));\n\nreturn state;\n"
+        "jsCode": "// ✅ Importamos el módulo 'url', que está permitido en n8n, para manejar las URLs.\nconst urlModule = require('url');\n\n// --- CONFIGURACIÓN ---\nconst MAIN_DOMAIN = String($('Table Name').first().json.dominio || '').trim();\nconst BASE_URL = String($('Table Name').first().json.url || '').trim();\nconst tableName = $('Table Name').first().json.tableName\nconst chat = $('Table Name').first().json.chat\n\nif (!MAIN_DOMAIN || !BASE_URL.startsWith('http')) {\n  throw new Error(`MAIN_DOMAIN (\"${MAIN_DOMAIN}\") o BASE_URL (\"${BASE_URL}\") son inválidos.`);\n}\n\n// --- ESTADO Y DATOS DE ENTRADA ---\nconst state = $(\"3. Get Next URL from Queue1\").first().json;\nconst htmlString = $input.first().json.data;\n\nif (!htmlString) {\n    return [{ json: state }]; // Si no hay HTML, devolvemos el estado sin cambios\n}\n\nconst visitedUrlsSet = new Set(state.visited_urls || []);\n\n// --- LIMPIEZA DEL CONTENIDO ---\nconst plainText = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n')\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText,\n});\n\n\n// --- EXTRACCIÓN Y FILTRADO DE NUEVOS ENLACES ---\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\nconst excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\nconst newLinksSet = new Set();\n\nconst normalizeUrl = (urlString) => {\n  if (!urlString) return null;\n  const parsedUrl = urlModule.parse(urlString);\n  parsedUrl.hash = null;\n  if (parsedUrl.pathname && parsedUrl.pathname !== '/' && parsedUrl.pathname.endsWith('/')) {\n      parsedUrl.pathname = parsedUrl.pathname.slice(0, -1);\n  }\n  return urlModule.format(parsedUrl);\n};\n\nfor (const [, href] of matches) {\n  if (!href) continue;\n  const fullUrl = urlModule.resolve(state.current_url, href.trim());\n  const normalized = normalizeUrl(fullUrl);\n  \n  if (\n    normalized &&\n    normalized.startsWith(BASE_URL) &&\n    !excludeExtensions.some(ext => normalized.toLowerCase().endsWith(ext)) &&\n    !visitedUrlsSet.has(normalized)\n  ) {\n    newLinksSet.add(normalized);\n  }\n}\n\n// --- ACTUALIZACIÓN DEL ESTADO ---\nconst combinedUrls = [...new Set([...state.urls_to_visit, ...newLinksSet])];\nstate.urls_to_visit = combinedUrls.filter(url => !visitedUrlsSet.has(url));\nstate.visited_urls = Array.from(visitedUrlsSet);\n\n// --- SALIDA CON CONTADORES ---\n// En lugar de devolver solo el estado, devolvemos un objeto JSON que incluye\n// el estado (para que el bucle siga funcionando) y las nuevas cuentas.\nconst finalJsonOutput = {\n\n  // Añadimos las cuentas de esta ejecución\n  debug_info: {\n    MAIN_DOMAIN: MAIN_DOMAIN,\n    tableName: tableName,\n    chat: chat,\n    page_processed: state.current_url,\n    \n    total_matches_on_page: matches.length,\n    new_urls_found_on_page: newLinksSet.size,\n    total_urls_in_queue: state.urls_to_visit.length,\n    total_urls_visited: state.visited_urls.length\n  },\n    ...state // Mantenemos todas las propiedades del estado (urls_to_visit, etc.)\n  \n};\n\nreturn [{ json: finalJsonOutput }];"
       },
       "name": "5. Extract Content & Find New Links1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1808,
+        2224,
         -848
       ],
       "id": "88efe2a7-82be-4bf7-953a-f9efb8586ca6"
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "2ac4b4dd-91ef-4a72-9edc-9e1578b731fd",
-              "name": "Url",
-              "value": "={{ $json.all_content[0].source }}",
-              "type": "string"
-            },
-            {
-              "id": "7ec1af15-21f2-4412-a736-62442e97b9b5",
-              "name": "Content",
-              "value": "={{ $json.all_content[0].content }}",
-              "type": "string"
-            },
-            {
-              "id": "c2ed2d57-430a-4c43-8e63-21fb8cc529c4",
-              "name": "tableName",
-              "value": "={{ $('Table Name').item.json.tableName }}",
-              "type": "string"
-            },
-            {
-              "id": "1bb8d843-5ed5-49ec-a09c-06cdd54a0a28",
-              "name": "message.chat.id",
-              "value": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2016,
-        -848
-      ],
-      "id": "f7a17c7a-a765-4631-8c5c-98a3637052d9",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "jsCode": "const state = $('5. Extract Content & Find New Links1').first().json;\nconst tableName = $('Edit Fields').first().json.tableName;\nconst chatID = $('Edit Fields').first().json.message.chat.id;\n\n// Condición: urls_to_visit vacío Y all_content tiene datos\nif (state.urls_to_visit.length === 0 && state.all_content?.length > 0) {\n  return {\n    ...state,\n    tableName,  // Añade estos campos\n    chatID\n  };\n}\n\n// En cualquier otro caso, devuelve el estado sin cambios\nreturn state;"
+        "jsCode": "const state = $('5. Extract Content & Find New Links1').first().json;\nconst tableName = $('data').first().json.tableName;\nconst chatID = $('data').first().json.chat.id;\nconst name = $('data').first().json.chat.first_name;\n\n// Condición de salida: Si ya no hay URLs para visitar, el proceso ha terminado.\n// Pasamos el estado final con todo el contenido acumulado.\nif (state.urls_to_visit.length === 0 && state.all_content?.length > 0) {\n  const finalState = {\n    ...state,\n    tableName,\n    chatID,\n    name\n  };\n  return [{ json: finalState }];\n}\n\n// Condición de bucle: Si todavía hay URLs para visitar.\n// Creamos una copia del estado para no modificar el original directamente.\nconst stateForNextPage = { ...state };\n\n// ✅ Limpiamos el array 'all_content', dejándolo vacío para la siguiente iteración.\nstateForNextPage.all_content = [];\n\n// Devolvemos el estado modificado.\nreturn [{ json: stateForNextPage }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2736,
+        3152,
         -848
       ],
       "id": "6a315a35-014e-4f44-977c-1e1c56d3f85c",
@@ -537,7 +579,7 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        2384,
+        2800,
         -352
       ]
     },
@@ -561,7 +603,7 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        2368,
+        2784,
         -640
       ]
     },
@@ -580,7 +622,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2960,
+        3376,
         -688
       ],
       "id": "daac1730-7b8b-4c8a-8b86-ab671cc5f69c"
@@ -588,7 +630,7 @@
     {
       "parameters": {
         "mode": "insert",
-        "tableName": "={{ $('Table Name').item.json.tableName }}",
+        "tableName": "={{ $json.tableName }}",
         "options": {
           "columnNames": {
             "values": {
@@ -600,7 +642,7 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
       "typeVersion": 1.3,
       "position": [
-        2256,
+        2672,
         -848
       ],
       "id": "750f37d9-bddb-4c97-8437-22bb188c9112",
@@ -621,7 +663,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        -224,
+        -16,
         -688
       ],
       "id": "e0a16c98-35e7-4833-a7aa-5f9aaa5ed169",
@@ -642,7 +684,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        256,
+        464,
         -688
       ],
       "id": "aae807cb-7ffe-48ea-b3ec-b06b3e9caf5e",
@@ -663,7 +705,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        -704,
+        -496,
         -688
       ],
       "id": "65412e9e-8670-4d92-abdc-92db00643381",
@@ -693,6 +735,18 @@
               "type": "string"
             },
             {
+              "id": "3d52f064-9de8-4c9c-990e-eed393ff6a03",
+              "name": "dominio",
+              "value": "={{ $json.message.text.extractUrl().replace(/^https?:\\/\\//, '').replace(/^(docs|api|www|app|developer|stage|test)\\./i, '').split('/')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "6664e1ae-a67e-4267-90be-2d26ddbcab24",
+              "name": "chat",
+              "value": "={{ $json.message.chat }}",
+              "type": "object"
+            },
+            {
               "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
               "name": "=tableName",
               "value": "={{ $json.message.text.extractUrl().extractDomain().replace(/^(docs|api|www|app|developer|stage|test)\\./i, '').split('.')[0] }}_doc",
@@ -705,7 +759,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1360,
+        -1152,
         -784
       ],
       "id": "4d03b177-9ab9-4645-a02f-b9a8ae62710f",
@@ -791,7 +845,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        480,
+        688,
         -688
       ],
       "id": "0294309e-940b-4e1c-8a21-df3e10c4beb5",
@@ -836,7 +890,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -1136,
+        -928,
         -784
       ],
       "id": "f78a13bd-ecc2-4175-b924-64f4a3c3e337",
@@ -876,7 +930,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -928,
+        -720,
         -784
       ],
       "id": "7d38dfee-ada5-4214-b0ee-90241ffd1f79",
@@ -927,7 +981,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3184,
+        3808,
         -688
       ],
       "id": "0e79920b-ae10-4a44-a5f2-de90fdceb779",
@@ -953,7 +1007,13 @@
             {
               "id": "c6d4f18b-bc68-4a86-8d05-be94948607e4",
               "name": "prompt.system",
-              "value": "=  Eres un agente experto en documentación técnica. Tu misión es asistir a desarrolladores y usuarios técnicos a consultar, buscar y entender documentación sobre tecnologías específicas, frameworks, librerías, herramientas o estructuras personalizadas.\n\n  Puedes acceder a:\n  - Una base de vectores (PGVector) con fragmentos de documentación, organizados en tablas. Cada tabla representa una documentación distinta.\n  - Una herramienta searchTableName que te permite buscar los nombres de todas las tablas disponibles para determinar qué documentaciones están cargadas.\n\n  Tu objetivo es ayudar al usuario a encontrar y explorar documentación almacenada en el sistema, de forma conversacional y precisa.\n\n  --- 🧠 Flujo general de razonamiento ---\n\n  1. Si el usuario ya mencionó la tecnología o documentación (por ejemplo, \"Tailwind\", \"NextAuth\", \"Stripe API\") y sabes qué tabla contiene esa documentación, puedes usar directamente la herramienta `PGVector Retrieval`.\n\n  2. Si **no conoces aún el `tableName`**:\n     - Ejecuta la herramienta `searchTableName` para obtener todos los nombres de tablas disponibles.\n     - Analiza los nombres y asócialos con las palabras clave que el usuario mencionó.\n     - Si encuentras una tabla relevante, guarda ese nombre como `tableName` y úsalo para la herramienta PGVector.\n     - Si no hay coincidencias, informa al usuario que no tienes esa documentación y solicita el enlace a la **documentación oficial** (no el sitio principal, sino la URL de la documentación técnica).\n\n  3. Mantén el contexto:\n     - Si el usuario ya está consultando una documentación, no preguntes otra vez qué documentación desea.\n     - Usa `tableName` activamente mientras esté en contexto.\n     - Si el usuario cambia de tema o tecnología, analiza y reinicia el flujo según corresponda.\n\n  4. Puedes responder preguntas específicas sobre secciones de la documentación (como instalación, configuración, autenticación, errores comunes, ejemplos, etc.) basándote en los fragmentos obtenidos por PGVector.\n\n  5. Si el usuario solicita documentación que **aún no está cargada**, responde amablemente:\n     - \"Actualmente no contamos con documentación sobre [tecnología mencionada].\"\n     - Pide que proporcione la URL directa de la documentación técnica para poder agregarla al sistema.\n     - Informa que una vez cargada, podrá consultarla aquí.\n\n  --- 🧰 Instrucciones de uso de herramientas ---\n\n  Tool: **searchTableName**\n  - Uso: Cuando el `tableName` aún no ha sido identificado.\n  - No requiere parámetros.\n  - Devuelve una lista de todas las tablas disponibles.\n  - Acción esperada: Analiza los nombres y determina cuál coincide mejor con el término o tecnología mencionada por el usuario.\n  - Guarda el nombre de la tabla como `tableName`.\n\n  Tool: **PGVector Retrieval (As Tool for AI Agent)**\n  - Uso: Solo cuando ya tienes definido un `tableName`.\n  - Parámetros:\n    - `tableName`: nombre exacto de la tabla donde está almacenada la documentación.\n  - El texto actual del usuario se utiliza automáticamente como `query` semántico para buscar en la documentación.\n  - Solo debes pasar el `tableName`. No es necesario pasar el query.\n  - Por ejemplo:\n    - Usuario: \"¿Cómo configuro dark mode en Tailwind?\"\n    - Acción: Si `tableName = tailwindcss`, llama a PGVector con ese nombre.\n\n  --- 🔁 Ejemplos de interacción ---\n\n  Usuario: \"¿Tienen documentación de Tailwind?\"\n  🔹 Acción: Llama a `searchTableName`, encuentra la tabla `tailwindcss`, guarda como `tableName`, y luego usa PGVector con ese tableName.\n\n  Usuario: \"Muéstrame cómo configurar autenticación en NextAuth\"\n  🔹 Acción: Verifica si ya estás trabajando con la documentación de `nextauth`. Si no, usa `searchTableName`, encuentra `nextauth`, y luego consulta esa tabla en PGVector.\n\n  Usuario: \"¿Tienen algo de Supabase?\"\n  🔹 Acción: Si `searchTableName` no devuelve ninguna tabla relevante, responde que no hay documentación cargada. Pide la URL directa de la documentación oficial.\n\n  Usuario: \"¿Qué dice sobre los breakpoints?\"\n  🔹 Acción: Si el `tableName` actual es `tailwindcss`, usa PGVector con ese nombre y deja que la pregunta fluya como query.\n\n  --- ✅ Reglas finales ---\n\n  - Nunca llames PGVector sin un `tableName`.\n  - Nunca pidas al usuario el nombre de la tabla, solo analiza o busca con `searchTableName`.\n  - Si no encuentras tabla coincidente, guía amablemente al usuario para enviar la URL de la documentación oficial.\n  - Siempre responde con claridad y sin tecnicismos innecesarios.\n  - Mantén la conversación centrada en ayudar a explorar la documentación cargada.\n\n--- 🔁 Encadenamiento de herramientas\n\nAntes de responder al usuario:\n\n- Si necesitas identificar el `tableName`, **primero ejecuta `searchTableName`**.\n- Luego analiza los resultados, guarda el `tableName`, y sin responder aún...\n- **Ejecuta directamente `PGVector Retrieval` con ese `tableName`.**\n- Solo después de haber ejecutado todas las herramientas necesarias, responde con el contenido solicitado.\n- No respondas con frases como: “Voy a buscar...”, “Consultando...”, “Usaré la herramienta...”.\n- Solo responde con resultados útiles y directos, como fragmentos de documentación o respuestas concretas.",
+              "value": "=  Eres un agente experto en documentación técnica. Tu misión es asistir a desarrolladores y usuarios técnicos a consultar, buscar y entender documentación sobre tecnologías específicas, frameworks, librerías, herramientas o estructuras personalizadas.\n\n  Puedes acceder a:\n  - Una base de vectores (PGVector) con fragmentos de documentación, organizados en tablas. Cada tabla representa una documentación distinta.\n  - Una herramienta searchTableName que te permite buscar los nombres de todas las tablas disponibles para determinar qué documentaciones están cargadas.\n\n  Tu objetivo es ayudar al usuario a encontrar y explorar documentación almacenada en el sistema, de forma conversacional y precisa.\n\n  --- 🧠 Flujo general de razonamiento ---\n\n  1. Si el usuario ya mencionó la tecnología o documentación (por ejemplo, \"Tailwind\", \"NextAuth\", \"Stripe API\") y sabes qué tabla contiene esa documentación, puedes usar directamente la herramienta `PGVector Retrieval`.\n\n  2. Si **no conoces aún el `tableName`**:\n     - Ejecuta la herramienta `searchTableName` para obtener todos los nombres de tablas disponibles.\n     - Analiza los nombres y asócialos con las palabras clave que el usuario mencionó.\n     - Si encuentras una tabla relevante, guarda ese nombre como `tableName` y úsalo para la herramienta PGVector.\n     - Si no hay coincidencias, informa al usuario que no tienes esa documentación y solicita el enlace a la **documentación oficial** (no el sitio principal, sino la URL de la documentación técnica).\n\n  3. Mantén el contexto:\n     - Si el usuario ya está consultando una documentación, no preguntes otra vez qué documentación desea.\n     - Usa `tableName` activamente mientras esté en contexto.\n     - Si el usuario cambia de tema o tecnología, analiza y reinicia el flujo según corresponda.\n\n  4. Puedes responder preguntas específicas sobre secciones de la documentación (como instalación, configuración, autenticación, errores comunes, ejemplos, etc.) basándote en los fragmentos obtenidos por PGVector.\n\n  5. Si el usuario solicita documentación que **aún no está cargada**, responde amablemente:\n     - \"Actualmente no contamos con documentación sobre [tecnología mencionada].\"\n     - Pide que proporcione la URL directa de la documentación técnica para poder agregarla al sistema.\n     - Informa que una vez cargada, podrá consultarla aquí.\n\n  --- 🧰 Instrucciones de uso de herramientas ---\n\n  Tool: **searchTableName**\n  - Uso: Cuando el `tableName` aún no ha sido identificado.\n  - No requiere parámetros.\n  - Devuelve una lista de todas las tablas disponibles.\n  - Acción esperada: Analiza los nombres y determina cuál coincide mejor con el término o tecnología mencionada por el usuario.\n  - Guarda el nombre de la tabla como `tableName`.\n\n  Tool: **PGVector Retrieval (As Tool for AI Agent)**\n  - Uso: Solo cuando ya tienes definido un `tableName`.\n  - Parámetros:\n    - `tableName`: nombre exacto de la tabla donde está almacenada la documentación.\n  - El texto actual del usuario se utiliza automáticamente como `query` semántico para buscar en la documentación.\n  - Solo debes pasar el `tableName`. No es necesario pasar el query.\n  - Por ejemplo:\n    - Usuario: \"¿Cómo configuro dark mode en Tailwind?\"\n    - Acción: Si `tableName = tailwindcss`, llama a PGVector con ese nombre.\n\n  --- 🔁 Ejemplos de interacción ---\n\n  Usuario: \"¿Tienen documentación de Tailwind?\"\n  🔹 Acción: Llama a `searchTableName`, encuentra la tabla `tailwindcss`, guarda como `tableName`, y luego usa PGVector con ese tableName.\n\n  Usuario: \"Muéstrame cómo configurar autenticación en NextAuth\"\n  🔹 Acción: Verifica si ya estás trabajando con la documentación de `nextauth`. Si no, usa `searchTableName`, encuentra `nextauth`, y luego consulta esa tabla en PGVector.\n\n  Usuario: \"¿Tienen algo de Supabase?\"\n  🔹 Acción: Si `searchTableName` no devuelve ninguna tabla relevante, responde que no hay documentación cargada. Pide la URL directa de la documentación oficial.\n\n  Usuario: \"¿Qué dice sobre los breakpoints?\"\n  🔹 Acción: Si el `tableName` actual es `tailwindcss`, usa PGVector con ese nombre y deja que la pregunta fluya como query.\n\n  --- ✅ Reglas finales ---\n\n  - Nunca llames PGVector sin un `tableName`.\n  - Nunca pidas al usuario el nombre de la tabla, solo analiza o busca con `searchTableName`.\n  - Si no encuentras tabla coincidente, guía amablemente al usuario para enviar la URL de la documentación oficial.\n  - Siempre responde con claridad y sin tecnicismos innecesarios.\n  - Mantén la conversación centrada en ayudar a explorar la documentación cargada.\n\n--- 🔁 Encadenamiento de herramientas\n\nAntes de responder al usuario:\n\n- Si necesitas identificar el `tableName`, **primero ejecuta `searchTableName`**.\n- Luego analiza los resultados, guarda el `tableName`, y sin responder aún...\n- **Ejecuta directamente `PGVector Retrieval` con ese `tableName`.**\n- Solo después de haber ejecutado todas las herramientas necesarias, responde con el contenido solicitado.\n- No respondas con frases como: “Voy a buscar...”, “Consultando...”, “Usaré la herramienta...”.\n- Solo responde con resultados útiles y directos, como fragmentos de documentación o respuestas concretas.\n\nIMPORTANTE, para enviar palabras en negrita solo usa un *, ejemplo: *palabra en negrita*, y no puede haber un * sin su cierre *",
+              "type": "string"
+            },
+            {
+              "id": "53b226aa-338f-450c-bec6-76cb73091a6b",
+              "name": "table_name",
+              "value": "={{ $('Table Name').item.json.tableName }}",
               "type": "string"
             }
           ]
@@ -963,7 +1023,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -704,
+        -496,
         -976
       ],
       "id": "5957dbb9-7ef6-46ce-8f82-1b91aa28bb27",
@@ -982,7 +1042,13 @@
             {
               "id": "ff0a80e2-8914-4d97-bc7c-8eec215b1597",
               "name": "prompt.system",
-              "value": "=  Eres un agente experto en documentación técnica. Tu misión es asistir a desarrolladores y usuarios técnicos a consultar, buscar y entender documentación sobre tecnologías específicas, frameworks, librerías, herramientas o estructuras personalizadas.\n\n  Puedes acceder a:\n  - Una base de vectores (PGVector) con fragmentos de documentación, organizados en tablas. Cada tabla representa una documentación distinta.\n  - Una herramienta searchTableName que te permite buscar los nombres de todas las tablas disponibles para determinar qué documentaciones están cargadas.\n\n  Tu objetivo es ayudar al usuario a encontrar y explorar documentación almacenada en el sistema, de forma conversacional y precisa.\n\n  --- 🧠 Flujo general de razonamiento ---\n\n  1. Si el usuario ya mencionó la tecnología o documentación (por ejemplo, \"Tailwind\", \"NextAuth\", \"Stripe API\") y sabes qué tabla contiene esa documentación, puedes usar directamente la herramienta `PGVector Retrieval`.\n\n  2. Si **no conoces aún el `table_name`**:\n     - Ejecuta la herramienta `searchTableName` para obtener todos los nombres de tablas disponibles.\n     - Analiza los nombres y asócialos con las palabras clave que el usuario mencionó.\n     - Si encuentras una tabla relevante, guarda ese nombre como `table_name` y úsalo para la herramienta `PGVector Store`.\n     - Si no hay coincidencias, informa al usuario que no tienes esa documentación y solicita el enlace a la **documentación oficial** (no el sitio principal, sino la URL de la documentación técnica).\n\n  3. Mantén el contexto:\n     - Si el usuario ya está consultando una documentación, no preguntes otra vez qué documentación desea.\n     - Usa `table_name` activamente mientras esté en contexto.\n     - Si el usuario cambia de tema o tecnología, analiza y reinicia el flujo según corresponda.\n\n  4. Puedes responder preguntas específicas sobre secciones de la documentación (como instalación, configuración, autenticación, errores comunes, ejemplos, etc.) basándote en los fragmentos obtenidos por PGVector.\n\n  5. Si el usuario solicita documentación que **aún no está cargada**, responde amablemente:\n     - \"Actualmente no contamos con documentación sobre [tecnología mencionada].\"\n     - Pide que proporcione la URL directa de la documentación técnica para poder agregarla al sistema.\n     - Informa que una vez cargada, podrá consultarla aquí.\n\n  --- 🧰 Instrucciones de uso de herramientas ---\n\n  Tool: **searchTableName**\n  - Uso: Cuando el `table_name` aún no ha sido identificado.\n  - No requiere parámetros.\n  - Devuelve una lista de todas las tablas disponibles.\n  - Acción esperada: Analiza los nombres y determina cuál coincide mejor con el término o tecnología mencionada por el usuario.\n  - Guarda el nombre de la tabla como `table_name`.\n\n  Tool: **PGVector Store**\n  - Uso: Solo cuando ya tienes definido un `table_name`.\n  - Parámetros:\n    - `table_name`: nombre exacto de la tabla donde está almacenada la documentación.\n  - El texto actual del usuario se utiliza automáticamente como `query` semántico para buscar en la documentación.\n  - Solo debes pasar el `table_name`. No es necesario pasar el query.\n  - Por ejemplo:\n    - Usuario: \"¿Cómo configuro dark mode en Tailwind?\"\n    - Acción: If `table_name = tailwindcss`, llama a PGVector con ese nombre.\n\n  --- 🔁 Ejemplos de interacción ---\n\n  Usuario: \"¿Tienen documentación de Tailwind?\"\n  🔹 Acción: Llama a `searchTableName`, encuentra la tabla `tailwindcss`, obtienes  `table_name`, y luego usa PGVector Store con ese table_name.\n\n  Usuario: \"Muéstrame cómo configurar autenticación en NextAuth\"\n  🔹 Acción: Verifica si ya estás trabajando con la documentación de `nextauth`. Si no, usa `searchTableName`, encuentra `nextauth`, y luego consulta esa tabla en PGVector Store.\n\n  Usuario: \"¿Tienen algo de Supabase?\"\n  🔹 Acción: Si `searchTableName` no devuelve ninguna tabla relevante, responde que no hay documentación cargada. Pide la URL directa de la documentación oficial.\n\n  Usuario: \"¿Qué dice sobre los breakpoints?\"\n  🔹 Acción: Si el `table_name` actual es `tailwindcss`, usa PGVector con ese nombre y deja que la pregunta fluya como query.\n\n  --- ✅ Reglas finales ---\n\n  - Nunca llames PGVector sin un `table_name`.\n  - Nunca pidas al usuario el nombre de la tabla, solo analiza o busca con `searchTableName`.\n  - Si no encuentras tabla coincidente, guía amablemente al usuario para enviar la URL de la documentación oficial.\n  - Siempre responde con claridad y sin tecnicismos innecesarios.\n  - Mantén la conversación centrada en ayudar a explorar la documentación cargada.\n  - en el historial de chat siempre mira si estan hablando de una documentacion en especial, \n  - no le digas al usuario que vas a buscar la tabla, dile la documentacion, pero no informes, primero buscas e informas si encontro o no, \n\n--- 🔁 Encadenamiento de herramientas\n\nAntes de responder al usuario:\n\n- Si necesitas identificar el `table_name`, **primero ejecuta `searchTableName`**.\n- Luego analiza los resultados, guarda el `table_name`, y sin responder aún...\n- **Ejecuta directamente `PGVector Store` con ese `table_name`.**\n- Solo después de haber ejecutado todas las herramientas necesarias, responde con el contenido solicitado.\n- No respondas con frases como: “Voy a buscar...”, “Consultando...”, “Usaré la herramienta...”.\n- Solo responde con resultados útiles y directos, como fragmentos de documentación o respuestas concretas.\n\n\n\n",
+              "value": "=  Eres un agente experto en documentación técnica. Tu misión es asistir a desarrolladores y usuarios técnicos a consultar, buscar y entender documentación sobre tecnologías específicas, frameworks, librerías, herramientas o estructuras personalizadas.\n\n  Puedes acceder a:\n  - Una base de vectores (PGVector) con fragmentos de documentación, organizados en tablas. Cada tabla representa una documentación distinta.\n  - Una herramienta searchTableName que te permite buscar los nombres de todas las tablas disponibles para determinar qué documentaciones están cargadas.\n\n  Tu objetivo es ayudar al usuario a encontrar y explorar documentación almacenada en el sistema, de forma conversacional y precisa.\n\n  --- 🧠 Flujo general de razonamiento ---\n\n  1. Si el usuario ya mencionó la tecnología o documentación (por ejemplo, \"Tailwind\", \"NextAuth\", \"Stripe API\") y sabes qué tabla contiene esa documentación, puedes usar directamente la herramienta `PGVector Retrieval`.\n\n  2. Si **no conoces aún el `table_name`**:\n     - Ejecuta la herramienta `searchTableName` para obtener todos los nombres de tablas disponibles.\n     - Analiza los nombres y asócialos con las palabras clave que el usuario mencionó.\n     - Si encuentras una tabla relevante, guarda ese nombre como `table_name` y úsalo para la herramienta `PGVector Store`.\n     - Si no hay coincidencias, informa al usuario que no tienes esa documentación y solicita el enlace a la **documentación oficial** (no el sitio principal, sino la URL de la documentación técnica).\n\n  3. Mantén el contexto:\n     - Si el usuario ya está consultando una documentación, no preguntes otra vez qué documentación desea.\n     - Usa `table_name` activamente mientras esté en contexto.\n     - Si el usuario cambia de tema o tecnología, analiza y reinicia el flujo según corresponda.\n\n  4. Puedes responder preguntas específicas sobre secciones de la documentación (como instalación, configuración, autenticación, errores comunes, ejemplos, etc.) basándote en los fragmentos obtenidos por PGVector.\n\n  5. Si el usuario solicita documentación que **aún no está cargada**, responde amablemente:\n     - \"Actualmente no contamos con documentación sobre [tecnología mencionada].\"\n     - Pide que proporcione la URL directa de la documentación técnica para poder agregarla al sistema.\n     - Informa que una vez cargada, podrá consultarla aquí.\n\n  --- 🧰 Instrucciones de uso de herramientas ---\n\n  Tool: **searchTableName**\n  - Uso: Cuando el `table_name` aún no ha sido identificado.\n  - No requiere parámetros.\n  - Devuelve una lista de todas las tablas disponibles.\n  - Acción esperada: Analiza los nombres y determina cuál coincide mejor con el término o tecnología mencionada por el usuario.\n  - Guarda el nombre de la tabla como `table_name`.\n\n  Tool: **PGVector Store**\n  - Uso: Solo cuando ya tienes definido un `table_name`.\n  - Parámetros:\n    - `table_name`: nombre exacto de la tabla donde está almacenada la documentación.\n  - El texto actual del usuario se utiliza automáticamente como `query` semántico para buscar en la documentación.\n  - Solo debes pasar el `table_name`. No es necesario pasar el query.\n  - Por ejemplo:\n    - Usuario: \"¿Cómo configuro dark mode en Tailwind?\"\n    - Acción: If `table_name = tailwindcss`, llama a PGVector con ese nombre.\n\n  --- 🔁 Ejemplos de interacción ---\n\n  Usuario: \"¿Tienen documentación de Tailwind?\"\n  🔹 Acción: Llama a `searchTableName`, encuentra la tabla `tailwindcss`, obtienes  `table_name`, y luego usa PGVector Store con ese table_name.\n\n  Usuario: \"Muéstrame cómo configurar autenticación en NextAuth\"\n  🔹 Acción: Verifica si ya estás trabajando con la documentación de `nextauth`. Si no, usa `searchTableName`, encuentra `nextauth`, y luego consulta esa tabla en PGVector Store.\n\n  Usuario: \"¿Tienen algo de Supabase?\"\n  🔹 Acción: Si `searchTableName` no devuelve ninguna tabla relevante, responde que no hay documentación cargada. Pide la URL directa de la documentación oficial.\n\n  Usuario: \"¿Qué dice sobre los breakpoints?\"\n  🔹 Acción: Si el `table_name` actual es `tailwindcss`, usa PGVector con ese nombre y deja que la pregunta fluya como query.\n\n  --- ✅ Reglas finales ---\n\n  - Nunca llames PGVector sin un `table_name`.\n  - Nunca pidas al usuario el nombre de la tabla, solo analiza o busca con `searchTableName`.\n  - Si no encuentras tabla coincidente, guía amablemente al usuario para enviar la URL de la documentación oficial.\n  - Siempre responde con claridad y sin tecnicismos innecesarios.\n  - Mantén la conversación centrada en ayudar a explorar la documentación cargada.\n  - en el historial de chat siempre mira si estan hablando de una documentacion en especial, \n  - no le digas al usuario que vas a buscar la tabla, dile la documentacion, pero no informes, primero buscas e informas si encontro o no, \n\n--- 🔁 Encadenamiento de herramientas\n\nAntes de responder al usuario:\n\n- Si necesitas identificar el `table_name`, **primero ejecuta `searchTableName`**.\n- Luego analiza los resultados, guarda el `table_name`, y sin responder aún...\n- **Ejecuta directamente `PGVector Store` con ese `table_name`.**\n- Solo después de haber ejecutado todas las herramientas necesarias, responde con el contenido solicitado.\n- No respondas con frases como: “Voy a buscar...”, “Consultando...”, “Usaré la herramienta...”.\n- Solo responde con resultados útiles y directos, como fragmentos de documentación o respuestas concretas.\n\nIMPORTANTE, para enviar palabras en negrita solo usa un *, ejemplo: *palabra en negrita*, y no puede haber un * sin su cierre *\n\n\n",
+              "type": "string"
+            },
+            {
+              "id": "3a365de6-47e1-479a-b7dc-a177294a5a1e",
+              "name": "table_name",
+              "value": "={{ $json.output }}",
               "type": "string"
             }
           ]
@@ -992,7 +1058,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -704,
+        -496,
         -1184
       ],
       "id": "1e705b95-d695-42fa-85c2-6189280e9f69",
@@ -1009,7 +1075,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        -336,
+        80,
         -1280
       ],
       "id": "c6813e95-a39c-4363-8349-481b497d1116",
@@ -1023,8 +1089,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -480,
-        -1056
+        -48,
+        -960
       ],
       "id": "2780d847-a1c9-4aa8-bc9c-e5accf1f840e",
       "name": "Google Gemini Chat Model",
@@ -1045,7 +1111,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        -336,
+        80,
         -1056
       ],
       "id": "cb536580-1d52-4918-9aef-9f1bcd016684",
@@ -1068,7 +1134,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        272,
+        688,
         -1264
       ],
       "id": "cff3af67-5e8d-43c7-a6cb-b2d0523165a9",
@@ -1088,7 +1154,7 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -192,
+        224,
         -848
       ],
       "id": "6ae9e80f-8b36-4771-ac76-2b3bd95481d1",
@@ -1104,7 +1170,7 @@
       "parameters": {
         "mode": "retrieve-as-tool",
         "toolDescription": "Use RAG to look up information in the knowledgebase whith table_name.\nsiempre envia el nombre de la tabla para buscar la informacion sobre la documentacion en esa tabla correspondiente.",
-        "tableName": "={{ $fromAI('table_name') }}",
+        "tableName": "={{ $('prompts').item.json.table_name }}",
         "topK": 5,
         "options": {
           "columnNames": {
@@ -1117,7 +1183,7 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
       "typeVersion": 1.3,
       "position": [
-        -192,
+        224,
         -1040
       ],
       "id": "63c58bec-db5f-4c26-8199-df79d26332a5",
@@ -1138,7 +1204,7 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        128,
+        544,
         -1056
       ],
       "id": "a8065a64-0fef-4db3-a8a1-e194a212e945",
@@ -1173,7 +1239,7 @@
             {
               "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
               "name": "tableName",
-              "value": "nestJs_doc",
+              "value": "=tailwindcss_doc",
               "type": "string"
             }
           ]
@@ -1260,7 +1326,7 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2224,
+        2640,
         -640
       ],
       "id": "f3629fe4-c690-44d5-85f4-a1df424216d0",
@@ -1302,8 +1368,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1,
       "position": [
-        -48,
-        -848
+        -128,
+        -816
       ],
       "credentials": {
         "openAiApi": {
@@ -1311,15 +1377,232 @@
           "name": "OpenAi account"
         }
       }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "tu tarea es analizar las conversaciones del usuario y  analizar el nombre de la 'table_name' que es la documentacion de la que que se esta hablando, y con eso busca en la tool searchTableName, cual es la tabla que concuerda y solo devuelve el nombre de la tabla que concuerde con lo que se esta hablando, solo el nombre de la tabla que concuerde, si no hay una tabla que concuerde devuelves, que no hay ninguna documentacion de..."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -912,
+        -1184
+      ],
+      "id": "ef9a92a2-b60d-4853-8a71-02ff9b4d3146",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "967af5a8-0f99-447f-81da-75fca27189cc",
+              "name": "prompt.user",
+              "value": "={{ $json.prompt.user }}",
+              "type": "string"
+            },
+            {
+              "id": "36dcdfcb-a632-464e-ac02-20b733ec2145",
+              "name": "prompt.system",
+              "value": "={{ $json.prompt.system }}",
+              "type": "string"
+            },
+            {
+              "id": "160174cf-1721-4eb4-aaee-abefede9ef96",
+              "name": "table_name",
+              "value": "={{ $json.table_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        -1136
+      ],
+      "id": "324a6fa7-1f6b-4b45-9bc3-d3e45e4c250a",
+      "name": "prompts"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "75f25449-59b4-414d-918d-adf70107fbe3",
+              "leftValue": "={{ $json.contenido }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        -688
+      ],
+      "id": "edff09fb-647f-495e-9b48-a19245f439b8",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=⚠️🤖 *Un pequeño contratiempo con tu documentación...*\n\nHola 👋,\n\nQueríamos informarte que hemos encontrado un inconveniente al procesar la documentación que solicitaste: *.{{ $('Table Name').item.json.tableName.split(\"_\")[0] }}*\n\nEl sitio web oficial parece utilizar una tecnología JavaScript moderna para cargar su contenido, y nuestro proceso automático no pudo leerlo correctamente en el primer intento.\n\n¡Pero no te preocupes! Nuestro equipo ya está trabajando en la solución para poder procesar este tipo de sitios. Te notificaremos tan pronto como la documentación esté cargada y lista para que puedas consultarla. 🧠💬\n\nAgradecemos mucho tu paciencia. 🛠️⏳",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1536,
+        -480
+      ],
+      "id": "3c238502-9371-42dd-9e8f-6b008ba2c0c2",
+      "name": "Send a text message2",
+      "webhookId": "a391d488-652d-4e4e-a215-32b1006a1e8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "O9mvGRSt0wAuuL8T",
+          "name": "LinkSeeker"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
+              "name": "tableName",
+              "value": "={{ $('Table Name').item.json.tableName }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        -480
+      ],
+      "id": "0548168c-0444-4b84-a8a4-415efca3f431",
+      "name": "Table Name DELETE1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP FUNCTION IF EXISTS match_{{ $json.tableName }};\nDROP TABLE IF EXISTS {{ $json.tableName }}_rows;\nDROP TABLE IF EXISTS {{ $json.tableName }}_metadata;\nDROP TABLE IF EXISTS {{ $json.tableName }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1952,
+        -480
+      ],
+      "id": "4a1479d3-20fe-4dc5-8b75-ad48db2aa0cf",
+      "name": "DELETE Documents Table and Match Function1",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2ac4b4dd-91ef-4a72-9edc-9e1578b731fd",
+              "name": "Url",
+              "value": "={{ $json.all_content[0].source }}",
+              "type": "string"
+            },
+            {
+              "id": "7ec1af15-21f2-4412-a736-62442e97b9b5",
+              "name": "Content",
+              "value": "={{ $json.all_content[0].content }}",
+              "type": "string"
+            },
+            {
+              "id": "c2ed2d57-430a-4c43-8e63-21fb8cc529c4",
+              "name": "tableName",
+              "value": "={{ $json.debug_info.tableName }}",
+              "type": "string"
+            },
+            {
+              "id": "1bb8d843-5ed5-49ec-a09c-06cdd54a0a28",
+              "name": "chat",
+              "value": "={{ $json.debug_info.chat }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2432,
+        -848
+      ],
+      "id": "f7a17c7a-a765-4631-8c5c-98a3637052d9",
+      "name": "data"
     }
   ],
   "pinData": {
+    "Recursive Character Text Splitter": [
+      {
+        "json": {
+          "isArtificialRecoveredEventItem": true
+        }
+      }
+    ],
+    "Default Data Loader1": [
+      {
+        "json": {
+          "isArtificialRecoveredEventItem": true
+        }
+      }
+    ],
+    "Embeddings Google Gemini1": [
+      {
+        "json": {
+          "isArtificialRecoveredEventItem": true
+        }
+      }
+    ],
     "Telegram Trigger": [
       {
         "json": {
-          "update_id": 173091046,
+          "update_id": 173091069,
           "message": {
-            "message_id": 76,
+            "message_id": 124,
             "from": {
               "id": 1469588614,
               "is_bot": false,
@@ -1333,15 +1616,46 @@
               "last_name": "Rodríguez",
               "type": "private"
             },
-            "date": 1753469525,
-            "text": "bien, como puedo iniciar con nestjs?",
+            "date": 1753559842,
+            "reply_to_message": {
+              "message_id": 123,
+              "from": {
+                "id": 1469588614,
+                "is_bot": false,
+                "first_name": "Pedro",
+                "last_name": "Rodríguez",
+                "language_code": "es"
+              },
+              "chat": {
+                "id": 1469588614,
+                "first_name": "Pedro",
+                "last_name": "Rodríguez",
+                "type": "private"
+              },
+              "date": 1753559116,
+              "text": "es esta:\nhttps://tailwindcss.com/docs",
+              "entities": [
+                {
+                  "offset": 9,
+                  "length": 28,
+                  "type": "url"
+                }
+              ],
+              "link_preview_options": {
+                "url": "https://tailwindcss.com/docs"
+              }
+            },
+            "text": "es esta:\nhttps://tailwindcss.com/docs",
             "entities": [
               {
-                "offset": 29,
-                "length": 6,
-                "type": "bold"
+                "offset": 9,
+                "length": 28,
+                "type": "url"
               }
-            ]
+            ],
+            "link_preview_options": {
+              "url": "https://tailwindcss.com/docs"
+            }
           }
         }
       }
@@ -1356,6 +1670,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-07-25T19:07:49.134Z",
-  "versionId": "207fd4ef-b155-44fb-86ee-1f674d6864d6"
+  "updatedAt": "2025-07-26T20:22:23.301Z",
+  "versionId": "4e2371a3-7d95-4d38-9f22-1bf51d9a4334"
 }
