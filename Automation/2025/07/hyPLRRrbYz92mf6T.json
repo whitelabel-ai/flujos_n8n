@@ -1,0 +1,109 @@
+{
+  "active": false,
+  "connections": {
+    "Guardar Transacción": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Registro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Guardar Transacción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-29T14:33:56.848Z",
+  "id": "hyPLRRrbYz92mf6T",
+  "isArchived": true,
+  "meta": null,
+  "name": "My Sub-workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "oldVersionNotice": "",
+        "operation": "insert",
+        "schema": "public",
+        "table": "",
+        "columns": "",
+        "returnFields": "*",
+        "additionalFields": {}
+      },
+      "name": "Guardar Transacción",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        -1872
+      ],
+      "id": "97ffee5f-90c6-40d6-aadd-0913eccbe34e",
+      "credentials": {
+        "postgres": {
+          "id": "gFhB2sfDoFHEQ7Pn",
+          "name": "pgvector n8n_scrapper"
+        }
+      },
+      "disabled": true,
+      "issues": {}
+    },
+    {
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "requestMethod": "GET",
+        "url": "https://api.twilio.com/2010-04-01/Accounts/{{your-twilio-account-sid}}/Messages.json",
+        "allowUnauthorizedCerts": false,
+        "responseFormat": "json",
+        "jsonParameters": false,
+        "options": {},
+        "headerParametersUi": {},
+        "queryParametersUi": {},
+        "infoMessage": ""
+      },
+      "name": "Confirmar Registro",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        2256,
+        -1872
+      ],
+      "id": "2a7da8f9-bf28-4cc4-92ce-ce2f4da55c31",
+      "disabled": false
+    },
+    {
+      "id": "43474138-e551-4f69-8ce9-946914c681c7",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        1824,
+        -1872
+      ],
+      "parameters": {
+        "inputSource": "passthrough"
+      }
+    }
+  ],
+  "pinData": null,
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-29T14:58:12.756Z",
+  "versionId": "d26b2391-b76f-4ce3-9e9c-fc41a49ba3d5"
+}
