@@ -585,7 +585,7 @@
       "typeVersion": 2,
       "position": [
         1744,
-        -728
+        -736
       ],
       "id": "fc921187-c6e6-461e-86c9-511bd3223d96"
     },
@@ -598,7 +598,7 @@
       "typeVersion": 2,
       "position": [
         1968,
-        -728
+        -736
       ],
       "id": "55a7c213-7205-4fea-a5cb-16a20459cb0f"
     },
@@ -697,7 +697,7 @@
       "typeVersion": 1,
       "position": [
         3616,
-        -728
+        -736
       ],
       "id": "daac1730-7b8b-4c8a-8b86-ab671cc5f69c"
     },
@@ -758,7 +758,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        280,
+        288,
         -608
       ],
       "id": "aae807cb-7ffe-48ea-b3ec-b06b3e9caf5e",
@@ -811,7 +811,7 @@
             {
               "id": "3d52f064-9de8-4c9c-990e-eed393ff6a03",
               "name": "dominio",
-              "value": "={{ $json.message.text.extractUrl().replace(/^https?:\\/\\//, '').replace(/^(docs|api|www|app|developer|stage|test)\\./i, '').split('/')[0] }}",
+              "value": "={{ \n  $json.message.text.extractUrl()\n    .replace(/^https?:\\/\\//, '')  // Elimina http:// o https://\n    .replace(\n      /^(docs?|api|www|app|developer|stage|test|ui|dev|sandbox|qa|staging|preprod|demo|account|support|blog|status|static|cdn|assets|media|mail|chat|shop|store|pay|billing|v\\d+|rest|graphql|us|eu|asia|latam|mx|es|fr|de|m)\\./i, \n      ''\n    )  // Elimina subdominios comunes\n    .split('/')[0]  // Toma solo el dominio principal\n}}",
               "type": "string"
             },
             {
@@ -823,7 +823,7 @@
             {
               "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
               "name": "=tableName",
-              "value": "={{ $json.message.text.extractUrl().extractDomain().replace(/^(docs|api|www|app|developer|stage|test)\\./i, '').split('.')[0] }}_doc",
+              "value": "={{ $json.message.text.extractUrl().extractDomain().replace(/^https?:\\/\\//, '')  // Elimina http:// o https://\n    .replace(\n      /^(docs?|api|www|app|developer|stage|test|ui|dev|sandbox|qa|staging|preprod|demo|account|support|blog|status|static|cdn|assets|media|mail|chat|shop|store|pay|billing|v\\d+|rest|graphql|us|eu|asia|latam|mx|es|fr|de|m)\\./i, \n      ''\n    ).split('.')[0] }}_doc",
               "type": "string"
             }
           ]
@@ -943,7 +943,7 @@
       "typeVersion": 1.2,
       "position": [
         -1808,
-        -808
+        -816
       ],
       "id": "c0391082-ada3-409f-b96e-45bca27dc723",
       "name": "Telegram Trigger",
@@ -1004,7 +1004,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -824,
+        -832,
         -704
       ],
       "id": "7d38dfee-ada5-4214-b0ee-90241ffd1f79",
@@ -1039,7 +1039,7 @@
       "typeVersion": 2.2,
       "position": [
         -1584,
-        -808
+        -816
       ],
       "id": "6e34e829-8155-4ffa-8324-1cc55d795107",
       "name": "If"
@@ -1056,7 +1056,7 @@
       "typeVersion": 1.2,
       "position": [
         3840,
-        -728
+        -736
       ],
       "id": "0e79920b-ae10-4a44-a5f2-de90fdceb779",
       "name": "Send a text message",
@@ -1098,7 +1098,7 @@
       "typeVersion": 3.4,
       "position": [
         -512,
-        -952
+        -960
       ],
       "id": "5957dbb9-7ef6-46ce-8f82-1b91aa28bb27",
       "name": "Edit Fields1"
@@ -1209,7 +1209,7 @@
       "typeVersion": 1.2,
       "position": [
         1296,
-        -1128
+        -1136
       ],
       "id": "cff3af67-5e8d-43c7-a6cb-b2d0523165a9",
       "name": "Send a text message1",
@@ -1271,8 +1271,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2008,
-        316
+        -2016,
+        320
       ],
       "typeVersion": 1,
       "id": "d0061d6b-7a03-47b5-bdb6-9f8669c25c0a",
@@ -1285,7 +1285,7 @@
             {
               "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
               "name": "tableName",
-              "value": "=chat_history_scrapper",
+              "value": "=ui",
               "type": "string"
             }
           ]
@@ -1296,7 +1296,7 @@
       "typeVersion": 3.4,
       "position": [
         -1808,
-        456
+        464
       ],
       "id": "1aaf4e0e-c86a-494d-8cec-90663c5efa19",
       "name": "Table Name DELETE"
@@ -1311,7 +1311,7 @@
       "typeVersion": 2.5,
       "position": [
         -1584,
-        456
+        464
       ],
       "id": "68ab090f-d11a-4960-8523-b2b702a66c17",
       "name": "DELETE Documents Table and Match Function",
@@ -1329,7 +1329,7 @@
       "typeVersion": 1,
       "position": [
         -1808,
-        232
+        240
       ],
       "id": "7a467a07-2c7b-4058-a148-a1c6ed7c0496",
       "name": "When clicking ‘Execute workflow’"
@@ -1354,7 +1354,7 @@
       "typeVersion": 2.6,
       "position": [
         -1808,
-        680
+        688
       ],
       "id": "1e5d2c0e-3452-452e-8fb5-f5d5a73789ec",
       "name": "Select rows from a table",
@@ -1395,7 +1395,7 @@
       "typeVersion": 1,
       "position": [
         -1808,
-        24
+        32
       ],
       "credentials": {
         "openAiApi": {
@@ -1415,7 +1415,7 @@
       "typeVersion": 1,
       "position": [
         -1808,
-        -184
+        -192
       ],
       "credentials": {
         "openAiApi": {
@@ -1522,7 +1522,7 @@
       "typeVersion": 1.2,
       "position": [
         1744,
-        -408
+        -416
       ],
       "id": "3c238502-9371-42dd-9e8f-6b008ba2c0c2",
       "name": "Send a text message2",
@@ -1552,7 +1552,7 @@
       "typeVersion": 3.4,
       "position": [
         1968,
-        -408
+        -416
       ],
       "id": "0548168c-0444-4b84-a8a4-415efca3f431",
       "name": "Table Name DELETE1"
@@ -1567,7 +1567,7 @@
       "typeVersion": 2.5,
       "position": [
         2192,
-        -408
+        -416
       ],
       "id": "4a1479d3-20fe-4dc5-8b75-ad48db2aa0cf",
       "name": "DELETE Documents Table and Match Function1",
@@ -1669,7 +1669,7 @@
       "typeVersion": 2,
       "position": [
         1520,
-        -1128
+        -1136
       ],
       "id": "7c80d7f6-a0ae-4f83-b490-7ed721fd02de",
       "name": "Code"
@@ -1731,28 +1731,24 @@
     }
   ],
   "pinData": {
-    "Telegram Trigger": [
+    "Recursive Character Text Splitter": [
       {
         "json": {
-          "update_id": 190857346,
-          "message": {
-            "message_id": 39,
-            "from": {
-              "id": 1469588614,
-              "is_bot": false,
-              "first_name": "Pedro",
-              "last_name": "Rodríguez",
-              "language_code": "es"
-            },
-            "chat": {
-              "id": 1469588614,
-              "first_name": "Pedro",
-              "last_name": "Rodríguez",
-              "type": "private"
-            },
-            "date": 1753730825,
-            "text": "si busca,"
-          }
+          "isArtificialRecoveredEventItem": true
+        }
+      }
+    ],
+    "Default Data Loader1": [
+      {
+        "json": {
+          "isArtificialRecoveredEventItem": true
+        }
+      }
+    ],
+    "Embeddings Google Gemini1": [
+      {
+        "json": {
+          "isArtificialRecoveredEventItem": true
         }
       }
     ]
@@ -1766,6 +1762,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-07-28T19:30:02.344Z",
-  "versionId": "fde3afa8-a446-4398-a8e6-55028cb8aff3"
+  "updatedAt": "2025-07-29T00:17:12.870Z",
+  "versionId": "3309ac28-0b52-47c9-a610-2293cabfee54"
 }
