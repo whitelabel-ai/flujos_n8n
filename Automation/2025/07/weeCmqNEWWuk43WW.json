@@ -1,29 +1,34 @@
 {
   "active": false,
   "connections": {
-    "When Executed by Another Workflow": {
+    "register_transaction": {
       "main": [
         [
           {
-            "node": "Obtener ID de categoría",
+            "node": "CategoryId",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Obtener ID de categoría": {
+    "Insertar transacción": {
+      "main": [
+        []
+      ]
+    },
+    "CategoryId": {
       "main": [
         [
           {
-            "node": "Obtener ID de fuente",
+            "node": "fuenteId",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Obtener ID de fuente": {
+    "fuenteId": {
       "main": [
         [
           {
@@ -45,29 +50,53 @@
   "nodes": [
     {
       "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO transacciones (\n  id_usuario,\n  descripcion,\n  monto,\n  moneda,\n  tipo,\n  fecha_transaccion,\n  id_categoria,\n  id_fuente\n)\nVALUES (\n  $1, $2, $3, $4, $5, $6, $7, $8\n)\nRETURNING id, id_usuario, descripcion, monto, moneda, tipo, fecha_transaccion, id_categoria, id_fuente;\n",
+        "options": {
+          "queryReplacement": "={{ $('register_transaction').item.json.id }},{{ $('register_transaction').item.json.descripcion }},{{ $('register_transaction').item.json.monto }}, {{ $('register_transaction').item.json.moneda }}, {{ $('register_transaction').item.json.tipo }}, , {{ $('register_transaction').item.json.fecha_transaccion }}, {{ $('CategoryId').item.json.id }}, {{ $json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        624,
+        0
+      ],
+      "id": "26b192b1-d32d-4bd2-8d37-31f14d879168",
+      "name": "Insertar transacción",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
         "workflowInputs": {
           "values": [
             {
-              "name": "id_usuario"
+              "name": "id"
             },
             {
-              "name": "tipo"
+              "name": "fecha_transaccion"
             },
             {
               "name": "monto",
               "type": "number"
             },
             {
-              "name": "descripcion"
+              "name": "moneda"
+            },
+            {
+              "name": "tipo"
             },
             {
               "name": "categoria"
             },
             {
-              "name": "moneda"
-            },
-            {
-              "name": "fecha_transaccion"
+              "name": "descripcion",
+              "type": "any"
             }
           ]
         }
@@ -79,7 +108,31 @@
         0
       ],
       "id": "706c98eb-d67a-4626-8282-90659c141926",
-      "name": "When Executed by Another Workflow"
+      "name": "register_transaction"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id FROM categorias\nWHERE LOWER(nombre) = LOWER($1)\nAND tipo = INITCAP($2)\nLIMIT 1\n",
+        "options": {
+          "queryReplacement": "={{ $json.categoria }}, {{ $json.tipo }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        0
+      ],
+      "id": "6af5f7ba-91dd-4e2c-ab82-6a6b804624d2",
+      "name": "CategoryId",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
     },
     {
       "parameters": {
@@ -94,60 +147,31 @@
         0
       ],
       "id": "40d49221-83f9-4734-a1b2-e1f8161db64d",
-      "name": "Obtener ID de fuente",
+      "name": "fuenteId",
+      "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "gFhB2sfDoFHEQ7Pn",
-          "name": "pgvector n8n_scrapper"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT id FROM categorias\nWHERE LOWER(nombre) = LOWER($1)\nAND tipo = INITCAP($2)\nLIMIT 1\n",
-        "options": {
-          "queryReplacement": "categoria, typo"
-        }
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        208,
-        0
-      ],
-      "id": "6af5f7ba-91dd-4e2c-ab82-6a6b804624d2",
-      "name": "Obtener ID de categoría",
-      "credentials": {
-        "postgres": {
-          "id": "gFhB2sfDoFHEQ7Pn",
-          "name": "pgvector n8n_scrapper"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "INSERT INTO transacciones (\n  id_usuario,\n  descripcion,\n  monto,\n  moneda,\n  tipo,\n  fecha_transaccion,\n  id_categoria,\n  id_fuente\n)\nVALUES (\n  $1, $2, $3, $4, $5, $6, $7, $8\n)\nRETURNING id;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        624,
-        0
-      ],
-      "id": "26b192b1-d32d-4bd2-8d37-31f14d879168",
-      "name": "Insertar transacción",
-      "credentials": {
-        "postgres": {
-          "id": "gFhB2sfDoFHEQ7Pn",
-          "name": "pgvector n8n_scrapper"
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
         }
       }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "register_transaction": [
+      {
+        "json": {
+          "id": "c1df07c5-9937-4be4-a745-d485dc92f6df",
+          "fecha_transaccion": "2022-08-24",
+          "monto": 165000,
+          "moneda": "COP",
+          "tipo": "Gasto",
+          "categoria": "Educación",
+          "descripcion": "Envío a banco para Universidad Santa María"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -157,6 +181,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-07-29T22:22:53.259Z",
-  "versionId": "5ab1188c-8e53-4e44-9868-6f5b9b2a2b09"
+  "updatedAt": "2025-07-30T15:40:07.814Z",
+  "versionId": "a4dccdaf-2748-418c-89dd-5c14b1392063"
 }
