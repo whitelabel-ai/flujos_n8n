@@ -1,182 +1,11 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "When clicking ‘Execute workflow’": {
       "main": [
         [
           {
             "node": "User test1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Procesar Mensaje": {
-      "main": [
-        [
-          {
-            "node": "Procesar Imagen",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Procesar Audio",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Procesar Archivo",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Procesar Texto",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Procesar Imagen": {
-      "main": [
-        [
-          {
-            "node": "Extraer Datos Imagen",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Procesar Audio": {
-      "main": [
-        [
-          {
-            "node": "Extraer Datos Audio",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Procesar Archivo": {
-      "main": [
-        [
-          {
-            "node": "Extraer Datos Archivo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Procesar Texto": {
-      "main": [
-        [
-          {
-            "node": "Obtener Categoría",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extraer Datos Imagen": {
-      "main": [
-        [
-          {
-            "node": "Obtener Categoría",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extraer Datos Audio": {
-      "main": [
-        [
-          {
-            "node": "Obtener Categoría",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extraer Datos Archivo": {
-      "main": [
-        [
-          {
-            "node": "Obtener Categoría",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener Categoría": {
-      "main": [
-        [
-          {
-            "node": "Confirmar Categoría",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Confirmar Categoría": {
-      "main": [
-        [
-          {
-            "node": "Esperar Respuesta",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Esperar Respuesta": {
-      "main": [
-        [
-          {
-            "node": "Validar Respuesta",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validar Respuesta": {
-      "main": [
-        [
-          {
-            "node": "Call My Sub-workflow",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Obtener Nueva Categoría",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener Nueva Categoría": {
-      "main": [
-        [
-          {
-            "node": "Call My Sub-workflow",
             "type": "main",
             "index": 0
           }
@@ -212,6 +41,11 @@
             "node": "Execute a SQL query",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Send message3",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -219,6 +53,11 @@
     "Switch": {
       "main": [
         [
+          {
+            "node": "IsFree?",
+            "type": "main",
+            "index": 0
+          },
           {
             "node": "type message Whatsap",
             "type": "main",
@@ -737,6 +576,62 @@
           }
         ]
       ]
+    },
+    "Get_categories": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_categories": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "query_transactions": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message3": {
+      "main": [
+        []
+      ]
+    },
+    "IsFree?": {
+      "main": [
+        [
+          {
+            "node": "send Publicidad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-28T20:07:09.475Z",
@@ -752,8 +647,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        384,
-        -992
+        496,
+        -304
       ],
       "id": "2594ae8c-9bed-48ad-9d66-cb2dd9828bc0",
       "name": "When clicking ‘Execute workflow’"
@@ -767,8 +662,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        592,
-        -992
+        704,
+        -304
       ],
       "id": "b9aebc97-33bb-4279-b877-c50e46c04cbf",
       "name": "CREATE DATABASE",
@@ -783,248 +678,18 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "whatsapp/mony",
+        "path": "mony",
         "options": {}
       },
       "name": "Webhook WhatsApp",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        976,
-        -1216
+        832,
+        -1568
       ],
       "id": "8bfa3d3c-5fef-4718-b93c-87719e70d86f",
       "webhookId": "ab9eb1e5-2b76-439c-9d0e-0a779ae79854"
-    },
-    {
-      "parameters": {
-        "value1": "={{ 0 }}"
-      },
-      "name": "Procesar Mensaje",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 1,
-      "position": [
-        240,
-        -2000
-      ],
-      "id": "012e0861-8f14-4b90-8cba-eb8063d31a3f"
-    },
-    {
-      "parameters": {
-        "model": "gpt-4o",
-        "prompt": "Extrae la siguiente información del mensaje '{{$node['Webhook WhatsApp'].json.body.Body}}' en formato JSON: {monto: number, tipo: 'Ingreso'|'Gasto', categoria: string, fecha: string (formato ISO), descripcion: string}. Si no se especifica la fecha, usa la fecha actual. Ejemplo: 'Gasté 50,000 en supermercado' → {monto: 50000, tipo: 'Gasto', categoria: 'Comida', fecha: '2025-07-28T00:00:00Z', descripcion: 'Supermercado'}.",
-        "options": {},
-        "requestOptions": {}
-      },
-      "name": "Procesar Texto",
-      "type": "n8n-nodes-base.openAi",
-      "typeVersion": 1,
-      "position": [
-        688,
-        -1664
-      ],
-      "id": "b75b8017-419c-4ecd-a52b-3d4fae5ae57d",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "https://vision.googleapis.com/v1/images:annotate?key={{your-google-vision-api-key}}",
-        "options": {}
-      },
-      "name": "Procesar Imagen",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 1,
-      "position": [
-        464,
-        -1872
-      ],
-      "id": "6c1ba06a-4447-4c73-a458-44691ac6c707"
-    },
-    {
-      "parameters": {
-        "model": "gpt-4o",
-        "prompt": "Extrae la siguiente información del texto OCR '{{$node['Procesar Imagen'].json.responses[0].fullTextAnnotation.text}}' en formato JSON: {monto: number, tipo: 'Ingreso'|'Gasto', categoria: string, fecha: string (formato ISO), descripcion: string}. Si no se especifica la fecha, usa la fecha actual.",
-        "options": {},
-        "requestOptions": {}
-      },
-      "name": "Extraer Datos Imagen",
-      "type": "n8n-nodes-base.openAi",
-      "typeVersion": 1,
-      "position": [
-        688,
-        -1872
-      ],
-      "id": "05e80d71-3d21-4627-8485-2c39ca578f1d",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "predefinedCredentialType",
-        "url": "https://api.openai.com/v1/audio/transcriptions",
-        "options": {}
-      },
-      "name": "Procesar Audio",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 1,
-      "position": [
-        464,
-        -2064
-      ],
-      "id": "d82e23a1-f5db-4733-baa8-b912d7c50688"
-    },
-    {
-      "parameters": {
-        "model": "gpt-4o",
-        "prompt": "Extrae la siguiente información del texto transcrito '{{$node['Procesar Audio'].json.text}}' en formato JSON: {monto: number, tipo: 'Ingreso'|'Gasto', categoria: string, fecha: string (formato ISO), descripcion: string}. Si no se especifica la fecha, usa la fecha actual.",
-        "options": {},
-        "requestOptions": {}
-      },
-      "name": "Extraer Datos Audio",
-      "type": "n8n-nodes-base.openAi",
-      "typeVersion": 1,
-      "position": [
-        688,
-        -2064
-      ],
-      "id": "03522398-7868-4ea2-9389-2168456f913c",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "basicAuth",
-        "url": "https://api.konfuzio.com/v3/documents",
-        "options": {}
-      },
-      "name": "Procesar Archivo",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 1,
-      "position": [
-        464,
-        -2272
-      ],
-      "id": "4eb58415-4201-4e9d-be4b-244d83229a32",
-      "credentials": {
-        "httpBasicAuth": {
-          "id": "lZ0efOUQUlbFdSMe",
-          "name": "Vapi"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": "gpt-4o",
-        "prompt": "Extrae la siguiente información del texto extraído '{{$node['Procesar Archivo'].json.text}}' en formato JSON: {monto: number, tipo: 'Ingreso'|'Gasto', categoria: string, fecha: string (formato ISO), descripcion: string}. Si no se especifica la fecha, usa la fecha actual.",
-        "options": {},
-        "requestOptions": {}
-      },
-      "name": "Extraer Datos Archivo",
-      "type": "n8n-nodes-base.openAi",
-      "typeVersion": 1,
-      "position": [
-        688,
-        -2272
-      ],
-      "id": "55454ac6-308c-4009-a4bd-cdf2653a3ac9",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "additionalFields": {}
-      },
-      "name": "Obtener Categoría",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 1,
-      "position": [
-        912,
-        -1872
-      ],
-      "id": "f4d365b1-5b6d-4ed9-a7b6-7ec0e78e5c04",
-      "credentials": {
-        "postgres": {
-          "id": "gFhB2sfDoFHEQ7Pn",
-          "name": "pgvector n8n_scrapper"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "authentication": "predefinedCredentialType",
-        "url": "https://api.twilio.com/2010-04-01/Accounts/{{your-twilio-account-sid}}/Messages.json",
-        "options": {}
-      },
-      "name": "Confirmar Categoría",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 1,
-      "position": [
-        1136,
-        -1872
-      ],
-      "id": "2ae75639-3b08-4dd2-907a-8a2c81fc111e"
-    },
-    {
-      "parameters": {},
-      "name": "Esperar Respuesta",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [
-        1360,
-        -1872
-      ],
-      "id": "b525e695-d1a6-4f74-8d4d-926a6a84ff0e",
-      "webhookId": "e7b569f0-8329-457f-8966-99631bf93d72"
-    },
-    {
-      "parameters": {},
-      "name": "Validar Respuesta",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 1,
-      "position": [
-        1584,
-        -1904
-      ],
-      "id": "5a7fe308-49ac-49e8-8a25-f9fadd619834"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "additionalFields": {}
-      },
-      "name": "Obtener Nueva Categoría",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 1,
-      "position": [
-        1808,
-        -1792
-      ],
-      "id": "f497db89-ff90-40c3-b167-6ccc062e2fdc",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      },
-      "disabled": true
     },
     {
       "parameters": {
@@ -1038,8 +703,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        960,
-        -384
+        832,
+        -640
       ],
       "id": "bee4c4e7-1624-4f07-9e22-e6d3030333d4"
     },
@@ -1051,8 +716,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1184,
-        -384
+        1056,
+        -640
       ],
       "id": "d88691ba-fc5f-4726-a522-94475db88094",
       "credentials": {
@@ -1073,8 +738,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        1408,
-        -384
+        1280,
+        -640
       ],
       "id": "0b7e1e6a-05e2-434d-af5b-7bc29d129f81"
     },
@@ -1092,8 +757,8 @@
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
       "position": [
-        960,
-        -1008
+        816,
+        -1280
       ],
       "id": "6d355b4a-23db-4855-a14c-8a1d3f2b9b18",
       "name": "WhatsApp Trigger",
@@ -1114,8 +779,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        592,
-        -800
+        704,
+        -112
       ],
       "id": "3174561b-a579-48d5-a34a-c2a1b0d1c208",
       "name": "User test",
@@ -1136,8 +801,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        592,
-        -624
+        704,
+        64
       ],
       "id": "4054dadf-ed25-4bf5-935b-165b8efc8ede",
       "name": "User test1",
@@ -1208,8 +873,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1632,
-        -1008
+        1488,
+        -1184
       ],
       "id": "792048ec-8c27-45ce-936e-588334d818ad",
       "name": "Switch"
@@ -1676,8 +1341,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1168,
-        -1008
+        1040,
+        -1184
       ],
       "id": "104da7ce-0d67-4b22-8f91-0dce40f79c80",
       "name": "Execute a SQL query",
@@ -1693,13 +1358,13 @@
         "promptType": "define",
         "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }}\nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### *1. CONTEXTO Y PERSONA*\n\nEres *Mony*, el asistente financiero personal de *{{ $json.first_name }}*. Ya lo conoces porque es un usuario registrado. Tu objetivo es ser su copiloto financiero: increíblemente *eficiente, preciso y amigable*. Tu tono es servicial y proactivo. Te comunicas a través de WhatsApp, así que sé directo y claro, usando emojis para facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐).\n\nLa fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\n\nTu misión es analizar el mensaje del usuario, *{{ $json.message }}*, para identificar su *intención principal* y utilizar una de tus herramientas (sub-workflows de N8N) para cumplir su solicitud. Si el mensaje es ambiguo o le falta información crucial, debes hacer una pregunta clara y concisa para obtener los datos que necesitas. Si es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\n\nEl mensaje del usuario (`{{ $json.message }}`) puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### *4. HERRAMIENTAS DISPONIBLES (TOOLS)*\n\nEstas son las únicas acciones que puedes realizar. Para ejecutar una, debes proporcionar los parámetros requeridos.\nen [usuario_data] encontraras los datos del usuario que debes pasar a las tools, como el id del usuario, o la moneda del usuario.\n<br>\n\n*Tool 1: `register_transaction`*\n\n  - *Descripción:* Registra una nueva transacción de ingreso o gasto en la cuenta del usuario.\n  - *Parámetros:*\n      - `tipo` (obligatorio): El tipo de transacción. Valores posibles: `\"ingreso\"` o `\"gasto\"`.\n      - `amount` (obligatorio): El valor numérico de la transacción. Extrae solo los números.\n      - `descripcion` (obligatorio): El texto que describe el movimiento (ej: \"Almuerzo con el equipo\").\n      - `categoria` (opcional): La categoría sugerida.puedes listarlas usando la tool 'manage_categories'\n      - `date` (opcional): La fecha en formato `AAAA-MM-DD`. Si no se especifica, se usará la fecha actual.\n\n<br>\n\n*Tool 2: `query_transactions`*\n\n  - *Descripción:* Busca y devuelve una lista de las transacciones del usuario según filtros.\n  - *Parámetros:*\n      - `period` (opcional): Un período de tiempo predefinido. Valores posibles: `\"hoy\"`, `\"ayer\"`, `\"esta_semana\"`, `\"este_mes\"`, `\"mes_pasado\"`.\n      - `start_date` (opcional): Fecha de inicio para la búsqueda, formato `AAAA-MM-DD`.\n      - `end_date` (opcional): Fecha de fin para la búsqueda, formato `AAAA-MM-DD`.\n      - `category` (opcional): Filtra por una categoría específica (ej: \"Transporte\").\n      - `tipo` (opcional): Filtra por `\"ingreso\"` o `\"gasto\"`.\n      - `keyword` (opcional): Busca una palabra clave en la descripción de las transacciones.\n      - `limit` (opcional): Número máximo de resultados a devolver. Default: `5`.\n\n<br>\n\n*Tool 3: `get_financial_summary`*\n\n  - *Descripción:* Calcula y devuelve un resumen financiero (total ingresos, total gastos y balance) para un período determinado.\n  - *Parámetros:*\n      - `period` (opcional): El período para el resumen. Valores: `\"hoy\"`, `\"esta_semana\"`, `\"este_mes\"` (default), `\"mes_pasado\"`, `\"este_año\"`.\n      - `start_date` (opcional): Fecha de inicio para un resumen de período personalizado, formato `AAAA-MM-DD`.\n      - `end_date` (opcional): Fecha de fin para un resumen de período personalizado, formato `AAAA-MM-DD`.\n\n<br>\n\n*Tool 4: `manage_categories`*\n\n  - *Descripción:* Permite al usuario gestionar sus categorías personalizadas.\n  - *Parámetros:*\n      - `action` (obligatorio): La acción a realizar. Valores: `\"create\"` o `\"list\"`.\n      - `category_name` (obligatorio si `action` es `create`): El nombre de la nueva categoría.\n      - `tipo` (obligatorio si `action` es `create`): El tipo, `\"ingreso\"` o `\"gasto\"`.\n\n### *5. LÓGICA DE PROCESAMIENTO (Paso a Paso)*\n\n1.  -Saluda:* Comienza tu respuesta dirigiéndote a `{{ $json.first_name }}`.\n2.  -Analiza la Intención:* Lee `{{ $json.message }}` y determina qué quiere hacer el usuario: ¿registrar algo, consultar, pedir un resumen o gestionar categorías?\n3.  -Selecciona la Herramienta:* Elige la herramienta (`tool`) más adecuada de la lista anterior para cumplir con la intención.\n4.  -Extrae los Parámetros:* Revisa el mensaje cuidadosamente y extrae toda la información necesaria para los parámetros de la herramienta seleccionada. Sé inteligente: \"la semana pasada\" implica un rango de fechas, \"salario\" implica un `tipo: \"ingreso\"`, \"gasté\" o \"compré\" implica `tipo: \"gasto\"`.\n5.  -Valida la Información:*\n      - *¿Tienes todo lo necesario?* Si para `register_transaction` tienes la descripción pero no el monto, debes preguntar.\n      - *Ejemplo de pregunta de clarificación:* \"¡Hola {{ $json.first_name }}! Entendido, quieres registrar un gasto en el cine. ¿Podrías decirme el monto por favor? 🧐\"\n      - *Si necesitas clarificación,* tu acción debe ser `reply` y no `call_tool`.\n6.  -Maneja Conversación Casual:* Si el mensaje es \"gracias\", \"hola Mony\", etc., no llames a ninguna herramienta. Simplemente responde amablemente. Tu acción debe ser `reply`.\n7.  -Construye la Respuesta Final:* Formatea tu salida como un *único objeto JSON* válido.\n\n### *6. FORMATO DE SALIDA (OBLIGATORIO)*\n\nTu respuesta DEBE ser un objeto JSON con una de las siguientes dos estructuras:\n\n*Para llamar a una herramienta:*\n\n```json\n{\n  \"action\": \"call_tool\",\n  \"tool_name\": \"nombre_de_la_herramienta\",\n  \"parameters\": {\n    \"param1\": \"valor1\",\n    \"param2\": \"valor2\"\n  }\n}\n```\n\n*Para responder directamente al usuario (saludos, preguntas, etc.):*\n\n```json\n{\n  \"action\": \"reply\",\n  \"message\": \"Hola {{ $json.first_name }}, este es mi mensaje para ti.\"\n}\n```\n\n### *7. EJEMPLOS*\n\n  - *Usuario:* `gasté 15.000 en un café`\n    -Tu Salida:*\n    ```json\n    {\n      \"action\": \"call_tool\",\n      \"tool_name\": \"register_transaction\",\n      \"parameters\": {\n        \"tipo\": \"gasto\",\n        \"amount\": 15000,\n        \"descripcion\": \"Café\",\n        \"date\": \"2025-07-29\"\n      }\n    }\n    ```\n  - *Usuario:* `<audio>me consignaron cien mil pesos de un amigo</audio>`\n    -Tu Salida:*\n    ```json\n    {\n      \"action\": \"call_tool\",\n      \"tool_name\": \"register_transaction\",\n      \"parameters\": {\n        \"tipo\": \"ingreso\",\n        \"amount\": 100000,\n        \"descripcion\": \"Consignación de un amigo\",\n        \"date\": \"2025-07-29\"\n      }\n    }\n    ```\n  - *Usuario:* `muéstrame mis últimos gastos de comida`\n    -Tu Salida:*\n    ```json\n    {\n      \"action\": \"call_tool\",\n      \"tool_name\": \"query_transactions\",\n      \"parameters\": {\n        \"tipo\": \"gasto\",\n        \"category\": \"Comida\",\n        \"limit\": 5\n      }\n    }\n    ```\n  - *Usuario:* `resumen de este mes`\n    -Tu Salida:*\n    ```json\n    {\n      \"action\": \"call_tool\",\n      \"tool_name\": \"get_financial_summary\",\n      \"parameters\": {\n        \"period\": \"este_mes\"\n      }\n    }\n    ```\n  - *Usuario:* `registra una compra en el supermercado`\n    -Tu Salida:*\n    ```json\n    {\n      \"action\": \"reply\",\n      \"message\": \"¡Hola {{ $json.first_name }}! Claro que sí. ¿Cuál fue el valor de la compra en el supermercado? 💰\"\n    }\n    ```\n  - *Usuario:* `gracias mony`\n    -Tu Salida:*\n    ```json\n    {\n      \"action\": \"reply\",\n      \"message\": \"¡Con todo el gusto, {{ $json.first_name }}! Aquí estoy si necesitas algo más. ✅\"\n    }\n    ```\n  - *Usuario:* `quiero crear una categoria para mis hobbies`\n    -Tu Salida:*\n    ```json\n    {\n      \"action\": \"call_tool\",\n      \"tool_name\": \"manage_categories\",\n      \"parameters\": {\n          \"action\": \"create\",\n          \"category_name\": \"Hobbies\",\n          \"tipo\": \"gasto\"\n      }\n    }\n    ```"
+          "systemMessage": "=### *1. CONTEXTO Y PERSONA*\n\nEres *Mony*, el asistente financiero personal de *{{ $json.first_name }}*. Ya lo conoces porque es un usuario registrado. Tu objetivo es ser su copiloto financiero: increíblemente *eficiente, preciso y amigable*. Tu tono es servicial y proactivo. Te comunicas a través de WhatsApp, así que sé directo y claro, usando emojis para facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐).\n\nLa fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\n\nTu misión es analizar el mensaje del usuario, *{{ $json.message }}*, para identificar su *intención principal* y utilizar una de tus herramientas (sub-workflows de N8N) para cumplir su solicitud. Si el mensaje es ambiguo o le falta información crucial, debes hacer una pregunta clara y concisa para obtener los datos que necesitas. Si es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\n\nEl mensaje del usuario (`{{ $json.message }}`) puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### *4. HERRAMIENTAS DISPONIBLES (TOOLS)*\n\nEstas son las únicas acciones que puedes realizar. Para ejecutar una, debes proporcionar los parámetros requeridos.\nen [usuario_data] encontraras los datos del usuario que debes pasar a las tools, como el id del usuario, o la moneda del usuario.\n<br>\n\n*Tool 1: `register_transaction`*\n\n  - *Descripción:* Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.\n  - *Parámetros:*\n      - `tipo` : El tipo de transacción. Valores posibles: `\"Ingreso\"` o `\"Gasto\"`.\n      - `monto` : El valor numérico de la transacción. Extrae solo los números.\n      - `descripcion` : El texto que describe el movimiento (ej: \"Almuerzo con el equipo\").\n      - `categoria`: siempre lista las categorias del usuario para ver relacionadas,  usa la tool 'get_categories', si no existe, pregunta si desea crearla y   'create_categories'para crear la categoria\n      - `fecha_transaccion` : La fecha en formato `AAAA-MM-DD`. Si no se especifica, se usará la fecha actual.\n\n<br>\n\n*Tool 2: `query_transactions`*\n\n  - *Descripción:* Busca y devuelve una lista de las transacciones del usuario según filtros no digas que vas a consultar, actua.\n  - *Parámetros:*\n      - `period` (opcional): Un período de tiempo predefinido. Valores posibles: `\"hoy\"`, `\"ayer\"`, `\"esta_semana\"`, `\"este_mes\"`, `\"mes_pasado\"`.\n      - `start_date` (opcional): Fecha de inicio para la búsqueda, formato `AAAA-MM-DD`.\n      - `end_date` (opcional): Fecha de fin para la búsqueda, formato `AAAA-MM-DD`.\n      - `category` (opcional): Filtra por una categoría específica (ej: \"Transporte\").\n      - `tipo` (opcional): Filtra por `\"Ingreso\"` o `\"Gasto\"`.\n      - `keyword` (opcional): Busca una palabra clave en la descripción de las transacciones.\n      - `limit` (opcional): Número máximo de resultados a devolver. Default: `5`.\n\n<br>\n\n*Tool 3: `get_financial_summary`*\n\n  - *Descripción:* Calcula y devuelve un resumen financiero (total Ingresos, total Gastos y balance) para un período determinado.\n  - *Parámetros:*\n      - `period` (opcional): El período para el resumen. Valores: `\"hoy\"`, `\"esta_semana\"`, `\"este_mes\"` (default), `\"mes_pasado\"`, `\"este_año\"`.\n      - `start_date` (opcional): Fecha de inicio para un resumen de período personalizado, formato `AAAA-MM-DD`.\n      - `end_date` (opcional): Fecha de fin para un resumen de período personalizado, formato `AAAA-MM-DD`.\n\n<br>\n\n*Tool 4: `get_categories`* Usar siempre antes de registrar una transaccion.\n\n  - *Descripción:* Permite al usuario listar todas sus categorías.\n\n*Tool 5: `create_categories`*\n\n  - *Descripción:* Permite al usuario crear sus categorías personalizadas, agregar una nueva si no existe.\n  - *Parámetros:*\n      - `nombre`:  El nombre de la nueva categoría.\n      - `tipo` : El tipo, `\"Ingreso\"` o `\"Gasto\"`.\n\n\n### *5. LÓGICA DE PROCESAMIENTO (Paso a Paso)*\n\n1.  -Saluda:* Comienza tu respuesta dirigiéndote a `{{ $json.first_name }}`.\n2.  -Analiza la Intención:* Lee `{{ $json.message }}` y determina qué quiere hacer el usuario: ¿registrar algo, consultar, pedir un resumen o gestionar categorías?\n3.  -Selecciona la Herramienta:* Elige la herramienta (`tool`) más adecuada de la lista anterior para cumplir con la intención.\n4.  -Extrae los Parámetros:* Revisa el mensaje cuidadosamente y extrae toda la información necesaria para los parámetros de la herramienta seleccionada. Sé inteligente: \"la semana pasada\" implica un rango de fechas, \"salario\" implica un `tipo: \"Ingreso\"`, \"gasté\" o \"compré\" implica `tipo: \"Gasto\"`.\n5.  -Valida la Información:*\n      - *¿Tienes todo lo necesario?* Si para `register_transaction` tienes la descripción pero no el monto, debes preguntar.\n      - *Ejemplo de pregunta de clarificación:* \"¡Hola {{ $json.first_name }}! Entendido, quieres registrar un Gasto en el cine. ¿Podrías decirme el monto por favor? 🧐\"\n      - *Si necesitas clarificación,* tu acción debe ser `reply` y no `call_tool`.\n6.  -Maneja Conversación Casual:* Si el mensaje es \"gracias\", \"hola Mony\", etc., no llames a ninguna herramienta. Simplemente responde amablemente. Tu acción debe ser `reply`.\n7.  -Construye la Respuesta Final:* Formatea tu salida como un *único objeto JSON* válido.\n\n### *6. FORMATO DE SALIDA (OBLIGATORIO)*\nnunca envies al usuario informacion sobre consultar a las tool, se proactivo y ejecuta e informa"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        2944,
+        2992,
         -544
       ],
       "id": "687acc71-c2ac-49a1-8d76-f3de9a49d198",
@@ -1712,8 +1377,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2912,
-        -352
+        2832,
+        -320
       ],
       "id": "03941d7b-632d-446f-b5a8-6d2fed9bc254",
       "name": "Google Gemini Chat Model",
@@ -1723,32 +1388,6 @@
           "name": "automation.whitelabel.lat"
         }
       }
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "hyPLRRrbYz92mf6T",
-          "mode": "list"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        2144,
-        -1920
-      ],
-      "name": "Call My Sub-workflow",
-      "id": "03fbc7aa-2e7d-4c54-bcc3-16b104798055"
     },
     {
       "parameters": {
@@ -1773,8 +1412,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1392,
-        -1008
+        1264,
+        -1184
       ],
       "id": "5aa43e16-51e2-4dc0-b7c5-6447c5d425da",
       "name": "data"
@@ -2316,7 +1955,7 @@
       "typeVersion": 1,
       "position": [
         2160,
-        -592
+        -656
       ],
       "id": "3d3b3080-5f5f-40d2-b65c-a5d844f544f6",
       "name": "Sticky Note1"
@@ -2331,8 +1970,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        3008,
-        -192
+        2928,
+        -320
       ],
       "id": "511ddf7c-3b18-4a92-a93d-63c125054f01",
       "name": "Redis Chat Memory",
@@ -2587,8 +2226,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1936,
-        -848
+        1712,
+        -1088
       ],
       "id": "63a60098-0575-441a-b40d-a9cbe12f21e5",
       "name": "Call Onboarding Register"
@@ -2604,9 +2243,89 @@
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [],
+          "value": {
+            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id', ``, 'string') }}",
+            "fecha_transaccion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fecha_transaccion', ``, 'string') }}",
+            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
+            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
+            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}",
+            "categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('categoria', ``, 'string') }}",
+            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "fecha_transaccion",
+              "displayName": "fecha_transaccion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "monto",
+              "displayName": "monto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "moneda",
+              "displayName": "moneda",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "categoria",
+              "displayName": "categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "descripcion",
+              "displayName": "descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
           "attemptToConvertTypes": false,
           "convertFieldsToString": false
         }
@@ -2614,14 +2333,269 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        3136,
-        -304
+        3408,
+        -320
       ],
       "id": "98f8b35b-de97-4778-abbf-cc07210548a6",
       "name": "register_transaction"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "categorias",
+          "mode": "list",
+          "cachedResultName": "categorias"
+        },
+        "returnAll": "",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3024,
+        -320
+      ],
+      "id": "0db389c1-d47d-4da9-9418-18ad8026b6f5",
+      "name": "Get_categories",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "categorias",
+          "mode": "list",
+          "cachedResultName": "categorias"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', ``, 'string') }}",
+            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3120,
+        -320
+      ],
+      "id": "f2d26818-24a9-4275-b484-a39d4fdd777d",
+      "name": "create_categories",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  id,\n  descripcion,\n  monto,\n  moneda,\n  tipo,\n  fecha_transaccion,\n  id_categoria,\n  id_fuente,\n  fecha_creacion\nFROM transacciones\nWHERE id_usuario = '{{ $fromAI('id_usuario', '', 'string') }}'\nORDER BY fecha_transaccion DESC;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3264,
+        -320
+      ],
+      "id": "795369be-415f-4f46-9562-94c3e9d2e4c7",
+      "name": "query_transactions",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "=+{{ $json.contacts[0].wa_id }}",
+        "textBody": "⏳...",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -1376
+      ],
+      "id": "85337e28-59db-422d-86b2-625dac126e89",
+      "name": "Send message3",
+      "webhookId": "9664ca8b-6cdf-474c-a4c2-07f5e237eae8",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "YohohlgP3bBq85IL",
+          "name": "Test Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        -1376
+      ],
+      "id": "d187ea81-69ea-4e63-8048-17f09a3c63ff",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "=+{{ $json.usuario_data.numero_whatsapp }}",
+        "messageType": "video",
+        "mediaPath": "useMediaId",
+        "mediaId": "=1936820460498772",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        -1536
+      ],
+      "id": "db71aa84-e365-4a39-bc7e-4be381a771f0",
+      "name": "send Publicidad",
+      "webhookId": "9664ca8b-6cdf-474c-a4c2-07f5e237eae8",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "YohohlgP3bBq85IL",
+          "name": "Test Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "93e015c8-0275-4999-a019-8d4f80b66d07",
+              "leftValue": "={{ $json.usuario_data.estado_suscripcion }}",
+              "rightValue": "=gratuito",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1680,
+        -1488
+      ],
+      "id": "f176e465-c428-4ba5-845f-80b2c4beb0ae",
+      "name": "IsFree?"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "WhatsApp Trigger": [
+      {
+        "json": {
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "573143400476",
+            "phone_number_id": "565888133266017"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "Pedro Rodriguez"
+              },
+              "wa_id": "573228854498"
+            }
+          ],
+          "messages": [
+            {
+              "from": "573228854498",
+              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y4RjhDMEQ1NDcwNEI0RjE1RTkA",
+              "timestamp": "1753889478",
+              "type": "image",
+              "image": {
+                "caption": "hice este pago hoy",
+                "mime_type": "image/jpeg",
+                "sha256": "aloKHu2mkDuytA/T1eywybbL+xktfPwRomc9eBjiY48=",
+                "id": "1034301138785114"
+              }
+            }
+          ],
+          "field": "messages"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -2635,6 +2609,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-07-29T22:23:24.734Z",
-  "versionId": "f0c8e9ff-bf3c-4a84-bd9e-f7e96c2397df"
+  "updatedAt": "2025-07-30T16:11:37.269Z",
+  "versionId": "87f801b6-b506-49f0-a498-2c18c92ad19c"
 }
