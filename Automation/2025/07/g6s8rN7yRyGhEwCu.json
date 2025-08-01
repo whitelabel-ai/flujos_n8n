@@ -324,62 +324,7 @@
         ]
       ]
     },
-    "Download media": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "DataAudio",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "DataText": {
-      "main": [
-        [
-          {
-            "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DataAudio": {
       "main": [
         [
           {
@@ -406,6 +351,50 @@
         [
           {
             "node": "Redis6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataAudio": {
+      "main": [
+        [
+          {
+            "node": "setData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download media": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "DataAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
             "type": "main",
             "index": 0
           }
@@ -1326,90 +1315,6 @@
     },
     {
       "parameters": {
-        "resource": "media",
-        "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.messages[0].audio.id }}"
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        -656,
-        -1600
-      ],
-      "id": "cfa9fab5-7fa1-4e4d-ae6b-1e14addccf76",
-      "name": "Download media",
-      "webhookId": "674eab48-c075-4f51-8adb-6e5017c9d7db",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://speech.googleapis.com/v1/speech:recognize",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "googleOAuth2Api",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"config\": {\n    \"encoding\": \"OGG_OPUS\",\n    \"sampleRateHertz\": 16000,\n    \"languageCode\": \"es-CO\",\n    \"enableAutomaticPunctuation\": true,\n    \"model\": \"telephony\"\n  },\n  \"audio\": {\n    \"content\": \"{{ $json.data }}\"\n  }\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        16,
-        -1600
-      ],
-      "id": "05c1d358-949b-44a5-ab0b-644e759bb9cc",
-      "name": "HTTP Request",
-      "credentials": {
-        "googleOAuth2Api": {
-          "id": "9Z0zKL8ENum6cJNe",
-          "name": "google-tts"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.url }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "whatsAppApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        -432,
-        -1600
-      ],
-      "id": "62cd1a1a-6d44-4865-a765-52f031334803",
-      "name": "HTTP Request1",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "binaryToPropery",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        -208,
-        -1600
-      ],
-      "id": "4956139b-84d6-4612-8ba7-084f5679fa84",
-      "name": "Extract from File"
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -1448,47 +1353,6 @@
       ],
       "id": "9fc99077-ce38-4f83-9b15-c4228320f288",
       "name": "DataText"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "={{ $json.results[0].alternatives[0].transcript }}",
-              "type": "string"
-            },
-            {
-              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
-              "name": "tags",
-              "value": "={{ $('WhatsApp Trigger').item.json.field }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        240,
-        -1600
-      ],
-      "id": "6228176b-4172-4be6-b80a-2b825e00f3ef",
-      "name": "DataAudio"
     },
     {
       "parameters": {
@@ -1555,6 +1419,133 @@
       ],
       "id": "bcd4e0de-ec54-4ecd-a03d-0e20cbc70c4e",
       "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
+              "name": "nombre",
+              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
+              "type": "string"
+            },
+            {
+              "id": "82031891-32ae-4442-b883-fad57ad08c79",
+              "name": "phone_number",
+              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
+              "name": "mensaje",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
+              "name": "tags",
+              "value": "={{ $('WhatsApp Trigger').item.json.field }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -64,
+        -1600
+      ],
+      "id": "6228176b-4172-4be6-b80a-2b825e00f3ef",
+      "name": "DataAudio"
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.messages[0].audio.id }}"
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -656,
+        -1600
+      ],
+      "id": "cfa9fab5-7fa1-4e4d-ae6b-1e14addccf76",
+      "name": "Download media",
+      "webhookId": "674eab48-c075-4f51-8adb-6e5017c9d7db",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-1"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "languaje",
+              "value": "es"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -256,
+        -1600
+      ],
+      "id": "a3b34ac5-05ae-47d0-9031-915f65fa1853",
+      "name": "HTTP Request2",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -464,
+        -1600
+      ],
+      "id": "a9663616-0192-4e66-883b-9244b45b67fa",
+      "name": "HTTP Request3",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1569,20 +1560,23 @@
           "contacts": [
             {
               "profile": {
-                "name": "Pedro Rodriguez"
+                "name": "Andrés Corral"
               },
-              "wa_id": "573228854498"
+              "wa_id": "573045809637"
             }
           ],
           "messages": [
             {
-              "from": "573228854498",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZFQzI2NTZCNzY5MkIzNkVBMzAA",
-              "timestamp": "1753827299",
-              "text": {
-                "body": "hola"
-              },
-              "type": "text"
+              "from": "573045809637",
+              "id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhgUM0YxMkYzQkIzRUFEMDBFQzExRDgA",
+              "timestamp": "1754006543",
+              "type": "audio",
+              "audio": {
+                "mime_type": "audio/ogg; codecs=opus",
+                "sha256": "aH7nolwc44V1a6pdYfIF9sIIgo9NJc1OjO/Xj463/Qw=",
+                "id": "1184776140040997",
+                "voice": true
+              }
             }
           ],
           "field": "messages"
@@ -1603,6 +1597,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-07-29T22:22:25.008Z",
-  "versionId": "4d863d0a-98ea-497f-9a42-a40dcaf1bc51"
+  "updatedAt": "2025-08-01T00:31:32.415Z",
+  "versionId": "ccff6340-2bcc-44ed-8925-9f9138040d7d"
 }
