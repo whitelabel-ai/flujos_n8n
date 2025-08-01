@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "When clicking ‘Execute workflow’": {
       "main": [
@@ -59,7 +59,7 @@
             "index": 0
           },
           {
-            "node": "type message Whatsap",
+            "node": "Call Agente Transaccional",
             "type": "main",
             "index": 0
           }
@@ -67,155 +67,6 @@
         [
           {
             "node": "Call Onboarding Register",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If1": {
-      "main": [
-        [
-          {
-            "node": "Unir Mensajes",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Redis": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait": {
-      "main": [
-        [
-          {
-            "node": "Redis",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Push Message": {
-      "main": [
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execution Data": {
-      "main": [
-        [
-          {
-            "node": "Push Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "type message Whatsap": {
-      "main": [
-        [
-          {
-            "node": "Download media",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Download media3",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Download media2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download media": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DataText": {
-      "main": [
-        [
-          {
-            "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DataAudio": {
-      "main": [
-        [
-          {
-            "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "setData": {
-      "main": [
-        [
-          {
-            "node": "Execution Data",
             "type": "main",
             "index": 0
           }
@@ -233,378 +84,12 @@
         ]
       ]
     },
-    "Unir Mensajes": {
-      "main": [
-        [
-          {
-            "node": "Message a model",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "data": {
       "main": [
         [
           {
             "node": "Switch",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request2": {
-      "main": [
-        [
-          {
-            "node": "DataAudio",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download media3": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download media2": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Analyze image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Analyze image": {
-      "main": [
-        [
-          {
-            "node": "DataImage",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DataImage": {
-      "main": [
-        [
-          {
-            "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request3": {
-      "main": [
-        [
-          {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "DataPdf",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "No Operation, do nothing2": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "No Operation, do nothing3": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "No Operation, do nothing4": {
-      "main": [
-        [
-          {
-            "node": "DataText",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DataPdf": {
-      "main": [
-        [
-          {
-            "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Data": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait11": {
-      "main": [
-        [
-          {
-            "node": "If13",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait12": {
-      "main": [
-        [
-          {
-            "node": "If12",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If12": {
-      "main": [
-        [
-          {
-            "node": "Send message1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing11",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If13": {
-      "main": [
-        [
-          {
-            "node": "Send message4",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing12",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait13": {
-      "main": [
-        [
-          {
-            "node": "If14",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If14": {
-      "main": [
-        [
-          {
-            "node": "Send message2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing13",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Redis Chat Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Message a model": {
-      "main": [
-        [
-          {
-            "node": "Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send message": {
-      "main": [
-        [
-          {
-            "node": "Redis5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Message a model1": {
-      "main": [
-        [
-          {
-            "node": "Wait11",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait12",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait13",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Send message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
-      "main": [
-        [
-          {
-            "node": "Message a model1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "register_transaction": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get_categories": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "create_categories": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "query_transactions": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -656,7 +141,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "-- EXTENSIONES ÚTILES\nCREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\nCREATE EXTENSION IF NOT EXISTS \"pgcrypto\";\n\n-- TABLA: Usuarios\nCREATE TABLE usuarios (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    nombre_completo TEXT NOT NULL,\n    email TEXT UNIQUE NOT NULL,\n    password_hash TEXT NOT NULL,\n    numero_whatsapp TEXT UNIQUE NOT NULL,\n    moneda_defecto TEXT DEFAULT 'COP',\n    estado_suscripcion TEXT DEFAULT 'gratuito',\n    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- TABLA: Categorías\nCREATE TABLE categorias (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL\n);\n\n-- Insertar categorías iniciales\nINSERT INTO categorias (nombre, tipo) VALUES\n    ('Comida', 'Gasto'),\n    ('Transporte', 'Gasto'),\n    ('Entretenimiento', 'Gasto'),\n    ('Salud', 'Gasto'),\n    ('Servicios', 'Gasto'),\n    ('Salario', 'Ingreso'),\n    ('Otros', 'Gasto');\n\n-- TABLA: Fuentes de Registro\nCREATE TABLE fuentes_registro (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE -- Ej: WhatsApp, Web, OCR, Audio, PDF\n);\n\n-- Insertar fuentes iniciales\nINSERT INTO fuentes_registro (nombre) VALUES\n    ('WhatsApp'),\n    ('Web'),\n\n\n-- TABLA: Transacciones\nCREATE TABLE transacciones (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    descripcion TEXT,\n    monto NUMERIC(12, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    fecha_transaccion DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id),\n    id_fuente INTEGER REFERENCES fuentes_registro(id),\n    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- TABLA: Suscripciones\nCREATE TABLE suscripciones (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    tipo TEXT CHECK (tipo IN ('gratuito', 'premium')) NOT NULL,\n    fecha_inicio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    fecha_expiracion TIMESTAMP\n);\n\n-- TABLA: Recordatorios\nCREATE TABLE recordatorios (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    frecuencia TEXT CHECK (frecuencia IN ('diario', 'semanal', 'nunca')) NOT NULL,\n    hora_envio TIME DEFAULT '08:00:00'\n);\n\n-- TABLA: Anuncios\nCREATE TABLE anuncios (\n    id SERIAL PRIMARY KEY,\n    titulo TEXT NOT NULL,\n    imagen_url TEXT,\n    enlace TEXT,\n    texto TEXT,\n    frecuencia TEXT DEFAULT '1_por_sesion',\n    pais_destino TEXT,\n    moneda_destino TEXT,\n    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    fecha_fin TIMESTAMP\n);\n\n-- TABLA: Logs de visualización de anuncios (opcional)\nCREATE TABLE anuncios_usuarios (\n    id SERIAL PRIMARY KEY,\n    id_anuncio INTEGER REFERENCES anuncios(id),\n    id_usuario UUID REFERENCES usuarios(id),\n    fecha_visto TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n",
+        "query": "-- EXTENSIONES ÚTILES\nCREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\nCREATE EXTENSION IF NOT EXISTS \"pgcrypto\";\n\n-- ####################################\n-- ##            TABLAS BASE        ##\n-- ####################################\n\n-- TABLA: Usuarios\nCREATE TABLE IF NOT EXISTS usuarios (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    nombre_completo TEXT NOT NULL,\n    email TEXT UNIQUE NOT NULL,\n    password_hash TEXT NOT NULL,\n    numero_whatsapp TEXT UNIQUE NOT NULL,\n    moneda_defecto TEXT DEFAULT 'COP',\n    estado_suscripcion TEXT DEFAULT 'gratuito',\n    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- TABLA: Fuentes de Registro\nCREATE TABLE IF NOT EXISTS fuentes_registro (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE -- Ej: WhatsApp, Web, OCR, Audio, PDF\n);\n\n-- Insertar fuentes iniciales\nINSERT INTO fuentes_registro (nombre) VALUES\n    ('WhatsApp'),\n    ('Web')\nON CONFLICT DO NOTHING;\n\n-- ############################################\n-- ##     MIGRACIÓN Y MEJORA DE CATEGORÍAS   ##\n-- ############################################\n\n-- Renombramos la tabla vieja para preservar las categorías iniciales\nCREATE TABLE IF NOT EXISTS categorias_globales (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL\n);\n\n-- Insertar categorías globales iniciales\nINSERT INTO categorias_globales (nombre, tipo) VALUES\n    ('Comida', 'Gasto'),\n    ('Transporte', 'Gasto'),\n    ('Entretenimiento', 'Gasto'),\n    ('Salud', 'Gasto'),\n    ('Servicios', 'Gasto'),\n    ('Salario', 'Ingreso'),\n    ('Otros', 'Gasto')\nON CONFLICT DO NOTHING;\n\n-- Nueva tabla de categorías por usuario\nCREATE TABLE IF NOT EXISTS categorias (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    UNIQUE (id_usuario, nombre)\n);\n\n-- ####################################\n-- ##         TRANSACCIONES         ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS transacciones (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    descripcion TEXT,\n    monto NUMERIC(12, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    fecha_transaccion DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id) ON DELETE SET NULL,\n    id_fuente INTEGER REFERENCES fuentes_registro(id),\n    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##        SUSCRIPCIONES BASE     ##\n-- ####################################\n\n-- Tabla para el plan del usuario (gratuito/premium)\nCREATE TABLE IF NOT EXISTS suscripciones (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    tipo TEXT CHECK (tipo IN ('gratuito', 'premium')) NOT NULL,\n    fecha_inicio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    fecha_expiracion TIMESTAMP\n);\n\n-- Tabla para suscripciones del usuario (ej. Netflix, Spotify)\nCREATE TABLE IF NOT EXISTS suscripciones_usuario (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto NUMERIC(10, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    frecuencia TEXT NOT NULL, -- 'mensual', 'anual', 'trimestral'\n    fecha_proximo_pago DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id),\n    activa BOOLEAN DEFAULT TRUE\n);\n\n-- ####################################\n-- ##        METAS DE AHORRO        ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS metas_ahorro (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto_objetivo NUMERIC(15, 2) NOT NULL,\n    monto_actual NUMERIC(15, 2) NOT NULL DEFAULT 0.00,\n    fecha_objetivo DATE NOT NULL,\n    estado TEXT NOT NULL DEFAULT 'activa', -- activa, completada, cancelada\n    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##       RECORDATORIOS Y ADS     ##\n-- ####################################\n\n-- Recordatorios de gasto\nCREATE TABLE IF NOT EXISTS recordatorios (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    frecuencia TEXT CHECK (frecuencia IN ('diario', 'semanal', 'nunca')) NOT NULL,\n    hora_envio TIME DEFAULT '08:00:00'\n);\n\n-- Anuncios\nCREATE TABLE IF NOT EXISTS anuncios (\n    id SERIAL PRIMARY KEY,\n    titulo TEXT NOT NULL,\n    imagen_url TEXT,\n    enlace TEXT,\n    texto TEXT,\n    frecuencia TEXT DEFAULT '1_por_sesion',\n    pais_destino TEXT,\n    moneda_destino TEXT,\n    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    fecha_fin TIMESTAMP\n);\n\n-- Logs de anuncios vistos\nCREATE TABLE IF NOT EXISTS anuncios_usuarios (\n    id SERIAL PRIMARY KEY,\n    id_anuncio INTEGER REFERENCES anuncios(id),\n    id_usuario UUID REFERENCES usuarios(id),\n    fecha_visto TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -773,28 +258,6 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "-- 2. Ahora insertar el usuario\nINSERT INTO usuarios (\n    nombre_completo,\n    email,\n    password_hash,\n    numero_whatsapp,\n    moneda_defecto,\n    estado_suscripcion\n) VALUES (\n    'Pedro Rodriguez',\n    'pro.pedro0413@gmail.com',\n    crypt('propro93', gen_salt('bf')),  -- Encriptación segura\n    '573228854498',\n    'COP',\n    'gratuito'\n)\nRETURNING *;",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        704,
-        -112
-      ],
-      "id": "3174561b-a579-48d5-a34a-c2a1b0d1c208",
-      "name": "User test",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
         "query": "SELECT numero_whatsapp, id FROM usuarios WHERE numero_whatsapp = '573228854498';\n",
         "options": {}
       },
@@ -881,457 +344,6 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "a7fe6665-ef0d-4ec2-9800-88004951e528",
-              "leftValue": "={{ $json.message.last() }}",
-              "rightValue": "={{ $('setData').item.json.mensaje }}",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        4656,
-        -1200
-      ],
-      "id": "5e088256-5ef9-45a7-94c0-64284a6f5513",
-      "name": "If1"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        4880,
-        -1104
-      ],
-      "id": "cf8fdf15-d597-441a-b463-fa657a476b01",
-      "name": "No Operation, do nothing1"
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "propertyName": "message",
-        "key": "=chat_id_{{ $json.phone_number }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        4432,
-        -1200
-      ],
-      "id": "a01f18e9-1120-47e4-b520-dbf1604739bb",
-      "name": "Redis",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "amount": 10
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        4208,
-        -1200
-      ],
-      "id": "b26ae8f9-982b-463c-9281-abe7f22fe856",
-      "name": "Wait",
-      "webhookId": "c42fd9d6-416c-4950-8662-76e241fbd897"
-    },
-    {
-      "parameters": {
-        "operation": "push",
-        "list": "=chat_id_{{ $json.phone_number }}",
-        "messageData": "={{ $json.mensaje }}",
-        "tail": true
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        3984,
-        -1200
-      ],
-      "id": "d0597622-e2d2-476a-973a-d7359fba0a5b",
-      "name": "Push Message",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "b89d5418-df60-419b-84f6-5bc7bc0dd09b",
-              "name": "message",
-              "value": "={{ $('Redis').item.json.message.join('\\n').replace(/test/gi, '') }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        4880,
-        -1296
-      ],
-      "id": "a055186e-5628-43ec-9a5b-d45d8ffa0546",
-      "name": "Unir Mensajes"
-    },
-    {
-      "parameters": {
-        "content": "## Incoming Messages\n",
-        "height": 764,
-        "width": 2912,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2160,
-        -1504
-      ],
-      "id": "5f62c8bc-9a89-4596-b3ed-f9a073430a1a",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "dataToSave": {
-          "values": [
-            {
-              "key": "nombre",
-              "value": "={{ $json.nombre }}"
-            },
-            {
-              "key": "phone_number",
-              "value": "={{ $json.phone_number }}"
-            },
-            {
-              "key": "tipo_mensaje",
-              "value": "={{ $json.tipo_mensaje }}"
-            },
-            {
-              "key": "mensaje",
-              "value": "={{ $json.mensaje }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executionData",
-      "typeVersion": 1.1,
-      "position": [
-        3760,
-        -1200
-      ],
-      "id": "e2ee0d57-e1ac-40b1-9e2e-cab93494fae3",
-      "name": "Execution Data"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('WhatsApp Trigger').item.json.messages[0].type }}",
-                    "rightValue": "audio",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "38cdad62-0d9c-45bc-860e-9e03d107ba58"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "audio"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "82df4052-c480-44a2-9d09-c195d4bc6879",
-                    "leftValue": "={{ $('WhatsApp Trigger').item.json.messages[0].type }}",
-                    "rightValue": "text",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "text"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "d9c1a8cf-af4e-4bca-a66c-184829c009d8",
-                    "leftValue": "={{ $('WhatsApp Trigger').item.json.messages[0].type }}",
-                    "rightValue": "document",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "document"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "71778507-22f2-4e0f-99d7-fdd87ed1f26b",
-                    "leftValue": "={{ $('WhatsApp Trigger').item.json.messages[0].type }}",
-                    "rightValue": "image",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "image"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        2192,
-        -1232
-      ],
-      "id": "44741ca5-9593-426b-a456-83d3779b2c3d",
-      "name": "type message Whatsap"
-    },
-    {
-      "parameters": {
-        "resource": "media",
-        "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $('WhatsApp Trigger').item.json.messages[0].audio.id }}"
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2640,
-        -1488
-      ],
-      "id": "2331b067-2771-48b8-b21e-6aa51471bd3f",
-      "name": "Download media",
-      "webhookId": "9559feee-21a8-4e7f-b6d4-a947041fdc5f",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.url }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "whatsAppApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        2864,
-        -1488
-      ],
-      "id": "c7ff40a5-d264-4ae0-a71f-c3863d4307c7",
-      "name": "HTTP Request1",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].text.body }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3312,
-        -1296
-      ],
-      "id": "0ac75478-27fd-4026-9544-77e79547a965",
-      "name": "DataText"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "=<audio>{{ $json.text }}</audio>",
-              "type": "string"
-            },
-            {
-              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
-              "name": "tags",
-              "value": "={{ $('WhatsApp Trigger').item.json.field }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3312,
-        -1488
-      ],
-      "id": "9f311bf2-2fe9-4271-a448-11d98ac2d5a0",
-      "name": "DataAudio"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "f4f107ad-f4e3-4616-a1ec-515f7324ba23",
-              "name": "nombre",
-              "value": "={{ $json.nombre }}",
-              "type": "string"
-            },
-            {
-              "id": "6f55c6f4-4cb3-4cec-9d31-b956d3fffde0",
-              "name": "phone_number",
-              "value": "={{ $json.phone_number }}",
-              "type": "string"
-            },
-            {
-              "id": "bad14eb8-f005-4d91-bd83-600e6105d974",
-              "name": "mensaje",
-              "value": "={{ $json.mensaje }}",
-              "type": "string"
-            },
-            {
-              "id": "d4a104fc-db17-404b-aa9b-e8014ee283d0",
-              "name": "usuario_data",
-              "value": "={{ $('data').item.json.usuario_data }}",
-              "type": "object"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3536,
-        -1200
-      ],
-      "id": "b130f89f-4be4-415a-bbe1-4e06245cb4b8",
-      "name": "setData"
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
         "query": "WITH dummy AS (\n    SELECT NULL::uuid AS id\n)\nSELECT \n    to_jsonb(u) AS user_data,\n    (u.id IS NOT NULL) AS existe\nFROM \n    dummy\nLEFT JOIN \n    usuarios u ON u.numero_whatsapp = $1;",
         "options": {
@@ -1350,42 +362,6 @@
         "postgres": {
           "id": "3BmLjpi7AvK0Sx6n",
           "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }}\nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
-        "options": {
-          "systemMessage": "=### *1. CONTEXTO Y PERSONA*\n\nEres *Mony*, el asistente financiero personal de *{{ $json.first_name }}*. Ya lo conoces porque es un usuario registrado. Tu objetivo es ser su copiloto financiero: increíblemente *eficiente, preciso y amigable*. Tu tono es servicial y proactivo. Te comunicas a través de WhatsApp, así que sé directo y claro, usando emojis para facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐).\n\nLa fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\n\nTu misión es analizar el mensaje del usuario, *{{ $json.message }}*, para identificar su *intención principal* y utilizar una de tus herramientas (sub-workflows de N8N) para cumplir su solicitud. Si el mensaje es ambiguo o le falta información crucial, debes hacer una pregunta clara y concisa para obtener los datos que necesitas. Si es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\n\nEl mensaje del usuario (`{{ $json.message }}`) puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### *4. HERRAMIENTAS DISPONIBLES (TOOLS)*\n\nEstas son las únicas acciones que puedes realizar. Para ejecutar una, debes proporcionar los parámetros requeridos.\nen [usuario_data] encontraras los datos del usuario que debes pasar a las tools, como el id del usuario, o la moneda del usuario.\n<br>\n\n*Tool 1: `register_transaction`*\n\n  - *Descripción:* Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.\n  - *Parámetros:*\n      - `tipo` : El tipo de transacción. Valores posibles: `\"Ingreso\"` o `\"Gasto\"`.\n      - `monto` : El valor numérico de la transacción. Extrae solo los números.\n      - `descripcion` : El texto que describe el movimiento (ej: \"Almuerzo con el equipo\").\n      - `categoria`: siempre lista las categorias del usuario para ver relacionadas,  usa la tool 'get_categories', si no existe, pregunta si desea crearla y   'create_categories'para crear la categoria\n      - `fecha_transaccion` : La fecha en formato `AAAA-MM-DD`. Si no se especifica, se usará la fecha actual.\n\n<br>\n\n*Tool 2: `query_transactions`*\n\n  - *Descripción:* Busca y devuelve una lista de las transacciones del usuario según filtros no digas que vas a consultar, actua.\n  - *Parámetros:*\n      - `period` (opcional): Un período de tiempo predefinido. Valores posibles: `\"hoy\"`, `\"ayer\"`, `\"esta_semana\"`, `\"este_mes\"`, `\"mes_pasado\"`.\n      - `start_date` (opcional): Fecha de inicio para la búsqueda, formato `AAAA-MM-DD`.\n      - `end_date` (opcional): Fecha de fin para la búsqueda, formato `AAAA-MM-DD`.\n      - `category` (opcional): Filtra por una categoría específica (ej: \"Transporte\").\n      - `tipo` (opcional): Filtra por `\"Ingreso\"` o `\"Gasto\"`.\n      - `keyword` (opcional): Busca una palabra clave en la descripción de las transacciones.\n      - `limit` (opcional): Número máximo de resultados a devolver. Default: `5`.\n\n<br>\n\n*Tool 3: `get_financial_summary`*\n\n  - *Descripción:* Calcula y devuelve un resumen financiero (total Ingresos, total Gastos y balance) para un período determinado.\n  - *Parámetros:*\n      - `period` (opcional): El período para el resumen. Valores: `\"hoy\"`, `\"esta_semana\"`, `\"este_mes\"` (default), `\"mes_pasado\"`, `\"este_año\"`.\n      - `start_date` (opcional): Fecha de inicio para un resumen de período personalizado, formato `AAAA-MM-DD`.\n      - `end_date` (opcional): Fecha de fin para un resumen de período personalizado, formato `AAAA-MM-DD`.\n\n<br>\n\n*Tool 4: `get_categories`* Usar siempre antes de registrar una transaccion.\n\n  - *Descripción:* Permite al usuario listar todas sus categorías.\n\n*Tool 5: `create_categories`*\n\n  - *Descripción:* Permite al usuario crear sus categorías personalizadas, agregar una nueva si no existe.\n  - *Parámetros:*\n      - `nombre`:  El nombre de la nueva categoría.\n      - `tipo` : El tipo, `\"Ingreso\"` o `\"Gasto\"`.\n\n\n### *5. LÓGICA DE PROCESAMIENTO (Paso a Paso)*\n\n1.  -Saluda:* Comienza tu respuesta dirigiéndote a `{{ $json.first_name }}`.\n2.  -Analiza la Intención:* Lee `{{ $json.message }}` y determina qué quiere hacer el usuario: ¿registrar algo, consultar, pedir un resumen o gestionar categorías?\n3.  -Selecciona la Herramienta:* Elige la herramienta (`tool`) más adecuada de la lista anterior para cumplir con la intención.\n4.  -Extrae los Parámetros:* Revisa el mensaje cuidadosamente y extrae toda la información necesaria para los parámetros de la herramienta seleccionada. Sé inteligente: \"la semana pasada\" implica un rango de fechas, \"salario\" implica un `tipo: \"Ingreso\"`, \"gasté\" o \"compré\" implica `tipo: \"Gasto\"`.\n5.  -Valida la Información:*\n      - *¿Tienes todo lo necesario?* Si para `register_transaction` tienes la descripción pero no el monto, debes preguntar.\n      - *Ejemplo de pregunta de clarificación:* \"¡Hola {{ $json.first_name }}! Entendido, quieres registrar un Gasto en el cine. ¿Podrías decirme el monto por favor? 🧐\"\n      - *Si necesitas clarificación,* tu acción debe ser `reply` y no `call_tool`.\n6.  -Maneja Conversación Casual:* Si el mensaje es \"gracias\", \"hola Mony\", etc., no llames a ninguna herramienta. Simplemente responde amablemente. Tu acción debe ser `reply`.\n7.  -Construye la Respuesta Final:* Formatea tu salida como un *único objeto JSON* válido.\n\n### *6. FORMATO DE SALIDA (OBLIGATORIO)*\nnunca envies al usuario informacion sobre consultar a las tool, se proactivo y ejecuta e informa"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.1,
-      "position": [
-        2992,
-        -544
-      ],
-      "id": "687acc71-c2ac-49a1-8d76-f3de9a49d198",
-      "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        2832,
-        -320
-      ],
-      "id": "03941d7b-632d-446f-b5a8-6d2fed9bc254",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "jQiccHfpS9BFKE4C",
-          "name": "automation.whitelabel.lat"
         }
       }
     },
@@ -1420,759 +396,11 @@
     },
     {
       "parameters": {
-        "resource": "media",
-        "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $('WhatsApp Trigger').item.json.messages[0].image.id }}"
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2640,
-        -912
-      ],
-      "id": "35f1c65d-e4c8-48d9-bfee-6c5bbafbbdac",
-      "name": "Download media2",
-      "webhookId": "9559feee-21a8-4e7f-b6d4-a947041fdc5f",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "media",
-        "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $('WhatsApp Trigger').item.json.messages[0].document.id }}"
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2640,
-        -1104
-      ],
-      "id": "a3d77aa1-96ef-4e6e-91b6-ed9c076329fb",
-      "name": "Download media3",
-      "webhookId": "9559feee-21a8-4e7f-b6d4-a947041fdc5f",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.openai.com/v1/audio/transcriptions",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "openAiApi",
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "model",
-              "value": "whisper-1"
-            },
-            {
-              "parameterType": "formBinaryData",
-              "name": "file",
-              "inputDataFieldName": "data"
-            },
-            {
-              "name": "languaje",
-              "value": "es"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3088,
-        -1488
-      ],
-      "id": "ac294548-ccf7-4197-86f8-74cb6250a6f0",
-      "name": "HTTP Request2",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "analyze",
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "text": "=Actúa como un contador público certificado experto en Colombia, con amplios conocimientos tributarios y financieros en América Latina. También eres un ingeniero experto en prompts y análisis OCR. Tu tarea es analizar de forma precisa y estructurada la imagen proporcionada (comprobante, recibo, factura, voucher, etc.) y extraer la siguiente información en formato JSON, validando cada campo cuidadosamente:\n\n1. **Tipo de Documento**: (Ej: Factura POS, Factura Electrónica, Recibo de Caja, Voucher, Cuenta de Cobro, etc.)\n2. **Fecha del Comprobante**: en formato `dd-mm-yyyy`. (Validar que no esté incompleta o ausente).\n3. **Monto Total**: En pesos colombianos (COP). Usar solo valores totales (ignorar subtotales).\n4. **Glosa / Descripción**: Breve texto explicando de qué trata el gasto o ingreso (Ej: \"Compra de víveres\", \"Pago de arriendo\", etc.)\n5. **Proveedor o Comercio**: Nombre del establecimiento donde se hizo la transacción.\n6. **NIT o Documento Tributario**: Detecta y extrae el NIT del proveedor. Si no existe NIT, intenta identificar cédula o algún documento oficial. Si no se encuentra, informar que no hay documento tributario.\n7. **Método de Pago**: Detectar si fue con Efectivo, Tarjeta de Crédito, Tarjeta de Débito, Transferencia, Nequi, Daviplata, etc. (En caso de duda, indicar \"No especificado\").\n8. **Categoría sugerida** (opcional): Propón una categoría financiera general (Ej: Alimentación, Transporte, Servicios, Arriendo, etc.).\n9. **Ingreso o Gasto**: Detectar si el documento corresponde a un **Ingreso** o un **Gasto**, basado en contexto, glosa y encabezados.\n\nAdemás, incluye al final una breve descripción en lenguaje natural del tipo de imagen analizada. Por ejemplo: “Se trata de un recibo POS con fecha clara y valor total, pero no se detecta NIT.” o “Factura electrónica válida con todos los campos presentes”.\n\n🔎 Si falta alguno de los datos obligatorios (como fecha, monto), indícalo explícitamente con el mensaje `\"error\": \"Campo faltante: ...\"` o `\"advertencia\": \"No se detectó la fecha del documento \"`.\n\nTu respuesta debe estar en formato JSON estructurado y fácil de procesar por un sistema automatizado.\n",
-        "inputType": "base64",
-        "simplify": false,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        3088,
-        -912
-      ],
-      "id": "987bd1cf-f645-4094-8f71-f2f71488901e",
-      "name": "Analyze image",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.url }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "whatsAppApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        2864,
-        -912
-      ],
-      "id": "7380f842-ae41-42c3-8c77-ca418758842a",
-      "name": "HTTP Request",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "=<img>{{ $json.choices[0].message.content }}</img>",
-              "type": "string"
-            },
-            {
-              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
-              "name": "tags",
-              "value": "={{ $('WhatsApp Trigger').item.json.field }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3312,
-        -912
-      ],
-      "id": "695d6bbb-d6fd-4d91-b4ec-dd5376f9d2f8",
-      "name": "DataImage"
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.url }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "whatsAppApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        2864,
-        -1104
-      ],
-      "id": "a1074fbb-1729-4215-9504-cdb59af33d93",
-      "name": "HTTP Request3",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "pdf",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        3088,
-        -1104
-      ],
-      "id": "57836e8c-f881-41aa-b115-d75a12562a05",
-      "name": "Extract from File"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        2640,
-        -1296
-      ],
-      "id": "24dca85b-771b-417c-98b5-2ea81148a45d",
-      "name": "No Operation, do nothing2"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        2864,
-        -1296
-      ],
-      "id": "8121188c-dfa2-4477-969b-405f60529565",
-      "name": "No Operation, do nothing3"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3088,
-        -1296
-      ],
-      "id": "23769f58-c2e6-4a56-9ba5-0ee3714d5a64",
-      "name": "No Operation, do nothing4"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "=<pdf>{{ $json.text }}</pdf>",
-              "type": "string"
-            },
-            {
-              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
-              "name": "tags",
-              "value": "={{ $('WhatsApp Trigger').item.json.field }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3312,
-        -1104
-      ],
-      "id": "13ff793f-5f36-4816-9fdd-c26c5c0338fa",
-      "name": "DataPdf"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "b89d5418-df60-419b-84f6-5bc7bc0dd09b",
-              "name": "message",
-              "value": "={{ $json.message.content }}",
-              "type": "string"
-            },
-            {
-              "id": "f312aa42-4354-4954-92ff-9549a49c1d5b",
-              "name": "user_id",
-              "value": "={{ $('setData').item.json.phone_number }}",
-              "type": "string"
-            },
-            {
-              "id": "4e6ed31c-2d8f-4415-bdaf-404a870f1cc2",
-              "name": "first_name",
-              "value": "={{ $('setData').item.json.nombre.split(\" \")[0] }}",
-              "type": "string"
-            },
-            {
-              "id": "f6c89644-22bf-403a-9b24-3753bf6b1220",
-              "name": "usuario_data",
-              "value": "={{ $('setData').item.json.usuario_data }}",
-              "type": "object"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2608,
-        -544
-      ],
-      "id": "27bed02c-a1b9-4659-b22b-0ee9ac2503be",
-      "name": "Data"
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $('Data').item.json.user_id }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        3040,
-        368
-      ],
-      "id": "da369de7-95ca-412e-9626-1aa9bbdfca9e",
-      "name": "Redis5",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "amount": 3
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        3264,
-        368
-      ],
-      "id": "f17914cc-c400-42ba-847e-c8c85c4d0e93",
-      "name": "Wait11",
-      "webhookId": "1a2d667d-1b88-4432-a605-5e5c482bf3b4"
-    },
-    {
-      "parameters": {
-        "amount": 3
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        2816,
-        544
-      ],
-      "id": "d61a260e-c707-4dd0-9314-3a13d3cbc703",
-      "name": "Wait12",
-      "webhookId": "c61553f0-2333-4fa3-9915-d2dfaf92dd97"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
-              "leftValue": "={{ $json.message.content.parte3}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3040,
-        544
-      ],
-      "id": "831315a9-08d1-4971-8b4c-4ce30749b137",
-      "name": "If12"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3456,
-        576
-      ],
-      "id": "af427a9f-ffb3-4383-99f4-276f92ad988b",
-      "name": "No Operation, do nothing11"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "709f4717-003f-4f9f-b841-18d2f2f4ddb4",
-              "leftValue": "={{ $json.message.content.parte2}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3440,
-        368
-      ],
-      "id": "6e8f752f-293d-477a-948b-a67ccf4d86a0",
-      "name": "If13"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3872,
-        384
-      ],
-      "id": "19e1645f-322f-438d-bdaa-7c1ea0f1ade5",
-      "name": "No Operation, do nothing12"
-    },
-    {
-      "parameters": {
-        "amount": 4
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        2816,
-        768
-      ],
-      "id": "82b7a2f4-70ed-408a-85f7-c912fb7cd522",
-      "name": "Wait13",
-      "webhookId": "559145e6-f3ff-440e-8298-8e384b390615"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
-              "leftValue": "={{ $json.message.content.parte4}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3040,
-        768
-      ],
-      "id": "c0eeca29-f23e-4ffd-9a0a-4688df6aaf15",
-      "name": "If14"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3456,
-        768
-      ],
-      "id": "d236f85e-cf04-4fcd-9fbb-382db64a3bf6",
-      "name": "No Operation, do nothing13"
-    },
-    {
-      "parameters": {
-        "content": "## AGENT MAIN",
-        "height": 600,
-        "width": 2240
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2160,
-        -656
-      ],
-      "id": "3d3b3080-5f5f-40d2-b65c-a5d844f544f6",
-      "name": "Sticky Note1"
-    },
-    {
-      "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "=chat_history_mony_{{ $('setData').item.json.phone_number }}",
-        "sessionTTL": 500000,
-        "contextWindowLength": 25
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
-      "typeVersion": 1.5,
-      "position": [
-        2928,
-        -320
-      ],
-      "id": "511ddf7c-3b18-4a92-a93d-63c125054f01",
-      "name": "Redis Chat Memory",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Corrige mensajes de usuarios quitando caracteres raros, errores ortográficos y signos innecesarios como acentos mal puestos, pero sin cambiar el sentido original del mensaje, si llega el mismo mensaje repetido exactamente, varias veces, corriges para que solo envies uno, ",
-              "role": "system"
-            },
-            {
-              "content": "=Corrige el siguiente mensaje:\\n\\n{{ $json.message }}\\n\\nDevuelve solo el mensaje corregido, no quites las etiquetas html"
-            }
-          ]
-        },
-        "options": {
-          "maxTokens": 200,
-          "temperature": 0.3
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        2208,
-        -544
-      ],
-      "id": "0acb5fc0-48b4-41e7-a4e3-f45d12c8bf2b",
-      "name": "Message a model",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte1 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2864,
-        368
-      ],
-      "id": "14604444-89dc-4ddd-8845-2a3b6c4d55c7",
-      "name": "Send message",
-      "webhookId": "9664ca8b-6cdf-474c-a4c2-07f5e237eae8",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **si hay una lista con varios items, no se debe dividir**, toda la lista debe ir en un mismo mensaje\n\n- **No incluyas datos sensibles del usuario** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
-            }
-          ]
-        },
-        "jsonOutput": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        2256,
-        368
-      ],
-      "id": "aa864cf2-1cfe-4e6b-971f-f0146639bb7e",
-      "name": "Message a model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte2 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        3648,
-        352
-      ],
-      "id": "67ff31b1-754f-46fc-b2e8-2143803a323a",
-      "name": "Send message4",
-      "webhookId": "142e011c-78b9-433c-a631-63863f0aa816",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte3 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        3248,
-        544
-      ],
-      "id": "36100d0e-cfa4-4de4-a364-d4b763e29adf",
-      "name": "Send message1",
-      "webhookId": "52abe86e-6124-4f7b-a024-c8f7b37b9958",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte4 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        3248,
-        736
-      ],
-      "id": "a743d4e3-7ecd-418a-b3e3-cd4d2bb535ae",
-      "name": "Send message2",
-      "webhookId": "d9f93f21-8ca8-44cb-a8e0-8eab8eccc67f",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## RESPONS AGENT",
-        "height": 760,
-        "width": 2264,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2176,
-        240
-      ],
-      "id": "2967513c-93dd-40e9-8c25-44aa65bea660",
-      "name": "Sticky Note2"
-    },
-    {
-      "parameters": {
         "workflowId": {
           "__rl": true,
           "value": "S9SCJIr4UmSrDNAM",
           "mode": "list",
-          "cachedResultName": "Onboarding Register"
+          "cachedResultName": "Onboarding"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -2226,243 +454,11 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1712,
-        -1088
+        1776,
+        -1024
       ],
       "id": "63a60098-0575-441a-b40d-a9cbe12f21e5",
       "name": "Call Onboarding Register"
-    },
-    {
-      "parameters": {
-        "description": "Registra una nueva transacción de ingreso o gasto en la cuenta del usuario.",
-        "workflowId": {
-          "__rl": true,
-          "value": "weeCmqNEWWuk43WW",
-          "mode": "list",
-          "cachedResultName": "register_transaction"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id', ``, 'string') }}",
-            "fecha_transaccion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fecha_transaccion', ``, 'string') }}",
-            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
-            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
-            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}",
-            "categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('categoria', ``, 'string') }}",
-            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "fecha_transaccion",
-              "displayName": "fecha_transaccion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "monto",
-              "displayName": "monto",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "moneda",
-              "displayName": "moneda",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "tipo",
-              "displayName": "tipo",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "categoria",
-              "displayName": "categoria",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "descripcion",
-              "displayName": "descripcion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        3408,
-        -320
-      ],
-      "id": "98f8b35b-de97-4778-abbf-cc07210548a6",
-      "name": "register_transaction"
-    },
-    {
-      "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "categorias",
-          "mode": "list",
-          "cachedResultName": "categorias"
-        },
-        "returnAll": "",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        3024,
-        -320
-      ],
-      "id": "0db389c1-d47d-4da9-9418-18ad8026b6f5",
-      "name": "Get_categories",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "categorias",
-          "mode": "list",
-          "cachedResultName": "categorias"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', ``, 'string') }}",
-            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "nombre",
-              "displayName": "nombre",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "tipo",
-              "displayName": "tipo",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        3120,
-        -320
-      ],
-      "id": "f2d26818-24a9-4275-b484-a39d4fdd777d",
-      "name": "create_categories",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT \n  id,\n  descripcion,\n  monto,\n  moneda,\n  tipo,\n  fecha_transaccion,\n  id_categoria,\n  id_fuente,\n  fecha_creacion\nFROM transacciones\nWHERE id_usuario = '{{ $fromAI('id_usuario', '', 'string') }}'\nORDER BY fecha_transaccion DESC;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        3264,
-        -320
-      ],
-      "id": "795369be-415f-4f46-9562-94c3e9d2e4c7",
-      "name": "query_transactions",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
     },
     {
       "parameters": {
@@ -2493,8 +489,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1872,
-        -1376
+        1792,
+        -1472
       ],
       "id": "d187ea81-69ea-4e63-8048-17f09a3c63ff",
       "name": "No Operation, do nothing"
@@ -2512,8 +508,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        1888,
-        -1536
+        1808,
+        -1632
       ],
       "id": "db71aa84-e365-4a39-bc7e-4be381a771f0",
       "name": "send Publicidad",
@@ -2553,49 +549,143 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1680,
-        -1488
+        1600,
+        -1584
       ],
       "id": "f176e465-c428-4ba5-845f-80b2c4beb0ae",
       "name": "IsFree?"
-    }
-  ],
-  "pinData": {
-    "WhatsApp Trigger": [
-      {
-        "json": {
-          "messaging_product": "whatsapp",
-          "metadata": {
-            "display_phone_number": "573143400476",
-            "phone_number_id": "565888133266017"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "mb7JhBisRgsDckO6",
+          "mode": "list",
+          "cachedResultName": "Agente Transaccional"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
+            "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
+            "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+            "usuario_data": "={{ $('data').item.json.usuario_data }}",
+            "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}"
           },
-          "contacts": [
+          "matchingColumns": [
+            "messages",
+            "contacts",
+            "field",
+            "usuario_data",
+            "metadata_phone_number_id"
+          ],
+          "schema": [
             {
-              "profile": {
-                "name": "Pedro Rodriguez"
-              },
-              "wa_id": "573228854498"
+              "id": "metadata",
+              "displayName": "metadata",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contacts",
+              "displayName": "contacts",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "messages",
+              "displayName": "messages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "field",
+              "displayName": "field",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "usuario_data",
+              "displayName": "usuario_data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
-          "messages": [
-            {
-              "from": "573228854498",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y4RjhDMEQ1NDcwNEI0RjE1RTkA",
-              "timestamp": "1753889478",
-              "type": "image",
-              "image": {
-                "caption": "hice este pago hoy",
-                "mime_type": "image/jpeg",
-                "sha256": "aloKHu2mkDuytA/T1eywybbL+xktfPwRomc9eBjiY48=",
-                "id": "1034301138785114"
-              }
-            }
-          ],
-          "field": "messages"
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1776,
+        -1248
+      ],
+      "name": "Call Agente Transaccional",
+      "id": "68a8e3ad-60b7-4ca2-b63f-6c3d8df24910"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DO\n$$\nDECLARE\n    tabla RECORD;\nBEGIN\n    -- Eliminar todas las tablas de forma segura y ordenada\n    FOR tabla IN\n        SELECT tablename FROM pg_tables\n        WHERE schemaname = 'public'\n    LOOP\n        EXECUTE 'DROP TABLE IF EXISTS public.' || quote_ident(tabla.tablename) || ' CASCADE';\n    END LOOP;\nEND;\n$$;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        704,
+        256
+      ],
+      "id": "e61a3ce3-9efa-44de-b209-6630f72fd1a7",
+      "name": "CLEAN DATABASE",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
         }
       }
-    ]
-  },
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 2. Ahora insertar el usuario\nINSERT INTO usuarios (\n    nombre_completo,\n    email,\n    password_hash,\n    numero_whatsapp,\n    moneda_defecto,\n    estado_suscripcion\n) VALUES (\n    'Pedro Rodriguez',\n    'pro.pedro0413@gmail.com',\n    crypt('propro93', gen_salt('bf')),  -- Encriptación segura\n    '573228854498',\n    'COP',\n    'gratuito'\n)\nRETURNING *;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        704,
+        -112
+      ],
+      "id": "3174561b-a579-48d5-a34a-c2a1b0d1c208",
+      "name": "insert user",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    }
+  ],
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -2609,6 +699,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-07-30T16:11:37.269Z",
-  "versionId": "87f801b6-b506-49f0-a498-2c18c92ad19c"
+  "updatedAt": "2025-08-01T22:19:27.528Z",
+  "versionId": "292668d5-f14e-4caa-9e4d-6c453ed45302"
 }
