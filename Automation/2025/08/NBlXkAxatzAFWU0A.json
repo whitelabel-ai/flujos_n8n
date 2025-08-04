@@ -1,0 +1,1163 @@
+{
+  "active": false,
+  "connections": {
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Call Vapi",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call Vapi1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Vapi1": {
+      "main": [
+        [
+          {
+            "node": "Acuerdo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acuerdo": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Data": {
+      "main": [
+        [
+          {
+            "node": "Acuerdo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data1": {
+      "main": [
+        [
+          {
+            "node": "Call Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data1": {
+      "main": [
+        [
+          {
+            "node": "Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Execution Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-04T19:39:04.643Z",
+  "id": "NBlXkAxatzAFWU0A",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o",
+          "mode": "list",
+          "cachedResultName": "EMS TECHNOLOGY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit#gid=1398101872"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Call"
+            },
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Contacted + Scheduled"
+            }
+          ]
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        464,
+        368
+      ],
+      "id": "12f5ce0b-fb29-4656-9209-e08c11055e5d",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Telefono",
+              "value": "={{ $json.Phone }}"
+            },
+            {
+              "key": "RowID",
+              "value": "={{ $json.row_number }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        688,
+        368
+      ],
+      "id": "96a41251-58e9-444e-8c5a-7f8ca0a16eb3",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "=0 8,14,16 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        368
+      ],
+      "id": "69f65c12-4ec7-4519-8fb3-40cd4534d544",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ebc8c00e-294e-4600-b04c-1688673c8491",
+              "name": "Empresa",
+              "value": "EMS TECHNOLOGY ",
+              "type": "string"
+            },
+            {
+              "id": "ca9e963d-c8a7-4bfd-9b36-608146e4e47c",
+              "name": "Client",
+              "value": "={{ $json.Client.split(\" \")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "e6956c3d-7dd7-4f7e-aac9-80328e15c90a",
+              "name": "Phone",
+              "value": "={{ $json.Phone }}",
+              "type": "string"
+            },
+            {
+              "id": "c94d2151-8d2b-483e-b690-9ae1e38681d8",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "string"
+            },
+            {
+              "id": "38791c98-796f-4318-acc1-49d409ba3742",
+              "name": "Quote ID",
+              "value": "={{ $json['Quote ID'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e8338329-3bd9-4268-ae79-e8426973f7c8",
+              "name": "Quote Sent Date",
+              "value": "={{ $json['Quote Sent Date'] }}",
+              "type": "string"
+            },
+            {
+              "id": "edced74b-a0c7-4b5d-8438-b476563a4ee1",
+              "name": "Amount (USD)",
+              "value": "={{ $json['Amount (USD)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "3ae6c8d2-3e1f-4e27-83ca-ef14c814adc3",
+              "name": "Product",
+              "value": "={{ $json.Product }}",
+              "type": "string"
+            },
+            {
+              "id": "9d1f2fef-a0b3-4f3b-b0fc-971239c24ccf",
+              "name": "Quote Details",
+              "value": "={{ $json['Quote Details'] }}",
+              "type": "string"
+            },
+            {
+              "id": "1fda8e0c-e4e7-4a14-8cc8-26bcc54797cd",
+              "name": "Call Summary",
+              "value": "={{ $json['Call Summary'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d08d255a-d081-4b8c-b6c1-06d8de29c006",
+              "name": "Next Step",
+              "value": "={{ $json['Next Step'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a2459995-3d48-47ef-a41a-54db5d455d71",
+              "name": "Client Feedback",
+              "value": "={{ $json['Client Feedback'] }}",
+              "type": "string"
+            },
+            {
+              "id": "0bf35bc0-af23-4c17-9d20-0e70daad859d",
+              "name": "Quote Status",
+              "value": "={{ $json['Quote Status'] }}",
+              "type": "string"
+            },
+            {
+              "id": "aea9c4ed-2cfb-40f2-bdc6-67bc273a53ac",
+              "name": "Next Call",
+              "value": "={{ $json['Next Call'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        368
+      ],
+      "id": "d4e2d608-28a3-4c1b-87e6-a4bfca2bc12f",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"assistantId\": \"2922a01b-f91d-4f57-80e5-50b2212faff1\",\n  \"assistantOverrides\": {\n    \"variableValues\": {\n      \"Company\": \"{{ $json.Empresa }}\",\n      \"name\": \"{{ $json.Client }}\",\n      \"Phone\": \"{{ $json.Phone }}\",\n      \"row_number\": \"{{ $json.row_number }}\",\n      \"Quote_ID\": \"{{ $json['Quote ID'] }}\",\n      \"Quote_Sent_Date\": \"{{ $json['Quote Sent Date'] }}\",\n      \"Amount_USD\": \"{{ $json['Amount (USD)'] }}\",\n      \"Product\": \"{{ $json.Product }}\",\n      \"Quote_Details\": \"{{ $json['Quote Details'] }}\",\n      \"Call_Summary\": {{ JSON.stringify ($json['Call Summary']) }},\n      \"Next_Step\": {{ JSON.stringify ($json['Next Step']) }}\n    }\n  },\n  \"customer\": {\n    \"number\": \"+{{ $json.Phone }}\"\n  },\n  \"phoneNumberId\": \"9efa67ba-4ff4-4a2b-87ad-685cc861d774\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1344,
+        272
+      ],
+      "id": "67b17d6b-09c3-4dcd-b437-a421a34fa848",
+      "name": "Call Vapi",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "lZ0efOUQUlbFdSMe",
+          "name": "Vapi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Google Sheets').item.json.Status }}",
+                    "rightValue": "Call",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1cccfbad-8440-44b8-937e-e81dd5bf95e7"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Call"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b8de537c-cbeb-4782-ba08-1c876bd490d0",
+                    "leftValue": "={{ $('Google Sheets').item.json.Status }}",
+                    "rightValue": "={{ $('Google Sheets').item.json.Status }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": " Schedule Call"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1120,
+        368
+      ],
+      "id": "c76cfabe-60e3-4a12-98db-b4babb3dd5b1",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"assistantId\": \"2922a01b-f91d-4f57-80e5-50b2212faff1\",\n  \"phoneNumberId\": \"9efa67ba-4ff4-4a2b-87ad-685cc861d774\",\n  \"assistantOverrides\": {\n    \"variableValues\": {\n      \"Company\": \"{{ $json.Empresa }}\",\n      \"Client\": \"{{ $json.Client }}\",\n      \"Phone\": \"{{ $json.Phone }}\",\n      \"row_number\": \"{{ $json.row_number }}\",\n      \"Quote_ID\": \"{{ $json['Quote ID'] }}\",\n      \"Quote_Sent_Date\": \"{{ $json['Quote Sent Date'] }}\",\n      \"Amount_USD\": \"{{ $json['Amount (USD)'] }}\",\n      \"Product\": \"{{ $json.Product }}\",\n      \"Quote_Details\": \"{{ $json['Quote Details'] }}\",\n      \"Call_Summary\": {{ JSON.stringify ($json['Call Summary']) }},\n      \"Next_Step\": {{ JSON.stringify ($json['Next Step']) }}\n    }\n  },\n  \"customer\": {\n    \"number\": \"+{{ $json.Phone }}\"\n  },\n    \"schedulePlan\": {\n        \"earliestAt\": \"{{ $json['Next Call'] }}\"\n    }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1344,
+        480
+      ],
+      "id": "049bbabe-9cc9-4739-bbaa-3fadf1c750e3",
+      "name": "Call Vapi1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "lZ0efOUQUlbFdSMe",
+          "name": "Vapi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o",
+          "mode": "list",
+          "cachedResultName": "EMS TECHNOLOGY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit#gid=1398101872"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Google Sheets').item.json.row_number }}",
+            "Status": "= Scheduled Call"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Client",
+              "displayName": "Client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote ID",
+              "displayName": "Quote ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote Sent Date",
+              "displayName": "Quote Sent Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Amount (USD)",
+              "displayName": "Amount (USD)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product",
+              "displayName": "Product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote Details",
+              "displayName": "Quote Details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Call Summary",
+              "displayName": "Call Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Next Step",
+              "displayName": "Next Step",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Feedback",
+              "displayName": "Client Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Quote Status",
+              "displayName": "Quote Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Next Call",
+              "displayName": "Next Call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Record",
+              "displayName": "Record",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1568,
+        480
+      ],
+      "id": "922ff13c-3ba6-4080-9f5f-ff38a5990672",
+      "name": "Acuerdo1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o",
+          "mode": "list",
+          "cachedResultName": "EMS TECHNOLOGY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit#gid=1398101872"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Google Sheets1').item.json.row_number }}",
+            "Status": "={{ $json.Status ? $json.Status : \"Rejected\" }}",
+            "Next Step": "={{ $json['Next Step'] ? $json['Next Step'] : $('Data1').item.json['Next Step'] }}",
+            "Quote Status": "={{ $json['Quote Status'] ? $json['Quote Status'] : $('Data1').item.json['Quote Status']}}",
+            "Next Call": "={{ $json['Next Call'] ? $json['Next Call'] : $('Data1').item.json['Next Call'] }}",
+            "Call Summary": "={{ $json['Call Summary'] ? $json['Call Summary'] : $('Data1').item.json['Call Summary'] }}",
+            "Record": "==HYPERLINK(\"{{ $json.Record }}\", \"Escuchar\")",
+            "Client Feedback": "={{ $json.Client_Feedback ? $json.Client_Feedback : $('Data1').item.json['Client Feedback']}}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Client",
+              "displayName": "Client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote ID",
+              "displayName": "Quote ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote Sent Date",
+              "displayName": "Quote Sent Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Amount (USD)",
+              "displayName": "Amount (USD)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product",
+              "displayName": "Product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote Details",
+              "displayName": "Quote Details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Call Summary",
+              "displayName": "Call Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Next Step",
+              "displayName": "Next Step",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Feedback",
+              "displayName": "Client Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote Status",
+              "displayName": "Quote Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Next Call",
+              "displayName": "Next Call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Record",
+              "displayName": "Record",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1344,
+        912
+      ],
+      "id": "bef780e0-52a8-4c7a-b35b-a445ad4cf344",
+      "name": "Acuerdo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ems",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        912
+      ],
+      "id": "21e6525f-29d9-4dd5-ad3d-667282f998d8",
+      "name": "Webhook",
+      "webhookId": "511cc4e6-0e63-4d50-920c-6781267159ed"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dd5784d7-45db-4769-8ec7-23fd06e53234",
+              "name": "Call Summary",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.summary }}",
+              "type": "string"
+            },
+            {
+              "id": "af5c2e92-6e1f-4680-baa6-87737c6ce733",
+              "name": "Status",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Status }}",
+              "type": "string"
+            },
+            {
+              "id": "c89a72ea-5170-4267-8a86-207b02fe007d",
+              "name": "Next Step",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Next_Step }}",
+              "type": "string"
+            },
+            {
+              "id": "6b0b4b56-c529-4aba-9c69-eae9eefee681",
+              "name": "Quote Status",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Quote_Status }}",
+              "type": "string"
+            },
+            {
+              "id": "6f3b2fc9-669d-47c9-b260-1bbae1cd050e",
+              "name": "Client_Feedback",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Client_Feedback }}",
+              "type": "string"
+            },
+            {
+              "id": "c06e39dd-57ce-401d-a515-e7e5dde3fc2f",
+              "name": "Next Call",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Next_Call }}",
+              "type": "string"
+            },
+            {
+              "id": "50216280-94af-414e-a194-f16436c77908",
+              "name": "Record",
+              "value": "={{ $('Webhook').item.json.body.message.stereoRecordingUrl }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        912
+      ],
+      "id": "382f5542-e640-4dca-8e1c-caa858ffff7b",
+      "name": "Call Data"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        1568,
+        912
+      ],
+      "id": "d3f27df9-d187-4227-bfef-8b88525f21fa",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ebc8c00e-294e-4600-b04c-1688673c8491",
+              "name": "Empresa",
+              "value": "EMS TECHNOLOGY ",
+              "type": "string"
+            },
+            {
+              "id": "ca9e963d-c8a7-4bfd-9b36-608146e4e47c",
+              "name": "Client",
+              "value": "={{ $json.Client.split(\" \")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "e6956c3d-7dd7-4f7e-aac9-80328e15c90a",
+              "name": "Phone",
+              "value": "={{ $json.Phone }}",
+              "type": "string"
+            },
+            {
+              "id": "c94d2151-8d2b-483e-b690-9ae1e38681d8",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "string"
+            },
+            {
+              "id": "38791c98-796f-4318-acc1-49d409ba3742",
+              "name": "Quote ID",
+              "value": "={{ $json['Quote ID'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e8338329-3bd9-4268-ae79-e8426973f7c8",
+              "name": "Quote Sent Date",
+              "value": "={{ $json['Quote Sent Date'] }}",
+              "type": "string"
+            },
+            {
+              "id": "edced74b-a0c7-4b5d-8438-b476563a4ee1",
+              "name": "Amount (USD)",
+              "value": "={{ $json['Amount (USD)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "3ae6c8d2-3e1f-4e27-83ca-ef14c814adc3",
+              "name": "Product",
+              "value": "={{ $json.Product }}",
+              "type": "string"
+            },
+            {
+              "id": "9d1f2fef-a0b3-4f3b-b0fc-971239c24ccf",
+              "name": "Quote Details",
+              "value": "={{ $json['Quote Details'] }}",
+              "type": "string"
+            },
+            {
+              "id": "1fda8e0c-e4e7-4a14-8cc8-26bcc54797cd",
+              "name": "Call Summary",
+              "value": "={{ $json['Call Summary'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d08d255a-d081-4b8c-b6c1-06d8de29c006",
+              "name": "Next Step",
+              "value": "={{ $json['Next Step'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a2459995-3d48-47ef-a41a-54db5d455d71",
+              "name": "Client Feedback",
+              "value": "={{ $json['Client Feedback'] }}",
+              "type": "string"
+            },
+            {
+              "id": "0bf35bc0-af23-4c17-9d20-0e70daad859d",
+              "name": "Quote Status",
+              "value": "={{ $json['Quote Status'] }}",
+              "type": "string"
+            },
+            {
+              "id": "aea9c4ed-2cfb-40f2-bdc6-67bc273a53ac",
+              "name": "Next Call",
+              "value": "={{ $json['Next Call'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        912
+      ],
+      "id": "a486217f-b3ff-42b1-9ba4-e08a9bad3549",
+      "name": "Data1"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Telefono",
+              "value": "={{ $json.Phone }}"
+            },
+            {
+              "key": "RowID",
+              "value": "={{ $json.row_number }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        688,
+        912
+      ],
+      "id": "6e30db52-cef1-4ad5-a242-61fb8e0f52c0",
+      "name": "Execution Data1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o",
+          "mode": "list",
+          "cachedResultName": "EMS TECHNOLOGY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit#gid=1398101872"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Phone",
+              "lookupValue": "={{ $json.body.message.call.assistantOverrides.variableValues.Phone }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        464,
+        912
+      ],
+      "id": "309d8003-47a1-4876-b75d-6c539c387e1f",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## START CALL\n*All day to 8am, 2pm, 4pm",
+        "height": 380,
+        "width": 1620,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        144,
+        240
+      ],
+      "id": "9b0b2611-b99b-472e-aa3a-d93d03b7f801",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## END OF CALL REPORT\n*Send Call Report to DataBase",
+        "height": 380,
+        "width": 1620,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        144,
+        688
+      ],
+      "id": "96804b26-b579-41e0-8d67-88a089a47ad8",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-08-04T19:39:04.643Z",
+  "versionId": "78fee0d8-b182-436e-a77f-6c4f3adf5bdb"
+}
