@@ -38,7 +38,7 @@
       "main": [
         [
           {
-            "node": "Execute a SQL query",
+            "node": "Get user_data",
             "type": "main",
             "index": 0
           },
@@ -54,7 +54,7 @@
       "main": [
         [
           {
-            "node": "Call Agente Transaccional",
+            "node": "Execute a SQL query",
             "type": "main",
             "index": 0
           }
@@ -62,17 +62,6 @@
         [
           {
             "node": "Call Onboarding Register",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute a SQL query": {
-      "main": [
-        [
-          {
-            "node": "data",
             "type": "main",
             "index": 0
           }
@@ -112,6 +101,57 @@
           }
         ]
       ]
+    },
+    "Get user_data": {
+      "main": [
+        [
+          {
+            "node": "data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "meta": {
+      "main": [
+        [
+          {
+            "node": "Call Agente Transaccional",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call Onboarding Register",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "data1": {
+      "main": [
+        [
+          {
+            "node": "meta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-28T20:07:09.475Z",
@@ -128,7 +168,7 @@
       "typeVersion": 1,
       "position": [
         496,
-        -304
+        -384
       ],
       "id": "2594ae8c-9bed-48ad-9d66-cb2dd9828bc0",
       "name": "When clicking ‘Execute workflow’"
@@ -142,8 +182,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        784,
-        -320
+        496,
+        -608
       ],
       "id": "b9aebc97-33bb-4279-b877-c50e46c04cbf",
       "name": "CREATE DATABASE",
@@ -165,7 +205,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        832,
+        496,
         -1568
       ],
       "id": "8bfa3d3c-5fef-4718-b93c-87719e70d86f",
@@ -183,10 +223,11 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        832,
-        -640
+        496,
+        -832
       ],
-      "id": "bee4c4e7-1624-4f07-9e22-e6d3030333d4"
+      "id": "bee4c4e7-1624-4f07-9e22-e6d3030333d4",
+      "disabled": true
     },
     {
       "parameters": {
@@ -196,8 +237,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1056,
-        -640
+        720,
+        -832
       ],
       "id": "d88691ba-fc5f-4726-a522-94475db88094",
       "credentials": {
@@ -218,8 +259,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        1280,
-        -640
+        944,
+        -832
       ],
       "id": "0b7e1e6a-05e2-434d-af5b-7bc29d129f81"
     },
@@ -237,8 +278,8 @@
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
       "position": [
-        816,
-        -1280
+        496,
+        -1248
       ],
       "id": "6d355b4a-23db-4855-a14c-8a1d3f2b9b18",
       "name": "WhatsApp Trigger",
@@ -259,8 +300,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        704,
-        64
+        496,
+        256
       ],
       "id": "4054dadf-ed25-4bf5-935b-165b8efc8ede",
       "name": "User test1",
@@ -331,34 +372,11 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1488,
-        -1184
+        1168,
+        -1152
       ],
       "id": "792048ec-8c27-45ce-936e-588334d818ad",
       "name": "Switch"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "WITH dummy AS (\n    SELECT NULL::uuid AS id\n)\nSELECT \n    to_jsonb(u) AS user_data,\n    (u.id IS NOT NULL) AS existe\nFROM \n    dummy\nLEFT JOIN \n    usuarios u ON u.numero_whatsapp = $1;",
-        "options": {
-          "queryReplacement": "='{{ $json.contacts[0].wa_id }}'"
-        }
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        1040,
-        -1184
-      ],
-      "id": "104da7ce-0d67-4b22-8f91-0dce40f79c80",
-      "name": "Execute a SQL query",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
     },
     {
       "parameters": {
@@ -383,8 +401,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1264,
-        -1184
+        944,
+        -1152
       ],
       "id": "5aa43e16-51e2-4dc0-b7c5-6447c5d425da",
       "name": "data"
@@ -403,7 +421,8 @@
             "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}",
             "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
             "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
-            "field": "={{ $('WhatsApp Trigger').item.json.field }}"
+            "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+            "usuario_data": "={{ $json.usuario_data }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -439,6 +458,15 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "usuario_data",
+              "displayName": "usuario_data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -449,8 +477,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1776,
-        -1024
+        2064,
+        -1056
       ],
       "id": "63a60098-0575-441a-b40d-a9cbe12f21e5",
       "name": "Call Onboarding Register"
@@ -466,8 +494,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        1040,
-        -1376
+        720,
+        -1344
       ],
       "id": "85337e28-59db-422d-86b2-625dac126e89",
       "name": "Send message3",
@@ -484,8 +512,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1696,
-        -160
+        720,
+        32
       ],
       "id": "d187ea81-69ea-4e63-8048-17f09a3c63ff",
       "name": "No Operation, do nothing"
@@ -503,8 +531,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        1712,
-        -320
+        720,
+        -160
       ],
       "id": "db71aa84-e365-4a39-bc7e-4be381a771f0",
       "name": "send Publicidad",
@@ -544,8 +572,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1504,
-        -272
+        496,
+        -64
       ],
       "id": "f176e465-c428-4ba5-845f-80b2c4beb0ae",
       "name": "IsFree?"
@@ -629,8 +657,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1776,
-        -1248
+        2064,
+        -1272
       ],
       "name": "Call Agente Transaccional",
       "id": "68a8e3ad-60b7-4ca2-b63f-6c3d8df24910"
@@ -644,8 +672,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        704,
-        256
+        496,
+        480
       ],
       "id": "e61a3ce3-9efa-44de-b209-6630f72fd1a7",
       "name": "CLEAN DATABASE",
@@ -666,8 +694,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        704,
-        -112
+        720,
+        -384
       ],
       "id": "3174561b-a579-48d5-a34a-c2a1b0d1c208",
       "name": "insert user",
@@ -678,9 +706,181 @@
           "name": "MONY_DB"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH dummy AS (\n    SELECT NULL::uuid AS id\n)\nSELECT \n    to_jsonb(u) AS user_data,\n    (u.id IS NOT NULL) AS existe\nFROM \n    dummy\nLEFT JOIN \n    usuarios u ON u.numero_whatsapp = $1;",
+        "options": {
+          "queryReplacement": "='{{ $json.contacts[0].wa_id }}'"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        720,
+        -1152
+      ],
+      "id": "104da7ce-0d67-4b22-8f91-0dce40f79c80",
+      "name": "Get user_data",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    EXISTS (\n        SELECT 1 \n        FROM metas_ahorro \n        WHERE id_usuario = $1\n    ) AS tiene_meta;\n",
+        "options": {
+          "queryReplacement": "={{ $json.usuario_data.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1392,
+        -1224
+      ],
+      "id": "e111f9d1-a716-4c94-ba43-9670bb6bb36f",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.meta }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9c38cf88-8498-4e41-b8b6-9c9bf0465b55"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "meta registrada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d20501b2-6c3d-42b4-9617-995adf90e423",
+                    "leftValue": "={{ $json.meta }}",
+                    "rightValue": "false",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Sin Registrar"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1840,
+        -1224
+      ],
+      "id": "a862f0d2-d27f-463c-9769-64ccfb057e62",
+      "name": "meta"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90dc24fa-85a0-4b98-ad7f-a0f2ab094722",
+              "name": "meta",
+              "value": "={{ $json.tiene_meta }}",
+              "type": "string"
+            },
+            {
+              "id": "70bf3769-05a5-4f09-9ead-f39029fc7167",
+              "name": "usuario_data",
+              "value": "={{ $('data').item.json.usuario_data }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        -1224
+      ],
+      "id": "2da62d31-1085-4a83-b8d5-0b51f43b4e2b",
+      "name": "data1"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "WhatsApp Trigger": [
+      {
+        "json": {
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "573143400476",
+            "phone_number_id": "565888133266017"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "Pedro Rodriguez"
+              },
+              "wa_id": "5732288544100"
+            }
+          ],
+          "messages": [
+            {
+              "from": "5732288544100",
+              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y2NzZDN0FFNTlFNjFCQkFCNUQA",
+              "timestamp": "1754504211",
+              "text": {
+                "body": "ok, como inicio"
+              },
+              "type": "text"
+            }
+          ],
+          "field": "messages"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -693,7 +893,7 @@
     }
   },
   "tags": [],
-  "triggerCount": 3,
-  "updatedAt": "2025-08-02T00:08:48.476Z",
-  "versionId": "8375aa55-f131-4b6e-9b3d-bbfa978f10b4"
+  "triggerCount": 2,
+  "updatedAt": "2025-08-06T19:21:23.994Z",
+  "versionId": "ac16b63d-41ba-451a-bd37-767aa01dae80"
 }
