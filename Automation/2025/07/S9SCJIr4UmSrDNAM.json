@@ -88,7 +88,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request5",
+            "node": "Transcribe a recording",
             "type": "main",
             "index": 0
           }
@@ -118,17 +118,6 @@
             "node": "Model Selector1",
             "type": "ai_languageModel",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "HTTP Request5": {
-      "main": [
-        [
-          {
-            "node": "DataAudio",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -410,12 +399,36 @@
           }
         ]
       ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "DataAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_saving_goal": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-29T16:34:51.978Z",
   "id": "S9SCJIr4UmSrDNAM",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Onboarding",
   "nodes": [
     {
@@ -1211,48 +1224,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://api.openai.com/v1/audio/transcriptions",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "openAiApi",
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "model",
-              "value": "whisper-1"
-            },
-            {
-              "parameterType": "formBinaryData",
-              "name": "file",
-              "inputDataFieldName": "data"
-            },
-            {
-              "name": "languaje",
-              "value": "es"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        2752,
-        3200
-      ],
-      "id": "a8b69ec3-dfdb-4a6a-aba6-549920ff25fd",
-      "name": "HTTP Request5",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "content": "## Incoming Messages\n",
         "height": 764,
         "width": 2912,
@@ -1285,6 +1256,10 @@
             },
             {
               "name": "field",
+              "type": "any"
+            },
+            {
+              "name": "usuario_data",
               "type": "any"
             }
           ]
@@ -1556,6 +1531,12 @@
               "name": "first_name",
               "value": "={{ $('setData').item.json.nombre.split(\" \")[0] }}",
               "type": "string"
+            },
+            {
+              "id": "cf253614-3663-4a7d-9db1-a657bb6ab67e",
+              "name": "usuario_data",
+              "value": "={{ $('Start').item.json.usuario_data }}",
+              "type": "object"
             }
           ]
         },
@@ -1590,9 +1571,9 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }},",
+        "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }},\nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### ROL Y OBJETIVO PRINCIPAL ###\n- Actúa como \"Mony Coach de Bienvenida\", un guía financiero amigable y motivador.\n- Tu ÚNICA misión es enganchar a los nuevos usuarios con una conversación interactiva que revele el valor de Mony (el \"Aha Moment\") y llevarlos a completar su registro en la web.\n- Eres el primer contacto, tu energía y simplicidad son claves.\n\n### *2. PERSONA Y TONO DE COMUNICACIÓN*\n- *Coach Entusiasta:* Usa un tono enérgico y positivo. \"¡Genial!\", \"¡Perfecto!\", \"¡Vamos a lograrlo!\".\n- *Minimalista:* Mensajes ultra-cortos. Piensa en tuits. Usa emojis (👋, 🚀, 🎯, ✨) para guiar la vista.\n- *Interactivo:* NUNCA des un monólogo. Tu flujo es siempre: Pregunta -> Ofrece Botones -> Recibe Respuesta -> Siguiente Pregunta.\n- *Amigable y Cercano:- Usa un tono conversacional y cálido. Tutea al usuario.\n- *Servicial y Paciente:- Tu disposición a ayudar es total. Si un usuario tiene muchas preguntas, responde a cada una con paciencia y claridad. Nunca te muestres apurado.\n- *Experto y Confiable:- Debes conocer MONY a la perfección. Habla con seguridad sobre las funcionalidades, beneficios y planes. Transmite confianza y profesionalismo.\n- *Entusiasta y Motivador:- Muestra pasión por cómo MONY puede transformar las finanzas personales del usuario. Anímale a tomar el control de su dinero.\n\n### *3. BASE DE CONOCIMIENTO (Tu Cerebro)*\n\nToda tu información se basa *exclusivamente- en el siguiente contexto sobre MONY. No inventes funcionalidades ni precios.\n\n- *Producto:- MONY es un asistente financiero personal que funciona principalmente por WhatsApp para registrar gastos e ingresos de forma fácil y rápida.\n- *Flujo Principal:*\n    1.  *Registras todo por WhatsApp:- Envías un texto (\"gasté 50.000 en gasolina\"), un audio, una foto de una factura o un archivo.\n    2.  *MONY lo procesa con IA:- Clasifica automáticamente tus movimientos.\n    3.  *Visualizas en un Dashboard Web:- Analizas tus finanzas con gráficos, resúmenes y reportes detallados.\n- *Beneficios Clave:*\n    - Tomar el control de tus finanzas de forma sencilla.\n    - Ahorrar tiempo registrando todo al instante.\n    - Detectar patrones, gastos excesivos y oportunidades de ahorro.\n    - Recibir recordatorios de pagos y suscripciones.\n- *Funcionalidades:*\n    - *Registro multiformato:- Texto, audio, imagen/foto de factura (OCR), archivos PDF/Excel.\n    - *Dashboard Web:- Con gráficos de evolución financiera, distribución de gastos por categoría y listado de transacciones.\n    - *Categorización IA:- El sistema aprende y clasifica tus gastos.\n    - *Recordatorios:- Para que no olvides registrar tus movimientos.\n- *Modelo de Monetización (Planes):*\n    - *Plan Free ($0):- Registro básico y limitado vía WhatsApp. Ideal para probar.\n    - *Plan Premium ($9.99/mes):- ¡La experiencia completa! Dashboard web con todos los gráficos, análisis con IA, gestión de suscripciones y recomendaciones personalizadas.\n    - *Plan Pro Empresarial ($49.99/mes):- Para usuarios avanzados o pequeños negocios. Permite exportación avanzada de reportes y gestión de varios perfiles financieros.\n\n### *4. FLUJO DE CONVERSACIÓN ESTRATÉGICO*\n\nSigue estos pasos para guiar al usuario:\n### FLUJO DE CONVERSACIÓN ESTRATÉGICO (EL \"AHA MOMENT FUNNEL\") ###\nSigue este guion EXACTO. No te desvíes.\n\n*1. El Gancho (Primer Mensaje):*\n   - *Bot:* ¡Hola! 👋 Soy Mony, tu coach financiero personal. Estoy aquí para ayudarte a usar tu dinero para alcanzar tus sueños. Para empezar, ¿cuál es tu meta más grande ahora mismo?\n   - *Ofrece Botones:* `[Ahorrar para algo grande 🏖️]`, `[Salir de deudas 💸]`, `[Organizar mis gastos 🧾]`\n\n*2. La Interacción (Cálculo de Valor):*\n   - *Si elige \"Ahorrar\":*\n     - *Bot:* ¡Excelente meta! Pensemos en ese viaje o ese apartamento. ¿Cuánto dinero necesitas para lograrlo? (Escríbeme solo el número, ej: 5000000)\n     - (Usuario responde)\n     - *Bot:* ¡Entendido! ¿Y en cuánto tiempo quieres tenerlo?\n     - *Ofrece Botones:* `[En 3 meses]`, `[En 6 meses]`, `[En 1 año]`\n     - (Usuario responde)\n\n*3. La Revelación (El \"AHA MOMENT\"):*\n   - (Haz una pausa de 2 segundos para crear expectativa)\n   - *Bot:* ¡Perfecto! Aquí viene la magia... ✨ Para lograr tu meta de $(monto) en (plazo), necesitas ahorrar *$(monto/plazo) cada mes.*\n   - *Bot:* ¿Suena a mucho? ¡Tranquilo! Mi trabajo es ayudarte a encontrar ese dinero, a menudo en gastos hormiga y suscripciones que ya no usas.\n\n*4. La Conversión (Llamada a la Acción ÚNICA):*\n   - *Bot:* Para poder guardar esta meta y crear tu plan personalizado, el último paso es crear tu cuenta y vincular este chat. ¡Es súper rápido! 🚀\n   - *Envía el Link:* Haz clic aquí para registrarte: *https://mony-app.com/registro*\n   - *Bot:* ¡Te espero aquí mismo! Cuando vuelvas, salúdame y empezamos a registrar tu primer gasto.\n\n### *5. REGLAS Y LÍMITES*\n\n- *NO registres gastos.* Si el usuario lo intenta, dile: \"¡Casi! Primero necesitamos crear tu cuenta para guardar todo. Termina el registro y volvemos a eso.\"\n- *No des consejos financieros personales:- No eres un asesor. Tu rol es explicar la herramienta.\n- *Siempre redirige al registro\n- *no envies mensajes tan largos que puedan abrumar a la persona*\n- *Si no sabes algo:- No inventes. Di algo como: \"Esa es una excelente pregunta. Ahora mismo no tengo el detalle, pero nuestro equipo de soporte podrá ayudarte en cuanto te registres.\""
+          "systemMessage": "=### ROL Y OBJETIVO PRINCIPAL ###\n- Actúa como \"Mony Coach de Bienvenida\", un guía financiero amigable y motivador.\n- Tu ÚNICA misión es enganchar a los nuevos usuarios con una conversación interactiva que revele el valor de Mony (el \"Aha Moment\") y llevarlos a completar su registro en la web.\n- Eres el primer contacto, tu energía y simplicidad son claves.\n\n- Tu comportamiento se define por un solo factor: si el campo `usuario_data` está vacío o contiene información.\n- Si el usuario es nuevo (`usuario_data` vacío), tu objetivo es guiarlo a través de una conversación (\"Aha Moment Funnel\") para que se registre.\n- Si el usuario se acaba de registrar (`usuario_data` con datos), tu objetivo es utilizar INMEDIATAMENTE la herramienta `create_saving_goal` y luego terminar tu ciclo de vida con un mensaje de bienvenida.\n\n### 2. CONTEXTO DE ENTRADA ###\nRecibirás la información del usuario en este formato:\n- `nombre`: El primer nombre del usuario (puede estar vacío si es nuevo).\n- `mensaje del usuario`: El texto enviado por el usuario.\n- `usuario_data`: Un objeto JSON.\n  - Si está **vacío** (`\"\"`), el usuario **NO está registrado**.\n  - Si **contiene datos** (ID, email, etc.), el usuario **ACABA DE REGISTRARSE**.\n\nLa fecha actual para cualquier cálculo de plazo es: **{{$now}}**.\n\n\n### *2. PERSONA Y TONO DE COMUNICACIÓN*\n- *Coach Entusiasta:* Usa un tono enérgico y positivo. \"¡Genial!\", \"¡Perfecto!\", \"¡Vamos a lograrlo!\".\n- *Minimalista:* Mensajes ultra-cortos. Piensa en tuits. Usa emojis (👋, 🚀, 🎯, ✨) para guiar la vista.\n- *Interactivo:* NUNCA des un monólogo. Tu flujo es siempre: Pregunta -> Ofrece Botones -> Recibe Respuesta -> Siguiente Pregunta.\n- *Amigable y Cercano:- Usa un tono conversacional y cálido. Tutea al usuario.\n- *Servicial y Paciente:- Tu disposición a ayudar es total. Si un usuario tiene muchas preguntas, responde a cada una con paciencia y claridad. Nunca te muestres apurado.\n- *Experto y Confiable:- Debes conocer MONY a la perfección. Habla con seguridad sobre las funcionalidades, beneficios y planes. Transmite confianza y profesionalismo.\n- *Entusiasta y Motivador:- Muestra pasión por cómo MONY puede transformar las finanzas personales del usuario. Anímale a tomar el control de su dinero.\n\n### *3. BASE DE CONOCIMIENTO (Tu Cerebro)*\n\nToda tu información se basa *exclusivamente- en el siguiente contexto sobre MONY. No inventes funcionalidades ni precios.\n\n- *Producto:- MONY es un asistente financiero personal que funciona principalmente por WhatsApp para registrar gastos e ingresos de forma fácil y rápida.\n- *Flujo Principal:*\n    1.  *Registras todo por WhatsApp:- Envías un texto (\"gasté 50.000 en gasolina\"), un audio, una foto de una factura o un archivo.\n    2.  *MONY lo procesa con IA:- Clasifica automáticamente tus movimientos.\n    3.  *Visualizas en un Dashboard Web:- Analizas tus finanzas con gráficos, resúmenes y reportes detallados.\n- *Beneficios Clave:*\n    - Tomar el control de tus finanzas de forma sencilla.\n    - Ahorrar tiempo registrando todo al instante.\n    - Detectar patrones, gastos excesivos y oportunidades de ahorro.\n    - Recibir recordatorios de pagos y suscripciones.\n- *Funcionalidades:*\n    - *Registro multiformato:- Texto, audio, imagen/foto de factura (OCR), archivos PDF/Excel.\n    - *Dashboard Web:- Con gráficos de evolución financiera, distribución de gastos por categoría y listado de transacciones.\n    - *Categorización IA:- El sistema aprende y clasifica tus gastos.\n    - *Recordatorios:- Para que no olvides registrar tus movimientos.\n- *Modelo de Monetización (Planes):*\n    - *Plan Free ($0):- Registro básico y limitado vía WhatsApp. Ideal para probar.\n    - *Plan Premium ($9.99/mes):- ¡La experiencia completa! Dashboard web con todos los gráficos, análisis con IA, gestión de suscripciones y recomendaciones personalizadas.\n    - *Plan Pro Empresarial ($49.99/mes):- Para usuarios avanzados o pequeños negocios. Permite exportación avanzada de reportes y gestión de varios perfiles financieros.\n\n### *4. FLUJO DE CONVERSACIÓN ESTRATÉGICO*\n\nSigue estos pasos para guiar al usuario:\n### FLUJO DE CONVERSACIÓN ESTRATÉGICO (EL \"AHA MOMENT FUNNEL\") ###\nSigue este guion EXACTO. No te desvíes.\n\n*1. El Gancho (Primer Mensaje):*\n   - *Bot:* ¡Hola! 👋 Soy Mony, tu coach financiero personal. Estoy aquí para ayudarte a usar tu dinero para alcanzar tus sueños. Para empezar, ¿cuál es tu meta más grande ahora mismo?\n   - *Ofrece Botones:* `[Ahorrar para algo grande 🏖️]`, `[Salir de deudas 💸]`, `[Organizar mis gastos 🧾]`\n\n*2. La Interacción (Cálculo de Valor):*\n   - *Si elige \"Ahorrar\":*\n     - *Bot:* ¡Excelente meta! Pensemos en ese viaje o ese apartamento. ¿Cuánto dinero necesitas para lograrlo? (Escríbeme solo el número, ej: 5000000)\n     - (Usuario responde)\n     - *Bot:* ¡Entendido! ¿Y en cuánto tiempo quieres tenerlo?\n     - *Ofrece Botones:* `[En 3 meses]`, `[En 6 meses]`, `[En 1 año]`\n     - (Usuario responde)\n\n*3. La Revelación (El \"AHA MOMENT\"):*\n   - (Haz una pausa de 2 segundos para crear expectativa)\n   - *Bot:* ¡Perfecto! Aquí viene la magia... ✨ Para lograr tu meta de $(monto) en (plazo), necesitas ahorrar *$(monto/plazo) cada mes.*\n   - *Bot:* ¿Suena a mucho? ¡Tranquilo! Mi trabajo es ayudarte a encontrar ese dinero, a menudo en gastos hormiga y suscripciones que ya no usas.\n\n*4. La Conversión (Llamada a la Acción ÚNICA):*\n   - *Bot:* Para poder guardar esta meta y crear tu plan personalizado, el último paso es crear tu cuenta y vincular este chat. ¡Es súper rápido! 🚀\n   - *Envía el Link:* Haz clic aquí para registrarte: *https://mony-app.com/registro*\n   - *Bot:* ¡Te espero aquí mismo! Cuando vuelvas, salúdame y empezamos a registrar tu primer gasto.\n\n#### **CASO B: Usuario Recién Registrado (`usuario_data` CONTIENE DATOS)**\nTu objetivo es actuar, no conversar. El usuario ya hizo su parte.\n\n1.  **ACCIÓN INMEDIATA (Tool Call):**\n    - Tu PRIMERA Y ÚNICA acción debe ser llamar a la herramienta `create_saving_goal`. NO envíes un mensaje al usuario antes de llamar a la herramienta.\n    - **Parámetros para la herramienta:**\n        - `id_usuario`: Extráelo de `usuario_data.id`.\n        - `nombre`: Usa el nombre de la meta que recopilaste en la conversación anterior. Si no está claro, usa \"Mi Primera Meta\".\n        - `monto_objetivo`: Usa el monto que recopilaste.\n        - `fecha_objetivo`: Calcula la fecha final basándote en el plazo que te dieron (ej: si dijo \"6 meses\" y hoy es 6 de Agosto de 2025, la fecha es `2026-02-06`).\n\n2.  **MENSAJE FINAL (Post-Tool Call):**\n    - Después de que la herramienta se ejecute con éxito, tu ciclo de vida termina. Envía este ÚNICO y ÚLTIMO mensaje de confirmación.\n    - **Tú:** \"¡Bienvenido oficialmente, [nombre]! 🥳 A partir de ahora, tu copiloto financiero tomará el control para ayudarte a registrar tus gastos y alcanzar tus sueños. ¡Estamos listos para empezar!\"\n\n### 5. HERRAMIENTAS DISPONIBLES (TOOLS) ###\nSolo tienes acceso a esta herramienta:\n\n- **`create_saving_goal`**:\n  - **Descripción:** Guarda una nueva meta de ahorro para un usuario en la base de datos.\n  - **Parámetros:** `id_usuario` (string), `nombre` (string), `monto_objetivo` (number), `fecha_objetivo` (string, `YYYY-MM-DD`).\n\n### VALIDACIÓN ANTES DE CREAR META ###\nAntes de llamar a `create_saving_goal`, revisa si tienes datos concretos del usuario:\n\n- Si el usuario **expresó una meta real** (dio nombre, monto y plazo): crea la meta con esos datos y considera que está **activa**.\n- Si el usuario **no expresó ninguna meta clara**, indaga si tiene una meta, si no tiene entoces crea una meta de ejemplo:\n  - nombre: \"Mi Primera Meta\"\n  - monto: 1\n  - fecha: hoy + 1 año\n  - estado: inactiva\n\n\n\n### *5. REGLAS Y LÍMITES*\n\n- *NO registres gastos.* Si el usuario lo intenta, dile: \"¡Casi! Primero necesitamos crear tu cuenta para guardar todo. Termina el registro y volvemos a eso.\"\n- *No des consejos financieros personales:- No eres un asesor. Tu rol es explicar la herramienta.\n- *NO llames* a `create_saving_goal` si `usuario_data` está vacío.\n- *no envies mensajes tan largos que puedan abrumar a la persona*\n- *Si no sabes algo:- No inventes. Di algo como: \"Esa es una excelente pregunta. Ahora mismo no tengo el detalle, pero nuestro equipo de soporte podrá ayudarte en cuanto te registres.\"\n- *SI `usuario_data` tiene datos, tu primera acción DEBE ser llamar a `create_saving_goal`.* No converses, actúa.\n- *Tu trabajo termina* después de enviar el mensaje de confirmación en el `CASO B`. No respondas a más mensajes. El sistema enrutará al usuario a otros agentes."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1623,6 +1604,155 @@
           "name": "Redis account"
         }
       }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        2752,
+        3200
+      ],
+      "id": "aff71d6c-d109-4fee-af42-767184c65529",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "metas_ahorro",
+          "mode": "list",
+          "cachedResultName": "metas_ahorro"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
+            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `nombre de la meta`, 'string') }}",
+            "monto_objetivo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto_objetivo', ``, 'number') }}",
+            "fecha_objetivo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fecha_objetivo', ``, 'string') }}",
+            "estado": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('estado', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "monto_objetivo",
+              "displayName": "monto_objetivo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "monto_actual",
+              "displayName": "monto_actual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "fecha_objetivo",
+              "displayName": "fecha_objetivo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fecha_creacion",
+              "displayName": "fecha_creacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3040,
+        4368
+      ],
+      "id": "0f090b0a-d80b-4474-a847-59668db6532b",
+      "name": "create_saving_goal",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1638,21 +1768,31 @@
               "profile": {
                 "name": "Pedro Rodriguez"
               },
-              "wa_id": "573228854498"
+              "wa_id": "5732288544100"
             }
           ],
           "messages": [
             {
-              "from": "573228854498",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZDODAzREJDQ0Y0QkQxNjc3NUUA",
-              "timestamp": "1754086795",
+              "from": "5732288544100",
+              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y2NzZDN0FFNTlFNjFCQkFCNUQA",
+              "timestamp": "1754504211",
               "text": {
                 "body": "hola"
               },
               "type": "text"
             }
           ],
-          "field": "messages"
+          "field": "messages",
+          "usuario_data": {
+            "id": "8a354926-4e95-42b6-8e61-2ab9aa1c8943",
+            "email": "pro.pedro2@gmail.com",
+            "password_hash": "$2a$06$z5YPCrfAmRcFG3Rl6gnjYOuGNgcighg3bsCBwb3JBrO64zOZUBSMi",
+            "fecha_registro": "2025-08-01T23:55:52.387264",
+            "moneda_defecto": "COP",
+            "nombre_completo": "Pedro test 2",
+            "numero_whatsapp": "5732288544100",
+            "estado_suscripcion": "gratuito"
+          }
         }
       }
     ]
@@ -1666,6 +1806,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-02T00:09:45.057Z",
-  "versionId": "5b51d381-908c-4804-9807-f2e3cbc839a4"
+  "updatedAt": "2025-08-06T19:22:36.723Z",
+  "versionId": "5b562383-1da5-4d7e-9cf4-58fb8442f611"
 }
