@@ -176,7 +176,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "-- EXTENSIONES ÚTILES\nCREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\nCREATE EXTENSION IF NOT EXISTS \"pgcrypto\";\n\n-- ####################################\n-- ##            TABLAS BASE        ##\n-- ####################################\n\n-- TABLA: Usuarios\nCREATE TABLE IF NOT EXISTS usuarios (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    nombre_completo TEXT NOT NULL,\n    email TEXT UNIQUE NOT NULL,\n    password_hash TEXT NOT NULL,\n    numero_whatsapp TEXT UNIQUE NOT NULL,\n    moneda_defecto TEXT DEFAULT 'COP',\n    estado_suscripcion TEXT DEFAULT 'gratuito',\n    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- TABLA: Fuentes de Registro\nCREATE TABLE IF NOT EXISTS fuentes_registro (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE -- Ej: WhatsApp, Web, OCR, Audio, PDF\n);\n\n-- Insertar fuentes iniciales\nINSERT INTO fuentes_registro (nombre) VALUES\n    ('WhatsApp'),\n    ('Web')\nON CONFLICT DO NOTHING;\n\n-- ############################################\n-- ##     MIGRACIÓN Y MEJORA DE CATEGORÍAS   ##\n-- ############################################\n\n-- Renombramos la tabla vieja para preservar las categorías iniciales\nCREATE TABLE IF NOT EXISTS categorias_globales (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL\n);\n\n-- Insertar categorías globales iniciales\nINSERT INTO categorias_globales (nombre, tipo) VALUES\n    ('Comida', 'Gasto'),\n    ('Transporte', 'Gasto'),\n    ('Entretenimiento', 'Gasto'),\n    ('Salud', 'Gasto'),\n    ('Servicios', 'Gasto'),\n    ('Salario', 'Ingreso'),\n    ('Otros', 'Gasto')\nON CONFLICT DO NOTHING;\n\n-- Nueva tabla de categorías por usuario\nCREATE TABLE IF NOT EXISTS categorias (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    presupuesto_mensual NUMERIC(12, 2),\n    UNIQUE (id_usuario, nombre)\n);\n\n-- ####################################\n-- ##         TRANSACCIONES         ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS transacciones (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    descripcion TEXT,\n    monto NUMERIC(12, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    fecha_transaccion DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id) ON DELETE SET NULL,\n    id_fuente INTEGER REFERENCES fuentes_registro(id),\n    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##        SUSCRIPCIONES BASE     ##\n-- ####################################\n\n-- Tabla para el plan del usuario (gratuito/premium)\nCREATE TABLE IF NOT EXISTS suscripciones (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    tipo TEXT CHECK (tipo IN ('gratuito', 'premium')) NOT NULL,\n    fecha_inicio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    fecha_expiracion TIMESTAMP\n);\n\n-- Tabla para suscripciones del usuario (ej. Netflix, Spotify)\nCREATE TABLE IF NOT EXISTS suscripciones_usuario (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto NUMERIC(10, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    frecuencia TEXT NOT NULL, -- 'mensual', 'anual', 'trimestral'\n    fecha_proximo_pago DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id),\n    activa BOOLEAN DEFAULT TRUE\n);\n\n-- ####################################\n-- ##        METAS DE AHORRO        ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS metas_ahorro (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto_objetivo NUMERIC(15, 2) NOT NULL,\n    monto_actual NUMERIC(15, 2) NOT NULL DEFAULT 0.00,\n    fecha_objetivo DATE NOT NULL,\n    estado TEXT NOT NULL DEFAULT 'activa', -- activa, completada, cancelada\n    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##       RECORDATORIOS Y ADS     ##\n-- ####################################\n\n-- Recordatorios de gasto\nCREATE TABLE IF NOT EXISTS recordatorios (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    frecuencia TEXT CHECK (frecuencia IN ('diario', 'semanal', 'nunca')) NOT NULL,\n    hora_envio TIME DEFAULT '08:00:00'\n);\n\n-- Anuncios\nCREATE TABLE IF NOT EXISTS anuncios (\n    id SERIAL PRIMARY KEY,\n    titulo TEXT NOT NULL,\n    imagen_url TEXT,\n    enlace TEXT,\n    texto TEXT,\n    frecuencia TEXT DEFAULT '1_por_sesion',\n    pais_destino TEXT,\n    moneda_destino TEXT,\n    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    fecha_fin TIMESTAMP\n);\n\n-- Logs de anuncios vistos\nCREATE TABLE IF NOT EXISTS anuncios_usuarios (\n    id SERIAL PRIMARY KEY,\n    id_anuncio INTEGER REFERENCES anuncios(id),\n    id_usuario UUID REFERENCES usuarios(id),\n    fecha_visto TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n",
+        "query": "-- EXTENSIONES ÚTILES\nCREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\nCREATE EXTENSION IF NOT EXISTS \"pgcrypto\";\n\n-- ####################################\n-- ##            TABLAS BASE        ##\n-- ####################################\n\n-- TABLA: Usuarios\nCREATE TABLE IF NOT EXISTS usuarios (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    nombre_completo TEXT NOT NULL,\n    email TEXT UNIQUE NOT NULL,\n    password_hash TEXT NOT NULL,\n    numero_whatsapp TEXT UNIQUE NOT NULL,\n    moneda_defecto TEXT DEFAULT 'COP',\n    estado_suscripcion TEXT DEFAULT 'gratuito',\n    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- TABLA: Fuentes de Registro\nCREATE TABLE IF NOT EXISTS fuentes_registro (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE -- Ej: WhatsApp, Web, OCR, Audio, PDF\n);\n\n-- Insertar fuentes iniciales\nINSERT INTO fuentes_registro (nombre) VALUES\n    ('WhatsApp'),\n    ('Web')\nON CONFLICT DO NOTHING;\n\n-- ############################################\n-- ##     MIGRACIÓN Y MEJORA DE CATEGORÍAS   ##\n-- ############################################\n\n-- Renombramos la tabla vieja para preservar las categorías iniciales\nCREATE TABLE IF NOT EXISTS categorias_globales (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL\n);\n\n-- Insertar categorías globales iniciales\nINSERT INTO categorias_globales (nombre, tipo) VALUES\n    ('Comida', 'Gasto'),\n    ('Transporte', 'Gasto'),\n    ('Entretenimiento', 'Gasto'),\n    ('Salud', 'Gasto'),\n    ('Servicios', 'Gasto'),\n    ('Salario', 'Ingreso'),\n    ('Otros', 'Gasto')\nON CONFLICT DO NOTHING;\n\n-- Nueva tabla de categorías por usuario\nCREATE TABLE IF NOT EXISTS categorias (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    presupuesto_mensual NUMERIC(12, 2),\n    UNIQUE (id_usuario, nombre)\n);\n\n-- ####################################\n-- ##         TRANSACCIONES         ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS transacciones (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    descripcion TEXT,\n    monto NUMERIC(12, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    fecha_transaccion DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id) ON DELETE SET NULL,\n    id_fuente INTEGER REFERENCES fuentes_registro(id),\n    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##        SUSCRIPCIONES BASE     ##\n-- ####################################\n\n-- Tabla para el plan del usuario (gratuito/premium)\nCREATE TABLE IF NOT EXISTS suscripciones (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    tipo TEXT CHECK (tipo IN ('gratuito', 'premium')) NOT NULL,\n    fecha_inicio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    fecha_expiracion TIMESTAMP\n);\n\n-- Tabla para suscripciones del usuario (ej. Netflix, Spotify)\nCREATE TABLE IF NOT EXISTS suscripciones_usuario (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto NUMERIC(10, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    frecuencia TEXT NOT NULL, -- 'mensual', 'anual', 'trimestral'\n    fecha_proximo_pago DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id),\n    activa BOOLEAN DEFAULT TRUE\n);\n\n-- ####################################\n-- ##        METAS DE AHORRO        ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS metas_ahorro (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto_objetivo NUMERIC(15, 2) NOT NULL,\n    monto_actual NUMERIC(15, 2) NOT NULL DEFAULT 0.00,\n    fecha_objetivo DATE NOT NULL,\n    estado TEXT NOT NULL DEFAULT 'activa', -- activa, completada, cancelada\n    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##       RECORDATORIOS Y ADS     ##\n-- ####################################\n\n-- Recordatorios de gasto\nCREATE TABLE IF NOT EXISTS recordatorios (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    frecuencia TEXT CHECK (frecuencia IN ('diario', 'semanal', 'nunca')) NOT NULL,\n    hora_envio TIME DEFAULT '08:00:00'\n);\n\n-- Anuncios\nCREATE TABLE IF NOT EXISTS anuncios (\n    id SERIAL PRIMARY KEY,\n    titulo TEXT NOT NULL,\n    imagen_url TEXT,\n    enlace TEXT,\n    texto TEXT,\n    frecuencia TEXT DEFAULT '1_por_sesion',\n    pais_destino TEXT,\n    moneda_destino TEXT,\n    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    fecha_fin TIMESTAMP\n);\n\n-- Logs de anuncios vistos\nCREATE TABLE IF NOT EXISTS anuncios_usuarios (\n    id SERIAL PRIMARY KEY,\n    id_anuncio INTEGER REFERENCES anuncios(id),\n    id_usuario UUID REFERENCES usuarios(id),\n    fecha_visto TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE OR REPLACE FUNCTION clonar_categorias_globales()\nRETURNS TRIGGER AS $$\nBEGIN\n  INSERT INTO categorias (id_usuario, nombre, tipo)\n  SELECT NEW.id, nombre, tipo\n  FROM categorias_globales;\n\n  RETURN NEW;\nEND;\n$$ LANGUAGE plpgsql;\n\n\nCREATE TRIGGER clonar_categorias_al_crear_usuario\nAFTER INSERT ON usuarios\nFOR EACH ROW\nEXECUTE FUNCTION clonar_categorias_globales();\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -658,7 +658,7 @@
       "typeVersion": 1.2,
       "position": [
         2064,
-        -1272
+        -1280
       ],
       "name": "Call Agente Transaccional",
       "id": "68a8e3ad-60b7-4ca2-b63f-6c3d8df24910"
@@ -742,7 +742,7 @@
       "typeVersion": 2.6,
       "position": [
         1392,
-        -1224
+        -1232
       ],
       "id": "e111f9d1-a716-4c94-ba43-9670bb6bb36f",
       "name": "Execute a SQL query",
@@ -813,7 +813,7 @@
       "typeVersion": 3.2,
       "position": [
         1840,
-        -1224
+        -1232
       ],
       "id": "a862f0d2-d27f-463c-9769-64ccfb057e62",
       "name": "meta"
@@ -842,10 +842,32 @@
       "typeVersion": 3.4,
       "position": [
         1616,
-        -1224
+        -1232
       ],
       "id": "2da62d31-1085-4a83-b8d5-0b51f43b4e2b",
       "name": "data1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "--- pagar y registrar subscripciones, pendiente\nCREATE OR REPLACE FUNCTION procesar_suscripciones_vencidas()\nRETURNS VOID AS $$\nBEGIN\n  -- Insertar transacciones\n  INSERT INTO transacciones (\n      id_usuario,\n      descripcion,\n      monto,\n      moneda,\n      tipo,\n      fecha_transaccion,\n      id_categoria,\n      id_fuente\n  )\n  SELECT\n      s.id_usuario,\n      CONCAT('Pago de suscripción: ', s.nombre),\n      s.monto,\n      s.moneda,\n      'Gasto',\n      CURRENT_DATE,\n      s.id_categoria,\n      f.id\n  FROM suscripciones_usuario s\n  LEFT JOIN fuentes_registro f ON f.nombre = 'Web'\n  WHERE s.activa = TRUE\n    AND s.fecha_proximo_pago = CURRENT_DATE;\n\n  -- Actualizar fechas\n  UPDATE suscripciones_usuario\n  SET fecha_proximo_pago = \n      CASE\n          WHEN frecuencia = 'mensual' THEN fecha_proximo_pago + INTERVAL '1 month'\n          WHEN frecuencia = 'trimestral' THEN fecha_proximo_pago + INTERVAL '3 months'\n          WHEN frecuencia = 'anual' THEN fecha_proximo_pago + INTERVAL '1 year'\n          ELSE fecha_proximo_pago\n      END\n  WHERE activa = TRUE\n    AND fecha_proximo_pago = CURRENT_DATE;\n\nEND;\n$$ LANGUAGE plpgsql;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        976,
+        -384
+      ],
+      "id": "9f99963f-2615-45b2-b284-c6b42fc92c65",
+      "name": "functions",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
     }
   ],
   "pinData": {
@@ -894,6 +916,6 @@
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-08-06T19:21:23.994Z",
-  "versionId": "ac16b63d-41ba-451a-bd37-767aa01dae80"
+  "updatedAt": "2025-08-07T20:40:54.167Z",
+  "versionId": "062cce5e-19a4-443c-9d65-adafaaba2977"
 }
