@@ -476,6 +476,121 @@
           }
         ]
       ]
+    },
+    "set_category_budget": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_subscription": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_reminder_preference": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_categories": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_user_category": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "register_transaction": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-01T22:35:15.126Z",
@@ -548,7 +663,7 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "={{ $('data').item.json.metadata.phone_number_id }}",
+        "phoneNumberId": "={{ $('Data').item.json.metadata.phone_number_id }}",
         "recipientPhoneNumber": "=+{{ $('Data').item.json.numero_whatsapp }}",
         "textBody": "={{ $json.message.content.parte4 }}",
         "additionalFields": {
@@ -772,7 +887,7 @@
         "messages": {
           "values": [
             {
-              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **si hay una lista con varios items, no se debe dividir**, toda la lista debe ir en un mismo mensaje\n\n- **No incluyas datos sensibles del usuario** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
+              "content": "=\nDivide el siguiente mensaje en hasta *4 partes más pequeñas* solo si es necesario, asegurándote de que cada parte tenga sentido completo.\n\n### *Reglas:*\n\n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en *una sola parte*.\n\n- Si es *mediano* (hasta *400 caracteres*), divídelo en *2 partes*.\n\n- Si es *largo* (hasta *600 caracteres*), divídelo en *3 partes*.\n\n- Si es *muy largo* (más de *600 caracteres*), agrégale una *parte4*.\n\n- *Evita dividir el mensaje innecesariamente*. Usa la *menor cantidad de partes posible*.\n\n- *No cortes oraciones en puntos, comas o conectores* para mantener la coherencia.\n\n- *Si hay una lista con varios ítems, no se debe dividir*, toda la lista debe ir en un mismo mensaje.\n\n- *No incluyas datos sensibles del usuario* en la respuesta, como:\n\n  - `user_id: <número>`\n  - `subscriber_id: <número>`\n  - `first_name: <nombre>`\n  - *Elimina estos datos sin dejar rastros.*\n\n- *Si no hay mensaje, no devuelvas nada.*\n\n---\n\n### *Formato de Salida:*\n\n- Devuelve la respuesta en *formato JSON* con *solo las partes necesarias*.\n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.\n- *Nunca uses comillas `\"` para resaltar palabras*. En su lugar, usa un solo asterisco: *palabra*.\n\n#### *Ejemplo de salida:*\n\n{\n\"parte1\": \"Texto de la primera parte.\",\n\"parte2\": \"Texto de la segunda parte.\"\n}\n\n### *Mensaje:*\n\n\"{{ $json.output }}\"\n"
             }
           ]
         },
@@ -967,7 +1082,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "WITH transacciones_mes AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    t.descripcion,\n    t.fecha_transaccion,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    date_part('month', t.fecha_transaccion) = date_part('month', CURRENT_DATE)\n    AND date_part('year', t.fecha_transaccion) = date_part('year', CURRENT_DATE)\n),\ningresos_gastos AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS total_ingresos,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS total_gastos\n  FROM transacciones_mes\n  GROUP BY id_usuario\n),\ncategorias_top_gasto AS (\n  SELECT \n    id_usuario,\n    categoria,\n    SUM(monto) AS total_categoria\n  FROM transacciones_mes\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario, categoria\n),\ndetalle_metas_activas AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'nombre', nombre,\n        'monto_objetivo', monto_objetivo,\n        'monto_actual', monto_actual,\n        'fecha_objetivo', fecha_objetivo\n      ) ORDER BY fecha_objetivo\n    ) AS metas_ahorro_activas\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ntop_categorias_detalle AS (\n  SELECT id_usuario, categoria, total_categoria\n  FROM (\n    SELECT \n      id_usuario, \n      categoria, \n      total_categoria,\n      ROW_NUMBER() OVER (PARTITION BY id_usuario ORDER BY total_categoria DESC) AS rn\n    FROM categorias_top_gasto\n  ) sub\n  WHERE rn <= 3\n),\ntop_suscripciones_detalle AS (\n  SELECT \n    id_usuario,\n    json_agg(json_build_object(\n      'nombre', nombre,\n      'monto', monto,\n      'frecuencia', frecuencia,\n      'fecha_proximo_pago', fecha_proximo_pago\n    ) ORDER BY monto DESC) AS detalle_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\ntotal_suscripciones AS (\n  SELECT \n    id_usuario,\n    SUM(monto) AS total_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\nahorros_mes AS (\n  SELECT \n    id_usuario,\n    SUM(monto_actual) AS total_ahorrado\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ndetalle_transacciones AS (\n  SELECT \n    id_usuario,\n    json_build_object(\n      'ingresos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_mes\n        WHERE tipo = 'Ingreso' AND transacciones_mes.id_usuario = t.id_usuario\n      ),\n      'gastos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_mes\n        WHERE tipo = 'Gasto' AND transacciones_mes.id_usuario = t.id_usuario\n      )\n    ) AS transacciones\n  FROM transacciones_mes t\n  GROUP BY id_usuario\n),\ndetalle_top_categorias AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total_categoria\n      ) ORDER BY total_categoria DESC\n    ) AS categorias_top\n  FROM top_categorias_detalle\n  GROUP BY id_usuario\n),\n-- MES PASADO\ntransacciones_mes_pasado AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    date_part('month', t.fecha_transaccion) = date_part('month', CURRENT_DATE - INTERVAL '1 month')\n    AND date_part('year', t.fecha_transaccion) = date_part('year', CURRENT_DATE - INTERVAL '1 month')\n),\nresumen_mes_pasado AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS ingresos_mes_pasado,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS gastos_mes_pasado\n  FROM transacciones_mes_pasado\n  GROUP BY id_usuario\n),\ncategorias_mes_pasado AS (\n  SELECT \n    id_usuario,\n    tipo,\n    categoria,\n    SUM(monto) AS total\n  FROM transacciones_mes_pasado\n  GROUP BY id_usuario, tipo, categoria\n),\ndetalle_categorias_mes_pasado_ingreso AS (\n  SELECT \n    id_usuario,\n    'Ingreso'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_mes_pasado\n  WHERE tipo = 'Ingreso'\n  GROUP BY id_usuario\n),\ndetalle_categorias_mes_pasado_gasto AS (\n  SELECT \n    id_usuario,\n    'Gasto'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_mes_pasado\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario\n),\ndetalle_categorias_mes_pasado AS (\n  SELECT \n    id_usuario,\n    json_object_agg(tipo, detalle) AS categorias_mes_pasado\n  FROM (\n    SELECT * FROM detalle_categorias_mes_pasado_ingreso\n    UNION ALL\n    SELECT * FROM detalle_categorias_mes_pasado_gasto\n  ) sub\n  GROUP BY id_usuario\n)\n\n-- FINAL\nSELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda_defecto,\n  \n  -- Totales\n  COALESCE(ig.total_ingresos, 0) AS total_ingresos,\n  COALESCE(ig.total_gastos, 0) AS total_gastos,\n  COALESCE(ig.total_ingresos, 0) - COALESCE(ig.total_gastos, 0) AS saldo_actual,\n  COALESCE(ts.total_suscripciones, 0) AS total_suscripciones_activas,\n  COALESCE(am.total_ahorrado, 0) AS total_ahorrado_en_metas_activas,\n  \n  -- Detalles enriquecidos\n  COALESCE(tc.categorias_top, '[]') AS top_categorias_gasto,\n  COALESCE(sd.detalle_suscripciones, '[]') AS top_suscripciones_activas,\n  COALESCE(dt.transacciones, '[]') AS detalle_transacciones,\n  COALESCE(ma.metas_ahorro_activas, '[]') AS detalle_metas_ahorro_activas,\n\n  -- Totales del mes anterior\n  COALESCE(rmp.ingresos_mes_pasado, 0) AS ingresos_mes_pasado,\n  COALESCE(rmp.gastos_mes_pasado, 0) AS gastos_mes_pasado,\n\n  -- Detalles por categoría del mes anterior\n  COALESCE(dcmp.categorias_mes_pasado, '{}') AS categorias_mes_pasado\n\nFROM usuarios u\nLEFT JOIN ingresos_gastos ig ON u.id = ig.id_usuario\nLEFT JOIN total_suscripciones ts ON u.id = ts.id_usuario\nLEFT JOIN ahorros_mes am ON u.id = am.id_usuario\nLEFT JOIN detalle_top_categorias tc ON u.id = tc.id_usuario\nLEFT JOIN top_suscripciones_detalle sd ON u.id = sd.id_usuario\nLEFT JOIN detalle_transacciones dt ON u.id = dt.id_usuario\nLEFT JOIN detalle_metas_activas ma ON u.id = ma.id_usuario\nLEFT JOIN resumen_mes_pasado rmp ON u.id = rmp.id_usuario\nLEFT JOIN detalle_categorias_mes_pasado dcmp ON u.id = dcmp.id_usuario\n\nORDER BY saldo_actual DESC;\n",
+        "query": "WITH transacciones_mes AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    t.descripcion,\n    t.fecha_transaccion,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    date_part('month', t.fecha_transaccion) = date_part('month', CURRENT_DATE)\n    AND date_part('year', t.fecha_transaccion) = date_part('year', CURRENT_DATE)\n),\ningresos_gastos AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS total_ingresos,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS total_gastos\n  FROM transacciones_mes\n  GROUP BY id_usuario\n),\ncategorias_top_gasto AS (\n  SELECT \n    id_usuario,\n    categoria,\n    SUM(monto) AS total_categoria\n  FROM transacciones_mes\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario, categoria\n),\ndetalle_metas_activas AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'nombre', nombre,\n        'monto_objetivo', monto_objetivo,\n        'monto_actual', monto_actual,\n        'fecha_objetivo', fecha_objetivo\n      ) ORDER BY fecha_objetivo\n    ) AS metas_ahorro_activas\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ntop_categorias_detalle AS (\n  SELECT id_usuario, categoria, total_categoria\n  FROM (\n    SELECT \n      id_usuario, \n      categoria, \n      total_categoria,\n      ROW_NUMBER() OVER (PARTITION BY id_usuario ORDER BY total_categoria DESC) AS rn\n    FROM categorias_top_gasto\n  ) sub\n  WHERE rn <= 3\n),\ntop_suscripciones_detalle AS (\n  SELECT \n    id_usuario,\n    json_agg(json_build_object(\n      'nombre', nombre,\n      'monto', monto,\n      'frecuencia', frecuencia,\n      'fecha_proximo_pago', fecha_proximo_pago\n    ) ORDER BY monto DESC) AS detalle_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\ntotal_suscripciones AS (\n  SELECT \n    id_usuario,\n    SUM(monto) AS total_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\nahorros_mes AS (\n  SELECT \n    id_usuario,\n    SUM(monto_actual) AS total_ahorrado\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ndetalle_transacciones AS (\n  SELECT \n    id_usuario,\n    json_build_object(\n      'ingresos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_mes\n        WHERE tipo = 'Ingreso' AND transacciones_mes.id_usuario = t.id_usuario\n      ),\n      'gastos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_mes\n        WHERE tipo = 'Gasto' AND transacciones_mes.id_usuario = t.id_usuario\n      )\n    ) AS transacciones\n  FROM transacciones_mes t\n  GROUP BY id_usuario\n),\ndetalle_top_categorias AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total_categoria\n      ) ORDER BY total_categoria DESC\n    ) AS categorias_top\n  FROM top_categorias_detalle\n  GROUP BY id_usuario\n),\n-- MES PASADO\ntransacciones_mes_pasado AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    date_part('month', t.fecha_transaccion) = date_part('month', CURRENT_DATE - INTERVAL '1 month')\n    AND date_part('year', t.fecha_transaccion) = date_part('year', CURRENT_DATE - INTERVAL '1 month')\n),\nresumen_mes_pasado AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS ingresos_mes_pasado,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS gastos_mes_pasado\n  FROM transacciones_mes_pasado\n  GROUP BY id_usuario\n),\ncategorias_mes_pasado AS (\n  SELECT \n    id_usuario,\n    tipo,\n    categoria,\n    SUM(monto) AS total\n  FROM transacciones_mes_pasado\n  GROUP BY id_usuario, tipo, categoria\n),\ndetalle_categorias_mes_pasado_ingreso AS (\n  SELECT \n    id_usuario,\n    'Ingreso'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_mes_pasado\n  WHERE tipo = 'Ingreso'\n  GROUP BY id_usuario\n),\ndetalle_categorias_mes_pasado_gasto AS (\n  SELECT \n    id_usuario,\n    'Gasto'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_mes_pasado\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario\n),\ndetalle_categorias_mes_pasado AS (\n  SELECT \n    id_usuario,\n    json_object_agg(tipo, detalle) AS categorias_mes_pasado\n  FROM (\n    SELECT * FROM detalle_categorias_mes_pasado_ingreso\n    UNION ALL\n    SELECT * FROM detalle_categorias_mes_pasado_gasto\n  ) sub\n  GROUP BY id_usuario\n)\n\n-- FINAL\nSELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda,\n  \n  -- Totales\n  COALESCE(ig.total_ingresos, 0) AS total_ingresos,\n  COALESCE(ig.total_gastos, 0) AS total_gastos,\n  COALESCE(ig.total_ingresos, 0) - COALESCE(ig.total_gastos, 0) AS saldo_actual,\n  COALESCE(ts.total_suscripciones, 0) AS total_suscripciones_activas,\n  COALESCE(am.total_ahorrado, 0) AS total_ahorrado_en_metas_activas,\n  \n  -- Detalles enriquecidos\n  COALESCE(tc.categorias_top, '[]') AS top_categorias_gasto,\n  COALESCE(sd.detalle_suscripciones, '[]') AS top_suscripciones_activas,\n  COALESCE(dt.transacciones, '[]') AS detalle_transacciones,\n  COALESCE(ma.metas_ahorro_activas, '[]') AS detalle_metas_ahorro_activas,\n\n  -- Totales del mes anterior\n  COALESCE(rmp.ingresos_mes_pasado, 0) AS ingresos_mes_pasado,\n  COALESCE(rmp.gastos_mes_pasado, 0) AS gastos_mes_pasado,\n\n  -- Detalles por categoría del mes anterior\n  COALESCE(dcmp.categorias_mes_pasado, '{}') AS categorias_mes_pasado\n\nFROM usuarios u\nLEFT JOIN ingresos_gastos ig ON u.id = ig.id_usuario\nLEFT JOIN total_suscripciones ts ON u.id = ts.id_usuario\nLEFT JOIN ahorros_mes am ON u.id = am.id_usuario\nLEFT JOIN detalle_top_categorias tc ON u.id = tc.id_usuario\nLEFT JOIN top_suscripciones_detalle sd ON u.id = sd.id_usuario\nLEFT JOIN detalle_transacciones dt ON u.id = dt.id_usuario\nLEFT JOIN detalle_metas_activas ma ON u.id = ma.id_usuario\nLEFT JOIN resumen_mes_pasado rmp ON u.id = rmp.id_usuario\nLEFT JOIN detalle_categorias_mes_pasado dcmp ON u.id = dcmp.id_usuario\n\nORDER BY saldo_actual DESC;\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1028,7 +1143,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "WITH transacciones_semana AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    t.descripcion,\n    t.fecha_transaccion,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n     t.fecha_transaccion >= CURRENT_DATE - INTERVAL '7 days'\n),\ningresos_gastos AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS total_ingresos,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS total_gastos\n  FROM transacciones_semana\n  GROUP BY id_usuario\n),\ncategorias_top_gasto AS (\n  SELECT \n    id_usuario,\n    categoria,\n    SUM(monto) AS total_categoria\n  FROM transacciones_semana\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario, categoria\n),\ndetalle_metas_activas AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'nombre', nombre,\n        'monto_objetivo', monto_objetivo,\n        'monto_actual', monto_actual,\n        'fecha_objetivo', fecha_objetivo\n      ) ORDER BY fecha_objetivo\n    ) AS metas_ahorro_activas\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\n\n  \ntop_categorias_detalle AS (\n  SELECT id_usuario, categoria, total_categoria\n  FROM (\n    SELECT \n      id_usuario, \n      categoria, \n      total_categoria,\n      ROW_NUMBER() OVER (PARTITION BY id_usuario ORDER BY total_categoria DESC) AS rn\n    FROM categorias_top_gasto\n  ) sub\n  WHERE rn <= 3\n),\ntop_suscripciones_detalle AS (\n  SELECT \n    id_usuario,\n    json_agg(json_build_object(\n      'nombre', nombre,\n      'monto', monto,\n      'frecuencia', frecuencia,\n      'fecha_proximo_pago', fecha_proximo_pago\n    ) ORDER BY monto DESC) AS detalle_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\ntotal_suscripciones AS (\n  SELECT \n    id_usuario,\n    SUM(monto) AS total_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\nahorros_semana AS (\n  SELECT \n    id_usuario,\n    SUM(monto_actual) AS total_ahorrado\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ndetalle_transacciones AS (\n  SELECT \n    id_usuario,\n    json_build_object(\n      'ingresos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_semana\n        WHERE tipo = 'Ingreso' AND transacciones_semana.id_usuario = t.id_usuario\n      ),\n      'gastos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_semana\n        WHERE tipo = 'Gasto' AND transacciones_semana.id_usuario = t.id_usuario\n      )\n    ) AS transacciones\n  FROM transacciones_semana t\n  GROUP BY id_usuario\n),\n\ndetalle_top_categorias AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total_categoria\n      ) ORDER BY total_categoria DESC\n    ) AS categorias_top\n  FROM top_categorias_detalle\n  GROUP BY id_usuario\n), \n  \n  resumen_semana_pasada AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS ingresos_semana_pasada,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS gastos_semana_pasada\n  FROM transacciones\n  WHERE \n    fecha_transaccion >= CURRENT_DATE - INTERVAL '14 days'\n    AND fecha_transaccion < CURRENT_DATE - INTERVAL '7 days'\n  GROUP BY id_usuario\n)\n\n\nSELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda_defecto,\n  \n  -- Totales\n  COALESCE(ig.total_ingresos, 0) AS total_ingresos,\n  COALESCE(ig.total_gastos, 0) AS total_gastos,\n  COALESCE(ig.total_ingresos, 0) - COALESCE(ig.total_gastos, 0) AS saldo_actual,\n  COALESCE(ts.total_suscripciones, 0) AS total_suscripciones_activas,\n  COALESCE(am.total_ahorrado, 0) AS total_ahorrado_en_metas_activas,\n  \n  -- Detalles enriquecidos\n  COALESCE(tc.categorias_top, '[]') AS top_categorias_gasto,\n  COALESCE(sd.detalle_suscripciones, '[]') AS top_suscripciones_activas,\n  COALESCE(dt.transacciones, '[]') AS detalle_transacciones,\n  COALESCE(ma.metas_ahorro_activas, '[]') AS detalle_metas_ahorro_activas,\n  COALESCE(rsp.ingresos_semana_pasada, 0) AS ingresos_semana_pasada,\n  COALESCE(rsp.gastos_semana_pasada, 0) AS gastos_semana_pasada\n\n\nFROM usuarios u\nLEFT JOIN ingresos_gastos ig ON u.id = ig.id_usuario\nLEFT JOIN total_suscripciones ts ON u.id = ts.id_usuario\nLEFT JOIN ahorros_semana am ON u.id = am.id_usuario\nLEFT JOIN detalle_top_categorias tc ON u.id = tc.id_usuario\nLEFT JOIN top_suscripciones_detalle sd ON u.id = sd.id_usuario\nLEFT JOIN detalle_transacciones dt ON u.id = dt.id_usuario\nLEFT JOIN detalle_metas_activas ma ON u.id = ma.id_usuario\nLEFT JOIN resumen_semana_pasada rsp ON u.id = rsp.id_usuario\n\n\n\nORDER BY saldo_actual DESC;",
+        "query": "WITH transacciones_semana AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    t.descripcion,\n    t.fecha_transaccion,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n     t.fecha_transaccion >= CURRENT_DATE - INTERVAL '7 days'\n),\ningresos_gastos AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS total_ingresos,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS total_gastos\n  FROM transacciones_semana\n  GROUP BY id_usuario\n),\ncategorias_top_gasto AS (\n  SELECT \n    id_usuario,\n    categoria,\n    SUM(monto) AS total_categoria\n  FROM transacciones_semana\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario, categoria\n),\ndetalle_metas_activas AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'nombre', nombre,\n        'monto_objetivo', monto_objetivo,\n        'monto_actual', monto_actual,\n        'fecha_objetivo', fecha_objetivo\n      ) ORDER BY fecha_objetivo\n    ) AS metas_ahorro_activas\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\n\n  \ntop_categorias_detalle AS (\n  SELECT id_usuario, categoria, total_categoria\n  FROM (\n    SELECT \n      id_usuario, \n      categoria, \n      total_categoria,\n      ROW_NUMBER() OVER (PARTITION BY id_usuario ORDER BY total_categoria DESC) AS rn\n    FROM categorias_top_gasto\n  ) sub\n  WHERE rn <= 3\n),\ntop_suscripciones_detalle AS (\n  SELECT \n    id_usuario,\n    json_agg(json_build_object(\n      'nombre', nombre,\n      'monto', monto,\n      'frecuencia', frecuencia,\n      'fecha_proximo_pago', fecha_proximo_pago\n    ) ORDER BY monto DESC) AS detalle_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\ntotal_suscripciones AS (\n  SELECT \n    id_usuario,\n    SUM(monto) AS total_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND date_part('month', fecha_proximo_pago) = date_part('month', CURRENT_DATE)\n    AND date_part('year', fecha_proximo_pago) = date_part('year', CURRENT_DATE)\n  GROUP BY id_usuario\n),\nahorros_semana AS (\n  SELECT \n    id_usuario,\n    SUM(monto_actual) AS total_ahorrado\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ndetalle_transacciones AS (\n  SELECT \n    id_usuario,\n    json_build_object(\n      'ingresos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_semana\n        WHERE tipo = 'Ingreso' AND transacciones_semana.id_usuario = t.id_usuario\n      ),\n      'gastos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_semana\n        WHERE tipo = 'Gasto' AND transacciones_semana.id_usuario = t.id_usuario\n      )\n    ) AS transacciones\n  FROM transacciones_semana t\n  GROUP BY id_usuario\n),\n\ndetalle_top_categorias AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total_categoria\n      ) ORDER BY total_categoria DESC\n    ) AS categorias_top\n  FROM top_categorias_detalle\n  GROUP BY id_usuario\n), \n  \n  resumen_semana_pasada AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS ingresos_semana_pasada,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS gastos_semana_pasada\n  FROM transacciones\n  WHERE \n    fecha_transaccion >= CURRENT_DATE - INTERVAL '14 days'\n    AND fecha_transaccion < CURRENT_DATE - INTERVAL '7 days'\n  GROUP BY id_usuario\n)\n\n\nSELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda,\n  \n  -- Totales\n  COALESCE(ig.total_ingresos, 0) AS total_ingresos,\n  COALESCE(ig.total_gastos, 0) AS total_gastos,\n  COALESCE(ig.total_ingresos, 0) - COALESCE(ig.total_gastos, 0) AS saldo_actual,\n  COALESCE(ts.total_suscripciones, 0) AS total_suscripciones_activas,\n  COALESCE(am.total_ahorrado, 0) AS total_ahorrado_en_metas_activas,\n  \n  -- Detalles enriquecidos\n  COALESCE(tc.categorias_top, '[]') AS top_categorias_gasto,\n  COALESCE(sd.detalle_suscripciones, '[]') AS top_suscripciones_activas,\n  COALESCE(dt.transacciones, '[]') AS detalle_transacciones,\n  COALESCE(ma.metas_ahorro_activas, '[]') AS detalle_metas_ahorro_activas,\n  COALESCE(rsp.ingresos_semana_pasada, 0) AS ingresos_semana_pasada,\n  COALESCE(rsp.gastos_semana_pasada, 0) AS gastos_semana_pasada\n\n\nFROM usuarios u\nLEFT JOIN ingresos_gastos ig ON u.id = ig.id_usuario\nLEFT JOIN total_suscripciones ts ON u.id = ts.id_usuario\nLEFT JOIN ahorros_semana am ON u.id = am.id_usuario\nLEFT JOIN detalle_top_categorias tc ON u.id = tc.id_usuario\nLEFT JOIN top_suscripciones_detalle sd ON u.id = sd.id_usuario\nLEFT JOIN detalle_transacciones dt ON u.id = dt.id_usuario\nLEFT JOIN detalle_metas_activas ma ON u.id = ma.id_usuario\nLEFT JOIN resumen_semana_pasada rsp ON u.id = rsp.id_usuario\n\n\n\nORDER BY saldo_actual DESC;",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1215,7 +1330,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "WITH transacciones_trimestre AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    t.descripcion,\n    t.fecha_transaccion,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    t.fecha_transaccion >= date_trunc('quarter', CURRENT_DATE)\n    AND t.fecha_transaccion < date_trunc('quarter', CURRENT_DATE) + INTERVAL '3 months'\n),\ningresos_gastos AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS total_ingresos,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS total_gastos\n  FROM transacciones_trimestre\n  GROUP BY id_usuario\n),\ncategorias_top_gasto AS (\n  SELECT \n    id_usuario,\n    categoria,\n    SUM(monto) AS total_categoria\n  FROM transacciones_trimestre\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario, categoria\n),\ndetalle_metas_activas AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'nombre', nombre,\n        'monto_objetivo', monto_objetivo,\n        'monto_actual', monto_actual,\n        'fecha_objetivo', fecha_objetivo\n      ) ORDER BY fecha_objetivo\n    ) AS metas_ahorro_activas\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ntop_categorias_detalle AS (\n  SELECT id_usuario, categoria, total_categoria\n  FROM (\n    SELECT \n      id_usuario, \n      categoria, \n      total_categoria,\n      ROW_NUMBER() OVER (PARTITION BY id_usuario ORDER BY total_categoria DESC) AS rn\n    FROM categorias_top_gasto\n  ) sub\n  WHERE rn <= 3\n),\ntop_suscripciones_detalle AS (\n  SELECT \n    id_usuario,\n    json_agg(json_build_object(\n      'nombre', nombre,\n      'monto', monto,\n      'frecuencia', frecuencia,\n      'fecha_proximo_pago', fecha_proximo_pago\n    ) ORDER BY monto DESC) AS detalle_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND fecha_proximo_pago >= date_trunc('quarter', CURRENT_DATE)\n    AND fecha_proximo_pago < date_trunc('quarter', CURRENT_DATE) + INTERVAL '3 months'\n  GROUP BY id_usuario\n),\ntotal_suscripciones AS (\n  SELECT \n    id_usuario,\n    SUM(monto) AS total_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND fecha_proximo_pago >= date_trunc('quarter', CURRENT_DATE)\n    AND fecha_proximo_pago < date_trunc('quarter', CURRENT_DATE) + INTERVAL '3 months'\n  GROUP BY id_usuario\n),\nahorros_trimestre AS (\n  SELECT \n    id_usuario,\n    SUM(monto_actual) AS total_ahorrado\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ndetalle_transacciones AS (\n  SELECT \n    id_usuario,\n    json_build_object(\n      'ingresos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_trimestre\n        WHERE tipo = 'Ingreso' AND transacciones_trimestre.id_usuario = t.id_usuario\n      ),\n      'gastos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_trimestre\n        WHERE tipo = 'Gasto' AND transacciones_trimestre.id_usuario = t.id_usuario\n      )\n    ) AS transacciones\n  FROM transacciones_trimestre t\n  GROUP BY id_usuario\n),\ndetalle_top_categorias AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total_categoria\n      ) ORDER BY total_categoria DESC\n    ) AS categorias_top\n  FROM top_categorias_detalle\n  GROUP BY id_usuario\n),\n-- Trimestre PASADO\ntransacciones_trimestre_pasado AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    t.fecha_transaccion >= date_trunc('quarter', CURRENT_DATE - INTERVAL '3 months')\n    AND t.fecha_transaccion < date_trunc('quarter', CURRENT_DATE)\n),\nresumen_trimestre_pasado AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS ingresos_trimestre_pasado,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS gastos_trimestre_pasado\n  FROM transacciones_trimestre_pasado\n  GROUP BY id_usuario\n),\ncategorias_trimestre_pasado AS (\n  SELECT \n    id_usuario,\n    tipo,\n    categoria,\n    SUM(monto) AS total\n  FROM transacciones_trimestre_pasado\n  GROUP BY id_usuario, tipo, categoria\n),\ndetalle_categorias_trimestre_pasado_ingreso AS (\n  SELECT \n    id_usuario,\n    'Ingreso'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_trimestre_pasado\n  WHERE tipo = 'Ingreso'\n  GROUP BY id_usuario\n),\ndetalle_categorias_trimestre_pasado_gasto AS (\n  SELECT \n    id_usuario,\n    'Gasto'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_trimestre_pasado\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario\n),\ndetalle_categorias_trimestre_pasado AS (\n  SELECT \n    id_usuario,\n    json_object_agg(tipo, detalle) AS categorias_trimestre_pasado\n  FROM (\n    SELECT * FROM detalle_categorias_trimestre_pasado_ingreso\n    UNION ALL\n    SELECT * FROM detalle_categorias_trimestre_pasado_gasto\n  ) sub\n  GROUP BY id_usuario\n)\n\n-- FINAL\nSELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda_defecto,\n  \n  -- Totales\n  COALESCE(ig.total_ingresos, 0) AS total_ingresos,\n  COALESCE(ig.total_gastos, 0) AS total_gastos,\n  COALESCE(ig.total_ingresos, 0) - COALESCE(ig.total_gastos, 0) AS saldo_actual,\n  COALESCE(ts.total_suscripciones, 0) AS total_suscripciones_activas,\n  COALESCE(am.total_ahorrado, 0) AS total_ahorrado_en_metas_activas,\n  \n  -- Detalles enriquecidos\n  COALESCE(tc.categorias_top, '[]') AS top_categorias_gasto,\n  COALESCE(sd.detalle_suscripciones, '[]') AS top_suscripciones_activas,\n  COALESCE(dt.transacciones, '[]') AS detalle_transacciones,\n  COALESCE(ma.metas_ahorro_activas, '[]') AS detalle_metas_ahorro_activas,\n\n  -- Totales del trimestre anterior\n  COALESCE(rmp.ingresos_trimestre_pasado, 0) AS ingresos_trimestre_pasado,\n  COALESCE(rmp.gastos_trimestre_pasado, 0) AS gastos_trimestre_pasado,\n\n  -- Detalles por categoría del trimestre anterior\n  COALESCE(dcmp.categorias_trimestre_pasado, '{}') AS categorias_trimestre_pasado\n\nFROM usuarios u\nLEFT JOIN ingresos_gastos ig ON u.id = ig.id_usuario\nLEFT JOIN total_suscripciones ts ON u.id = ts.id_usuario\nLEFT JOIN ahorros_trimestre am ON u.id = am.id_usuario\nLEFT JOIN detalle_top_categorias tc ON u.id = tc.id_usuario\nLEFT JOIN top_suscripciones_detalle sd ON u.id = sd.id_usuario\nLEFT JOIN detalle_transacciones dt ON u.id = dt.id_usuario\nLEFT JOIN detalle_metas_activas ma ON u.id = ma.id_usuario\nLEFT JOIN resumen_trimestre_pasado rmp ON u.id = rmp.id_usuario\nLEFT JOIN detalle_categorias_trimestre_pasado dcmp ON u.id = dcmp.id_usuario\n\nORDER BY saldo_actual DESC;\n",
+        "query": "WITH transacciones_trimestre AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    t.descripcion,\n    t.fecha_transaccion,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    t.fecha_transaccion >= date_trunc('quarter', CURRENT_DATE)\n    AND t.fecha_transaccion < date_trunc('quarter', CURRENT_DATE) + INTERVAL '3 months'\n),\ningresos_gastos AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS total_ingresos,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS total_gastos\n  FROM transacciones_trimestre\n  GROUP BY id_usuario\n),\ncategorias_top_gasto AS (\n  SELECT \n    id_usuario,\n    categoria,\n    SUM(monto) AS total_categoria\n  FROM transacciones_trimestre\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario, categoria\n),\ndetalle_metas_activas AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'nombre', nombre,\n        'monto_objetivo', monto_objetivo,\n        'monto_actual', monto_actual,\n        'fecha_objetivo', fecha_objetivo\n      ) ORDER BY fecha_objetivo\n    ) AS metas_ahorro_activas\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ntop_categorias_detalle AS (\n  SELECT id_usuario, categoria, total_categoria\n  FROM (\n    SELECT \n      id_usuario, \n      categoria, \n      total_categoria,\n      ROW_NUMBER() OVER (PARTITION BY id_usuario ORDER BY total_categoria DESC) AS rn\n    FROM categorias_top_gasto\n  ) sub\n  WHERE rn <= 3\n),\ntop_suscripciones_detalle AS (\n  SELECT \n    id_usuario,\n    json_agg(json_build_object(\n      'nombre', nombre,\n      'monto', monto,\n      'frecuencia', frecuencia,\n      'fecha_proximo_pago', fecha_proximo_pago\n    ) ORDER BY monto DESC) AS detalle_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND fecha_proximo_pago >= date_trunc('quarter', CURRENT_DATE)\n    AND fecha_proximo_pago < date_trunc('quarter', CURRENT_DATE) + INTERVAL '3 months'\n  GROUP BY id_usuario\n),\ntotal_suscripciones AS (\n  SELECT \n    id_usuario,\n    SUM(monto) AS total_suscripciones\n  FROM suscripciones_usuario\n  WHERE activa = TRUE\n    AND fecha_proximo_pago >= date_trunc('quarter', CURRENT_DATE)\n    AND fecha_proximo_pago < date_trunc('quarter', CURRENT_DATE) + INTERVAL '3 months'\n  GROUP BY id_usuario\n),\nahorros_trimestre AS (\n  SELECT \n    id_usuario,\n    SUM(monto_actual) AS total_ahorrado\n  FROM metas_ahorro\n  WHERE estado = 'activa'\n  GROUP BY id_usuario\n),\ndetalle_transacciones AS (\n  SELECT \n    id_usuario,\n    json_build_object(\n      'ingresos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_trimestre\n        WHERE tipo = 'Ingreso' AND transacciones_trimestre.id_usuario = t.id_usuario\n      ),\n      'gastos', (\n        SELECT json_agg(\n          json_build_object(\n            'monto', monto,\n            'categoria', categoria,\n            'descripcion', descripcion,\n            'fecha', fecha_transaccion\n          ) ORDER BY fecha_transaccion DESC\n        )\n        FROM transacciones_trimestre\n        WHERE tipo = 'Gasto' AND transacciones_trimestre.id_usuario = t.id_usuario\n      )\n    ) AS transacciones\n  FROM transacciones_trimestre t\n  GROUP BY id_usuario\n),\ndetalle_top_categorias AS (\n  SELECT \n    id_usuario,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total_categoria\n      ) ORDER BY total_categoria DESC\n    ) AS categorias_top\n  FROM top_categorias_detalle\n  GROUP BY id_usuario\n),\n-- Trimestre PASADO\ntransacciones_trimestre_pasado AS (\n  SELECT \n    t.id_usuario,\n    t.tipo,\n    t.monto,\n    c.nombre AS categoria\n  FROM transacciones t\n  LEFT JOIN categorias c ON t.id_categoria = c.id\n  WHERE \n    t.fecha_transaccion >= date_trunc('quarter', CURRENT_DATE - INTERVAL '3 months')\n    AND t.fecha_transaccion < date_trunc('quarter', CURRENT_DATE)\n),\nresumen_trimestre_pasado AS (\n  SELECT \n    id_usuario,\n    SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS ingresos_trimestre_pasado,\n    SUM(CASE WHEN tipo = 'Gasto' THEN monto ELSE 0 END) AS gastos_trimestre_pasado\n  FROM transacciones_trimestre_pasado\n  GROUP BY id_usuario\n),\ncategorias_trimestre_pasado AS (\n  SELECT \n    id_usuario,\n    tipo,\n    categoria,\n    SUM(monto) AS total\n  FROM transacciones_trimestre_pasado\n  GROUP BY id_usuario, tipo, categoria\n),\ndetalle_categorias_trimestre_pasado_ingreso AS (\n  SELECT \n    id_usuario,\n    'Ingreso'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_trimestre_pasado\n  WHERE tipo = 'Ingreso'\n  GROUP BY id_usuario\n),\ndetalle_categorias_trimestre_pasado_gasto AS (\n  SELECT \n    id_usuario,\n    'Gasto'::text AS tipo,\n    json_agg(\n      json_build_object(\n        'categoria', categoria,\n        'monto', total\n      ) ORDER BY total DESC\n    ) AS detalle\n  FROM categorias_trimestre_pasado\n  WHERE tipo = 'Gasto'\n  GROUP BY id_usuario\n),\ndetalle_categorias_trimestre_pasado AS (\n  SELECT \n    id_usuario,\n    json_object_agg(tipo, detalle) AS categorias_trimestre_pasado\n  FROM (\n    SELECT * FROM detalle_categorias_trimestre_pasado_ingreso\n    UNION ALL\n    SELECT * FROM detalle_categorias_trimestre_pasado_gasto\n  ) sub\n  GROUP BY id_usuario\n)\n\n-- FINAL\nSELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda,\n  \n  -- Totales\n  COALESCE(ig.total_ingresos, 0) AS total_ingresos,\n  COALESCE(ig.total_gastos, 0) AS total_gastos,\n  COALESCE(ig.total_ingresos, 0) - COALESCE(ig.total_gastos, 0) AS saldo_actual,\n  COALESCE(ts.total_suscripciones, 0) AS total_suscripciones_activas,\n  COALESCE(am.total_ahorrado, 0) AS total_ahorrado_en_metas_activas,\n  \n  -- Detalles enriquecidos\n  COALESCE(tc.categorias_top, '[]') AS top_categorias_gasto,\n  COALESCE(sd.detalle_suscripciones, '[]') AS top_suscripciones_activas,\n  COALESCE(dt.transacciones, '[]') AS detalle_transacciones,\n  COALESCE(ma.metas_ahorro_activas, '[]') AS detalle_metas_ahorro_activas,\n\n  -- Totales del trimestre anterior\n  COALESCE(rmp.ingresos_trimestre_pasado, 0) AS ingresos_trimestre_pasado,\n  COALESCE(rmp.gastos_trimestre_pasado, 0) AS gastos_trimestre_pasado,\n\n  -- Detalles por categoría del trimestre anterior\n  COALESCE(dcmp.categorias_trimestre_pasado, '{}') AS categorias_trimestre_pasado\n\nFROM usuarios u\nLEFT JOIN ingresos_gastos ig ON u.id = ig.id_usuario\nLEFT JOIN total_suscripciones ts ON u.id = ts.id_usuario\nLEFT JOIN ahorros_trimestre am ON u.id = am.id_usuario\nLEFT JOIN detalle_top_categorias tc ON u.id = tc.id_usuario\nLEFT JOIN top_suscripciones_detalle sd ON u.id = sd.id_usuario\nLEFT JOIN detalle_transacciones dt ON u.id = dt.id_usuario\nLEFT JOIN detalle_metas_activas ma ON u.id = ma.id_usuario\nLEFT JOIN resumen_trimestre_pasado rmp ON u.id = rmp.id_usuario\nLEFT JOIN detalle_categorias_trimestre_pasado dcmp ON u.id = dcmp.id_usuario\n\nORDER BY saldo_actual DESC;\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1236,7 +1351,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda_defecto,\n\n  -- Transacciones de HOY agrupadas por tipo\n  jsonb_build_object(\n    'Ingreso', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Ingreso' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Ingreso'),\n    'Gasto', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Gasto' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Gasto')\n  ) AS transacciones_hoy,\n\n  -- Transacciones de AYER agrupadas por tipo\n  jsonb_build_object(\n    'Ingreso', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Ingreso' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Ingreso'),\n    'Gasto', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Gasto' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Gasto')\n  ) AS transacciones_ayer\n\nFROM transacciones t\nLEFT JOIN categorias c ON t.id_categoria = c.id\nLEFT JOIN fuentes_registro f ON t.id_fuente = f.id\nLEFT JOIN usuarios u ON u.id = t.id_usuario\nWHERE \n  t.fecha_transaccion IN (CURRENT_DATE, CURRENT_DATE - INTERVAL '1 day')\nGROUP BY u.id, u.nombre_completo, u.numero_whatsapp, u.moneda_defecto\nORDER BY u.id;\n",
+        "query": "SELECT \n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  u.moneda,\n\n  -- Transacciones de HOY agrupadas por tipo\n  jsonb_build_object(\n    'Ingreso', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Ingreso' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Ingreso'),\n    'Gasto', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Gasto' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE AND t.tipo = 'Gasto')\n  ) AS transacciones_hoy,\n\n  -- Transacciones de AYER agrupadas por tipo\n  jsonb_build_object(\n    'Ingreso', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Ingreso' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Ingreso'),\n    'Gasto', jsonb_agg(\n      CASE \n        WHEN t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Gasto' THEN\n          jsonb_build_object(\n            'id', t.id,\n            'descripcion', t.descripcion,\n            'monto', t.monto,\n            'moneda', t.moneda,\n            'fecha', t.fecha_transaccion,\n            'categoria', c.nombre,\n            'fuente', f.nombre\n          )\n        ELSE NULL\n      END\n    ) FILTER (WHERE t.fecha_transaccion = CURRENT_DATE - INTERVAL '1 day' AND t.tipo = 'Gasto')\n  ) AS transacciones_ayer\n\nFROM transacciones t\nLEFT JOIN categorias c ON t.id_categoria = c.id\nLEFT JOIN fuentes_registro f ON t.id_fuente = f.id\nLEFT JOIN usuarios u ON u.id = t.id_usuario\nWHERE \n  t.fecha_transaccion IN (CURRENT_DATE, CURRENT_DATE - INTERVAL '1 day')\nGROUP BY u.id, u.nombre_completo, u.numero_whatsapp, u.moneda\nORDER BY u.id;\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1342,14 +1457,14 @@
         "descriptionType": "manual",
         "toolDescription": "Consulta el estado de las metas de ahorro activas del usuario",
         "operation": "executeQuery",
-        "query": "SELECT \n  nombre, \n  monto_objetivo, \n  monto_actual, \n  fecha_objetivo \nFROM metas_ahorro\nWHERE \n  id_usuario = {{ $fromAI(\"id_usuario\", `ID del usuario que tiene metas de ahorro activas`, \"string\") }} \n  AND estado = 'activa'\nORDER BY fecha_objetivo ASC;",
+        "query": "SELECT \n  nombre, \n  monto_objetivo, \n  monto_actual, \n  fecha_objetivo \nFROM metas_ahorro\nWHERE \n  id_usuario = '{{ $fromAI(\"id_usuario\", `ID del usuario que tiene metas de ahorro activas`, \"string\") }}'\n  AND estado = 'activa'\nORDER BY fecha_objetivo ASC;\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        3456,
-        4400
+        3392,
+        4544
       ],
       "id": "f74051fb-c791-452c-95c4-63100200df23",
       "name": "get_saving_goals",
@@ -1365,14 +1480,14 @@
         "descriptionType": "manual",
         "toolDescription": "Consulta los presupuestos establecidos por el usuario para sus categorías.",
         "operation": "executeQuery",
-        "query": "SELECT nombre, presupuesto_mensual FROM categorias\nWHERE id_usuario = {{ $fromAI(\"id_usuario\", `ID del usuario`, \"string\") }} AND presupuesto_mensual IS NOT NULL AND tipo = 'Gasto';",
+        "query": "SELECT nombre, presupuesto_mensual FROM categorias\nWHERE id_usuario = '{{ $fromAI(\"id_usuario\", `ID del usuario`, \"string\") }}' AND presupuesto_mensual IS NOT NULL AND tipo = 'Gasto';",
         "options": {}
       },
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        3200,
-        4400
+        3552,
+        4528
       ],
       "id": "d9bfc2d7-aeb3-41a4-8c7c-b80ebcdc3b3e",
       "name": "get_category_budgets",
@@ -1406,7 +1521,7 @@
             "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `Nombre de la subscripcion`, 'string') }}",
             "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
             "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
-            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', ``, 'string') }}",
+            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `puede ser uno de estos diario, semanal, mensual, trimestral, anual`, 'string') }}",
             "fecha_proximo_pago": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fecha_proximo_pago', ``, 'string') }}",
             "id_categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_categoria', `id de la categoria que se registra la subscripcion`, 'number') }}"
           },
@@ -1423,15 +1538,6 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": true
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
             },
             {
               "id": "nombre",
@@ -1466,8 +1572,34 @@
               "required": true,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "nunca",
+                  "value": "nunca"
+                },
+                {
+                  "name": "anual",
+                  "value": "anual"
+                },
+                {
+                  "name": "trimestral",
+                  "value": "trimestral"
+                },
+                {
+                  "name": "mensual",
+                  "value": "mensual"
+                },
+                {
+                  "name": "semanal",
+                  "value": "semanal"
+                },
+                {
+                  "name": "diario",
+                  "value": "diario"
+                }
+              ]
             },
             {
               "id": "fecha_proximo_pago",
@@ -1479,21 +1611,30 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "id_categoria",
-              "displayName": "id_categoria",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
               "id": "activa",
               "displayName": "activa",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_categoria",
+              "displayName": "id_categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
               "canBeUsedToMatch": true
             }
           ],
@@ -1505,8 +1646,8 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        3328,
-        4400
+        3280,
+        4432
       ],
       "id": "a9f57d07-d104-4280-8d58-7397a2978b58",
       "name": "add_user_subscription",
@@ -1529,7 +1670,7 @@
       "typeVersion": 2.6,
       "position": [
         2944,
-        4400
+        4480
       ],
       "id": "d7e8bc34-55df-477c-bad9-c34cbeb3ab62",
       "name": "analyze_spending_habits",
@@ -1900,6 +2041,585 @@
       ],
       "id": "d650da0c-84a7-419c-84fd-d6a69a3ac3e4",
       "name": "Data"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Establece o actualiza el presupuesto mensual para una categoría de gasto específica",
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "categorias",
+          "mode": "list",
+          "cachedResultName": "categorias"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre__using_to_match_', `nombre exacto de la categoria a actualizar`, 'string') }}",
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario__using_to_match_', ``, 'string') }}",
+            "presupuesto_mensual": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('presupuesto_mensual', `monto nuevo a actualizar`, 'number') }}",
+            "tipo": "Gasto"
+          },
+          "matchingColumns": [
+            "id_usuario",
+            "nombre"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "options",
+              "canBeUsedToMatch": false,
+              "options": [
+                {
+                  "name": "Gasto",
+                  "value": "Gasto"
+                },
+                {
+                  "name": "Ingreso",
+                  "value": "Ingreso"
+                }
+              ],
+              "removed": false
+            },
+            {
+              "id": "presupuesto_mensual",
+              "displayName": "presupuesto_mensual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3664,
+        4400
+      ],
+      "id": "8fcea9d6-e9c9-4fb5-976a-c6b712683e1a",
+      "name": "set_category_budget",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "obtienes todas las  suscripciones o gastos recurrente del usuario, como Netflix o el gimnasio",
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "suscripciones_usuario",
+          "mode": "list",
+          "cachedResultName": "suscripciones_usuario"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "id_usuario",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3184,
+        4528
+      ],
+      "id": "a1742a75-9c81-431e-911f-b356b38d1562",
+      "name": "get_user_subscription",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Permite al usuario configurar la frecuencia de los recordatorios para registrar sus gastos.",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "recordatorios",
+          "mode": "list",
+          "cachedResultName": "recordatorios"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
+            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `'diario'/'semanal'/'mensual'`, 'string') }}",
+            "hora_envio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('hora_envio', `HH:MM:SS`, 'string') }}",
+            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "frecuencia",
+              "displayName": "frecuencia",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "nunca",
+                  "value": "nunca"
+                },
+                {
+                  "name": "anual",
+                  "value": "anual"
+                },
+                {
+                  "name": "trimestral",
+                  "value": "trimestral"
+                },
+                {
+                  "name": "mensual",
+                  "value": "mensual"
+                },
+                {
+                  "name": "semanal",
+                  "value": "semanal"
+                },
+                {
+                  "name": "diario",
+                  "value": "diario"
+                }
+              ]
+            },
+            {
+              "id": "hora_envio",
+              "displayName": "hora_envio",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "time",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "descripcion",
+              "displayName": "descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3792,
+        4560
+      ],
+      "id": "2b9f2640-de35-463e-b80f-426de22de785",
+      "name": "set_reminder_preference",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "categorias",
+          "mode": "list",
+          "cachedResultName": "categorias"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `nombre de la categoria`, 'string') }}",
+            "tipo": "={{ $fromAI('tipo', `Gasto o Ingreso`, 'string') }}",
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
+            "presupuesto_mensual": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('presupuesto_mensual', ``, 'number') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "Gasto",
+                  "value": "Gasto"
+                },
+                {
+                  "name": "Ingreso",
+                  "value": "Ingreso"
+                }
+              ]
+            },
+            {
+              "id": "presupuesto_mensual",
+              "displayName": "presupuesto_mensual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3872,
+        4400
+      ],
+      "id": "8fd63c3d-076f-4f89-b7cc-ba5a59776199",
+      "name": "create_user_category",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "categorias",
+          "mode": "list",
+          "cachedResultName": "categorias"
+        },
+        "returnAll": "",
+        "where": {
+          "values": [
+            {
+              "column": "id_usuario",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3792,
+        4304
+      ],
+      "id": "45753350-5c57-488e-8d50-cd4d6f4ef296",
+      "name": "get_user_categories",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7bbf55f-ad9e-4b40-9825-c07c3861efa3",
+              "name": "trigger_data",
+              "value": "={{ $json }}",
+              "type": "object"
+            },
+            {
+              "id": "ee72c582-17c1-4ca0-84ba-dde0d82420d7",
+              "name": "numero_whatsapp",
+              "value": "={{ $json.data.numero_whatsapp }}",
+              "type": "string"
+            },
+            {
+              "id": "7a8ebe2d-134e-46c8-ad91-6ac0f49d7b66",
+              "name": "user_data",
+              "value": "{}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4432,
+        3472
+      ],
+      "id": "c61f4ab8-7b2c-4208-a3e7-dfbeb5448092",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        4192
+      ],
+      "id": "d1058376-81c3-4840-9069-7afdb2e2434b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "description": "Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario, solamente si estas muy seguro que no existe la transaccion, y ya has validado anteriormente y no existe efectivamente",
+        "workflowId": {
+          "__rl": true,
+          "value": "weeCmqNEWWuk43WW",
+          "mode": "list",
+          "cachedResultName": "register_transaction"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "fecha_transaccion": "={{ $fromAI('fecha_transaccion', ``, 'string') }}",
+            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
+            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
+            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}",
+            "categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('categoria', ``, 'string') }}",
+            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}",
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', `id del usuario`, 'string') }}",
+            "CategoryId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CategoryId', `id de la categoria, obtenido en la tool get_user_categories`, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "fecha_transaccion",
+              "displayName": "fecha_transaccion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "monto",
+              "displayName": "monto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "moneda",
+              "displayName": "moneda",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "CategoryId",
+              "displayName": "CategoryId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "categoria",
+              "displayName": "categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "descripcion",
+              "displayName": "descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        2784,
+        4576
+      ],
+      "id": "76516215-02ef-4b4e-82a0-13d3fe1d59a3",
+      "name": "register_transaction"
     }
   ],
   "pinData": {
@@ -1913,22 +2633,49 @@
           "contacts": [
             {
               "profile": {
-                "name": "Pedro Rodriguez"
+                "name": "•OSCAR•"
               },
-              "wa_id": "5732288544100"
+              "wa_id": "573208397300"
             }
           ],
-          "messages": "creemos la de panadería que dices",
+          "messages": "Ya pudiste?",
           "field": "messages",
           "usuario_data": {
-            "id": "8a354926-4e95-42b6-8e61-2ab9aa1c8943",
-            "email": "pro.pedro2@gmail.com",
-            "password_hash": "$2a$06$z5YPCrfAmRcFG3Rl6gnjYOuGNgcighg3bsCBwb3JBrO64zOZUBSMi",
-            "fecha_registro": "2025-08-01T23:55:52.387264",
-            "moneda_defecto": "COP",
-            "nombre_completo": "Pedro test 2",
-            "numero_whatsapp": "5732288544100",
-            "estado_suscripcion": "gratuito"
+            "id": "32e0733f-bbc1-471a-953d-bdf5bb44a09e",
+            "email": "oscarbejm.ai@gmail.com",
+            "moneda": "COP",
+            "password": "$2a$12$LBRK2Ec7mE5xrTCgcXeQUen5/Jj1lMPzWsqbzSFC/a/snZo8CgoSC",
+            "fecha_registro": "2025-08-09T16:49:55.873",
+            "nombre_completo": "Oscar Bejman",
+            "numero_whatsapp": "+573208397300",
+            "estado_suscripcion": "free"
+          }
+        }
+      }
+    ],
+    "Data": [
+      {
+        "json": {
+          "numero_whatsapp": "573208397300",
+          "trigger_data": {},
+          "user_data": {
+            "message": "Ya pudiste?",
+            "numero_whatsapp": "573208397300",
+            "first_name": "•OSCAR•",
+            "usuario_data": {
+              "id": "32e0733f-bbc1-471a-953d-bdf5bb44a09e",
+              "email": "oscarbejm.ai@gmail.com",
+              "moneda": "COP",
+              "password": "$2a$12$LBRK2Ec7mE5xrTCgcXeQUen5/Jj1lMPzWsqbzSFC/a/snZo8CgoSC",
+              "fecha_registro": "2025-08-09T16:49:55.873",
+              "nombre_completo": "Oscar Bejman",
+              "numero_whatsapp": "+573208397300",
+              "estado_suscripcion": "free"
+            },
+            "redis_message": "chat_id_573208397300"
+          },
+          "metadata": {
+            "phone_number_id": "565888133266017"
           }
         }
       }
@@ -1938,7 +2685,9 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7CI8d1lC1EC1eqnL"
   },
   "staticData": {
     "node:resumen-financiero-hoy": {
@@ -1968,6 +2717,6 @@
   },
   "tags": [],
   "triggerCount": 8,
-  "updatedAt": "2025-08-08T13:40:30.623Z",
-  "versionId": "412b0fbe-05c3-4d92-afad-964c7f53e5d4"
+  "updatedAt": "2025-08-09T20:51:05.900Z",
+  "versionId": "b3aada7d-db0e-42d2-9355-4a52227c118a"
 }
