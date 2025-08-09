@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "CLEAN DATABASE",
+            "node": "crear UUI postgres",
             "type": "main",
             "index": 0
           }
@@ -147,6 +147,17 @@
         [
           {
             "node": "meta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User test1": {
+      "main": [
+        [
+          {
+            "node": "Delete table or rows",
             "type": "main",
             "index": 0
           }
@@ -720,10 +731,8 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "WITH dummy AS (\n    SELECT NULL::uuid AS id\n)\nSELECT \n    to_jsonb(u) AS user_data,\n    (u.id IS NOT NULL) AS existe\nFROM \n    dummy\nLEFT JOIN \n    usuarios u ON u.numero_whatsapp = $1;",
-        "options": {
-          "queryReplacement": "='{{ $json.contacts[0].wa_id }}'"
-        }
+        "query": "WITH dummy AS (\n    SELECT NULL::uuid AS id\n)\nSELECT \n    to_jsonb(u) AS user_data,\n    (u.id IS NOT NULL) AS existe\nFROM \n    dummy\nLEFT JOIN \n    usuarios u ON u.numero_whatsapp = '+{{ $json.contacts[0].wa_id }}';",
+        "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
@@ -878,6 +887,68 @@
           "name": "MONY_DB"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\nALTER TABLE transacciones \nALTER COLUMN id SET DEFAULT uuid_generate_v4();\n\n-- Suscripciones Usuario\nALTER TABLE suscripciones_usuario\nALTER COLUMN id SET DEFAULT uuid_generate_v4();\n\n-- Metas de Ahorro\nALTER TABLE metas_ahorro\nALTER COLUMN id SET DEFAULT uuid_generate_v4();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1072,
+        -272
+      ],
+      "id": "182c32c0-5874-435b-ac92-17af6c16ba04",
+      "name": "crear UUI postgres",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "usuarios",
+          "mode": "list",
+          "cachedResultName": "usuarios"
+        },
+        "deleteCommand": "delete",
+        "where": {
+          "values": [
+            {
+              "column": "id",
+              "value": "="
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        704,
+        256
+      ],
+      "id": "2140ccc3-58e3-4058-8228-ac1d6daa2545",
+      "name": "Delete table or rows",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
     }
   ],
   "pinData": {
@@ -894,16 +965,16 @@
               "profile": {
                 "name": "Pedro Rodriguez"
               },
-              "wa_id": "5732288544100"
+              "wa_id": "573228854498"
             }
           ],
           "messages": [
             {
-              "from": "5732288544100",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y2NzZDN0FFNTlFNjFCQkFCNUQA",
-              "timestamp": "1754504211",
+              "from": "573228854498",
+              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZBOEU4Q0M5RTNDM0Q5ODI0MDgA",
+              "timestamp": "1754714678",
               "text": {
-                "body": "ok, como inicio"
+                "body": "hola cual es el link para registrarme?"
               },
               "type": "text"
             }
@@ -917,7 +988,9 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7CI8d1lC1EC1eqnL"
   },
   "staticData": {
     "node:Programar Recordatorios": {
@@ -926,6 +999,6 @@
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-08-08T18:19:07.818Z",
-  "versionId": "6866b202-3b09-43f1-8bdd-be2d725d1d45"
+  "updatedAt": "2025-08-09T20:50:26.126Z",
+  "versionId": "909a6933-6574-484c-89be-ba02fbf14a73"
 }
