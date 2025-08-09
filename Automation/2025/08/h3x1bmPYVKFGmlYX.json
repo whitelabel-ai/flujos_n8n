@@ -67,7 +67,7 @@
       "main": [
         [
           {
-            "node": "Get row(s) in sheet1",
+            "node": "validar creditos",
             "type": "main",
             "index": 0
           }
@@ -423,17 +423,6 @@
         ]
       ]
     },
-    "Get row(s) in sheet1": {
-      "main": [
-        [
-          {
-            "node": "mensajes>0",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code": {
       "main": [
         [
@@ -472,6 +461,35 @@
         [
           {
             "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "get client email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validar creditos": {
+      "main": [
+        [
+          {
+            "node": "mensajes>0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get client email": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
             "type": "main",
             "index": 0
           }
@@ -970,8 +988,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        1744,
-        -1808
+        1776,
+        -2048
       ],
       "id": "f8d7f618-71e7-4517-84ad-ae5011443351",
       "name": "Message a model",
@@ -1484,7 +1502,8 @@
           "id": "yzvE00xFtVHtaoZ1",
           "name": "Redis account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {},
@@ -1495,7 +1514,8 @@
         -2368
       ],
       "id": "24f2d53b-3e3b-419e-8829-45781e60c41f",
-      "name": "When clicking ‘Execute workflow’"
+      "name": "When clicking ‘Execute workflow’",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1815,7 +1835,8 @@
           "id": "yzvE00xFtVHtaoZ1",
           "name": "Redis account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1832,47 +1853,6 @@
       "typeVersion": 1,
       "id": "e817b37c-b821-48b1-b707-ccdfe587ed72",
       "name": "Sticky Note3"
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA",
-          "mode": "list",
-          "cachedResultName": "Contador de Mensajes",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Hoja 1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit#gid=0"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "cliente_id",
-              "lookupValue": "573112530069"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        624,
-        -1392
-      ],
-      "id": "a19567b1-e471-4eca-83d2-f3c037d8c9f0",
-      "name": "Get row(s) in sheet1",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
-          "name": "hola@whitelabel.lat"
-        }
-      }
     },
     {
       "parameters": {
@@ -2016,7 +1996,7 @@
           "conditions": [
             {
               "id": "dd4bf3e0-60b2-4dd2-800a-5521ad60d811",
-              "leftValue": "={{$node[\"Get row(s) in sheet1\"].json[\"mensajes_restantes\"]}}",
+              "leftValue": "={{$node[\"validar creditos\"].json[\"mensajes_restantes\"]}}",
               "rightValue": 0,
               "operator": {
                 "type": "number",
@@ -2071,6 +2051,108 @@
       ],
       "id": "ae2c34d1-6470-4c03-b660-dadaf5a32ab5",
       "name": "correo10%"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA",
+          "mode": "list",
+          "cachedResultName": "Contador de Mensajes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "cliente_id",
+              "lookupValue": "={{ $('WhatsApp Trigger').item.json.metadata.display_phone_number }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        624,
+        -1392
+      ],
+      "id": "a19567b1-e471-4eca-83d2-f3c037d8c9f0",
+      "name": "validar creditos",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "11S_SH27GHWMbmxidc4ESFNcxzyImvIDyV5si8Zi7YLA",
+          "mode": "list",
+          "cachedResultName": "DB clientes ValeIA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11S_SH27GHWMbmxidc4ESFNcxzyImvIDyV5si8Zi7YLA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11S_SH27GHWMbmxidc4ESFNcxzyImvIDyV5si8Zi7YLA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "id_numberphone",
+              "lookupValue": "={{ $json.cliente_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1248,
+        -1248
+      ],
+      "id": "0564c719-b810-4d94-8eb3-96988a38676e",
+      "name": "get client email",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1424,
+        -1216
+      ],
+      "id": "1a566a50-0d3a-412f-a53f-b41716da8d6d",
+      "name": "Send a message",
+      "webhookId": "bf7ba3ce-08e7-464b-a7f5-18a087f58399",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "No30HHponDPtNWfb",
+          "name": "hola@whitelabel.lat"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -2094,6 +2176,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-08T22:32:20.394Z",
-  "versionId": "c672b84e-5f8f-4015-ae1f-8ff838b1e44d"
+  "updatedAt": "2025-08-08T23:04:31.334Z",
+  "versionId": "cd07a4a8-61f6-4fa2-afb7-a4ee244a4a47"
 }
