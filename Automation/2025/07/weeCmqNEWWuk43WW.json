@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "CategoryId",
+            "node": "Insertar transacción",
             "type": "main",
             "index": 0
           }
@@ -15,28 +15,6 @@
     "Insertar transacción": {
       "main": [
         []
-      ]
-    },
-    "CategoryId": {
-      "main": [
-        [
-          {
-            "node": "fuenteId",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "fuenteId": {
-      "main": [
-        [
-          {
-            "node": "Insertar transacción",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     }
   },
@@ -51,15 +29,13 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO transacciones (\n  id_usuario,\n  descripcion,\n  monto,\n  moneda,\n  tipo,\n  fecha_transaccion,\n  id_categoria,\n  id_fuente\n)\nVALUES (\n  $1, $2, $3, $4, $5, $6, $7, $8\n)\nRETURNING id, id_usuario, descripcion, monto, moneda, tipo, fecha_transaccion, id_categoria, id_fuente;\n",
-        "options": {
-          "queryReplacement": "={{ $('register_transaction').item.json.id }},{{ $('register_transaction').item.json.descripcion }},{{ $('register_transaction').item.json.monto }}, {{ $('register_transaction').item.json.moneda }}, {{ $('register_transaction').item.json.tipo }}, , {{ $('register_transaction').item.json.fecha_transaccion }}, {{ $('CategoryId').item.json.id }}, {{ $json.id }}"
-        }
+        "query": "INSERT INTO transacciones (\n  descripcion,\n  monto,\n  moneda,\n  tipo,\n  fecha_transaccion,\n  id_usuario,\n  id_categoria,\n  id_fuente\n)\nVALUES (\n  '{{ $('register_transaction').item.json.descripcion }}',\n  {{ $('register_transaction').item.json.monto }},\n  '{{ $('register_transaction').item.json.moneda }}',\n  '{{ $('register_transaction').item.json.tipo }}',\n  '{{ $('register_transaction').item.json.fecha_transaccion }}',\n  '{{ $('register_transaction').item.json.id_usuario }}',\n  {{ $json.CategoryId }},\n  1\n);\n",
+        "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        624,
+        320,
         0
       ],
       "id": "26b192b1-d32d-4bd2-8d37-31f14d879168",
@@ -76,7 +52,7 @@
         "workflowInputs": {
           "values": [
             {
-              "name": "id"
+              "name": "id_usuario"
             },
             {
               "name": "fecha_transaccion"
@@ -90,6 +66,9 @@
             },
             {
               "name": "tipo"
+            },
+            {
+              "name": "CategoryId"
             },
             {
               "name": "categoria"
@@ -109,65 +88,20 @@
       ],
       "id": "706c98eb-d67a-4626-8282-90659c141926",
       "name": "register_transaction"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT id FROM categorias\nWHERE LOWER(nombre) = LOWER($1)\nAND tipo = INITCAP($2)\nLIMIT 1\n",
-        "options": {
-          "queryReplacement": "={{ $json.categoria }}, {{ $json.tipo }}"
-        }
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        208,
-        0
-      ],
-      "id": "6af5f7ba-91dd-4e2c-ab82-6a6b804624d2",
-      "name": "CategoryId",
-      "alwaysOutputData": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT id FROM fuentes_registro WHERE nombre = 'WhatsApp' LIMIT 1;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        416,
-        0
-      ],
-      "id": "40d49221-83f9-4734-a1b2-e1f8161db64d",
-      "name": "fuenteId",
-      "alwaysOutputData": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
     }
   ],
   "pinData": {
     "register_transaction": [
       {
         "json": {
-          "id": "c1df07c5-9937-4be4-a745-d485dc92f6df",
-          "fecha_transaccion": "2022-08-24",
-          "monto": 165000,
+          "id_usuario": "32e0733f-bbc1-471a-953d-bdf5bb44a09e",
+          "fecha_transaccion": "2025-08-09",
+          "monto": 1000,
           "moneda": "COP",
-          "tipo": "Gasto",
+          "tipo": "Ingreso",
+          "CategoryId": "53",
           "categoria": "Educación",
-          "descripcion": "Envío a banco para Universidad Santa María"
+          "descripcion": "capacitación en inteligencia artificial"
         }
       }
     ]
@@ -176,11 +110,13 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7CI8d1lC1EC1eqnL"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-07-30T15:40:07.814Z",
-  "versionId": "a4dccdaf-2748-418c-89dd-5c14b1392063"
+  "updatedAt": "2025-08-09T20:51:33.895Z",
+  "versionId": "4b3e0e40-6206-48bc-8518-c994d6117c4b"
 }
