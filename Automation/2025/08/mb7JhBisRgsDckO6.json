@@ -382,13 +382,7 @@
     },
     "Redis Chat Memory": {
       "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Message a model": {
@@ -443,7 +437,7 @@
       "main": [
         [
           {
-            "node": "Message a model1",
+            "node": "If2",
             "type": "main",
             "index": 0
           }
@@ -632,6 +626,40 @@
           }
         ]
       ]
+    },
+    "get_user_subscription": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-08-01T21:41:37.862Z",
@@ -813,7 +841,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3872,
+        4080,
         384
       ],
       "id": "19e1645f-322f-438d-bdaa-7c1ea0f1ade5",
@@ -922,7 +950,7 @@
         "messages": {
           "values": [
             {
-              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **si hay una lista con varios items, no se debe dividir**, toda la lista debe ir en un mismo mensaje\n\n- **No incluyas datos sensibles del usuario** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
+              "content": "=\nDivide el siguiente mensaje en hasta *4 partes más pequeñas* solo si es necesario, asegurándote de que cada parte tenga sentido completo.\n\n### *Reglas:*\n\n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en *una sola parte*.\n\n- Si es *mediano* (hasta *400 caracteres*), divídelo en *2 partes*.\n\n- Si es *largo* (hasta *600 caracteres*), divídelo en *3 partes*.\n\n- Si es *muy largo* (más de *600 caracteres*), agrégale una *parte4*.\n\n- *Evita dividir el mensaje innecesariamente*. Usa la *menor cantidad de partes posible*.\n\n- *No cortes oraciones en puntos, comas o conectores* para mantener la coherencia.\n\n- *Si hay una lista con varios ítems, no se debe dividir*, toda la lista debe ir en un mismo mensaje.\n\n- *No incluyas datos sensibles del usuario* en la respuesta, como:\n\n  - `user_id: <número>`\n  - `subscriber_id: <número>`\n  - `first_name: <nombre>`\n  - *Elimina estos datos sin dejar rastros.*\n\n- *Si no hay mensaje, no devuelvas nada.*\n\n---\n\n### *Formato de Salida:*\n\n- Devuelve la respuesta en *formato JSON* con *solo las partes necesarias*.\n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.\n- *Nunca uses comillas `\"` para resaltar palabras*. En su lugar, usa un solo asterisco: *palabra*.\n\n#### *Ejemplo de salida:*\n\n{\n\"parte1\": \"Texto de la primera parte.\",\n\"parte2\": \"Texto de la segunda parte.\"\n}\n\n### *Mensaje:*\n\n\"{{ $json.output }}\"\n"
             }
           ]
         },
@@ -1027,7 +1055,7 @@
     },
     {
       "parameters": {
-        "description": "Registra una nueva transacción de ingreso o gasto en la cuenta del usuario.",
+        "description": "Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.",
         "workflowId": {
           "__rl": true,
           "value": "weeCmqNEWWuk43WW",
@@ -1037,21 +1065,22 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id', ``, 'string') }}",
             "fecha_transaccion": "={{ $fromAI('fecha_transaccion', ``, 'string') }}",
             "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
             "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
             "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}",
             "categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('categoria', ``, 'string') }}",
-            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}"
+            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}",
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', `id del usuario`, 'string') }}",
+            "CategoryId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CategoryId', `id de la categoria, obtenido en la tool get_user_categories`, 'string') }}"
           },
           "matchingColumns": [
             "id"
           ],
           "schema": [
             {
-              "id": "id",
-              "displayName": "id",
+              "id": "id_usuario",
+              "displayName": "id_usuario",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1092,6 +1121,16 @@
             {
               "id": "tipo",
               "displayName": "tipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "CategoryId",
+              "displayName": "CategoryId",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1158,9 +1197,9 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }}\nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
+        "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }} \nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres **Mony**, el copiloto financiero personal de **[nombre]**. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente **eficiente, preciso y amigable**. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\n\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud. Si el mensaje es ambiguo o le falta información crucial, debes hacer una pregunta clara y concisa para obtener los datos que necesitas. Si es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\n\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1.  **Saluda Corto:** Inicia siempre dirigiéndote al usuario por su `nombre`.\n2.  **Analiza la Intención:** Lee el `mensaje del usuario` y determina qué quiere hacer. ¿Es una acción (registrar, crear, configurar) o una consulta (preguntar, listar, pedir resumen)?\n3.  **Selecciona la Herramienta Adecuada:** Elige la herramienta de tu lista que mejor cumpla con la intención.\n4.  **Extrae Parámetros:** Revisa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente: \"salario\" implica `tipo: \"Ingreso\"`, \"la semana pasada\" implica un rango de fechas, \"Netflix\" se refiere a una suscripción.\n5.  **Valida o Actúa:**\n    - Si tienes todos los datos, llama a la herramienta (`call_tool`).\n    - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta clara y concisa usando botones (`reply`). Ejemplo: \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6.  **Maneja Conversación Casual:** Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1.  **Consulta Categorías:** Llama SIEMPRE primero a la herramienta `get_user_categories` para obtener la lista de categorías del usuario.\n2.  **Intenta Coincidir:** Compara la descripción del gasto del usuario (ej: \"almuerzo con amigos\") con sus categorías existentes.\n3.  **Clarifica si es Ambiguo:** Si la descripción podría encajar en varias categorías, NO adivines. Pregunta con botones: \"Entendido. ¿Ese gasto lo clasificamos como `[Comida]`, `[Restaurantes]` o `[Ocio]`?\".\n4.  **Ofrece Crear:** Si la categoría claramente no existe, pregunta si desea crearla: \"¿Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla? `[Sí, crearla]` `[No, usar otra]`\". Si la respuesta es sí, usa `create_user_category`.\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\nPuedes usar las siguientes herramientas para cumplir las solicitudes del usuario:\n- **Transacciones:** `register_transaction`, `query_transactions`.\n- **Categorías:** `get_user_categories`, `create_user_category`.\n- **Presupuestos:** `set_category_budget`, `get_category_budgets`.\n- **Metas de Ahorro:** `get_saving_goals`.\n- **Suscripciones:** `add_user_subscription`, `get_user_subscriptions`.\n- **Configuración:** `set_reminder_preference`.\n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- **Actúa, no anuncies:** Nunca digas \"Voy a buscar en la base de datos\". Simplemente hazlo y presenta el resultado.\n- **Confirma acciones:** Después de una acción exitosa (registrar, crear, configurar), confirma con un mensaje corto y un emoji. \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- **Usa botones:** Siempre que el usuario deba elegir entre un set limitado de opciones (categorías, sí/no), usa botones de respuesta rápida.\n- **Si no entiendes, pregunta:** Si la solicitud del usuario es muy ambigua, pide amablemente que la reformule. \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\".\n- **Nunca inventes información.** Si no encuentras datos, infórmalo. \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n"
+          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\n\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud. Si el mensaje es ambiguo o le falta información crucial, debes hacer una pregunta clara y concisa para obtener los datos que necesitas. Si es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\n\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1 SALUDO Y PROACTIVIDAD\nSi el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \nEn su lugar:\n1. Saluda por su `nombre` con energía.\n2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n3. Incluye un *tip o beneficio* de usar Mony.\n4. Usa emojis para hacerlo amigable.\n\nEjemplos:\n- \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n- \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n- \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n- \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n*Importante:*  \nCada saludo debe terminar con una invitación clara a interactuar, ya sea con botones o una pregunta directa.\n\n2.  *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer. ¿Es una acción (registrar, crear, configurar) o una consulta (preguntar, listar, pedir resumen)?\n3.  *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4.  *Extrae Parámetros:* Revisa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente: \"salario\" implica `tipo: \"Ingreso\"`, \"la semana pasada\" implica un rango de fechas, \"Netflix\" se refiere a una suscripción.\n5.  *Valida o Actúa:*\n    - Si tienes todos los datos, llama a la herramienta (`call_tool`).\n    - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta clara y concisa usando botones (`reply`). Ejemplo: \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6.  *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1.  *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories` para obtener la lista de categorías del usuario.\n2.  *Intenta Coincidir:* Compara la descripción del gasto del usuario (ej: \"almuerzo con amigos\") con sus categorías existentes.\n3.  *Clarifica si es Ambiguo:* Si la descripción podría encajar en varias categorías, NO adivines. Pregunta con botones: \"Entendido. ¿Ese gasto lo clasificamos como `[Comida]`, `[Restaurantes]` o `[Ocio]`?\".\n4.  *Ofrece Crear:* Si la categoría claramente no existe, pregunta si desea crearla: \"¿Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla? `[Sí, crearla]` `[No, usar otra]`\". Si la respuesta es sí, usa `create_user_category`.\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\nPuedes usar las siguientes herramientas para cumplir las solicitudes del usuario:\n- *Transacciones:* `register_transaction`, `query_transactions`.\n- *Categorías:* `get_user_categories`, `create_user_category`.\n- *Presupuestos:* `set_category_budget`, `get_category_budgets`.\n- *Metas de Ahorro:* `get_saving_goals`.\n- *Suscripciones:* `add_user_subscription`, `get_user_subscriptions`.\n- *Configuración:* `set_reminder_preference`.\n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar en la base de datos, o tienes toda la razon...\". Simplemente hazlo y presenta el resultado.\n- *Confirma acciones:* Después de una acción exitosa (registrar, crear, configurar), confirma con un mensaje corto y un emoji. \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Usa botones:* Siempre que el usuario deba elegir entre un set limitado de opciones (categorías, sí/no), usa botones de respuesta rápida.\n- *Si no entiendes, pregunta:* Si la solicitud del usuario es muy ambigua, pide amablemente que la reformule. \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\".\n- *Nunca inventes información.* Si no encuentras datos, infórmalo. \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1892,7 +1931,7 @@
             {
               "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
               "name": "mensaje",
-              "value": "=<audio>{{ $json.text }}</audio>",
+              "value": "=<audio>{{ $json.content.parts[0].text }}</audio>",
               "type": "string"
             },
             {
@@ -2268,7 +2307,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `nombre de la categoria`, 'string') }}",
-            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}",
+            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', `Gasto o Ingreso`, 'string') }}",
             "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
             "presupuesto_mensual": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('presupuesto_mensual', ``, 'number') }}"
           },
@@ -2287,16 +2326,6 @@
               "removed": true
             },
             {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "nombre",
               "displayName": "nombre",
               "required": true,
@@ -2311,8 +2340,18 @@
               "required": true,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "Gasto",
+                  "value": "Gasto"
+                },
+                {
+                  "name": "Ingreso",
+                  "value": "Ingreso"
+                }
+              ]
             },
             {
               "id": "presupuesto_mensual",
@@ -2321,6 +2360,16 @@
               "defaultMatch": false,
               "display": true,
               "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
               "canBeUsedToMatch": true,
               "removed": false
             }
@@ -2384,16 +2433,6 @@
               "removed": true
             },
             {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "nombre",
               "displayName": "nombre",
               "required": true,
@@ -2409,8 +2448,18 @@
               "required": true,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
+              "type": "options",
               "canBeUsedToMatch": false,
+              "options": [
+                {
+                  "name": "Gasto",
+                  "value": "Gasto"
+                },
+                {
+                  "name": "Ingreso",
+                  "value": "Ingreso"
+                }
+              ],
               "removed": true
             },
             {
@@ -2421,6 +2470,16 @@
               "display": true,
               "type": "number",
               "canBeUsedToMatch": false
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -2531,15 +2590,6 @@
               "removed": true
             },
             {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
               "id": "nombre",
               "displayName": "nombre",
               "required": true,
@@ -2572,8 +2622,34 @@
               "required": true,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "nunca",
+                  "value": "nunca"
+                },
+                {
+                  "name": "anual",
+                  "value": "anual"
+                },
+                {
+                  "name": "trimestral",
+                  "value": "trimestral"
+                },
+                {
+                  "name": "mensual",
+                  "value": "mensual"
+                },
+                {
+                  "name": "semanal",
+                  "value": "semanal"
+                },
+                {
+                  "name": "diario",
+                  "value": "diario"
+                }
+              ]
             },
             {
               "id": "fecha_proximo_pago",
@@ -2585,21 +2661,30 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "id_categoria",
-              "displayName": "id_categoria",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
               "id": "activa",
               "displayName": "activa",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_categoria",
+              "displayName": "id_categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
               "canBeUsedToMatch": true
             }
           ],
@@ -2643,7 +2728,8 @@
           "value": {
             "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
             "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `'diario'/'semanal'/'mensual'`, 'string') }}",
-            "hora_envio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('hora_envio', `HH:MM:SS`, 'string') }}"
+            "hora_envio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('hora_envio', `HH:MM:SS`, 'string') }}",
+            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}"
           },
           "matchingColumns": [
             "id"
@@ -2660,30 +2746,66 @@
               "removed": true
             },
             {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
               "id": "frecuencia",
               "displayName": "frecuencia",
               "required": true,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "nunca",
+                  "value": "nunca"
+                },
+                {
+                  "name": "anual",
+                  "value": "anual"
+                },
+                {
+                  "name": "trimestral",
+                  "value": "trimestral"
+                },
+                {
+                  "name": "mensual",
+                  "value": "mensual"
+                },
+                {
+                  "name": "semanal",
+                  "value": "semanal"
+                },
+                {
+                  "name": "diario",
+                  "value": "diario"
+                }
+              ]
             },
             {
               "id": "hora_envio",
               "displayName": "hora_envio",
-              "required": false,
+              "required": true,
               "defaultMatch": false,
               "display": true,
               "type": "time",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "descripcion",
+              "displayName": "descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
               "canBeUsedToMatch": true
             }
           ],
@@ -2706,59 +2828,126 @@
           "name": "MONY_DB"
         }
       }
-    }
-  ],
-  "pinData": {
-    "Start": [
-      {
-        "json": {
-          "metadata": {
-            "display_phone_number": "573143400476",
-            "phone_number_id": "565888133266017"
-          },
-          "contacts": [
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "obtienes todas las  suscripciones o gastos recurrente del usuario, como Netflix o el gimnasio",
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "suscripciones_usuario",
+          "mode": "list",
+          "cachedResultName": "suscripciones_usuario"
+        },
+        "where": {
+          "values": [
             {
-              "profile": {
-                "name": "Pedro Rodriguez"
-              },
-              "wa_id": "5732288544100"
+              "column": "id_usuario",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
             }
-          ],
-          "messages": [
-            {
-              "from": "5732288544100",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y2NzZDN0FFNTlFNjFCQkFCNUQA",
-              "timestamp": "1754504211",
-              "text": {
-                "body": "creemos la de panaderia que dices"
-              },
-              "type": "text"
-            }
-          ],
-          "field": "messages",
-          "usuario_data": {
-            "id": "8a354926-4e95-42b6-8e61-2ab9aa1c8943",
-            "email": "pro.pedro2@gmail.com",
-            "password_hash": "$2a$06$z5YPCrfAmRcFG3Rl6gnjYOuGNgcighg3bsCBwb3JBrO64zOZUBSMi",
-            "fecha_registro": "2025-08-01T23:55:52.387264",
-            "moneda_defecto": "COP",
-            "nombre_completo": "Pedro test 2",
-            "numero_whatsapp": "5732288544100",
-            "estado_suscripcion": "gratuito"
-          }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        4560,
+        -352
+      ],
+      "id": "8c313b4f-886f-4081-8899-e2a715615035",
+      "name": "get_user_subscription",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
         }
       }
-    ]
-  },
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=MONY_chat_id_573143025978"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3648,
+        -1776
+      ],
+      "id": "61cb52b0-b64a-4dfb-bb23-025be39b6b92",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8721a225-ddfb-44a4-bf51-b0e18ba5b767",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4032,
+        -576
+      ],
+      "id": "9e24fc14-5f34-4482-9ef7-43a3fa9100d5",
+      "name": "If2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        2256,
+        -320
+      ],
+      "id": "1d0cebf2-efe2-46f1-82f8-65e7050138bc",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7CI8d1lC1EC1eqnL"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-07T21:33:29.056Z",
-  "versionId": "e317eda8-adae-4fde-bcee-ad5c0002559d"
+  "updatedAt": "2025-08-09T20:50:53.850Z",
+  "versionId": "3fd1e965-f03c-4a67-a9f3-fe4057389d38"
 }
