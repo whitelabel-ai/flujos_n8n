@@ -393,7 +393,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields7",
+            "node": "Edit Fields9",
             "type": "main",
             "index": 0
           }
@@ -404,7 +404,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields7",
+            "node": "Edit Fields9",
             "type": "main",
             "index": 0
           }
@@ -415,7 +415,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields7",
+            "node": "Edit Fields9",
             "type": "main",
             "index": 0
           }
@@ -426,18 +426,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields7",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields7": {
-      "main": [
-        [
-          {
-            "node": "Data",
+            "node": "Edit Fields9",
             "type": "main",
             "index": 0
           }
@@ -1039,8 +1028,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        3648,
-        3808
+        560,
+        3472
       ]
     },
     {
@@ -1073,8 +1062,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        2112,
-        3328
+        544,
+        4272
       ],
       "id": "ae172954-ca99-4183-9398-d669929d4403",
       "name": "resumen-financiero-hoy"
@@ -1088,8 +1077,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2336,
-        3648
+        768,
+        4656
       ],
       "id": "e526f52c-584e-4a85-8b3d-071da18402ba",
       "name": "Execute a SQL query",
@@ -1113,8 +1102,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        736,
-        4864
+        544,
+        5056
       ],
       "id": "c8a2e983-0d98-403b-926f-ca5e0e6d1836",
       "name": "anuncio_disponible"
@@ -1122,14 +1111,14 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT\n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  a.id AS id_anuncio,\n  a.titulo,\n  a.texto,\n  a.imagen_url,\n  a.enlace\nFROM usuarios u\nJOIN anuncios a ON\n  (a.pais_destino IS NULL OR a.pais_destino = '') AND\n  (a.moneda_destino IS NULL OR a.moneda_destino = u.moneda_defecto)\n  AND a.fecha_inicio <= CURRENT_TIMESTAMP\n  AND (a.fecha_fin IS NULL OR a.fecha_fin >= CURRENT_TIMESTAMP)\nWHERE NOT EXISTS (\n  SELECT 1 FROM anuncios_usuarios au\n  WHERE au.id_usuario = u.id AND au.id_anuncio = a.id\n);\n",
+        "query": "SELECT\n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  a.id AS id_anuncio,\n  a.titulo,\n  a.texto,\n  a.imagen_url,\n  a.enlace\nFROM usuarios u\nJOIN anuncios a ON\n  (a.pais_destino IS NULL OR a.pais_destino = '') AND\n  (a.moneda_destino IS NULL OR a.moneda_destino = u.moneda)\n  AND a.fecha_inicio <= CURRENT_TIMESTAMP\n  AND (a.fecha_fin IS NULL OR a.fecha_fin >= CURRENT_TIMESTAMP)\nWHERE NOT EXISTS (\n  SELECT 1 FROM anuncios_usuarios au\n  WHERE au.id_usuario = u.id AND au.id_anuncio = a.id\n);\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        960,
-        4864
+        768,
+        5056
       ],
       "id": "7616be24-df8c-4801-9d21-d2c119db44db",
       "name": "Execute a SQL query1",
@@ -1149,8 +1138,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2336,
-        3488
+        768,
+        4464
       ],
       "id": "9b9e4cd6-b9ad-4656-92f2-29c60affd9ee",
       "name": "Execute a SQL query2",
@@ -1170,8 +1159,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        3872,
-        3312
+        768,
+        3664
       ],
       "id": "990283be-0347-499b-95b3-c90324638d31",
       "name": "Execute a SQL query3",
@@ -1191,8 +1180,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        3872,
-        3632
+        768,
+        4048
       ],
       "id": "1cedeb4a-773a-44da-ae74-ac25f1299b74",
       "name": "Execute a SQL query4",
@@ -1233,8 +1222,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        3872,
-        3472
+        768,
+        3856
       ],
       "id": "39210825-0cd8-45b1-8a31-d418617eeb22",
       "name": "Execute a SQL query6",
@@ -1248,15 +1237,15 @@
     {
       "parameters": {
         "content": "## trigger Messages\n",
-        "height": 764,
-        "width": 2912,
+        "height": 1884,
+        "width": 1280,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2048,
-        3264
+        304,
+        3376
       ],
       "id": "955b8628-30bc-4896-8bec-616d27401a4d",
       "name": "Sticky Note"
@@ -1278,8 +1267,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        2112,
-        3488
+        544,
+        4464
       ],
       "id": "a46aa4d6-afe8-4847-98df-17d1cc157aad",
       "name": "resumen_semanal"
@@ -1299,8 +1288,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        2112,
-        3648
+        544,
+        4656
       ],
       "id": "9cfa6d04-1c6a-4876-be2b-883eb4a0e9f3",
       "name": "resumen_mensual"
@@ -1321,8 +1310,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        2112,
-        3824
+        544,
+        4848
       ],
       "id": "81e31659-355f-4cc7-a3a8-a4a5d0cf921c",
       "name": "resumen_trimestral"
@@ -1336,8 +1325,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2336,
-        3824
+        768,
+        4848
       ],
       "id": "20769197-aaea-40ec-af5e-e475ff5eaae5",
       "name": "resumen_trimestral1",
@@ -1357,8 +1346,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2336,
-        3328
+        768,
+        4272
       ],
       "id": "e1f59a2c-1f5f-45d7-b06e-700e2006932c",
       "name": "Execute a SQL query7",
@@ -1384,8 +1373,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        3648,
-        3312
+        544,
+        3664
       ],
       "id": "53d964d8-1631-4f56-910c-bba2e3ce59c4",
       "name": "alerta_presupuesto"
@@ -1404,8 +1393,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        3648,
-        3472
+        544,
+        3856
       ],
       "id": "e84f72e2-9ab4-4732-a52f-93fc49d2bf3e",
       "name": "meta_en_riesgo"
@@ -1423,8 +1412,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        3648,
-        3632
+        544,
+        4048
       ],
       "id": "6c99f197-0ad2-49c9-8f01-53e1f5403ddc",
       "name": "recordatorio_suscripcion"
@@ -1704,8 +1693,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2544,
-        3328
+        992,
+        4272
       ],
       "id": "42f408d0-8df7-4148-a81c-3183355f1c79",
       "name": "Edit Fields"
@@ -1733,8 +1722,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2544,
-        3488
+        992,
+        4464
       ],
       "id": "13384383-357f-42c0-ac56-f4bb8e9d066e",
       "name": "Edit Fields1"
@@ -1762,8 +1751,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2544,
-        3648
+        992,
+        4656
       ],
       "id": "6965e033-7117-46d0-b32d-087ac2678c0b",
       "name": "Edit Fields2"
@@ -1791,8 +1780,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2544,
-        3824
+        992,
+        4848
       ],
       "id": "7907e240-f7a0-4e14-9ffe-030bbfd51771",
       "name": "Edit Fields3"
@@ -1820,8 +1809,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4048,
-        3312
+        992,
+        3664
       ],
       "id": "1d3a9d2a-5955-495b-8645-5b6dc40265b3",
       "name": "Edit Fields4"
@@ -1849,8 +1838,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4064,
-        3472
+        992,
+        3856
       ],
       "id": "da4d1c30-6539-4fab-abda-15523d006882",
       "name": "Edit Fields5"
@@ -1878,46 +1867,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4064,
-        3632
+        992,
+        4048
       ],
       "id": "59c9f04e-f4ba-4bd7-9293-c889369ecc21",
       "name": "Edit Fields6"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "b7bbf55f-ad9e-4b40-9825-c07c3861efa3",
-              "name": "trigger_data",
-              "value": "={{ $json }}",
-              "type": "object"
-            },
-            {
-              "id": "ee72c582-17c1-4ca0-84ba-dde0d82420d7",
-              "name": "numero_whatsapp",
-              "value": "={{ $json.data.numero_whatsapp }}",
-              "type": "string"
-            },
-            {
-              "id": "7a8ebe2d-134e-46c8-ad91-6ac0f49d7b66",
-              "name": "user_data",
-              "value": "{}",
-              "type": "object"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2848,
-        3520
-      ],
-      "id": "6d5c6f0b-0b6c-468f-b94d-4e5a9da02bdb",
-      "name": "Edit Fields7"
     },
     {
       "parameters": {
@@ -1948,8 +1902,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4080,
-        3808
+        1008,
+        3472
       ],
       "id": "4999cf04-48ce-4134-842b-92bc8f88cfaf",
       "name": "Edit Fields8"
@@ -1995,8 +1949,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3872,
-        3808
+        784,
+        3472
       ],
       "id": "5dd4e062-ee35-463c-94e2-44ceef199946",
       "name": "user_data"
@@ -2486,8 +2440,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4432,
-        3472
+        1328,
+        4128
       ],
       "id": "c61f4ab8-7b2c-4208-a3e7-dfbeb5448092",
       "name": "Edit Fields9"
@@ -2497,8 +2451,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        1872,
-        4192
+        240,
+        4272
       ],
       "id": "d1058376-81c3-4840-9069-7afdb2e2434b",
       "name": "When clicking ‘Execute workflow’"
@@ -2679,6 +2633,23 @@
           }
         }
       }
+    ],
+    "anuncio_disponible": [
+      {
+        "json": {
+          "timestamp": "2025-08-10T08:00:25.010-05:00",
+          "Readable date": "August 10th 2025, 8:00:25 am",
+          "Readable time": "8:00:25 am",
+          "Day of week": "Sunday",
+          "Year": "2025",
+          "Month": "August",
+          "Day of month": "10",
+          "Hour": "08",
+          "Minute": "00",
+          "Second": "25",
+          "Timezone": "America/Bogota (UTC-05:00)"
+        }
+      }
     ]
   },
   "repo_name": "flujos_n8n",
@@ -2717,6 +2688,6 @@
   },
   "tags": [],
   "triggerCount": 8,
-  "updatedAt": "2025-08-09T20:51:05.900Z",
-  "versionId": "b3aada7d-db0e-42d2-9355-4a52227c118a"
+  "updatedAt": "2025-08-10T22:06:22.410Z",
+  "versionId": "fdce71ac-4dbb-4c12-8dcd-50b9578bb2a2"
 }
