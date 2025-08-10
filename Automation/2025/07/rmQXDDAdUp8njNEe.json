@@ -3,13 +3,7 @@
   "connections": {
     "When clicking ‘Execute workflow’": {
       "main": [
-        [
-          {
-            "node": "crear UUI postgres",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Programar Recordatorios": {
@@ -86,13 +80,7 @@
     },
     "IsFree?": {
       "main": [
-        [
-          {
-            "node": "send Publicidad",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
         [
           {
             "node": "No Operation, do nothing",
@@ -542,8 +530,8 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $json.usuario_data.numero_whatsapp }}",
+        "phoneNumberId": "={{ $json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "=+573228854498",
         "messageType": "video",
         "mediaPath": "useMediaId",
         "mediaId": "=1936820460498772",
@@ -553,7 +541,7 @@
       "typeVersion": 1,
       "position": [
         720,
-        -160
+        -1504
       ],
       "id": "db71aa84-e365-4a39-bc7e-4be381a771f0",
       "name": "send Publicidad",
@@ -708,15 +696,126 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "-- 2. Ahora insertar el usuario\nINSERT INTO usuarios (\n    nombre_completo,\n    email,\n    password_hash,\n    numero_whatsapp,\n    moneda_defecto,\n    estado_suscripcion\n) VALUES (\n    'Pedro test 2',\n    'pro.pedro2@gmail.com',\n    crypt('propro93', gen_salt('bf')),  -- Encriptación segura\n    '5732288544100',\n    'COP',\n    'gratuito'\n)\nRETURNING *;",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "anuncios",
+          "mode": "list",
+          "cachedResultName": "anuncios"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "titulo",
+              "displayName": "titulo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "imagen_url",
+              "displayName": "imagen_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "enlace",
+              "displayName": "enlace",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "texto",
+              "displayName": "texto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "frecuencia",
+              "displayName": "frecuencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "pais_destino",
+              "displayName": "pais_destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "moneda_destino",
+              "displayName": "moneda_destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fecha_inicio",
+              "displayName": "fecha_inicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fecha_fin",
+              "displayName": "fecha_fin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        720,
-        -384
+        736,
+        -448
       ],
       "id": "3174561b-a579-48d5-a34a-c2a1b0d1c208",
       "name": "insert user",
@@ -929,7 +1028,7 @@
           "values": [
             {
               "column": "id",
-              "value": "="
+              "value": "=w"
             }
           ]
         },
@@ -971,10 +1070,10 @@
           "messages": [
             {
               "from": "573228854498",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZBOEU4Q0M5RTNDM0Q5ODI0MDgA",
-              "timestamp": "1754714678",
+              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y2RERFMTZGMzMwMTMxQjcyQTEA",
+              "timestamp": "1754835012",
               "text": {
-                "body": "hola cual es el link para registrarme?"
+                "body": "hola"
               },
               "type": "text"
             }
@@ -989,8 +1088,7 @@
   "repo_path": "Automation/",
   "settings": {
     "executionOrder": "v1",
-    "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": "7CI8d1lC1EC1eqnL"
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": {
     "node:Programar Recordatorios": {
@@ -999,6 +1097,6 @@
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-08-09T20:50:26.126Z",
-  "versionId": "909a6933-6574-484c-89be-ba02fbf14a73"
+  "updatedAt": "2025-08-10T22:07:04.451Z",
+  "versionId": "6b9f834f-2b0b-44c3-9758-9e4a45175a96"
 }
