@@ -453,6 +453,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Notificacion Creditos Agotados",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -460,18 +467,17 @@
       "main": [
         [
           {
-            "node": "Code",
+            "node": "Notificacion 10% Creditos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "correo5%",
             "type": "main",
             "index": 0
           }
         ],
-        [
-          {
-            "node": "get client email",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "validar creditos": {
@@ -479,17 +485,6 @@
         [
           {
             "node": "mensajes>0",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get client email": {
-      "main": [
-        [
-          {
-            "node": "Send a message",
             "type": "main",
             "index": 0
           }
@@ -1842,7 +1837,7 @@
       "parameters": {
         "content": "###  Verificacion de creditos",
         "height": 416,
-        "width": 1056,
+        "width": 1376,
         "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -1861,8 +1856,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1312,
-        -1424
+        1472,
+        -1440
       ],
       "id": "17e51404-dc78-4933-93f7-2a638d29966e",
       "name": "Code"
@@ -1887,7 +1882,9 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {},
-          "matchingColumns": [],
+          "matchingColumns": [
+            "cliente_id"
+          ],
           "schema": [
             {
               "id": "cliente_id",
@@ -1896,7 +1893,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "model_agent",
@@ -1926,13 +1924,14 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "#Mensajes",
-              "displayName": "#Mensajes",
+              "id": "numero_mensajes",
+              "displayName": "numero_mensajes",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "mensajes_usados",
@@ -1951,6 +1950,46 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "correo_10%",
+              "displayName": "correo_10%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "correo_5%",
+              "displayName": "correo_5%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contacto ",
+              "displayName": "contacto ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "row_number",
@@ -1972,8 +2011,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1488,
-        -1424
+        1648,
+        -1440
       ],
       "id": "8a858195-8e04-49e7-a514-2d5875b3ba4d",
       "name": "Update row in sheet",
@@ -2012,8 +2051,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        800,
-        -1392
+        752,
+        -1376
       ],
       "id": "a3cf9e9f-e67f-4f10-8a9d-865d1116f29d",
       "name": "mensajes>0"
@@ -2029,13 +2068,21 @@
           },
           "conditions": [
             {
-              "id": "d6ebf1c5-f947-4fcb-8bca-d632d19ad7cd",
-              "leftValue": "={{ $json['correo_10%'] }}",
-              "rightValue": "True",
+              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
+              "leftValue": "={{ $('validar creditos').item.json['count_10%'] }}",
+              "rightValue": 10,
               "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
+                "type": "number",
+                "operation": "lte"
+              }
+            },
+            {
+              "id": "c91f6db5-6501-4107-9e51-a7bd26b367d4",
+              "leftValue": "={{ $('validar creditos').item.json.mensajes_restantes }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
               }
             }
           ],
@@ -2046,8 +2093,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1056,
-        -1408
+        960,
+        -1424
       ],
       "id": "ae2c34d1-6470-4c03-b660-dadaf5a32ab5",
       "name": "correo10%"
@@ -2081,8 +2128,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        624,
-        -1392
+        608,
+        -1376
       ],
       "id": "a19567b1-e471-4eca-83d2-f3c037d8c9f0",
       "name": "validar creditos",
@@ -2095,57 +2142,42 @@
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "11S_SH27GHWMbmxidc4ESFNcxzyImvIDyV5si8Zi7YLA",
-          "mode": "list",
-          "cachedResultName": "DB clientes ValeIA",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11S_SH27GHWMbmxidc4ESFNcxzyImvIDyV5si8Zi7YLA/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Hoja 1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11S_SH27GHWMbmxidc4ESFNcxzyImvIDyV5si8Zi7YLA/edit#gid=0"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "id_numberphone",
-              "lookupValue": "={{ $json.cliente_id }}"
-            }
-          ]
-        },
+        "sendTo": "={{ $json.email }}",
+        "subject": "=Oye {{ $json['contacto '] }} Tus  Creditos para {{ $json.model_agent }} se estan agotando ",
+        "message": "=<p>Hola {{ $json['contacto '] }},</p>  <p>🚀 ¡Felicitaciones! 🎉🎊\nTu asistente IA <strong>{{ $json.model_agent }}</strong> ha demostrado su valor: <strong>El 90%📈 de tus créditos ya se han utilizado atendiendo y fidelizando a tus clientes</strong>.</p>  <p>Esto significa que tu inversión <strong>está dando resultados reales</strong>. Cada interacción generada ha sido una oportunidad para conectar, resolver y vender más.</p>  <p>Ahora bien… solo queda el <strong>10% de tus créditos</strong>. Y cuando tu asistente se detiene, también lo hace el flujo de oportunidades y la experiencia que tus clientes ya esperan de ti.</p>  <p><strong>No frenes tu impulso.</strong> Recarga hoy mismo y asegúrate de que tu asistente IA siga trabajando para ti 24/7, sin interrupciones.</p>  <p> <a href=\"https://tusitio.com/recargar\" style=\"background-color:#ff6f00;color:#fff;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:6px;display:inline-block;font-size:16px;\"> 💳 RECARGA AHORA Y MANTEN EL RITMO  </a> </p>  <p>El momento de actuar es ahora. Tus clientes ya están respondiendo.<br> El equipo de {{ $json.casa_matriz }}</p> ",
         "options": {}
       },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
       "position": [
-        1248,
-        -1248
+        1296,
+        -1232
       ],
-      "id": "0564c719-b810-4d94-8eb3-96988a38676e",
-      "name": "get client email",
+      "id": "4894cfe2-cd24-4dba-8450-b778025c3a7d",
+      "name": "Notificacion 10% Creditos",
+      "webhookId": "afc42567-0941-400e-878a-ea0626e51fbb",
       "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
+        "gmailOAuth2": {
+          "id": "No30HHponDPtNWfb",
           "name": "hola@whitelabel.lat"
         }
       }
     },
     {
       "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "Urgente!!! Tus creditos se agotaron ",
+        "message": "=<p>Hola {{ $('validar creditos').item.json['contacto '] }},</p>\n\n<p>🎯 Tu asistente IA <strong>{{ $json.model_agent }}</strong> <strong>se ha quedado sin créditos</strong>… ¡y eso es motivo de felicitación! Significa que has utilizado al máximo su potencial, atendiendo a tus clientes y manteniendo conversaciones de alto valor que impulsan tu negocio.</p>\n\n<p>Has sacado todo el provecho de tu inversión. Sin embargo, <strong>los clientes de {{ $json.nombre_cliente }} están esperando seguir conversando con tu asistente</strong>, y para que vuelva a estar activo es necesario recargarlo.</p>\n\n<p>Recargar ahora te permitirá continuar con la atención rápida, personalizada y efectiva que ya has estado ofreciendo, sin perder el impulso que has logrado.</p>\n\n<p>\n<a href=\"https://tusitio.com/recargar\" style=\"background-color:#28a745;color:#fff;padding:12px 18px;text-decoration:none;font-weight:bold;border-radius:6px;display:inline-block;\">\n💳 RECARGAR Y CONTINUAR EL ÉXITO\n</a>\n</p>\n\n<p>Tu asistente está listo para seguir trabajando contigo.<br>\nEl equipo de {{ $json.casa_matriz }}</p>\n\n",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1424,
-        -1216
+        928,
+        -1232
       ],
       "id": "1a566a50-0d3a-412f-a53f-b41716da8d6d",
-      "name": "Send a message",
+      "name": "Notificacion Creditos Agotados",
       "webhookId": "bf7ba3ce-08e7-464b-a7f5-18a087f58399",
       "credentials": {
         "gmailOAuth2": {
@@ -2153,6 +2185,48 @@
           "name": "hola@whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c91f6db5-6501-4107-9e51-a7bd26b367d4",
+              "leftValue": "={{ $('validar creditos').item.json.mensajes_restantes }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
+              "leftValue": "={{ $('validar creditos').item.json['count_10%'] }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1216,
+        -1424
+      ],
+      "id": "34307f06-766c-4701-9140-4bce10bd8fd7",
+      "name": "correo5%"
     }
   ],
   "pinData": {},
@@ -2176,6 +2250,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-08T23:04:31.334Z",
-  "versionId": "cd07a4a8-61f6-4fa2-afb7-a4ee244a4a47"
+  "updatedAt": "2025-08-10T18:32:30.422Z",
+  "versionId": "36f14453-9399-4e44-bc40-e78a168b8ed6"
 }
