@@ -613,7 +613,7 @@
     {
       "parameters": {
         "operation": "delete",
-        "key": "=chat_id_{{ $('Data').item.json.user_id }}"
+        "key": "=chat_id_{{ $json.phone_number }}"
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
@@ -1277,7 +1277,7 @@
     {
       "parameters": {
         "operation": "push",
-        "list": "=chat_id_mony{{ $json.phone_number }}",
+        "list": "=chat_id_{{ $json.phone_number }}",
         "messageData": "={{ $json.mensaje }}",
         "tail": true
       },
@@ -1300,7 +1300,7 @@
       "parameters": {
         "operation": "get",
         "propertyName": "message",
-        "key": "=chat_id_mony{{ $json.phone_number }}",
+        "key": "=chat_id_{{ $json.phone_number }}",
         "options": {}
       },
       "type": "n8n-nodes-base.redis",
@@ -1566,7 +1566,8 @@
         2624
       ],
       "id": "80040176-2ec8-4138-85d9-31444478d523",
-      "name": "AI Agent - V1"
+      "name": "AI Agent - V1",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1584,26 +1585,6 @@
       ],
       "id": "59735d43-9896-438b-ae76-abe62a56640f",
       "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=chat_history_mony_573005792037"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        3072,
-        2608
-      ],
-      "id": "5a974e75-4ef8-4c5e-8056-be9accb0c7d0",
-      "name": "Redis",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
     },
     {
       "parameters": {
@@ -1773,6 +1754,46 @@
           "name": "MONY_DB"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_id_573228854498"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3072,
+        2784
+      ],
+      "id": "ba73caf0-0e45-424c-ad89-c395e7f486ba",
+      "name": "push_message",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_history_mony_573228854498"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3072,
+        2608
+      ],
+      "id": "5a974e75-4ef8-4c5e-8056-be9accb0c7d0",
+      "name": "memory",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1828,6 +1849,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-10T01:45:57.891Z",
-  "versionId": "eff2f3de-6cd1-4e64-a606-fe5c96eaba5b"
+  "updatedAt": "2025-08-11T22:28:02.155Z",
+  "versionId": "0e17a08e-9387-402b-8b8d-aa0c67493731"
 }
