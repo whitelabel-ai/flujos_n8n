@@ -173,7 +173,7 @@
       "main": [
         [
           {
-            "node": "Execute a SQL query1",
+            "node": "user free",
             "type": "main",
             "index": 0
           }
@@ -576,6 +576,123 @@
           {
             "node": "AI Agent",
             "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "user free": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "anuncios por usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "data anuncio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "message anuncio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "data anuncio": {
+      "main": [
+        [
+          {
+            "node": "log de vista",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "anuncios por usuario": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reset anuncios": {
+      "main": [
+        [
+          {
+            "node": "anuncios por usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "message anuncio": {
+      "main": [
+        [
+          {
+            "node": "send pay",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "reset anuncios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "anuncio_disponible1": {
+      "main": [
+        [
+          {
+            "node": "user free",
+            "type": "main",
             "index": 0
           }
         ]
@@ -1094,7 +1211,7 @@
         "rule": {
           "interval": [
             {
-              "triggerAtHour": 8
+              "triggerAtHour": 9
             }
           ]
         }
@@ -1102,32 +1219,11 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        544,
-        5056
+        336,
+        5408
       ],
       "id": "c8a2e983-0d98-403b-926f-ca5e0e6d1836",
       "name": "anuncio_disponible"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT\n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  a.id AS id_anuncio,\n  a.titulo,\n  a.texto,\n  a.imagen_url,\n  a.enlace\nFROM usuarios u\nJOIN anuncios a ON\n  (a.pais_destino IS NULL OR a.pais_destino = '') AND\n  (a.moneda_destino IS NULL OR a.moneda_destino = u.moneda)\n  AND a.fecha_inicio <= CURRENT_TIMESTAMP\n  AND (a.fecha_fin IS NULL OR a.fecha_fin >= CURRENT_TIMESTAMP)\nWHERE NOT EXISTS (\n  SELECT 1 FROM anuncios_usuarios au\n  WHERE au.id_usuario = u.id AND au.id_anuncio = a.id\n);\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        768,
-        5056
-      ],
-      "id": "7616be24-df8c-4801-9d21-d2c119db44db",
-      "name": "Execute a SQL query1",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
     },
     {
       "parameters": {
@@ -1195,27 +1291,6 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT\n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  COUNT(t.id) AS total_transacciones,\n  SUM(CASE WHEN t.tipo = 'Gasto' THEN t.monto ELSE 0 END) AS total_gastos,\n  SUM(CASE WHEN t.tipo = 'Ingreso' THEN t.monto ELSE 0 END) AS total_ingresos\nFROM usuarios u\nJOIN transacciones t ON t.id_usuario = u.id\nWHERE t.fecha_transaccion >= CURRENT_DATE - INTERVAL '7 days'\nGROUP BY u.id, u.nombre_completo, u.numero_whatsapp;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        1664,
-        4912
-      ],
-      "id": "8c78fb39-ecfc-44ff-bb9a-2037ea4f51ae",
-      "name": "Execute a SQL query5",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
         "query": "SELECT\n  u.id AS id_usuario,\n  u.nombre_completo,\n  u.numero_whatsapp,\n  m.id AS id_meta,\n  m.nombre AS nombre_meta,\n  m.monto_objetivo,\n  m.monto_actual,\n  m.fecha_objetivo,\n  m.fecha_creacion,\n  ROUND(\n    EXTRACT(EPOCH FROM (CURRENT_DATE - m.fecha_creacion)) /\n    EXTRACT(EPOCH FROM (m.fecha_objetivo - m.fecha_creacion)) * 100, 2\n  ) AS porcentaje_esperado,\n  ROUND((m.monto_actual / m.monto_objetivo) * 100, 2) AS porcentaje_actual\nFROM usuarios u\nJOIN metas_ahorro m ON m.id_usuario = u.id\nWHERE m.estado = 'activa'\n  AND CURRENT_DATE < m.fecha_objetivo\n  AND m.monto_objetivo > 0\n  AND (m.monto_actual / m.monto_objetivo) < \n      (\n        EXTRACT(EPOCH FROM (CURRENT_DATE - m.fecha_creacion)) /\n        EXTRACT(EPOCH FROM (m.fecha_objetivo - m.fecha_creacion)) - 0.2\n      );\n",
         "options": {}
       },
@@ -1237,7 +1312,7 @@
     {
       "parameters": {
         "content": "## trigger Messages\n",
-        "height": 1884,
+        "height": 1676,
         "width": 1280,
         "color": 4
       },
@@ -1300,7 +1375,7 @@
           "interval": [
             {
               "field": "months",
-              "monthsInterval": 30,
+              "monthsInterval": 3,
               "triggerAtDayOfMonth": 29,
               "triggerAtHour": 8
             }
@@ -2574,6 +2649,355 @@
       ],
       "id": "76516215-02ef-4b4e-82a0-13d3fe1d59a3",
       "name": "register_transaction"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  id,\n  nombre_completo,\n  email,\n  numero_whatsapp,\n  moneda,\n  estado_suscripcion,\n  fecha_registro\nFROM usuarios\nWHERE estado_suscripcion = 'free';\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        560,
+        5408
+      ],
+      "id": "7616be24-df8c-4801-9d21-d2c119db44db",
+      "name": "user free",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "={{ $json.from }}",
+        "messageType": "video",
+        "mediaLink": "={{ $json.enlace }}",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.texto }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1808,
+        5408
+      ],
+      "id": "171ce6c0-3e12-4536-bce0-f619cdefa66c",
+      "name": "Send message",
+      "webhookId": "0c3a1105-a247-4873-97ed-9ddde5be8084",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        784,
+        5408
+      ],
+      "id": "949406d5-1d36-4074-84b1-b12d408e6508",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "108082ee-5ba1-4fb3-a962-aef4bbbb8119",
+              "leftValue": "={{ $json.reset_logs_flag }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1152,
+        5424
+      ],
+      "id": "1d46f24c-6450-4147-ab06-f5224a2ca0ab",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "96f5727d-d3fc-408a-8eb2-9cc197175017",
+              "name": "enlace",
+              "value": "={{ $json.enlace }}",
+              "type": "string"
+            },
+            {
+              "id": "8df86a1b-33b8-48a9-8dac-1b825140c92b",
+              "name": "metadata.phone_number_id",
+              "value": "565888133266017",
+              "type": "string"
+            },
+            {
+              "id": "3d9983b5-e5a8-4af1-a348-dc218466f2c2",
+              "name": "from",
+              "value": "={{ $json.numero_whatsapp.replace('+','') }}",
+              "type": "string"
+            },
+            {
+              "id": "3efebc00-427b-48c3-ac74-e9ecc4814e2a",
+              "name": "texto",
+              "value": "={{ $json.texto }}",
+              "type": "string"
+            },
+            {
+              "id": "9490d1d8-6657-4a7f-b4ad-aa39e2954422",
+              "name": "usuario_id",
+              "value": "={{ $json.usuario_id }}",
+              "type": "string"
+            },
+            {
+              "id": "edc45042-9725-40fd-ae01-edfcba57ab4e",
+              "name": "anuncio_id",
+              "value": "={{ $json.anuncio_id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        5408
+      ],
+      "id": "c92917ff-f87a-4af6-bd4f-dc8661c3e9b5",
+      "name": "data anuncio"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH anuncio_no_visto AS (\n  SELECT a.*\n  FROM anuncios a\n  LEFT JOIN anuncios_usuarios au \n    ON a.id = au.id_anuncio AND au.id_usuario = $1\n  WHERE au.id IS NULL\n    AND (a.fecha_fin IS NULL OR a.fecha_fin > NOW())\n    AND a.fecha_inicio <= NOW()\n  ORDER BY a.id ASC\n  LIMIT 1\n), usuario_actual AS (\n  SELECT id, numero_whatsapp FROM usuarios WHERE id = $1\n)\nSELECT \n  u.id AS usuario_id,\n  u.numero_whatsapp,\n  an.id AS anuncio_id,\n  an.titulo,\n  an.imagen_url,\n  an.enlace,\n  an.texto,\n  an.frecuencia,\n  an.fecha_inicio,\n  an.fecha_fin,\n  CASE WHEN an.id IS NULL THEN TRUE ELSE FALSE END AS reset_logs_flag\nFROM usuario_actual u\nLEFT JOIN anuncio_no_visto an ON TRUE;\n",
+        "options": {
+          "queryReplacement": "={{ $json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        976,
+        5424
+      ],
+      "id": "e69e4b87-1964-4250-a7ff-313f6d70449d",
+      "name": "anuncios por usuario",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO anuncios (titulo, imagen_url, enlace, texto, frecuencia, fecha_inicio)\nVALUES\n('Mony Video', 'https://minios3.whitelabel.lat/mony/mony.mp4', 'https://minios3.whitelabel.lat/mony/mony.mp4', 'Publicidad Mony', '1_por_sesion', NOW()),\n('Whitelabel Video', 'https://minios3.whitelabel.lat/mony/whitelabel.mp4', 'https://minios3.whitelabel.lat/mony/whitelabel.mp4', 'Publicidad Whitelabel', '1_por_sesion', NOW());\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        560,
+        5616
+      ],
+      "id": "f9e3aed0-5ea0-4c82-8dda-26e88760d81a",
+      "name": "add anuncio",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH borrado AS (\n  DELETE FROM anuncios_usuarios\n  WHERE id_usuario = $1\n  RETURNING id_usuario\n)\nSELECT id, numero_whatsapp\nFROM usuarios\nWHERE id = $1;\n",
+        "options": {
+          "queryReplacement": "={{ $json.usuario_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1824,
+        5584
+      ],
+      "id": "719b9f5a-ec1c-4745-88b0-3b8ae19320cf",
+      "name": "reset anuncios",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# SEND advertisement\n\n",
+        "height": 496,
+        "width": 1680
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        5328
+      ],
+      "id": "9ff4f21f-2055-4466-be81-bf1957f0c837",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO anuncios_usuarios (id_anuncio, id_usuario, fecha_visto)\nVALUES ($1, $2, NOW());\n",
+        "options": {
+          "queryReplacement": "={{ $json.anuncio_id }},{{ $json.usuario_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1648,
+        5408
+      ],
+      "id": "8c78fb39-ecfc-44ff-bb9a-2037ea4f51ae",
+      "name": "log de vista",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "96f5727d-d3fc-408a-8eb2-9cc197175017",
+              "name": "enlace",
+              "value": "={{ $json.enlace }}",
+              "type": "string"
+            },
+            {
+              "id": "8df86a1b-33b8-48a9-8dac-1b825140c92b",
+              "name": "metadata.phone_number_id",
+              "value": "565888133266017",
+              "type": "string"
+            },
+            {
+              "id": "3d9983b5-e5a8-4af1-a348-dc218466f2c2",
+              "name": "from",
+              "value": "={{ $json.numero_whatsapp.replace('+','') }}",
+              "type": "string"
+            },
+            {
+              "id": "3efebc00-427b-48c3-ac74-e9ecc4814e2a",
+              "name": "texto",
+              "value": "={{ $json.texto }}",
+              "type": "string"
+            },
+            {
+              "id": "9490d1d8-6657-4a7f-b4ad-aa39e2954422",
+              "name": "usuario_id",
+              "value": "={{ $json.usuario_id }}",
+              "type": "string"
+            },
+            {
+              "id": "edc45042-9725-40fd-ae01-edfcba57ab4e",
+              "name": "anuncio_id",
+              "value": "={{ $json.anuncio_id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1488,
+        5584
+      ],
+      "id": "3a90d926-f2b7-423e-82c4-2a61862847dd",
+      "name": "message anuncio"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "={{ $json.from }}",
+        "textBody": "=👋  Me alegra que estés viendo estas recomendaciones que pueden ayudarte a *crecer financieramente*.\nSolo un *recordatorio amigable*: si prefieres una experiencia *sin anuncios*, considera pasarte a nuestro plan *Premium*. Así tendrás contenido personalizado y *cero interrupciones*.\n¿Quieres que te cuente cómo hacerlo? 😊",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        5584
+      ],
+      "id": "68359f5c-5688-42d1-aa7a-5edb35242533",
+      "name": "send pay",
+      "webhookId": "0c3a1105-a247-4873-97ed-9ddde5be8084",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        5616
+      ],
+      "id": "4d9d82d4-66dc-4b34-b1dc-6dff0be7ee11",
+      "name": "anuncio_disponible1"
     }
   ],
   "pinData": {
@@ -2633,23 +3057,6 @@
           }
         }
       }
-    ],
-    "anuncio_disponible": [
-      {
-        "json": {
-          "timestamp": "2025-08-10T08:00:25.010-05:00",
-          "Readable date": "August 10th 2025, 8:00:25 am",
-          "Readable time": "8:00:25 am",
-          "Day of week": "Sunday",
-          "Year": "2025",
-          "Month": "August",
-          "Day of month": "10",
-          "Hour": "08",
-          "Minute": "00",
-          "Second": "25",
-          "Timezone": "America/Bogota (UTC-05:00)"
-        }
-      }
     ]
   },
   "repo_name": "flujos_n8n",
@@ -2684,10 +3091,13 @@
     },
     "node:recordatorio_suscripcion": {
       "recurrenceRules": []
+    },
+    "node:anuncio_disponible1": {
+      "recurrenceRules": []
     }
   },
   "tags": [],
-  "triggerCount": 8,
-  "updatedAt": "2025-08-10T22:06:22.410Z",
-  "versionId": "fdce71ac-4dbb-4c12-8dcd-50b9578bb2a2"
+  "triggerCount": 9,
+  "updatedAt": "2025-08-11T21:51:38.575Z",
+  "versionId": "7086df1c-d7a4-463b-9e50-58b7d0578e4e"
 }
