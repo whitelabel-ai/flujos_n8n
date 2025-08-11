@@ -850,7 +850,7 @@
     {
       "parameters": {
         "operation": "delete",
-        "key": "={{ $('Data').item.json.redis_message }}"
+        "key": "=chat_id_{{ $('setData').item.json.phone_number}}"
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
@@ -1528,7 +1528,7 @@
       "parameters": {
         "operation": "get",
         "propertyName": "message",
-        "key": "={{ $json.redis_message }}",
+        "key": "=chat_id_{{ $json.phone_number }}",
         "options": {}
       },
       "type": "n8n-nodes-base.redis",
@@ -1563,7 +1563,7 @@
     {
       "parameters": {
         "operation": "push",
-        "list": "={{ $json.redis_message }}",
+        "list": "=chat_id_{{ $json.phone_number }}",
         "messageData": "={{ $json.mensaje }}",
         "tail": true
       },
@@ -2873,7 +2873,7 @@
     {
       "parameters": {
         "operation": "delete",
-        "key": "=MONY_chat_id_573005792037"
+        "key": "=MONY_chat_id_573228854498"
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
@@ -2948,6 +2948,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-10T01:45:49.495Z",
-  "versionId": "40379a58-131e-4e93-9bc3-c5a2c97b6a09"
+  "updatedAt": "2025-08-11T22:24:52.637Z",
+  "versionId": "49e00a8d-ddf8-4117-8660-d67eb7d15aa5"
 }
