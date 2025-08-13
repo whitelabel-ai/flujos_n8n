@@ -112,13 +112,7 @@
     },
     "Send message3": {
       "main": [
-        [
-          {
-            "node": "Redis6",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Message a model3": {
@@ -697,6 +691,76 @@
           }
         ]
       ]
+    },
+    "anuncio_disponible2": {
+      "main": [
+        [
+          {
+            "node": "get user free",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Obtener Anuncios Activos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Obtener Logs Recientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enviar?": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Anuncios Activos": {
+      "main": [
+        [
+          {
+            "node": "enviar ahora",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get user free": {
+      "main": [
+        []
+      ]
+    },
+    "enviar ahora": {
+      "main": [
+        [
+          {
+            "node": "enviar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Logs Recientes": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-08-01T22:35:15.126Z",
@@ -890,26 +954,6 @@
     },
     {
       "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $('Data').item.json.numero_whatsapp }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        3136,
-        5056
-      ],
-      "id": "a5e30e48-0d4d-4973-9223-61f39db64930",
-      "name": "Redis6",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "amount": 3
       },
       "type": "n8n-nodes-base.wait",
@@ -1087,7 +1131,7 @@
       "typeVersion": 1.5,
       "position": [
         2816,
-        4400
+        4416
       ],
       "id": "6c2a22c6-560a-43b7-b6b8-4046793258f5",
       "name": "Redis Chat Memory1",
@@ -1154,7 +1198,7 @@
         "promptType": "define",
         "text": "=nombre: {{ $json.user_data.first_name }},\nmensaje del usuario: {{ $json.user_data.message }},\ntrigger_data: {{ JSON.stringify($json.trigger_data) }}\nuser_data: {{ JSON.stringify($json.user_data) }}",
         "options": {
-          "systemMessage": "=### 1. ROL Y PERSONA FUNDAMENTAL ###\n- Eres *Mony Coach*, el Estratega Financiero y Mentor Personal de *[nombre]*. Tu propósito trasciende el de un simple analista; eres un narrador de historias financieras.\n- Tu personalidad combina la agudeza de un analista de datos con la empatía de un coach de vida. Eres perspicaz, positivo y siempre enfocado en el empoderamiento. Usas un lenguaje claro y analogías para desmitificar las finanzas.\n- *Tu Filosofía Central:* Tu objetivo no es solo reportar números, sino *contar la historia que esos números revelan* sobre la vida financiera de tu usuario y darle las herramientas para que escriba un mejor próximo capítulo.\n\n### 2. ANÁLISIS DEL CONTEXTO Y MODO DE OPERACIÓN ###\nTu comportamiento se adapta al contexto de entrada. Primero, revisa si el campo `trigger_data` está vacío.\n\n- *Modo Proactivo (Trigger Detectado):*\n  - *Contexto:* `trigger_data` contiene un objeto con `trigger_type` y un `data` rico en información.\n  - *Tu Misión:* Entregar un *\"Reporte de Valor\"*. Este no es un simple mensaje, es un mini-informe bien estructurado, visualmente agradable y lleno de insights, utilizando la data provista.\n\n- *Modo Reactivo (Conversación Directa):*\n  - *Contexto:* `trigger_data` está vacío (`{}`). El usuario te ha hablado directamente.\n  - *Tu Misión:* Sostener una *\"Conversación de Coaching\"*. Utiliza tu memoria de chat, tus herramientas analíticas y tu protocolo de conversación para diagnosticar, aconsejar y guiar al usuario.\n\n### 3. MODO PROACTIVO: ESTRUCTURA DE REPORTES DE VALOR ###\nCuando un trigger te activa, NO uses las plantillas genéricas. Construye tus respuestas siguiendo estas estructuras detalladas para que sean dignas de un coach premium. Usa formato Markdown (negritas, cursivas, listas) y emojis para una máxima legibilidad en WhatsApp.\n\n---\n#### *Plantilla para: `resumen-financiero-hoy`, `resumen_semanal`, `resumen_mensual`, `resumen_trimestral`*\n\n* *Encabezado Atractivo:*\n    \"¡Hola, [nombre]! ☀️ Aquí tienes tu radiografía financiera de esta semana. ¡Vamos a ver qué nos cuentan los números!\"\n\n* *El Gran Panorama 📊:*\n    \"Un vistazo general de tu flujo de dinero:\"\n    * 🟢 *Ingresos:* `$(total_ingresos)`\n    * 🔴 *Gastos:* `$(total_gastos)`\n    * 💰 *Balance (Ahorro/Déficit):* `$(saldo_actual)`\n\n* *Análisis de Gastos 🔍:*\n    \"¿En qué se concentraron tus gastos? Tu top 3 fue:\"\n    1.  *$(categoria_1):* `$(monto_1)`\n    2.  *$(categoria_2):* `$(monto_2)`\n    3.  *$(categoria_3):* `$(monto_3)`\n\n* *💡 Insight del Coach:*\n    \"*Mi observación principal:* (Aquí va tu análisis. Ej: \"Veo que 'Restaurantes' 🍕 fue tu categoría principal esta semana, superando a 'Supermercado'. Esto puede ser una señal de que estás disfrutando de la vida social, ¡lo cual es genial! Solo tenlo presente para mantener el equilibrio con tu presupuesto mensual.\")\"\n\n* *Progreso hacia tus Sueños 🎯:*\n    \"Así van tus metas de ahorro:\"\n    * \"*(Nombre de la meta):* Has ahorrado `$(monto_actual)` de `$(monto_objetivo)`.\"\n\n* *Llamada a la Acción Conversacional:*\n    \"¿Quieres que profundicemos en alguna de estas categorías? Solo dime, por ejemplo, '*analiza mis gastos en restaurantes*'.\"\n\n---\n#### *Plantilla para: `alerta_presupuesto`*\n\n\"¡Hola [nombre]! Una pequeña alerta amistosa de tu coach 🧐.\n\nHe notado que tu gasto en la categoría *'[nombre_categoria]'* ha alcanzado el *[porcentaje_gastado]%* de tu presupuesto mensual.\n\nTe quedan *$[monto_restante]* para el resto del mes en esta área. ¡Gestionar con inteligencia estos últimos días será clave!\n\nSi quieres, podemos revisar los últimos gastos de esta categoría para ver dónde podemos ser más estratégicos. ¿Te parece?\"\n\n---\n#### *Plantilla para: `meta_en_riesgo`*\n\n\"¡Hola [nombre]! Hablemos de tu increíble meta: *'[nombre_meta]'* 🏖️.\n\nPara alcanzarla en la fecha que nos propusimos, tu progreso de ahorro debería estar en un *[progreso_esperado]%*, y actualmente vamos por un *[progreso_actual]%*.\n\n¡No te preocupes! Esto no es un problema, es una *oportunidad para ajustar la estrategia*. Aún estamos a tiempo de enderezar el rumbo.\n\nCreo que el primer paso sería identificar a dónde se está yendo el dinero que podría ir a este ahorro. ¿Quieres que juntos analicemos tus gastos del último mes para encontrar esas oportunidades?\"\n\n---\n\n### 4. MODO REACTIVO: PROTOCOLO DE CONVERSACIÓN DE COACHING ###\nCuando un usuario te hable, sigue este protocolo:\n\n1.  *Escucha y Empatiza:* Reconoce su pregunta o inquietud. Muestra que entiendes su necesidad. \"Entendido, quieres saber cómo optimizar tus ahorros. Es una excelente pregunta.\"\n2.  *Diagnostica con Datos (Piensa en Voz Alta):* Explica tu plan de acción y qué herramientas usarás. Esto genera confianza. \"Para darte el mejor consejo, voy a hacer un análisis completo. Primero, usaré `get_financial_health_snapshot` para ver tu panorama general. Luego, con `analyze_spending_habits`, buscaré patrones y 'gastos hormiga'. Finalmente, revisaré tus suscripciones con `get_user_subscriptions`.\"\n3.  *Prescribe con Claridad (Dato -> Insight -> Acción):* Sintetiza tus hallazgos en consejos prácticos.\n    * *Dato:* \"Mi análisis muestra que tienes 7 transacciones en 'Cafeterías' este mes, sumando $75.000.\"\n    * *Insight:* \"Este es un clásico 'gasto hormiga'. Individualmente parecen pequeños, pero juntos tienen un impacto significativo que podría estar yendo a tus metas.\"\n    * *Acción Sugerida:* \"¿Qué te parecería un reto? La próxima semana, intenta preparar tu café en casa y destinemos esos $20.000 que podrías ahorrar directamente a tu meta 'Viaje a la playa'.\"\n4.  *Invita al Siguiente Paso:* Termina siempre con una pregunta abierta que mantenga la conversación y el empoderamiento. \"¿Qué área te gustaría que ataquemos primero?\" o \"¿Quieres que configuremos un presupuesto para la categoría 'Restaurantes'?\"\n\n### 5. HERRAMIENTAS DISPONIBLES ###\n- *Consultas Generales:* `query_transactions`, `get_saving_goals`, `get_user_subscriptions`, `get_category_budgets`.\n- *Análisis Avanzado:* `get_financial_health_snapshot`, `analyze_spending_habits`, `compare_spending_periods`.\n- *Acciones Externas:* `generate_and_send_report`.\n\n### 6. REGLAS DE ORO DEL COACHING FINANCIERO ###\n- *Sé un Narrador de Datos:* No te limites a listar números. Explica qué significan y qué historia cuentan sobre los hábitos del usuario.\n- *Detecta y Nombra los Hábitos:* Busca activamente patrones como \"gastos de fin de semana\", \"gastos hormiga\", \"compras por impulso\" y menciónalos por su nombre para crear conciencia.\n- *Usa Analogías:* Simplifica conceptos complejos. \"Piensa en tus ahorros como semillas. Cada peso que guardas es una semilla que crecerá para convertirse en el árbol de tus metas.\"\n- *Formato Ante Todo:* La legibilidad es clave en WhatsApp. Usa *negritas* para destacar cifras y conceptos, _cursivas_ para énfasis y • listas para desglosar información.\n- *El Principio del \"Siguiente Paso Lógico\":* Siempre anticipa la próxima pregunta del usuario y ofrécele una acción o un análisis adicional."
+          "systemMessage": "=### 1. ROL Y PERSONA FUNDAMENTAL ###\n- Eres *Mony Coach*, el Estratega Financiero y Mentor Personal de *[nombre]*. Tu propósito trasciende el de un simple analista; eres un narrador de historias financieras.\n- Tu personalidad combina la agudeza de un analista de datos con la empatía de un coach de vida. Eres perspicaz, positivo y siempre enfocado en el empoderamiento. Usas un lenguaje claro y analogías para desmitificar las finanzas.\n- *Tu Filosofía Central:* Tu objetivo no es solo reportar números, sino *contar la historia que esos números revelan* sobre la vida financiera de tu usuario y darle las herramientas para que escriba un mejor próximo capítulo.\n\n### 2. ANÁLISIS DEL CONTEXTO Y MODO DE OPERACIÓN ###\nTu comportamiento se adapta al contexto de entrada. Primero, revisa si el campo `trigger_data` está vacío.\n\n- *Modo Proactivo (Trigger Detectado):*\n  - *Contexto:* `trigger_data` contiene un objeto con `trigger_type` y un `data` rico en información.\n  - *Tu Misión:* Entregar un *\"Reporte de Valor\"*. Este no es un simple mensaje, es un mini-informe bien estructurado, visualmente agradable y lleno de insights, utilizando la data provista.\n\n- *Modo Reactivo (Conversación Directa):*\n  - *Contexto:* `trigger_data` está vacío (`{}`). El usuario te ha hablado directamente.\n  - *Tu Misión:* Sostener una *\"Conversación de Coaching\"*. Utiliza tu memoria de chat, tus herramientas analíticas y tu protocolo de conversación para diagnosticar, aconsejar y guiar al usuario, detecta si el usuario tiene transacciones si no, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n### 3. MODO PROACTIVO: ESTRUCTURA DE REPORTES DE VALOR ###\nCuando un trigger te activa, NO uses las plantillas genéricas. Construye tus respuestas siguiendo estas estructuras detalladas para que sean dignas de un coach premium. Usa formato Markdown (negritas, cursivas, listas) y emojis para una máxima legibilidad en WhatsApp.\n\n---\n#### *Plantilla para: `resumen-financiero-hoy`, `resumen_semanal`, `resumen_mensual`, `resumen_trimestral`*\n\n* *Encabezado Atractivo:*\n    \"¡Hola, [nombre]! ☀️ Aquí tienes tu radiografía financiera de esta semana. ¡Vamos a ver qué nos cuentan los números!\"\n\n* *El Gran Panorama 📊:*\n    \"Un vistazo general de tu flujo de dinero:\"\n    * 🟢 *Ingresos:* `$(total_ingresos)`\n    * 🔴 *Gastos:* `$(total_gastos)`\n    * 💰 *Balance (Ahorro/Déficit):* `$(saldo_actual)`\n\n* *Análisis de Gastos 🔍:*\n    \"¿En qué se concentraron tus gastos? Tu top 3 fue:\"\n    1.  *$(categoria_1):* `$(monto_1)`\n    2.  *$(categoria_2):* `$(monto_2)`\n    3.  *$(categoria_3):* `$(monto_3)`\n\n* *💡 Insight del Coach:*\n    \"*Mi observación principal:* (Aquí va tu análisis. Ej: \"Veo que 'Restaurantes' 🍕 fue tu categoría principal esta semana, superando a 'Supermercado'. Esto puede ser una señal de que estás disfrutando de la vida social, ¡lo cual es genial! Solo tenlo presente para mantener el equilibrio con tu presupuesto mensual.\")\"\n\n* *Progreso hacia tus Sueños 🎯:*\n    \"Así van tus metas de ahorro:\"\n    * \"*(Nombre de la meta):* Has ahorrado `$(monto_actual)` de `$(monto_objetivo)`.\"\n\n* *Llamada a la Acción Conversacional:*\n    \"¿Quieres que profundicemos en alguna de estas categorías? Solo dime, por ejemplo, '*analiza mis gastos en restaurantes*'.\"\n\n---\n#### *Plantilla para: `alerta_presupuesto`*\n\n\"¡Hola [nombre]! Una pequeña alerta amistosa de tu coach 🧐.\n\nHe notado que tu gasto en la categoría *'[nombre_categoria]'* ha alcanzado el *[porcentaje_gastado]%* de tu presupuesto mensual.\n\nTe quedan *$[monto_restante]* para el resto del mes en esta área. ¡Gestionar con inteligencia estos últimos días será clave!\n\nSi quieres, podemos revisar los últimos gastos de esta categoría para ver dónde podemos ser más estratégicos. ¿Te parece?\"\n\n---\n#### *Plantilla para: `meta_en_riesgo`*\n\n\"¡Hola [nombre]! Hablemos de tu increíble meta: *'[nombre_meta]'* 🏖️.\n\nPara alcanzarla en la fecha que nos propusimos, tu progreso de ahorro debería estar en un *[progreso_esperado]%*, y actualmente vamos por un *[progreso_actual]%*.\n\n¡No te preocupes! Esto no es un problema, es una *oportunidad para ajustar la estrategia*. Aún estamos a tiempo de enderezar el rumbo.\n\nCreo que el primer paso sería identificar a dónde se está yendo el dinero que podría ir a este ahorro. ¿Quieres que juntos analicemos tus gastos del último mes para encontrar esas oportunidades?\"\n\n---\n\n### 4. MODO REACTIVO: PROTOCOLO DE CONVERSACIÓN DE COACHING ###\nCuando un usuario te hable, sigue este protocolo:\n\n1.  *Escucha y Empatiza:* Reconoce su pregunta o inquietud. Muestra que entiendes su necesidad. \"Entendido, quieres saber cómo optimizar tus ahorros. Es una excelente pregunta.\"\n2.  *Diagnostica con Datos (Piensa en Voz Alta):* Explica tu plan de acción y qué herramientas usarás. Esto genera confianza. \"Para darte el mejor consejo, voy a hacer un análisis completo. Primero, usaré `get_financial_health_snapshot` para ver tu panorama general. Luego, con `analyze_spending_habits`, buscaré patrones y 'gastos hormiga'. Finalmente, revisaré tus suscripciones con `get_user_subscriptions`.\"\n3.  *Prescribe con Claridad (Dato -> Insight -> Acción):* Sintetiza tus hallazgos en consejos prácticos.\n    * *Dato:* \"Mi análisis muestra que tienes 7 transacciones en 'Cafeterías' este mes, sumando $75.000.\"\n    * *Insight:* \"Este es un clásico 'gasto hormiga'. Individualmente parecen pequeños, pero juntos tienen un impacto significativo que podría estar yendo a tus metas.\"\n    * *Acción Sugerida:* \"¿Qué te parecería un reto? La próxima semana, intenta preparar tu café en casa y destinemos esos $20.000 que podrías ahorrar directamente a tu meta 'Viaje a la playa'.\"\n4.  *Invita al Siguiente Paso:* Termina siempre con una pregunta abierta que mantenga la conversación y el empoderamiento. \"¿Qué área te gustaría que ataquemos primero?\" o \"¿Quieres que configuremos un presupuesto para la categoría 'Restaurantes'?\"\n\n### 5. HERRAMIENTAS DISPONIBLES ###\n- *Consultas Generales:* `query_transactions`, `get_saving_goals`, `get_user_subscriptions`, `get_category_budgets`.\n- *Análisis Avanzado:* `get_financial_health_snapshot`, `analyze_spending_habits`, `compare_spending_periods`.\n- *Acciones Externas:* `generate_and_send_report`.\n\n### 6. REGLAS DE ORO DEL COACHING FINANCIERO ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar en la base de datos, o usare... o tienes toda la razon...\". Simplemente hazlo y presenta el resultado.\n- *Sé un Narrador de Datos:* No te limites a listar números. Explica qué significan y qué historia cuentan sobre los hábitos del usuario.\n- *Detecta y Nombra los Hábitos:* Busca activamente patrones como \"gastos de fin de semana\", \"gastos hormiga\", \"compras por impulso\" y menciónalos por su nombre para crear conciencia.\n- *Usa Analogías:* Simplifica conceptos complejos. \"Piensa en tus ahorros como semillas. Cada peso que guardas es una semilla que crecerá para convertirse en el árbol de tus metas.\"\n- *Formato Ante Todo:* La legibilidad es clave en WhatsApp. Usa *negritas* para destacar cifras y conceptos, _cursivas_ para énfasis y • listas para desglosar información.\n- *El Principio del \"Siguiente Paso Lógico\":* Siempre anticipa la próxima pregunta del usuario y ofrécele una acción o un análisis adicional.\n\n- *Nunca inventes información.* Si no encuentras datos, infórmalo. \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1223,7 +1267,8 @@
         5408
       ],
       "id": "c8a2e983-0d98-403b-926f-ca5e0e6d1836",
-      "name": "anuncio_disponible"
+      "name": "anuncio_disponible",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1727,7 +1772,7 @@
         "descriptionType": "manual",
         "toolDescription": "Analiza los gastos de un período para identificar las 2 categorías con mayor gasto y los 'gastos hormiga' (transacciones pequeñas y frecuentes en una misma categoría).",
         "operation": "executeQuery",
-        "query": "-- Consulta 1: Top Categoría de Gasto\nSELECT c.nombre, SUM(t.monto) as total_gastado\nFROM transacciones t\nJOIN categorias c ON t.id_categoria = c.id\nWHERE t.id_usuario = :id_usuario AND t.tipo = 'Gasto' AND t.fecha_transaccion BETWEEN :start_date AND :end_date\nGROUP BY c.nombre\nORDER BY total_gastado DESC\nLIMIT 2;\n\n-- Consulta 2: Detección de Gastos Hormiga (ej: más de 5 transacciones menores a $20.000 COP)\nSELECT c.nombre, COUNT(t.id) as numero_transacciones, SUM(t.monto) as total_gastado\nFROM transacciones t\nJOIN categorias c ON t.id_categoria = c.id\nWHERE t.id_usuario = '{{ $fromAI(\"id_usuario\", `ID del usuario dueño de las transacciones`, \"string\") }}' AND t.tipo = 'Gasto' AND t.monto < 20000 AND t.fecha_transaccion BETWEEN {{ $fromAI('start_date', ``, 'string') }} AND {{ $fromAI('end_date', ``, 'string') }}\nGROUP BY c.nombre\nHAVING COUNT(t.id) > 5\nORDER BY total_gastado DESC;",
+        "query": "-- Consulta 1: Top Categoría de Gasto\nSELECT c.nombre, SUM(t.monto) as total_gastado\nFROM transacciones t\nJOIN categorias c ON t.id_categoria = c.id\nWHERE t.id_usuario = '{{ $fromAI(\"id_usuario\", `ID del usuario dueño de las transacciones`, \"string\") }}' AND t.tipo = 'Gasto' AND t.fecha_transaccion BETWEEN {{ $fromAI('start_date', ``, 'string') }} AND {{ $fromAI('end_date', ``, 'string') }}\nGROUP BY c.nombre\nORDER BY total_gastado DESC\nLIMIT 2;\n\n-- Consulta 2: Detección de Gastos Hormiga (ej: más de 5 transacciones menores a $20.000 COP)\nSELECT c.nombre, COUNT(t.id) as numero_transacciones, SUM(t.monto) as total_gastado\nFROM transacciones t\nJOIN categorias c ON t.id_categoria = c.id\nWHERE t.id_usuario = '{{ $fromAI(\"id_usuario\", `ID del usuario dueño de las transacciones`, \"string\") }}' AND t.tipo = 'Gasto' AND t.monto < 20000 AND t.fecha_transaccion BETWEEN {{ $fromAI('start_date', ``, 'string') }} AND {{ $fromAI('end_date', ``, 'string') }}\nGROUP BY c.nombre\nHAVING COUNT(t.id) > 5\nORDER BY total_gastado DESC;",
         "options": {}
       },
       "type": "n8n-nodes-base.postgresTool",
@@ -2997,7 +3042,475 @@
         5616
       ],
       "id": "4d9d82d4-66dc-4b34-b1dc-6dff0be7ee11",
-      "name": "anuncio_disponible1"
+      "name": "anuncio_disponible1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# SEND advertisement AIRTABLE\n\n\n",
+        "height": 496,
+        "width": 1680
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        320,
+        5872
+      ],
+      "id": "55bd93a5-dcb9-45c8-abc9-43fca7d15faf",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        6144
+      ],
+      "id": "9fab0d4a-721c-4052-9bba-fddb17c45d06",
+      "name": "anuncio_disponible2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appeEyMJXtknc4KrR",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tbl02BF19QlKxvXmN",
+          "mode": "id"
+        },
+        "triggerField": "fecha_creacion",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        432,
+        6800
+      ],
+      "id": "4445e5b4-2bf3-4f90-86e4-f5a764986164",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "u7Y2oDaiCkrDAgjV",
+          "name": "Gestión de Publicidad Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "75741923-fe06-4384-ba82-2747db1cefbd",
+              "leftValue": "={{ $json.enviarAhora }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        6224
+      ],
+      "id": "289eff46-8849-47ac-b246-dd3998ca6fd2",
+      "name": "enviar?"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "TEXTO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "ea6c8c20-20b2-48d9-bc44-c3c11a6aac86"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TEXTO"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c9ea4125-e72c-4479-93cf-1bc52442f010",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "IMAGEN",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "IMAGEN"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a7e4d476-639a-4cce-a0b9-da994a318e13",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "VIDEO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "VIDEO"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "71deeb84-bf4b-40a3-a871-c686e7f11091",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "TEXTO_E_IMAGEN",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TEXTO_E_IMAGEN"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d9d458b1-ea3e-4695-976d-61c41de07e83",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "TEXTO_E_VIDEO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TEXTO_E_VIDEO"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1616,
+        5920
+      ],
+      "id": "af54e4e5-a613-445f-af90-a6ddfc6598f4",
+      "name": "tipo"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "anunciantes",
+          "mode": "list",
+          "cachedResultName": "anunciantes"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre_empresa": "={{ $json.fields.nombre_empresa }}",
+            "nombre_contacto": "={{ $json.fields.nombre_contacto }}",
+            "email_contacto": "={{ $json.fields.email_contacto }}",
+            "whatsapp_contacto": "={{ $json.fields.whatsapp_contacto }}",
+            "fecha_creacion": "={{ $json.fields.fecha_creacion }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "nombre_empresa",
+              "displayName": "nombre_empresa",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "nombre_contacto",
+              "displayName": "nombre_contacto",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email_contacto",
+              "displayName": "email_contacto",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "whatsapp_contacto",
+              "displayName": "whatsapp_contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fecha_creacion",
+              "displayName": "fecha_creacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        608,
+        6800
+      ],
+      "id": "72a8781f-0e4c-4a01-916c-cc5ff4a640a4",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appeEyMJXtknc4KrR",
+          "mode": "list",
+          "cachedResultName": "Gestión de Publicidad Mony",
+          "cachedResultUrl": "https://airtable.com/appeEyMJXtknc4KrR"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblSqtqdtt0BucZAM",
+          "mode": "list",
+          "cachedResultName": "Anuncios",
+          "cachedResultUrl": "https://airtable.com/appeEyMJXtknc4KrR/tblSqtqdtt0BucZAM"
+        },
+        "filterByFormula": "({estado} = 'ACTIVO')",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        448,
+        6224
+      ],
+      "id": "d8dc2f53-18a4-4690-a771-14fca2575c9f",
+      "name": "Obtener Anuncios Activos",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "u7Y2oDaiCkrDAgjV",
+          "name": "Gestión de Publicidad Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appeEyMJXtknc4KrR",
+          "mode": "list",
+          "cachedResultName": "Gestión de Publicidad Mony",
+          "cachedResultUrl": "https://airtable.com/appeEyMJXtknc4KrR"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkKidBWt1wChOqr",
+          "mode": "list",
+          "cachedResultName": "Log de Envíos",
+          "cachedResultUrl": "https://airtable.com/appeEyMJXtknc4KrR/tblkKidBWt1wChOqr"
+        },
+        "filterByFormula": "IS_AFTER({fecha_envio}, DATEADD(TODAY(), -30, 'days'))",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        448,
+        6400
+      ],
+      "id": "dad94311-3b3d-4b5f-a0f5-53144cfa9ed1",
+      "name": "Obtener Logs Recientes",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "u7Y2oDaiCkrDAgjV",
+          "name": "Gestión de Publicidad Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  id,\n  nombre_completo,\n  email,\n  numero_whatsapp,\n  moneda,\n  estado_suscripcion,\n  fecha_registro\nFROM usuarios\nWHERE estado_suscripcion = 'free';\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        448,
+        6064
+      ],
+      "id": "a0204aab-a3ed-4533-932b-c29f70c56e3b",
+      "name": "get user free",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nitems.forEach(item => {\n    const data = item.json;\n\n    // Lista de días en español\n    const diasSemana = [\n        \"Domingo\", \"Lunes\", \"Martes\", \"Miércoles\", \n        \"Jueves\", \"Viernes\", \"Sábado\"\n    ];\n\n    // Fecha y hora actual en Bogotá\n    const ahoraBogota = new Date(\n        new Date().toLocaleString(\"en-US\", { timeZone: \"America/Bogota\" })\n    );\n\n    const diaActual = diasSemana[ahoraBogota.getDay()];\n    const minutosActuales = ahoraBogota.getHours() * 60 + ahoraBogota.getMinutes();\n\n    let enviarHoy = false;\n\n    // Validar frecuencia\n    if (data.tipo_frecuencia === \"DIARIO\") {\n        enviarHoy = true;\n    } else if (data.tipo_frecuencia === \"DIAS_ESPECIFICOS\" && Array.isArray(data.dias_semana)) {\n        enviarHoy = data.dias_semana.includes(diaActual);\n    }\n\n    // Validar hora con tolerancia de ±20 minutos\n    let enviarAhora = false;\n    if (enviarHoy && Array.isArray(data.horas_envio)) {\n        enviarAhora = data.horas_envio.some(hora => {\n            const [h, m] = hora.split(\":\").map(Number);\n            const minutosProgramados = h * 60 + m;\n            return Math.abs(minutosActuales - minutosProgramados) <= 30;\n        });\n    }\n\n    results.push({\n        json: {\n            ...data,\n            hoy_es: diaActual,\n            hora_actual: ahoraBogota.toTimeString().slice(0, 5),\n            enviarHoy,\n            enviarAhora\n        }\n    });\n});\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        6224
+      ],
+      "id": "74d26989-cf19-4f56-8d66-272a691cc91b",
+      "name": "enviar ahora"
+    },
+    {
+      "parameters": {
+        "jsCode": "const usuarios = $json; // Usuario actual del loop\nconst anuncios = $items(\"enviar?\", 0).map(item => item.json);\nconst logs = $items(\"Obtener Logs Recientes\", 0).map(item => item.json);\n\n// Aseguramos que sean arrays\nconst arrUsuarios = Array.isArray(usuarios) ? usuarios : [usuarios];\nconst arrAnuncios = Array.isArray(anuncios) ? anuncios : [anuncios];\nconst arrLogs = Array.isArray(logs) ? logs : [logs];\n\nconst result = arrUsuarios.map(usuario => {\n  // Filtramos logs que correspondan a este usuario\n  const logsUsuario = arrLogs.filter(\n    log => log.id_usuario_db === usuario.id\n  );\n\n  // Anexamos todos los anuncios disponibles\n  return {\n    ...usuario,\n    anuncios_disponibles: arrAnuncios,\n    logs: logsUsuario\n  };\n});\n\nreturn result.map(r => ({ json: r }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        6176
+      ],
+      "id": "eaa438b6-4beb-4e83-af9c-181f27ea526f",
+      "name": "Code"
     }
   ],
   "pinData": {
@@ -3011,49 +3524,22 @@
           "contacts": [
             {
               "profile": {
-                "name": "•OSCAR•"
+                "name": "Pedro Rodriguez"
               },
-              "wa_id": "573208397300"
+              "wa_id": "573228854498"
             }
           ],
-          "messages": "Ya pudiste?",
+          "messages": "puedes ver mis hábitos para que me aconsejes?",
           "field": "messages",
           "usuario_data": {
-            "id": "32e0733f-bbc1-471a-953d-bdf5bb44a09e",
-            "email": "oscarbejm.ai@gmail.com",
+            "id": "46ed80f9-8ef4-4faf-91fe-30a2ec76d0e0",
+            "email": "pro.pedro0413@gmail.com",
             "moneda": "COP",
-            "password": "$2a$12$LBRK2Ec7mE5xrTCgcXeQUen5/Jj1lMPzWsqbzSFC/a/snZo8CgoSC",
-            "fecha_registro": "2025-08-09T16:49:55.873",
-            "nombre_completo": "Oscar Bejman",
-            "numero_whatsapp": "+573208397300",
+            "password": "$2a$12$T.GVMfVNgql1Xqqn7wwukO1l/aI0dnzSIIGMg63Z3C/7J6H3EKTSm",
+            "fecha_registro": "2025-08-11T22:52:19.508",
+            "nombre_completo": "Pedro Rodriguez",
+            "numero_whatsapp": "+573228854498",
             "estado_suscripcion": "free"
-          }
-        }
-      }
-    ],
-    "Data": [
-      {
-        "json": {
-          "numero_whatsapp": "573208397300",
-          "trigger_data": {},
-          "user_data": {
-            "message": "Ya pudiste?",
-            "numero_whatsapp": "573208397300",
-            "first_name": "•OSCAR•",
-            "usuario_data": {
-              "id": "32e0733f-bbc1-471a-953d-bdf5bb44a09e",
-              "email": "oscarbejm.ai@gmail.com",
-              "moneda": "COP",
-              "password": "$2a$12$LBRK2Ec7mE5xrTCgcXeQUen5/Jj1lMPzWsqbzSFC/a/snZo8CgoSC",
-              "fecha_registro": "2025-08-09T16:49:55.873",
-              "nombre_completo": "Oscar Bejman",
-              "numero_whatsapp": "+573208397300",
-              "estado_suscripcion": "free"
-            },
-            "redis_message": "chat_id_573208397300"
-          },
-          "metadata": {
-            "phone_number_id": "565888133266017"
           }
         }
       }
@@ -3094,10 +3580,16 @@
     },
     "node:anuncio_disponible1": {
       "recurrenceRules": []
+    },
+    "node:anuncio_disponible2": {
+      "recurrenceRules": []
+    },
+    "node:Airtable Trigger": {
+      "lastTimeChecked": "2025-08-13T20:50:46Z"
     }
   },
   "tags": [],
-  "triggerCount": 9,
-  "updatedAt": "2025-08-11T21:51:38.575Z",
-  "versionId": "7086df1c-d7a4-463b-9e50-58b7d0578e4e"
+  "triggerCount": 8,
+  "updatedAt": "2025-08-13T20:50:46.531Z",
+  "versionId": "e47b7769-338e-42d1-9b60-737629387256"
 }
