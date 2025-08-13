@@ -103,6 +103,11 @@
             "node": "OpenAI",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Redis5",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -198,13 +203,7 @@
     },
     "Send Content1": {
       "main": [
-        [
-          {
-            "node": "Redis5",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Wait11": {
@@ -295,11 +294,6 @@
       ]
     },
     "OpenAI Chat Model": {
-      "ai_languageModel": [
-        []
-      ]
-    },
-    "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
           {
@@ -777,8 +771,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        3760,
-        1220
+        1800,
+        1460
       ],
       "id": "90717572-a289-4aa9-8e07-267c3954b71a",
       "name": "Redis5",
@@ -1056,8 +1050,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        2300,
-        2080
+        2380,
+        1860
       ],
       "id": "b990fbcd-1334-453c-90d3-c65470a575d0",
       "name": "OpenAI Chat Model",
@@ -1067,29 +1061,39 @@
           "name": "OpenAi account"
         }
       }
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        2400,
-        1840
-      ],
-      "id": "a503277b-5d32-4bc3-9290-a21f4be6e24f",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "7B9Ztbhb2FvSX13q",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "primary-production-158f.up.railway.app",
+            "user-agent": "ManyChat",
+            "content-length": "118",
+            "content-type": "application/json; charset=utf-8",
+            "x-forwarded-for": "3.75.206.75",
+            "x-forwarded-host": "primary-production-158f.up.railway.app",
+            "x-forwarded-proto": "https",
+            "x-railway-edge": "railway/europe-west4",
+            "x-railway-request-id": "jXTV1wtiRL286lBLnD36RA",
+            "x-real-ip": "3.75.206.75",
+            "x-request-start": "1755058393606",
+            "accept-encoding": "gzip"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "2103870515",
+            "first_name": "RoA",
+            "last_input_text": "Necesito Crear un Recordatorio, me ayudas por favor"
+          },
+          "webhookUrl": "https://primary-production-158f.up.railway.app/webhook/reminders",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Angela/",
@@ -1106,6 +1110,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-07-03T00:46:04.958Z",
-  "versionId": "7ac6e542-2342-4db6-965e-b5463ef0f1ab"
+  "updatedAt": "2025-08-13T21:25:56.645Z",
+  "versionId": "36173595-557a-41ce-a10b-23cd9ebd3aeb"
 }
