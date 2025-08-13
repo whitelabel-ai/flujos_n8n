@@ -109,22 +109,11 @@
         ]
       ]
     },
-    "User test1": {
-      "main": [
-        [
-          {
-            "node": "Delete table or rows",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Wait": {
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -134,6 +123,112 @@
     "HTTP Request": {
       "main": [
         []
+      ]
+    },
+    "delet user": {
+      "main": [
+        [
+          {
+            "node": "onboarding delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onboarding delete": {
+      "main": [
+        [
+          {
+            "node": "transaction delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transaction delete": {
+      "main": [
+        [
+          {
+            "node": "push_message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onboarding delete1": {
+      "main": [
+        [
+          {
+            "node": "transaction delete1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transaction delete1": {
+      "main": [
+        [
+          {
+            "node": "push_message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "delete number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete number": {
+      "main": [
+        [
+          {
+            "node": "onboarding delete1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Users": {
+      "main": [
+        [
+          {
+            "node": "delet user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -165,7 +260,8 @@
           "id": "3BmLjpi7AvK0Sx6n",
           "name": "MONY_DB"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -191,38 +287,6 @@
         "whatsAppTriggerApi": {
           "id": "jxY742yXHUpUmkYh",
           "name": "Test Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "usuarios",
-          "mode": "list",
-          "cachedResultName": "usuarios"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        400,
-        192
-      ],
-      "id": "4054dadf-ed25-4bf5-935b-165b8efc8ede",
-      "name": "User test1",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
         }
       }
     },
@@ -405,7 +469,8 @@
         -32
       ],
       "id": "d187ea81-69ea-4e63-8048-17f09a3c63ff",
-      "name": "No Operation, do nothing"
+      "name": "No Operation, do nothing",
+      "disabled": true
     },
     {
       "parameters": {
@@ -439,7 +504,8 @@
         -32
       ],
       "id": "f176e465-c428-4ba5-845f-80b2c4beb0ae",
-      "name": "IsFree?"
+      "name": "IsFree?",
+      "disabled": true
     },
     {
       "parameters": {
@@ -521,7 +587,7 @@
       "typeVersion": 1.2,
       "position": [
         1968,
-        -1368
+        -1376
       ],
       "name": "Call Agente Transaccional",
       "id": "68a8e3ad-60b7-4ca2-b63f-6c3d8df24910"
@@ -535,8 +601,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        400,
-        416
+        384,
+        608
       ],
       "id": "e61a3ce3-9efa-44de-b209-6630f72fd1a7",
       "name": "CLEAN DATABASE",
@@ -546,7 +612,8 @@
           "id": "3BmLjpi7AvK0Sx6n",
           "name": "MONY_DB"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -557,13 +624,21 @@
         },
         "table": {
           "__rl": true,
-          "value": "anuncios",
+          "value": "metas_ahorro",
           "mode": "list",
-          "cachedResultName": "anuncios"
+          "cachedResultName": "metas_ahorro"
         },
         "columns": {
           "mappingMode": "defineBelow",
-          "value": {},
+          "value": {
+            "id": "a0e2a22b-5f50-4d43-9b81-0a6f0d9c4c7c",
+            "nombre": "Salir de deudas",
+            "monto_objetivo": 35000000,
+            "fecha_objetivo": "=2026-02-12T00:00:00.000-05:00",
+            "estado": "activa",
+            "id_usuario": "5112139f-13f8-4ec9-ba00-9c02ea774c5a",
+            "monto_actual": 0
+          },
           "matchingColumns": [
             "id"
           ],
@@ -571,16 +646,15 @@
             {
               "id": "id",
               "displayName": "id",
-              "required": false,
+              "required": true,
               "defaultMatch": true,
               "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "type": "string",
+              "canBeUsedToMatch": true
             },
             {
-              "id": "titulo",
-              "displayName": "titulo",
+              "id": "nombre",
+              "displayName": "nombre",
               "required": true,
               "defaultMatch": false,
               "display": true,
@@ -588,62 +662,62 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "imagen_url",
-              "displayName": "imagen_url",
-              "required": false,
+              "id": "monto_objetivo",
+              "displayName": "monto_objetivo",
+              "required": true,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
+              "type": "number",
               "canBeUsedToMatch": true
             },
             {
-              "id": "enlace",
-              "displayName": "enlace",
+              "id": "monto_actual",
+              "displayName": "monto_actual",
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
+              "type": "number",
               "canBeUsedToMatch": true
             },
             {
-              "id": "texto",
-              "displayName": "texto",
+              "id": "fecha_objetivo",
+              "displayName": "fecha_objetivo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "cancelada",
+                  "value": "cancelada"
+                },
+                {
+                  "name": "completada",
+                  "value": "completada"
+                },
+                {
+                  "name": "inactiva",
+                  "value": "inactiva"
+                },
+                {
+                  "name": "activa",
+                  "value": "activa"
+                }
+              ]
             },
             {
-              "id": "frecuencia",
-              "displayName": "frecuencia",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "pais_destino",
-              "displayName": "pais_destino",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "moneda_destino",
-              "displayName": "moneda_destino",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "fecha_inicio",
-              "displayName": "fecha_inicio",
+              "id": "fecha_creacion",
+              "displayName": "fecha_creacion",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -651,12 +725,12 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "fecha_fin",
-              "displayName": "fecha_fin",
-              "required": false,
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
               "defaultMatch": false,
               "display": true,
-              "type": "dateTime",
+              "type": "string",
               "canBeUsedToMatch": true
             }
           ],
@@ -679,7 +753,8 @@
           "id": "3BmLjpi7AvK0Sx6n",
           "name": "MONY_DB"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -714,7 +789,7 @@
       "typeVersion": 2.6,
       "position": [
         1296,
-        -1320
+        -1328
       ],
       "id": "e111f9d1-a716-4c94-ba43-9670bb6bb36f",
       "name": "Execute a SQL query",
@@ -785,7 +860,7 @@
       "typeVersion": 3.2,
       "position": [
         1744,
-        -1320
+        -1328
       ],
       "id": "a862f0d2-d27f-463c-9769-64ccfb057e62",
       "name": "meta"
@@ -814,7 +889,7 @@
       "typeVersion": 3.4,
       "position": [
         1520,
-        -1320
+        -1328
       ],
       "id": "2da62d31-1085-4a83-b8d5-0b51f43b4e2b",
       "name": "data1"
@@ -839,7 +914,8 @@
           "id": "3BmLjpi7AvK0Sx6n",
           "name": "MONY_DB"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -850,52 +926,12 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        400,
-        -256
+        384,
+        -224
       ],
       "id": "182c32c0-5874-435b-ac92-17af6c16ba04",
       "name": "crear UUI postgres",
       "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "deleteTable",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "usuarios",
-          "mode": "list",
-          "cachedResultName": "usuarios"
-        },
-        "deleteCommand": "delete",
-        "where": {
-          "values": [
-            {
-              "column": "id",
-              "value": "=w"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        624,
-        192
-      ],
-      "id": "2140ccc3-58e3-4058-8228-ac1d6daa2545",
-      "name": "Delete table or rows",
       "credentials": {
         "postgres": {
           "id": "3BmLjpi7AvK0Sx6n",
@@ -917,8 +953,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        848,
-        -1440
+        1136,
+        -1552
       ],
       "id": "a0112fb7-9b2a-4827-a898-9f117c0bebfe",
       "name": "HTTP Request",
@@ -940,16 +976,314 @@
       "id": "25affb45-a6dc-4d08-a387-b500f7e839a9",
       "name": "Wait",
       "webhookId": "bbaf7bad-b230-4117-83d9-4073b4f772f7"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH datos_usuario AS (\n  SELECT \n    id,\n    numero_whatsapp\n  FROM usuarios\n  WHERE id = '5d9de924-8858-4908-bf74-016909a8e452'\n),\nborrado AS (\n  -- 1️⃣ Borrar logs de anuncios\n  DELETE FROM anuncios_usuarios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_recordatorios AS (\n  DELETE FROM recordatorios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_metas AS (\n  DELETE FROM metas_ahorro \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_usuario AS (\n  DELETE FROM suscripciones_usuario \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_mony AS (\n  DELETE FROM suscripciones_mony \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_transacciones AS (\n  DELETE FROM transacciones \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_categorias AS (\n  DELETE FROM categorias \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_usuario AS (\n  DELETE FROM usuarios \n  WHERE id = (SELECT id FROM datos_usuario)\n)\nSELECT \n  true AS success,\n  id,\n  numero_whatsapp\nFROM datos_usuario;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        624,
+        192
+      ],
+      "id": "2140ccc3-58e3-4058-8228-ac1d6daa2545",
+      "name": "delet user",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_history_mony_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        848,
+        192
+      ],
+      "id": "86aca0a1-5a8d-4a34-8ca8-875272d2efd6",
+      "name": "onboarding delete",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=MONY_chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        192
+      ],
+      "id": "6bd5955d-f989-4310-91c7-918f8db40045",
+      "name": "transaction delete",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        192
+      ],
+      "id": "2a4d98c6-7d66-49dc-be9f-bd83d0f4a636",
+      "name": "push_message",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_history_mony_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        832,
+        384
+      ],
+      "id": "5c1221fb-a389-4cd6-a025-df67cc819174",
+      "name": "onboarding delete1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=MONY_chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        384
+      ],
+      "id": "b3047b92-1a58-474f-ae75-3af3f8d141fb",
+      "name": "transaction delete1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        384
+      ],
+      "id": "498c4b07-de4c-443c-9b32-3f53bb1db023",
+      "name": "push_message1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        416,
+        384
+      ],
+      "id": "14ff3555-101d-4cc2-ae86-2292fd45b47a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "43859a53-b296-4aa4-8453-a3eabec83f0a",
+              "name": "numero_whatsapp",
+              "value": "=573228854498",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        384
+      ],
+      "id": "4dfc4a2d-cc1c-47e6-aaee-3329bf4eee5b",
+      "name": "delete number"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "usuarios",
+          "mode": "list",
+          "cachedResultName": "usuarios"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        400,
+        192
+      ],
+      "id": "4054dadf-ed25-4bf5-935b-165b8efc8ede",
+      "name": "Users",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "20b304b2-e565-4c21-9e81-221fcee2576b",
+              "leftValue": "={{ $json.messages[0].id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        -1440
+      ],
+      "id": "b1b4dac5-d0df-4426-b5d5-936577ebc905",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        -1408
+      ],
+      "id": "cfcfd462-76db-4b1b-9275-88e7cb775f3d",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "content": "## DELETE USER\n",
+        "height": 384,
+        "width": 1104
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        320,
+        144
+      ],
+      "id": "f2a28873-5b30-478d-b2fc-2b73f9607b4c",
+      "name": "Sticky Note"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "WhatsApp Trigger": [
+      {
+        "json": {
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "573143400476",
+            "phone_number_id": "565888133266017"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "•OSCAR•"
+              },
+              "wa_id": "573208397300"
+            }
+          ],
+          "messages": [
+            {
+              "from": "573208397300",
+              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0E4RTk5RERDODI1M0ZCMkNEMjQA",
+              "timestamp": "1755038781",
+              "text": {
+                "body": "Me guste $13 mil en peaje"
+              },
+              "type": "text"
+            }
+          ],
+          "field": "messages"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
     "executionOrder": "v1",
-    "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": "7CI8d1lC1EC1eqnL"
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": {
     "node:Programar Recordatorios": {
@@ -958,6 +1292,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-11T22:08:34.317Z",
-  "versionId": "9ca5688e-f73d-4678-9037-b588a49024c1"
+  "updatedAt": "2025-08-13T20:48:13.908Z",
+  "versionId": "87b72b90-438f-47dd-971c-adc7472fd3e5"
 }
