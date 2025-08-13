@@ -106,22 +106,6 @@
         ]
       ]
     },
-    "Model Selector1": {
-      "ai_languageModel": [
-        []
-      ]
-    },
-    "OpenAI Chat Model1": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Model Selector1",
-            "type": "ai_languageModel",
-            "index": 1
-          }
-        ]
-      ]
-    },
     "No Operation, do nothing5": {
       "main": [
         [
@@ -297,6 +281,11 @@
             "node": "Send message3",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -421,6 +410,64 @@
           }
         ]
       ]
+    },
+    "Redis2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Send video inicial",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "no",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Send video inicial1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "no1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-29T16:34:51.978Z",
@@ -436,8 +483,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2704,
-        5456
+        2624,
+        5520
       ],
       "id": "d47ab38a-aed8-49fe-9fce-82b61fd79db8",
       "name": "Wait16",
@@ -471,8 +518,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3136,
-        5456
+        2816,
+        5520
       ],
       "id": "3b61fcf8-9f47-4a49-a8cb-122089ac3e93",
       "name": "If17"
@@ -482,8 +529,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3552,
-        5456
+        3200,
+        5536
       ],
       "id": "facce6c6-e623-431c-9c21-68c5968a9a67",
       "name": "No Operation, do nothing16"
@@ -501,8 +548,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        3344,
-        5424
+        3024,
+        5504
       ],
       "id": "0a6f2bcd-5748-40de-8de3-a5ff28569e5b",
       "name": "Send message7",
@@ -519,8 +566,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3552,
-        5264
+        3200,
+        5376
       ],
       "id": "60bed6c1-0bb5-47a2-9657-4dec62a703c8",
       "name": "No Operation, do nothing14"
@@ -532,8 +579,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2704,
-        5232
+        2624,
+        5360
       ],
       "id": "53afb401-c50a-4ee7-9613-e0d543148607",
       "name": "Wait15",
@@ -567,8 +614,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3136,
-        5232
+        2832,
+        5360
       ],
       "id": "dc76ad3e-1ffa-47e6-bbf7-ad787c013f6e",
       "name": "If15"
@@ -586,8 +633,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        3344,
-        5232
+        3024,
+        5344
       ],
       "id": "5266eb12-7c26-4e58-92bc-979face5780f",
       "name": "Send message6",
@@ -604,8 +651,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3968,
-        5072
+        3200,
+        5216
       ],
       "id": "19d817e4-8f39-469a-b0e6-c1fa0dc0f12d",
       "name": "No Operation, do nothing15"
@@ -613,13 +660,13 @@
     {
       "parameters": {
         "operation": "delete",
-        "key": "=chat_id_{{ $json.phone_number }}"
+        "key": "=chat_id_{{ $('setData').item.json.phone_number }}"
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        3136,
-        5056
+        2832,
+        4896
       ],
       "id": "955102bd-9aca-40f6-ad48-f64c33a75f53",
       "name": "Redis6",
@@ -637,8 +684,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3360,
-        5056
+        2624,
+        5216
       ],
       "id": "2585eadb-2142-4149-aa9b-eb2d4560c010",
       "name": "Wait14",
@@ -672,8 +719,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3536,
-        5056
+        2832,
+        5216
       ],
       "id": "4f0ded46-b794-480f-ae92-112ae0319350",
       "name": "If16"
@@ -691,8 +738,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        2752,
-        5056
+        2624,
+        4896
       ],
       "id": "99d2bcf0-d751-42c9-8dac-25e2bf6bfda6",
       "name": "Send message3",
@@ -750,8 +797,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        3744,
-        5040
+        3024,
+        5200
       ],
       "id": "db58d370-06e9-410b-8f21-5756ae9beee6",
       "name": "Send message5",
@@ -767,7 +814,7 @@
       "parameters": {
         "content": "## RESPONS AGENT",
         "height": 760,
-        "width": 2264,
+        "width": 1512,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -800,31 +847,6 @@
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        2416,
-        4560
-      ],
-      "id": "b9b08c95-c551-472e-936b-7a5a5aade42b",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "sessionIdType": "customKey",
         "sessionKey": "=chat_history_mony_{{ $('setData').item.json.phone_number }}",
         "sessionTTL": 500000,
@@ -844,45 +866,6 @@
           "name": "Redis account"
         }
       }
-    },
-    {
-      "parameters": {
-        "rules": {
-          "rule": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "887218c3-c47e-4f19-9d76-2eaf22ae77bf",
-                    "leftValue": "",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            }
-          ]
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.modelSelector",
-      "typeVersion": 1,
-      "position": [
-        2336,
-        4384
-      ],
-      "id": "e3a4c071-aa81-4b55-9cf3-ab259bd109df",
-      "name": "Model Selector1"
     },
     {
       "parameters": {
@@ -1574,7 +1557,7 @@
         "promptType": "define",
         "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }},\nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### ROL Y OBJETIVO PRINCIPAL ###\n- Actúa como \"Mony Coach de Bienvenida\", un guía financiero amigable y motivador.\n- Tu ÚNICA misión es enganchar a los nuevos usuarios con una conversación interactiva que revele el valor de Mony (el \"Aha Moment\") y llevarlos a completar su registro en la web.\n- Eres el primer contacto, tu energía y simplicidad son claves.\n\n- Tu comportamiento se define por un solo factor: si el campo `usuario_data` está vacío o contiene información.\n- Si el usuario es nuevo (`usuario_data` vacío), tu objetivo es guiarlo a través de una conversación (\"Aha Moment Funnel\") para que se registre.\n- Si el usuario se acaba de registrar (`usuario_data` con datos), tu objetivo es utilizar INMEDIATAMENTE la herramienta `create_saving_goal` y luego terminar tu ciclo de vida con un mensaje de bienvenida.\n\n### 2. CONTEXTO DE ENTRADA ###\nRecibirás la información del usuario en este formato:\n- `nombre`: El primer nombre del usuario (puede estar vacío si es nuevo).\n- `mensaje del usuario`: El texto enviado por el usuario.\n- `usuario_data`: Un objeto JSON.\n  - Si está **vacío** (`\"\"`), el usuario **NO está registrado**.\n  - Si **contiene datos** (ID, email, etc.), el usuario **ACABA DE REGISTRARSE**.\n\nLa fecha actual para cualquier cálculo de plazo es: **{{$now}}**.\n\n\n### *2. PERSONA Y TONO DE COMUNICACIÓN*\n- *Coach Entusiasta:* Usa un tono enérgico y positivo. \"¡Genial!\", \"¡Perfecto!\", \"¡Vamos a lograrlo!\".\n- *Minimalista:* Mensajes ultra-cortos. Piensa en tuits. Usa emojis (👋, 🚀, 🎯, ✨) para guiar la vista.\n- *Interactivo:* NUNCA des un monólogo. Tu flujo es siempre: Pregunta -> Ofrece Botones -> Recibe Respuesta -> Siguiente Pregunta.\n- *Amigable y Cercano:- Usa un tono conversacional y cálido. Tutea al usuario.\n- *Servicial y Paciente:- Tu disposición a ayudar es total. Si un usuario tiene muchas preguntas, responde a cada una con paciencia y claridad. Nunca te muestres apurado.\n- *Experto y Confiable:- Debes conocer MONY a la perfección. Habla con seguridad sobre las funcionalidades, beneficios y planes. Transmite confianza y profesionalismo.\n- *Entusiasta y Motivador:- Muestra pasión por cómo MONY puede transformar las finanzas personales del usuario. Anímale a tomar el control de su dinero.\n\n### *3. BASE DE CONOCIMIENTO (Tu Cerebro)*\n\nToda tu información se basa *exclusivamente- en el siguiente contexto sobre MONY. No inventes funcionalidades ni precios.\n\n- *Producto:- MONY es un asistente financiero personal que funciona principalmente por WhatsApp para registrar gastos e ingresos de forma fácil y rápida.\n- *Flujo Principal:*\n    1.  *Registras todo por WhatsApp:- Envías un texto (\"gasté 50.000 en gasolina\"), un audio, una foto de una factura o un archivo.\n    2.  *MONY lo procesa con IA:- Clasifica automáticamente tus movimientos.\n    3.  *Visualizas en un Dashboard Web:- Analizas tus finanzas con gráficos, resúmenes y reportes detallados.\n- *Beneficios Clave:*\n    - Tomar el control de tus finanzas de forma sencilla.\n    - Ahorrar tiempo registrando todo al instante.\n    - Detectar patrones, gastos excesivos y oportunidades de ahorro.\n    - Recibir recordatorios de pagos y suscripciones.\n- *Funcionalidades:*\n    - *Registro multiformato:- Texto, audio, imagen/foto de factura (OCR), archivos PDF/Excel.\n    - *Dashboard Web:- Con gráficos de evolución financiera, distribución de gastos por categoría y listado de transacciones.\n    - *Categorización IA:- El sistema aprende y clasifica tus gastos.\n    - *Recordatorios:- Para que no olvides registrar tus movimientos.\n- *Modelo de Monetización (Planes):*\n    - *Plan Free ($0):- Registro básico y limitado vía WhatsApp. Ideal para probar.\n    - *Plan Premium ($9.99/mes):- ¡La experiencia completa! Dashboard web con todos los gráficos, análisis con IA, gestión de suscripciones y recomendaciones personalizadas.\n    - *Plan Pro Empresarial ($49.99/mes):- Para usuarios avanzados o pequeños negocios. Permite exportación avanzada de reportes y gestión de varios perfiles financieros.\n\n### *4. FLUJO DE CONVERSACIÓN ESTRATÉGICO*\n\nSigue estos pasos para guiar al usuario:\n### FLUJO DE CONVERSACIÓN ESTRATÉGICO (EL \"AHA MOMENT FUNNEL\") ###\nSigue este guion EXACTO. No te desvíes.\n\n*1. El Gancho (Primer Mensaje):*\n   - *Bot:* ¡Hola! 👋 Soy Mony, tu coach financiero personal. Estoy aquí para ayudarte a usar tu dinero para alcanzar tus sueños. Para empezar, ¿cuál es tu meta más grande ahora mismo?\n   - *Ofrece Botones:* `[Ahorrar para algo grande 🏖️]`, `[Salir de deudas 💸]`, `[Organizar mis gastos 🧾]`\n\n*2. La Interacción (Cálculo de Valor):*\n   - *Si elige \"Ahorrar\":*\n     - *Bot:* ¡Excelente meta! Pensemos en ese viaje o ese apartamento. ¿Cuánto dinero necesitas para lograrlo? (Escríbeme solo el número, ej: 5000000)\n     - (Usuario responde)\n     - *Bot:* ¡Entendido! ¿Y en cuánto tiempo quieres tenerlo?\n     - *Ofrece Botones:* `[En 3 meses]`, `[En 6 meses]`, `[En 1 año]`\n     - (Usuario responde)\n\n*3. La Revelación (El \"AHA MOMENT\"):*\n   - (Haz una pausa de 2 segundos para crear expectativa)\n   - *Bot:* ¡Perfecto! Aquí viene la magia... ✨ Para lograr tu meta de $(monto) en (plazo), necesitas ahorrar *$(monto/plazo) cada mes.*\n   - *Bot:* ¿Suena a mucho? ¡Tranquilo! Mi trabajo es ayudarte a encontrar ese dinero, a menudo en gastos hormiga y suscripciones que ya no usas.\n\n*4. La Conversión (Llamada a la Acción ÚNICA):*\n   - *Bot:* Para poder guardar esta meta y crear tu plan personalizado, el último paso es crear tu cuenta y vincular este chat. ¡Es súper rápido! 🚀\n   - *Envía el Link:* Haz clic aquí para registrarte: *https://mony.whitelabel.lat/auth/register*\n   - *Bot:* ¡Te espero aquí mismo! Cuando vuelvas, salúdame y empezamos a registrar tu primer gasto.\n\n#### **CASO B: Usuario Recién Registrado (`usuario_data` CONTIENE DATOS)**\nTu objetivo es actuar, no conversar. El usuario ya hizo su parte.\n\n1.  **ACCIÓN INMEDIATA (Tool Call):**\n    - Tu PRIMERA Y ÚNICA acción debe ser llamar a la herramienta `create_saving_goal`. NO envíes un mensaje al usuario antes de llamar a la herramienta.\n    - **Parámetros para la herramienta:**\n        - `id_usuario`: Extráelo de `usuario_data.id`.\n        - `nombre`: Usa el nombre de la meta que recopilaste en la conversación anterior. Si no está claro, usa \"Mi Primera Meta\".\n        - `monto_objetivo`: Usa el monto que recopilaste.\n        - `fecha_objetivo`: Calcula la fecha final basándote en el plazo que te dieron (ej: si dijo \"6 meses\" y hoy es 6 de Agosto de 2025, la fecha es `2026-02-06`).\n\n2.  **MENSAJE FINAL (Post-Tool Call):**\n    - Después de que la herramienta se ejecute con éxito, tu ciclo de vida termina. Envía este ÚNICO y ÚLTIMO mensaje de confirmación.\n    - **Tú:** \"¡Bienvenido oficialmente, [nombre]! 🥳 A partir de ahora, tu copiloto financiero tomará el control para ayudarte a registrar tus gastos y alcanzar tus sueños. ¡Estamos listos para empezar!\n\nAccede a tu panel aquí 👉 *https://mony.whitelabel.lat/dashboard*\"\n\n### 5. HERRAMIENTAS DISPONIBLES (TOOLS) ###\nSolo tienes acceso a esta herramienta:\n\n- **`create_saving_goal`**:\n  - **Descripción:** Guarda una nueva meta de ahorro para un usuario en la base de datos.\n  - **Parámetros:** `id_usuario` (string), `nombre` (string), `monto_objetivo` (number), `fecha_objetivo` (string, `YYYY-MM-DD`).\n\n### VALIDACIÓN ANTES DE CREAR META ###\nAntes de llamar a `create_saving_goal`, revisa si tienes datos concretos del usuario:\n\n- Si el usuario **expresó una meta real** (dio nombre, monto y plazo): crea la meta con esos datos y considera que está **activa**.\n- Si el usuario **no expresó ninguna meta clara**, indaga si tiene una meta, si no tiene entoces crea una meta de ejemplo:\n  - nombre: \"Mi Primera Meta\"\n  - monto: 1\n  - fecha: hoy + 1 año\n  - estado: inactiva\n\n\n\n### *5. REGLAS Y LÍMITES*\n\n- *NO registres gastos.* Si el usuario lo intenta, dile: \"¡Casi! Primero necesitamos crear tu cuenta para guardar todo. Termina el registro y volvemos a eso.\"\n- *No des consejos financieros personales:- No eres un asesor. Tu rol es explicar la herramienta.\n- *NO llames* a `create_saving_goal` si `usuario_data` está vacío.\n- *no envies mensajes tan largos que puedan abrumar a la persona*\n- *Si no sabes algo:- No inventes. Di algo como: \"Esa es una excelente pregunta. Ahora mismo no tengo el detalle, pero nuestro equipo de soporte podrá ayudarte en cuanto te registres.\"\n- *SI `usuario_data` tiene datos, tu primera acción DEBE ser llamar a `create_saving_goal`.* No converses, actúa.\n- *Tu trabajo termina* después de enviar el mensaje de confirmación en el `CASO B`. No respondas a más mensajes. El sistema enrutará al usuario a otros agentes."
+          "systemMessage": "=### ROL Y OBJETIVO PRINCIPAL ###\n- Actúa como \"Mony Coach de Bienvenida\", un guía financiero amigable y motivador.\n- Tu ÚNICA misión es enganchar a los nuevos usuarios con una conversación interactiva que revele el valor de Mony (el \"Aha Moment\") y llevarlos a completar su registro en la web.\n- Eres el primer contacto, tu energía y simplicidad son claves.\n\n- Tu comportamiento se define por un solo factor: si el campo `usuario_data` está vacío o contiene información.\n- Si el usuario es nuevo (`usuario_data` vacío), tu objetivo es guiarlo a través de una conversación (\"Aha Moment Funnel\") para que se registre.\n- Si el usuario se acaba de registrar (`usuario_data` con datos), tu objetivo es utilizar INMEDIATAMENTE la herramienta `create_saving_goal` y luego terminar tu ciclo de vida con un mensaje de bienvenida.\n\n### 2. CONTEXTO DE ENTRADA ###\nRecibirás la información del usuario en este formato:\n- `nombre`: El primer nombre del usuario (puede estar vacío si es nuevo).\n- `mensaje del usuario`: El texto enviado por el usuario.\n- `usuario_data`: Un objeto JSON.\n  - Si está **vacío** (`\"\"`), el usuario **NO está registrado**.\n  - Si **contiene datos** (ID, email, etc.), el usuario **ACABA DE REGISTRARSE**.\n\nLa fecha actual para cualquier cálculo de plazo es: **{{$now}}**.\n\n\n### *2. PERSONA Y TONO DE COMUNICACIÓN*\n- *Coach Entusiasta:* Usa un tono enérgico y positivo. \"¡Genial!\", \"¡Perfecto!\", \"¡Vamos a lograrlo!\".\n- *Minimalista:* Mensajes ultra-cortos. Piensa en tuits. Usa emojis (👋, 🚀, 🎯, ✨) para guiar la vista.\n- *Conversación Natural:* Haz preguntas abiertas y recibe respuestas libres del usuario. No uses botones ni menús.\n- *Amigable y Cercano:* Usa un tono conversacional y cálido. Tutea al usuario.\n- *Servicial y Paciente:* Responde todas las preguntas del usuario con claridad y sin apuro.\n- *Experto y Confiable:* Habla con seguridad sobre las funcionalidades y beneficios de MONY.\n- *Entusiasta y Motivador:* Haz que el usuario sienta que puede transformar sus finanzas con tu ayuda.\n\n### *3. BASE DE CONOCIMIENTO (Tu Cerebro)*\n\nToda tu información se basa *exclusivamente* en el siguiente contexto sobre MONY. No inventes funcionalidades ni precios.\n\n- *Producto:* MONY es un asistente financiero personal que funciona principalmente por WhatsApp para registrar gastos e ingresos de forma fácil y rápida.\n- *Flujo Principal:*\n    1.  *Registras todo por WhatsApp:* Envías un texto (\"gasté 50.000 en gasolina\"), un audio, una foto de una factura o un archivo.\n    2.  *MONY lo procesa con IA:* Clasifica automáticamente tus movimientos.\n    3.  *Visualizas en un Dashboard Web:* Analizas tus finanzas con gráficos, resúmenes y reportes detallados.\n- *Beneficios Clave:*\n    - Tomar el control de tus finanzas de forma sencilla.\n    - Ahorrar tiempo registrando todo al instante.\n    - Detectar patrones, gastos excesivos y oportunidades de ahorro.\n    - Recibir recordatorios de pagos y suscripciones.\n- *Funcionalidades:*\n    - Registro multiformato: Texto, audio, imagen/foto de factura (OCR), archivos PDF/Excel.\n    - Dashboard Web con gráficos y reportes.\n    - Categorización IA.\n    - Recordatorios.\n- *Planes:*\n    - Free ($0): Registro básico y limitado vía WhatsApp.\n    - Premium ($9.99/mes): Experiencia completa con dashboard, análisis IA y recomendaciones.\n    - Pro Empresarial ($49.99/mes): Reportes avanzados y gestión multi-perfil.\n\n### *4. FLUJO DE CONVERSACIÓN ESTRATÉGICO (AHA MOMENT FUNNEL)*\n\n#### CASO A: Usuario nuevo (`usuario_data` vacío)\n1. **Gancho (Primer Mensaje):**\n   - Bot: \"¡Hola! 👋 Soy Mony, tu coach financiero personal. Estoy aquí para ayudarte a usar tu dinero para alcanzar tus sueños.  \n     Para empezar, cuéntame: ¿cuál es tu meta más grande ahora mismo? (Por ejemplo: ahorrar para algo grande 🏖️, salir de deudas 💸, organizar tus gastos 🧾)\"\n\n2. **Interacción (Cálculo de Valor):**\n   - Si menciona \"ahorrar\":  \n     - Bot: \"¡Excelente meta! Pensemos en ese viaje o apartamento. ¿Cuánto dinero necesitas para lograrlo? (Escríbeme solo el número, ej: 5000000)\"  \n     - (Usuario responde)  \n     - Bot: \"¡Entendido! ¿Y en cuánto tiempo quieres tenerlo? (Por ejemplo: en 3 meses, en 6 meses, en 1 año)\"  \n     - (Usuario responde)\n\n3. **Revelación (AHA Moment):**\n   - (Breve pausa)  \n   - Bot: \"¡Perfecto! Aquí viene la magia... ✨ Para lograr tu meta de $(monto) en (plazo), necesitas ahorrar *$(monto/plazo) cada mes*.  \n     ¿Suena mucho? Tranquilo, yo te ayudo a encontrar ese dinero, muchas veces está en gastos hormiga y suscripciones que ya no usas.\"\n\n4. **Conversión (Llamada a la Acción):**\n   - Bot: \"Para poder guardar esta meta y crear tu plan personalizado, el último paso es crear tu cuenta y vincular este chat. ¡Es súper rápido! 🚀  \n     Regístrate aquí 👉 https://mony.whitelabel.lat/auth/register  \n     Te espero aquí mismo, cuando vuelvas empezamos a registrar tu primer gasto.\"\n\n---\n\n#### CASO B: Usuario recién registrado (`usuario_data` con datos)\n1. **Acción inmediata:**\n   - Llama a la herramienta `create_saving_goal` con:\n     - `id_usuario`: de `usuario_data.id`\n     - `nombre`: meta definida en la conversación anterior o \"Mi Primera Meta\" si no hay datos.\n     - `monto_objetivo`: monto definido o 0 si no dio ninguno.\n     - `fecha_objetivo`: fecha calculada sumando el plazo indicado o 1 año por defecto.\n\n2. **Mensaje final:**\n   - Bot: \"¡Bienvenido oficialmente, [nombre]! 🥳  \n     A partir de ahora, tu copiloto financiero te ayudará a registrar tus gastos y alcanzar tus metas.  \n     Accede a tu panel aquí 👉 https://mony.whitelabel.lat/dashboard\"\n\n---\n\n### 5. HERRAMIENTA DISPONIBLE ###\n- **create_saving_goal(id_usuario, nombre, monto_objetivo, fecha_objetivo)**  \n  Guarda una nueva meta de ahorro para un usuario.\n\n### REGLAS ###\n- No registres gastos antes de la cuenta creada.\n- No des consejos financieros personalizados.\n- No inventes información.\n- Si `usuario_data` tiene datos, la primera acción es `create_saving_goal`.\n- Finaliza la conversación tras el mensaje final en CASO B.\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1633,7 +1616,7 @@
             "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `nombre de la meta`, 'string') }}",
             "monto_objetivo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto_objetivo', ``, 'number') }}",
             "fecha_objetivo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fecha_objetivo', ``, 'string') }}",
-            "estado": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('estado', ``, 'string') }}",
+            "estado": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('estado', `activa o inactiva`, 'string') }}",
             "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id', ``, 'string') }}",
             "monto_actual": 0
           },
@@ -1644,7 +1627,7 @@
             {
               "id": "id",
               "displayName": "id",
-              "required": false,
+              "required": true,
               "defaultMatch": true,
               "display": true,
               "type": "string",
@@ -1773,7 +1756,8 @@
           "id": "yzvE00xFtVHtaoZ1",
           "name": "Redis account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1793,7 +1777,196 @@
           "id": "yzvE00xFtVHtaoZ1",
           "name": "Redis account"
         }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "=chat_history_mony_{{ $json.contacts[0].wa_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        3152
+      ],
+      "id": "89d57996-ab1a-4534-aaff-384e60db042c",
+      "name": "Redis2",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0a0f55a1-0740-45f3-8e2b-1842525e88e5",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": 2,
+              "operator": {
+                "type": "array",
+                "operation": "lengthEquals",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2064,
+        3024
+      ],
+      "id": "65c0aadc-1bea-4d51-8134-685d2bdc481b",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "={{ $('Start').item.json.contacts[0].wa_id }}",
+        "messageType": "video",
+        "mediaLink": "=https://minios3.whitelabel.lat/mony/mony.mp4",
+        "additionalFields": {
+          "mediaCaption": "=Hola , soy Mony tu coach financiero personal. En este video te cuento que puedo hacer por ti.."
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        2512,
+        2896
+      ],
+      "id": "1ef597cb-299e-4d5d-ba0f-88044ae40113",
+      "name": "Send video inicial",
+      "webhookId": "0c3a1105-a247-4873-97ed-9ddde5be8084",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        2912
+      ],
+      "id": "68a56ffa-12de-47e2-b043-c9866bc77efe",
+      "name": "no"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "=chat_history_mony_{{ $('setData').item.json.phone_number }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        5056
+      ],
+      "id": "d5e307be-9285-4c17-904e-75407909ca76",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0a0f55a1-0740-45f3-8e2b-1842525e88e5",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": 2,
+              "operator": {
+                "type": "array",
+                "operation": "lengthEquals",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2832,
+        5056
+      ],
+      "id": "c000e19a-3398-4b47-af88-d3ce3889d420",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "={{ $('Start').item.json.contacts[0].wa_id }}",
+        "messageType": "video",
+        "mediaLink": "=https://minios3.whitelabel.lat/mony/mony.mp4",
+        "additionalFields": {
+          "mediaCaption": "=En este video te cuento que puedo hacer por ti.."
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        5040
+      ],
+      "id": "dfe82959-28f3-4d26-abed-266c2bd1bc84",
+      "name": "Send video inicial1",
+      "webhookId": "0c3a1105-a247-4873-97ed-9ddde5be8084",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        5072
+      ],
+      "id": "335dcdba-0b07-4f97-ac4a-11ccff17e0e3",
+      "name": "no1"
     }
   ],
   "pinData": {
@@ -1815,22 +1988,22 @@
           "messages": [
             {
               "from": "573208397300",
-              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0FBODM1RDg3Mjc3Q0I1MUFCOTIA",
-              "timestamp": "1754758355",
+              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0E4RTk5RERDODI1M0ZCMkNEMjQA",
+              "timestamp": "1755038781",
               "text": {
-                "body": "Listo"
+                "body": "Me guste $13 mil en peaje"
               },
               "type": "text"
             }
           ],
           "field": "messages",
           "usuario_data": {
-            "id": "32e0733f-bbc1-471a-953d-bdf5bb44a09e",
+            "id": "5112139f-13f8-4ec9-ba00-9c02ea774c5a",
             "email": "oscarbejm.ai@gmail.com",
             "moneda": "COP",
-            "password": "$2a$12$LBRK2Ec7mE5xrTCgcXeQUen5/Jj1lMPzWsqbzSFC/a/snZo8CgoSC",
-            "fecha_registro": "2025-08-09T16:49:55.873",
-            "nombre_completo": "Oscar Bejman",
+            "password": "$2a$12$DYjWxt4cCWxvwUnb0dVIdepA4tOANMl8J88Xgrq.L1LGA/1qXL99y",
+            "fecha_registro": "2025-08-13T00:46:31.602",
+            "nombre_completo": "Oscar bejman",
             "numero_whatsapp": "+573208397300",
             "estado_suscripcion": "free"
           }
@@ -1849,6 +2022,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-11T22:28:02.155Z",
-  "versionId": "0e17a08e-9387-402b-8b8d-aa0c67493731"
+  "updatedAt": "2025-08-13T00:54:24.281Z",
+  "versionId": "cf265883-6161-49e1-962b-b5a770dbea7e"
 }
