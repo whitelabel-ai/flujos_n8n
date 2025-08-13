@@ -81,6 +81,13 @@
         ],
         [
           {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
             "node": "Download media3",
             "type": "main",
             "index": 0
@@ -382,7 +389,13 @@
     },
     "Redis Chat Memory": {
       "ai_memory": [
-        []
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
       ]
     },
     "Message a model": {
@@ -392,19 +405,18 @@
             "node": "Mony Coach?",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Send message": {
-      "main": [
-        [
+          },
           {
             "node": "Redis5",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Send message": {
+      "main": [
+        []
       ]
     },
     "Message a model1": {
@@ -471,6 +483,11 @@
         [
           {
             "node": "type message Whatsap",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Redis2",
             "type": "main",
             "index": 0
           }
@@ -660,6 +677,89 @@
       "main": [
         []
       ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing5": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing6": {
+      "main": [
+        [
+          {
+            "node": "DataText1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataText1": {
+      "main": [
+        [
+          {
+            "node": "setData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Send video inicial",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "no",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message2": {
+      "main": [
+        []
+      ]
+    },
+    "No Operation, do nothing13": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-08-01T21:41:37.862Z",
@@ -823,8 +923,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        3248,
-        544
+        3264,
+        512
       ],
       "id": "36100d0e-cfa4-4de4-a364-d4b763e29adf",
       "name": "Send message1",
@@ -841,31 +941,11 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4080,
-        384
+        3664,
+        368
       ],
       "id": "19e1645f-322f-438d-bdaa-7c1ea0f1ade5",
       "name": "No Operation, do nothing12"
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $('setData').item.json.phone_number}}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        3040,
-        368
-      ],
-      "id": "da369de7-95ca-412e-9626-1aa9bbdfca9e",
-      "name": "Redis5",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
     },
     {
       "parameters": {
@@ -874,8 +954,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3264,
-        368
+        3072,
+        352
       ],
       "id": "f17914cc-c400-42ba-847e-c8c85c4d0e93",
       "name": "Wait11",
@@ -909,8 +989,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3440,
-        368
+        3248,
+        352
       ],
       "id": "6e8f752f-293d-477a-948b-a67ccf4d86a0",
       "name": "If13"
@@ -983,8 +1063,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        3648,
-        352
+        3456,
+        336
       ],
       "id": "67ff31b1-754f-46fc-b2e8-2143803a323a",
       "name": "Send message4",
@@ -1041,8 +1121,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        3264,
-        -352
+        3280,
+        -320
       ],
       "id": "511ddf7c-3b18-4a92-a93d-63c125054f01",
       "name": "Redis Chat Memory",
@@ -1199,7 +1279,7 @@
         "promptType": "define",
         "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }} \nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\n\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud. Si el mensaje es ambiguo o le falta información crucial, debes hacer una pregunta clara y concisa para obtener los datos que necesitas. Si es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\n\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1 SALUDO Y PROACTIVIDAD\nSi el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \nEn su lugar:\n1. Saluda por su `nombre` con energía.\n2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n3. Incluye un *tip o beneficio* de usar Mony.\n4. Usa emojis para hacerlo amigable.\n\nEjemplos:\n- \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n- \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n- \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n- \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n*Importante:*  \nCada saludo debe terminar con una invitación clara a interactuar, ya sea con botones o una pregunta directa.\n\n2.  *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer. ¿Es una acción (registrar, crear, configurar) o una consulta (preguntar, listar, pedir resumen)?\n3.  *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4.  *Extrae Parámetros:* Revisa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente: \"salario\" implica `tipo: \"Ingreso\"`, \"la semana pasada\" implica un rango de fechas, \"Netflix\" se refiere a una suscripción.\n5.  *Valida o Actúa:*\n    - Si tienes todos los datos, llama a la herramienta (`call_tool`).\n    - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta clara y concisa usando botones (`reply`). Ejemplo: \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6.  *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1.  *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories` para obtener la lista de categorías del usuario.\n2.  *Intenta Coincidir:* Compara la descripción del gasto del usuario (ej: \"almuerzo con amigos\") con sus categorías existentes.\n3.  *Clarifica si es Ambiguo:* Si la descripción podría encajar en varias categorías, NO adivines. Pregunta con botones: \"Entendido. ¿Ese gasto lo clasificamos como `[Comida]`, `[Restaurantes]` o `[Ocio]`?\".\n4.  *Ofrece Crear:* Si la categoría claramente no existe, pregunta si desea crearla: \"¿Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla? `[Sí, crearla]` `[No, usar otra]`\". Si la respuesta es sí, usa `create_user_category`.\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\nPuedes usar las siguientes herramientas para cumplir las solicitudes del usuario:\n- *Transacciones:* `register_transaction`, `query_transactions`.\n- *Categorías:* `get_user_categories`, `create_user_category`.\n- *Presupuestos:* `set_category_budget`, `get_category_budgets`.\n- *Metas de Ahorro:* `get_saving_goals`.\n- *Suscripciones:* `add_user_subscription`, `get_user_subscriptions`.\n- *Configuración:* `set_reminder_preference`.\n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar en la base de datos, o tienes toda la razon...\". Simplemente hazlo y presenta el resultado.\n- *Confirma acciones:* Después de una acción exitosa (registrar, crear, configurar), confirma con un mensaje corto y un emoji. \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Usa botones:* Siempre que el usuario deba elegir entre un set limitado de opciones (categorías, sí/no), usa botones de respuesta rápida.\n- *Si no entiendes, pregunta:* Si la solicitud del usuario es muy ambigua, pide amablemente que la reformule. \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\".\n- *Nunca inventes información.* Si no encuentras datos, infórmalo. \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n"
+          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`.\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `query_transactions`  \n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `set_category_budget`, `get_category_budgets`  \n- *Metas de Ahorro:* `get_saving_goals`  \n- *Suscripciones:* `add_user_subscription`, `get_user_subscriptions`  \n- *Configuración:* `set_reminder_preference`\n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *No uses botones:* Todas las interacciones deben ser texto natural.\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1401,7 +1481,7 @@
       "typeVersion": 1,
       "position": [
         2640,
-        -1104
+        -1056
       ],
       "id": "a3d77aa1-96ef-4e6e-91b6-ed9c076329fb",
       "name": "Download media3",
@@ -1424,7 +1504,7 @@
       "typeVersion": 4.2,
       "position": [
         2864,
-        -1104
+        -1056
       ],
       "id": "a1074fbb-1729-4215-9504-cdb59af33d93",
       "name": "HTTP Request3",
@@ -1444,7 +1524,7 @@
       "typeVersion": 1,
       "position": [
         3088,
-        -1104
+        -1056
       ],
       "id": "57836e8c-f881-41aa-b115-d75a12562a05",
       "name": "Extract from File"
@@ -1485,7 +1565,7 @@
       "typeVersion": 3.4,
       "position": [
         3312,
-        -1104
+        -1056
       ],
       "id": "13ff793f-5f36-4816-9fdd-c26c5c0338fa",
       "name": "DataPdf"
@@ -1724,6 +1804,31 @@
                 },
                 "conditions": [
                   {
+                    "id": "8713f778-dafe-4a52-916e-0289f4e7faad",
+                    "leftValue": "={{ $('Start').item.json.messages[0].type }}",
+                    "rightValue": "reaction",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "reaction"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
                     "id": "d9c1a8cf-af4e-4bca-a66c-184829c009d8",
                     "leftValue": "={{ $('Start').item.json.messages[0].type }}",
                     "rightValue": "document",
@@ -1830,7 +1935,7 @@
       "typeVersion": 3.4,
       "position": [
         3312,
-        -1296
+        -1328
       ],
       "id": "0ac75478-27fd-4026-9544-77e79547a965",
       "name": "DataText"
@@ -1841,7 +1946,7 @@
       "typeVersion": 1,
       "position": [
         2640,
-        -1296
+        -1328
       ],
       "id": "24dca85b-771b-417c-98b5-2ea81148a45d",
       "name": "No Operation, do nothing2"
@@ -1852,7 +1957,7 @@
       "typeVersion": 1,
       "position": [
         2864,
-        -1296
+        -1328
       ],
       "id": "8121188c-dfa2-4477-969b-405f60529565",
       "name": "No Operation, do nothing3"
@@ -1863,7 +1968,7 @@
       "typeVersion": 1,
       "position": [
         3088,
-        -1296
+        -1328
       ],
       "id": "23769f58-c2e6-4a56-9ba5-0ee3714d5a64",
       "name": "No Operation, do nothing4"
@@ -2001,8 +2106,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        1952,
-        -1200
+        1840,
+        -1168
       ]
     },
     {
@@ -2711,7 +2816,7 @@
     {
       "parameters": {
         "descriptionType": "manual",
-        "toolDescription": "Permite al usuario configurar la frecuencia de los recordatorios para registrar sus gastos.",
+        "toolDescription": "configurar la frecuencia de los recordatorios para registrar sus gastos si diario, semanal o mensual",
         "schema": {
           "__rl": true,
           "mode": "list",
@@ -2934,9 +3039,232 @@
       ],
       "id": "1d0cebf2-efe2-46f1-82f8-65e7050138bc",
       "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
+              "name": "nombre",
+              "value": "={{ $('Start').item.json.contacts[0].profile.name }}",
+              "type": "string"
+            },
+            {
+              "id": "82031891-32ae-4442-b883-fad57ad08c79",
+              "name": "phone_number",
+              "value": "={{ $('Start').item.json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
+              "name": "mensaje",
+              "value": "={{ $json.messages[0].reaction.emoji }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3312,
+        -1184
+      ],
+      "id": "8547e538-b5bf-4552-b45b-7ddba1e0e29f",
+      "name": "DataText1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        -1184
+      ],
+      "id": "abd0003f-8a9b-4126-9e06-510828b17620",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2864,
+        -1184
+      ],
+      "id": "09a0c3ac-67d8-4d8e-aa8a-eca2bda822e4",
+      "name": "No Operation, do nothing5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3088,
+        -1184
+      ],
+      "id": "fc301f1f-e597-478a-a90f-c8e3bd24497b",
+      "name": "No Operation, do nothing6"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "=MONY_chat_id_{{ $json.contacts[0].wa_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        -1376
+      ],
+      "id": "99ff4d63-905b-4398-a7a8-1c5101a3ba7f",
+      "name": "Redis2",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0a0f55a1-0740-45f3-8e2b-1842525e88e5",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2400,
+        -1504
+      ],
+      "id": "0958d289-6a9f-4597-a967-6716af1fc2c1",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
+        "recipientPhoneNumber": "={{ $('Start').item.json.contacts[0].wa_id }}",
+        "messageType": "video",
+        "mediaLink": "=https://minios3.whitelabel.lat/mony/mony.mp4",
+        "additionalFields": {
+          "mediaCaption": "=Hola , soy Mony tu coach financiero personal. En este video te cuento que puedo hacer por ti.."
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        2848,
+        -1632
+      ],
+      "id": "d4f3101b-4999-4c1c-92a7-afe93df43a3b",
+      "name": "Send video inicial",
+      "webhookId": "0c3a1105-a247-4873-97ed-9ddde5be8084",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "IzfsUgwJnA4EF09z",
+          "name": "whatsap Valeia"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2656,
+        -1616
+      ],
+      "id": "6c82f14d-558e-4f51-93d5-21a2066b4a52",
+      "name": "no"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_id_{{ $('setData').item.json.phone_number}}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2512,
+        -704
+      ],
+      "id": "da369de7-95ca-412e-9626-1aa9bbdfca9e",
+      "name": "Redis5",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "metadata": {
+            "display_phone_number": "573143400476",
+            "phone_number_id": "565888133266017"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "•OSCAR•"
+              },
+              "wa_id": "573208397300"
+            }
+          ],
+          "messages": [
+            {
+              "from": "573208397300",
+              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0E4NzJBRjgwRkZFNzFBQzBGOTYA",
+              "timestamp": "1755046662",
+              "text": {
+                "body": "Si"
+              },
+              "type": "text"
+            }
+          ],
+          "field": "messages",
+          "usuario_data": {
+            "id": "5112139f-13f8-4ec9-ba00-9c02ea774c5a",
+            "email": "oscarbejm.ai@gmail.com",
+            "moneda": "COP",
+            "password": "$2a$12$DYjWxt4cCWxvwUnb0dVIdepA4tOANMl8J88Xgrq.L1LGA/1qXL99y",
+            "fecha_registro": "2025-08-13T00:46:31.602",
+            "nombre_completo": "Oscar bejman",
+            "numero_whatsapp": "+573208397300",
+            "estado_suscripcion": "free"
+          }
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -2948,6 +3276,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-11T22:24:52.637Z",
-  "versionId": "49e00a8d-ddf8-4117-8660-d67eb7d15aa5"
+  "updatedAt": "2025-08-13T01:08:54.063Z",
+  "versionId": "e9a3df3c-5625-4b13-9c2f-73e92cba0aae"
 }
