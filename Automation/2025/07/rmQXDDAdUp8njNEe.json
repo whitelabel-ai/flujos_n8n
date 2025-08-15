@@ -285,8 +285,8 @@
       "webhookId": "22e117ba-6848-499c-b9ff-8b6b13b1f278",
       "credentials": {
         "whatsAppTriggerApi": {
-          "id": "jxY742yXHUpUmkYh",
-          "name": "Test Pedro"
+          "id": "ddycsJygSAVzSYVN",
+          "name": "MONY"
         }
       }
     },
@@ -980,7 +980,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "WITH datos_usuario AS (\n  SELECT \n    id,\n    numero_whatsapp\n  FROM usuarios\n  WHERE id = '5d9de924-8858-4908-bf74-016909a8e452'\n),\nborrado AS (\n  -- 1️⃣ Borrar logs de anuncios\n  DELETE FROM anuncios_usuarios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_recordatorios AS (\n  DELETE FROM recordatorios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_metas AS (\n  DELETE FROM metas_ahorro \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_usuario AS (\n  DELETE FROM suscripciones_usuario \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_mony AS (\n  DELETE FROM suscripciones_mony \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_transacciones AS (\n  DELETE FROM transacciones \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_categorias AS (\n  DELETE FROM categorias \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_usuario AS (\n  DELETE FROM usuarios \n  WHERE id = (SELECT id FROM datos_usuario)\n)\nSELECT \n  true AS success,\n  id,\n  numero_whatsapp\nFROM datos_usuario;\n",
+        "query": "WITH datos_usuario AS (\n  SELECT \n    id,\n    numero_whatsapp\n  FROM usuarios\n  WHERE id = '5112139f-13f8-4ec9-ba00-9c02ea774c5a'\n),\nborrado AS (\n  -- 1️⃣ Borrar logs de anuncios\n  DELETE FROM logs_vistas_anuncios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_recordatorios AS (\n  DELETE FROM recordatorios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_metas AS (\n  DELETE FROM metas_ahorro \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_usuario AS (\n  DELETE FROM suscripciones_usuario \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_mony AS (\n  DELETE FROM suscripciones_mony \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_transacciones AS (\n  DELETE FROM transacciones \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_categorias AS (\n  DELETE FROM categorias \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_usuario AS (\n  DELETE FROM usuarios \n  WHERE id = (SELECT id FROM datos_usuario)\n)\nSELECT \n  true AS success,\n  id,\n  numero_whatsapp\nFROM datos_usuario;\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1245,39 +1245,7 @@
       "name": "Sticky Note"
     }
   ],
-  "pinData": {
-    "WhatsApp Trigger": [
-      {
-        "json": {
-          "messaging_product": "whatsapp",
-          "metadata": {
-            "display_phone_number": "573143400476",
-            "phone_number_id": "565888133266017"
-          },
-          "contacts": [
-            {
-              "profile": {
-                "name": "•OSCAR•"
-              },
-              "wa_id": "573208397300"
-            }
-          ],
-          "messages": [
-            {
-              "from": "573208397300",
-              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0E4RTk5RERDODI1M0ZCMkNEMjQA",
-              "timestamp": "1755038781",
-              "text": {
-                "body": "Me guste $13 mil en peaje"
-              },
-              "type": "text"
-            }
-          ],
-          "field": "messages"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -1292,6 +1260,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-13T20:48:13.908Z",
-  "versionId": "87b72b90-438f-47dd-971c-adc7472fd3e5"
+  "updatedAt": "2025-08-15T20:16:24.834Z",
+  "versionId": "765d34ae-9d70-48af-985d-c087b2a761cc"
 }
