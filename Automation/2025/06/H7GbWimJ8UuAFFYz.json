@@ -34,7 +34,7 @@
         ],
         [
           {
-            "node": "AUDIO/TEXT",
+            "node": "AUDIO/TEXT1",
             "type": "main",
             "index": 0
           }
@@ -230,6 +230,207 @@
           }
         ]
       ]
+    },
+    "whisper Transcriber": {
+      "main": [
+        [
+          {
+            "node": "audioGrupo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3": {
+      "main": [
+        [
+          {
+            "node": "whisper Transcriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AUDIO/TEXT1": {
+      "main": [
+        [
+          {
+            "node": "textGrupo1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "S3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "audioGrupo1": {
+      "main": [
+        [
+          {
+            "node": "Datagroups1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "textGrupo1": {
+      "main": [
+        [
+          {
+            "node": "Datagroups1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Datagroups1": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enviar confirmacion Pedido": {
+      "main": [
+        [
+          {
+            "node": "Get suplier",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets6": {
+      "main": [
+        [
+          {
+            "node": "confirmacion pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "confirmacion pedido": {
+      "main": [
+        [
+          {
+            "node": "Send Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get suplier": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Productos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "productos unicos1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Productos1": {
+      "main": [
+        [
+          {
+            "node": "productos unicos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "add reporte1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "enviar confirmacion Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-20T16:55:44.851Z",
@@ -274,8 +475,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -420,
-        240
+        -400,
+        -288
       ],
       "id": "91637a68-8156-4b13-8372-e25108934fdf",
       "name": "whisper Transcriber1",
@@ -294,8 +495,8 @@
       "type": "n8n-nodes-base.s3",
       "typeVersion": 1,
       "position": [
-        -640,
-        240
+        -624,
+        -288
       ],
       "id": "5f07bff9-d229-49ba-9f15-7227df9ee3c5",
       "name": "S31",
@@ -332,7 +533,7 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "Pedro"
+              "outputKey": "Domingo"
             },
             {
               "conditions": {
@@ -356,7 +557,7 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "Andres"
+              "outputKey": "Ingreso a Bodega"
             }
           ]
         },
@@ -365,8 +566,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -1080,
-        140
+        -1072,
+        148
       ],
       "id": "fcbd2b3a-b016-49b7-984c-ee32ff978ad6",
       "name": "GRUPOS"
@@ -432,8 +633,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -860,
-        140
+        -848,
+        -384
       ],
       "id": "d891a451-168b-4392-b866-84ddf69e723f",
       "name": "AUDIO/TEXT"
@@ -473,8 +674,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -200,
-        240
+        -176,
+        -288
       ],
       "id": "157297e6-de23-4bd3-858c-c56fb61e82a2",
       "name": "audioGrupo"
@@ -514,8 +715,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -200,
-        0
+        -176,
+        -480
       ],
       "id": "88ac7c6a-ff16-44cc-bb94-894cc4b89659",
       "name": "textGrupo"
@@ -573,8 +774,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        20,
-        140
+        48,
+        -384
       ],
       "id": "26159a77-dffa-4d3e-b259-9c1a36751626",
       "name": "Datagroups"
@@ -590,8 +791,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        1340,
-        300
+        1392,
+        -224
       ],
       "id": "767e0d89-5a55-4d05-becc-78acb4279e3b",
       "name": "AI Agent1"
@@ -604,15 +805,15 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1420,
-        520
+        1472,
+        0
       ],
       "id": "8723bb61-04ec-49af-8187-3e3673fabbd4",
       "name": "Google Gemini Chat Model1",
       "credentials": {
         "googlePalmApi": {
           "id": "jQiccHfpS9BFKE4C",
-          "name": "Google Gemini(PaLM) Api account"
+          "name": "automation.whitelabel.lat"
         }
       }
     },
@@ -653,8 +854,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        460,
-        140
+        496,
+        -384
       ],
       "id": "e958ee37-8b79-4218-87fa-ffed13764625",
       "name": "enviar confirmacion Pedido1"
@@ -696,8 +897,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        900,
-        0
+        944,
+        -528
       ],
       "id": "937f11b5-d2f0-4298-bc88-5d281f67f704",
       "name": "Google Sheets5",
@@ -715,8 +916,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1120,
-        0
+        1168,
+        -528
       ],
       "id": "76e45a77-7b2b-4005-b22c-a186e8001490",
       "name": "confirmacion pedido1"
@@ -732,8 +933,8 @@
       "type": "n8n-nodes-evolution-api.evolutionApi",
       "typeVersion": 1,
       "position": [
-        1420,
-        0
+        1456,
+        -528
       ],
       "id": "2d7275e8-3edf-427c-b514-fcee3f2b6e75",
       "name": "Send Order2",
@@ -773,8 +974,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        680,
-        0
+        720,
+        -528
       ],
       "id": "8fe22a5a-bf91-4d99-8c1a-85b573b46761",
       "name": "Get suplier2",
@@ -823,8 +1024,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        680,
-        300
+        720,
+        -224
       ],
       "id": "a87d3c48-f3d9-43e7-8cf9-dcb28e580211",
       "name": "Google Sheets",
@@ -842,8 +1043,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1120,
-        300
+        1168,
+        -224
       ],
       "id": "24ce98e0-abad-49c0-9e18-467ae32bdd73",
       "name": "productos unicos"
@@ -856,8 +1057,8 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        900,
-        300
+        944,
+        -224
       ],
       "id": "fb7a062e-f7b6-43cf-ae57-77a4d7558248",
       "name": "Productos"
@@ -869,8 +1070,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1720,
-        300
+        1744,
+        -224
       ],
       "id": "97f55f8b-1f86-4862-9d44-a0e6d408fcaf",
       "name": "Code3"
@@ -969,8 +1170,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        2080,
-        320
+        1968,
+        -224
       ],
       "id": "66c2e5a3-62e9-4a7a-b7ff-363a1a518365",
       "name": "add reporte",
@@ -1007,8 +1208,8 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1,
       "position": [
-        240,
-        140
+        272,
+        -384
       ],
       "id": "76246cc5-6d52-4b51-a031-c07e942895b5",
       "name": "Execution Data1"
@@ -1020,11 +1221,721 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -1300,
-        140
+        -1296,
+        148
       ],
       "id": "16db1430-6fa9-453c-b038-245438274e6e",
       "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-1"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "languaje",
+              "value": "es"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -352,
+        816
+      ],
+      "id": "dadd836c-e1ed-41f8-86a4-eeba700e9b00",
+      "name": "whisper Transcriber",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "bucketName": "evolution",
+        "fileKey": "={{ decodeURIComponent($('Webhook').item.json.body.data.message.mediaUrl.match(/https:\\/\\/[^\\/]+\\/evolution\\/(.+?)\\?/)[1]) }}"
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        816
+      ],
+      "id": "c47cbb76-34e4-4928-ade2-b9d1603c754a",
+      "name": "S3",
+      "credentials": {
+        "s3": {
+          "id": "iQ1otocSkl7CBOiI",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Texto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
+                    "leftValue": "={{ $json.body.data.message.base64 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -800,
+        720
+      ],
+      "id": "61fb2f5e-e43a-4785-84b4-45b5bec76360",
+      "name": "AUDIO/TEXT1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "message",
+              "value": "={{ $json.body.text }}",
+              "type": "string"
+            },
+            {
+              "id": "5fc779b6-3524-4152-a1e4-5c0f094e1f05",
+              "name": "quotedMessage",
+              "value": "={{ $('GRUPOS').item.json.body.data.message.audioMessage.contextInfo.quotedMessage.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "596b4cf4-4f36-4866-ba6b-634ada561da2",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $('GRUPOS').item.json.body.data.key.participant.split('@')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "f2f1490f-caf5-4310-80f8-c14e6aad0ccf",
+              "name": "NOMBRE",
+              "value": "={{ $('GRUPOS').item.json.body.data.pushName.split(' ')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        816
+      ],
+      "id": "ab85c587-19ce-4288-998f-bb1827e1a160",
+      "name": "audioGrupo1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+              "name": "message",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "5fc779b6-3524-4152-a1e4-5c0f094e1f05",
+              "name": "quotedMessage",
+              "value": "={{ $('GRUPOS').item.json.body.data.message.audioMessage.contextInfo.quotedMessage.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "596b4cf4-4f36-4866-ba6b-634ada561da2",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $('GRUPOS').item.json.body.data.key.participant.split('@')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "f2f1490f-caf5-4310-80f8-c14e6aad0ccf",
+              "name": "NOMBRE",
+              "value": "={{ $('GRUPOS').item.json.body.data.pushName.split(' ')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        624
+      ],
+      "id": "e2b4b273-c577-4508-9336-54d6222728af",
+      "name": "textGrupo1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19685da7-d325-456c-ba75-669f53f667ab",
+              "name": "NOMBRE",
+              "value": "={{ $json.NOMBRE }}",
+              "type": "string"
+            },
+            {
+              "id": "9ef83bfa-1544-4ce2-b316-d23c727495c1",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d0808961-590a-4be2-b482-e89ac806793c",
+              "name": "Message",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            },
+            {
+              "id": "4d277582-d64f-456a-bc14-a454eeb0987a",
+              "name": "quotedMessage.conversation",
+              "value": "={{ $json.quotedMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "12ed8d66-1c80-45fa-89f0-b494a79b2c6f",
+              "name": "FECHA",
+              "value": "={{ $('Webhook').item.json.body.date_time.toDateTime().format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "db70bf6e-e14e-43d1-a867-6ac464da82db",
+              "name": "Fecha ayer",
+              "value": "={{ DateTime.fromISO($('Webhook').item.json.body.date_time).minus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "50f2f710-56e2-4efe-84dd-cc7f426dc2e1",
+              "name": "fecha mañana",
+              "value": "={{ DateTime.fromISO($('Webhook').item.json.body.date_time).plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        720
+      ],
+      "id": "57f9b815-1a67-423d-8afc-2565125809d8",
+      "name": "Datagroups1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=nombre del que reporta: {{ $('Datagroups1').item.json.NOMBRE }}\n\n📦 STOCK REPORTADO: {{ $('Datagroups1').item.json.Message }}\n\nLISTA DE PEDIDOS: {{ JSON.stringify($json.data) }} \n\nFECHA: {{ $('Datagroups1').item.json.FECHA }}",
+        "options": {
+          "systemMessage": "=Tu tarea es analizar el reporte de stock enviado por un empleado en formato de texto libre, llamado `STOCK REPORTADO`, y compararlo con la `LISTA DE PEDIDOS` (estructura JSON) que contiene los productos esperados, junto con su palet y tipo de caja asignado.\n\nEl objetivo es generar una lista normalizada y estructurada con la siguiente lógica:\n\n## 🧾 FORMATO DE ENTRADA:\n\n1. STOCK REPORTADO: texto libre escrito por un humano. Ejemplo:\n\"Amarillo, bolsa de zarve 10, godoy 55, berenjena P, palet americano 25, godoy negra 60, verde bolsa de zarve 30, godoy 60.\"\n\n2. LISTA DE PEDIDOS (JSON):\n{{ JSON.stringify($json.data) }}\n\n## 📌 OBJETIVO:\n\nDevuelve una nueva lista de productos con los siguientes criterios:\n\n### 1. Coincidencias:\n\nBusca coincidencias entre lo reportado en STOCK REPORTADO y los elementos de la LISTA DE PEDIDOS. Las coincidencias pueden ser:\n- Por color (Rojo, Verde, Amarillo, Naranja, etc.)\n- Por tipo (gg, god, m, std, emma, neg, P, etc.)\n- Por nombre parcial (como \"godoy\", \"zarve\", \"negra\", \"euro\", \"americano\")\n- Por número (cantidad asociada, como 10, 25, 55)\n\nCuando se identifique una coincidencia:\n- Devuelve el PRODUCTO, PALET y CAJAS de la LISTA DE PEDIDOS.\n- Extrae y asigna la CANT_PALET si hay una palabra que coincide con un tipo de palet (ej. \"palet americano 25\" → cantidad 25).\n- Extrae y asigna la CANT_CAJAS si hay una palabra que coincide con una caja (ej. \"godoy 60\" → caja godoy → cantidad 60).\n\n### 2. Ambigüedad:\n\nSi hay varias coincidencias posibles en LISTA DE PALETS o LISTA DE CAJAS, elige la opción más genérica o la que tenga menos detalles.  \nPor ejemplo:\n- Si solo se dice \"euro\", selecciona PALET EURO RETORNABLE.\n- Si dice \"godoy\" sin más detalles, selecciona CAJA GODOY 40x30x12.\n\n### 3. Sin coincidencia:\n\nSi un ítem del STOCK REPORTADO no coincide con ningún producto de la LISTA DE PEDIDOS, devuélvelo exactamente como fue escrito por el empleado bajo el campo \"PRODUCTO\" sin alterarlo. No intentes adivinar ni modificar.\n\n### 4. Normalización:\n\nCada ítem devuelto debe tener la siguiente estructura:\n\n{\n  \"FECHA\": \"{{ $('Datagroups1').item.json.FECHA }}\",\n  \"PRODUCTO\": \"nombre estandarizado del producto\",\n  \"PALET\": \"palet correspondiente\",\n  \"CANT_PALET\": cantidad si se reportó,\n  \"CAJAS\": \"caja correspondiente\",\n  \"CANT_CAJAS\": cantidad si se reportó,\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\nSi no hay coincidencia:\n\n{\n  \"FECHA\": \"{{ $('Datagroups1').item.json.FECHA }}\",\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\n### 5. Separación de productos:\n\nCada producto debe tratarse como un bloque completo que empieza con una palabra clave identificativa (como un color o tipo) y termina justo antes de que empiece otro.  \nNunca dividas un grupo como \"Amarillo, bolsa de zarve 10, godoy 55\" en varios productos. Eso es un solo bloque.\n\n### 6. Condiciones adicionales:\n\n- Comparación insensible a mayúsculas/minúsculas.\n- Ignora comas, puntos y otros separadores.\n- Tolerancia básica a errores ortográficos (\"zarve\" ≈ \"azarbe\", \"godoy negra\" ≈ \"bandeja negra\").\n- Acepta si la cantidad viene antes o después del nombre (\"25 zarve\" o \"zarve 25\").\n\n## 📥 DATOS DE ENTRADA:\n\nNOMBRE: {{ $('Datagroups1').item.json.NOMBRE }}\nFECHA: {{ $('Datagroups1').item.json.FECHA }}\nSTOCK REPORTADO: {{ $('Datagroups1').item.json.Message }}\n\n## ✅ Devuelve solo un array JSON válido, sin explicaciones adicionales ni texto fuera del array.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        864
+      ],
+      "id": "0686a10a-12a1-4bbd-8c11-cc500db5e958",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        1088
+      ],
+      "id": "f1addbff-f896-42ae-95ce-ad21ecca43da",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a9acea2b-5e7a-4f61-973b-dcc29ff57aa0",
+              "leftValue": "={{ $json.Message.toLowerCase() }}",
+              "rightValue": "resumen",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "64b22c6e-5062-453f-b74f-c731c622b869",
+              "leftValue": "={{ $json.quotedMessage.conversation }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        544,
+        720
+      ],
+      "id": "4686ed07-36fc-482e-92a6-6a2edbbb55e9",
+      "name": "enviar confirmacion Pedido"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $('Datagroups1').item.json.FECHA }}"
+            },
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Solicitado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        992,
+        560
+      ],
+      "id": "3bc478a3-7391-4d07-991e-bb05973cd8bc",
+      "name": "Google Sheets6",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener fecha y hora actuales con zona horaria\nconst zonaHoraria = 'America/Bogota';\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Agrupar productos por finca y por número de pedido\nconst agrupados = {};\nlet fechaEntrega = '';\nlet entregaTexto = '';\n\nfor (const item of items) {\n  const finca = item.json.FINCA;\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  if (!agrupados[finca]) agrupados[finca] = {};\n  if (!agrupados[finca][numPedido]) agrupados[finca][numPedido] = [];\n\n  agrupados[finca][numPedido].push(\n    `- ${item.json.CANT_PALETS} x ${item.json.CANT_CAJAS} - ${item.json.PRODUCTO} - ${item.json.PALET} - ${item.json.CAJAS}`\n  );\n\n  // Guardar fecha y entrega (serán iguales para todos los ítems)\n  fechaEntrega = item.json.FECHA;\n  entregaTexto = item.json.ENTREGA;\n  encargado = $('Get suplier').first().json[\"ENCARGADO \"].split(' ')[0];\n}\n\n// Construir mensajes para cada finca\nconst mensajes = [];\n\nfor (const finca in agrupados) {\n  let mensaje = `${saludo} - *${encargado}*\\nSe envía resumen de pedidos solicitados para el ${fechaEntrega}.\\nPor favor responder sobre este mensaje las novedades y confirmar el status del pedido.\\n\\n`;\n\n  for (const numPedido in agrupados[finca]) {\n    mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n    mensaje += agrupados[finca][numPedido].join('\\n\\n') + '\\n\\n';\n  }\n\n  mensaje = mensaje.trim();\n\n  mensajes.push({\n    json: {\n      FINCA: finca,\n      MENSAJE_RESUMEN: mensaje,\n      FECHA: fechaEntrega,\n      ENTREGA: entregaTexto,\n      TELEFONO: $('enviar confirmacion Pedido').first().json['Nº DE TELÉFONO']\n    }\n  });\n}\n\nreturn mensajes;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        560
+      ],
+      "id": "1dc66772-64b1-48cb-ae90-f596d8003327",
+      "name": "confirmacion pedido"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Pedro",
+        "remoteJid": "=+{{ $json.TELEFONO }}",
+        "messageText": "={{ $json.MENSAJE_RESUMEN }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        560
+      ],
+      "id": "06ea0313-3bcd-431c-b3e8-d21532837576",
+      "name": "Send Order",
+      "credentials": {
+        "evolutionApi": {
+          "id": "OFo9A7x3qE1W1DKN",
+          "name": "Evolution account Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Nº DE TELÉFONO",
+              "lookupValue": "={{ $json[\"Nº DE TELÉFONO\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        768,
+        560
+      ],
+      "id": "0c4cea0b-8797-4b37-91db-1200ca752d2d",
+      "name": "Get suplier",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json.FECHA }}"
+            },
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json['Fecha ayer'] }}"
+            },
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json['fecha mañana'] }}"
+            }
+          ]
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        768,
+        864
+      ],
+      "id": "405611de-c4f3-4d9d-8edb-e19700372fa8",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items[0].json.data;\n\nconst uniqueCombos = new Set();\nconst result = [];\n\nfor (const entry of data) {\n  const key = `${entry.PRODUCTO} | ${entry.PALET} | ${entry.CAJAS}`;\n  \n  if (!uniqueCombos.has(key)) {\n    uniqueCombos.add(key);\n    result.push({\n      PRODUCTO: entry.PRODUCTO,\n      PALET: entry.PALET,\n      CAJAS: entry.CAJAS\n    });\n  }\n}\n\nreturn [{\n  json: {\n    data: result\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        864
+      ],
+      "id": "8a8a138d-0a38-4976-8035-4138814bb8c4",
+      "name": "productos unicos1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        992,
+        864
+      ],
+      "id": "7194583a-7408-4aea-9153-b509e8ef0eea",
+      "name": "Productos1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el texto plano del agente\nconst raw = items[0].json.output;\n\n// Intentar extraer el JSON entre los delimitadores ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\n// Si no encuentra un bloque válido, intentar parsear como JSON directo\nconst cleanJsonString = match ? match[1] : raw;\n\n// Intentar parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(cleanJsonString);\n} catch (error) {\n  throw new Error(\"No se pudo parsear el JSON: \" + error.message);\n}\n\n// Verificamos que sea un array\nif (!Array.isArray(parsed)) {\n  throw new Error(\"El JSON parseado no es un array.\");\n}\n\n// Devolvemos cada objeto como item independiente\nreturn parsed.map(obj => ({ json: obj }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        864
+      ],
+      "id": "99aef397-872e-443c-a60c-2e3a2977a5b5",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 660283765,
+          "mode": "list",
+          "cachedResultName": "REPORTE DOMINGO",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=660283765"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALET",
+              "displayName": "CANT_PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "REPORTE",
+              "displayName": "REPORTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2016,
+        864
+      ],
+      "id": "208735fd-31b7-4601-9fc3-fd49e4eeae4d",
+      "name": "add reporte1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Message",
+              "value": "={{ $json.Message }}"
+            },
+            {
+              "key": "Telefono",
+              "value": "={{ $json[\"Nº DE TELÉFONO\"] }}"
+            },
+            {
+              "key": "Finca",
+              "value": "={{ $json.FINCA }}"
+            },
+            {
+              "key": "Fecha",
+              "value": "={{ $json.FECHA }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        320,
+        720
+      ],
+      "id": "e97a5e35-8a45-4c96-b9c8-54dfb462c2a8",
+      "name": "Execution Data"
     }
   ],
   "pinData": {},
@@ -1037,6 +1948,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-20T17:40:39.669Z",
-  "versionId": "56b7f2a1-86e7-4bf9-a5a6-d35c9d2e097e"
+  "updatedAt": "2025-08-13T22:39:32.797Z",
+  "versionId": "21d14a71-816f-4326-a3d6-9375fabfd5c5"
 }
