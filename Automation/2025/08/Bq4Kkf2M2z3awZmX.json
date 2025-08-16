@@ -47,17 +47,6 @@
         ]
       ]
     },
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "Validar creditos",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "correo5%": {
       "main": [
         [
@@ -101,6 +90,17 @@
         [
           {
             "node": "mensajes>0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Validar creditos",
             "type": "main",
             "index": 0
           }
@@ -237,22 +237,6 @@
           "name": "hola@whitelabel.lat"
         }
       }
-    },
-    {
-      "parameters": {
-        "options": {
-          "responseMode": "responseNodes"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        208,
-        272
-      ],
-      "id": "e4853e20-5451-47c6-81a8-d9647275a4d8",
-      "name": "When chat message received",
-      "webhookId": "67ac1544-1e54-49ce-8932-f472d1ae198f"
     },
     {
       "parameters": {
@@ -617,6 +601,19 @@
       ],
       "id": "152402aa-48fa-4749-bc5b-171024b86e50",
       "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        272
+      ],
+      "id": "1c0b354e-83c3-4c82-a44d-11f3a65e5618",
+      "name": "When Executed by Another Workflow"
     }
   ],
   "pinData": {},
@@ -629,6 +626,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-10T23:02:59.808Z",
-  "versionId": "b4b4f659-8fc7-4ad8-a939-bac35d3e4fc4"
+  "updatedAt": "2025-08-16T20:34:41.593Z",
+  "versionId": "d5e4671d-98bd-44d3-9bff-2d08d639bd91"
 }
