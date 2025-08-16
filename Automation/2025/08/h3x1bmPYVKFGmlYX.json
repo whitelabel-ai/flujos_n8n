@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Message a model1",
+            "node": "OpenAI1",
             "type": "main",
             "index": 0
           }
@@ -65,7 +65,13 @@
     },
     "Unir Mensajes": {
       "main": [
-        []
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Data": {
@@ -73,93 +79,6 @@
         [
           {
             "node": "Get row(s) in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait11": {
-      "main": [
-        [
-          {
-            "node": "If13",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait12": {
-      "main": [
-        [
-          {
-            "node": "If12",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If12": {
-      "main": [
-        [
-          {
-            "node": "Send message1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing11",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If13": {
-      "main": [
-        [
-          {
-            "node": "Send message4",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing12",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait13": {
-      "main": [
-        [
-          {
-            "node": "If14",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If14": {
-      "main": [
-        [
-          {
-            "node": "Send message2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing13",
             "type": "main",
             "index": 0
           }
@@ -182,54 +101,6 @@
         [
           {
             "node": "Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "WhatsApp Trigger": {
-      "main": [
-        [
-          {
-            "node": "type message Whatsap",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send message": {
-      "main": [
-        [
-          {
-            "node": "Redis5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Message a model1": {
-      "main": [
-        [
-          {
-            "node": "Wait11",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait12",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait13",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Send message",
             "type": "main",
             "index": 0
           }
@@ -300,24 +171,6 @@
         ]
       ]
     },
-    "type message Whatsap": {
-      "main": [
-        [
-          {
-            "node": "Download media",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "DataText",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "DataText": {
       "main": [
         [
@@ -356,17 +209,6 @@
         [
           {
             "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download media": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request3",
             "type": "main",
             "index": 0
           }
@@ -416,6 +258,203 @@
           }
         ]
       ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Seteo_Whatsapp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow1": {
+      "main": [
+        [
+          {
+            "node": "Validacion creditos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "type message Chatwood": {
+      "main": [
+        [
+          {
+            "node": "Obtener audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "DataText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait11": {
+      "main": [
+        [
+          {
+            "node": "If13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait12": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If13": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait13": {
+      "main": [
+        [
+          {
+            "node": "If14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If14": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seteo_Whatsapp": {
+      "main": [
+        [
+          {
+            "node": "type message Chatwood",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Redis5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener audio": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validacion creditos": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-04T22:34:24.685Z",
@@ -437,7 +476,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        1776,
+        1984,
         -1456
       ],
       "id": "30dfa33c-1578-4d1e-8ade-f04415c100e5",
@@ -471,8 +510,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        160,
-        -1248
+        -384,
+        -1392
       ],
       "id": "e554d0f1-78fc-4c45-b57d-f75cd0b5262d",
       "name": "If1"
@@ -482,8 +521,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        336,
-        -1136
+        -208,
+        -1280
       ],
       "id": "8b0c2b86-bac3-4ca5-8779-36bcb17af808",
       "name": "No Operation, do nothing1"
@@ -498,8 +537,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        16,
-        -1248
+        -528,
+        -1392
       ],
       "id": "39f8662e-0094-4335-95f0-fad4128bce58",
       "name": "Redis",
@@ -511,14 +550,12 @@
       }
     },
     {
-      "parameters": {
-        "amount": 10
-      },
+      "parameters": {},
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -144,
-        -1248
+        -688,
+        -1392
       ],
       "id": "83e90e95-7d6f-49db-a398-58a5ce4e9cd2",
       "name": "Wait",
@@ -527,15 +564,15 @@
     {
       "parameters": {
         "operation": "push",
-        "list": "=chat_id_{{ $json.phone_number }}",
-        "messageData": "={{ $json.mensaje }}",
+        "list": "={{ $('Seteo_Whatsapp').item.json.conversation_id }}",
+        "messageData": "={{ $('Seteo_Whatsapp').item.json.mensaje }}",
         "tail": true
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        -288,
-        -1248
+        -816,
+        -1392
       ],
       "id": "634f5670-645d-4ead-bdfe-cc57a5c20756",
       "name": "Push Message",
@@ -571,13 +608,13 @@
             {
               "id": "75372881-4219-4c13-bb9a-615314982292",
               "name": "name",
-              "value": "={{ $('WhatsApp Trigger').item.json.contacts[0].profile.name }}",
+              "value": "={{ $('Webhook').item.json.body.conversation.messages[0].sender.name }}",
               "type": "string"
             },
             {
               "id": "9b51ce59-b4c4-434d-baac-793706d93483",
               "name": "WhatsApp",
-              "value": "=+{{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
+              "value": "={{ $('Webhook').item.json.body.conversation.messages[0].sender.phone_number }}",
               "type": "string"
             }
           ]
@@ -587,7 +624,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1120,
+        1328,
         -1456
       ],
       "id": "313d7a7c-ff50-4faa-bd2e-03fd64f0bae8",
@@ -610,221 +647,24 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        336,
-        -1360
+        -192,
+        -1472
       ],
       "id": "69891f66-d621-4b69-a035-3fcfec6532c5",
       "name": "Unir Mensajes"
     },
     {
       "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $('Data').item.json.user_id }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        3424,
-        -1488
-      ],
-      "id": "c60271c7-fe59-4dd4-b0c0-ae9862e79799",
-      "name": "Redis5",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "amount": 2
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        3648,
-        -1488
-      ],
-      "id": "79479303-7263-425e-a4f0-7ac8340c9ce4",
-      "name": "Wait11",
-      "webhookId": "f536635a-1b6e-4be1-b9f7-5d750b9915e3"
-    },
-    {
-      "parameters": {
-        "amount": 2
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        3200,
-        -1312
-      ],
-      "id": "5b04c29b-c033-4106-a0e6-521e1551dff0",
-      "name": "Wait12",
-      "webhookId": "e5286325-6c55-4614-be59-5ce3baaad7fe"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
-              "leftValue": "={{ $json.message.content.parte3}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3424,
-        -1312
-      ],
-      "id": "e2d5cea5-23cd-4460-9e7e-b122f29a474a",
-      "name": "If12"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3840,
-        -1280
-      ],
-      "id": "1ddc1cfe-cf41-468f-bf15-ff02f4255a12",
-      "name": "No Operation, do nothing11"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "709f4717-003f-4f9f-b841-18d2f2f4ddb4",
-              "leftValue": "={{ $json.message.content.parte2}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3824,
-        -1488
-      ],
-      "id": "b8f9e823-8143-4adf-8daf-d636bd8f27b9",
-      "name": "If13"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        4256,
-        -1472
-      ],
-      "id": "479bc836-37c1-42f5-a814-1744cb2624d5",
-      "name": "No Operation, do nothing12"
-    },
-    {
-      "parameters": {
-        "amount": 2
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        3200,
-        -1088
-      ],
-      "id": "5cb4fb4a-e32a-4b9c-be84-6739843a78da",
-      "name": "Wait13",
-      "webhookId": "ca91d3f3-72c6-426f-ac8e-f926436b5f8e"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
-              "leftValue": "={{ $json.message.content.parte4}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3424,
-        -1088
-      ],
-      "id": "2979838f-ca98-4ddd-8118-9ffb71d6b092",
-      "name": "If14"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3840,
-        -1088
-      ],
-      "id": "4c9f105a-53a0-4f6a-a9b0-eadae02f28fa",
-      "name": "No Operation, do nothing13"
-    },
-    {
-      "parameters": {
         "content": "## Incoming Messages\n",
-        "height": 540,
+        "height": 412,
         "width": 1792,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1264,
-        -1472
+        -1824,
+        -1536
       ],
       "id": "49eb7478-daba-4372-a9fb-9f4f30faae3f",
       "name": "Sticky Note"
@@ -839,26 +679,10 @@
       "typeVersion": 1,
       "position": [
         672,
-        -1520
+        -1536
       ],
       "id": "1f0ec2e5-656a-45ca-b6fc-c7c9f6377c8a",
       "name": "Sticky Note1"
-    },
-    {
-      "parameters": {
-        "content": "## RESPONS AGENT",
-        "height": 600,
-        "width": 1768,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2704,
-        -1520
-      ],
-      "id": "e3f80b6f-5429-4ce8-8b29-39d8332a6b0f",
-      "name": "Sticky Note2"
     },
     {
       "parameters": {
@@ -870,7 +694,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        1712,
+        1920,
         -1168
       ],
       "id": "286ce9a5-69c7-423e-a7ee-7d2fa1b813d0",
@@ -909,95 +733,11 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        752,
-        -1440
+        720,
+        -1456
       ],
       "id": "f8d7f618-71e7-4517-84ad-ae5011443351",
       "name": "Message a model",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "updates": [
-          "messages"
-        ],
-        "options": {
-          "messageStatusUpdates": [
-            "failed"
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.whatsAppTrigger",
-      "typeVersion": 1,
-      "position": [
-        -1232,
-        -1248
-      ],
-      "id": "a9058d3f-11d6-4bfd-be96-8011b18affc7",
-      "name": "WhatsApp Trigger",
-      "webhookId": "eb7313b1-a05b-43a7-9f7d-06b1bfd0325f",
-      "credentials": {
-        "whatsAppTriggerApi": {
-          "id": "GM09ZMKDDr5OF5u9",
-          "name": "WhatsApp Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte1 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        3248,
-        -1488
-      ],
-      "id": "e52da148-07de-4c8c-a0ff-55a8ad60d98d",
-      "name": "Send message",
-      "webhookId": "c1ac82f4-83bd-489f-a137-20846d2e0ea9",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **si hay una lista con varios items, no se debe dividir**, toda la lista debe ir en un mismo mensaje\n\n- **No incluyas datos sensibles del usuario** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>` \n  - `mensajes de error`\n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  || {{ $json.output[0].text }}\n"
-            }
-          ]
-        },
-        "jsonOutput": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        2784,
-        -1456
-      ],
-      "id": "3f845141-356b-4ea6-aaba-8515fc250099",
-      "name": "Message a model1",
       "credentials": {
         "openAiApi": {
           "id": "UYsXoFpwT6Oh1GeF",
@@ -1012,7 +752,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1488,
+        1696,
         -1168
       ],
       "id": "3713dfc8-3d51-40b0-a188-4db0328ff8f7",
@@ -1021,78 +761,6 @@
         "googlePalmApi": {
           "id": "jQiccHfpS9BFKE4C",
           "name": "automation.whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte2 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        4032,
-        -1504
-      ],
-      "id": "8f6f962d-7ef8-422d-9d68-bd0574a2c303",
-      "name": "Send message4",
-      "webhookId": "da25c650-1eb6-460e-a75a-6edb41c2a5be",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte3 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        3632,
-        -1312
-      ],
-      "id": "fac3901c-c477-488e-8e9e-2753f5238573",
-      "name": "Send message1",
-      "webhookId": "149b6c25-1ff1-4a05-a33b-4efa146529ba",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('WhatsApp Trigger').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
-        "textBody": "={{ $json.message.content.parte4 }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        3632,
-        -1120
-      ],
-      "id": "317f8597-5725-4dc4-8dcc-1f7913a51a9a",
-      "name": "Send message2",
-      "webhookId": "64535dbc-53f6-4df0-b4f8-99cfb4ad8c6d",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
         }
       }
     },
@@ -1112,7 +780,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        1888,
+        2096,
         -1168
       ],
       "id": "f43cf77d-59c9-4ed9-bef9-ede07b2b4ac4",
@@ -1140,7 +808,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        2096,
+        2304,
         -1168
       ],
       "id": "215d0da8-5ea9-4dad-87bb-27aa7b4bf74d",
@@ -1182,7 +850,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        2352,
+        2480,
         -1184
       ],
       "id": "bd7a1cc1-4fc6-4475-9534-96f1c4be36ec",
@@ -1213,10 +881,6 @@
             {
               "key": "tipo_mensaje",
               "value": "={{ $json.tipo_mensaje }}"
-            },
-            {
-              "key": "mensaje",
-              "value": "={{ $json.mensaje }}"
             }
           ]
         }
@@ -1224,8 +888,8 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1.1,
       "position": [
-        -432,
-        -1248
+        -976,
+        -1392
       ],
       "id": "f844c95c-a6d1-4675-a425-5214aaf9c2db",
       "name": "Execution Data"
@@ -1265,96 +929,30 @@
     },
     {
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $json.messages[0].type }}",
-                    "rightValue": "audio",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "38cdad62-0d9c-45bc-860e-9e03d107ba58"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "audio"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "82df4052-c480-44a2-9d09-c195d4bc6879",
-                    "leftValue": "={{ $json.messages[0].type }}",
-                    "rightValue": "text",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "text"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        -1040,
-        -1248
-      ],
-      "id": "4eac4455-0e54-4dd0-8d4d-ccab9c397857",
-      "name": "type message Whatsap"
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
               "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
               "name": "nombre",
-              "value": "={{ $json.contacts[0].profile.name }}",
+              "value": "={{ $json.nombre }}",
               "type": "string"
             },
             {
               "id": "82031891-32ae-4442-b883-fad57ad08c79",
               "name": "phone_number",
-              "value": "={{ $json.contacts[0].wa_id }}",
+              "value": "={{ $json.phone_number }}",
               "type": "string"
             },
             {
               "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
               "name": "mensaje",
-              "value": "={{ $json.messages[0].text.body }}",
+              "value": "={{ $json.mensaje }}",
               "type": "string"
             },
             {
               "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
               "name": "tags",
-              "value": "={{ $json.field }}",
+              "value": "={{ $json.tags }}",
               "type": "string"
             }
           ]
@@ -1364,8 +962,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -784,
-        -1248
+        -1360,
+        -1392
       ],
       "id": "856e3e16-66a7-4dba-b3dc-a60253ea8dca",
       "name": "DataText"
@@ -1399,8 +997,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -592,
-        -1248
+        -1152,
+        -1392
       ],
       "id": "1cb98732-f7cf-4aa1-b58f-a9b4071787ce",
       "name": "setData"
@@ -1473,33 +1071,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -176,
-        -1840
+        -736,
+        -1760
       ],
       "id": "cd71ed0a-b7ae-4fe0-b376-63300df2abd3",
       "name": "DataAudio"
-    },
-    {
-      "parameters": {
-        "resource": "media",
-        "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.messages[0].audio.id }}"
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        -768,
-        -1840
-      ],
-      "id": "97b5eeca-ccd2-459c-91ca-e77929b2f284",
-      "name": "Download media",
-      "webhookId": "1537d7fd-b071-4bf1-9a47-3ae3d5805861",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
     },
     {
       "parameters": {
@@ -1531,8 +1107,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -368,
-        -1840
+        -928,
+        -1760
       ],
       "id": "b185e355-9fcf-41ea-80dd-8c4d653b34ef",
       "name": "HTTP Request2",
@@ -1553,8 +1129,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -576,
-        -1840
+        -1136,
+        -1760
       ],
       "id": "55c808fc-a835-4d9a-8ea2-8ebe0fdecb14",
       "name": "HTTP Request3",
@@ -1690,7 +1266,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1536,
+        1744,
         -1456
       ],
       "id": "45fa82e5-fddc-4bcd-b1de-05391803d78a",
@@ -1716,7 +1292,7 @@
           "values": [
             {
               "lookupColumn": "Numero de whastapp que vas a usar para tu asistente",
-              "lookupValue": "=573112530069"
+              "lookupValue": "=573150759897"
             }
           ]
         },
@@ -1725,7 +1301,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1312,
+        1520,
         -1456
       ],
       "id": "e427a95c-ccbc-403b-bf8b-ed0eece1c36d",
@@ -1758,9 +1334,739 @@
         }
       },
       "disabled": true
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": [
+            "failed"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -2368
+      ],
+      "id": "a9058d3f-11d6-4bfd-be96-8011b18affc7",
+      "name": "WhatsApp Trigger",
+      "webhookId": "eb7313b1-a05b-43a7-9f7d-06b1bfd0325f",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "GM09ZMKDDr5OF5u9",
+          "name": "WhatsApp Valeia"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatwood_onboarding_estarter",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1968,
+        -1408
+      ],
+      "id": "df6acedd-bd2a-4a93-868f-f0f37c07eb7e",
+      "name": "Webhook",
+      "webhookId": "3f4bb931-0b29-4f22-b253-9316b2ab9923"
+    },
+    {
+      "parameters": {
+        "content": "## Validador de Creditos\n",
+        "height": 416,
+        "width": 608,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        16,
+        -1536
+      ],
+      "typeVersion": 1,
+      "id": "84cf8c1a-85d0-496d-8223-044f9f479e0b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "Bq4Kkf2M2z3awZmX",
+          "mode": "list",
+          "cachedResultName": "Tool Contador de Mensajes"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "client_id"
+          ],
+          "schema": [
+            {
+              "id": "client_id",
+              "displayName": "client_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        -1472
+      ],
+      "id": "d2fe0745-e047-49e8-b5c9-e67f335140e8",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['content-type'] }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "38cdad62-0d9c-45bc-860e-9e03d107ba58"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "82df4052-c480-44a2-9d09-c195d4bc6879",
+                    "leftValue": "={{ $json['content-type'] }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1584,
+        -1408
+      ],
+      "id": "4eac4455-0e54-4dd0-8d4d-ccab9c397857",
+      "name": "type message Chatwood"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **Reemplaza siempre la palabra \"Dosis\" por \"Cantidad\"**.  \n- **No incluyas datos sensibles** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        3152,
+        -1488
+      ],
+      "id": "9a7aeb36-eb05-4078-bee1-eb1cea94b374",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_id_{{ $json.conversation_id }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3744,
+        -1488
+      ],
+      "id": "15198269-b785-4b44-9694-847f59273591",
+      "name": "Redis5",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3712,
+        -1488
+      ],
+      "id": "c1d76d77-4040-4cc3-a45b-dd2201846b01",
+      "name": "Wait11",
+      "webhookId": "421fa124-d19b-4b79-99dc-a3a3b6a82453"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3504,
+        -1312
+      ],
+      "id": "90a4cb75-bd22-4021-bae9-e72870ce3ac7",
+      "name": "Wait12",
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
+              "leftValue": "={{ $json.message.content.parte3}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3728,
+        -1312
+      ],
+      "id": "ea05cb74-5c01-4613-97eb-b917395d357b",
+      "name": "If12"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4144,
+        -1280
+      ],
+      "id": "b1cb7094-1aa2-4653-9a98-3c7bfea93134",
+      "name": "No Operation, do nothing11"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "709f4717-003f-4f9f-b841-18d2f2f4ddb4",
+              "leftValue": "={{ $json.message.content.parte2}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3920,
+        -1488
+      ],
+      "id": "f4d054fb-edf2-40d4-ad9c-93782a5974a2",
+      "name": "If13"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4352,
+        -1472
+      ],
+      "id": "53fd905a-6a00-425a-9fdc-8ff439bdf7ce",
+      "name": "No Operation, do nothing12"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3504,
+        -1088
+      ],
+      "id": "a22a11bc-4e09-41c9-a4f9-2b57523f1623",
+      "name": "Wait13",
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
+              "leftValue": "={{ $json.message.content.parte4}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3728,
+        -1088
+      ],
+      "id": "db115311-189c-45d5-9d29-084f1715a6bb",
+      "name": "If14"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4144,
+        -1088
+      ],
+      "id": "e1708a40-05d9-454a-ab75-a21e9a3b3491",
+      "name": "No Operation, do nothing13"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.whitelabel.lat/api/v1/accounts/{{ $('Webhook').item.json.body.account.id }}/conversations/{{ $('setData').item.json.conversation_id }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "iBk8qBMpRbbFVdSWurg36arD"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte2) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4144,
+        -1504
+      ],
+      "id": "431bafdb-0f05-4463-999f-fdbc05e29eff",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "content": "## RESPONS AGENT",
+        "height": 600,
+        "width": 1720,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        -1552
+      ],
+      "id": "1d524884-f016-4b71-8eb1-82f418b3d20e",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.whitelabel.lat/api/v1/accounts/{{ $('Webhook').item.json.body.account.id }}/conversations/{{ $('setData').item.json.conversation_id }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "iBk8qBMpRbbFVdSWurg36arD"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte3) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3952,
+        -1328
+      ],
+      "id": "ec336550-52cb-4324-90b2-697abc0588da",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://chatwoot.whitelabel.lat/api/v1/accounts/{{ $('Webhook').item.json.body.account.id }}/conversations/{{ $('setData').item.json.conversation_id }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "iBk8qBMpRbbFVdSWurg36arD"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte4) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3968,
+        -1104
+      ],
+      "id": "b7fbb82e-6913-4e5b-baf3-8742deb4dc1d",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
+              "name": "nombre",
+              "value": "={{ $json.body.conversation.meta.sender.name.split(\" \")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "82031891-32ae-4442-b883-fad57ad08c79",
+              "name": "phone_number",
+              "value": "={{ $json.body.conversation.meta.sender.phone_number }}",
+              "type": "string"
+            },
+            {
+              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
+              "name": "mensaje",
+              "value": "={{ $json.body.conversation.messages[0].content }}",
+              "type": "string"
+            },
+            {
+              "id": "01193a9d-40ea-48b1-96f1-592105684644",
+              "name": "content-type",
+              "value": "={{ $json.body.conversation.messages[0].content_type }}",
+              "type": "string"
+            },
+            {
+              "id": "2189dde7-a49e-4226-be25-22f3e62caf99",
+              "name": "conversation_id",
+              "value": "={{ $json.body.conversation.messages[0].conversation_id }}",
+              "type": "string"
+            },
+            {
+              "id": "c6b5261d-a252-4328-af15-9699dfc5ba2b",
+              "name": "receptor",
+              "value": "={{ $json.body.message_type }}",
+              "type": "string"
+            },
+            {
+              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
+              "name": "tags",
+              "value": "={{ $json.body.conversation.labels[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "9fa3abe3-7509-4197-b8e6-d8e1c965a410",
+              "name": "Account_id",
+              "value": "={{ $json.body.account.id }}",
+              "type": "string"
+            },
+            {
+              "id": "e0f26e09-c35f-40b4-9794-8ffe0806c767",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1776,
+        -1408
+      ],
+      "id": "a4295dc2-f005-4b85-9826-e25e8c81e94a",
+      "name": "Seteo_Whatsapp"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/app/accounts/{{ $json.Account_id }}/conversations/{{ $json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3552,
+        -1488
+      ],
+      "id": "e383ed30-0e77-4cd0-b778-4a4b5e305b9b",
+      "name": "HTTP Request6",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "U1L1YfbxjqRFSqPR",
+          "name": "crm.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://crm.whitelabel.lat/app/accounts/{{ $json.body.account.id }}/conversations/ {{ $json.body.conversation.messages[0].conversation_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1344,
+        -1760
+      ],
+      "id": "81d8bba4-f9ad-437b-8a3f-e78ab2d91d35",
+      "name": "Obtener audio"
+    },
+    {
+      "parameters": {
+        "content": "## Audio Transcriptor From crm.whitelabel.lat\n    ",
+        "height": 304,
+        "width": 848,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1376,
+        -1856
+      ],
+      "typeVersion": 1,
+      "id": "6649c285-2c65-4a74-b9dd-1fc62aa69ccc",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7efee19e-15a3-4263-b1da-237dd881d34b",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        -1472
+      ],
+      "id": "9b5b1c95-0ac1-47f1-9448-0287795409d1",
+      "name": "Validacion creditos"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+            "content-length": "480",
+            "accept": "application/json",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "content-type": "application/json",
+            "x-forwarded-for": "44.195.58.80",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "4f3b0c84f963",
+            "x-real-ip": "44.195.58.80"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "account": {
+              "id": 2,
+              "name": "Estarter.co"
+            },
+            "additional_attributes": {},
+            "avatar": "",
+            "custom_attributes": {},
+            "email": null,
+            "id": 2,
+            "identifier": null,
+            "name": "😃",
+            "phone_number": "+573008564836",
+            "thumbnail": "",
+            "blocked": false,
+            "event": "contact_updated",
+            "changed_attributes": [
+              {
+                "updated_at": {
+                  "previous_value": "2025-08-16T21:52:07.731Z",
+                  "current_value": "2025-08-16T22:26:26.482Z"
+                }
+              },
+              {
+                "last_activity_at": {
+                  "previous_value": "2025-08-16T21:52:07.726Z",
+                  "current_value": "2025-08-16T22:26:26.477Z"
+                }
+              }
+            ]
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook-test/chatwood_onboarding_estarter",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -1781,6 +2087,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-10T23:27:56.254Z",
-  "versionId": "204e4176-a130-4743-ab15-f6b312d4a64d"
+  "updatedAt": "2025-08-16T22:28:00.265Z",
+  "versionId": "c972343c-4115-4340-95ed-4d2a29e8ae08"
 }
