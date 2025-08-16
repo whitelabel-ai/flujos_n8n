@@ -485,11 +485,6 @@
             "node": "type message Whatsap",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Redis2",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -722,35 +717,6 @@
         ]
       ]
     },
-    "Redis2": {
-      "main": [
-        [
-          {
-            "node": "If3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If3": {
-      "main": [
-        [
-          {
-            "node": "Send video inicial",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "no",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Send message2": {
       "main": [
         []
@@ -759,6 +725,17 @@
     "No Operation, do nothing13": {
       "main": [
         []
+      ]
+    },
+    "updated_user_subscriptions": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -833,7 +810,7 @@
       "parameters": {
         "operation": "send",
         "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
+        "recipientPhoneNumber": "={{ $('Data').item.json.user_id }}",
         "textBody": "={{ $json.message.content.parte4 }}",
         "additionalFields": {}
       },
@@ -848,8 +825,8 @@
       "webhookId": "d9f93f21-8ca8-44cb-a8e0-8eab8eccc67f",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -916,7 +893,7 @@
       "parameters": {
         "operation": "send",
         "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
+        "recipientPhoneNumber": "={{ $('Data').item.json.user_id }}",
         "textBody": "={{ $json.message.content.parte3 }}",
         "additionalFields": {}
       },
@@ -931,8 +908,8 @@
       "webhookId": "52abe86e-6124-4f7b-a024-c8f7b37b9958",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -999,7 +976,7 @@
       "parameters": {
         "operation": "send",
         "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
+        "recipientPhoneNumber": "={{ $('Data').item.json.user_id }}",
         "textBody": "={{ $json.message.content.parte1 }}",
         "additionalFields": {}
       },
@@ -1014,8 +991,8 @@
       "webhookId": "9664ca8b-6cdf-474c-a4c2-07f5e237eae8",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -1056,7 +1033,7 @@
       "parameters": {
         "operation": "send",
         "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $('Data').item.json.user_id }}",
+        "recipientPhoneNumber": "={{ $('Data').item.json.user_id }}",
         "textBody": "={{ $json.message.content.parte2 }}",
         "additionalFields": {}
       },
@@ -1071,8 +1048,8 @@
       "webhookId": "142e011c-78b9-433c-a631-63863f0aa816",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -1086,8 +1063,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2176,
-        240
+        2160,
+        192
       ],
       "id": "2967513c-93dd-40e9-8c25-44aa65bea660",
       "name": "Sticky Note2"
@@ -1145,7 +1122,7 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "fecha_transaccion": "={{ $fromAI('fecha_transaccion', ``, 'string') }}",
+            "fecha_transaccion": "={{ $fromAI('fecha_transaccion', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}",
             "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
             "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
             "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}",
@@ -1279,7 +1256,7 @@
         "promptType": "define",
         "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }} \nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`.\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `query_transactions`  \n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `set_category_budget`, `get_category_budgets`  \n- *Metas de Ahorro:* `get_saving_goals`  \n- *Suscripciones:* `add_user_subscription`, `get_user_subscriptions`  \n- *Configuración:* `set_reminder_preference`\n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *No uses botones:* Todas las interacciones deben ser texto natural.\n"
+          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n   - si se registra una subscripcion, registrala tambien como transaccion ya que se supone que acaba de pagarla.\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`,\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `query_transactions`  \n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `set_category_budget`, `get_category_budgets`  \n- *Metas de Ahorro:* `get_saving_goals`  \n- *Suscripciones:* `add_user_subscription`, `get_user_subscriptions`, `updated_user_subscriptions`  \n- *Configuración:* `set_reminder_preference`\n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *No uses botones:* Todas las interacciones deben ser texto natural.\n\nIMPORTANTE: jamas registrar una transaccion sin haber consultado la tool 'get_user_categories'\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1306,7 +1283,7 @@
               "role": "system"
             },
             {
-              "content": "=Corrige el siguiente mensaje:\\n\\n{{ $json.message }}\\n\\nDevuelve solo el mensaje corregido, no quites las etiquetas html"
+              "content": "=Corrige el siguiente mensaje:\n\"{{ $json.message }}\",\n\nsolo debes devolver solo el mensaje corregido, no quites las etiquetas html"
             }
           ]
         },
@@ -1340,7 +1317,7 @@
       "typeVersion": 1,
       "position": [
         2160,
-        -656
+        -672
       ],
       "id": "3d3b3080-5f5f-40d2-b65c-a5d844f544f6",
       "name": "Sticky Note1"
@@ -1362,8 +1339,8 @@
       "webhookId": "9559feee-21a8-4e7f-b6d4-a947041fdc5f",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -1414,8 +1391,8 @@
       "name": "HTTP Request",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -1488,8 +1465,8 @@
       "webhookId": "9559feee-21a8-4e7f-b6d4-a947041fdc5f",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -1510,8 +1487,8 @@
       "name": "HTTP Request3",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -1990,8 +1967,8 @@
       "webhookId": "9559feee-21a8-4e7f-b6d4-a947041fdc5f",
       "credentials": {
         "whatsAppApi": {
-          "id": "YohohlgP3bBq85IL",
-          "name": "Test Pedro"
+          "id": "vxdq4Km4pHfuOQVV",
+          "name": "MONY"
         }
       }
     },
@@ -2068,7 +2045,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2160,
+        2128,
         -1504
       ],
       "id": "5f62c8bc-9a89-4596-b3ed-f9a073430a1a",
@@ -2487,8 +2464,8 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        3776,
-        -352
+        3792,
+        -336
       ],
       "id": "f2d26818-24a9-4275-b484-a39d4fdd777d",
       "name": "create_user_category",
@@ -2595,8 +2572,8 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        3904,
-        -272
+        3920,
+        -256
       ],
       "id": "f7543378-3dfe-4468-8dcc-9765d7356925",
       "name": "set_category_budget",
@@ -2676,8 +2653,8 @@
             "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `Nombre de la subscripcion`, 'string') }}",
             "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
             "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
-            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', ``, 'string') }}",
-            "fecha_proximo_pago": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fecha_proximo_pago', ``, 'string') }}",
+            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `diario, semanal, mensualtrimestral, anual`, 'string') }}",
+            "fecha_proximo_pago": "={{ $fromAI('fecha_proximo_pago', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}",
             "id_categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_categoria', `id de la categoria que se registra la subscripcion`, 'number') }}"
           },
           "matchingColumns": [
@@ -3110,100 +3087,6 @@
     },
     {
       "parameters": {
-        "operation": "get",
-        "propertyName": "message",
-        "key": "=MONY_chat_id_{{ $json.contacts[0].wa_id }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        2208,
-        -1376
-      ],
-      "id": "99ff4d63-905b-4398-a7a8-1c5101a3ba7f",
-      "name": "Redis2",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "0a0f55a1-0740-45f3-8e2b-1842525e88e5",
-              "leftValue": "={{ $json.message }}",
-              "rightValue": "",
-              "operator": {
-                "type": "array",
-                "operation": "notExists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        2400,
-        -1504
-      ],
-      "id": "0958d289-6a9f-4597-a967-6716af1fc2c1",
-      "name": "If3"
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $('Start').item.json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "={{ $('Start').item.json.contacts[0].wa_id }}",
-        "messageType": "video",
-        "mediaLink": "=https://minios3.whitelabel.lat/mony/mony.mp4",
-        "additionalFields": {
-          "mediaCaption": "=Hola , soy Mony tu coach financiero personal. En este video te cuento que puedo hacer por ti.."
-        }
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2848,
-        -1632
-      ],
-      "id": "d4f3101b-4999-4c1c-92a7-afe93df43a3b",
-      "name": "Send video inicial",
-      "webhookId": "0c3a1105-a247-4873-97ed-9ddde5be8084",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "IzfsUgwJnA4EF09z",
-          "name": "whatsap Valeia"
-        }
-      }
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        2656,
-        -1616
-      ],
-      "id": "6c82f14d-558e-4f51-93d5-21a2066b4a52",
-      "name": "no"
-    },
-    {
-      "parameters": {
         "operation": "delete",
         "key": "=chat_id_{{ $('setData').item.json.phone_number}}"
       },
@@ -3221,6 +3104,182 @@
           "name": "Redis account"
         }
       }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "actualiza cada que se vensa una subscipcion la nueva fecha de pago, si esta activa o no, el monto u otros parametros si se necesitan actualizar",
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "suscripciones_usuario",
+          "mode": "list",
+          "cachedResultName": "suscripciones_usuario"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "activa": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('activa', ``, 'boolean') }}",
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
+            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `Nombre de la subscripcion`, 'string') }}",
+            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
+            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
+            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `diario, semanal, mensualtrimestral, anual`, 'string') }}",
+            "fecha_proximo_pago": "={{ $fromAI('fecha_proximo_pago', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}",
+            "id_categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_categoria', `id de la categoria que se registra la subscripcion`, 'number') }}",
+            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id__using_to_match_', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "monto",
+              "displayName": "monto",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "moneda",
+              "displayName": "moneda",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "frecuencia",
+              "displayName": "frecuencia",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "nunca",
+                  "value": "nunca"
+                },
+                {
+                  "name": "anual",
+                  "value": "anual"
+                },
+                {
+                  "name": "trimestral",
+                  "value": "trimestral"
+                },
+                {
+                  "name": "mensual",
+                  "value": "mensual"
+                },
+                {
+                  "name": "semanal",
+                  "value": "semanal"
+                },
+                {
+                  "name": "diario",
+                  "value": "diario"
+                }
+              ]
+            },
+            {
+              "id": "fecha_proximo_pago",
+              "displayName": "fecha_proximo_pago",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "activa",
+              "displayName": "activa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_categoria",
+              "displayName": "id_categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        4704,
+        -384
+      ],
+      "id": "4ad21fce-0ab7-4878-a893-db7a87f78350",
+      "name": "updated_user_subscriptions",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.exchangerate.host/convert?from=USD&to=COP&amount=10000",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4896,
+        -464
+      ],
+      "id": "a0824499-c1ee-4c3b-a73e-6f06ac5862f1",
+      "name": "HTTP Request2"
     }
   ],
   "pinData": {
@@ -3229,12 +3288,12 @@
         "json": {
           "metadata": {
             "display_phone_number": "573143400476",
-            "phone_number_id": "565888133266017"
+            "phone_number_id": "735679592965149"
           },
           "contacts": [
             {
               "profile": {
-                "name": "•OSCAR•"
+                "name": "Oscar"
               },
               "wa_id": "573208397300"
             }
@@ -3242,22 +3301,24 @@
           "messages": [
             {
               "from": "573208397300",
-              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0E4NzJBRjgwRkZFNzFBQzBGOTYA",
-              "timestamp": "1755046662",
-              "text": {
-                "body": "Si"
-              },
-              "type": "text"
+              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0ExNjdFQzFGQ0M1QzMxRkY4RDYA",
+              "timestamp": "1755378277",
+              "type": "image",
+              "image": {
+                "mime_type": "image/jpeg",
+                "sha256": "fSh0eBKr/r6kuVmC6bTh9SMDo+Qz+8hfQp85H/BA6A8=",
+                "id": "651045754129580"
+              }
             }
           ],
           "field": "messages",
           "usuario_data": {
-            "id": "5112139f-13f8-4ec9-ba00-9c02ea774c5a",
-            "email": "oscarbejm.ai@gmail.com",
+            "id": "884bc934-410e-49c0-b255-f0874a9b9ba4",
+            "email": "obejman@gmail.com",
             "moneda": "COP",
-            "password": "$2a$12$DYjWxt4cCWxvwUnb0dVIdepA4tOANMl8J88Xgrq.L1LGA/1qXL99y",
-            "fecha_registro": "2025-08-13T00:46:31.602",
-            "nombre_completo": "Oscar bejman",
+            "password": "$2a$12$vTLGjIeqWlczuCDqlQ3spuHlrNX33aLkd3SIydSPP5mecKQZHXU5i",
+            "fecha_registro": "2025-08-16T01:33:37.947",
+            "nombre_completo": "Oscar Bejman",
             "numero_whatsapp": "+573208397300",
             "estado_suscripcion": "free"
           }
@@ -3276,6 +3337,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-13T01:08:54.063Z",
-  "versionId": "e9a3df3c-5625-4b13-9c2f-73e92cba0aae"
+  "updatedAt": "2025-08-16T21:14:49.579Z",
+  "versionId": "7c958fdb-1bca-4110-a4b0-c52ffb8e22fa"
 }
