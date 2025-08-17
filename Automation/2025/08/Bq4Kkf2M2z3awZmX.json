@@ -535,7 +535,7 @@
           "values": [
             {
               "lookupColumn": "cliente_id",
-              "lookupValue": "={{ $json.sessionId }}"
+              "lookupValue": "={{ $json.cliente_id }}"
             }
           ]
         },
@@ -544,7 +544,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        432,
+        336,
         272
       ],
       "id": "356dfa3e-74c6-4ca3-8ffd-50b33e3d8361",
@@ -604,19 +604,34 @@
     },
     {
       "parameters": {
-        "inputSource": "passthrough"
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "cliente_id",
+              "type": "any"
+            }
+          ]
+        }
       },
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        224,
+        80,
         272
       ],
       "id": "1c0b354e-83c3-4c82-a44d-11f3a65e5618",
       "name": "When Executed by Another Workflow"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "cliente_id": "2"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -626,6 +641,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-16T20:34:41.593Z",
-  "versionId": "d5e4671d-98bd-44d3-9bff-2d08d639bd91"
+  "updatedAt": "2025-08-16T22:40:05.327Z",
+  "versionId": "6123f209-e02c-4b63-8859-874024557295"
 }
