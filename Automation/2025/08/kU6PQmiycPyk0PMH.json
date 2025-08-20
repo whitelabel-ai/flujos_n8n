@@ -1,0 +1,230 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "preguntas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "preguntas": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-20T20:21:00.444Z",
+  "id": "kU6PQmiycPyk0PMH",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "informe",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "user_name"
+            },
+            {
+              "name": "user_email"
+            },
+            {
+              "name": "user_empresa"
+            },
+            {
+              "name": "¿Qué es lo que te inspira a trabajar cada día?"
+            },
+            {
+              "name": "¿Qué vendes y a qué sector te diriges?"
+            },
+            {
+              "name": "¿Qué emociones quieres que tu marca transmita a tus clientes?"
+            },
+            {
+              "name": "¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy? "
+            },
+            {
+              "name": "¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que tu marca/empresa resuelve para ellos?"
+            },
+            {
+              "name": "¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?"
+            },
+            {
+              "name": "¿Qué tan visible eres a nivel digital?"
+            },
+            {
+              "name": "¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?"
+            },
+            {
+              "name": "¿Cuáles son los recursos existentes que cuentas actualmente para mejorar tu presencia digital?"
+            },
+            {
+              "name": "Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?"
+            },
+            {
+              "name": "historial de conversación",
+              "type": "any"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1ec891f2-56ce-4dba-8a46-0fe1c2d0faa8",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5dbc476f-2d53-4f1e-a25d-904309dbb158",
+              "name": "userData",
+              "value": "={\n  \"user_name\": \"{{ $json.user_name }}\",\n  \"empresa\": \"{{ $json.user_empresa }}\",\n  \"user_email\": \"{{ $json.user_email }}\"\n}\n",
+              "type": "object"
+            },
+            {
+              "id": "37b041c5-fbf2-42f8-86a6-cae62d5752ce",
+              "name": "Retratar",
+              "value": "={\n  \"¿Qué es lo que te inspira a trabajar cada día?\": \"{{ $json['¿Qué es lo que te inspira a trabajar cada día?'] }}\",\n  \"¿Qué vendes y a qué sector te diriges?\": \"{{ $json['¿Qué vendes y a qué sector te diriges?'] }}\",\n  \"¿Qué emociones quieres que tu marca transmita a tus clientes?\": \"{{ $json['¿Qué emociones quieres que tu marca transmita a tus clientes?'] }}\"\n}",
+              "type": "object"
+            },
+            {
+              "id": "86afb64c-8b1d-4e99-8986-7f8b3ba209ea",
+              "name": "Descomponer",
+              "value": "={\n  \"¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy?\": \"{{ $json['¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy? '] }}\",\n  \"¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que tu marca/empresa resuelve para ellos?\": \"{{ $json['¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que tu marca/empresa resuelve para ellos?'] }}\",\n  \"¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?\": \"{{ $json['¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?'] }}\",\n  \"¿Qué tan visible eres a nivel digital?\": \"{{ $json['¿Qué tan visible eres a nivel digital?'] }}\"\n}",
+              "type": "object"
+            },
+            {
+              "id": "06f5f89d-a76b-49d1-8a3e-2c19f6dbde1d",
+              "name": "Reinterpretar",
+              "value": "={\n  \"¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?\": \"{{ $json['¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?'] }}\",\n  \"¿Cuáles son los recursos existentes que cuentas actualmente para mejorar tu presencia digital?\": \"{{ $json['¿Cuáles son los recursos existentes que cuentas actualmente para mejorar tu presencia digital?'] }}\",\n  \"Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?\": \"{{ $json['Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?'] }}\"\n}\n",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "90020f1d-e600-4269-a9be-a3fa24164c89",
+      "name": "preguntas"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a60dc707-23ed-4ac3-bd39-f6aff22bec90",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        96
+      ],
+      "id": "02404b29-b009-47fb-be64-692612c8911a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "194MFiXo95zC--6dfuzzuM2CG0A_g-EbQtLWUCPskTHw",
+          "mode": "list",
+          "cachedResultName": "PMV- Quizz diagnóstico presencia digital",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/194MFiXo95zC--6dfuzzuM2CG0A_g-EbQtLWUCPskTHw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1146885935,
+          "mode": "list",
+          "cachedResultName": "Copia de Quizz",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/194MFiXo95zC--6dfuzzuM2CG0A_g-EbQtLWUCPskTHw/edit#gid=1146885935"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -96
+      ],
+      "id": "0775c8e6-b474-4f33-8cd6-cddab294d24d",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "user_name": "Pedro",
+          "user_email": "pro.pedro0413@gmail.com",
+          "user_empresa": "Fluo",
+          "¿Qué es lo que te inspira a trabajar cada día?": "Lo que me inspira cada día a trabajar es mi familia, mi hijo y mi esposa.",
+          "¿Qué vendes y a qué sector te diriges?": "Vendo automatizaciones para empresas.",
+          "¿Qué emociones quieres que tu marca transmita a tus clientes?": "Quiero transmitir confianza, seguridad, que no se sientan abandonados en el proceso.",
+          "¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy? ": "consumen mucho tiempo",
+          "¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que tu marca/empresa resuelve para ellos?": "Pues los conozco un poco, quiero clientes que tengan claro lo que quieren.",
+          "¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?": "Es personalizada, cada cliente requiere algo en particular para su empresa.",
+          "¿Qué tan visible eres a nivel digital?": "Un poco, necesito arreglar mi landing y hacer más trabajo de publicidad.",
+          "¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?": "Quiero vender más.",
+          "¿Cuáles son los recursos existentes que cuentas actualmente para mejorar tu presencia digital?": "herramientas y equipo,",
+          "Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?": "uff poder irme a las Bahamas sin preocuparme del negocio, y que todo fluya como si nada,",
+          "historial de conversación": "Hola, soy Qubra, tu Curador Digital y el agente conversacional oficial de Vanguardistas. Estoy aquí para acompañarte en un viaje estratégico, donde descubriremos la esencia de tu marca, diagnosticaremos tus desafíos y prepararemos la información para un informe profesional a medida.\n\nPara personalizar nuestra conversación y entender mejor tu contexto, me gustaría saber:\n\n*   Tu nombre:\n*   El nombre de tu empresa o marca personal:\n*   Tu correo electrónico:\n\nAsí podremos empezar a pintar el lienzo de tu éxito. ¡Estoy emocionado de comenzar!\n\n**Usuario:** Perfecto, mi nombre es Pedro, mi empresa es Fluo y mi correo es pro.pedro0413@gmail.com.\n\n¡Excelente, Pedro! Qué gusto conocerte a ti y a Fluo. Ya tenemos los trazos iniciales para personalizar este viaje.\n\nAhora, para empezar a pintar la esencia de tu marca y entender lo que la hace única, me gustaría preguntarte:\n\n**¿Qué es lo que te inspira a trabajar cada día, Pedro?** Es como descubrir los colores base que le dan vida a tu proyecto.\n\n**Usuario:** Lo que me inspira cada día a trabajar es mi familia, mi hijo y mi esposa.\n\n¡Qué inspiración tan poderosa, Pedro! Tu familia, tu hijo y tu esposa... eso es como la raíz más profunda y genuina de tu proyecto, lo que le da un propósito y una fuerza inquebrantable. Esos son los colores más auténticos de tu lienzo, ¡los que realmente importan!\n\nAhora, para entender mejor la forma que está tomando esa inspiración, cuéntame:\n\n**¿Qué vendes y a qué sector te diriges?** (Por ejemplo: servicios de consultoría para empresas, productos de bienestar, formación presencial, etc.) Esto nos ayudará a dibujar el contorno de tu obra.\n\n**Usuario:** Vendo automatizaciones para empresas.\n\nEntendido, Pedro. ¡Automatizaciones para empresas! Eso es fascinante. Estás en un sector que realmente está redefiniendo la eficiencia y el futuro de muchos negocios. Es como ser un arquitecto que diseña puentes para hacer la vida empresarial más fluida y eficaz.\n\nAhora, pensemos en cómo quieres que esa obra sea percibida por quienes la disfrutan. Dime:\n\n**¿Qué emociones quieres que tu marca, Fluo, transmita a tus clientes?** Es como elegir la atmósfera y el sentimiento que quieres evocar en cada persona que interactúa con lo que ofreces.\n\n**Usuario:** Quiero transmitir confianza, seguridad, que no se sientan abandonados en el proceso.\n\n¡Magnífico, Pedro! Confianza, seguridad, que nunca se sientan abandonados en el proceso... Esos son pilares emocionales muy sólidos. Estás buscando construir una relación con tus clientes basada en la tranquilidad y el soporte continuo, lo cual es fundamental en un servicio tan crítico como las automatizaciones. Es como asegurarte de que cada trazo de tu marca inspire calma y certeza.\n\nHemos pintado ya una parte hermosa de la esencia de Fluo. Ahora, vamos a la siguiente etapa, donde descompondremos algunos de los desafíos actuales. Como un artista que observa su obra desde diferentes ángulos para detectar dónde ajustar.\n\nPara empezar, cuéntame:\n\n**¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy?**\n\n**Usuario:** consumen mucho tiempo,\n\nEntiendo perfectamente, Pedro. \"Consumen mucho tiempo\" es una realidad con la que batallan muchísimos negocios, ¡especialmente cuando ofrecen soluciones tan valiosas como las automatizaciones! Reconocer esto es el primer paso para encontrar un nuevo enfoque. Nos revela una oportunidad para optimizar tus procesos y liberar ese tiempo tan valioso.\n\nAhora, pasemos a otro ángulo clave de tu negocio. Para poder ayudarles de la mejor manera, necesitamos saber a quiénes estamos pintando:\n\n**¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que tu marca/empresa resuelve para ellos?** Es como saber exactamente qué tipo de luz o sombra necesita tu obra para brillar.\n\n**Usuario:** Pues los conozco un poco, quiero clientes que tengan claro lo que quieren.\n\nComprendo, Pedro. Conoces a tus clientes \"un poco\" y deseas que tengan \"claro lo que quieren\". Eso es una señal importante, porque la claridad en el cliente a menudo refleja la claridad en la oferta. ¡Ahí hay una gran oportunidad para afinar el enfoque! Es como si tuvieras un lienzo, pero aún puedes definir mejor el rostro de quien lo va a admirar.\n\nAhora, hablemos de la experiencia que tus clientes viven al interactuar con Fluo. Esto nos ayuda a ver tu obra desde su perspectiva:\n\n**¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?** ¿Es fluida, escaótica, personalizada? Dime lo que te venga a la mente.\n\n**Usuario:** Es personalizada, cada cliente requiere algo en particular para su empresa.\n\nExcelente, Pedro. Que la experiencia sea \"personalizada\" es una fortaleza enorme, especialmente en el ámbito de las automatizaciones, donde cada empresa tiene necesidades únicas. Esto nos dice que Fluo ya está creando un vínculo cercano y adaptado con sus clientes, lo cual es muy valioso. Es como tener un artista que pinta un retrato único para cada persona, ¡eso genera una conexión muy especial!\n\nAhora, hablemos de la visibilidad de esa obra maestra que estás construyendo. Para que más personas puedan apreciarla, es vital que sea encontrada.\n\n**¿Qué tan visible eres a nivel digital?** ¿Sientes que Fluo está llegando a las personas correctas?\n\n**Usuario:** Un poco, necesito arreglar mi landing y hacer más trabajo de publicidad.\n\nGracias, Pedro. \"Un poco\", y la necesidad de \"arreglar tu landing y hacer más trabajo de publicidad\"... ¡es una respuesta muy honesta y reveladora! Entiendo perfectamente. Esto nos muestra una oportunidad clara y definida para amplificar el alcance de Fluo y asegurarte de que tu mensaje llegue a quienes más lo necesitan. Es como tener una galería de arte con una obra increíble, pero que aún necesita una mejor iluminación y señalización para que todos la descubran.\n\nHemos cubierto puntos clave de tu realidad actual. Ahora, vamos a la etapa final, la de \"Reinterpretar\", donde proyectamos el futuro y sentamos las bases para la acción. Como un arquitecto que visualiza el edificio terminado.\n\nPara empezar a construir esa visión, dime:\n\n**¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?** ¿Más clientes, más reconocimiento, optimizar procesos internos?\n\n**Usuario:** Quiero vender más.\n\n¡Directo y al grano, Pedro! \"Quiero vender más\" es un objetivo claro y fundamental, la meta principal para cualquier negocio que busca crecer. Entiendo perfectamente esa visión, y es precisamente lo que buscamos potenciar con este diagnóstico. Es como tener claro el destino final en tu mapa.\n\nAhora, para alcanzar ese destino, hablemos de los recursos que tienes a mano. Como un constructor que revisa sus materiales disponibles antes de iniciar la obra.\n\n**¿Cuáles son los recursos existentes con los que cuentas actualmente para mejorar tu presencia digital y vender más?** Pueden ser herramientas, equipo, conocimientos, tiempo específico, etc.\n\n**Usuario:** herramientas y equipo,\n\nPerfecto, Pedro. Contar con \"herramientas y equipo\" es una base muy sólida para empezar a construir. Es como ya tener los cimientos y parte de la estructura para tu nueva estrategia digital. Esto nos da un punto de partida excelente para optimizar lo que ya tienes y complementarlo con lo que sea necesario.\n\nHemos llegado al último punto de nuestro recorrido juntos, la pregunta que nos permite visualizar el éxito de todo este proceso. Como el artista que ve su obra terminada y siente la satisfacción del logro.\n\n**Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?** ¿Qué impacto concreto te gustaría ver?\n\n**Usuario:** uff poder irme a las Bahamas sin preocuparme del negocio, y que todo fluya como si nada,\n\n¡Uff, Pedro, esa es una visión de éxito tan clara como inspiradora! \"Poder irme a las Bahamas sin preocuparme del negocio, y que todo fluya como si nada\"... ¡Eso es libertad, tranquilidad y el sueño de muchos emprendedores! Es el retrato de una operación optimizada, donde Fluo funciona de manera autónoma y eficiente, permitiéndote disfrutar de los frutos de tu trabajo. ¡Me encanta esa meta!\n\nHemos recorrido un camino increíble, Pedro. Hemos pintado la esencia de Fluo, descompuesto los desafíos y reinterpretado tu visión de futuro. Toda esta valiosa información que me has compartido es el material perfecto para crear algo realmente transformador para ti.\n\nAhora, con todos estos detalles, Vanguardistas generará un **Informe de Diagnóstico Profesional** exclusivo para Fluo. Este informe será como un mapa detallado, con un mini plan de acción personalizado que te mostrará los pasos clave para alcanzar esa visión de libertad y fluidez.\n\nPara asegurarme de que recibas este informe directamente, ¿podrías confirmar que el correo al que debo enviarlo es **pro.pedro0413@gmail.com**?\n\n**Usuario:** Si el correo está bien.,"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-08-20T22:21:29.039Z",
+  "versionId": "9da9a696-81e6-4dcd-8714-7e12265f6678"
+}
