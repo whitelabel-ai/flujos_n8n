@@ -456,17 +456,6 @@
         ]
       ]
     },
-    "register_transaction": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "query_transactions": {
       "ai_tool": [
         [
@@ -728,6 +717,17 @@
       ]
     },
     "updated_user_subscriptions": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "register_transaction": {
       "ai_tool": [
         [
           {
@@ -1109,124 +1109,6 @@
           "name": "Redis account"
         }
       }
-    },
-    {
-      "parameters": {
-        "description": "Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.",
-        "workflowId": {
-          "__rl": true,
-          "value": "weeCmqNEWWuk43WW",
-          "mode": "list",
-          "cachedResultName": "register_transaction"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "fecha_transaccion": "={{ $fromAI('fecha_transaccion', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}",
-            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
-            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
-            "tipo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo', ``, 'string') }}",
-            "categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('categoria', ``, 'string') }}",
-            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}",
-            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', `id del usuario`, 'string') }}",
-            "CategoryId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CategoryId', `id de la categoria, obtenido en la tool 'get_user_categories'`, 'string') }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "fecha_transaccion",
-              "displayName": "fecha_transaccion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "monto",
-              "displayName": "monto",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "moneda",
-              "displayName": "moneda",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "tipo",
-              "displayName": "tipo",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "CategoryId",
-              "displayName": "CategoryId",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "categoria",
-              "displayName": "categoria",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "descripcion",
-              "displayName": "descripcion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        3392,
-        -272
-      ],
-      "id": "98f8b35b-de97-4778-abbf-cc07210548a6",
-      "name": "register_transaction"
     },
     {
       "parameters": {
@@ -3280,6 +3162,159 @@
       ],
       "id": "a0824499-c1ee-4c3b-a73e-6f06ac5862f1",
       "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "transacciones",
+          "mode": "list",
+          "cachedResultName": "transacciones"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
+            "id_categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_categoria', `id de la categoria, obtenido en la tool 'get_user_categories'`, 'number') }}",
+            "id_fuente": 1,
+            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}",
+            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
+            "tipo": "={{ $fromAI('tipo', `Gasto o Ingreso`, 'string') }}",
+            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
+            "fecha_transaccion": "={{ $fromAI('fecha_transaccion', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "descripcion",
+              "displayName": "descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "monto",
+              "displayName": "monto",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "moneda",
+              "displayName": "moneda",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "Gasto",
+                  "value": "Gasto"
+                },
+                {
+                  "name": "Ingreso",
+                  "value": "Ingreso"
+                }
+              ]
+            },
+            {
+              "id": "fecha_transaccion",
+              "displayName": "fecha_transaccion",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fecha_creacion",
+              "displayName": "fecha_creacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_usuario",
+              "displayName": "id_usuario",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_categoria",
+              "displayName": "id_categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_fuente",
+              "displayName": "id_fuente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3408,
+        -272
+      ],
+      "id": "bafa1f13-fecf-48d5-85b0-783c4ab6eb41",
+      "name": "register_transaction",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
     }
   ],
   "pinData": {
@@ -3293,7 +3328,7 @@
           "contacts": [
             {
               "profile": {
-                "name": "Oscar"
+                "name": "OSCAR"
               },
               "wa_id": "573208397300"
             }
@@ -3301,12 +3336,15 @@
           "messages": [
             {
               "from": "573208397300",
-              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0E5NEJFNTc4NzY0NUFFOUU3QzEA",
-              "timestamp": "1755550117",
-              "text": {
-                "body": "Que registraras ?"
-              },
-              "type": "text"
+              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0E4QjBGODlDRjhBQThDREZCMTIA",
+              "timestamp": "1755642696",
+              "type": "audio",
+              "audio": {
+                "mime_type": "audio/ogg; codecs=opus",
+                "sha256": "QM6EjfDexquqW8yF98xiw4W0qRnN7m5wAO/gx52tWGk=",
+                "id": "1171130495046818",
+                "voice": true
+              }
             }
           ],
           "field": "messages",
@@ -3335,6 +3373,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-18T20:57:44.539Z",
-  "versionId": "7766cb1b-b036-4879-816b-20754752f422"
+  "updatedAt": "2025-08-19T22:42:42.792Z",
+  "versionId": "2c6537a9-716f-4ff6-b2fd-2172a1b4e442"
 }
