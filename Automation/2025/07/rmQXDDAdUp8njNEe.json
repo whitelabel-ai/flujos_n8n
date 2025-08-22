@@ -915,8 +915,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        384,
-        -224
+        416,
+        -192
       ],
       "id": "182c32c0-5874-435b-ac92-17af6c16ba04",
       "name": "crear UUI postgres",
@@ -957,7 +957,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "WITH datos_usuario AS (\n  SELECT \n    id,\n    numero_whatsapp\n  FROM usuarios\n  WHERE id = '5112139f-13f8-4ec9-ba00-9c02ea774c5a'\n),\nborrado AS (\n  -- 1️⃣ Borrar logs de anuncios\n  DELETE FROM logs_vistas_anuncios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_recordatorios AS (\n  DELETE FROM recordatorios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_metas AS (\n  DELETE FROM metas_ahorro \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_usuario AS (\n  DELETE FROM suscripciones_usuario \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_mony AS (\n  DELETE FROM suscripciones_mony \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_transacciones AS (\n  DELETE FROM transacciones \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_categorias AS (\n  DELETE FROM categorias \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_usuario AS (\n  DELETE FROM usuarios \n  WHERE id = (SELECT id FROM datos_usuario)\n)\nSELECT \n  true AS success,\n  id,\n  numero_whatsapp\nFROM datos_usuario;\n",
+        "query": "WITH datos_usuario AS (\n  SELECT \n    id,\n    numero_whatsapp\n  FROM usuarios\n  WHERE id = '814ef7a9-3dc6-466b-ba65-7914f00d34ae'\n),\nborrado AS (\n  -- 1️⃣ Borrar logs de anuncios\n  DELETE FROM logs_vistas_anuncios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_recordatorios AS (\n  DELETE FROM recordatorios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_metas AS (\n  DELETE FROM metas_ahorro \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_usuario AS (\n  DELETE FROM suscripciones_usuario \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_mony AS (\n  DELETE FROM suscripciones_mony \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_transacciones AS (\n  DELETE FROM transacciones \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_categorias AS (\n  DELETE FROM categorias \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_usuario AS (\n  DELETE FROM usuarios \n  WHERE id = (SELECT id FROM datos_usuario)\n)\nSELECT \n  true AS success,\n  id,\n  numero_whatsapp\nFROM datos_usuario;\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -1269,6 +1269,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-15T23:01:03.287Z",
-  "versionId": "835e5a8f-f9a7-47ed-905e-ced46d7492ad"
+  "updatedAt": "2025-08-22T13:30:33.326Z",
+  "versionId": "2eca76de-c699-4ba0-8ad8-68e3514bbf5d"
 }
