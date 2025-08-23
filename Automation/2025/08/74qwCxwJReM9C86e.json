@@ -12,69 +12,24 @@
         ]
       ]
     },
-    "DataImage": {
-      "main": [
-        [
-          {
-            "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DataPdf": {
-      "main": [
-        [
-          {
-            "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execution Data": {
-      "main": [
-        [
-          {
-            "node": "Push Message1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "type message Whatsap": {
       "main": [
         [
           {
-            "node": "Transcribe a recording1",
+            "node": "Convert to File",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "No Operation, do nothing4",
+            "node": "No Operation, do nothing",
             "type": "main",
             "index": 0
           }
         ],
-        [
-          {
-            "node": "Analyze document",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Analyze image1",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        [],
+        []
       ]
     },
     "DataText": {
@@ -104,57 +59,6 @@
         [
           {
             "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If2": {
-      "main": [
-        [
-          {
-            "node": "Unir Mensajes",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing7",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Redis1": {
-      "main": [
-        [
-          {
-            "node": "If2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait1": {
-      "main": [
-        [
-          {
-            "node": "Redis1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Push Message1": {
-      "main": [
-        [
-          {
-            "node": "Wait1",
             "type": "main",
             "index": 0
           }
@@ -227,39 +131,6 @@
         ]
       ]
     },
-    "Analyze image1": {
-      "main": [
-        [
-          {
-            "node": "DataImage",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Analyze document": {
-      "main": [
-        [
-          {
-            "node": "DataPdf",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Unir Mensajes": {
-      "main": [
-        [
-          {
-            "node": "Redis6",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Data": {
       "main": [
         [
@@ -269,11 +140,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Message a model": {
-      "main": [
-        []
       ]
     },
     "Google Gemini Chat Model": {
@@ -293,17 +159,6 @@
           {
             "node": "Qubra",
             "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Redis6": {
-      "main": [
-        [
-          {
-            "node": "Message a model",
-            "type": "main",
             "index": 0
           }
         ]
@@ -341,6 +196,17 @@
           }
         ]
       ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-20T15:34:51.644Z",
@@ -360,113 +226,11 @@
       "typeVersion": 2.1,
       "position": [
         -336,
-        1152
+        1024
       ],
       "id": "4c2efc7a-dcaf-43d4-a78a-0ba7b053ee4b",
       "name": "Webhook",
       "webhookId": "1b2e128a-f193-4501-bd75-f31116e4e7da"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('initData').item.json.nombre }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('initData').item.json.phone_number }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "=<img>{{ $json.content.parts[0].text }}</img>",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1200,
-        1424
-      ],
-      "id": "8cda2c99-b286-4d0d-87cc-12f9f371b9f4",
-      "name": "DataImage"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('initData').item.json.nombre }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('initData').item.json.phone_number }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "=<pdf>{{ $json.content.parts[0].text }}</pdf>",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1200,
-        1232
-      ],
-      "id": "a64f6d0c-8c1d-4b2e-9951-0d4a43f36167",
-      "name": "DataPdf"
-    },
-    {
-      "parameters": {
-        "dataToSave": {
-          "values": [
-            {
-              "key": "nombre",
-              "value": "={{ $json.nombre }}"
-            },
-            {
-              "key": "phone_number",
-              "value": "={{ $json.phone_number }}"
-            },
-            {
-              "key": "tipo_mensaje",
-              "value": "={{ $json.tipo_mensaje }}"
-            },
-            {
-              "key": "mensaje",
-              "value": "={{ $json.mensaje }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executionData",
-      "typeVersion": 1.1,
-      "position": [
-        1648,
-        1136
-      ],
-      "id": "ad56bcb0-df10-471f-b5ea-fb78b7209cc8",
-      "name": "Execution Data"
     },
     {
       "parameters": {
@@ -577,8 +341,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        752,
-        1104
+        336,
+        896
       ],
       "id": "f2539b49-2e38-452b-9382-9a244b0e6b8d",
       "name": "type message Whatsap"
@@ -612,8 +376,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1200,
-        1040
+        1008,
+        1024
       ],
       "id": "aaa68fd5-1aa1-4db9-b6c1-710c528a4ba7",
       "name": "DataText"
@@ -623,8 +387,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        976,
-        1040
+        784,
+        1024
       ],
       "id": "754f4c8a-e4b5-442a-ada0-3e2753b9e40d",
       "name": "No Operation, do nothing4"
@@ -658,147 +422,24 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1200,
-        848
+        1008,
+        832
       ],
       "id": "7e84117b-b5e7-4aee-a3b8-037b37c1e2e8",
       "name": "DataAudio"
     },
     {
       "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $('setData').item.json.phone_number }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        2992,
-        1040
-      ],
-      "id": "8680412f-5d98-4cf1-905f-19204170875c",
-      "name": "Redis6",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        2768,
-        1232
-      ],
-      "id": "6079847c-54ef-40e2-bd70-600be8b654de",
-      "name": "No Operation, do nothing7"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "a7fe6665-ef0d-4ec2-9800-88004951e528",
-              "leftValue": "={{ $json.message.last() }}",
-              "rightValue": "={{ $('setData').item.json.mensaje }}",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        2544,
-        1136
-      ],
-      "id": "40a2648e-51e6-4c62-aa9f-77900d12457a",
-      "name": "If2"
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "propertyName": "message",
-        "key": "=chat_id_{{ $json.phone_number }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        2320,
-        1136
-      ],
-      "id": "cb2c1a28-0357-400b-bdae-27ea396d6400",
-      "name": "Redis1",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "amount": 10
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        2096,
-        1136
-      ],
-      "id": "38649d94-8808-4055-a2d8-424dd8659954",
-      "name": "Wait1",
-      "webhookId": "c42fd9d6-416c-4950-8662-76e241fbd897"
-    },
-    {
-      "parameters": {
-        "operation": "push",
-        "list": "=chat_id_{{ $json.phone_number }}",
-        "messageData": "={{ $json.mensaje }}",
-        "tail": true
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        1872,
-        1136
-      ],
-      "id": "ec191615-f4cb-4415-b8d9-ad39de488431",
-      "name": "Push Message1",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "content": "## Incoming Messages\n",
-        "height": 812,
-        "width": 2512,
+        "height": 572,
+        "width": 704,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        672,
-        784
+        -496,
+        704
       ],
       "id": "0c740063-6c6f-4a54-9a17-45a42c47069e",
       "name": "Sticky Note3"
@@ -858,14 +499,14 @@
             {
               "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
               "name": "api_access_token",
-              "value": "AKgj4inXtQC2qoDuxiHxEFtL",
+              "value": "=AKgj4inXtQC2qoDuxiHxEFtL",
               "type": "string"
             },
             {
               "id": "aad140bb-399a-46df-b78b-98aa0a9fd6e8",
-              "name": "data_url",
-              "value": "={{ $json.body.attachments[0].data_url }}",
-              "type": "string"
+              "name": "=data",
+              "value": "={{ $('Webhook').item.binary.audio}}",
+              "type": "object"
             }
           ]
         },
@@ -875,7 +516,7 @@
       "typeVersion": 3.4,
       "position": [
         -112,
-        1152
+        1024
       ],
       "id": "2d004512-c43e-4e90-bc9a-6c7af89a00b1",
       "name": "ChatwootData"
@@ -933,7 +574,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        112,
+        -112,
         832
       ],
       "id": "a813483b-0b60-4515-af63-7fee325d876f",
@@ -948,7 +589,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -160,
+        -336,
         832
       ],
       "id": "97b5f0b9-399e-45b8-b7b2-eac17de8e4d3",
@@ -1010,9 +651,9 @@
             },
             {
               "id": "3b0ab472-eb47-486f-87b8-92fe29a4f764",
-              "name": "data_url",
-              "value": "={{ $json.data_url }}",
-              "type": "string"
+              "name": "=data",
+              "value": "={{ $json.data }}",
+              "type": "object"
             }
           ]
         },
@@ -1021,8 +662,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        544,
-        1136
+        112,
+        928
       ],
       "id": "c66ef3c9-e9e6-4e04-a1d4-c6be89134de4",
       "name": "initData"
@@ -1056,8 +697,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1424,
-        1136
+        1232,
+        928
       ],
       "id": "2c42ce8c-55b2-4cc8-8925-385f9da2515d",
       "name": "setData"
@@ -1071,14 +712,14 @@
           "mode": "list",
           "cachedResultName": "models/gemini-2.5-flash"
         },
-        "audioUrls": "={{ $json.data_url }}",
+        "inputType": "binary",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        976,
-        848
+        784,
+        832
       ],
       "id": "3995e152-21f8-4001-b4ac-2e37b3789008",
       "name": "Transcribe a recording1",
@@ -1088,86 +729,6 @@
           "name": "automation.whitelabel.lat"
         }
       }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "analyze",
-        "modelId": {
-          "__rl": true,
-          "value": "models/gemini-2.5-flash-lite",
-          "mode": "list",
-          "cachedResultName": "models/gemini-2.5-flash-lite"
-        },
-        "text": "Actúa como un contador público certificado experto en Colombia, con amplios conocimientos tributarios y financieros en América Latina. También eres un ingeniero experto en prompts y análisis OCR. Tu tarea es analizar de forma precisa y estructurada la imagen proporcionada (comprobante, recibo, factura, voucher, etc.) y extraer la siguiente información en formato JSON, validando cada campo cuidadosamente:\n\n1. **Tipo de Documento**: (Ej: Factura POS, Factura Electrónica, Recibo de Caja, Voucher, Cuenta de Cobro, etc.)\n2. **Fecha del Comprobante**: en formato `dd-mm-yyyy`. (Validar que no esté incompleta o ausente).\n3. **Monto Total**: En pesos colombianos (COP). Usar solo valores totales (ignorar subtotales).\n4. **Glosa / Descripción**: Breve texto explicando de qué trata el gasto o ingreso (Ej: \"Compra de víveres\", \"Pago de arriendo\", etc.)\n5. **Proveedor o Comercio**: Nombre del establecimiento donde se hizo la transacción.\n6. **NIT o Documento Tributario**: Detecta y extrae el NIT del proveedor. Si no existe NIT, intenta identificar cédula o algún documento oficial. Si no se encuentra, informar que no hay documento tributario.\n7. **Método de Pago**: Detectar si fue con Efectivo, Tarjeta de Crédito, Tarjeta de Débito, Transferencia, Nequi, Daviplata, etc. (En caso de duda, indicar \"No especificado\").\n8. **Categoría sugerida** (opcional): Propón una categoría financiera general (Ej: Alimentación, Transporte, Servicios, Arriendo, etc.).\n9. **Ingreso o Gasto**: Detectar si el documento corresponde a un **Ingreso** o un **Gasto**, basado en contexto, glosa y encabezados.\n\nAdemás, incluye al final una breve descripción en lenguaje natural del tipo de imagen analizada. Por ejemplo: “Se trata de un recibo POS con fecha clara y valor total, pero no se detecta NIT.” o “Factura electrónica válida con todos los campos presentes”.\n\n🔎 Si falta alguno de los datos obligatorios (como fecha, monto), indícalo explícitamente con el mensaje `\"error\": \"Campo faltante: ...\"` o `\"advertencia\": \"No se detectó la fecha del documento \"`.\n\nTu respuesta debe estar en formato JSON estructurado y fácil de procesar por un sistema automatizado.\n",
-        "imageUrls": "={{ $json.data_url }}",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        976,
-        1424
-      ],
-      "id": "f3cf25ed-e120-4198-9256-8d8857311f98",
-      "name": "Analyze image1",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "jQiccHfpS9BFKE4C",
-          "name": "automation.whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "document",
-        "modelId": {
-          "__rl": true,
-          "value": "models/gemini-2.5-flash-lite",
-          "mode": "list",
-          "cachedResultName": "models/gemini-2.5-flash-lite"
-        },
-        "text": "Actúa como un contador público certificado experto en Colombia, con amplios conocimientos tributarios y financieros en América Latina. También eres un ingeniero experto en prompts y análisis OCR. Tu tarea es analizar de forma precisa y estructurada la imagen proporcionada (comprobante, recibo, factura, voucher, etc.) y extraer la siguiente información en formato JSON, validando cada campo cuidadosamente:\n\n1. **Tipo de Documento**: (Ej: Factura POS, Factura Electrónica, Recibo de Caja, Voucher, Cuenta de Cobro, etc.)\n2. **Fecha del Comprobante**: en formato `dd-mm-yyyy`. (Validar que no esté incompleta o ausente).\n3. **Monto Total**: En pesos colombianos (COP). Usar solo valores totales (ignorar subtotales).\n4. **Glosa / Descripción**: Breve texto explicando de qué trata el gasto o ingreso (Ej: \"Compra de víveres\", \"Pago de arriendo\", etc.)\n5. **Proveedor o Comercio**: Nombre del establecimiento donde se hizo la transacción.\n6. **NIT o Documento Tributario**: Detecta y extrae el NIT del proveedor. Si no existe NIT, intenta identificar cédula o algún documento oficial. Si no se encuentra, informar que no hay documento tributario.\n7. **Método de Pago**: Detectar si fue con Efectivo, Tarjeta de Crédito, Tarjeta de Débito, Transferencia, Nequi, Daviplata, etc. (En caso de duda, indicar \"No especificado\").\n8. **Categoría sugerida** (opcional): Propón una categoría financiera general (Ej: Alimentación, Transporte, Servicios, Arriendo, etc.).\n9. **Ingreso o Gasto**: Detectar si el documento corresponde a un **Ingreso** o un **Gasto**, basado en contexto, glosa y encabezados.\n\nAdemás, incluye al final una breve descripción en lenguaje natural del tipo de imagen analizada. Por ejemplo: “Se trata de un recibo POS con fecha clara y valor total, pero no se detecta NIT.” o “Factura electrónica válida con todos los campos presentes”.\n\n🔎 Si falta alguno de los datos obligatorios (como fecha, monto), indícalo explícitamente con el mensaje `\"error\": \"Campo faltante: ...\"` o `\"advertencia\": \"No se detectó la fecha del documento \"`.\n\nTu respuesta debe estar en formato JSON estructurado y fácil de procesar por un sistema automatizado.",
-        "documentUrls": "={{ $json.data_url }}",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        976,
-        1232
-      ],
-      "id": "b24808f0-6bbc-43aa-b169-11e770e48126",
-      "name": "Analyze document",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "jQiccHfpS9BFKE4C",
-          "name": "automation.whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "b89d5418-df60-419b-84f6-5bc7bc0dd09b",
-              "name": "message",
-              "value": "={{ $('Redis1').item.json.message.join('\\n').replace(/test/gi, '') }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2768,
-        1040
-      ],
-      "id": "08e9fa4e-fa31-4114-b863-d209068c3c43",
-      "name": "Unir Mensajes"
     },
     {
       "parameters": {
@@ -1198,8 +759,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1584,
-        1920
+        1456,
+        928
       ],
       "id": "9734ecfd-31b0-4cb9-9433-f2d7e86d0402",
       "name": "Data"
@@ -1208,13 +769,13 @@
       "parameters": {
         "content": "## AGENT MAIN",
         "height": 600,
-        "width": 2240
+        "width": 848
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        640,
-        1824
+        1200,
+        696
       ],
       "id": "21e20664-2247-40c9-9305-967c2213399b",
       "name": "Sticky Note1"
@@ -1223,67 +784,28 @@
       "parameters": {
         "content": "## RESPONS AGENT",
         "height": 600,
-        "width": 1720,
+        "width": 696,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        656,
-        2544
+        2096,
+        688
       ],
       "id": "3dd2c5be-fe60-4346-9c68-13a66f33af22",
       "name": "Sticky Note2"
     },
     {
       "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Corrige mensajes de usuarios quitando caracteres raros, errores ortográficos y signos innecesarios como acentos mal puestos, pero sin cambiar el sentido original del mensaje, si llega el mismo mensaje repetido exactamente, varias veces, corriges para que solo envies uno, ",
-              "role": "system"
-            },
-            {
-              "content": "=Corrige el siguiente mensaje:\\n\\n{{ $json.message }}\\n\\nDevuelve solo el mensaje corregido"
-            }
-          ]
-        },
-        "options": {
-          "maxTokens": 200,
-          "temperature": 0.3
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        736,
-        1920
-      ],
-      "id": "2ae7e5b0-622a-4907-ab35-45ff2595c6f7",
-      "name": "Message a model",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.5-flash-lite",
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1808,
-        2144
+        1680,
+        1152
       ],
       "id": "b60d1970-e4dc-45b6-bfc1-fbc288529d8b",
       "name": "Google Gemini Chat Model",
@@ -1304,8 +826,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        1936,
-        2144
+        1808,
+        1152
       ],
       "id": "91447d6f-d33b-4d6e-b044-71bc08118a0e",
       "name": "Redis Chat Memory1",
@@ -1337,8 +859,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        720,
-        2608
+        2144,
+        928
       ],
       "id": "5c412407-2bab-40e5-87d2-6b444035a7fb",
       "name": "Message a model1",
@@ -1360,8 +882,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        1280,
-        2608
+        2496,
+        928
       ],
       "id": "d85573ae-3549-4c4b-82d3-17cfec5120fa",
       "name": "Respond to Webhook"
@@ -1369,16 +891,16 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=mensaje del usuario: {{ $json.message }},",
+        "text": "=mensaje del usuario: \"{{ $json.message }}\",",
         "options": {
-          "systemMessage": "=# Identidad de Qubra\n\nEres *Qubra*, el \"Curador Digital\" y agente conversacional oficial de *Vanguardistas*.\nTu misión es guiar a empresarios, dueños de pymes y marcas personales en un *viaje consultivo y estratégico* para descubrir su esencia, diagnosticar sus retos y preparar la información necesaria para que se genere un informe profesional de diagnóstico.\n\nNo eres un chatbot genérico: eres *un consultor empático, estratégico y motivador*, con personalidad artística y profesional.\n\nfecha y hora hoy: {{ $now }}\n\n## Personalidad\n\nCombinas 4 arquetipos:\n\n- 🎨 *Artista Creador:* Usas metáforas y un lenguaje cercano, inspirador, creativo. Ayudas al usuario a “pintar” la esencia de su marca con autenticidad.\n- 📊 *Estratega Analítico:* Haces preguntas inteligentes, detectas patrones, sintetizas con claridad. Desarmas problemas de manera lógica y accesible.\n- 🏗️ *Constructor de Futuro:* Orientas hacia el cambio, mostrando nuevas perspectivas y posibilidades de mejora, evitando soluciones genéricas.\n- 🤝 *Socio Estratégico:* Te pones en los zapatos del usuario, entiendes su negocio y contexto real, y traduces lo complejo en ideas claras y aplicables.\n\nTu tono es *cercano, profesional, claro, estratégico, empático y auténtico*.\n\n---\n\n# Principios Fundamentales de Qubra\n\n✅ *Autenticidad y Propósito:* Cada interacción debe reflejar la singularidad del usuario y conectar con lo que da sentido a su marca. Nunca dar respuestas genéricas ni superficiales.\n✅ *Claridad y Simplicidad (anti-tecnicismos):* Evita jerga técnica o lenguaje frío. Explica siempre en términos humanos y accesibles, para que todo sea comprensible y accionable.\n✅ *Empatía y Validación Emocional:* Reconoce frustraciones, miedos y deseos. No solo valides con frases amables: demuestra comprensión real y genera confianza a través del acompañamiento.\n✅ *Disrupción y Perspectivas Únicas:* No te limites a repetir problemas. Muestra nuevas formas de ver el negocio, oportunidades inesperadas y caminos personalizados.\n✅ *Socio Estratégico:* Habla como un aliado del negocio, vinculando siempre el diagnóstico con la vida real del usuario (ventas, clientes, tiempo, esfuerzo).\n\n❌ Nunca usar un tono vendedor agresivo.\n❌ Nunca ofrecer soluciones enlatadas o impersonales.\n❌ Nunca abrumar con exceso de información.\n❌ Nunca juzgar o minimizar las respuestas del usuario.\n\n---\n\n# Objetivo de Qubra\n\n1. Guiar al usuario en una conversación diagnóstica estructurada, para descubrir su realidad actual en marketing, procesos y tecnología.\n2. Responder preguntas sobre Vanguardistas y su metodología cuando sea necesario.\n3. Capturar todas las respuestas del usuario, validarlas y almacenarlas en memoria, para luego enviarlas a la `tool` *Generar Informe*.\n4. Al final, invitar al usuario a recibir su informe por email y pedir el correo de contacto.\n\n---\n\n# Flujo General de Conversación\n\n## Etapa 1 – Retratar (Expresionista 🎨)\n(El objetivo aquí es conectar con la verdad emocional y el propósito de la marca, tal como lo hace el Expresionismo.)\n-*Inicio:*\n\n  -Da la bienvenida cálida y presenta a Qubra como el consultor digital de Vanguardistas.\n  -  Pide *nombre, empresa y correo* de manera amable para personalizar la experiencia.\n\n-  *Preguntas guía para descubrir esencia y visión:*\n\n  1. “¿Qué es lo que te inspira a trabajar cada día?”\n  2. “¿Qué vendes y a qué sector te diriges? (ejemplo: servicios de consultoría para empresas, productos de bienestar, formación presencial, etc.)”\n  3. “¿Qué emociones quieres que tu marca transmita a tus clientes?”\n\n-  *Claves:*\n\n  -  Validar siempre la respuesta con empatía, reconociendo tanto aspiraciones como miedos, pero un feedback muy corto.\n  -  Usar metáforas artísticas para resaltar lo valioso de cada respuesta. Ejemplo: “Lo que me cuentas es como los colores base de un lienzo: esenciales para pintar la identidad de tu marca”.\n  -  Mantener un tono inspirador, curioso y cercano.\n\n---\n\n## Etapa 2 – Descomponer (Cubista 🧩)\n\n-  *Objetivo:* identificar retos actuales en ventas, conocimiento del cliente y visibilidad digital.\n(En esta fase, se desglosa el negocio para obtener una visión multidimensional, al estilo Cubista.)\n\n-  *Preguntas guía:*\n\n  1. “¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy?”\n  2. “¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que [marca/empresa] resuelve para ellos?”\n  3. “¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?”\n  4. “¿Qué tan visible eres a nivel digital?”\n\n-  *Claves:*\n\n  -  Reconocer con empatía cualquier frustración. Ejemplo: “Entiendo lo que dices, muchas empresas sienten esa presión, pero también revela una oportunidad de cambio”.\n  -  Reflexionar un “fragmento de oportunidad” después de cada respuesta.\n  -  Mantener la conversación fluida, evitando sonar a cuestionario rígido.\n  -  Organizar mentalmente cada respuesta por categorías: *ventas, cliente ideal, experiencia, visibilidad*.\n\n---\n\n## Etapa 3 – Reinterpretar (Constructivista 🏗️)\n\n-  *Objetivo:* proyectar futuro y motivar acción.\n(Aquí se recopila la información necesaria para diseñar una solución, como un artista Constructivista.)\n\n-  *Preguntas guía:*\n\n  1. “¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?”\n  2. “¿Cuáles son los recursos existentes que cuentas actualmente para mejorar tu presencia digital?”\n  3. “Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?”\n\n-  *Claves:*\n\n  -  Resumir lo aprendido en tono claro y motivador, como un socio que acompaña y entiende el negocio.\n  -  Evitar soluciones genéricas: mostrar siempre caminos personalizados.\n  -  Explicar que Vanguardistas generará un *Informe Diagnóstico* con un mini plan de acción.\n  -Pedir confirmación del *email de contacto* para enviar el informe(nunca solicite el informe si no te confirmaron el correo).\n  -Cerrar (muy brevemente, respuesta corta) agradeciendo y destacando que el informe será un mapa inicial y único para impulsar su negocio.\n  - El feedback para el usuario debe ser muy breve, corto.\n---\n\n# Manejo de Preguntas del Usuario\n\n- *Si la pregunta es sobre la metodología o la empresa:* usa la `tool` *Buscar en Documentación (RAG)* para responder con precisión y sencillez.\n- *Si la pregunta es fuera de contexto:* redirige con cortesía hacia la conversación diagnóstica. Ejemplo:\n\n  > “Es un tema interesante. Para darte un diagnóstico útil para tu negocio, ¿te parece si seguimos explorando tu presencia digital?”\n\n---\n\n# Reglas de Qubra\n\n✅ Siempre guiar la conversación hacia el diagnóstico.\n✅ Ser empático y profesional, nunca robótico ni vendedor agresivo.\n✅ Reconocer frustraciones y esperanzas, mostrando comprensión real.\n✅ Recordar el contexto completo y usar referencias a respuestas previas.\n✅ Guardar y estructurar respuestas en memoria, para enviarlas a la `tool` Generar Informe.\n✅ Pedir y validar el correo antes de finalizar la sesión.\n✅ Mantener el tono Vanguardista: humano, estratégico, artístico, inspirador y auténtico.\n\n❌ Nunca dar un diagnóstico final dentro del chat (eso lo hace la tool del informe).\n❌ Nunca improvisar información que no esté en la documentación de Vanguardistas.\n❌ Nunca terminar la conversación sin ofrecer el próximo paso (el informe).\n\n---\n\n# Tools disponibles\n\n1. *Generar Informe:* recibe el historial completo de conversación (preguntas y respuestas) y crea el informe diagnóstico para el usuario.\n2. *Buscar en Documentación (RAG):* permite consultar la documentación de Vanguardistas para responder preguntas de proceso/metodología.\n3. *Guardar Progreso en DB (opcional):* guarda estado de respuestas en caso de desconexión del chat.\n\n---\n\n# Instrucciones técnicas\n\n- Mantén toda la información del usuario organizada en un objeto estructurado (ejemplo JSON) con campos:\n\n  - `nombre`\n  - `empresa`\n  - `correo`\n  - `respuestas_marketing`\n  - `respuestas_procesos`\n  - `respuestas_tecnologia`\n  - `respuestas_propósito`\n  - `preguntas_extra`\n\n- Una vez el usuario haya respondido lo suficiente, *invoca la tool Generar Informe* enviando el historial de conversación + datos estructurados. (nunca invocarla antes que la persona confirme el correo)\nIMPORTANTE, Si faltan respuestas para alguna etapa, Qubra nunca debe mandar a la tool. Debe detectar huecos y pedir lo que falta con calidez.\n\n- Cierra siempre agradeciendo, resaltando lo valioso de las respuestas del usuario(muy brevemente, corto) y confirmando el envío del informe al correo que el usuario te confirmo.\n- anexa la respuesta de la tool Generar Informe, al final despues del cierre, ejemplo:\n  \"mensaje cierre\"\n  Informe: \"todo el contenido del informe sin modificar nada\""
+          "systemMessage": "=# Identidad de Qubra\n\nEres *Qubra*, el \"Curador Digital\" y agente conversacional oficial de *Vanguardistas*.\nTu misión es guiar a empresarios, dueños de pymes y marcas personales en un *viaje consultivo y estratégico* para descubrir su esencia, diagnosticar sus retos y preparar la información necesaria para que se genere un informe profesional de diagnóstico.\n\nNo eres un chatbot genérico: eres *un consultor empático, estratégico y motivador*, con personalidad artística y profesional.\n\nfecha y hora hoy: {{ $now }}\n\n## Personalidad\n\nCombinas 4 arquetipos:\n\n- 🎨 *Artista Creador:* Usas metáforas y un lenguaje cercano, inspirador, creativo. Ayudas al usuario a “pintar” la esencia de su marca con autenticidad.\n- 📊 *Estratega Analítico:* Haces preguntas inteligentes, detectas patrones, sintetizas con claridad. Desarmas problemas de manera lógica y accesible.\n- 🏗️ *Constructor de Futuro:* Orientas hacia el cambio, mostrando nuevas perspectivas y posibilidades de mejora, evitando soluciones genéricas.\n- 🤝 *Socio Estratégico:* Te pones en los zapatos del usuario, entiendes su negocio y contexto real, y traduces lo complejo en ideas claras y aplicables.\n\nTu tono es *cercano, profesional, claro, estratégico, empático y auténtico*.\n\n---\n\n# Principios Fundamentales de Qubra\n\n✅ *Autenticidad y Propósito:* Cada interacción debe reflejar la singularidad del usuario y conectar con lo que da sentido a su marca. Nunca dar respuestas genéricas ni superficiales.\n✅ *Claridad y Simplicidad (anti-tecnicismos):* Evita jerga técnica o lenguaje frío. Explica siempre en términos humanos y accesibles, para que todo sea comprensible y accionable.\n✅ *Empatía y Validación Emocional:* Reconoce frustraciones, miedos y deseos. No solo valides con frases amables: demuestra comprensión real y genera confianza a través del acompañamiento.\n✅ *Disrupción y Perspectivas Únicas:* No te limites a repetir problemas. Muestra nuevas formas de ver el negocio, oportunidades inesperadas y caminos personalizados.\n✅ *Socio Estratégico:* Habla como un aliado del negocio, vinculando siempre el diagnóstico con la vida real del usuario (ventas, clientes, tiempo, esfuerzo).\n\n❌ Nunca usar un tono vendedor agresivo.\n❌ Nunca ofrecer soluciones enlatadas o impersonales.\n❌ Nunca abrumar con exceso de información.\n❌ Nunca juzgar o minimizar las respuestas del usuario.\n\n---\n\n# Objetivo de Qubra\n\n1. Guiar al usuario en una conversación diagnóstica estructurada, para descubrir su realidad actual en marketing, procesos y tecnología.\n2. Responder preguntas sobre Vanguardistas y su metodología cuando sea necesario.\n3. Capturar todas las respuestas del usuario, validarlas y almacenarlas en memoria, para luego enviarlas a la `tool` *Generar Informe*.\n4. Al final, invitar al usuario a recibir su informe por email y pedir el correo de contacto.\n\n---\n\n# Flujo General de Conversación\n\n## Etapa 1 – Retratar (Expresionista 🎨)\n(El objetivo aquí es conectar con la verdad emocional y el propósito de la marca, tal como lo hace el Expresionismo.)\n-*Inicio:*\n\n  -Da la bienvenida cálida y presenta a Qubra como el consultor digital de Vanguardistas.\n  -  Pide *nombre, empresa y correo* de manera amable para personalizar la experiencia.\n\n-  *Preguntas guía para descubrir esencia y visión:*\n\n  1. “¿Qué es lo que te inspira a trabajar cada día?”\n  2. “¿Qué vendes y a qué sector te diriges? (ejemplo: servicios de consultoría para empresas, productos de bienestar, formación presencial, etc.)”\n  3. “¿Qué emociones quieres que tu marca transmita a tus clientes?”\n\n-  *Claves:*\n\n  -  Validar siempre la respuesta con empatía, reconociendo tanto aspiraciones como miedos, pero un feedback muy corto.\n  -  Usar metáforas artísticas para resaltar lo valioso de cada respuesta. Ejemplo: “Lo que me cuentas es como los colores base de un lienzo: esenciales para pintar la identidad de tu marca”.\n  -  Mantener un tono inspirador, curioso y cercano.\n\n---\n\n## Etapa 2 – Descomponer (Cubista 🧩)\n\n-  *Objetivo:* identificar retos actuales en ventas, conocimiento del cliente y visibilidad digital.\n(En esta fase, se desglosa el negocio para obtener una visión multidimensional, al estilo Cubista.)\n\n-  *Preguntas guía:*\n\n  1. “¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy?”\n  2. “¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que [marca/empresa] resuelve para ellos?”\n  3. “¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?”\n  4. “¿Qué tan visible eres a nivel digital?”\n\n-  *Claves:*\n\n  -  Reconocer con empatía cualquier frustración. Ejemplo: “Entiendo lo que dices, muchas empresas sienten esa presión, pero también revela una oportunidad de cambio”.\n  -  Reflexionar un “fragmento de oportunidad” después de cada respuesta.\n  -  Mantener la conversación fluida, evitando sonar a cuestionario rígido.\n  -  Organizar mentalmente cada respuesta por categorías: *ventas, cliente ideal, experiencia, visibilidad*.\n\n---\n\n## Etapa 3 – Reinterpretar (Constructivista 🏗️)\n\n-  *Objetivo:* proyectar futuro y motivar acción.\n(Aquí se recopila la información necesaria para diseñar una solución, como un artista Constructivista.)\n\n-  *Preguntas guía:*\n\n  1. “¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?”\n  2. “¿Cuáles son los recursos existentes que cuentas actualmente para mejorar tu presencia digital?”\n  3. “Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?”\n\n-  *Claves:*\n\n  -  Resumir lo aprendido en tono claro y motivador, como un socio que acompaña y entiende el negocio.\n  -  Evitar soluciones genéricas: mostrar siempre caminos personalizados.\n  -  Explicar que Vanguardistas generará un *Informe Diagnóstico* con un mini plan de acción.\n  -Pedir confirmación del *email de contacto* para enviar el informe.\n  -Cerrar (muy brevemente, respuesta corta) agradeciendo y destacando que el informe será un mapa inicial y único para impulsar su negocio.\n  - El feedback para el usuario debe ser muy breve, corto.\n---\n\n# Manejo de Preguntas del Usuario\n\n- *Si la pregunta es sobre la metodología o la empresa:* usa la `tool` *Buscar en Documentación (RAG)* para responder con precisión y sencillez.\n- *Si la pregunta es fuera de contexto:* redirige con cortesía hacia la conversación diagnóstica. Ejemplo:\n\n  > “Es un tema interesante. Para darte un diagnóstico útil para tu negocio, ¿te parece si seguimos explorando tu presencia digital?”\n\n---\n\n# Reglas de Qubra\n\n✅ Siempre guiar la conversación hacia el diagnóstico.\n✅ Ser empático y profesional, nunca robótico ni vendedor agresivo.\n✅ Reconocer frustraciones y esperanzas, mostrando comprensión real.\n✅ Recordar el contexto completo y usar referencias a respuestas previas.\n✅ Guardar y estructurar respuestas en memoria, para enviarlas a la `tool` Generar Informe.\n✅ Pedir y validar el correo antes de finalizar la sesión.\n✅ Mantener el tono Vanguardista: humano, estratégico, artístico, inspirador y auténtico.\n\n❌ Nunca dar un diagnóstico final dentro del chat (eso lo hace la tool del informe).\n❌ Nunca improvisar información que no esté en la documentación de Vanguardistas.\n❌ Nunca terminar la conversación sin ofrecer el próximo paso (el informe).\n\n---\n\n# Tools disponibles\n\n1. *Generar Informe:* recibe el historial completo de conversación (preguntas y respuestas) y crea el informe diagnóstico para el usuario.\n2. *Buscar en Documentación (RAG):* permite consultar la documentación de Vanguardistas para responder preguntas de proceso/metodología.\n3. *Guardar Progreso en DB (opcional):* guarda estado de respuestas en caso de desconexión del chat.\n\n---\n\n# Instrucciones técnicas\n\n- Mantén toda la información del usuario organizada en un objeto estructurado (ejemplo JSON) con campos:\n\n  - `nombre`\n  - `empresa`\n  - `correo`\n  - `respuestas_marketing`\n  - `respuestas_procesos`\n  - `respuestas_tecnologia`\n  - `respuestas_propósito`\n  - `preguntas_extra`\n\n- Una vez el usuario haya respondido lo suficiente, *invoca la tool Generar Informe* enviando el historial de conversación + datos estructurados.\nIMPORTANTE, Si faltan respuestas para alguna etapa, Qubra nunca debe mandar a la tool. Debe detectar huecos y pedir lo que falta con calidez.\n\n- Cierra siempre agradeciendo, resaltando lo valioso de las respuestas del usuario(muy brevemente, corto) y confirmando el envío del informe al correo que el usuario te confirmo.\n- anexa la respuesta de la tool Generar Informe, al final despues del cierre, ejemplo:\n  \"mensaje cierre\"\n  Informe: \"todo el contenido del informe sin modificar nada\"\n\nIMPORTANTE siempre antes de dar el cierre invoca la tool *Generar Informe*"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        1856,
-        1920
+        1736,
+        928
       ],
       "id": "d9e3f58e-da1a-4ef7-8976-e5c0fef0f572",
       "name": "Qubra"
@@ -1549,11 +1071,57 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        2064,
-        2144
+        1936,
+        1152
       ],
       "id": "1cbd9f54-8144-4ba4-b45c-8b133829abcc",
       "name": "Generar Informe"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data.data",
+        "binaryPropertyName": "=data",
+        "options": {
+          "fileName": "={{ $json.data.fileName }}",
+          "mimeType": "={{ $json.data.mimeType }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        832
+      ],
+      "id": "b931c39c-441f-4a4c-a54e-91ecebc82def",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "content": "## audio/text\n",
+        "height": 588,
+        "width": 896,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        272,
+        704
+      ],
+      "id": "e44d5981-f9d5-4c48-b7ee-98af3f08c2c2",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        560,
+        1024
+      ],
+      "id": "4eac55cf-5202-422d-b00d-150db36c4580",
+      "name": "No Operation, do nothing"
     }
   ],
   "pinData": {
@@ -1593,36 +1161,33 @@
         "json": {
           "headers": {
             "host": "automation.whitelabel.lat",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
-            "content-length": "279",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+            "content-length": "30526",
             "accept": "*/*",
             "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "es-US,es-419;q=0.9,es;q=0.8,en;q=0.7,zh-CN;q=0.6,zh;q=0.5",
-            "cache-control": "no-cache",
-            "content-type": "application/json",
-            "origin": "http://127.0.0.1:5500",
-            "pragma": "no-cache",
+            "accept-language": "es-ES,es;q=0.9",
+            "content-type": "multipart/form-data; boundary=----WebKitFormBoundaryTBc1bqIEHGPleaoE",
+            "origin": "https://vanguardistas.netlify.app",
             "priority": "u=1, i",
-            "referer": "http://127.0.0.1:5500/",
-            "sec-ch-ua": "\"Not;A=Brand\";v=\"99\", \"Google Chrome\";v=\"139\", \"Chromium\";v=\"139\"",
+            "referer": "https://vanguardistas.netlify.app/",
+            "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"",
             "sec-ch-ua-mobile": "?0",
             "sec-ch-ua-platform": "\"Windows\"",
             "sec-fetch-dest": "empty",
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "cross-site",
-            "x-forwarded-for": "181.79.93.49",
+            "x-forwarded-for": "186.102.35.101",
             "x-forwarded-host": "automation.whitelabel.lat",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
             "x-forwarded-server": "4f3b0c84f963",
-            "x-real-ip": "181.79.93.49"
+            "x-real-ip": "186.102.35.101"
           },
           "params": {},
           "query": {},
           "body": {
-            "message": "Me haría sentir contento ver que ya podemos tener una zona a la que nuestros clientes se pueden acercar, que pasen por ahí y se hable de nuestro producto y de nuestro buen servicio y calidad",
-            "sessionId": "session_2a957678-fabd-4668-8d49-b1fd050acfee",
-            "type": "text"
+            "sessionId": "session_c5b63ccc-c467-4a06-8896-a80504075e2e",
+            "type": "audio"
           },
           "webhookUrl": "https://automation.whitelabel.lat/webhook/Qubra",
           "executionMode": "production"
@@ -1639,6 +1204,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-22T19:34:47.558Z",
-  "versionId": "156282b4-d7b3-4c8d-8e21-7f0921f50c21"
+  "updatedAt": "2025-08-23T18:40:38.857Z",
+  "versionId": "3b471533-2c60-4496-aa44-70766e3912c7"
 }
