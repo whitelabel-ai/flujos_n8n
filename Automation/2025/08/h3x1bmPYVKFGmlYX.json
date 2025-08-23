@@ -430,11 +430,6 @@
             "node": "Redis",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Tool Contador de mensajes",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -454,7 +449,7 @@
       "main": [
         [
           {
-            "node": "ChatwootData",
+            "node": "env",
             "type": "main",
             "index": 0
           }
@@ -521,6 +516,28 @@
         [
           {
             "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "env": {
+      "main": [
+        [
+          {
+            "node": "ChatwootData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "Tool Contador de mensajes",
             "type": "main",
             "index": 0
           }
@@ -1416,7 +1433,9 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "cliente_id": "={{ $('initData').item.json.account_id }}"
+            "cliente_id": "={{ $('initData').item.json.account_id }}",
+            "message": "={{ $json.message }}",
+            "inbox_id": "={{ $('initData').item.json.body.conversation.messages[0].inbox_id }}"
           },
           "matchingColumns": [
             "client_id"
@@ -1429,6 +1448,26 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "inbox_id",
+              "displayName": "inbox_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
               "removed": false
             }
           ],
@@ -1913,62 +1952,68 @@
             {
               "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
               "name": "nombre",
-              "value": "={{ $json.body.conversation.meta.sender.name.split(\" \")[0] }}",
+              "value": "={{ $('chatwoot').item.json.body.conversation.meta.sender.name.split(\" \")[0] }}",
               "type": "string"
             },
             {
               "id": "82031891-32ae-4442-b883-fad57ad08c79",
               "name": "phone_number",
-              "value": "={{ $json.body.conversation.meta.sender.phone_number.replace('+','') }}",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].sender.phone_number.replace('+','') }}",
               "type": "string"
             },
             {
               "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
               "name": "mensaje",
-              "value": "={{ $json.body.conversation.messages[0].content }}",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].content }}",
               "type": "string"
             },
             {
               "id": "01193a9d-40ea-48b1-96f1-592105684644",
               "name": "tipo_mensaje",
-              "value": "={{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}",
+              "value": "={{ $('chatwoot').item.json.body.attachments?.[0]?.file_type || $('chatwoot').item.json.body.conversation.messages?.[0]?.content_type }}",
               "type": "string"
             },
             {
               "id": "c6b5261d-a252-4328-af15-9699dfc5ba2b",
               "name": "receptor",
-              "value": "={{ $json.body.message_type }}",
+              "value": "={{ $('chatwoot').item.json.body.message_type }}",
               "type": "string"
             },
             {
               "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
               "name": "tags",
-              "value": "={{ $json.body.conversation.labels }}",
+              "value": "={{ $('chatwoot').item.json.body.conversation.labels }}",
               "type": "array"
             },
             {
               "id": "2189dde7-a49e-4226-be25-22f3e62caf99",
               "name": "conversation_id",
-              "value": "={{ $json.body.conversation.messages[0].conversation_id }}",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].conversation_id }}",
               "type": "string"
             },
             {
               "id": "c8242d40-84d3-4c64-adcc-d15b8de57a9a",
               "name": "account_id",
-              "value": "={{ $json.body.account.id }}",
+              "value": "={{ $('chatwoot').item.json.body.account.id }}",
               "type": "number"
-            },
-            {
-              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
-              "name": "api_access_token",
-              "value": "DrGpYbBHEo6jJnmG8vxSMH3U",
-              "type": "string"
             },
             {
               "id": "aad140bb-399a-46df-b78b-98aa0a9fd6e8",
               "name": "data_url",
-              "value": "={{ $json.body.attachments[0].data_url }}",
+              "value": "={{ $('chatwoot').item.json.body.attachments[0].data_url }}",
               "type": "string"
+            },
+            {
+              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
+              "name": "api_access_token",
+              "value": "={{ $json.api_access_token }}",
+              "type": "string"
+            },
+            {
+              "id": "0d13abaf-bcd9-4d8f-b8bb-511b45ee9909",
+              "name": "body.conversation.messages[0].inbox_id",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].inbox_id }}",
+              "type": "number"
             }
           ]
         },
@@ -1992,7 +2037,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -3680,
+        -3856,
         -1280
       ],
       "id": "4c7dc18c-fbf7-4f02-9267-adce29b3cd81",
@@ -2003,12 +2048,6 @@
       "parameters": {
         "assignments": {
           "assignments": [
-            {
-              "id": "cb120617-0a0f-4b8d-8979-909001725c0d",
-              "name": "phone_number_id",
-              "value": "={{ $json.phone_number_id }}",
-              "type": "string"
-            },
             {
               "id": "5276d674-1b57-4af7-88f3-5f9616e64cc3",
               "name": "nombre",
@@ -2056,6 +2095,18 @@
               "name": "data_url",
               "value": "={{ $json.data_url }}",
               "type": "string"
+            },
+            {
+              "id": "6843c5fe-3e47-4cfc-9076-dc347074cfba",
+              "name": "api_access_token",
+              "value": "={{ $('ChatwootData').item.json.api_access_token }}",
+              "type": "string"
+            },
+            {
+              "id": "ed3cd62e-2096-4e8e-a455-f7fcadba5130",
+              "name": "body.conversation.messages[0].inbox_id",
+              "value": "={{ $('ChatwootData').item.json.body.conversation.messages[0].inbox_id }}",
+              "type": "number"
             }
           ]
         },
@@ -2091,6 +2142,18 @@
               "name": "mensaje",
               "value": "={{ $json.mensaje }}",
               "type": "string"
+            },
+            {
+              "id": "bfd537e2-84c2-4c0b-a01d-7057001c5bd9",
+              "name": "Inbox_id",
+              "value": "={{ $('ChatwootData').item.json.body.conversation.messages[0].inbox_id }}",
+              "type": "number"
+            },
+            {
+              "id": "2f922806-ddf5-48e4-9a34-53ca59af3494",
+              "name": "client_id",
+              "value": "={{ $('ChatwootData').item.json.account_id }}",
+              "type": "number"
             }
           ]
         },
@@ -2309,9 +2372,192 @@
       "typeVersion": 1,
       "id": "40f6c16c-f86d-49ad-8516-07e8895e8ab0",
       "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
+              "name": "api_access_token",
+              "value": "DrGpYbBHEo6jJnmG8vxSMH3U",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3664,
+        -1280
+      ],
+      "id": "1cd05578-ef1f-44b3-a11f-bd2435f788df",
+      "name": "env"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "chatwoot": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+            "content-length": "2462",
+            "accept": "application/json",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "content-type": "application/json",
+            "x-forwarded-for": "44.195.58.80",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "4f3b0c84f963",
+            "x-real-ip": "44.195.58.80"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "account": {
+              "id": 2,
+              "name": "Estarter.co"
+            },
+            "additional_attributes": {},
+            "content_attributes": {},
+            "content_type": "text",
+            "content": "hola",
+            "conversation": {
+              "additional_attributes": {},
+              "can_reply": true,
+              "channel": "Channel::Whatsapp",
+              "contact_inbox": {
+                "id": 5,
+                "contact_id": 5,
+                "inbox_id": 2,
+                "source_id": "573045809637",
+                "created_at": "2025-08-23T00:34:03.686Z",
+                "updated_at": "2025-08-23T00:34:03.686Z",
+                "hmac_verified": false,
+                "pubsub_token": "pV7sV7Wr8EyrLm7xtv1oG8Dn"
+              },
+              "id": 3,
+              "inbox_id": 2,
+              "messages": [
+                {
+                  "id": 362,
+                  "content": "hola",
+                  "account_id": 2,
+                  "inbox_id": 2,
+                  "conversation_id": 3,
+                  "message_type": 0,
+                  "created_at": 1755910574,
+                  "updated_at": "2025-08-23T00:56:14.022Z",
+                  "private": false,
+                  "status": "sent",
+                  "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhgUM0Y4Qjk1NTI1RTBCMkRGRUU5QTIA",
+                  "content_type": "text",
+                  "content_attributes": {},
+                  "sender_type": "Contact",
+                  "sender_id": 5,
+                  "external_source_ids": {},
+                  "additional_attributes": {},
+                  "processed_message_content": "hola",
+                  "sentiment": {},
+                  "conversation": {
+                    "assignee_id": 3,
+                    "unread_count": 1,
+                    "last_activity_at": 1755910574,
+                    "contact_inbox": {
+                      "source_id": "573045809637"
+                    }
+                  },
+                  "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": null,
+                    "id": 5,
+                    "identifier": null,
+                    "name": "Andrés Corral",
+                    "phone_number": "+573045809637",
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                  }
+                }
+              ],
+              "labels": [],
+              "meta": {
+                "sender": {
+                  "additional_attributes": {},
+                  "custom_attributes": {},
+                  "email": null,
+                  "id": 5,
+                  "identifier": null,
+                  "name": "Andrés Corral",
+                  "phone_number": "+573045809637",
+                  "thumbnail": "",
+                  "blocked": false,
+                  "type": "contact"
+                },
+                "assignee": {
+                  "id": 3,
+                  "name": "Cristian",
+                  "available_name": "Cristian_palma",
+                  "avatar_url": "",
+                  "type": "user",
+                  "availability_status": null,
+                  "thumbnail": ""
+                },
+                "team": null,
+                "hmac_verified": false
+              },
+              "status": "open",
+              "custom_attributes": {},
+              "snoozed_until": null,
+              "unread_count": 1,
+              "first_reply_created_at": "2025-08-23T00:47:29.872Z",
+              "priority": null,
+              "waiting_since": 1755910488,
+              "agent_last_seen_at": 1755910489,
+              "contact_last_seen_at": 0,
+              "last_activity_at": 1755910574,
+              "timestamp": 1755910574,
+              "created_at": 1755909243,
+              "updated_at": 1755910574.023745
+            },
+            "created_at": "2025-08-23T00:56:14.022Z",
+            "id": 362,
+            "inbox": {
+              "id": 2,
+              "name": "Whatsapp"
+            },
+            "message_type": "incoming",
+            "private": false,
+            "sender": {
+              "account": {
+                "id": 2,
+                "name": "Estarter.co"
+              },
+              "additional_attributes": {},
+              "avatar": "",
+              "custom_attributes": {},
+              "email": null,
+              "id": 5,
+              "identifier": null,
+              "name": "Andrés Corral",
+              "phone_number": "+573045809637",
+              "thumbnail": "",
+              "blocked": false
+            },
+            "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhgUM0Y4Qjk1NTI1RTBCMkRGRUU5QTIA",
+            "event": "message_created"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook-test/chatwood_onboarding_estarter",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -2332,6 +2578,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-20T23:38:25.651Z",
-  "versionId": "a1c9e2e1-83d3-4864-a853-ff4bf2ab7fb4"
+  "updatedAt": "2025-08-23T00:58:35.583Z",
+  "versionId": "227bcd9e-760b-4c76-b2f7-5d004fd1a7af"
 }
