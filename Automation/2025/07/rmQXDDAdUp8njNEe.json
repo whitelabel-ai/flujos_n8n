@@ -5,12 +5,12 @@
       "main": [
         [
           {
-            "node": "Get user_data",
+            "node": "If",
             "type": "main",
             "index": 0
           },
           {
-            "node": "If",
+            "node": "get-profile-by-phone",
             "type": "main",
             "index": 0
           }
@@ -21,7 +21,7 @@
       "main": [
         [
           {
-            "node": "Execute a SQL query",
+            "node": "get_saving_goals",
             "type": "main",
             "index": 0
           }
@@ -40,40 +40,6 @@
         [
           {
             "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IsFree?": {
-      "main": [
-        [],
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get user_data": {
-      "main": [
-        [
-          {
-            "node": "data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute a SQL query": {
-      "main": [
-        [
-          {
-            "node": "data1",
             "type": "main",
             "index": 0
           }
@@ -219,6 +185,28 @@
           }
         ]
       ]
+    },
+    "get-profile-by-phone": {
+      "main": [
+        [
+          {
+            "node": "data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_saving_goals": {
+      "main": [
+        [
+          {
+            "node": "data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-28T20:07:09.475Z",
@@ -229,29 +217,6 @@
   },
   "name": "Mony",
   "nodes": [
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "-- EXTENSIONES ÚTILES\nCREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\nCREATE EXTENSION IF NOT EXISTS \"pgcrypto\";\n\n-- ####################################\n-- ##            TABLAS BASE        ##\n-- ####################################\n\n-- TABLA: Usuarios\nCREATE TABLE IF NOT EXISTS usuarios (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    nombre_completo TEXT NOT NULL,\n    email TEXT UNIQUE NOT NULL,\n    password_hash TEXT NOT NULL,\n    numero_whatsapp TEXT UNIQUE NOT NULL,\n    moneda_defecto TEXT DEFAULT 'COP',\n    estado_suscripcion TEXT DEFAULT 'gratuito',\n    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- TABLA: Fuentes de Registro\nCREATE TABLE IF NOT EXISTS fuentes_registro (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE -- Ej: WhatsApp, Web, OCR, Audio, PDF\n);\n\n-- Insertar fuentes iniciales\nINSERT INTO fuentes_registro (nombre) VALUES\n    ('WhatsApp'),\n    ('Web')\nON CONFLICT DO NOTHING;\n\n-- ############################################\n-- ##     MIGRACIÓN Y MEJORA DE CATEGORÍAS   ##\n-- ############################################\n\n-- Renombramos la tabla vieja para preservar las categorías iniciales\nCREATE TABLE IF NOT EXISTS categorias_globales (\n    id SERIAL PRIMARY KEY,\n    nombre TEXT NOT NULL UNIQUE,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL\n);\n\n-- Insertar categorías globales iniciales\nINSERT INTO categorias_globales (nombre, tipo) VALUES\n    ('Comida', 'Gasto'),\n    ('Transporte', 'Gasto'),\n    ('Entretenimiento', 'Gasto'),\n    ('Salud', 'Gasto'),\n    ('Servicios', 'Gasto'),\n    ('Salario', 'Ingreso'),\n    ('Otros', 'Gasto')\nON CONFLICT DO NOTHING;\n\n-- Nueva tabla de categorías por usuario\nCREATE TABLE IF NOT EXISTS categorias (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    presupuesto_mensual NUMERIC(12, 2),\n    UNIQUE (id_usuario, nombre)\n);\n\n-- ####################################\n-- ##         TRANSACCIONES         ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS transacciones (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    descripcion TEXT,\n    monto NUMERIC(12, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    tipo TEXT CHECK (tipo IN ('Ingreso', 'Gasto')) NOT NULL,\n    fecha_transaccion DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id) ON DELETE SET NULL,\n    id_fuente INTEGER REFERENCES fuentes_registro(id),\n    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##        SUSCRIPCIONES BASE     ##\n-- ####################################\n\n-- Tabla para el plan del usuario (gratuito/premium)\nCREATE TABLE IF NOT EXISTS suscripciones (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    tipo TEXT CHECK (tipo IN ('gratuito', 'premium')) NOT NULL,\n    fecha_inicio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    fecha_expiracion TIMESTAMP\n);\n\n-- Tabla para suscripciones del usuario (ej. Netflix, Spotify)\nCREATE TABLE IF NOT EXISTS suscripciones_usuario (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto NUMERIC(10, 2) NOT NULL,\n    moneda TEXT NOT NULL DEFAULT 'COP',\n    frecuencia TEXT NOT NULL, -- 'mensual', 'anual', 'trimestral'\n    fecha_proximo_pago DATE NOT NULL,\n    id_categoria INTEGER REFERENCES categorias(id),\n    activa BOOLEAN DEFAULT TRUE\n);\n\n-- ####################################\n-- ##        METAS DE AHORRO        ##\n-- ####################################\n\nCREATE TABLE IF NOT EXISTS metas_ahorro (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n    id_usuario UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,\n    nombre TEXT NOT NULL,\n    monto_objetivo NUMERIC(15, 2) NOT NULL,\n    monto_actual NUMERIC(15, 2) NOT NULL DEFAULT 0.00,\n    fecha_objetivo DATE NOT NULL,\n    estado TEXT NOT NULL DEFAULT 'activa', -- activa, completada, cancelada\n    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n);\n\n-- ####################################\n-- ##       RECORDATORIOS Y ADS     ##\n-- ####################################\n\n-- Recordatorios de gasto\nCREATE TABLE IF NOT EXISTS recordatorios (\n    id SERIAL PRIMARY KEY,\n    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,\n    frecuencia TEXT CHECK (frecuencia IN ('diario', 'semanal', 'nunca')) NOT NULL,\n    hora_envio TIME DEFAULT '08:00:00'\n);\n\n-- Anuncios\nCREATE TABLE IF NOT EXISTS anuncios (\n    id SERIAL PRIMARY KEY,\n    titulo TEXT NOT NULL,\n    imagen_url TEXT,\n    enlace TEXT,\n    texto TEXT,\n    frecuencia TEXT DEFAULT '1_por_sesion',\n    pais_destino TEXT,\n    moneda_destino TEXT,\n    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    fecha_fin TIMESTAMP\n);\n\n-- Logs de anuncios vistos\nCREATE TABLE IF NOT EXISTS anuncios_usuarios (\n    id SERIAL PRIMARY KEY,\n    id_anuncio INTEGER REFERENCES anuncios(id),\n    id_usuario UUID REFERENCES usuarios(id),\n    fecha_visto TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE OR REPLACE FUNCTION clonar_categorias_globales()\nRETURNS TRIGGER AS $$\nBEGIN\n  INSERT INTO categorias (id_usuario, nombre, tipo)\n  SELECT NEW.id, nombre, tipo\n  FROM categorias_globales;\n\n  RETURN NEW;\nEND;\n$$ LANGUAGE plpgsql;\n\n\nCREATE TRIGGER clonar_categorias_al_crear_usuario\nAFTER INSERT ON usuarios\nFOR EACH ROW\nEXECUTE FUNCTION clonar_categorias_globales();\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        400,
-        -480
-      ],
-      "id": "b9aebc97-33bb-4279-b877-c50e46c04cbf",
-      "name": "CREATE DATABASE",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      },
-      "disabled": true
-    },
     {
       "parameters": {
         "updates": [
@@ -338,7 +303,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1072,
+        1280,
         -1248
       ],
       "id": "792048ec-8c27-45ce-936e-588334d818ad",
@@ -367,7 +332,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        848,
+        1056,
         -1248
       ],
       "id": "5aa43e16-51e2-4dc0-b7c5-6447c5d425da",
@@ -443,58 +408,11 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1968,
+        2384,
         -1152
       ],
       "id": "63a60098-0575-441a-b40d-a9cbe12f21e5",
       "name": "Call Onboarding Register"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        624,
-        -32
-      ],
-      "id": "d187ea81-69ea-4e63-8048-17f09a3c63ff",
-      "name": "No Operation, do nothing",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "93e015c8-0275-4999-a019-8d4f80b66d07",
-              "leftValue": "={{ $json.usuario_data.estado_suscripcion }}",
-              "rightValue": "=gratuito",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        400,
-        -32
-      ],
-      "id": "f176e465-c428-4ba5-845f-80b2c4beb0ae",
-      "name": "IsFree?",
-      "disabled": true
     },
     {
       "parameters": {
@@ -575,219 +493,11 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1968,
+        2384,
         -1376
       ],
       "name": "Call Agente Transaccional",
       "id": "68a8e3ad-60b7-4ca2-b63f-6c3d8df24910"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "DO\n$$\nDECLARE\n    tabla RECORD;\nBEGIN\n    -- Eliminar todas las tablas de forma segura y ordenada\n    FOR tabla IN\n        SELECT tablename FROM pg_tables\n        WHERE schemaname = 'public'\n    LOOP\n        EXECUTE 'DROP TABLE IF EXISTS public.' || quote_ident(tabla.tablename) || ' CASCADE';\n    END LOOP;\nEND;\n$$;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        384,
-        608
-      ],
-      "id": "e61a3ce3-9efa-44de-b209-6630f72fd1a7",
-      "name": "CLEAN DATABASE",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "metas_ahorro",
-          "mode": "list",
-          "cachedResultName": "metas_ahorro"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "id": "a0e2a22b-5f50-4d43-9b81-0a6f0d9c4c7c",
-            "nombre": "Salir de deudas",
-            "monto_objetivo": 35000000,
-            "fecha_objetivo": "=2026-02-12T00:00:00.000-05:00",
-            "estado": "activa",
-            "id_usuario": "5112139f-13f8-4ec9-ba00-9c02ea774c5a",
-            "monto_actual": 0
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": true,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "nombre",
-              "displayName": "nombre",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "monto_objetivo",
-              "displayName": "monto_objetivo",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "monto_actual",
-              "displayName": "monto_actual",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "fecha_objetivo",
-              "displayName": "fecha_objetivo",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "estado",
-              "displayName": "estado",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "options",
-              "canBeUsedToMatch": true,
-              "options": [
-                {
-                  "name": "cancelada",
-                  "value": "cancelada"
-                },
-                {
-                  "name": "completada",
-                  "value": "completada"
-                },
-                {
-                  "name": "inactiva",
-                  "value": "inactiva"
-                },
-                {
-                  "name": "activa",
-                  "value": "activa"
-                }
-              ]
-            },
-            {
-              "id": "fecha_creacion",
-              "displayName": "fecha_creacion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        400,
-        -928
-      ],
-      "id": "3174561b-a579-48d5-a34a-c2a1b0d1c208",
-      "name": "insert user",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "WITH dummy AS (\n    SELECT NULL::uuid AS id\n)\nSELECT \n    to_jsonb(u) AS user_data,\n    (u.id IS NOT NULL) AS existe\nFROM \n    dummy\nLEFT JOIN \n    usuarios u ON u.numero_whatsapp = '+{{ $json.contacts[0].wa_id }}';",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        624,
-        -1248
-      ],
-      "id": "104da7ce-0d67-4b22-8f91-0dce40f79c80",
-      "name": "Get user_data",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT \n    EXISTS (\n        SELECT 1 \n        FROM metas_ahorro \n        WHERE id_usuario = $1\n    ) AS tiene_meta;\n",
-        "options": {
-          "queryReplacement": "={{ $json.usuario_data.id }}"
-        }
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        1296,
-        -1328
-      ],
-      "id": "e111f9d1-a716-4c94-ba43-9670bb6bb36f",
-      "name": "Execute a SQL query",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
     },
     {
       "parameters": {
@@ -806,8 +516,9 @@
                     "leftValue": "={{ $json.meta }}",
                     "rightValue": "true",
                     "operator": {
-                      "type": "string",
-                      "operation": "equals"
+                      "type": "array",
+                      "operation": "notEmpty",
+                      "singleValue": true
                     },
                     "id": "9c38cf88-8498-4e41-b8b6-9c9bf0465b55"
                   }
@@ -831,8 +542,9 @@
                     "leftValue": "={{ $json.meta }}",
                     "rightValue": "false",
                     "operator": {
-                      "type": "string",
-                      "operation": "equals"
+                      "type": "array",
+                      "operation": "empty",
+                      "singleValue": true
                     }
                   }
                 ],
@@ -848,8 +560,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1744,
-        -1328
+        2016,
+        -1312
       ],
       "id": "a862f0d2-d27f-463c-9769-64ccfb057e62",
       "name": "meta"
@@ -861,8 +573,8 @@
             {
               "id": "90dc24fa-85a0-4b98-ad7f-a0f2ab094722",
               "name": "meta",
-              "value": "={{ $json.tiene_meta }}",
-              "type": "string"
+              "value": "={{ $json.metas }}",
+              "type": "array"
             },
             {
               "id": "70bf3769-05a5-4f09-9ead-f39029fc7167",
@@ -877,34 +589,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1520,
-        -1328
+        1744,
+        -1344
       ],
       "id": "2da62d31-1085-4a83-b8d5-0b51f43b4e2b",
       "name": "data1"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "--- pagar y registrar subscripciones, pendiente\nCREATE OR REPLACE FUNCTION procesar_suscripciones_vencidas()\nRETURNS VOID AS $$\nBEGIN\n  -- Insertar transacciones\n  INSERT INTO transacciones (\n      id_usuario,\n      descripcion,\n      monto,\n      moneda,\n      tipo,\n      fecha_transaccion,\n      id_categoria,\n      id_fuente\n  )\n  SELECT\n      s.id_usuario,\n      CONCAT('Pago de suscripción: ', s.nombre),\n      s.monto,\n      s.moneda,\n      'Gasto',\n      CURRENT_DATE,\n      s.id_categoria,\n      f.id\n  FROM suscripciones_usuario s\n  LEFT JOIN fuentes_registro f ON f.nombre = 'Web'\n  WHERE s.activa = TRUE\n    AND s.fecha_proximo_pago = CURRENT_DATE;\n\n  -- Actualizar fechas\n  UPDATE suscripciones_usuario\n  SET fecha_proximo_pago = \n      CASE\n          WHEN frecuencia = 'mensual' THEN fecha_proximo_pago + INTERVAL '1 month'\n          WHEN frecuencia = 'trimestral' THEN fecha_proximo_pago + INTERVAL '3 months'\n          WHEN frecuencia = 'anual' THEN fecha_proximo_pago + INTERVAL '1 year'\n          ELSE fecha_proximo_pago\n      END\n  WHERE activa = TRUE\n    AND fecha_proximo_pago = CURRENT_DATE;\n\nEND;\n$$ LANGUAGE plpgsql;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        400,
-        -704
-      ],
-      "id": "9f99963f-2615-45b2-b284-c6b42fc92c65",
-      "name": "functions",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      },
-      "disabled": true
     },
     {
       "parameters": {
@@ -942,7 +631,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1104,
+        1312,
         -1600
       ],
       "id": "a0112fb7-9b2a-4827-a898-9f117c0bebfe",
@@ -1113,7 +802,7 @@
             {
               "id": "43859a53-b296-4aa4-8453-a3eabec83f0a",
               "name": "numero_whatsapp",
-              "value": "=573228854498",
+              "value": "=573045809637",
               "type": "string"
             }
           ]
@@ -1189,7 +878,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        800,
+        1008,
         -1488
       ],
       "id": "b1b4dac5-d0df-4426-b5d5-936577ebc905",
@@ -1200,7 +889,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1088,
+        1296,
         -1456
       ],
       "id": "cfcfd462-76db-4b1b-9275-88e7cb775f3d",
@@ -1220,6 +909,76 @@
       ],
       "id": "f2a28873-5b30-478d-b2fc-2b73f9607b4c",
       "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "url": "https://api.mony.whitelabel.lat/api/v1/users/profile-by-phone",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "=+{{ $json.contacts[0].wa_id }}"
+            },
+            {
+              "name": "includeCategories",
+              "value": "false"
+            },
+            {
+              "name": "includeSuscripcionesMony",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        736,
+        -1248
+      ],
+      "id": "d2be74ba-dcae-4c51-962c-8300609465a9",
+      "name": "get-profile-by-phone",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.mony.whitelabel.lat/api/v1/saving-goals",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $json.usuario_data.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1488,
+        -1344
+      ],
+      "id": "2c430c77-9efe-48bd-8001-03747b4a3d72",
+      "name": "get_saving_goals",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1242,10 +1001,10 @@
           "messages": [
             {
               "from": "573228854498",
-              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZCOUNFRjE5M0FFNzZENzAxQUEA",
-              "timestamp": "1755298718",
+              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZGNEIyREZFNkRDNUJDQjhDNjUA",
+              "timestamp": "1756042765",
               "text": {
-                "body": "organizar gastos"
+                "body": "ok, con cuales subscripciones me quedo?"
               },
               "type": "text"
             }
@@ -1269,6 +1028,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-23T15:44:03.607Z",
-  "versionId": "1b27862e-14ea-4f40-bfe1-559584ca6100"
+  "updatedAt": "2025-08-24T17:17:42.356Z",
+  "versionId": "a13058bf-5892-4ee8-ae4d-6b49a2e3bd12"
 }
