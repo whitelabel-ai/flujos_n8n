@@ -456,17 +456,6 @@
         ]
       ]
     },
-    "query_transactions": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Start": {
       "main": [
         [
@@ -551,92 +540,9 @@
         ]
       ]
     },
-    "get_user_categories": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "create_user_category": {
       "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "set_category_budget": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get_category_budgets": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get_saving_goals": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "add_user_subscription": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "set_reminder_preference": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get_user_subscription": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "If2": {
@@ -650,7 +556,7 @@
         ],
         [
           {
-            "node": "Redis",
+            "node": "Data",
             "type": "main",
             "index": 0
           }
@@ -711,7 +617,7 @@
         []
       ]
     },
-    "updated_user_subscriptions": {
+    "register_transaction": {
       "ai_tool": [
         [
           {
@@ -722,7 +628,95 @@
         ]
       ]
     },
-    "register_transaction": {
+    "get_user_categories": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_transactions": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_category_budget": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_saving_goals": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_progres_saving_goals": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_saving_goal": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_user_subscriptions": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_user_subscription": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "updated_user_subscriptions": {
       "ai_tool": [
         [
           {
@@ -1068,6 +1062,7 @@
     },
     {
       "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
@@ -1090,7 +1085,7 @@
         "sessionIdType": "customKey",
         "sessionKey": "=MONY_{{ $('Data').item.json.redis_message }}",
         "sessionTTL": 500000,
-        "contextWindowLength": 25
+        "contextWindowLength": 10
       },
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
@@ -1109,33 +1104,10 @@
     },
     {
       "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Recupera todas las transacciones del usuario en un período de tiempo definido. El intervalo de tiempo debe proporcionarse como una cadena compatible con PostgreSQL, como '7 days', '1 month', '90 days', etc. Filtra las transacciones por la fecha (fecha_transaccion) y devuelve los resultados ordenados de más reciente a más antiguo. Incluye información de la categoría y la fuente asociada a cada transacción.\n\nUsa la variable interval para definir el rango de fechas que quieres consultar, por ejemplo:\n'7 days' → últimos 7 días\n'1 month' → último mes\n'3 months' → últimos 3 meses",
-        "operation": "executeQuery",
-        "query": "SELECT \n  jsonb_build_object(\n    'id', t.id,\n    'descripcion', t.descripcion,\n    'monto', t.monto,\n    'moneda', t.moneda,\n    'tipo', t.tipo,\n    'fecha', t.fecha_transaccion,\n    'categoria', c.nombre,\n    'fuente', f.nombre\n  ) AS transaccion\nFROM transacciones t\nLEFT JOIN categorias c ON t.id_categoria = c.id\nLEFT JOIN fuentes_registro f ON t.id_fuente = f.id\nWHERE \n  t.id_usuario = '{{ $fromAI(\"id_usuario\", `ID del usuario dueño de las transacciones`, \"string\") }}'\n  AND t.fecha_transaccion >= CURRENT_DATE - INTERVAL '{{ $fromAI(\"interval\", `intervalo de tiempo a analizar como '7 days', '1 month' o '90 days'`, \"string\") }}'\nORDER BY t.fecha_transaccion DESC;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        3520,
-        -352
-      ],
-      "id": "795369be-415f-4f46-9562-94c3e9d2e4c7",
-      "name": "query_transactions",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }} \nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n   - si se registra una subscripcion, registrala tambien como transaccion ya que se supone que acaba de pagarla.\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`,\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `query_transactions`  \n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `set_category_budget`, `get_category_budgets`  \n- *Metas de Ahorro:* `get_saving_goals`  \n- *Suscripciones:* `add_user_subscription`, `get_user_subscriptions`, `updated_user_subscriptions`  \n- *Configuración:* `set_reminder_preference`\n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *No uses botones:* Todas las interacciones deben ser texto natural.\n\nIMPORTANTE: jamas registrar una transaccion sin haber consultado la tool 'get_user_categories'ya que dara error.\n- *Actúa siempre, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\", o voy a hacer,  — hazlo y muestra el resultado.\n"
+          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n   - si se registra una subscripcion, registrala tambien como transaccion ya que se supone que acaba de pagarla.\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`,\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `get_transactions`  \n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `update_category_budget`, `get_user_categories`  \n- *Metas de Ahorro:* `get_saving_goals`, \n- *para registrar un ahorro* 'update_progres_saving_goals'(suma el monto actual de la meta a ahorrar mas el nuevo monto, siempre pasar el id exacto de la meta, obtenido en la tool 'get_saving_goals')\n- *Suscripciones:* `create_user_subscription`, `get_user_subscriptions`, `updated_user_subscriptions`  \n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *Siempre antes de crear una meta, debemos preguntar la fecha Objetivo, si en 1 mes, 3 meses o 1 año*\n- *las subscripciones del usuario se registra el pago automaticamente cada mes, para dejar de registrar debe inactivar la subscripcion* (puedes informarle al usuario cada que crees una subscripcion)\n\nIMPORTANTE: jamas registrar una transaccion sin haber consultado la tool 'get_user_categories'ya que dara error.\n- *Actúa siempre, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\", o voy a hacer,  — hazlo y muestra el resultado.\n\npor ahora crear categorias y dar analisis con graficas detalladas es una funcion premium"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1145,7 +1117,9 @@
         -576
       ],
       "id": "687acc71-c2ac-49a1-8d76-f3de9a49d198",
-      "name": "AI Agent"
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000
     },
     {
       "parameters": {
@@ -1998,7 +1972,7 @@
         "promptType": "define",
         "text": "=mensaje del usuario: {{ $json.message.content }},",
         "options": {
-          "systemMessage": "=### 💼 Contexto General\nEres un clasificador de intención que trabaja dentro de una arquitectura multi-agente con *Mony Coach* y *Mony Transaccional*.\n\nTu única responsabilidad es analizar el mensaje del usuario y su contexto reciente para decidir si debe intervenir *Mony Coach* (coach financiero) o no.\n\n### 🧠 Instrucciones de Razonamiento\n1. Analiza el mensaje actual del usuario (`user_message`) y los **últimos 5 mensajes anteriores** del usuario (`user_memory`).\n2. Determina si la intención del mensaje es:\n   - **Hablar sobre un mensaje que *Mony Coach* ya envió**, como un **resumen financiero**, **alerta de presupuesto**, **recordatorio de suscripción** o **meta en riesgo**.\n   - **NO realizar una acción transaccional** (como registrar gastos o ingresos).\n\n3. Si detectas que el usuario quiere continuar la conversación sobre **información enviada por Mony Coach** y **NO está registrando una transacción**, entonces:\n   - Devuelve la salida exacta: `Mony Coach`\n\n4. En cualquier otro caso (registro, consulta, charla casual, creación de categorías, etc.), no devuelvas nada. Otro agente tomará el control.\n\n### ✅ Salida Esperada\n\nSolo puede ser una de estas dos:\n\n* `\"Mony Coach\"` → si la intención es seguir hablando sobre un resumen o mensaje anterior de tipo *coach* (no transaccional).\n* Nada → si la intención es distinta (registro, consulta, categorías, etc.).\n\n### ⚠️ Reglas Importantes\n\n* No analices intención para ejecutar herramientas. Solo clasifica.\n* No respondas con texto libre.\n* No uses lógica difusa. Si hay duda, **no devuelvas nada**.\n* No devuelvas explicaciones. Solo la string `\"Mony Coach\"` si aplica.\n\n### 🧠 Consejos\n\n* Palabras clave que suelen indicar intención tipo Coach: \"resumen\", \"meta\", \"presupuesto\", \"alerta\", \"reporte\", \"progreso\", \"cómo voy\", \"por qué subí\", etc.\n* Si el mensaje contiene verbos como \"registrar\", \"anotar\", \"gastar\", \"ingresé\", \"compré\", etc., es transaccional.\n"
+          "systemMessage": "=### 💼 Contexto General\nEres un clasificador de intención que trabaja dentro de una arquitectura multi-agente con *Mony Coach* y *Mony Transaccional*.\n\nTu única responsabilidad es analizar el mensaje del usuario y su contexto reciente para decidir si debe intervenir *Mony Coach* (coach financiero) o no.\n\n### 🧠 Instrucciones de Razonamiento\n1. Analiza el mensaje actual del usuario (`user_message`) y los **últimos 5 mensajes anteriores** del usuario (`user_memory`).\n2. Determina si la intención del mensaje es:\n   - **Hablar sobre un mensaje que *Mony Coach* ya envió**, como un **resumen financiero**, **alerta de presupuesto**, **recordatorio de suscripción** o **meta en riesgo**.\n   - **NO realizar una acción transaccional** (como registrar gastos o ingresos).\n\n3. Si detectas que el usuario quiere continuar la conversación sobre **información enviada por Mony Coach** y **NO está registrando una transacción**, entonces:\n   - Devuelve la salida exacta: `Mony Coach`\n\n4. En cualquier otro caso (registro, consulta, charla casual, creación de categorías, etc.), no devuelvas nada. Otro agente tomará el control.\n\n### ✅ Salida Esperada\n\nSolo puede ser una de estas dos:\n\n* `\"Mony Coach\"` → si la intención es seguir hablando sobre un resumen o mensaje anterior de tipo *coach* (no transaccional).\n* Nada → si la intención es distinta (registro, consulta, categorías, etc.).\n\n### ⚠️ Reglas Importantes\n\n* No analices intención para ejecutar herramientas. Solo clasifica.\n* No respondas con texto libre.\n* No uses lógica difusa. Si hay duda, **no devuelvas nada**.\n* No devuelvas explicaciones. Solo la string `\"Mony Coach\"` si aplica.\n\n### 🧠 Consejos\n\n* Palabras clave que suelen indicar intención tipo Coach: \"resumen\", \"meta\", \"presupuesto\", \"alerta\", \"reporte\", \"categorias\", \"progreso\", \"cómo voy\", \"por qué subí\", etc.\n* Si el mensaje contiene verbos como \"registrar\", \"anotar\", \"gastar\", \"ingresé\", \"compré\", etc., es transaccional.\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -2213,46 +2187,6 @@
     },
     {
       "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "categorias",
-          "mode": "list",
-          "cachedResultName": "categorias"
-        },
-        "returnAll": "",
-        "where": {
-          "values": [
-            {
-              "column": "id_usuario",
-              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        3648,
-        -272
-      ],
-      "id": "0db389c1-d47d-4da9-9418-18ad8026b6f5",
-      "name": "get_user_categories",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
         "schema": {
           "__rl": true,
           "mode": "list",
@@ -2343,487 +2277,11 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        3792,
-        -336
+        3616,
+        -208
       ],
       "id": "f2d26818-24a9-4275-b484-a39d4fdd777d",
       "name": "create_user_category",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Establece o actualiza el presupuesto mensual para una categoría de gasto específica",
-        "operation": "upsert",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "categorias",
-          "mode": "list",
-          "cachedResultName": "categorias"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre__using_to_match_', `nombre exacto de la categoria a actualizar`, 'string') }}",
-            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario__using_to_match_', ``, 'string') }}",
-            "presupuesto_mensual": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('presupuesto_mensual', `monto nuevo a actualizar`, 'number') }}"
-          },
-          "matchingColumns": [
-            "id_usuario",
-            "nombre"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "nombre",
-              "displayName": "nombre",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "tipo",
-              "displayName": "tipo",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "options",
-              "canBeUsedToMatch": false,
-              "options": [
-                {
-                  "name": "Gasto",
-                  "value": "Gasto"
-                },
-                {
-                  "name": "Ingreso",
-                  "value": "Ingreso"
-                }
-              ],
-              "removed": true
-            },
-            {
-              "id": "presupuesto_mensual",
-              "displayName": "presupuesto_mensual",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": false
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        3920,
-        -256
-      ],
-      "id": "f7543378-3dfe-4468-8dcc-9765d7356925",
-      "name": "set_category_budget",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Consulta los presupuestos establecidos por el usuario para sus categorías.",
-        "operation": "executeQuery",
-        "query": "SELECT nombre, presupuesto_mensual FROM categorias\nWHERE id_usuario = {{ $fromAI(\"id_usuario\", `ID del usuario`, \"string\") }} AND presupuesto_mensual IS NOT NULL AND tipo = 'Gasto';",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        4032,
-        -352
-      ],
-      "id": "a7c8cc67-0323-4c34-9dbd-86d6ec653680",
-      "name": "get_category_budgets",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Consulta el estado de las metas de ahorro activas del usuario",
-        "operation": "executeQuery",
-        "query": "SELECT \n  nombre, \n  monto_objetivo, \n  monto_actual, \n  fecha_objetivo \nFROM metas_ahorro\nWHERE \n  id_usuario = {{ $fromAI(\"id_usuario\", `ID del usuario que tiene metas de ahorro activas`, \"string\") }} \n  AND estado = 'activa'\nORDER BY fecha_objetivo ASC;",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        4160,
-        -272
-      ],
-      "id": "c92a4f44-4caf-49a5-be72-622baef98137",
-      "name": "get_saving_goals",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Registra una nueva suscripción o gasto recurrente del usuario, como Netflix o el gimnasio",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "suscripciones_usuario",
-          "mode": "list",
-          "cachedResultName": "suscripciones_usuario"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "activa": true,
-            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
-            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `Nombre de la subscripcion`, 'string') }}",
-            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
-            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
-            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `diario, semanal, mensualtrimestral, anual`, 'string') }}",
-            "fecha_proximo_pago": "={{ $fromAI('fecha_proximo_pago', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}",
-            "id_categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_categoria', `id de la categoria que se registra la subscripcion`, 'number') }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "nombre",
-              "displayName": "nombre",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "monto",
-              "displayName": "monto",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "moneda",
-              "displayName": "moneda",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "frecuencia",
-              "displayName": "frecuencia",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "options",
-              "canBeUsedToMatch": true,
-              "options": [
-                {
-                  "name": "nunca",
-                  "value": "nunca"
-                },
-                {
-                  "name": "anual",
-                  "value": "anual"
-                },
-                {
-                  "name": "trimestral",
-                  "value": "trimestral"
-                },
-                {
-                  "name": "mensual",
-                  "value": "mensual"
-                },
-                {
-                  "name": "semanal",
-                  "value": "semanal"
-                },
-                {
-                  "name": "diario",
-                  "value": "diario"
-                }
-              ]
-            },
-            {
-              "id": "fecha_proximo_pago",
-              "displayName": "fecha_proximo_pago",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "activa",
-              "displayName": "activa",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "boolean",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_categoria",
-              "displayName": "id_categoria",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        4288,
-        -352
-      ],
-      "id": "356d857b-2d9e-4b20-bf83-f0b9635115dc",
-      "name": "add_user_subscription",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "configurar la frecuencia de los recordatorios para registrar sus gastos si diario, semanal o mensual",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "recordatorios",
-          "mode": "list",
-          "cachedResultName": "recordatorios"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
-            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `'diario'/'semanal'/'mensual'`, 'string') }}",
-            "hora_envio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('hora_envio', `HH:MM:SS`, 'string') }}",
-            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "frecuencia",
-              "displayName": "frecuencia",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "options",
-              "canBeUsedToMatch": true,
-              "options": [
-                {
-                  "name": "nunca",
-                  "value": "nunca"
-                },
-                {
-                  "name": "anual",
-                  "value": "anual"
-                },
-                {
-                  "name": "trimestral",
-                  "value": "trimestral"
-                },
-                {
-                  "name": "mensual",
-                  "value": "mensual"
-                },
-                {
-                  "name": "semanal",
-                  "value": "semanal"
-                },
-                {
-                  "name": "diario",
-                  "value": "diario"
-                }
-              ]
-            },
-            {
-              "id": "hora_envio",
-              "displayName": "hora_envio",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "time",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "descripcion",
-              "displayName": "descripcion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        4432,
-        -272
-      ],
-      "id": "c6443060-7816-44cb-96be-5928c528e608",
-      "name": "set_reminder_preference",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "obtienes todas las  suscripciones o gastos recurrente del usuario, como Netflix o el gimnasio",
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "suscripciones_usuario",
-          "mode": "list",
-          "cachedResultName": "suscripciones_usuario"
-        },
-        "where": {
-          "values": [
-            {
-              "column": "id_usuario",
-              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        4560,
-        -352
-      ],
-      "id": "8c313b4f-886f-4081-8899-e2a715615035",
-      "name": "get_user_subscription",
       "credentials": {
         "postgres": {
           "id": "3BmLjpi7AvK0Sx6n",
@@ -2975,330 +2433,523 @@
     },
     {
       "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "actualiza cada que se vensa una subscipcion la nueva fecha de pago, si esta activa o no, el monto u otros parametros si se necesitan actualizar",
-        "operation": "update",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "suscripciones_usuario",
-          "mode": "list",
-          "cachedResultName": "suscripciones_usuario"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "activa": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('activa', ``, 'boolean') }}",
-            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
-            "nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre', `Nombre de la subscripcion`, 'string') }}",
-            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
-            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
-            "frecuencia": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('frecuencia', `diario, semanal, mensualtrimestral, anual`, 'string') }}",
-            "fecha_proximo_pago": "={{ $fromAI('fecha_proximo_pago', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}",
-            "id_categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_categoria', `id de la categoria que se registra la subscripcion`, 'number') }}",
-            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id__using_to_match_', ``, 'string') }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
+        "toolDescription": "Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.",
+        "method": "POST",
+        "url": "https://api.mony.whitelabel.lat/api/v1/transactions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "nombre",
-              "displayName": "nombre",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "monto",
-              "displayName": "monto",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "moneda",
-              "displayName": "moneda",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "frecuencia",
-              "displayName": "frecuencia",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "options",
-              "canBeUsedToMatch": true,
-              "options": [
-                {
-                  "name": "nunca",
-                  "value": "nunca"
-                },
-                {
-                  "name": "anual",
-                  "value": "anual"
-                },
-                {
-                  "name": "trimestral",
-                  "value": "trimestral"
-                },
-                {
-                  "name": "mensual",
-                  "value": "mensual"
-                },
-                {
-                  "name": "semanal",
-                  "value": "semanal"
-                },
-                {
-                  "name": "diario",
-                  "value": "diario"
-                }
-              ]
-            },
-            {
-              "id": "fecha_proximo_pago",
-              "displayName": "fecha_proximo_pago",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "activa",
-              "displayName": "activa",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "boolean",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_categoria",
-              "displayName": "id_categoria",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
+              "name": "x-user-id",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
             }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "descripcion",
+              "value": "={{ $fromAI('descripcion', `Descripción de la transacción`, 'string') }}"
+            },
+            {
+              "name": "monto",
+              "value": "={{ $fromAI('monto', ` Monto de la transacción`, 'number') }}"
+            },
+            {
+              "name": "tipo",
+              "value": "={{ $fromAI('tipo', `Gasto o Ingreso`, 'string') }}"
+            },
+            {
+              "name": "fechaTransaccion",
+              "value": "={{ $fromAI('fecha_transaccion', `formato ISO: YYYY-MM-DD`, 'string') }}"
+            },
+            {
+              "name": "idCategoria",
+              "value": "={{ $fromAI('id_categoria', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}"
+            },
+            {
+              "name": "moneda",
+              "value": "={{ $fromAI('moneda', `Código de moneda`, 'string') }}"
+            },
+            {
+              "name": "idFuente",
+              "value": "1"
+            }
+          ]
         },
         "options": {}
       },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
       "position": [
-        4704,
-        -384
+        3424,
+        -208
       ],
-      "id": "4ad21fce-0ab7-4878-a893-db7a87f78350",
-      "name": "updated_user_subscriptions",
+      "id": "64548201-5017-4c3f-ba39-064a52b34b41",
+      "name": "register_transaction",
       "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
         }
       }
     },
     {
       "parameters": {
-        "url": "https://api.exchangerate.host/convert?from=USD&to=COP&amount=10000",
+        "toolDescription": "obtiene las categorias de un usuario",
+        "url": "https://api.mony.whitelabel.lat/api/v1/categories",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "userId",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
         "options": {}
       },
-      "type": "n8n-nodes-base.httpRequest",
+      "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4896,
-        -464
+        3632,
+        -368
       ],
-      "id": "a0824499-c1ee-4c3b-a73e-6f06ac5862f1",
-      "name": "HTTP Request2"
+      "id": "8512594d-91eb-4e1a-afd8-0fde20cc8a8e",
+      "name": "get_user_categories",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
     },
     {
       "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "transacciones",
-          "mode": "list",
-          "cachedResultName": "transacciones"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "monto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('monto', ``, 'number') }}",
-            "id_categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_categoria', `id de la categoria, obtenido en la tool 'get_user_categories'`, 'number') }}",
-            "id_fuente": 1,
-            "descripcion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('descripcion', ``, 'string') }}",
-            "moneda": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('moneda', ``, 'string') }}",
-            "tipo": "={{ $fromAI('tipo', `Gasto o Ingreso`, 'string') }}",
-            "id_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_usuario', ``, 'string') }}",
-            "fecha_transaccion": "={{ $fromAI('fecha_transaccion', `Devuelve la fecha en formato ISO: YYYY-MM-DD`, 'string') }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
+        "toolDescription": "Recupera todas las transacciones del usuario en un período de tiempo definido",
+        "url": "https://api.mony.whitelabel.lat/api/v1/transactions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
             {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
+              "name": "pagina",
+              "value": "={{ $fromAI('pagina', `numero de la pagina a consultar`, 'string') }}"
             },
             {
-              "id": "descripcion",
-              "displayName": "descripcion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
+              "name": "limite",
+              "value": "50"
             },
             {
-              "id": "monto",
-              "displayName": "monto",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
+              "name": "fechaInicio",
+              "value": "={{ $fromAI('fechaInicio', `Fecha en formato YYYY-MM-DD`, 'string') }}"
             },
             {
-              "id": "moneda",
-              "displayName": "moneda",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "tipo",
-              "displayName": "tipo",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "options",
-              "canBeUsedToMatch": true,
-              "options": [
-                {
-                  "name": "Gasto",
-                  "value": "Gasto"
-                },
-                {
-                  "name": "Ingreso",
-                  "value": "Ingreso"
-                }
-              ]
-            },
-            {
-              "id": "fecha_transaccion",
-              "displayName": "fecha_transaccion",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "fecha_creacion",
-              "displayName": "fecha_creacion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_categoria",
-              "displayName": "id_categoria",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_fuente",
-              "displayName": "id_fuente",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
+              "name": "fechaFin",
+              "value": "={{ $fromAI('fechaFin', `Fecha en formato YYYY-MM-DD`, 'string') }}"
             }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
+            }
+          ]
         },
         "options": {}
       },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
       "position": [
-        3408,
-        -272
+        3424,
+        -352
       ],
-      "id": "bafa1f13-fecf-48d5-85b0-783c4ab6eb41",
-      "name": "register_transaction",
+      "id": "03dd88fc-5d9e-46d0-ac52-fc101272e025",
+      "name": "get_transactions",
       "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Establece o actualiza el presupuesto mensual para cada categoría de gasto específica",
+        "method": "PATCH",
+        "url": "=https://api.mony.whitelabel.lat/api/v1/categories/{{ $fromAI('categoryId', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "presupuestoMensual",
+              "value": "={{ $fromAI('presupuestoMensual', ` Monto del presupuesto de la categoria`, 'number') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3616,
+        -48
+      ],
+      "id": "8645539a-a45d-4c22-af93-b55d193c75d2",
+      "name": "update_category_budget",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Consulta el estado de las metas de ahorro activas del usuario",
+        "url": "https://api.mony.whitelabel.lat/api/v1/saving-goals",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "estado",
+              "value": "activa"
+            },
+            {
+              "name": "pagina",
+              "value": "1"
+            },
+            {
+              "name": "limite",
+              "value": "10"
+            },
+            {
+              "name": "ordenarPor",
+              "value": "fechaCreacion"
+            },
+            {
+              "name": "direccion",
+              "value": "desc"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3840,
+        -336
+      ],
+      "id": "cf7a0f83-c457-42a8-a339-045082e39e02",
+      "name": "get_saving_goals",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Actualiza específicamente el monto actual ahorrado. Cambia automáticamente el estado a \"completada\" si se alcanza el objetivo, debes pasar el id de la meta, obtenido en la tool 'get_saving_goals'",
+        "method": "PATCH",
+        "url": "=https://api.mony.whitelabel.lat/api/v1/saving-goals/{{ $fromAI('metaId', `id de la meta, obtenido en la tool '\\''get_saving_goals'\\''`, 'string') }}/amount",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "monto",
+              "value": "={{ $fromAI('monto', ` suma del monto actual + nuevo monto `, 'number') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3856,
+        -48
+      ],
+      "id": "4411a6bb-6d39-46e7-9a58-60cc35852db9",
+      "name": "update_progres_saving_goals",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Guarda una nueva meta de ahorro para el usuario",
+        "method": "POST",
+        "url": "https://api.mony.whitelabel.lat/api/v1/saving-goals",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('id_usuario', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "nombre",
+              "value": "={{ $fromAI('nombre', `nombre de la meta`, 'string') }}"
+            },
+            {
+              "name": "montoObjetivo",
+              "value": "={{ $fromAI('monto_objetivo', `Monto objetivo a ahorrar`, 'number') }}"
+            },
+            {
+              "name": "montoActual",
+              "value": "={{ $fromAI('monto_actual', `Monto actual ahorrado (default: 0)`, 'number') }}"
+            },
+            {
+              "name": "fechaObjetivo",
+              "value": "={{ $fromAI(\n  'fechaObjetivo',\n  'Devuelve la fecha en la que finaliza la meta de ahorro, en formato ISO estricto (YYYY-MM-DD). No incluyas texto adicional.',\n  'string'\n) }}"
+            },
+            {
+              "name": "estado",
+              "value": "={{ $fromAI('estado', `activa o inactiva`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3856,
+        -192
+      ],
+      "id": "9dbaea84-0686-4067-aa70-bed6dac8daee",
+      "name": "create_saving_goal",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Consulta el todas las subscripciones del usuario del usuario",
+        "url": "https://api.mony.whitelabel.lat/api/v1/user-subscriptions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        4048,
+        -336
+      ],
+      "id": "82a047fc-7b43-46a4-8576-9115719d2c83",
+      "name": "get_user_subscriptions",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Registra una nueva suscripción o gasto recurrente del usuario, como Netflix o el gimnasio",
+        "method": "POST",
+        "url": "https://api.mony.whitelabel.lat/api/v1/user-subscriptions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('id_usuario', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "nombre",
+              "value": "={{ $fromAI('nombre', `Nombre de la suscripción`, 'string') }}"
+            },
+            {
+              "name": "monto",
+              "value": "={{ $fromAI('monto', `Precio de la suscripción`, 'number') }}"
+            },
+            {
+              "name": "moneda",
+              "value": "={{ $fromAI('moneda', `Código de moneda`, 'string') }}"
+            },
+            {
+              "name": "frecuencia",
+              "value": "={{ $fromAI(\n  'frecuencia',\n  'Frecuencia de cobro (mensual, anual, semanal, diaria)',\n  'string'\n) }}"
+            },
+            {
+              "name": "fechaInicio",
+              "value": "={{ $fromAI('fechaInicio', `Fecha de inicio de la suscripción (formato: YYYY-MM-DD)`, 'string') }}"
+            },
+            {
+              "name": "fechaProximoPago",
+              "value": "={{ $fromAI('fechaProximoPago', `Fecha de Proximo Pago de la suscripción (formato: YYYY-MM-DD)`, 'string') }}"
+            },
+            {
+              "name": "activa",
+              "value": "true"
+            },
+            {
+              "name": "categoryId",
+              "value": "={{ $fromAI('categoryId', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}"
+            },
+            {
+              "name": "descripcion",
+              "value": "={{ $fromAI('descripcion', `Descripción adicional de la suscripción`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        4064,
+        -144
+      ],
+      "id": "34de9918-9d67-4508-a634-b5e31f4fd4f2",
+      "name": "create_user_subscription",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "actualiza la subscripcion si esta activa o no, el monto u otros parametros si se necesitan actualizar",
+        "method": "PATCH",
+        "url": "=https://api.mony.whitelabel.lat/api/v1/user-subscriptions/{{ $fromAI('subscriptionId', `id de la Subscripcion, obtenido en la tool '\\''get_user_subscriptions'\\''`, 'string') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('id_usuario', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "nombre",
+              "value": "={{ $fromAI('nombre', `Nombre de la suscripción`, 'string') }}"
+            },
+            {
+              "name": "monto",
+              "value": "={{ $fromAI('monto', `Precio de la suscripción`, 'number') }}"
+            },
+            {
+              "name": "moneda",
+              "value": "={{ $fromAI('moneda', `Código de moneda`, 'string') }}"
+            },
+            {
+              "name": "frecuencia",
+              "value": "={{ $fromAI(\n  'frecuencia',\n  'Frecuencia de cobro (mensual, anual, semanal, diaria)',\n  'string'\n) }}"
+            },
+            {
+              "name": "activa",
+              "value": "={{ $fromAI('activa', `true o false`, 'boolean') }}"
+            },
+            {
+              "name": "categoryId",
+              "value": "={{ $fromAI('categoryId', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}"
+            },
+            {
+              "name": "descripcion",
+              "value": "={{ $fromAI('descripcion', `Descripción adicional de la suscripción`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        4064,
+        0
+      ],
+      "id": "961e0c66-9416-4cbd-bee4-af1630130f8f",
+      "name": "updated_user_subscriptions",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
         }
       }
     }
@@ -3314,35 +2965,70 @@
           "contacts": [
             {
               "profile": {
-                "name": "OSCAR"
+                "name": "Pedro Rodriguez"
               },
-              "wa_id": "573208397300"
+              "wa_id": "573228854498"
             }
           ],
           "messages": [
             {
-              "from": "573208397300",
-              "id": "wamid.HBgMNTczMjA4Mzk3MzAwFQIAEhgUM0FGRkZDNEI3NEM2ODFGQ0M2ODgA",
-              "timestamp": "1755796726",
-              "type": "audio",
-              "audio": {
-                "mime_type": "audio/ogg; codecs=opus",
-                "sha256": "Q6SMDmQzL9oMwhDTWh574BlxDv9JchYHRsGBj94AGFs=",
-                "id": "1423671979181440",
-                "voice": true
-              }
+              "from": "573228854498",
+              "id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3NkU3RTE1Q0MyQ0YyQUNEMDYA",
+              "timestamp": "1756041991",
+              "text": {
+                "body": "no, quiero registrar una subscripcion a Netflix por 24000"
+              },
+              "type": "text"
             }
           ],
           "field": "messages",
           "usuario_data": {
-            "id": "884bc934-410e-49c0-b255-f0874a9b9ba4",
-            "email": "obejman@gmail.com",
+            "id": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+            "nombreCompleto": "Pedro Rodriguez",
+            "email": "pro.pedro0413@gmail.com",
+            "numeroWhatsapp": "+573228854498",
             "moneda": "COP",
-            "password": "$2a$12$vTLGjIeqWlczuCDqlQ3spuHlrNX33aLkd3SIydSPP5mecKQZHXU5i",
-            "fecha_registro": "2025-08-16T01:33:37.947",
-            "nombre_completo": "Oscar Bejman",
-            "numero_whatsapp": "+573208397300",
-            "estado_suscripcion": "free"
+            "estadoSuscripcion": "free",
+            "fechaRegistro": "2025-08-23T22:35:15.923Z",
+            "frecuenciaRecordatorios": "nunca",
+            "frecuenciaInformes": "mensual",
+            "suscripcionMony": [
+              {
+                "id": "51edf3e2-c8a5-4f08-a296-2e353c22056e",
+                "tipo": "free",
+                "fechaInicio": "2025-08-23T22:35:15.946Z",
+                "fechaExpiracion": null,
+                "activa": true,
+                "precio": "0",
+                "moneda": "USD",
+                "stripeCustomerId": null,
+                "stripeSubscriptionId": null,
+                "fechaCreacion": "2025-08-23T22:35:15.946Z",
+                "fechaActualizacion": "2025-08-23T22:35:15.946Z",
+                "idUsuario": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd"
+              }
+            ],
+            "metasDeAhorro": [
+              {
+                "id": "55177fda-6c10-4641-a758-53a1c54da974",
+                "nombre": "Comprar un PC",
+                "montoObjetivo": "3000000",
+                "montoActual": "200000",
+                "fechaObjetivo": "2025-08-23T00:00:00.000Z",
+                "estado": "activa",
+                "fechaCreacion": "2025-08-24T04:47:09.954Z",
+                "idUsuario": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd"
+              }
+            ],
+            "suscripciones": [],
+            "estadisticas": {
+              "ingresosMes": 0,
+              "gastosMes": 5000,
+              "balanceMes": -5000,
+              "totalTransaccionesMes": 1,
+              "metasActivas": 1,
+              "suscripcionesActivas": 0
+            }
           }
         }
       }
@@ -3359,6 +3045,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-21T17:29:42.341Z",
-  "versionId": "f19477f8-424f-4190-9bc9-73612cb53a1d"
+  "updatedAt": "2025-08-24T13:33:25.661Z",
+  "versionId": "7e59a64c-0011-47e4-a281-58b1b4ef58db"
 }
