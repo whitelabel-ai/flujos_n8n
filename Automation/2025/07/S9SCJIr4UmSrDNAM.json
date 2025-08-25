@@ -428,11 +428,6 @@
         ]
       ]
     },
-    "create_saving_goal(pg)": {
-      "ai_tool": [
-        []
-      ]
-    },
     "get_users_count": {
       "ai_tool": [
         [
@@ -1292,7 +1287,7 @@
         "operation": "send",
         "phoneNumberId": "={{ $json.metadata.phone_number_id }}",
         "recipientPhoneNumber": "=+{{ $json.contacts[0].wa_id }}",
-        "textBody": "=📄 ¡ Gracias por enviarnos tu documento.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\n👉 Puedes registrarte en menos de 1 minuto aquí:\n*https://mony-app.com/registro*\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀",
+        "textBody": "=📄 ¡ Gracias por enviarnos tu documento.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀",
         "additionalFields": {
           "previewUrl": true
         }
@@ -1318,7 +1313,7 @@
         "operation": "send",
         "phoneNumberId": "={{ $json.metadata.phone_number_id }}",
         "recipientPhoneNumber": "=+{{ $json.contacts[0].wa_id }}",
-        "textBody": "=📄 ¡ Gracias por enviarnos tu imagen.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\n👉 Puedes registrarte en menos de 1 minuto aquí:\n*https://mony-app.com/registro*\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀",
+        "textBody": "=📄 ¡ Gracias por enviarnos tu imagen.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀",
         "additionalFields": {
           "previewUrl": true
         }
@@ -1553,7 +1548,9 @@
         4144
       ],
       "id": "59735d43-9896-438b-ae76-abe62a56640f",
-      "name": "AI Agent"
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000
     },
     {
       "parameters": {
@@ -1675,148 +1672,6 @@
       ],
       "id": "335dcdba-0b07-4f97-ac4a-11ccff17e0e3",
       "name": "no1"
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "metas_ahorro",
-          "mode": "list",
-          "cachedResultName": "metas_ahorro"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "id_usuario": "={{ $fromAI('id_usuario', ``, 'string') }}",
-            "nombre": "={{ $fromAI('nombre', `nombre de la meta`, 'string') }}",
-            "monto_objetivo": "={{ $fromAI('monto_objetivo', ``, 'number') }}",
-            "fecha_objetivo": "={{ $fromAI('fecha_objetivo', ``, 'string') }}",
-            "estado": "={{ $fromAI('estado', `activa o inactiva`, 'string') }}",
-            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id', ``, 'string') }}",
-            "monto_actual": 0
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": true,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "nombre",
-              "displayName": "nombre",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "monto_objetivo",
-              "displayName": "monto_objetivo",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "monto_actual",
-              "displayName": "monto_actual",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "fecha_objetivo",
-              "displayName": "fecha_objetivo",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "estado",
-              "displayName": "estado",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "options",
-              "canBeUsedToMatch": true,
-              "options": [
-                {
-                  "name": "cancelada",
-                  "value": "cancelada"
-                },
-                {
-                  "name": "completada",
-                  "value": "completada"
-                },
-                {
-                  "name": "inactiva",
-                  "value": "inactiva"
-                },
-                {
-                  "name": "activa",
-                  "value": "activa"
-                }
-              ],
-              "removed": false
-            },
-            {
-              "id": "fecha_creacion",
-              "displayName": "fecha_creacion",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "id_usuario",
-              "displayName": "id_usuario",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgresTool",
-      "typeVersion": 2.6,
-      "position": [
-        2816,
-        4672
-      ],
-      "id": "0f090b0a-d80b-4474-a847-59668db6532b",
-      "name": "create_saving_goal(pg)",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
     },
     {
       "parameters": {
@@ -1980,6 +1835,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-24T17:39:41.338Z",
-  "versionId": "c457939d-0115-4e42-acb1-ae552974c64b"
+  "updatedAt": "2025-08-25T11:10:56.850Z",
+  "versionId": "526896ce-e854-4350-8a33-6ed877eacd27"
 }
