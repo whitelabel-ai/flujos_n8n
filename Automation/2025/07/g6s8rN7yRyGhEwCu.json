@@ -522,13 +522,7 @@
     },
     "Validacion creditos": {
       "main": [
-        [
-          {
-            "node": "Message a model",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
         [
           {
             "node": "HTTP Request5",
@@ -543,6 +537,13 @@
         [
           {
             "node": "Validacion creditos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message a model",
             "type": "main",
             "index": 0
           }
@@ -1892,6 +1893,12 @@
               "name": "data_url",
               "value": "={{ $json.data_url }}",
               "type": "string"
+            },
+            {
+              "id": "cb548f82-b654-4a9c-b737-d357e3620b35",
+              "name": "inbox_id",
+              "value": "={{ $('chatwoot').item.json.body.conversation.inbox_id }}",
+              "type": "number"
             }
           ]
         },
@@ -2139,7 +2146,8 @@
           "mappingMode": "defineBelow",
           "value": {
             "cliente_id": "={{ $('initData').item.json.account_id }}",
-            "message": "={{ $json.message }}"
+            "message": "={{ $json.message }}",
+            "inbox_id": "={{ $('initData').item.json.inbox_id }}"
           },
           "matchingColumns": [
             "client_id"
@@ -2163,6 +2171,16 @@
               "canBeUsedToMatch": true,
               "type": "string",
               "removed": false
+            },
+            {
+              "id": "inbox_id",
+              "displayName": "inbox_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
             }
           ],
           "attemptToConvertTypes": true,
@@ -2180,7 +2198,9 @@
         -1264
       ],
       "id": "2d1b59e1-b4e6-4fae-9f32-989c3ca77777",
-      "name": "Tool Contador de mensajes"
+      "name": "Tool Contador de mensajes",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -2235,7 +2255,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "3954",
+            "content-length": "3184",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -2275,17 +2295,17 @@
               "inbox_id": 1,
               "messages": [
                 {
-                  "id": 142,
+                  "id": 369,
                   "content": null,
                   "account_id": 1,
                   "inbox_id": 1,
                   "conversation_id": 1,
                   "message_type": 0,
-                  "created_at": 1755523164,
-                  "updated_at": "2025-08-18T13:19:24.767Z",
+                  "created_at": 1756144540,
+                  "updated_at": "2025-08-25T17:55:40.407Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y0M0UzNTFFQzY0QjM5QjQwQzcA",
+                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3MUZFNkQ4RjU3MEVBQzg4MTgA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
@@ -2296,22 +2316,22 @@
                   "sentiment": {},
                   "conversation": {
                     "assignee_id": 2,
-                    "unread_count": 4,
-                    "last_activity_at": 1755523164,
+                    "unread_count": 1,
+                    "last_activity_at": 1756144540,
                     "contact_inbox": {
                       "source_id": "573228854498"
                     }
                   },
                   "attachments": [
                     {
-                      "id": 7,
-                      "message_id": 142,
-                      "file_type": "file",
+                      "id": 22,
+                      "message_id": 369,
+                      "file_type": "video",
                       "account_id": 1,
                       "extension": null,
-                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/1.jpg",
-                      "thumb_url": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--4adf005ce86f2c0a70f4f9a6534bcd915ed6b297/1.jpg",
-                      "file_size": 265007,
+                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBHdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--dbc3353d8b8f32eb9d8a4fe3c9a746d460065e6d/File.mp4",
+                      "thumb_url": "",
+                      "file_size": 15606384,
                       "width": null,
                       "height": null
                     }
@@ -2359,19 +2379,19 @@
               "status": "open",
               "custom_attributes": {},
               "snoozed_until": null,
-              "unread_count": 4,
+              "unread_count": 1,
               "first_reply_created_at": "2025-08-15T02:02:56.597Z",
               "priority": null,
-              "waiting_since": 0,
-              "agent_last_seen_at": 1755519670,
+              "waiting_since": 1756142372,
+              "agent_last_seen_at": 1756144420,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1755523164,
-              "timestamp": 1755523164,
+              "last_activity_at": 1756144540,
+              "timestamp": 1756144540,
               "created_at": 1755209872,
-              "updated_at": 1755523164.769823
+              "updated_at": 1756144540.41078
             },
-            "created_at": "2025-08-18T13:19:24.767Z",
-            "id": 142,
+            "created_at": "2025-08-25T17:55:40.407Z",
+            "id": 369,
             "inbox": {
               "id": 1,
               "name": "Valeia"
@@ -2394,17 +2414,17 @@
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y0M0UzNTFFQzY0QjM5QjQwQzcA",
+            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3MUZFNkQ4RjU3MEVBQzg4MTgA",
             "attachments": [
               {
-                "id": 7,
-                "message_id": 142,
-                "file_type": "file",
+                "id": 22,
+                "message_id": 369,
+                "file_type": "video",
                 "account_id": 1,
                 "extension": null,
-                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/1.jpg",
-                "thumb_url": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--4adf005ce86f2c0a70f4f9a6534bcd915ed6b297/1.jpg",
-                "file_size": 265007,
+                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBHdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--dbc3353d8b8f32eb9d8a4fe3c9a746d460065e6d/File.mp4",
+                "thumb_url": "",
+                "file_size": 15606384,
                 "width": null,
                 "height": null
               }
@@ -2430,6 +2450,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-18T17:03:50.826Z",
-  "versionId": "5174fe59-970f-4b72-9617-576167e3dbe4"
+  "updatedAt": "2025-08-25T17:56:20.870Z",
+  "versionId": "60765afb-5972-4b4a-b1cb-a06d2f5bad7b"
 }
