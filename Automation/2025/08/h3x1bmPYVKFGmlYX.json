@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "AI Agent": {
       "main": [
@@ -114,24 +114,6 @@
         [
           {
             "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validacion creditos": {
-      "main": [
-        [
-          {
-            "node": "Message a model",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -260,7 +242,7 @@
       "main": [
         [
           {
-            "node": "Validacion creditos",
+            "node": "Validacion creditos_Bloqueado?",
             "type": "main",
             "index": 0
           }
@@ -543,6 +525,24 @@
           }
         ]
       ]
+    },
+    "Validacion creditos_Bloqueado?": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-04T22:34:24.685Z",
@@ -564,8 +564,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        1840,
-        -1488
+        1808,
+        -1584
       ],
       "id": "30dfa33c-1578-4d1e-8ade-f04415c100e5",
       "name": "AI Agent"
@@ -612,7 +612,7 @@
       "typeVersion": 3.4,
       "position": [
         1072,
-        -1440
+        -1584
       ],
       "id": "313d7a7c-ff50-4faa-bd2e-03fd64f0bae8",
       "name": "Data"
@@ -642,8 +642,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        1920,
-        -1168
+        1664,
+        -1248
       ],
       "id": "286ce9a5-69c7-423e-a7ee-7d2fa1b813d0",
       "name": "Redis Chat Memory",
@@ -681,8 +681,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        720,
-        -1440
+        736,
+        -1584
       ],
       "id": "f8d7f618-71e7-4517-84ad-ae5011443351",
       "name": "Message a model",
@@ -700,8 +700,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1696,
-        -1168
+        1472,
+        -1264
       ],
       "id": "3713dfc8-3d51-40b0-a188-4db0328ff8f7",
       "name": "Google Gemini Chat Model",
@@ -728,8 +728,8 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        2096,
-        -1168
+        1872,
+        -1248
       ],
       "id": "f43cf77d-59c9-4ed9-bef9-ede07b2b4ac4",
       "name": "consultar_disponibilidad",
@@ -972,8 +972,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1488,
-        -1440
+        1504,
+        -1584
       ],
       "id": "45fa82e5-fddc-4bcd-b1de-05391803d78a",
       "name": "Edit Fields"
@@ -1007,8 +1007,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1280,
-        -1440
+        1296,
+        -1584
       ],
       "id": "e427a95c-ccbc-403b-bf8b-ed0eece1c36d",
       "name": "Get row(s) in sheet",
@@ -1023,52 +1023,18 @@
     {
       "parameters": {
         "content": "## Validador de Creditos\n",
-        "height": 704,
+        "height": 736,
         "width": 896,
         "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -288,
-        -1648
+        -1664
       ],
       "typeVersion": 1,
       "id": "84cf8c1a-85d0-496d-8223-044f9f479e0b",
       "name": "Sticky Note3"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "7efee19e-15a3-4263-b1da-237dd881d34b",
-              "leftValue": "={{ $json.Bloqueado }}",
-              "rightValue": "False",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        128,
-        -1408
-      ],
-      "id": "9b5b1c95-0ac1-47f1-9448-0287795409d1",
-      "name": "Validacion creditos"
     },
     {
       "parameters": {
@@ -1092,7 +1058,7 @@
       "typeVersion": 1.8,
       "position": [
         2976,
-        -1472
+        -1584
       ],
       "id": "f829a2ba-7e37-4df8-aeab-c523e46c2e1f",
       "name": "OpenAI1",
@@ -1378,15 +1344,15 @@
     {
       "parameters": {
         "content": "## RESPONS AGENT",
-        "height": 600,
+        "height": 728,
         "width": 1720,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2896,
-        -1536
+        2688,
+        -1664
       ],
       "id": "c8f13f5b-3b29-4852-8e8a-786f524eeb05",
       "name": "Sticky Note2"
@@ -1483,7 +1449,7 @@
       "typeVersion": 1.2,
       "position": [
         -192,
-        -1408
+        -1568
       ],
       "id": "d2fe0745-e047-49e8-b5c9-e67f335140e8",
       "name": "Tool Contador de mensajes"
@@ -1572,8 +1538,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2368,
-        -976
+        -2384,
+        -1088
       ],
       "id": "4a45729a-3679-4678-912b-92ebad245457",
       "name": "DataImage"
@@ -1608,7 +1574,7 @@
       "typeVersion": 3.4,
       "position": [
         -2368,
-        -1152
+        -1248
       ],
       "id": "cb935aaa-ae66-4bc7-ae30-cd414ce575f2",
       "name": "DataPdf"
@@ -1790,7 +1756,7 @@
       "typeVersion": 3.4,
       "position": [
         -2368,
-        -1408
+        -1440
       ],
       "id": "a8fda2f2-b9d2-4540-b451-0b37ba5ebac2",
       "name": "DataText"
@@ -1801,7 +1767,7 @@
       "typeVersion": 1,
       "position": [
         -2576,
-        -1408
+        -1440
       ],
       "id": "9f473694-f4dd-4844-8a63-4792be6899f7",
       "name": "No Operation, do nothing4"
@@ -1836,7 +1802,7 @@
       "typeVersion": 3.4,
       "position": [
         -2368,
-        -1584
+        -1600
       ],
       "id": "33dc3a3f-fe03-4cd7-8b54-44e372432883",
       "name": "DataAudio"
@@ -1887,9 +1853,7 @@
       "name": "If2"
     },
     {
-      "parameters": {
-        "amount": 10
-      },
+      "parameters": {},
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
@@ -2184,7 +2148,7 @@
       "typeVersion": 1,
       "position": [
         -2592,
-        -1584
+        -1600
       ],
       "id": "05069f34-9f84-405a-92e2-7876c032fe20",
       "name": "Transcribe a recording1",
@@ -2212,8 +2176,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        -2592,
-        -976
+        -2576,
+        -1072
       ],
       "id": "b0c59c42-3f7e-4c71-9b31-08a2d62893b1",
       "name": "Analyze image1",
@@ -2240,8 +2204,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        -2592,
-        -1152
+        -2608,
+        -1248
       ],
       "id": "7e107905-ec54-41ac-ac10-d5655188e2e8",
       "name": "Analyze document",
@@ -2297,7 +2261,7 @@
     {
       "parameters": {
         "content": "## Incoming Messages\n",
-        "height": 812,
+        "height": 748,
         "width": 3168,
         "color": 4
       },
@@ -2305,7 +2269,7 @@
       "typeVersion": 1,
       "position": [
         -3552,
-        -1648
+        -1664
       ],
       "id": "9e13a6f8-c990-4e8f-a0a9-9ead2f39c6cb",
       "name": "Sticky Note"
@@ -2329,21 +2293,21 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"content\": \"En un momento uno de nuestros agentes te contactara\",\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "jsonBody": "{\n  \"content\": \"\\nGracias por tu mensaje 🙌.\\nPara darte una atención más cercana, te invitamos a continuar esta conversación con uno de nuestros asesores.\\n\\n👉 <a href=\\\"https://wa.me/573001234567\\\">Haz clic aquí para chatear ahora mismo en WhatsApp</a>\\n\\n¡Estaremos encantados de ayudarte personalmente! 🌟\",\n  \"message_type\": \"outgoing\",\n  \"private\": false\n}\n",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        288,
-        -1152
+        368,
+        -1440
       ],
       "id": "d6513c9c-458c-440a-a83f-2cf8dbed889a",
       "name": "HTTP Request"
     },
     {
       "parameters": {
-        "content": "## Test 18/08/2025 12:14 \n **text** = ok\n **audio** = ok\n **document**=  [Error]\n **image**= ok ",
+        "content": "## Test 25/08/2025 21:03 \n **text** = ok\n **audio** = ok\n **document**=  Recibe pero solo PDF\n **image**= ok",
         "height": 208,
         "width": 304,
         "color": 3
@@ -2359,15 +2323,15 @@
     },
     {
       "parameters": {
-        "content": "## Test: \n**1. descuento en Sheet 18/08/2025 12:23**\n      cre_usa =   417 /// 418  =ok\n  cre_rest=  33 ///  32 =ok\n%_rest =  7  ///  7% =ok\n**2. notificaciones  dd/mm/yyyy  hh:mm**\ncorreo10%\nCorreo 5%\nCorreo/Cre_Agotados\n**3. Mensaje al usuario dd/mm/yyyy hh:mm**\nWhatsappMessage= ",
-        "height": 240,
+        "content": "## Test: \n**1. descuento en Sheet 26/08/2025 15:21:16**\n      cre_usa =  ok\n  cre_rest= ok\n%_rest = ok\n\n**2. notificaciones**  \ncorreo10% = OK\nCorreo 5% = OK\nCorreo/Cre_Agotados = ok\n\n**3. Mensaje al usuario cuando creditos agotados**\nWhatsappMessage= ok\n\n**4. Flujo normal cuando hay creditos**\ncorre mensaje= ok\n\n**FIN DE QA 26/08/2025 16:15**",
+        "height": 416,
         "width": 320,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -256,
-        -1216
+        -208,
+        -1360
       ],
       "typeVersion": 1,
       "id": "40f6c16c-f86d-49ad-8516-07e8895e8ab0",
@@ -2395,6 +2359,64 @@
       ],
       "id": "1cd05578-ef1f-44b3-a11f-bd2435f788df",
       "name": "env"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2112,
+        -1152
+      ],
+      "typeVersion": 1,
+      "id": "0796d4c4-00ea-4d7e-b247-08cc64dc0986",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        704,
+        -1184
+      ],
+      "typeVersion": 1,
+      "id": "608f9971-9ebd-4c76-bae8-2bbfbb14871d",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7efee19e-15a3-4263-b1da-237dd881d34b",
+              "leftValue": "={{ $json.Bloqueado }}",
+              "rightValue": "False",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        112,
+        -1568
+      ],
+      "id": "9b5b1c95-0ac1-47f1-9448-0287795409d1",
+      "name": "Validacion creditos_Bloqueado?"
     }
   ],
   "pinData": {
@@ -2404,7 +2426,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "2462",
+            "content-length": "2392",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -2425,60 +2447,60 @@
             "additional_attributes": {},
             "content_attributes": {},
             "content_type": "text",
-            "content": "hola",
+            "content": "probando agent main y memoria",
             "conversation": {
               "additional_attributes": {},
               "can_reply": true,
               "channel": "Channel::Whatsapp",
               "contact_inbox": {
-                "id": 5,
-                "contact_id": 5,
+                "id": 2,
+                "contact_id": 2,
                 "inbox_id": 2,
-                "source_id": "573045809637",
-                "created_at": "2025-08-23T00:34:03.686Z",
-                "updated_at": "2025-08-23T00:34:03.686Z",
+                "source_id": "573008564836",
+                "created_at": "2025-08-14T22:53:46.809Z",
+                "updated_at": "2025-08-14T22:53:46.809Z",
                 "hmac_verified": false,
-                "pubsub_token": "pV7sV7Wr8EyrLm7xtv1oG8Dn"
+                "pubsub_token": "KhrK1smnqLRgJKw1wsmn3oiK"
               },
-              "id": 3,
+              "id": 4,
               "inbox_id": 2,
               "messages": [
                 {
-                  "id": 362,
-                  "content": "hola",
+                  "id": 479,
+                  "content": "probando agent main y memoria",
                   "account_id": 2,
                   "inbox_id": 2,
-                  "conversation_id": 3,
+                  "conversation_id": 4,
                   "message_type": 0,
-                  "created_at": 1755910574,
-                  "updated_at": "2025-08-23T00:56:14.022Z",
+                  "created_at": 1756245110,
+                  "updated_at": "2025-08-26T21:51:50.490Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhgUM0Y4Qjk1NTI1RTBCMkRGRUU5QTIA",
+                  "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhgWM0VCMDQ3MzEwN0JFMTBBNUZDQjQ0OQA=",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
-                  "sender_id": 5,
+                  "sender_id": 2,
                   "external_source_ids": {},
                   "additional_attributes": {},
-                  "processed_message_content": "hola",
+                  "processed_message_content": "probando agent main y memoria",
                   "sentiment": {},
                   "conversation": {
-                    "assignee_id": 3,
-                    "unread_count": 1,
-                    "last_activity_at": 1755910574,
+                    "assignee_id": null,
+                    "unread_count": 10,
+                    "last_activity_at": 1756245110,
                     "contact_inbox": {
-                      "source_id": "573045809637"
+                      "source_id": "573008564836"
                     }
                   },
                   "sender": {
                     "additional_attributes": {},
                     "custom_attributes": {},
                     "email": null,
-                    "id": 5,
+                    "id": 2,
                     "identifier": null,
-                    "name": "Andrés Corral",
-                    "phone_number": "+573045809637",
+                    "name": "😃",
+                    "phone_number": "+573008564836",
                     "thumbnail": "",
                     "blocked": false,
                     "type": "contact"
@@ -2491,42 +2513,34 @@
                   "additional_attributes": {},
                   "custom_attributes": {},
                   "email": null,
-                  "id": 5,
+                  "id": 2,
                   "identifier": null,
-                  "name": "Andrés Corral",
-                  "phone_number": "+573045809637",
+                  "name": "😃",
+                  "phone_number": "+573008564836",
                   "thumbnail": "",
                   "blocked": false,
                   "type": "contact"
                 },
-                "assignee": {
-                  "id": 3,
-                  "name": "Cristian",
-                  "available_name": "Cristian_palma",
-                  "avatar_url": "",
-                  "type": "user",
-                  "availability_status": null,
-                  "thumbnail": ""
-                },
+                "assignee": null,
                 "team": null,
                 "hmac_verified": false
               },
               "status": "open",
               "custom_attributes": {},
               "snoozed_until": null,
-              "unread_count": 1,
-              "first_reply_created_at": "2025-08-23T00:47:29.872Z",
+              "unread_count": 10,
+              "first_reply_created_at": "2025-08-26T01:06:12.461Z",
               "priority": null,
-              "waiting_since": 1755910488,
-              "agent_last_seen_at": 1755910489,
+              "waiting_since": 1756245072,
+              "agent_last_seen_at": 1756170444,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1755910574,
-              "timestamp": 1755910574,
-              "created_at": 1755909243,
-              "updated_at": 1755910574.023745
+              "last_activity_at": 1756245110,
+              "timestamp": 1756245110,
+              "created_at": 1756170293,
+              "updated_at": 1756245110.491895
             },
-            "created_at": "2025-08-23T00:56:14.022Z",
-            "id": 362,
+            "created_at": "2025-08-26T21:51:50.490Z",
+            "id": 479,
             "inbox": {
               "id": 2,
               "name": "Whatsapp"
@@ -2542,17 +2556,17 @@
               "avatar": "",
               "custom_attributes": {},
               "email": null,
-              "id": 5,
+              "id": 2,
               "identifier": null,
-              "name": "Andrés Corral",
-              "phone_number": "+573045809637",
+              "name": "😃",
+              "phone_number": "+573008564836",
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhgUM0Y4Qjk1NTI1RTBCMkRGRUU5QTIA",
+            "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhgWM0VCMDQ3MzEwN0JFMTBBNUZDQjQ0OQA=",
             "event": "message_created"
           },
-          "webhookUrl": "https://automation.whitelabel.lat/webhook-test/chatwood_onboarding_estarter",
+          "webhookUrl": "https://automation.whitelabel.lat/webhook-test/test_chatwood_onboarding_estarter",
           "executionMode": "test"
         }
       }
@@ -2566,6 +2580,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "7CI8d1lC1EC1eqnL"
   },
+  "shared": [
+    {
+      "createdAt": "2025-08-04T22:34:24.685Z",
+      "updatedAt": "2025-08-04T22:34:24.685Z",
+      "role": "workflow:owner",
+      "workflowId": "h3x1bmPYVKFGmlYX",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
   "staticData": {
     "node:Formbricks": {}
   },
@@ -2578,6 +2601,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-23T00:58:35.583Z",
-  "versionId": "227bcd9e-760b-4c76-b2f7-5d004fd1a7af"
+  "updatedAt": "2025-08-26T22:20:20.525Z",
+  "versionId": "bc2dc611-bffc-4524-b183-52716cb2679d"
 }
