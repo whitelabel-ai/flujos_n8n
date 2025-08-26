@@ -216,7 +216,13 @@
     },
     "WhatsApp Trigger": {
       "main": [
-        []
+        [
+          {
+            "node": "get-profile-by-phone",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -326,18 +332,18 @@
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "S9SCJIr4UmSrDNAM",
+          "value": "7udG9O5kmPeeOaXL",
           "mode": "list",
           "cachedResultName": "Onboarding"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "metadata": "={{ $('WhatsApp Trigger1').item.json.metadata }}",
-            "contacts": "={{ $('WhatsApp Trigger1').item.json.contacts }}",
-            "messages": "={{ $('WhatsApp Trigger1').item.json.messages }}",
-            "field": "={{ $('WhatsApp Trigger1').item.json.field }}",
-            "usuario_data": "={{ $json.usuario_data }}"
+            "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}",
+            "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
+            "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
+            "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+            "usuario_data": "={{ $('data').item.json.usuario_data }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -347,8 +353,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
               "id": "contacts",
@@ -380,8 +385,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -402,26 +406,20 @@
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "mb7JhBisRgsDckO6",
+          "value": "WE1bVt3r1GoX2Dif",
           "mode": "list",
           "cachedResultName": "Agente Transaccional"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "messages": "={{ $('WhatsApp Trigger1').item.json.messages }}",
-            "contacts": "={{ $('WhatsApp Trigger1').item.json.contacts }}",
-            "field": "={{ $('WhatsApp Trigger1').item.json.field }}",
-            "usuario_data": "={{ $('data').item.json.usuario_data }}",
-            "metadata": "={{ $('WhatsApp Trigger1').item.json.metadata }}"
+            "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}",
+            "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
+            "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
+            "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+            "usuario_data": "={{ $json.usuario_data }}"
           },
-          "matchingColumns": [
-            "messages",
-            "contacts",
-            "field",
-            "usuario_data",
-            "metadata_phone_number_id"
-          ],
+          "matchingColumns": [],
           "schema": [
             {
               "id": "metadata",
@@ -429,8 +427,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
               "id": "contacts",
@@ -438,8 +435,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
               "id": "messages",
@@ -447,8 +443,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
               "id": "field",
@@ -456,8 +451,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
               "id": "usuario_data",
@@ -465,8 +459,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -972,8 +965,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        288,
-        -1264
+        368,
+        -1248
       ],
       "id": "c666a14a-4046-4fc4-b095-6941bfd09d41",
       "name": "Webhook",
@@ -1019,8 +1012,20 @@
             {
               "id": "e6ac796a-86cf-4dce-a3f3-1f3b8ea8e180",
               "name": "contacts",
-              "value": "={\n\"profile\": \n{\n\"name\": \n\"{{ $json.body.conversation.meta.sender.name.split(' ')[0] }}\"\n},\n\"wa_id\": \n\"{{ $json.body.conversation.meta.sender.phone_number }}\"\n}",
-              "type": "object"
+              "value": "=[{\n\"profile\": \n{\n\"name\": \n\"{{ $json.body.conversation.meta.sender.name.split(' ')[0] }}\"\n},\n\"wa_id\": \n\"{{ $json.body.conversation.messages[0].conversation.contact_inbox.source_id }}\"\n}]",
+              "type": "array"
+            },
+            {
+              "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
+              "name": "messages",
+              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  \"{{ $json.body.conversation.messages[0].content }}\" },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
+              "type": "array"
+            },
+            {
+              "id": "8bf1bf21-59a9-4c92-8e31-7e20a7cae8d4",
+              "name": "field",
+              "value": "={{ $json.body.conversation.labels }}",
+              "type": "array"
             }
           ]
         },
@@ -1029,201 +1034,14 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        496,
-        -1264
+        576,
+        -1248
       ],
       "id": "942fcc0a-03c5-4b79-95f7-ccbf0fec60bb",
       "name": "WhatsApp Trigger"
     }
   ],
   "pinData": {
-    "Webhook": [
-      {
-        "json": {
-          "headers": {
-            "host": "automation.whitelabel.lat",
-            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "3184",
-            "accept": "application/json",
-            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-            "content-type": "application/json",
-            "x-forwarded-for": "44.195.58.80",
-            "x-forwarded-host": "automation.whitelabel.lat",
-            "x-forwarded-port": "443",
-            "x-forwarded-proto": "https",
-            "x-forwarded-server": "4f3b0c84f963",
-            "x-real-ip": "44.195.58.80"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "account": {
-              "id": 1,
-              "name": "WHITELABEL"
-            },
-            "additional_attributes": {},
-            "content_attributes": {},
-            "content_type": "text",
-            "content": null,
-            "conversation": {
-              "additional_attributes": {},
-              "can_reply": true,
-              "channel": "Channel::Whatsapp",
-              "contact_inbox": {
-                "id": 1,
-                "contact_id": 1,
-                "inbox_id": 1,
-                "source_id": "573228854498",
-                "created_at": "2025-08-14T22:17:52.111Z",
-                "updated_at": "2025-08-14T22:17:52.111Z",
-                "hmac_verified": false,
-                "pubsub_token": "prJLRjLmZjHgCN1hfaWXduh1"
-              },
-              "id": 1,
-              "inbox_id": 1,
-              "messages": [
-                {
-                  "id": 369,
-                  "content": null,
-                  "account_id": 1,
-                  "inbox_id": 1,
-                  "conversation_id": 1,
-                  "message_type": 0,
-                  "created_at": 1756144540,
-                  "updated_at": "2025-08-25T17:55:40.407Z",
-                  "private": false,
-                  "status": "sent",
-                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3MUZFNkQ4RjU3MEVBQzg4MTgA",
-                  "content_type": "text",
-                  "content_attributes": {},
-                  "sender_type": "Contact",
-                  "sender_id": 1,
-                  "external_source_ids": {},
-                  "additional_attributes": {},
-                  "processed_message_content": null,
-                  "sentiment": {},
-                  "conversation": {
-                    "assignee_id": 2,
-                    "unread_count": 1,
-                    "last_activity_at": 1756144540,
-                    "contact_inbox": {
-                      "source_id": "573228854498"
-                    }
-                  },
-                  "attachments": [
-                    {
-                      "id": 22,
-                      "message_id": 369,
-                      "file_type": "video",
-                      "account_id": 1,
-                      "extension": null,
-                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBHdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--dbc3353d8b8f32eb9d8a4fe3c9a746d460065e6d/File.mp4",
-                      "thumb_url": "",
-                      "file_size": 15606384,
-                      "width": null,
-                      "height": null
-                    }
-                  ],
-                  "sender": {
-                    "additional_attributes": {},
-                    "custom_attributes": {},
-                    "email": null,
-                    "id": 1,
-                    "identifier": null,
-                    "name": "Pedro Rodriguez",
-                    "phone_number": "+573228854498",
-                    "thumbnail": "",
-                    "blocked": false,
-                    "type": "contact"
-                  }
-                }
-              ],
-              "labels": [],
-              "meta": {
-                "sender": {
-                  "additional_attributes": {},
-                  "custom_attributes": {},
-                  "email": null,
-                  "id": 1,
-                  "identifier": null,
-                  "name": "Pedro Rodriguez",
-                  "phone_number": "+573228854498",
-                  "thumbnail": "",
-                  "blocked": false,
-                  "type": "contact"
-                },
-                "assignee": {
-                  "id": 2,
-                  "name": "whitelabel",
-                  "available_name": "whitelabel",
-                  "avatar_url": "",
-                  "type": "user",
-                  "availability_status": null,
-                  "thumbnail": ""
-                },
-                "team": null,
-                "hmac_verified": false
-              },
-              "status": "open",
-              "custom_attributes": {},
-              "snoozed_until": null,
-              "unread_count": 1,
-              "first_reply_created_at": "2025-08-15T02:02:56.597Z",
-              "priority": null,
-              "waiting_since": 1756142372,
-              "agent_last_seen_at": 1756144420,
-              "contact_last_seen_at": 0,
-              "last_activity_at": 1756144540,
-              "timestamp": 1756144540,
-              "created_at": 1755209872,
-              "updated_at": 1756144540.41078
-            },
-            "created_at": "2025-08-25T17:55:40.407Z",
-            "id": 369,
-            "inbox": {
-              "id": 1,
-              "name": "Valeia"
-            },
-            "message_type": "incoming",
-            "private": false,
-            "sender": {
-              "account": {
-                "id": 1,
-                "name": "WHITELABEL"
-              },
-              "additional_attributes": {},
-              "avatar": "",
-              "custom_attributes": {},
-              "email": null,
-              "id": 1,
-              "identifier": null,
-              "name": "Pedro Rodriguez",
-              "phone_number": "+573228854498",
-              "thumbnail": "",
-              "blocked": false
-            },
-            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3MUZFNkQ4RjU3MEVBQzg4MTgA",
-            "attachments": [
-              {
-                "id": 22,
-                "message_id": 369,
-                "file_type": "video",
-                "account_id": 1,
-                "extension": null,
-                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBHdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--dbc3353d8b8f32eb9d8a4fe3c9a746d460065e6d/File.mp4",
-                "thumb_url": "",
-                "file_size": 15606384,
-                "width": null,
-                "height": null
-              }
-            ],
-            "event": "message_created"
-          },
-          "webhookUrl": "https://automation.whitelabel.lat/webhook/valeia-chatwoot",
-          "executionMode": "production"
-        }
-      }
-    ],
     "WhatsApp Trigger1": [
       {
         "json": {
@@ -1254,6 +1072,157 @@
           "field": "messages"
         }
       }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+            "content-length": "2334",
+            "accept": "application/json",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "content-type": "application/json",
+            "x-forwarded-for": "44.195.58.80",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "4f3b0c84f963",
+            "x-real-ip": "44.195.58.80"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "account": {
+              "id": 1,
+              "name": "WHITELABEL"
+            },
+            "additional_attributes": {},
+            "content_attributes": {},
+            "content_type": "text",
+            "content": "hola",
+            "conversation": {
+              "additional_attributes": {},
+              "can_reply": true,
+              "channel": "Channel::Whatsapp",
+              "contact_inbox": {
+                "id": 1,
+                "contact_id": 1,
+                "inbox_id": 1,
+                "source_id": "573228854498",
+                "created_at": "2025-08-14T22:17:52.111Z",
+                "updated_at": "2025-08-14T22:17:52.111Z",
+                "hmac_verified": false,
+                "pubsub_token": "prJLRjLmZjHgCN1hfaWXduh1"
+              },
+              "id": 1,
+              "inbox_id": 1,
+              "messages": [
+                {
+                  "id": 71,
+                  "content": "hola",
+                  "account_id": 1,
+                  "inbox_id": 1,
+                  "conversation_id": 1,
+                  "message_type": 0,
+                  "created_at": 1755382115,
+                  "updated_at": "2025-08-16T22:08:35.977Z",
+                  "private": false,
+                  "status": "sent",
+                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y4OTFGNDlDRDgxNzI1REExRkQA",
+                  "content_type": "text",
+                  "content_attributes": {},
+                  "sender_type": "Contact",
+                  "sender_id": 1,
+                  "external_source_ids": {},
+                  "additional_attributes": {},
+                  "processed_message_content": "hola",
+                  "sentiment": {},
+                  "conversation": {
+                    "assignee_id": null,
+                    "unread_count": 2,
+                    "last_activity_at": 1755382115,
+                    "contact_inbox": {
+                      "source_id": "573228854499"
+                    }
+                  },
+                  "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": null,
+                    "id": 1,
+                    "identifier": null,
+                    "name": "Pedro Rodriguez",
+                    "phone_number": "+573228854498",
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                  }
+                }
+              ],
+              "labels": [],
+              "meta": {
+                "sender": {
+                  "additional_attributes": {},
+                  "custom_attributes": {},
+                  "email": null,
+                  "id": 1,
+                  "identifier": null,
+                  "name": "Pedro Rodriguez",
+                  "phone_number": "+573228854498",
+                  "thumbnail": "",
+                  "blocked": false,
+                  "type": "contact"
+                },
+                "assignee": null,
+                "team": null,
+                "hmac_verified": false
+              },
+              "status": "open",
+              "custom_attributes": {},
+              "snoozed_until": null,
+              "unread_count": 2,
+              "first_reply_created_at": "2025-08-15T02:02:56.597Z",
+              "priority": null,
+              "waiting_since": 1755223716,
+              "agent_last_seen_at": 1755379729,
+              "contact_last_seen_at": 0,
+              "last_activity_at": 1755382115,
+              "timestamp": 1755382115,
+              "created_at": 1755209872,
+              "updated_at": 1755382115.978963
+            },
+            "created_at": "2025-08-16T22:08:35.977Z",
+            "id": 71,
+            "inbox": {
+              "id": 1,
+              "name": "Valeia"
+            },
+            "message_type": "incoming",
+            "private": false,
+            "sender": {
+              "account": {
+                "id": 1,
+                "name": "WHITELABEL"
+              },
+              "additional_attributes": {},
+              "avatar": "",
+              "custom_attributes": {},
+              "email": null,
+              "id": 1,
+              "identifier": null,
+              "name": "Pedro Rodriguez",
+              "phone_number": "+573228854498",
+              "thumbnail": "",
+              "blocked": false
+            },
+            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y4OTFGNDlDRDgxNzI1REExRkQA",
+            "event": "message_created"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook-test/valeia-chatwoot",
+          "executionMode": "test"
+        }
+      }
     ]
   },
   "repo_name": "flujos_n8n",
@@ -1263,6 +1232,15 @@
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner"
   },
+  "shared": [
+    {
+      "createdAt": "2025-08-25T21:46:54.076Z",
+      "updatedAt": "2025-08-25T21:46:54.076Z",
+      "role": "workflow:owner",
+      "workflowId": "ayMXNtsNigR3wBBF",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
   "staticData": {
     "node:Programar Recordatorios": {
       "recurrenceRules": []
@@ -1270,6 +1248,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-25T22:31:25.093Z",
-  "versionId": "534d05d0-a774-4b2e-bc82-77fad8584a47"
+  "updatedAt": "2025-08-26T14:27:43.037Z",
+  "versionId": "752f6a3d-b458-4f41-b992-bd9c1d5f5d93"
 }
