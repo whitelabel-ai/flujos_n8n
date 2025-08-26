@@ -522,7 +522,13 @@
     },
     "Validacion creditos": {
       "main": [
-        [],
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "HTTP Request5",
@@ -2115,9 +2121,9 @@
               "leftValue": "={{ $json.Bloqueado }}",
               "rightValue": "False",
               "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
               }
             }
           ],
@@ -2211,7 +2217,7 @@
           "parameters": [
             {
               "name": "api_access_token",
-              "value": "={{ $('initData').item.json.api_access_token }}"
+              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
             },
             {
               "name": "Content-Type",
@@ -2235,6 +2241,7 @@
     },
     {
       "parameters": {
+        "content": "## message control\n",
         "height": 464,
         "width": 512
       },
@@ -2242,7 +2249,7 @@
       "typeVersion": 1,
       "position": [
         1408,
-        -1360
+        -1344
       ],
       "id": "12202c1a-1226-45f2-bcd8-8faa9e24c466",
       "name": "Sticky Note"
@@ -2255,7 +2262,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "3184",
+            "content-length": "2759",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -2276,7 +2283,7 @@
             "additional_attributes": {},
             "content_attributes": {},
             "content_type": "text",
-            "content": null,
+            "content": "hola",
             "conversation": {
               "additional_attributes": {},
               "can_reply": true,
@@ -2291,55 +2298,48 @@
                 "hmac_verified": false,
                 "pubsub_token": "prJLRjLmZjHgCN1hfaWXduh1"
               },
-              "id": 1,
+              "id": 4,
               "inbox_id": 1,
               "messages": [
                 {
-                  "id": 369,
-                  "content": null,
+                  "id": 438,
+                  "content": "hola",
                   "account_id": 1,
                   "inbox_id": 1,
-                  "conversation_id": 1,
+                  "conversation_id": 4,
                   "message_type": 0,
-                  "created_at": 1756144540,
-                  "updated_at": "2025-08-25T17:55:40.407Z",
+                  "created_at": 1756225905,
+                  "updated_at": "2025-08-26T16:31:45.669Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3MUZFNkQ4RjU3MEVBQzg4MTgA",
+                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3QTYxRUVCNTZDNTFCRjU2QjAA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
                   "sender_id": 1,
                   "external_source_ids": {},
                   "additional_attributes": {},
-                  "processed_message_content": null,
+                  "processed_message_content": "hola",
                   "sentiment": {},
                   "conversation": {
-                    "assignee_id": 2,
+                    "assignee_id": null,
                     "unread_count": 1,
-                    "last_activity_at": 1756144540,
+                    "last_activity_at": 1756225905,
                     "contact_inbox": {
                       "source_id": "573228854498"
                     }
                   },
-                  "attachments": [
-                    {
-                      "id": 22,
-                      "message_id": 369,
-                      "file_type": "video",
-                      "account_id": 1,
-                      "extension": null,
-                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBHdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--dbc3353d8b8f32eb9d8a4fe3c9a746d460065e6d/File.mp4",
-                      "thumb_url": "",
-                      "file_size": 15606384,
-                      "width": null,
-                      "height": null
-                    }
-                  ],
                   "sender": {
-                    "additional_attributes": {},
+                    "additional_attributes": {
+                      "city": "Villavicencio",
+                      "country": "Colombia",
+                      "description": "",
+                      "company_name": "Whitelabel",
+                      "country_code": "CO",
+                      "social_profiles": {}
+                    },
                     "custom_attributes": {},
-                    "email": null,
+                    "email": "pro.pedro0413@gmail.com",
                     "id": 1,
                     "identifier": null,
                     "name": "Pedro Rodriguez",
@@ -2353,9 +2353,16 @@
               "labels": [],
               "meta": {
                 "sender": {
-                  "additional_attributes": {},
+                  "additional_attributes": {
+                    "city": "Villavicencio",
+                    "country": "Colombia",
+                    "description": "",
+                    "company_name": "Whitelabel",
+                    "country_code": "CO",
+                    "social_profiles": {}
+                  },
                   "custom_attributes": {},
-                  "email": null,
+                  "email": "pro.pedro0413@gmail.com",
                   "id": 1,
                   "identifier": null,
                   "name": "Pedro Rodriguez",
@@ -2364,34 +2371,26 @@
                   "blocked": false,
                   "type": "contact"
                 },
-                "assignee": {
-                  "id": 2,
-                  "name": "whitelabel",
-                  "available_name": "whitelabel",
-                  "avatar_url": "",
-                  "type": "user",
-                  "availability_status": null,
-                  "thumbnail": ""
-                },
+                "assignee": null,
                 "team": null,
                 "hmac_verified": false
               },
-              "status": "open",
+              "status": "pending",
               "custom_attributes": {},
               "snoozed_until": null,
               "unread_count": 1,
-              "first_reply_created_at": "2025-08-15T02:02:56.597Z",
+              "first_reply_created_at": null,
               "priority": null,
-              "waiting_since": 1756142372,
-              "agent_last_seen_at": 1756144420,
+              "waiting_since": 1756225905,
+              "agent_last_seen_at": 0,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1756144540,
-              "timestamp": 1756144540,
-              "created_at": 1755209872,
-              "updated_at": 1756144540.41078
+              "last_activity_at": 1756225905,
+              "timestamp": 1756225905,
+              "created_at": 1756225905,
+              "updated_at": 1756225905.6722457
             },
-            "created_at": "2025-08-25T17:55:40.407Z",
-            "id": 369,
+            "created_at": "2025-08-26T16:31:45.669Z",
+            "id": 438,
             "inbox": {
               "id": 1,
               "name": "Valeia"
@@ -2403,10 +2402,17 @@
                 "id": 1,
                 "name": "WHITELABEL"
               },
-              "additional_attributes": {},
+              "additional_attributes": {
+                "city": "Villavicencio",
+                "country": "Colombia",
+                "description": "",
+                "company_name": "Whitelabel",
+                "country_code": "CO",
+                "social_profiles": {}
+              },
               "avatar": "",
               "custom_attributes": {},
-              "email": null,
+              "email": "pro.pedro0413@gmail.com",
               "id": 1,
               "identifier": null,
               "name": "Pedro Rodriguez",
@@ -2414,21 +2420,7 @@
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3MUZFNkQ4RjU3MEVBQzg4MTgA",
-            "attachments": [
-              {
-                "id": 22,
-                "message_id": 369,
-                "file_type": "video",
-                "account_id": 1,
-                "extension": null,
-                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBHdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--dbc3353d8b8f32eb9d8a4fe3c9a746d460065e6d/File.mp4",
-                "thumb_url": "",
-                "file_size": 15606384,
-                "width": null,
-                "height": null
-              }
-            ],
+            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3QTYxRUVCNTZDNTFCRjU2QjAA",
             "event": "message_created"
           },
           "webhookUrl": "https://automation.whitelabel.lat/webhook/valeia-chatwoot",
@@ -2445,11 +2437,20 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "7CI8d1lC1EC1eqnL"
   },
+  "shared": [
+    {
+      "createdAt": "2025-07-23T21:31:14.625Z",
+      "updatedAt": "2025-07-23T21:31:14.625Z",
+      "role": "workflow:owner",
+      "workflowId": "g6s8rN7yRyGhEwCu",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
   "staticData": {
     "node:Formbricks": {}
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-25T17:56:20.870Z",
-  "versionId": "60765afb-5972-4b4a-b1cb-a06d2f5bad7b"
+  "updatedAt": "2025-08-26T21:44:21.723Z",
+  "versionId": "d8b85d1f-c2b0-47b6-866f-b5a33613b9df"
 }
