@@ -30,32 +30,6 @@
         ]
       ]
     },
-    "OpenAI1": {
-      "main": [
-        [
-          {
-            "node": "Wait11",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait12",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait13",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Wait11": {
       "main": [
         [
@@ -218,7 +192,7 @@
       "main": [
         [
           {
-            "node": "OpenAI1",
+            "node": "Message a model1",
             "type": "main",
             "index": 0
           }
@@ -488,6 +462,32 @@
           }
         ]
       ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-05-22T03:11:30.320Z",
@@ -618,39 +618,6 @@
       ],
       "id": "b1b6b6b2-5d66-45cd-9e62-b29e441ebad1",
       "name": "Data"
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **Reemplaza siempre la palabra \"Dosis\" por \"Cantidad\"**.  \n- **No incluyas datos sensibles** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
-            }
-          ]
-        },
-        "jsonOutput": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        2016,
-        -704
-      ],
-      "id": "c7e0a775-e14d-44c0-b699-fadc2da7ce1a",
-      "name": "OpenAI1",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -947,8 +914,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1312,
-        -768
+        1872,
+        -752
       ],
       "id": "f66a9220-eca6-42a3-ba0e-7b6a6a6b8d6e",
       "name": "Sticky Note2"
@@ -1970,6 +1937,39 @@
       ],
       "id": "b16be175-31b3-40ec-8282-fda69612e161",
       "name": "Unir Mensajes"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=\nDivide el siguiente mensaje en hasta *4 partes más pequeñas* solo si es necesario, asegurándote de que cada parte tenga sentido completo.\n\n### *Reglas:*\n\n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en *una sola parte*.\n\n- Si es *mediano* (hasta *400 caracteres*), divídelo en *2 partes*.\n\n- Si es *largo* (hasta *600 caracteres*), divídelo en *3 partes*.\n\n- Si es *muy largo* (más de *600 caracteres*), agrégale una *parte4*.\n\n- *Evita dividir el mensaje innecesariamente*. Usa la *menor cantidad de partes posible*.\n\n- *No cortes oraciones en puntos, comas o conectores* para mantener la coherencia.\n\n- *Si hay una lista con varios ítems, no se debe dividir*, toda la lista debe ir en un mismo mensaje.\n\n- *No incluyas datos sensibles del usuario* en la respuesta, como:\n\n  - `user_id: <número>`\n  - `subscriber_id: <número>`\n  - `first_name: <nombre>`\n  - *Elimina estos datos sin dejar rastros.*\n\n- *Si no hay mensaje, no devuelvas nada.*\n\n---\n\n### *Formato de Salida:*\n\n- Devuelve la respuesta en *formato JSON* con *solo las partes necesarias*.\n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.\n- *Nunca uses comillas `\"` para resaltar palabras*. En su lugar, usa un solo asterisco: *palabra*.\n\n#### *Ejemplo de salida:*\n\n{\n\"parte1\": \"Texto de la primera parte.\",\n\"parte2\": \"Texto de la segunda parte.\"\n}\n\n### *Mensaje:*\n\n\"{{ $json.output }}\"\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2016,
+        -704
+      ],
+      "id": "c7e0a775-e14d-44c0-b699-fadc2da7ce1a",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -2200,11 +2200,20 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "7CI8d1lC1EC1eqnL"
   },
+  "shared": [
+    {
+      "createdAt": "2025-05-22T03:11:30.320Z",
+      "updatedAt": "2025-05-22T03:11:30.320Z",
+      "role": "workflow:owner",
+      "workflowId": "AdcpHFHuUVLPnrVw",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
   "staticData": {
     "node:Formbricks": {}
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-20T17:29:35.456Z",
-  "versionId": "fba5cce8-d22e-4afe-8f07-41121d603f52"
+  "updatedAt": "2025-08-26T17:06:22.888Z",
+  "versionId": "b4effe8a-10af-4eb1-8d1d-5a1789f1a820"
 }
