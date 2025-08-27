@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "AI Agent": {
       "main": [
@@ -57,17 +57,6 @@
       ]
     },
     "consultar_disponibilidad": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "consultar_eventos_dia": {
       "ai_tool": [
         [
           {
@@ -543,6 +532,17 @@
           }
         ]
       ]
+    },
+    "consultar_eventos_dia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-04T22:34:24.685Z",
@@ -733,34 +733,6 @@
       ],
       "id": "f43cf77d-59c9-4ed9-bef9-ede07b2b4ac4",
       "name": "consultar_disponibilidad",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "RMuQyYsn6eGZTZPX",
-          "name": "hola@whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "calendar": {
-          "__rl": true,
-          "value": "c_c6586519956e46090f3bb622f584fc361b4b6e3d57970bf898ebd0167cc7d90b@group.calendar.google.com",
-          "mode": "list",
-          "cachedResultName": "Prueba de Agendamiento ValeIA"
-        },
-        "timeMin": "={{ $fromAI('After', ``, 'string') }}",
-        "timeMax": "={{ $fromAI('Before', ``, 'string') }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
-      "position": [
-        2304,
-        -1168
-      ],
-      "id": "215d0da8-5ea9-4dad-87bb-27aa7b4bf74d",
-      "name": "consultar_eventos_dia",
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "RMuQyYsn6eGZTZPX",
@@ -1345,7 +1317,7 @@
       "parameters": {
         "content": "## RESPONS AGENT",
         "height": 728,
-        "width": 1720,
+        "width": 1928,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -1995,7 +1967,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "chatwood_onboarding_estarter",
+        "path": "test_chatwood_onboarding_estarter",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
@@ -2361,17 +2333,6 @@
       "name": "env"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        2112,
-        -1152
-      ],
-      "typeVersion": 1,
-      "id": "0796d4c4-00ea-4d7e-b247-08cc64dc0986",
-      "name": "Sticky Note6"
-    },
-    {
       "parameters": {
         "color": 3
       },
@@ -2417,161 +2378,37 @@
       ],
       "id": "9b5b1c95-0ac1-47f1-9448-0287795409d1",
       "name": "Validacion creditos_Bloqueado?"
-    }
-  ],
-  "pinData": {
-    "chatwoot": [
-      {
-        "json": {
-          "headers": {
-            "host": "automation.whitelabel.lat",
-            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "2392",
-            "accept": "application/json",
-            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-            "content-type": "application/json",
-            "x-forwarded-for": "44.195.58.80",
-            "x-forwarded-host": "automation.whitelabel.lat",
-            "x-forwarded-port": "443",
-            "x-forwarded-proto": "https",
-            "x-forwarded-server": "4f3b0c84f963",
-            "x-real-ip": "44.195.58.80"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "account": {
-              "id": 2,
-              "name": "Estarter.co"
-            },
-            "additional_attributes": {},
-            "content_attributes": {},
-            "content_type": "text",
-            "content": "probando agent main y memoria",
-            "conversation": {
-              "additional_attributes": {},
-              "can_reply": true,
-              "channel": "Channel::Whatsapp",
-              "contact_inbox": {
-                "id": 2,
-                "contact_id": 2,
-                "inbox_id": 2,
-                "source_id": "573008564836",
-                "created_at": "2025-08-14T22:53:46.809Z",
-                "updated_at": "2025-08-14T22:53:46.809Z",
-                "hmac_verified": false,
-                "pubsub_token": "KhrK1smnqLRgJKw1wsmn3oiK"
-              },
-              "id": 4,
-              "inbox_id": 2,
-              "messages": [
-                {
-                  "id": 479,
-                  "content": "probando agent main y memoria",
-                  "account_id": 2,
-                  "inbox_id": 2,
-                  "conversation_id": 4,
-                  "message_type": 0,
-                  "created_at": 1756245110,
-                  "updated_at": "2025-08-26T21:51:50.490Z",
-                  "private": false,
-                  "status": "sent",
-                  "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhgWM0VCMDQ3MzEwN0JFMTBBNUZDQjQ0OQA=",
-                  "content_type": "text",
-                  "content_attributes": {},
-                  "sender_type": "Contact",
-                  "sender_id": 2,
-                  "external_source_ids": {},
-                  "additional_attributes": {},
-                  "processed_message_content": "probando agent main y memoria",
-                  "sentiment": {},
-                  "conversation": {
-                    "assignee_id": null,
-                    "unread_count": 10,
-                    "last_activity_at": 1756245110,
-                    "contact_inbox": {
-                      "source_id": "573008564836"
-                    }
-                  },
-                  "sender": {
-                    "additional_attributes": {},
-                    "custom_attributes": {},
-                    "email": null,
-                    "id": 2,
-                    "identifier": null,
-                    "name": "😃",
-                    "phone_number": "+573008564836",
-                    "thumbnail": "",
-                    "blocked": false,
-                    "type": "contact"
-                  }
-                }
-              ],
-              "labels": [],
-              "meta": {
-                "sender": {
-                  "additional_attributes": {},
-                  "custom_attributes": {},
-                  "email": null,
-                  "id": 2,
-                  "identifier": null,
-                  "name": "😃",
-                  "phone_number": "+573008564836",
-                  "thumbnail": "",
-                  "blocked": false,
-                  "type": "contact"
-                },
-                "assignee": null,
-                "team": null,
-                "hmac_verified": false
-              },
-              "status": "open",
-              "custom_attributes": {},
-              "snoozed_until": null,
-              "unread_count": 10,
-              "first_reply_created_at": "2025-08-26T01:06:12.461Z",
-              "priority": null,
-              "waiting_since": 1756245072,
-              "agent_last_seen_at": 1756170444,
-              "contact_last_seen_at": 0,
-              "last_activity_at": 1756245110,
-              "timestamp": 1756245110,
-              "created_at": 1756170293,
-              "updated_at": 1756245110.491895
-            },
-            "created_at": "2025-08-26T21:51:50.490Z",
-            "id": 479,
-            "inbox": {
-              "id": 2,
-              "name": "Whatsapp"
-            },
-            "message_type": "incoming",
-            "private": false,
-            "sender": {
-              "account": {
-                "id": 2,
-                "name": "Estarter.co"
-              },
-              "additional_attributes": {},
-              "avatar": "",
-              "custom_attributes": {},
-              "email": null,
-              "id": 2,
-              "identifier": null,
-              "name": "😃",
-              "phone_number": "+573008564836",
-              "thumbnail": "",
-              "blocked": false
-            },
-            "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhgWM0VCMDQ3MzEwN0JFMTBBNUZDQjQ0OQA=",
-            "event": "message_created"
-          },
-          "webhookUrl": "https://automation.whitelabel.lat/webhook-test/test_chatwood_onboarding_estarter",
-          "executionMode": "test"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "c_c6586519956e46090f3bb622f584fc361b4b6e3d57970bf898ebd0167cc7d90b@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Prueba de Agendamiento ValeIA"
+        },
+        "timeMin": "={{ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2256,
+        -1184
+      ],
+      "id": "215d0da8-5ea9-4dad-87bb-27aa7b4bf74d",
+      "name": "consultar_eventos_dia",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "RMuQyYsn6eGZTZPX",
+          "name": "hola@whitelabel.lat"
         }
       }
-    ]
-  },
+    }
+  ],
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -2601,6 +2438,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-26T22:20:20.525Z",
-  "versionId": "bc2dc611-bffc-4524-b183-52716cb2679d"
+  "updatedAt": "2025-08-27T22:13:51.452Z",
+  "versionId": "e54c43b4-f6ac-4058-8a5b-344d7485638f"
 }
