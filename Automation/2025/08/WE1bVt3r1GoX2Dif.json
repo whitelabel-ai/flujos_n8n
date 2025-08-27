@@ -81,21 +81,21 @@
         ],
         [
           {
-            "node": "No Operation, do nothing6",
+            "node": "setData",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Download media3",
+            "node": "Analyze document",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Download media2",
+            "node": "Analyze image1",
             "type": "main",
             "index": 0
           }
@@ -142,6 +142,11 @@
             "node": "Message a model",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Redis5",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -157,77 +162,11 @@
         ]
       ]
     },
-    "Download media3": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download media2": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Analyze image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Analyze image": {
-      "main": [
-        [
-          {
-            "node": "DataImage",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "DataImage": {
       "main": [
         [
           {
             "node": "setData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request3": {
-      "main": [
-        [
-          {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "DataPdf",
             "type": "main",
             "index": 0
           }
@@ -272,11 +211,6 @@
         [
           {
             "node": "Mony Coach?",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Redis5",
             "type": "main",
             "index": 0
           }
@@ -635,11 +569,22 @@
         ]
       ]
     },
-    "No Operation, do nothing6": {
+    "Analyze document": {
       "main": [
         [
           {
-            "node": "setData",
+            "node": "DataPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image1": {
+      "main": [
+        [
+          {
+            "node": "DataImage",
             "type": "main",
             "index": 0
           }
@@ -663,8 +608,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        3344,
-        -352
+        3008,
+        -336
       ],
       "id": "87a3cf33-02b2-4f95-b01c-d0ec6bf57ccd",
       "name": "Google Gemini Chat Model",
@@ -685,8 +630,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        3488,
-        -320
+        3152,
+        -304
       ],
       "id": "0b7f3d0b-02de-4c60-be2a-898af35be802",
       "name": "Redis Chat Memory",
@@ -708,8 +653,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        3888,
-        -576
+        3552,
+        -560
       ],
       "id": "18f6a6f4-4df7-4a67-adab-e737189410b1",
       "name": "AI Agent",
@@ -743,8 +688,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2416,
-        -592
+        2080,
+        -576
       ],
       "id": "7822a46e-594a-4b8b-b58f-26db00f39111",
       "name": "Message a model",
@@ -758,91 +703,17 @@
     {
       "parameters": {
         "content": "## AGENT MAIN",
-        "height": 568,
+        "height": 584,
         "width": 2912
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2160,
-        -672
+        2064,
+        -688
       ],
       "id": "2c09937a-3385-4c9a-aa98-b1d229248b78",
       "name": "Sticky Note1"
-    },
-    {
-      "parameters": {
-        "resource": "media",
-        "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $('Start').item.json.messages[0].image.id }}"
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2848,
-        -912
-      ],
-      "id": "40dcf37b-6388-43e9-897d-7c503973d498",
-      "name": "Download media2",
-      "webhookId": "493b6747-9b15-4812-9d3a-42707f26b040",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "vxdq4Km4pHfuOQVV",
-          "name": "MONY"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "analyze",
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "text": "=Actúa como un contador público certificado experto en Colombia, con amplios conocimientos tributarios y financieros en América Latina. También eres un ingeniero experto en prompts y análisis OCR. Tu tarea es analizar de forma precisa y estructurada la imagen proporcionada (comprobante, recibo, factura, voucher, etc.) y extraer la siguiente información en formato JSON, validando cada campo cuidadosamente:\n\n1. **Tipo de Documento**: (Ej: Factura POS, Factura Electrónica, Recibo de Caja, Voucher, Cuenta de Cobro, etc.)\n2. **Fecha del Comprobante**: en formato `dd-mm-yyyy`. (Validar que no esté incompleta o ausente).\n3. **Monto Total**: En pesos colombianos (COP). Usar solo valores totales (ignorar subtotales).\n4. **Glosa / Descripción**: Breve texto explicando de qué trata el gasto o ingreso (Ej: \"Compra de víveres\", \"Pago de arriendo\", etc.)\n5. **Proveedor o Comercio**: Nombre del establecimiento donde se hizo la transacción.\n6. **NIT o Documento Tributario**: Detecta y extrae el NIT del proveedor. Si no existe NIT, intenta identificar cédula o algún documento oficial. Si no se encuentra, informar que no hay documento tributario.\n7. **Método de Pago**: Detectar si fue con Efectivo, Tarjeta de Crédito, Tarjeta de Débito, Transferencia, Nequi, Daviplata, etc. (En caso de duda, indicar \"No especificado\").\n8. **Categoría sugerida** (opcional): Propón una categoría financiera general (Ej: Alimentación, Transporte, Servicios, Arriendo, etc.).\n9. **Ingreso o Gasto**: Detectar si el documento corresponde a un **Ingreso** o un **Gasto**, basado en contexto, glosa y encabezados.\n\nAdemás, incluye al final una breve descripción en lenguaje natural del tipo de imagen analizada. Por ejemplo: “Se trata de un recibo POS con fecha clara y valor total, pero no se detecta NIT.” o “Factura electrónica válida con todos los campos presentes”.\n\n🔎 Si falta alguno de los datos obligatorios (como fecha, monto), indícalo explícitamente con el mensaje `\"error\": \"Campo faltante: ...\"` o `\"advertencia\": \"No se detectó la fecha del documento \"`.\n\nTu respuesta debe estar en formato JSON estructurado y fácil de procesar por un sistema automatizado.\n",
-        "inputType": "base64",
-        "simplify": false,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        3296,
-        -912
-      ],
-      "id": "0066b4a8-7a55-420c-95d5-92a3435c873e",
-      "name": "Analyze image",
-      "credentials": {
-        "openAiApi": {
-          "id": "UYsXoFpwT6Oh1GeF",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.url }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "whatsAppApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3072,
-        -912
-      ],
-      "id": "550ddcbe-f809-4e62-a832-a6d9d4595437",
-      "name": "HTTP Request",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "vxdq4Km4pHfuOQVV",
-          "name": "MONY"
-        }
-      }
     },
     {
       "parameters": {
@@ -863,7 +734,7 @@
             {
               "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
               "name": "mensaje",
-              "value": "=<img>{{ $json.choices[0].message.content }}</img>",
+              "value": "=<img>{{ $json.content.parts[0].text }}</img>",
               "type": "string"
             },
             {
@@ -879,8 +750,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3520,
-        -912
+        2944,
+        -896
       ],
       "id": "e4f21b1b-181b-4fe4-80af-28809810e016",
       "name": "DataImage"
@@ -890,69 +761,11 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        5088,
-        -1104
+        4528,
+        -1136
       ],
       "id": "c11e559c-ae4c-4d12-bcd2-fba45377f142",
       "name": "No Operation, do nothing1"
-    },
-    {
-      "parameters": {
-        "resource": "media",
-        "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $('Start').item.json.messages[0].document.id }}"
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2848,
-        -1056
-      ],
-      "id": "72ce6b03-5fbc-4001-b488-184f04fe1101",
-      "name": "Download media3",
-      "webhookId": "e43db6fe-ae74-4b11-b60f-6280d4eb5a46",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "vxdq4Km4pHfuOQVV",
-          "name": "MONY"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.url }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "whatsAppApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3072,
-        -1056
-      ],
-      "id": "a5781a49-b26e-43ba-930f-4495438e85df",
-      "name": "HTTP Request3",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "vxdq4Km4pHfuOQVV",
-          "name": "MONY"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "pdf",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        3296,
-        -1056
-      ],
-      "id": "fd52f943-12d0-42f2-a5b9-261eec5c57df",
-      "name": "Extract from File"
     },
     {
       "parameters": {
@@ -973,7 +786,7 @@
             {
               "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
               "name": "mensaje",
-              "value": "=<pdf>{{ $json.text }}</pdf>",
+              "value": "=<pdf>{{ $json.content.parts[0].text }}</pdf>",
               "type": "string"
             },
             {
@@ -989,8 +802,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3520,
-        -1056
+        2944,
+        -1088
       ],
       "id": "89262db2-4527-4c2a-979d-f60c7db35b00",
       "name": "DataPdf"
@@ -1023,8 +836,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        4864,
-        -1200
+        4304,
+        -1232
       ],
       "id": "ff67dae3-4a39-4d96-9abd-db1ae9a4f653",
       "name": "If1"
@@ -1039,8 +852,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        4640,
-        -1200
+        4080,
+        -1232
       ],
       "id": "46df5375-b019-4eee-b281-4fd31038a4c2",
       "name": "Redis",
@@ -1058,8 +871,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        4416,
-        -1200
+        3856,
+        -1232
       ],
       "id": "999d6c91-8934-41cb-a53e-464f0f9d4588",
       "name": "Wait",
@@ -1075,8 +888,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        4192,
-        -1200
+        3632,
+        -1232
       ],
       "id": "8c580517-e270-425d-b5cd-211f6a63289d",
       "name": "Push Message",
@@ -1113,8 +926,8 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1.1,
       "position": [
-        3968,
-        -1200
+        3408,
+        -1232
       ],
       "id": "e9cb4e6b-25ec-4c69-aacb-cd37cebcaa0c",
       "name": "Execution Data"
@@ -1160,8 +973,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3744,
-        -1200
+        3168,
+        -1232
       ],
       "id": "a5cb853c-74a4-4522-8b2d-f3690d0cdc89",
       "name": "setData"
@@ -1301,8 +1114,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        2400,
-        -1232
+        2496,
+        -1280
       ],
       "id": "da51c290-1122-4c6d-bd98-7c3961ee3dc1",
       "name": "type message Whatsap"
@@ -1324,8 +1137,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        5088,
-        -1296
+        4528,
+        -1328
       ],
       "id": "3c50b61a-cf36-44bb-91f1-9370e27dd35e",
       "name": "Unir Mensajes"
@@ -1359,8 +1172,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3520,
-        -1328
+        2960,
+        -1264
       ],
       "id": "84c6e336-b293-438e-93cf-6da160ff014a",
       "name": "DataText"
@@ -1370,8 +1183,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3296,
-        -1328
+        2736,
+        -1264
       ],
       "id": "f878dfc0-f125-48e8-9f6b-fef6f4a1cae9",
       "name": "No Operation, do nothing4"
@@ -1411,8 +1224,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3520,
-        -1488
+        2960,
+        -1456
       ],
       "id": "3e24daa3-a133-410f-8991-5cb2ac26e487",
       "name": "DataAudio"
@@ -1427,7 +1240,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2128,
+        2080,
         -1504
       ],
       "id": "9f8d1a54-1978-4074-beee-d207ab83b0d9",
@@ -1465,8 +1278,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        1808,
-        -1184
+        2112,
+        -1248
       ]
     },
     {
@@ -1480,8 +1293,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        2816,
-        -592
+        2480,
+        -576
       ],
       "id": "29a010e7-66fc-478d-992a-b6a5e6dfd2dc",
       "name": "Mony Coach?"
@@ -1514,8 +1327,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3440,
-        -592
+        3104,
+        -576
       ],
       "id": "d78950c6-c05f-4130-ad8f-7733b274bdaa",
       "name": "If"
@@ -1588,8 +1401,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        3680,
-        -608
+        3344,
+        -592
       ],
       "id": "532a59e6-c27b-4ede-b0cb-27a17a20a4b2",
       "name": "Agent Coach"
@@ -1601,8 +1414,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2848,
-        -368
+        2512,
+        -352
       ],
       "id": "0f68662c-31b4-436c-b2e7-bb9d931a42cf",
       "name": "Google Gemini Chat Model1",
@@ -1622,8 +1435,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        2976,
-        -368
+        2640,
+        -352
       ],
       "id": "1fee46a5-0a99-47f8-afc9-ce7bad9d74c2",
       "name": "Redis Chat Memory1",
@@ -1681,8 +1494,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3216,
-        -592
+        2880,
+        -576
       ],
       "id": "dd4def68-2554-42cc-8eb2-2fa65a620578",
       "name": "Data"
@@ -1779,8 +1592,8 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        3840,
-        -224
+        4272,
+        -448
       ],
       "id": "75ad0f35-5833-4935-9af8-d4a1d904a93b",
       "name": "create_user_category",
@@ -1839,8 +1652,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        4240,
-        -576
+        3904,
+        -560
       ],
       "id": "0f251e60-dda4-47bb-803a-e92c75ed0165",
       "name": "If2"
@@ -1853,8 +1666,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        2720,
-        -704
+        4752,
+        -1392
       ],
       "id": "1434ade7-12d7-4102-88f7-94e7ba282e96",
       "name": "Redis5",
@@ -1919,8 +1732,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        3632,
-        -96
+        4272,
+        -240
       ],
       "id": "f2b5628a-2541-4bc9-ad13-4156571a16b7",
       "name": "register_transaction",
@@ -1951,8 +1764,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        3840,
-        -368
+        4448,
+        -656
       ],
       "id": "d34aa9bd-4870-4c3c-a094-c6ac6c5e7868",
       "name": "get_user_categories",
@@ -2004,8 +1817,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        3632,
-        -352
+        4272,
+        -656
       ],
       "id": "cee7d5dd-631b-4fbb-b1be-1f2dca06d85c",
       "name": "get_transactions",
@@ -2046,8 +1859,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        3840,
-        -80
+        4448,
+        -448
       ],
       "id": "965f3c61-f7b4-4213-94d8-17f73ed91af7",
       "name": "update_category_budget",
@@ -2103,8 +1916,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4048,
-        -336
+        4640,
+        -656
       ],
       "id": "106f762f-584a-491a-9edb-05ad5431a043",
       "name": "get_saving_goals",
@@ -2145,8 +1958,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4064,
-        -48
+        4640,
+        -240
       ],
       "id": "e1deaf4d-27eb-4ba5-84c8-b5e446414205",
       "name": "update_progres_saving_goals",
@@ -2203,8 +2016,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4064,
-        -192
+        4640,
+        -448
       ],
       "id": "149dd369-1577-40e4-a318-97712bf2d7db",
       "name": "create_saving_goal",
@@ -2235,8 +2048,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4256,
-        -336
+        4800,
+        -656
       ],
       "id": "f48cccfb-8a74-402a-b7c0-6233f8d9ae16",
       "name": "get_user_subscriptions",
@@ -2309,8 +2122,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4272,
-        -144
+        4800,
+        -448
       ],
       "id": "e0be9211-d710-488a-9e2f-f71fb1494eef",
       "name": "create_user_subscription",
@@ -2375,8 +2188,8 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4272,
-        0
+        4800,
+        -240
       ],
       "id": "9354661b-d461-4213-a9b5-32e991a55524",
       "name": "updated_user_subscriptions",
@@ -2402,8 +2215,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        3296,
-        -1488
+        2736,
+        -1456
       ],
       "id": "77a7b6e4-d66d-440f-ba2b-eaefa0901559",
       "name": "Transcribe a recording",
@@ -2418,6 +2231,8 @@
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -2435,16 +2250,24 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3792,
-        240
+        3360,
+        0
       ],
       "id": "ec06c713-6e92-46c3-9777-3dd2cf572785",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     },
     {
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -2462,11 +2285,17 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3392,
-        416
+        2960,
+        176
       ],
       "id": "64498322-2d35-433e-a2a6-ede4c3c8e4d5",
-      "name": "HTTP Request2"
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     },
     {
       "parameters": {
@@ -2491,15 +2320,15 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3072,
-        256
+        2640,
+        16
       ],
       "id": "087ce7a6-9baa-4e63-8fea-98eb69cb0d45",
       "name": "HTTP Request4",
       "credentials": {
         "httpHeaderAuth": {
-          "id": "ijWOk4uGRwt4GzN5",
-          "name": "Valeia - Hablaya"
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
         }
       }
     },
@@ -2510,8 +2339,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3360,
-        256
+        2928,
+        16
       ],
       "id": "d5d571dc-c0c9-4b6f-9fb2-c492ef8eed9e",
       "name": "Wait14",
@@ -2524,8 +2353,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2944,
-        432
+        2512,
+        192
       ],
       "id": "6501f256-4afb-4522-8543-f4d13fdcdbf3",
       "name": "Wait15",
@@ -2559,8 +2388,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3168,
-        432
+        2736,
+        192
       ],
       "id": "7fbce335-cd3c-405e-a61f-d7d575595809",
       "name": "If15"
@@ -2570,8 +2399,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3584,
-        464
+        3152,
+        224
       ],
       "id": "88a2fc94-335e-48e0-a0c1-db90c975bd4e",
       "name": "No Operation, do nothing"
@@ -2604,8 +2433,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3568,
-        256
+        3136,
+        16
       ],
       "id": "860c9625-c3d2-4c02-b55b-3f5a769c5c89",
       "name": "If16"
@@ -2615,8 +2444,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4000,
-        272
+        3568,
+        32
       ],
       "id": "a0534563-1456-4128-a8f9-d294fe283fcf",
       "name": "No Operation, do nothing14"
@@ -2628,8 +2457,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2944,
-        656
+        2512,
+        416
       ],
       "id": "d1347171-118c-4289-a67d-8f626d809bfc",
       "name": "Wait16",
@@ -2663,8 +2492,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3168,
-        656
+        2736,
+        416
       ],
       "id": "9e690e60-3689-4435-9551-6fa1c10f4bcb",
       "name": "If17"
@@ -2674,8 +2503,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3584,
-        656
+        3152,
+        416
       ],
       "id": "a080ae7c-7837-4d8f-88f6-f421144ffa23",
       "name": "No Operation, do nothing15"
@@ -2684,6 +2513,8 @@
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -2701,11 +2532,17 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3408,
-        640
+        2976,
+        400
       ],
       "id": "57fe7fa2-37fe-4c69-a600-88b13625fa46",
-      "name": "HTTP Request5"
+      "name": "HTTP Request5",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     },
     {
       "parameters": {
@@ -2717,8 +2554,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2464,
-        192
+        2064,
+        -48
       ],
       "id": "12593e2d-97c8-4ac2-b62b-0091c30b6969",
       "name": "Sticky Note3"
@@ -2744,8 +2581,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2592,
-        256
+        2160,
+        16
       ],
       "id": "4b6a03eb-4443-47eb-bd60-787f1aa34cb1",
       "name": "Message a model2",
@@ -2797,22 +2634,84 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2016,
-        -1184
+        2320,
+        -1248
       ],
       "id": "620ed4ce-4360-41a2-9252-6d1a35d604d8",
       "name": "initData"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash-lite",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash-lite"
+        },
+        "text": "Actúa como un contador público certificado experto en Colombia, con amplios conocimientos tributarios y financieros en América Latina. También eres un ingeniero experto en prompts y análisis OCR. Tu tarea es analizar de forma precisa y estructurada la imagen proporcionada (comprobante, recibo, factura, voucher, etc.) y extraer la siguiente información en formato JSON, validando cada campo cuidadosamente:\n\n1. **Tipo de Documento**: (Ej: Factura POS, Factura Electrónica, Recibo de Caja, Voucher, Cuenta de Cobro, etc.)\n2. **Fecha del Comprobante**: en formato `dd-mm-yyyy`. (Validar que no esté incompleta o ausente).\n3. **Monto Total**: En pesos colombianos (COP). Usar solo valores totales (ignorar subtotales).\n4. **Glosa / Descripción**: Breve texto explicando de qué trata el gasto o ingreso (Ej: \"Compra de víveres\", \"Pago de arriendo\", etc.)\n5. **Proveedor o Comercio**: Nombre del establecimiento donde se hizo la transacción.\n6. **NIT o Documento Tributario**: Detecta y extrae el NIT del proveedor. Si no existe NIT, intenta identificar cédula o algún documento oficial. Si no se encuentra, informar que no hay documento tributario.\n7. **Método de Pago**: Detectar si fue con Efectivo, Tarjeta de Crédito, Tarjeta de Débito, Transferencia, Nequi, Daviplata, etc. (En caso de duda, indicar \"No especificado\").\n8. **Categoría sugerida** (opcional): Propón una categoría financiera general (Ej: Alimentación, Transporte, Servicios, Arriendo, etc.).\n9. **Ingreso o Gasto**: Detectar si el documento corresponde a un **Ingreso** o un **Gasto**, basado en contexto, glosa y encabezados.\n\nAdemás, incluye al final una breve descripción en lenguaje natural del tipo de imagen analizada. Por ejemplo: “Se trata de un recibo POS con fecha clara y valor total, pero no se detecta NIT.” o “Factura electrónica válida con todos los campos presentes”.\n\n🔎 Si falta alguno de los datos obligatorios (como fecha, monto), indícalo explícitamente con el mensaje `\"error\": \"Campo faltante: ...\"` o `\"advertencia\": \"No se detectó la fecha del documento \"`.\n\nTu respuesta debe estar en formato JSON estructurado y fácil de procesar por un sistema automatizado.\n",
+        "imageUrls": "={{ $json.messages[0].file.body }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        3296,
-        -1184
+        2720,
+        -896
       ],
-      "id": "21a91818-34d4-4ff5-8c49-7268d6c4e081",
-      "name": "No Operation, do nothing6"
+      "id": "d5a36439-8cfe-4ec2-a915-3230b793134b",
+      "name": "Analyze image1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash-lite",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash-lite"
+        },
+        "text": "Actúa como un contador público certificado experto en Colombia, con amplios conocimientos tributarios y financieros en América Latina. También eres un ingeniero experto en prompts y análisis OCR. Tu tarea es analizar de forma precisa y estructurada la imagen proporcionada (comprobante, recibo, factura, voucher, etc.) y extraer la siguiente información en formato JSON, validando cada campo cuidadosamente:\n\n1. **Tipo de Documento**: (Ej: Factura POS, Factura Electrónica, Recibo de Caja, Voucher, Cuenta de Cobro, etc.)\n2. **Fecha del Comprobante**: en formato `dd-mm-yyyy`. (Validar que no esté incompleta o ausente).\n3. **Monto Total**: En pesos colombianos (COP). Usar solo valores totales (ignorar subtotales).\n4. **Glosa / Descripción**: Breve texto explicando de qué trata el gasto o ingreso (Ej: \"Compra de víveres\", \"Pago de arriendo\", etc.)\n5. **Proveedor o Comercio**: Nombre del establecimiento donde se hizo la transacción.\n6. **NIT o Documento Tributario**: Detecta y extrae el NIT del proveedor. Si no existe NIT, intenta identificar cédula o algún documento oficial. Si no se encuentra, informar que no hay documento tributario.\n7. **Método de Pago**: Detectar si fue con Efectivo, Tarjeta de Crédito, Tarjeta de Débito, Transferencia, Nequi, Daviplata, etc. (En caso de duda, indicar \"No especificado\").\n8. **Categoría sugerida** (opcional): Propón una categoría financiera general (Ej: Alimentación, Transporte, Servicios, Arriendo, etc.).\n9. **Ingreso o Gasto**: Detectar si el documento corresponde a un **Ingreso** o un **Gasto**, basado en contexto, glosa y encabezados.\n\nAdemás, incluye al final una breve descripción en lenguaje natural del tipo de imagen analizada. Por ejemplo: “Se trata de un recibo POS con fecha clara y valor total, pero no se detecta NIT.” o “Factura electrónica válida con todos los campos presentes”.\n\n🔎 Si falta alguno de los datos obligatorios (como fecha, monto), indícalo explícitamente con el mensaje `\"error\": \"Campo faltante: ...\"` o `\"advertencia\": \"No se detectó la fecha del documento \"`.\n\nTu respuesta debe estar en formato JSON estructurado y fácil de procesar por un sistema automatizado.",
+        "documentUrls": "={{ $json.messages[0].file.body }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        -1088
+      ],
+      "id": "df778fb6-a403-4e47-83fe-8b4231be571e",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Tools\n",
+        "height": 560,
+        "width": 768,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4192,
+        -672
+      ],
+      "id": "cea1dcd9-c346-4d8b-9070-e140483654e1",
+      "name": "Sticky Note2"
     }
   ],
   "pinData": {
@@ -2820,7 +2719,7 @@
       {
         "json": {
           "metadata": {
-            "account_id": "1",
+            "account_id": "3",
             "conversation_id": "1"
           },
           "contacts": [
@@ -2834,15 +2733,15 @@
           "messages": [
             {
               "from": "+573228854498",
-              "id": "71",
-              "timestamp": "1755382115",
+              "id": "20",
+              "timestamp": "1756277433",
               "text": {
-                "body": "hola"
-              },
-              "file": {
                 "body": ""
               },
-              "type": "text"
+              "file": {
+                "body": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b3fbe689974646b692540c923cb7f796d3488108/File.jpg"
+              },
+              "type": "image"
             }
           ],
           "field": [],
@@ -2861,7 +2760,7 @@
                 "id": "55177fda-6c10-4641-a758-53a1c54da974",
                 "nombre": "Comprar un PC",
                 "montoObjetivo": "3000000",
-                "montoActual": "200000",
+                "montoActual": "400000",
                 "fechaObjetivo": "2025-08-23T00:00:00.000Z",
                 "estado": "activa",
                 "fechaCreacion": "2025-08-24T04:47:09.954Z",
@@ -2885,9 +2784,9 @@
             ],
             "estadisticas": {
               "ingresosMes": 0,
-              "gastosMes": 103000,
-              "balanceMes": -103000,
-              "totalTransaccionesMes": 4,
+              "gastosMes": 123000,
+              "balanceMes": -123000,
+              "totalTransaccionesMes": 5,
               "metasActivas": 1,
               "suscripcionesActivas": 1
             }
@@ -2913,8 +2812,15 @@
     }
   ],
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-08-27T07:22:21.261Z",
+      "updatedAt": "2025-08-27T07:22:21.261Z",
+      "id": "yewU12nVfiCDIjkl",
+      "name": "PRODUCCION"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2025-08-26T19:15:22.813Z",
-  "versionId": "3db94363-07a1-4cbc-87eb-65b28f8dcf21"
+  "updatedAt": "2025-08-27T20:52:38.527Z",
+  "versionId": "e7bbbfa6-7b6c-45ac-a079-ec31c96f6401"
 }
