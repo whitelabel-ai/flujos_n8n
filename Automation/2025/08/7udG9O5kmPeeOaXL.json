@@ -59,14 +59,14 @@
         ],
         [
           {
-            "node": "Send message",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Send message1",
+            "node": "HTTP Request3",
             "type": "main",
             "index": 0
           }
@@ -818,58 +818,6 @@
     },
     {
       "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $json.contacts[0].wa_id }}",
-        "textBody": "=📄 ¡ Gracias por enviarnos tu documento.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀",
-        "additionalFields": {
-          "previewUrl": true
-        }
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2752,
-        3552
-      ],
-      "id": "c7acc31c-2cb8-4257-aa32-ffbc06fafc8a",
-      "name": "Send message",
-      "webhookId": "29fa50ac-53c1-42bc-9ed9-84134f0b2e06",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "vxdq4Km4pHfuOQVV",
-          "name": "MONY"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "={{ $json.metadata.phone_number_id }}",
-        "recipientPhoneNumber": "=+{{ $json.contacts[0].wa_id }}",
-        "textBody": "=📄 ¡ Gracias por enviarnos tu imagen.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀",
-        "additionalFields": {
-          "previewUrl": true
-        }
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        2752,
-        3728
-      ],
-      "id": "65ef6fa7-138e-4132-8d03-cdf8bfeb1545",
-      "name": "Send message1",
-      "webhookId": "957cbdff-242d-4dad-addc-8ed0a2cfd02b",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "vxdq4Km4pHfuOQVV",
-          "name": "MONY"
-        }
-      }
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -1180,6 +1128,8 @@
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -1201,12 +1151,20 @@
         4944
       ],
       "id": "abdde90b-5827-42ac-88d8-bdb2ad1f775a",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     },
     {
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -1228,7 +1186,13 @@
         5104
       ],
       "id": "c0905feb-3a96-4246-b229-eeecf4996d21",
-      "name": "HTTP Request2"
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     },
     {
       "parameters": {
@@ -1260,8 +1224,8 @@
       "name": "HTTP Request4",
       "credentials": {
         "httpHeaderAuth": {
-          "id": "ijWOk4uGRwt4GzN5",
-          "name": "Valeia - Hablaya"
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
         }
       }
     },
@@ -1269,6 +1233,8 @@
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -1290,7 +1256,13 @@
         5264
       ],
       "id": "a502d36a-e50b-4bd9-b4da-1a14c34a7592",
-      "name": "HTTP Request5"
+      "name": "HTTP Request5",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     },
     {
       "parameters": {
@@ -1564,6 +1536,76 @@
       ],
       "id": "87a3f79f-114c-42e1-9062-8fe70c3be241",
       "name": "initData"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"📄 ¡ Gracias por enviarnos tu documento.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀\",\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2752,
+        3552
+      ],
+      "id": "3875b2e5-fe15-4652-b0c8-593eb17369e6",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"📄 ¡ Gracias por enviarnos tu imagen.\nSin embargo, para poder procesarlo y ayudarte con el análisis, primero necesitas estar registrado en **MONY**.\nEsto nos permite guardar tu información de forma segura y ofrecerte una experiencia personalizada. 🧠✨\n\nUna vez estés dentro, ¡estaremos listos para ayudarte a organizar tus finanzas como un pro! 💸🚀\",\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2752,
+        3712
+      ],
+      "id": "6d21c50b-5e3d-4f70-ac49-a10ec1958d18",
+      "name": "HTTP Request3",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1621,6 +1663,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-08-26T17:07:45.406Z",
-  "versionId": "8898aead-84b3-46b0-a4b1-8650d3168f96"
+  "updatedAt": "2025-08-27T07:15:57.678Z",
+  "versionId": "fb053e71-2bb3-4207-9eea-369ebf81d305"
 }
