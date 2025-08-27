@@ -414,7 +414,7 @@
             "index": 0
           },
           {
-            "node": "Tool Contador de mensajes",
+            "node": "Message a model",
             "type": "main",
             "index": 0
           }
@@ -519,42 +519,6 @@
           }
         ]
       ]
-    },
-    "Validacion creditos": {
-      "main": [
-        [
-          {
-            "node": "Message a model",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "HTTP Request5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Tool Contador de mensajes": {
-      "main": [
-        [
-          {
-            "node": "Validacion creditos",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Message a model",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "createdAt": "2025-07-23T21:31:14.625Z",
@@ -563,7 +527,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "Valeia-Bot-whatsap",
+  "name": "Valeia",
   "nodes": [
     {
       "parameters": {
@@ -847,13 +811,11 @@
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "api_access_token",
-              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
-            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -872,7 +834,13 @@
         96
       ],
       "id": "e8eb0649-0cca-4e98-8c71-c59b2d7893c7",
-      "name": "HTTP Request"
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ijWOk4uGRwt4GzN5",
+          "name": "Valeia - Hablaya"
+        }
+      }
     },
     {
       "parameters": {
@@ -1075,13 +1043,11 @@
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "api_access_token",
-              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
-            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -1100,19 +1066,23 @@
         80
       ],
       "id": "a7a41322-c5b9-46b5-9047-f116b8be7d04",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ijWOk4uGRwt4GzN5",
+          "name": "Valeia - Hablaya"
+        }
+      }
     },
     {
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "api_access_token",
-              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
-            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -1131,19 +1101,23 @@
         256
       ],
       "id": "4db53bea-03c8-40b5-9c68-062223044f89",
-      "name": "HTTP Request2"
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ijWOk4uGRwt4GzN5",
+          "name": "Valeia - Hablaya"
+        }
+      }
     },
     {
       "parameters": {
         "method": "POST",
         "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "api_access_token",
-              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
-            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -1162,7 +1136,13 @@
         480
       ],
       "id": "39f6e552-f32c-40df-9b15-21ac825357e6",
-      "name": "HTTP Request3"
+      "name": "HTTP Request3",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ijWOk4uGRwt4GzN5",
+          "name": "Valeia - Hablaya"
+        }
+      }
     },
     {
       "parameters": {
@@ -2108,139 +2088,6 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "7efee19e-15a3-4263-b1da-237dd881d34b",
-              "leftValue": "={{ $json.Bloqueado }}",
-              "rightValue": "False",
-              "operator": {
-                "type": "boolean",
-                "operation": "false",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        1632,
-        -1264
-      ],
-      "id": "10939b3b-36aa-48af-bea5-2b1b8eee3928",
-      "name": "Validacion creditos"
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "Bq4Kkf2M2z3awZmX",
-          "mode": "list",
-          "cachedResultName": "Tool Contador de Mensajes"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "cliente_id": "={{ $('initData').item.json.account_id }}",
-            "message": "={{ $json.message }}",
-            "inbox_id": "={{ $('initData').item.json.inbox_id }}"
-          },
-          "matchingColumns": [
-            "client_id"
-          ],
-          "schema": [
-            {
-              "id": "cliente_id",
-              "displayName": "cliente_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "message",
-              "displayName": "message",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "inbox_id",
-              "displayName": "inbox_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": true,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": true
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        1424,
-        -1264
-      ],
-      "id": "2d1b59e1-b4e6-4fae-9f32-989c3ca77777",
-      "name": "Tool Contador de mensajes",
-      "alwaysOutputData": false,
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "api_access_token",
-              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"content\": \"En un momento uno de nuestros agentes te contactara\",\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        1776,
-        -1056
-      ],
-      "id": "19fb0485-5c61-4a46-b6bc-e43f32bac76d",
-      "name": "HTTP Request5"
-    },
-    {
-      "parameters": {
         "content": "## message control\n",
         "height": 464,
         "width": 512
@@ -2262,23 +2109,23 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "2759",
+            "content-length": "2306",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
-            "x-forwarded-for": "44.195.58.80",
+            "x-forwarded-for": "54.82.14.220",
             "x-forwarded-host": "automation.whitelabel.lat",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
             "x-forwarded-server": "4f3b0c84f963",
-            "x-real-ip": "44.195.58.80"
+            "x-real-ip": "54.82.14.220"
           },
           "params": {},
           "query": {},
           "body": {
             "account": {
-              "id": 1,
-              "name": "WHITELABEL"
+              "id": 2,
+              "name": "Valeia"
             },
             "additional_attributes": {},
             "content_attributes": {},
@@ -2293,26 +2140,26 @@
                 "contact_id": 1,
                 "inbox_id": 1,
                 "source_id": "573228854498",
-                "created_at": "2025-08-14T22:17:52.111Z",
-                "updated_at": "2025-08-14T22:17:52.111Z",
+                "created_at": "2025-08-27T05:25:41.969Z",
+                "updated_at": "2025-08-27T05:25:41.969Z",
                 "hmac_verified": false,
-                "pubsub_token": "prJLRjLmZjHgCN1hfaWXduh1"
+                "pubsub_token": "D8ZpspXq6tm88UtbjKezy6cj"
               },
-              "id": 4,
+              "id": 1,
               "inbox_id": 1,
               "messages": [
                 {
-                  "id": 438,
+                  "id": 1,
                   "content": "hola",
-                  "account_id": 1,
+                  "account_id": 2,
                   "inbox_id": 1,
-                  "conversation_id": 4,
+                  "conversation_id": 1,
                   "message_type": 0,
-                  "created_at": 1756225905,
-                  "updated_at": "2025-08-26T16:31:45.669Z",
+                  "created_at": 1756272342,
+                  "updated_at": "2025-08-27T05:25:42.071Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3QTYxRUVCNTZDNTFCRjU2QjAA",
+                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZGRUUwRjcyOEEyM0QzMUM5OUQA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
@@ -2324,22 +2171,15 @@
                   "conversation": {
                     "assignee_id": null,
                     "unread_count": 1,
-                    "last_activity_at": 1756225905,
+                    "last_activity_at": 1756272342,
                     "contact_inbox": {
                       "source_id": "573228854498"
                     }
                   },
                   "sender": {
-                    "additional_attributes": {
-                      "city": "Villavicencio",
-                      "country": "Colombia",
-                      "description": "",
-                      "company_name": "Whitelabel",
-                      "country_code": "CO",
-                      "social_profiles": {}
-                    },
+                    "additional_attributes": {},
                     "custom_attributes": {},
-                    "email": "pro.pedro0413@gmail.com",
+                    "email": null,
                     "id": 1,
                     "identifier": null,
                     "name": "Pedro Rodriguez",
@@ -2353,16 +2193,9 @@
               "labels": [],
               "meta": {
                 "sender": {
-                  "additional_attributes": {
-                    "city": "Villavicencio",
-                    "country": "Colombia",
-                    "description": "",
-                    "company_name": "Whitelabel",
-                    "country_code": "CO",
-                    "social_profiles": {}
-                  },
+                  "additional_attributes": {},
                   "custom_attributes": {},
-                  "email": "pro.pedro0413@gmail.com",
+                  "email": null,
                   "id": 1,
                   "identifier": null,
                   "name": "Pedro Rodriguez",
@@ -2381,38 +2214,31 @@
               "unread_count": 1,
               "first_reply_created_at": null,
               "priority": null,
-              "waiting_since": 1756225905,
+              "waiting_since": 1756272342,
               "agent_last_seen_at": 0,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1756225905,
-              "timestamp": 1756225905,
-              "created_at": 1756225905,
-              "updated_at": 1756225905.6722457
+              "last_activity_at": 1756272342,
+              "timestamp": 1756272342,
+              "created_at": 1756272342,
+              "updated_at": 1756272342.0739856
             },
-            "created_at": "2025-08-26T16:31:45.669Z",
-            "id": 438,
+            "created_at": "2025-08-27T05:25:42.071Z",
+            "id": 1,
             "inbox": {
               "id": 1,
-              "name": "Valeia"
+              "name": "Valeia-Whatsapp"
             },
             "message_type": "incoming",
             "private": false,
             "sender": {
               "account": {
-                "id": 1,
-                "name": "WHITELABEL"
+                "id": 2,
+                "name": "Valeia"
               },
-              "additional_attributes": {
-                "city": "Villavicencio",
-                "country": "Colombia",
-                "description": "",
-                "company_name": "Whitelabel",
-                "country_code": "CO",
-                "social_profiles": {}
-              },
+              "additional_attributes": {},
               "avatar": "",
               "custom_attributes": {},
-              "email": "pro.pedro0413@gmail.com",
+              "email": null,
               "id": 1,
               "identifier": null,
               "name": "Pedro Rodriguez",
@@ -2420,7 +2246,7 @@
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y3QTYxRUVCNTZDNTFCRjU2QjAA",
+            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZGRUUwRjcyOEEyM0QzMUM5OUQA",
             "event": "message_created"
           },
           "webhookUrl": "https://automation.whitelabel.lat/webhook/valeia-chatwoot",
@@ -2449,8 +2275,15 @@
   "staticData": {
     "node:Formbricks": {}
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-08-27T07:22:21.261Z",
+      "updatedAt": "2025-08-27T07:22:21.261Z",
+      "id": "yewU12nVfiCDIjkl",
+      "name": "PRODUCCION"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-26T21:44:21.723Z",
-  "versionId": "d8b85d1f-c2b0-47b6-866f-b5a33613b9df"
+  "updatedAt": "2025-08-27T07:22:23.054Z",
+  "versionId": "52b25ed0-a9f3-4bbb-8f02-8b801a3ee106"
 }
