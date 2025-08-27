@@ -25,6 +25,11 @@
             "node": "Blocked",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "SET 0%",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -95,30 +100,18 @@
         ]
       ]
     },
-    "correo10%_enviado?": {
-      "main": [
-        [],
-        [
-          {
-            "node": "enviar_correo10%?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "enviar_correo10%?": {
       "main": [
         [
           {
-            "node": "Notificacion 10% Creditos",
+            "node": "Se ha enviado antes?",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "No Operation, do nothing",
+            "node": "No Operation, do nothing5",
             "type": "main",
             "index": 0
           }
@@ -135,30 +128,18 @@
         []
       ]
     },
-    "correo5%_enviado?1": {
-      "main": [
-        [],
-        [
-          {
-            "node": "enviar_correo5%?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "enviar_correo5%?": {
       "main": [
         [
           {
-            "node": "Notificacion 5% Creditos1",
+            "node": "se ha enviado antes?",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "No Operation, do nothing1",
+            "node": "No Operation, do nothing3",
             "type": "main",
             "index": 0
           }
@@ -180,7 +161,7 @@
       "main": [
         [
           {
-            "node": "correo5%_enviado?1",
+            "node": "enviar_correo5%?",
             "type": "main",
             "index": 0
           }
@@ -191,7 +172,7 @@
       "main": [
         [
           {
-            "node": "correo10%_enviado?",
+            "node": "enviar_correo10%?",
             "type": "main",
             "index": 0
           }
@@ -200,20 +181,102 @@
     },
     "Blocked": {
       "main": [
-        [
-          {
-            "node": "Notificacion creditos agotados",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Notificacion creditos agotados": {
       "main": [
         [
           {
-            "node": "Blocked1",
+            "node": "Update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing3": {
+      "main": [
+        []
+      ]
+    },
+    "SET 0%": {
+      "main": [
+        [
+          {
+            "node": "enviar_correo0%?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Se ha enviado antes?": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notificacion 10% Creditos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "se ha enviado antes?": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notificacion 5% Creditos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enviar_correo0%?": {
+      "main": [
+        [
+          {
+            "node": "se ha enviado antes?2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "se ha enviado antes?2": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notificacion creditos agotados",
             "type": "main",
             "index": 0
           }
@@ -266,15 +329,15 @@
     {
       "parameters": {
         "sendTo": "={{ $json.email }}",
-        "subject": "=Oye {{ $json['contacto '] }} Tus  Creditos para {{ $json.model_agent }} se estan agotando ",
-        "message": "=<p>Hola {{ $json['contacto '] }},</p>  <p>🚀 ¡Felicitaciones! 🎉🎊\nTu asistente IA <strong>{{ $json.model_agent }}</strong> ha demostrado su valor: <strong>El 90%📈 de tus créditos ya se han utilizado atendiendo y fidelizando a tus clientes</strong>.</p>  <p>Esto significa que tu inversión <strong>está dando resultados reales</strong>. Cada interacción generada ha sido una oportunidad para conectar, resolver y vender más.</p>  <p>Ahora bien… solo queda el <strong>10% de tus créditos</strong>. Y cuando tu asistente se detiene, también lo hace el flujo de oportunidades y la experiencia que tus clientes ya esperan de ti.</p>  <p><strong>No frenes tu impulso.</strong> Recarga ahora mismo y te daremos 10 creditos de cortesia, asegúrate de que tu asistente IA siga trabajando para ti 24/7, sin interrupciones.</p>  <p> <a href=\"https://tusitio.com/recargar\" style=\"background-color:#ff6f00;color:#fff;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:6px;display:inline-block;font-size:16px;\"> 💳 RECARGA AHORA Y MANTEN EL RITMO  </a> </p>  <p>El momento de actuar es ahora. Tus clientes ya están respondiendo.<br> El equipo de {{ $json.casa_matriz }}</p> ",
+        "subject": "= {{ $json['primer nombre'] }} Tus  Creditos para {{ $json.model_agent }} se estan agotando, 😨 solo queda el 10%",
+        "message": "=<p>Hola {{ $json['primer nombre'] }},</p>  <p>🚀 ¡Felicitaciones! 🎉🎊\nTu asistente  <strong>{{ $json.model_agent }}</strong> ha demostrado su valor: <strong>El 90%📈 de tus créditos ya se han utilizado atendiendo y fidelizando a tus clientes</strong>.</p>  <p>Esto significa que tu inversión <strong>está dando resultados reales</strong>. Cada interacción generada ha sido una oportunidad para conectar, resolver y vender más.</p>  <p>Ahora bien… solo queda el <strong>10% de tus créditos</strong>. Y cuando tu asistente se detiene, también lo hace el flujo de oportunidades y la experiencia que tus clientes ya esperan de ti.</p>  <p><strong>No frenes tu impulso.</strong> Recarga ahora mismo y te daremos 10 creditos de cortesia, asegúrate de que tu asistente IA siga trabajando para ti 24/7, sin interrupciones.</p>  <p> <a href=\"https://tusitio.com/recargar\" style=\"background-color:#ff6f00;color:#fff;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:6px;display:inline-block;font-size:16px;\"> 💳 RECARGA AHORA Y MANTEN EL RITMO  </a> </p>  <p>El momento de actuar es ahora. Tus clientes ya están respondiendo.\n\n<br> Cordialmente, \nEl equipo de {{ $json.casa_matriz }}</p> ",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        272,
-        -1216
+        448,
+        -1280
       ],
       "id": "a30d641e-0107-4e96-81ab-b12ff19c55c3",
       "name": "Notificacion 10% Creditos",
@@ -293,8 +356,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -432,
-        -176
+        -192,
+        -128
       ],
       "id": "44de6ee8-916a-43cd-8ee0-073421ed8368",
       "name": "descontar credito usado1"
@@ -535,8 +598,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -208,
-        -176
+        32,
+        -128
       ],
       "id": "ccbcc99d-7147-4325-be33-73c36a119730",
       "name": "Update row in sheet1",
@@ -711,6 +774,24 @@
               "name": "numero_creditos",
               "value": "={{ $json.numero_creditos }}",
               "type": "number"
+            },
+            {
+              "id": "277ab046-3f9c-4990-85d0-c1df513aaf31",
+              "name": "correo_0%",
+              "value": "={{ $json['correo_0%'] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "ea3e0060-3d92-48ef-b067-86d0a9173568",
+              "name": "Enviado 0%",
+              "value": "={{ $json['Enviado 0%'] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "aee017bb-8762-4038-980f-0cecc11cc6cd",
+              "name": "primer nombre",
+              "value": "={{ $json['primer nombre'] }}",
+              "type": "string"
             }
           ]
         },
@@ -737,41 +818,8 @@
           "conditions": [
             {
               "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
-              "leftValue": "={{ $json['enviado 10%'] }}",
-              "rightValue": "TRUE",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -176,
-        -1136
-      ],
-      "id": "1098a13e-96c0-46b5-97a1-5cecf9d3aa34",
-      "name": "correo10%_enviado?"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
               "leftValue": "={{ $('Edit Fields2').item.json['correo_10%'] }}",
-              "rightValue": 10,
+              "rightValue": "TRUE",
               "operator": {
                 "type": "boolean",
                 "operation": "true",
@@ -786,8 +834,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        64,
-        -1120
+        -160,
+        -1424
       ],
       "id": "764b81ca-7bd8-4be1-ab97-986d6bf64cce",
       "name": "enviar_correo10%?"
@@ -1028,8 +1076,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        496,
-        -1216
+        640,
+        -1280
       ],
       "id": "41224297-251f-46ca-ba6b-5b977f7bcbe6",
       "name": "Update row in sheet",
@@ -1045,8 +1093,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        272,
-        -1024
+        352,
+        -1056
       ],
       "id": "dd782763-0f82-4929-94d5-82d43b235b9e",
       "name": "No Operation, do nothing"
@@ -1058,8 +1106,8 @@
             {
               "id": "d2e4d16c-c294-498d-8074-a18bbe848f72",
               "name": "Bloqueado",
-              "value": "False",
-              "type": "string"
+              "value": false,
+              "type": "boolean"
             },
             {
               "id": "49d0f4a3-026a-404c-aca0-0672914ca3fa",
@@ -1074,8 +1122,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        16,
-        -176
+        256,
+        -128
       ],
       "id": "84d26bcb-b1a0-4c8d-8d0c-d6f28829f4de",
       "name": "Not_blocked"
@@ -1121,8 +1169,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -432,
-        16
+        -192,
+        48
       ],
       "id": "152402aa-48fa-4749-bc5b-171024b86e50",
       "name": "Blocked"
@@ -1148,7 +1196,6 @@
           "mappingMode": "defineBelow",
           "value": {
             "row_number": "={{ $('Validar creditos').item.json.row_number }}",
-            "enviado 10%": "",
             "enviado 5%": "TRUE"
           },
           "matchingColumns": [
@@ -1162,7 +1209,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "nombre_cliente",
@@ -1171,7 +1219,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "cliente_id",
@@ -1180,7 +1229,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "contacto ",
@@ -1189,7 +1239,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "email",
@@ -1198,7 +1249,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "sitio_web_Contacto",
@@ -1207,7 +1259,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "Human_in_the_Loop",
@@ -1216,7 +1269,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "model_agent",
@@ -1225,7 +1279,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "inbox_id",
@@ -1234,7 +1289,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "Plan",
@@ -1243,7 +1299,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "numero_creditos",
@@ -1252,7 +1309,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "creditos_usados",
@@ -1261,7 +1319,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "creditos_restantes",
@@ -1270,7 +1329,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "remaining_percentage",
@@ -1279,7 +1339,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "correo_10%",
@@ -1288,7 +1349,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "correo_5%",
@@ -1297,7 +1359,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "Bloqueo",
@@ -1306,7 +1369,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "enviado 10%",
@@ -1315,7 +1379,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "enviado 5%",
@@ -1346,8 +1411,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        496,
-        -848
+        624,
+        -880
       ],
       "id": "99b795c2-9bca-4df0-bdf2-1c16993c268f",
       "name": "Update row in sheet2",
@@ -1357,50 +1422,6 @@
           "name": "hola@whitelabel.lat"
         }
       }
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        304,
-        -656
-      ],
-      "id": "ebc8cba7-f78e-410e-9627-218452ac7131",
-      "name": "No Operation, do nothing1"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
-              "leftValue": "={{ $json['enviado 5%'] }}",
-              "rightValue": "true",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -176,
-        -800
-      ],
-      "id": "a81224ef-5656-4f29-ad02-13a87ed6c923",
-      "name": "correo5%_enviado?1"
     },
     {
       "parameters": {
@@ -1415,10 +1436,10 @@
             {
               "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
               "leftValue": "={{ $('Edit Fields2').item.json['correo_5%'] }}",
-              "rightValue": 10,
+              "rightValue": "TRUE",
               "operator": {
                 "type": "boolean",
-                "operation": "false",
+                "operation": "true",
                 "singleValue": true
               }
             }
@@ -1430,8 +1451,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        80,
-        -784
+        -160,
+        -1024
       ],
       "id": "a14f8929-915f-469a-a222-7bdb320d3780",
       "name": "enviar_correo5%?"
@@ -1446,8 +1467,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        288,
-        -848
+        368,
+        -880
       ],
       "id": "94b960b2-e983-402b-aeec-bdd43f3ad635",
       "name": "Notificacion 5% Creditos1",
@@ -1500,8 +1521,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -400,
-        -800
+        -368,
+        -1024
       ],
       "id": "dbcb5a34-b1b2-467a-8099-c44f9901b988",
       "name": "SET 5%"
@@ -1524,8 +1545,8 @@
             },
             {
               "id": "f483b3f2-a34b-482c-b4a1-daf6a52dabd7",
-              "name": "contacto ",
-              "value": "={{ $json['contacto '] }}",
+              "name": "primer nombre",
+              "value": "={{ $json['primer nombre'] }}",
               "type": "string"
             },
             {
@@ -1539,6 +1560,12 @@
               "name": "casa_matriz",
               "value": "={{ $json.casa_matriz }}",
               "type": "string"
+            },
+            {
+              "id": "e4e614dc-3dca-4825-8da6-0e04d3a4b514",
+              "name": "primer nombre",
+              "value": "={{ $('Edit Fields2').item.json['primer nombre'] }}",
+              "type": "string"
             }
           ]
         },
@@ -1547,47 +1574,24 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -400,
-        -1136
+        -352,
+        -1424
       ],
       "id": "00562f58-9f1e-4db7-a617-c8524810286e",
       "name": "SET 10%"
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "d2e4d16c-c294-498d-8074-a18bbe848f72",
-              "name": "Bloqueado",
-              "value": true,
-              "type": "boolean"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        16,
-        16
-      ],
-      "id": "0f1f6d26-4b27-4bf7-856c-722e911ab195",
-      "name": "Blocked1"
-    },
-    {
-      "parameters": {
         "sendTo": "={{ $json.email }}",
-        "subject": "=Hola, {{ $json['contacto '] }} ",
+        "subject": "=😥Lo sentimos, {{ $json['contacto '] }} tus creditos se agotaron",
         "message": "=<p>Hola {{ $json['contacto '] }},</p>  <p>🚀 Tus creditos para <strong>{{ $json.model_agent }}</strong> Se han Agotado</strong>.</p>  <p>Recarga ahora y sigue sacando provecho de la Inteligencia Artificial diseñada especialmente para ti. </p>  <p> <a href=\"https://tusitio.com/recargar\" style=\"background-color:#ff6f00;color:#fff;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:6px;display:inline-block;font-size:16px;\"> 💳 RECARGA AHORA   </a> </p>  <p>El momento de actuar es ahora. Tus clientes ya están respondiendo.\n\n<br> El equipo de Zaion Agency</p> ",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -208,
-        16
+        400,
+        -464
       ],
       "id": "671cb264-8a92-4363-87f6-6cd7f493b0e9",
       "name": "Notificacion creditos agotados",
@@ -1601,14 +1605,14 @@
     },
     {
       "parameters": {
-        "content": "## Validacion de Creditos\n",
+        "content": "# Validacion de Creditos\n",
         "height": 448,
-        "width": 800
+        "width": 1312
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -512,
-        -256
+        -496,
+        -240
       ],
       "typeVersion": 1,
       "id": "f93638a9-7be9-4c2f-9c66-f2b5d49c7716",
@@ -1616,19 +1620,512 @@
     },
     {
       "parameters": {
-        "content": "## Notificaciones\n",
-        "height": 864,
+        "content": "# Notificaciones al Cliente\n",
+        "height": 1248,
         "width": 1296,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -560,
-        -1264
+        -480,
+        -1536
       ],
       "typeVersion": 1,
       "id": "5c1acc54-9c1d-48d0-bc8f-ce10cf22174b",
       "name": "Sticky Note1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        432,
+        -1456
+      ],
+      "id": "d91800c1-3061-4ea1-a260-b68fe1a2e5d1",
+      "name": "No Operation, do nothing2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        96,
+        -848
+      ],
+      "id": "355a7100-92a4-4a0a-8ce2-05ca4d5a66d2",
+      "name": "No Operation, do nothing3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b783063d-0403-4aed-a580-dbcc53f1c6ad",
+              "name": "contacto ",
+              "value": "={{ $('Edit Fields2').item.json['contacto '] }}",
+              "type": "string"
+            },
+            {
+              "id": "3e756689-0b9a-45c8-a0e3-b349fce7def0",
+              "name": "email",
+              "value": "={{ $('Edit Fields2').item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "7464b78b-6262-4e66-a37a-36e8da9ff9bc",
+              "name": "model_agent",
+              "value": "={{ $('Edit Fields2').item.json.model_agent }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        -608
+      ],
+      "id": "8204fdb4-db4e-47f3-b370-27210f90384c",
+      "name": "SET 0%"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -640
+      ],
+      "id": "6d2c4638-43ab-4645-94e4-0422331d16c5",
+      "name": "No Operation, do nothing4"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA",
+          "mode": "list",
+          "cachedResultName": "Contador de Mensajes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Validar creditos').item.json.row_number }}",
+            "Enviado 0%": "TRUE"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "casa_matriz",
+              "displayName": "casa_matriz",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "nombre_cliente",
+              "displayName": "nombre_cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "cliente_id",
+              "displayName": "cliente_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contacto ",
+              "displayName": "contacto ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "primer nombre",
+              "displayName": "primer nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "sitio_web_Contacto",
+              "displayName": "sitio_web_Contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Human_in_the_Loop",
+              "displayName": "Human_in_the_Loop",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "model_agent",
+              "displayName": "model_agent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "inbox_id",
+              "displayName": "inbox_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Plan",
+              "displayName": "Plan",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "numero_creditos",
+              "displayName": "numero_creditos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "creditos_usados",
+              "displayName": "creditos_usados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "creditos_restantes",
+              "displayName": "creditos_restantes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "remaining_percentage",
+              "displayName": "remaining_percentage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "correo_10%",
+              "displayName": "correo_10%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "correo_5%",
+              "displayName": "correo_5%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Bloqueo",
+              "displayName": "Bloqueo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "enviado 10%",
+              "displayName": "enviado 10%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "enviado 5%",
+              "displayName": "enviado 5%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Enviado 0%",
+              "displayName": "Enviado 0%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        640,
+        -464
+      ],
+      "id": "08c043dc-df05-49c1-8f58-c4f66cc4b44b",
+      "name": "Update row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -1232
+      ],
+      "id": "2a36ab20-6c52-4156-96b5-baa9057003e4",
+      "name": "No Operation, do nothing5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
+              "leftValue": "={{ $json['enviado 10%'] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        112,
+        -1440
+      ],
+      "id": "1098a13e-96c0-46b5-97a1-5cecf9d3aa34",
+      "name": "Se ha enviado antes?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
+              "leftValue": "={{ $json['enviado 5%'] }}",
+              "rightValue": "TRUE",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        -1040
+      ],
+      "id": "a81224ef-5656-4f29-ad02-13a87ed6c923",
+      "name": "se ha enviado antes?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
+              "leftValue": "={{ $('Edit Fields2').item.json['correo_0%'] }}",
+              "rightValue": "TRUE",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -144,
+        -608
+      ],
+      "id": "2d9f7c8c-95c6-4c1c-a72e-bd9bcde1a159",
+      "name": "enviar_correo0%?"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -448
+      ],
+      "id": "dcb65bd1-2fef-4e01-9c10-3b1263cd7f9e",
+      "name": "No Operation, do nothing6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
+              "leftValue": "={{ $('Edit Fields2').item.json['Enviado 0%'] }}",
+              "rightValue": "TRUE",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        -624
+      ],
+      "id": "cda764b0-0513-40e5-86bb-35682755c88d",
+      "name": "se ha enviado antes?2"
     }
   ],
   "pinData": {},
@@ -1652,6 +2149,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-26T22:20:16.468Z",
-  "versionId": "433be816-c21a-42eb-b0ea-0d9d08c8841c"
+  "updatedAt": "2025-08-27T20:12:29.377Z",
+  "versionId": "80cba3fa-19dc-454e-8633-86c1aa7c0f76"
 }
