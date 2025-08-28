@@ -1,24 +1,6 @@
 {
   "active": false,
   "connections": {
-    "If": {
-      "main": [
-        [
-          {
-            "node": "initData",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Data": {
       "main": [
         [
@@ -348,55 +330,11 @@
         ]
       ]
     },
-    "ChatwootData": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "chatwoot": {
-      "main": [
-        [
-          {
-            "node": "ChatwootData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "whatsap trigger": {
       "main": [
         [
           {
-            "node": "whatsappData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "whatsappData": {
-      "main": [
-        [
-          {
             "node": "initData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "initData": {
-      "main": [
-        [
-          {
-            "node": "type message Whatsap",
             "type": "main",
             "index": 0
           }
@@ -488,6 +426,68 @@
           }
         ]
       ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execution Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data1": {
+      "main": [
+        [
+          {
+            "node": "initData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "initData": {
+      "main": [
+        [
+          {
+            "node": "type message Whatsap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-05-22T03:11:30.320Z",
@@ -528,61 +528,6 @@
       ],
       "id": "afb29986-9121-4aac-ab15-61e1c69c7e4d",
       "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "abaa9de2-4388-46df-9440-7c458be2669a",
-              "leftValue": "={{ $json.receptor }}",
-              "rightValue": "incoming",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            },
-            {
-              "id": "2b50ffbe-a3c8-4299-b6f3-86f9f79de33b",
-              "leftValue": "={{ $json.tags }}",
-              "rightValue": "=apagar-agente",
-              "operator": {
-                "type": "array",
-                "operation": "notContains",
-                "rightType": "any"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -560,
-        -1968
-      ],
-      "id": "5e70bc62-c73b-4a07-8a5f-e8b46b618e6a",
-      "name": "If"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        -336,
-        -1872
-      ],
-      "id": "e0d3b5c5-be7b-45a7-a297-698ea69649f5",
-      "name": "No Operation, do nothing"
     },
     {
       "parameters": {
@@ -1235,7 +1180,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.tipo_mensaje }}",
+                    "leftValue": "={{ $json.messages[0].type }}",
                     "rightValue": "audio",
                     "operator": {
                       "type": "string",
@@ -1260,7 +1205,7 @@
                 "conditions": [
                   {
                     "id": "82df4052-c480-44a2-9d09-c195d4bc6879",
-                    "leftValue": "={{ $json.tipo_mensaje }}",
+                    "leftValue": "={{ $json.messages[0].type }}",
                     "rightValue": "text",
                     "operator": {
                       "type": "string",
@@ -1285,7 +1230,7 @@
                 "conditions": [
                   {
                     "id": "d9c1a8cf-af4e-4bca-a66c-184829c009d8",
-                    "leftValue": "={{ $json.tipo_mensaje }}",
+                    "leftValue": "={{ $json.messages[0].type }}",
                     "rightValue": "=file",
                     "operator": {
                       "type": "string",
@@ -1309,7 +1254,7 @@
                 "conditions": [
                   {
                     "id": "71778507-22f2-4e0f-99d7-fdd87ed1f26b",
-                    "leftValue": "={{ $json.tipo_mensaje }}",
+                    "leftValue": "={{ $json.messages[0].type }}",
                     "rightValue": "image",
                     "operator": {
                       "type": "string",
@@ -1558,158 +1503,6 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $json.body.conversation.meta.sender.name.split(\" \")[0] }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $json.body.conversation.meta.sender.phone_number.replace('+','') }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "={{ $json.body.conversation.messages[0].content }}",
-              "type": "string"
-            },
-            {
-              "id": "01193a9d-40ea-48b1-96f1-592105684644",
-              "name": "tipo_mensaje",
-              "value": "={{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}",
-              "type": "string"
-            },
-            {
-              "id": "c6b5261d-a252-4328-af15-9699dfc5ba2b",
-              "name": "receptor",
-              "value": "={{ $json.body.message_type }}",
-              "type": "string"
-            },
-            {
-              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
-              "name": "tags",
-              "value": "={{ $json.body.conversation.labels }}",
-              "type": "array"
-            },
-            {
-              "id": "2189dde7-a49e-4226-be25-22f3e62caf99",
-              "name": "conversation_id",
-              "value": "={{ $json.body.conversation.messages[0].conversation_id }}",
-              "type": "string"
-            },
-            {
-              "id": "c8242d40-84d3-4c64-adcc-d15b8de57a9a",
-              "name": "account_id",
-              "value": "={{ $json.body.account.id }}",
-              "type": "number"
-            },
-            {
-              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
-              "name": "api_access_token",
-              "value": "AKgj4inXtQC2qoDuxiHxEFtL",
-              "type": "string"
-            },
-            {
-              "id": "aad140bb-399a-46df-b78b-98aa0a9fd6e8",
-              "name": "data_url",
-              "value": "={{ $json.body.attachments[0].data_url }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -784,
-        -1968
-      ],
-      "id": "e3d967e2-82b6-4b06-8280-931be742cb71",
-      "name": "ChatwootData"
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "valeia-chatwoot",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        -992,
-        -1968
-      ],
-      "id": "45fb24f4-e71c-4d84-8532-93b0a538e06b",
-      "name": "chatwoot",
-      "webhookId": "e5c97b17-19ee-406e-9dcf-3cdcde1945ec"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "7fba40fd-13ea-470a-a784-d886fa69b736",
-              "name": "account_id",
-              "value": "={{ $json.metadata.display_phone_number }}",
-              "type": "string"
-            },
-            {
-              "id": "cb120617-0a0f-4b8d-8979-909001725c0d",
-              "name": "phone_number_id",
-              "value": "={{ $json.metadata.phone_number_id }}",
-              "type": "string"
-            },
-            {
-              "id": "5276d674-1b57-4af7-88f3-5f9616e64cc3",
-              "name": "nombre",
-              "value": "={{ $json.contacts[0].profile.name }}",
-              "type": "string"
-            },
-            {
-              "id": "92d97526-26b7-461c-b7ec-7cd13074512e",
-              "name": "phone_number",
-              "value": "={{ $json.contacts[0].wa_id }}",
-              "type": "string"
-            },
-            {
-              "id": "0605a012-1740-4b13-8e7f-57e156ad2fbe",
-              "name": "mensaje",
-              "value": "={{ $json.messages[0].text.body }}",
-              "type": "string"
-            },
-            {
-              "id": "5060779d-87fc-49af-9212-c7972aae9ff0",
-              "name": "tipo_mensaje",
-              "value": "={{ $json.messages[0].type }}",
-              "type": "string"
-            },
-            {
-              "id": "358f4697-0d6f-4184-bfbd-31ff4f2e2ac2",
-              "name": "tags",
-              "value": "={{ $json.field }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -576,
-        -2288
-      ],
-      "id": "dfbbb39c-2014-4ba8-b8e4-e877dad04fe8",
-      "name": "whatsappData"
-    },
-    {
-      "parameters": {
         "httpMethod": "POST",
         "path": "whatsap",
         "options": {}
@@ -1724,77 +1517,6 @@
       "name": "whatsap trigger",
       "webhookId": "6704f599-c49e-4dd2-848c-7d9401baf9a1",
       "disabled": true
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "cb120617-0a0f-4b8d-8979-909001725c0d",
-              "name": "phone_number_id",
-              "value": "={{ $json.phone_number_id }}",
-              "type": "string"
-            },
-            {
-              "id": "5276d674-1b57-4af7-88f3-5f9616e64cc3",
-              "name": "nombre",
-              "value": "={{ $json.nombre }}",
-              "type": "string"
-            },
-            {
-              "id": "92d97526-26b7-461c-b7ec-7cd13074512e",
-              "name": "phone_number",
-              "value": "={{ $json.phone_number }}",
-              "type": "string"
-            },
-            {
-              "id": "0605a012-1740-4b13-8e7f-57e156ad2fbe",
-              "name": "mensaje",
-              "value": "={{ $json.mensaje }}",
-              "type": "string"
-            },
-            {
-              "id": "5060779d-87fc-49af-9212-c7972aae9ff0",
-              "name": "tipo_mensaje",
-              "value": "={{ $json.tipo_mensaje }}",
-              "type": "string"
-            },
-            {
-              "id": "358f4697-0d6f-4184-bfbd-31ff4f2e2ac2",
-              "name": "tags",
-              "value": "={{ $json.tags }}",
-              "type": "string"
-            },
-            {
-              "id": "d7bd017f-435b-4c5c-89ba-77b2bdd3d56d",
-              "name": "account_id",
-              "value": "={{ $json.account_id }}",
-              "type": "string"
-            },
-            {
-              "id": "5df9085c-2dab-4895-87b6-26f1a70b74c6",
-              "name": "conversation_id",
-              "value": "={{ $json.conversation_id }}",
-              "type": "string"
-            },
-            {
-              "id": "3b0ab472-eb47-486f-87b8-92fe29a4f764",
-              "name": "data_url",
-              "value": "={{ $json.data_url }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -144,
-        -1984
-      ],
-      "id": "8c4bd296-d52e-42ed-a85f-8a3e5be6f43a",
-      "name": "initData"
     },
     {
       "parameters": {
@@ -1970,6 +1692,189 @@
           "name": "OpenAi account"
         }
       }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mony",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1024,
+        -1888
+      ],
+      "id": "45ed3f18-c1c2-49ae-9c8a-afd23d9d571c",
+      "name": "Webhook",
+      "webhookId": "afc7954a-020f-4194-89fd-fa609358b4b0"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24753cf1-0e65-46ba-8117-cafa44f119a0",
+              "name": "metadata",
+              "value": "={\n\"account_id\": \n\"{{ $json.body.account.id }}\",\n\"conversation_id\": \n\"{{ $json.body.conversation.messages[0].conversation_id }}\"\n}",
+              "type": "object"
+            },
+            {
+              "id": "e6ac796a-86cf-4dce-a3f3-1f3b8ea8e180",
+              "name": "contacts",
+              "value": "=[{\n\"profile\": \n{\n\"name\": \n\"{{ $json.body.conversation.meta.sender.name.split(' ')[0] }}\"\n},\n\"wa_id\": \n\"{{ $json.body.conversation.messages[0].conversation.contact_inbox.source_id }}\"\n}]",
+              "type": "array"
+            },
+            {
+              "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
+              "name": "messages",
+              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($json.body.conversation.messages[0].content) }} },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
+              "type": "array"
+            },
+            {
+              "id": "8bf1bf21-59a9-4c92-8e31-7e20a7cae8d4",
+              "name": "field",
+              "value": "={{ $json.body.conversation.labels }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": false
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -576,
+        -1984
+      ],
+      "id": "8b05ddde-7986-4a24-bd8b-abf47cd24b8a",
+      "name": "WhatsApp Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "abaa9de2-4388-46df-9440-7c458be2669a",
+              "leftValue": "={{ $json.body.message_type }}",
+              "rightValue": "incoming",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "2b50ffbe-a3c8-4299-b6f3-86f9f79de33b",
+              "leftValue": "={{ $json.body.conversation.labels }}",
+              "rightValue": "=apagar-agente",
+              "operator": {
+                "type": "array",
+                "operation": "notContains",
+                "rightType": "any"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -800,
+        -1888
+      ],
+      "id": "fba175fb-7a3a-472d-bad6-0fba72a4ce19",
+      "name": "If1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        -1792
+      ],
+      "id": "6116a8a3-5384-4725-8d76-bcc6bd252f2b",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "name",
+              "value": "={{ $json.contacts[0].profile.name }}"
+            },
+            {
+              "key": "phone",
+              "value": "={{ $json.messages[0].from }}"
+            },
+            {
+              "key": "message",
+              "value": "={{ $json.messages[0].text.body }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -1984
+      ],
+      "id": "83604ef4-62e8-46e2-a3a9-d0227b77a456",
+      "name": "Execution Data1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d776135-119d-4f26-b527-ab8bbf287a82",
+              "name": "metadata",
+              "value": "={{ $json.metadata }}",
+              "type": "object"
+            },
+            {
+              "id": "b6cb9f52-1a4c-4f2c-9b4b-34fd6e3a8d8b",
+              "name": "contacts",
+              "value": "={{ $json.contacts }}",
+              "type": "array"
+            },
+            {
+              "id": "c9ae006b-e74b-44b6-b1ca-2ade7ae36c06",
+              "name": "messages",
+              "value": "={{ $json.messages }}",
+              "type": "array"
+            },
+            {
+              "id": "2fd7d02b-a2ab-4372-aa73-9fad91ba0f5d",
+              "name": "field",
+              "value": "={{ $json.field }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -160,
+        -1984
+      ],
+      "id": "ca7dfa0e-2f32-4e34-93ef-a766b0dabc8f",
+      "name": "initData"
     }
   ],
   "pinData": {
@@ -2004,101 +1909,87 @@
         }
       }
     ],
-    "chatwoot": [
+    "Webhook": [
       {
         "json": {
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "3954",
+            "content-length": "2782",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
-            "x-forwarded-for": "44.195.58.80",
+            "x-forwarded-for": "54.82.14.220",
             "x-forwarded-host": "automation.whitelabel.lat",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
             "x-forwarded-server": "4f3b0c84f963",
-            "x-real-ip": "44.195.58.80"
+            "x-real-ip": "54.82.14.220"
           },
           "params": {},
           "query": {},
           "body": {
             "account": {
-              "id": 1,
-              "name": "WHITELABEL"
+              "id": 3,
+              "name": "Mony"
             },
             "additional_attributes": {},
             "content_attributes": {},
             "content_type": "text",
-            "content": null,
+            "content": "Tuve 180.000 ayer \n\nGaste 28.000 en cosas para mí primer día de trabajo. \nGaste 30.000 en transporte a una conferencia.\nGaste 64000 en transportes",
             "conversation": {
               "additional_attributes": {},
               "can_reply": true,
               "channel": "Channel::Whatsapp",
               "contact_inbox": {
-                "id": 1,
-                "contact_id": 1,
-                "inbox_id": 1,
-                "source_id": "573228854498",
-                "created_at": "2025-08-14T22:17:52.111Z",
-                "updated_at": "2025-08-14T22:17:52.111Z",
+                "id": 216,
+                "contact_id": 217,
+                "inbox_id": 2,
+                "source_id": "573018080570",
+                "created_at": "2025-08-27T22:57:33.702Z",
+                "updated_at": "2025-08-27T22:57:33.702Z",
                 "hmac_verified": false,
-                "pubsub_token": "prJLRjLmZjHgCN1hfaWXduh1"
+                "pubsub_token": "ossGkNcZmrmjgwbzimBWupxE"
               },
-              "id": 1,
-              "inbox_id": 1,
+              "id": 214,
+              "inbox_id": 2,
               "messages": [
                 {
-                  "id": 142,
-                  "content": null,
-                  "account_id": 1,
-                  "inbox_id": 1,
-                  "conversation_id": 1,
+                  "id": 1358,
+                  "content": "Tuve 180.000 ayer \n\nGaste 28.000 en cosas para mí primer día de trabajo. \nGaste 30.000 en transporte a una conferencia.\nGaste 64000 en transportes",
+                  "account_id": 3,
+                  "inbox_id": 2,
+                  "conversation_id": 214,
                   "message_type": 0,
-                  "created_at": 1755523164,
-                  "updated_at": "2025-08-18T13:19:24.767Z",
+                  "created_at": 1756336167,
+                  "updated_at": "2025-08-27T23:09:27.875Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y0M0UzNTFFQzY0QjM5QjQwQzcA",
+                  "source_id": "wamid.HBgMNTczMDE4MDgwNTcwFQIAEhggMjRFRTZDRkE5RjU4M0ZCMDdFRDQ3QTc2OUFBQUQxREYA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
-                  "sender_id": 1,
+                  "sender_id": 217,
                   "external_source_ids": {},
                   "additional_attributes": {},
-                  "processed_message_content": null,
+                  "processed_message_content": "Tuve 180.000 ayer \n\nGaste 28.000 en cosas para mí primer día de trabajo. \nGaste 30.000 en transporte a una conferencia.\nGaste 64000 en transportes",
                   "sentiment": {},
                   "conversation": {
-                    "assignee_id": 2,
-                    "unread_count": 4,
-                    "last_activity_at": 1755523164,
+                    "assignee_id": null,
+                    "unread_count": 10,
+                    "last_activity_at": 1756336167,
                     "contact_inbox": {
-                      "source_id": "573228854498"
+                      "source_id": "573018080570"
                     }
                   },
-                  "attachments": [
-                    {
-                      "id": 7,
-                      "message_id": 142,
-                      "file_type": "file",
-                      "account_id": 1,
-                      "extension": null,
-                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/1.jpg",
-                      "thumb_url": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--4adf005ce86f2c0a70f4f9a6534bcd915ed6b297/1.jpg",
-                      "file_size": 265007,
-                      "width": null,
-                      "height": null
-                    }
-                  ],
                   "sender": {
                     "additional_attributes": {},
                     "custom_attributes": {},
                     "email": null,
-                    "id": 1,
+                    "id": 217,
                     "identifier": null,
-                    "name": "Pedro Rodriguez",
-                    "phone_number": "+573228854498",
+                    "name": "Valentina",
+                    "phone_number": "+573018080570",
                     "thumbnail": "",
                     "blocked": false,
                     "type": "contact"
@@ -2111,82 +2002,60 @@
                   "additional_attributes": {},
                   "custom_attributes": {},
                   "email": null,
-                  "id": 1,
+                  "id": 217,
                   "identifier": null,
-                  "name": "Pedro Rodriguez",
-                  "phone_number": "+573228854498",
+                  "name": "Valentina",
+                  "phone_number": "+573018080570",
                   "thumbnail": "",
                   "blocked": false,
                   "type": "contact"
                 },
-                "assignee": {
-                  "id": 2,
-                  "name": "whitelabel",
-                  "available_name": "whitelabel",
-                  "avatar_url": "",
-                  "type": "user",
-                  "availability_status": null,
-                  "thumbnail": ""
-                },
+                "assignee": null,
                 "team": null,
                 "hmac_verified": false
               },
-              "status": "open",
+              "status": "pending",
               "custom_attributes": {},
               "snoozed_until": null,
-              "unread_count": 4,
-              "first_reply_created_at": "2025-08-15T02:02:56.597Z",
+              "unread_count": 10,
+              "first_reply_created_at": null,
               "priority": null,
-              "waiting_since": 0,
-              "agent_last_seen_at": 1755519670,
+              "waiting_since": 1756335453,
+              "agent_last_seen_at": 0,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1755523164,
-              "timestamp": 1755523164,
-              "created_at": 1755209872,
-              "updated_at": 1755523164.769823
+              "last_activity_at": 1756336167,
+              "timestamp": 1756336167,
+              "created_at": 1756335453,
+              "updated_at": 1756336167.8773613
             },
-            "created_at": "2025-08-18T13:19:24.767Z",
-            "id": 142,
+            "created_at": "2025-08-27T23:09:27.875Z",
+            "id": 1358,
             "inbox": {
-              "id": 1,
-              "name": "Valeia"
+              "id": 2,
+              "name": "Whatsapp Mony"
             },
             "message_type": "incoming",
             "private": false,
             "sender": {
               "account": {
-                "id": 1,
-                "name": "WHITELABEL"
+                "id": 3,
+                "name": "Mony"
               },
               "additional_attributes": {},
               "avatar": "",
               "custom_attributes": {},
               "email": null,
-              "id": 1,
+              "id": 217,
               "identifier": null,
-              "name": "Pedro Rodriguez",
-              "phone_number": "+573228854498",
+              "name": "Valentina",
+              "phone_number": "+573018080570",
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y0M0UzNTFFQzY0QjM5QjQwQzcA",
-            "attachments": [
-              {
-                "id": 7,
-                "message_id": 142,
-                "file_type": "file",
-                "account_id": 1,
-                "extension": null,
-                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/1.jpg",
-                "thumb_url": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4ad2a61e526c5905cfb9b7a3040100f6ce01e94f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--4adf005ce86f2c0a70f4f9a6534bcd915ed6b297/1.jpg",
-                "file_size": 265007,
-                "width": null,
-                "height": null
-              }
-            ],
+            "source_id": "wamid.HBgMNTczMDE4MDgwNTcwFQIAEhggMjRFRTZDRkE5RjU4M0ZCMDdFRDQ3QTc2OUFBQUQxREYA",
             "event": "message_created"
           },
-          "webhookUrl": "https://automation.whitelabel.lat/webhook/valeia-chatwoot",
+          "webhookUrl": "https://automation.whitelabel.lat/webhook/mony",
           "executionMode": "production"
         }
       }
@@ -2214,6 +2083,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-27T20:47:10.455Z",
-  "versionId": "daa87176-5d06-4da3-b656-7c3c4217a9df"
+  "updatedAt": "2025-08-28T20:10:07.348Z",
+  "versionId": "8550359b-da50-43f1-a5d2-7cedcd003633"
 }
