@@ -289,7 +289,7 @@
       "typeVersion": 3.2,
       "position": [
         1712,
-        -1256
+        -1264
       ],
       "id": "ca4e20df-54bd-4594-a27d-06fb2a414774",
       "name": "Switch"
@@ -318,7 +318,7 @@
       "typeVersion": 3.4,
       "position": [
         1488,
-        -1256
+        -1264
       ],
       "id": "271926c3-8fb5-4d88-96bd-ea8a50d20d61",
       "name": "data"
@@ -577,7 +577,7 @@
       "typeVersion": 2.6,
       "position": [
         368,
-        -840
+        -848
       ],
       "id": "e52976c1-0857-4e25-8b77-04dd61eed487",
       "name": "crear UUI postgres",
@@ -599,7 +599,7 @@
       "typeVersion": 2.6,
       "position": [
         592,
-        -616
+        -624
       ],
       "id": "a2207570-eb57-43f1-b0e8-645a38d143ef",
       "name": "delet user",
@@ -619,7 +619,7 @@
       "typeVersion": 1,
       "position": [
         816,
-        -616
+        -624
       ],
       "id": "dae5314a-eb0a-4c21-ae7f-39b923e19bbb",
       "name": "onboarding delete",
@@ -639,7 +639,7 @@
       "typeVersion": 1,
       "position": [
         1040,
-        -616
+        -624
       ],
       "id": "91ce9c81-7a0d-4900-add9-8f332b0eb0c7",
       "name": "transaction delete",
@@ -659,7 +659,7 @@
       "typeVersion": 1,
       "position": [
         1264,
-        -616
+        -624
       ],
       "id": "091ebd5d-0265-469d-9eac-c96085621b95",
       "name": "push_message",
@@ -679,7 +679,7 @@
       "typeVersion": 1,
       "position": [
         816,
-        -392
+        -400
       ],
       "id": "289db6d7-e0dd-42d6-9af7-c0132ad7cedd",
       "name": "onboarding delete1",
@@ -699,7 +699,7 @@
       "typeVersion": 1,
       "position": [
         1040,
-        -392
+        -400
       ],
       "id": "ac650faa-1e47-4921-9145-62da5f685392",
       "name": "transaction delete1",
@@ -719,7 +719,7 @@
       "typeVersion": 1,
       "position": [
         1264,
-        -392
+        -400
       ],
       "id": "4e692ade-4506-427b-8a37-ca0f1fb5cfe0",
       "name": "push_message1",
@@ -736,7 +736,7 @@
       "typeVersion": 1,
       "position": [
         368,
-        -392
+        -400
       ],
       "id": "36d6bb66-d215-47ee-a6ac-e1ca7c5befd0",
       "name": "When clicking ‘Execute workflow’"
@@ -759,7 +759,7 @@
       "typeVersion": 3.4,
       "position": [
         592,
-        -392
+        -400
       ],
       "id": "3fd29df2-5ac9-4fe9-86a6-7d89215859c4",
       "name": "delete number"
@@ -784,7 +784,7 @@
       "typeVersion": 2.6,
       "position": [
         368,
-        -616
+        -624
       ],
       "id": "a50f808b-08e4-475f-a4eb-a24524c80291",
       "name": "Users",
@@ -805,8 +805,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        312,
-        -616
+        320,
+        -624
       ],
       "id": "c1596ad9-1358-42c2-ad68-0d8b13f43ccc",
       "name": "Sticky Note"
@@ -839,7 +839,7 @@
       "typeVersion": 4.2,
       "position": [
         1264,
-        -1256
+        -1264
       ],
       "id": "bcdbd78a-466a-4ce6-b8ec-3fef7f738d8e",
       "name": "get-profile-by-phone",
@@ -891,7 +891,7 @@
       "typeVersion": 2.1,
       "position": [
         368,
-        -1160
+        -1168
       ],
       "id": "c666a14a-4046-4fc4-b095-6941bfd09d41",
       "name": "Webhook",
@@ -916,7 +916,7 @@
             {
               "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
               "name": "messages",
-              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  \"{{ $json.body.conversation.messages[0].content }}\" },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
+              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($json.body.conversation.messages[0].content) }} },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
               "type": "array"
             },
             {
@@ -927,13 +927,15 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "ignoreConversionErrors": false
+        }
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
         816,
-        -1256
+        -1264
       ],
       "id": "942fcc0a-03c5-4b79-95f7-ccbf0fec60bb",
       "name": "WhatsApp Trigger"
@@ -977,7 +979,7 @@
       "typeVersion": 2.2,
       "position": [
         592,
-        -1160
+        -1168
       ],
       "id": "8a0004c5-9337-4f3c-96b7-b6977d0f44cd",
       "name": "If"
@@ -988,7 +990,7 @@
       "typeVersion": 1,
       "position": [
         816,
-        -1064
+        -1072
       ],
       "id": "ec2dd217-fed6-454f-9ed8-8f358156aa05",
       "name": "No Operation, do nothing"
@@ -1016,7 +1018,7 @@
       "typeVersion": 1.1,
       "position": [
         1040,
-        -1256
+        -1264
       ],
       "id": "a9176d51-fbd2-4736-8b53-34d613a2e951",
       "name": "Execution Data"
@@ -1029,7 +1031,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "2300",
+            "content-length": "2782",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -1050,60 +1052,60 @@
             "additional_attributes": {},
             "content_attributes": {},
             "content_type": "text",
-            "content": "hola",
+            "content": "Tuve 180.000 ayer \n\nGaste 28.000 en cosas para mí primer día de trabajo. \nGaste 30.000 en transporte a una conferencia.\nGaste 64000 en transportes",
             "conversation": {
               "additional_attributes": {},
               "can_reply": true,
               "channel": "Channel::Whatsapp",
               "contact_inbox": {
-                "id": 2,
-                "contact_id": 2,
+                "id": 216,
+                "contact_id": 217,
                 "inbox_id": 2,
-                "source_id": "573228854498",
-                "created_at": "2025-08-27T06:08:54.230Z",
-                "updated_at": "2025-08-27T06:08:54.230Z",
+                "source_id": "573018080570",
+                "created_at": "2025-08-27T22:57:33.702Z",
+                "updated_at": "2025-08-27T22:57:33.702Z",
                 "hmac_verified": false,
-                "pubsub_token": "o5zS3vcuyn5CJ4ufPPEoqJGu"
+                "pubsub_token": "ossGkNcZmrmjgwbzimBWupxE"
               },
-              "id": 1,
+              "id": 214,
               "inbox_id": 2,
               "messages": [
                 {
-                  "id": 7,
-                  "content": "hola",
+                  "id": 1358,
+                  "content": "Tuve 180.000 ayer \n\nGaste 28.000 en cosas para mí primer día de trabajo. \nGaste 30.000 en transporte a una conferencia.\nGaste 64000 en transportes",
                   "account_id": 3,
                   "inbox_id": 2,
-                  "conversation_id": 1,
+                  "conversation_id": 214,
                   "message_type": 0,
-                  "created_at": 1756275530,
-                  "updated_at": "2025-08-27T06:18:50.315Z",
+                  "created_at": 1756336167,
+                  "updated_at": "2025-08-27T23:09:27.875Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y4NDA4RDc5MTI3Rjg1M0VFMjgA",
+                  "source_id": "wamid.HBgMNTczMDE4MDgwNTcwFQIAEhggMjRFRTZDRkE5RjU4M0ZCMDdFRDQ3QTc2OUFBQUQxREYA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
-                  "sender_id": 2,
+                  "sender_id": 217,
                   "external_source_ids": {},
                   "additional_attributes": {},
-                  "processed_message_content": "hola",
+                  "processed_message_content": "Tuve 180.000 ayer \n\nGaste 28.000 en cosas para mí primer día de trabajo. \nGaste 30.000 en transporte a una conferencia.\nGaste 64000 en transportes",
                   "sentiment": {},
                   "conversation": {
                     "assignee_id": null,
-                    "unread_count": 2,
-                    "last_activity_at": 1756275530,
+                    "unread_count": 10,
+                    "last_activity_at": 1756336167,
                     "contact_inbox": {
-                      "source_id": "573228854498"
+                      "source_id": "573018080570"
                     }
                   },
                   "sender": {
                     "additional_attributes": {},
                     "custom_attributes": {},
                     "email": null,
-                    "id": 2,
+                    "id": 217,
                     "identifier": null,
-                    "name": "Pedro Rodriguez",
-                    "phone_number": "+573228854498",
+                    "name": "Valentina",
+                    "phone_number": "+573018080570",
                     "thumbnail": "",
                     "blocked": false,
                     "type": "contact"
@@ -1116,10 +1118,10 @@
                   "additional_attributes": {},
                   "custom_attributes": {},
                   "email": null,
-                  "id": 2,
+                  "id": 217,
                   "identifier": null,
-                  "name": "Pedro Rodriguez",
-                  "phone_number": "+573228854498",
+                  "name": "Valentina",
+                  "phone_number": "+573018080570",
                   "thumbnail": "",
                   "blocked": false,
                   "type": "contact"
@@ -1131,19 +1133,19 @@
               "status": "pending",
               "custom_attributes": {},
               "snoozed_until": null,
-              "unread_count": 2,
+              "unread_count": 10,
               "first_reply_created_at": null,
               "priority": null,
-              "waiting_since": 1756274934,
+              "waiting_since": 1756335453,
               "agent_last_seen_at": 0,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1756275530,
-              "timestamp": 1756275530,
-              "created_at": 1756274934,
-              "updated_at": 1756275530.3174314
+              "last_activity_at": 1756336167,
+              "timestamp": 1756336167,
+              "created_at": 1756335453,
+              "updated_at": 1756336167.8773613
             },
-            "created_at": "2025-08-27T06:18:50.315Z",
-            "id": 7,
+            "created_at": "2025-08-27T23:09:27.875Z",
+            "id": 1358,
             "inbox": {
               "id": 2,
               "name": "Whatsapp Mony"
@@ -1159,14 +1161,14 @@
               "avatar": "",
               "custom_attributes": {},
               "email": null,
-              "id": 2,
+              "id": 217,
               "identifier": null,
-              "name": "Pedro Rodriguez",
-              "phone_number": "+573228854498",
+              "name": "Valentina",
+              "phone_number": "+573018080570",
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y4NDA4RDc5MTI3Rjg1M0VFMjgA",
+            "source_id": "wamid.HBgMNTczMDE4MDgwNTcwFQIAEhggMjRFRTZDRkE5RjU4M0ZCMDdFRDQ3QTc2OUFBQUQxREYA",
             "event": "message_created"
           },
           "webhookUrl": "https://automation.whitelabel.lat/webhook/mony",
@@ -1206,6 +1208,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-27T13:28:42.628Z",
-  "versionId": "2823faea-c21a-4af7-b6c7-4e9362ae2fa1"
+  "updatedAt": "2025-08-27T23:21:11.796Z",
+  "versionId": "5d6f2058-167c-4cf9-b8a1-009e9723cb54"
 }
