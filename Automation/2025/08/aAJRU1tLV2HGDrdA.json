@@ -34,7 +34,7 @@
         ],
         [
           {
-            "node": "Reminder",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -197,14 +197,14 @@
     },
     "Loop Over Items": {
       "main": [
+        [],
         [
           {
             "node": "Reminder",
             "type": "main",
             "index": 0
           }
-        ],
-        []
+        ]
       ]
     },
     "Wait14": {
@@ -346,7 +346,7 @@
       "main": [
         [
           {
-            "node": "initData",
+            "node": ">6Hours",
             "type": "main",
             "index": 0
           }
@@ -385,6 +385,28 @@
           }
         ]
       ]
+    },
+    ">6Hours": {
+      "main": [
+        [
+          {
+            "node": "<24Hours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "<24Hours": {
+      "main": [
+        [
+          {
+            "node": "initData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-25T21:45:53.048Z",
@@ -403,8 +425,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2528,
-        3504
+        2672,
+        3536
       ],
       "id": "47d070fd-e1f8-428d-883c-614e7c4e28f4",
       "name": "Google Gemini Chat Model1",
@@ -425,8 +447,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        2720,
-        3520
+        2816,
+        3536
       ],
       "id": "784020bd-54ef-4771-b6c4-0d73ad54d25f",
       "name": "Redis Chat Memory1",
@@ -497,7 +519,7 @@
       "typeVersion": 2.2,
       "position": [
         2976,
-        3296
+        3328
       ],
       "id": "2301ed6c-cff8-425a-b6e8-e92e663bd9d6",
       "name": "If2"
@@ -659,8 +681,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        2624,
-        3296
+        2688,
+        3328
       ],
       "id": "1ca60088-e387-4d3f-ade7-ff9bbf7ba47c",
       "name": "Reminder",
@@ -915,7 +937,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4560,
+        4544,
         3136
       ],
       "id": "0e2ed6f8-36a7-45d4-ab97-98c23e78a7fc",
@@ -950,7 +972,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4160,
+        4144,
         3312
       ],
       "id": "28ab3928-a0c0-436d-bcbd-45e591f644fe",
@@ -985,7 +1007,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3840,
+        3824,
         3152
       ],
       "id": "da01b147-7450-409c-a120-410c3e43b8ae",
@@ -1004,7 +1026,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        4128,
+        4112,
         3152
       ],
       "id": "1b234048-cd17-40e1-9dc4-3f0e0e6fef33",
@@ -1018,7 +1040,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3712,
+        3696,
         3328
       ],
       "id": "34bc57b1-3bb2-41d4-b7eb-2edae68553c7",
@@ -1053,7 +1075,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3936,
+        3920,
         3328
       ],
       "id": "a45fe5d1-83ee-4598-a14c-e5f39f24ac3f",
@@ -1064,7 +1086,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4352,
+        4336,
         3360
       ],
       "id": "379e37b2-d572-4fa7-a421-0eae72fb758e",
@@ -1098,7 +1120,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        4336,
+        4320,
         3152
       ],
       "id": "e72b6711-21ea-4f2d-96e6-bebfe929dab1",
@@ -1109,7 +1131,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4768,
+        4752,
         3168
       ],
       "id": "30066cff-9b73-4406-adf0-f4eff0f9e1bb",
@@ -1122,7 +1144,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3712,
+        3696,
         3552
       ],
       "id": "dadde827-7572-4e57-88d1-ff1289ffadc8",
@@ -1157,7 +1179,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3936,
+        3920,
         3552
       ],
       "id": "606d4332-0505-4aea-a90e-45515b96f1ea",
@@ -1168,7 +1190,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4352,
+        4336,
         3552
       ],
       "id": "ff4408ea-f21a-436d-a126-c4f2e7fac5b2",
@@ -1197,7 +1219,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4176,
+        4160,
         3536
       ],
       "id": "58361e17-d079-46e3-b110-cf060604a090",
@@ -1246,7 +1268,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        3360,
+        3344,
         3152
       ],
       "id": "9190a563-6f63-41e3-ad62-76fbe8ac0930",
@@ -1333,8 +1355,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2432,
-        3136
+        2320,
+        3152
       ],
       "id": "177e188e-a06d-4980-85f7-2f15f140f2ab",
       "name": "If"
@@ -1356,7 +1378,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2672,
+        2560,
         3136
       ],
       "id": "bd5df85f-26f4-4c9e-b826-b3611c23b881",
@@ -1379,11 +1401,79 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2240,
-        3136
+        2128,
+        3152
       ],
       "id": "5201eb7b-4777-4614-a437-e3cc4ac49c13",
       "name": "get contact"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b998b888-8446-4933-86c7-6152a9392cfc",
+              "leftValue": "={{ (Date.now() / 1000) - $json[\"payload\"][0][\"meta\"][\"sender\"][\"last_activity_at\"] > 21600 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2768,
+        3136
+      ],
+      "id": "35dc192a-7224-4c6b-a625-84c52412ccf2",
+      "name": ">6Hours"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "12391106-2717-4d64-a3b0-fc0720a3a214",
+              "leftValue": "={{ (Date.now() / 1000) - $json[\"payload\"][0][\"meta\"][\"sender\"][\"last_activity_at\"] < 86400 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2960,
+        3120
+      ],
+      "id": "1d557459-6a38-4c19-9fea-6d63d90898fe",
+      "name": "<24Hours"
     }
   ],
   "pinData": {},
@@ -1457,6 +1547,6 @@
     }
   ],
   "triggerCount": 3,
-  "updatedAt": "2025-08-28T19:37:59.464Z",
-  "versionId": "6bf5fd29-e695-452b-ae89-85c0eece4ef3"
+  "updatedAt": "2025-08-29T22:11:24.478Z",
+  "versionId": "88fa5c17-4f6c-426d-8852-a8ab846d8a58"
 }
