@@ -142,7 +142,13 @@
     },
     "Data": {
       "main": [
-        []
+        [
+          {
+            "node": "get contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Reminder": {
@@ -517,6 +523,50 @@
         [
           {
             "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Conversations1": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Send_Encuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Conversations2": {
+      "main": [
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "Formulario",
             "type": "main",
             "index": 0
           }
@@ -2083,6 +2133,192 @@
       ],
       "id": "43b57f6c-00d6-4712-a5d4-1200bca50a26",
       "name": "get contact1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const BASE_URL = \"https://crm.whitelabel.lat/api/v1/accounts/3/conversations\";\nconst TOKEN = \"uuWT9PNsY83ucax7HeqBEUSi\";\n\nasync function getAllConversations() {\n  let page = 1;\n  const perPage = 25;\n  const results = [];\n\n  while (true) {\n    const response = await this.helpers.httpRequest({\n      method: \"GET\",\n      url: `${BASE_URL}?status=all&page=${page}&per_page=${perPage}`,\n      headers: {\n        \"api_access_token\": TOKEN,\n        \"Content-Type\": \"application/json\",\n      },\n      json: true,\n    });\n\n    const payload = response.data?.payload || [];\n\n    if (payload.length === 0) break;\n\n    for (const conv of payload) {\n      results.push({\n        conversation_id: conv.id,\n        contact_id: conv.meta?.sender?.id,\n        name: conv.meta?.sender?.name || null,\n        phone_number: conv.meta?.sender?.phone_number || null,\n        account_id: conv.account_id,\n        labels: conv.labels || [],\n        status: conv.status,\n      });\n    }\n\n    page++;\n  }\n\n  return results.map(r => ({ json: r }));\n}\n\nreturn await getAllConversations();\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2416,
+        3936
+      ],
+      "id": "6c541e3e-d7a5-4f65-aec7-56f0753e6803",
+      "name": "Get_Conversations1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dc71d298-231b-4852-aa86-b42f2131eecf",
+              "leftValue": "={{ $json.labels }}",
+              "rightValue": "registrado",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "f56f0803-364f-49e0-8ee2-1df4137504b1",
+              "leftValue": "={{ $json.phone_number }}",
+              "rightValue": "+573228854498",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        3936
+      ],
+      "id": "0b9d4424-9c16-4db8-b9dd-b0d91fd86b07",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const BASE_URL = \"https://crm.whitelabel.lat/api/v1/accounts/3/conversations\";\nconst TOKEN = \"uuWT9PNsY83ucax7HeqBEUSi\";\n\nasync function getAllConversations() {\n  let page = 1;\n  const perPage = 25;\n  const results = [];\n\n  while (true) {\n    const response = await this.helpers.httpRequest({\n      method: \"GET\",\n      url: `${BASE_URL}?status=all&page=${page}&per_page=${perPage}`,\n      headers: {\n        \"api_access_token\": TOKEN,\n        \"Content-Type\": \"application/json\",\n      },\n      json: true,\n    });\n\n    const payload = response.data?.payload || [];\n\n    if (payload.length === 0) break;\n\n    for (const conv of payload) {\n      results.push({\n        conversation_id: conv.id,\n        contact_id: conv.meta?.sender?.id,\n        name: conv.meta?.sender?.name || null,\n        phone_number: conv.meta?.sender?.phone_number || null,\n        account_id: conv.account_id,\n        labels: conv.labels || [],\n        status: conv.status,\n      });\n    }\n\n    page++;\n  }\n\n  return results.map(r => ({ json: r }));\n}\n\nreturn await getAllConversations();\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        4176
+      ],
+      "id": "c2c9e4d2-4f8b-4506-a169-2644c7019f46",
+      "name": "Get_Conversations2",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dc71d298-231b-4852-aa86-b42f2131eecf",
+              "leftValue": "={{ $json.labels }}",
+              "rightValue": "registrado",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "f56f0803-364f-49e0-8ee2-1df4137504b1",
+              "leftValue": "={{ $json.phone_number }}",
+              "rightValue": "+573228854498",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        4176
+      ],
+      "id": "f4e58430-187f-4211-883b-edbcc92fa09b",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $json.account_id }}/conversations/{{ $json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"¿Cómo calificarías nuestro servicio?\",\n  \"content_type\": \"input_select\",\n  \"content_attributes\": {\n    \"items\": [\n      { \"title\": \"Excelente 😀\", \"value\": \"5\" },\n      { \"title\": \"Bueno 🙂\", \"value\": \"4\" },\n      { \"title\": \"Regular 😐\", \"value\": \"3\" },\n      { \"title\": \"Malo 🙁\", \"value\": \"2\" },\n      { \"title\": \"Terrible 😞\", \"value\": \"1\" }\n    ]\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3024,
+        3920
+      ],
+      "id": "1730c737-efcd-4f13-83bc-1ff42525f21a",
+      "name": "Send_Encuesta",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $json.account_id }}/conversations/{{ $json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"form\",\n  \"content_type\": \"form\",\n  \"content_attributes\": {\n    \"items\": [\n      { \"name\":\"email\", \"placeholder\":\"Please enter your email\", \"type\":\"email\", \"label\":\"Email\", \"default\":\"[email protected]\" },\n      { \"name\":\"text_aread\", \"placeholder\":\"Please enter text\", \"type\":\"text_area\", \"label\":\"Large Text\", \"default\":\"Sample text\" },\n      { \"name\":\"text\", \"placeholder\":\"Please enter text\", \"type\":\"text\", \"label\":\"text\", \"default\":\"sample input\" },\n      { \"name\":\"select\", \"label\":\"Select Option\", \"type\":\"select\",\n        \"options\":[ { \"label\":\"Burito\",\"value\":\"Burito\" }, { \"label\":\"Pasta\",\"value\":\"Pasta\" } ]\n      }\n    ]\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3008,
+        4160
+      ],
+      "id": "67323719-032d-4547-8861-8625cd54c5e1",
+      "name": "Formulario",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -2149,6 +2385,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-08-28T21:39:59.857Z",
-  "versionId": "c56e14b0-25c6-4d2e-b421-d6706029eb97"
+  "updatedAt": "2025-08-29T20:39:24.899Z",
+  "versionId": "05633f1c-d30c-4b9e-9269-3504bb4525e4"
 }
