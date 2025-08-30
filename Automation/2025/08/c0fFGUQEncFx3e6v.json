@@ -254,7 +254,7 @@
       "main": [
         [
           {
-            "node": "get_conversation",
+            "node": "get_conversationId",
             "type": "main",
             "index": 0
           }
@@ -277,17 +277,6 @@
         [
           {
             "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get_conversation": {
-      "main": [
-        [
-          {
-            "node": "initData",
             "type": "main",
             "index": 0
           }
@@ -567,6 +556,17 @@
         [
           {
             "node": "Formulario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_conversationId": {
+      "main": [
+        [
+          {
+            "node": "initData",
             "type": "main",
             "index": 0
           }
@@ -1328,29 +1328,6 @@
       ],
       "id": "40ec7486-7b0f-4da8-9a31-f1f15120ec79",
       "name": "If"
-    },
-    {
-      "parameters": {
-        "url": "=https://crm.whitelabel.lat/api/v1/accounts/3/contacts/{{ $json.payload[0].id }}/conversations",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "api_access_token",
-              "value": "uuWT9PNsY83ucax7HeqBEUSi"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3120,
-        3136
-      ],
-      "id": "0550efd0-da3b-4c8d-befc-02ff36c895c1",
-      "name": "get_conversation"
     },
     {
       "parameters": {
@@ -2136,7 +2113,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const BASE_URL = \"https://crm.whitelabel.lat/api/v1/accounts/3/conversations\";\nconst TOKEN = \"uuWT9PNsY83ucax7HeqBEUSi\";\n\nasync function getAllConversations() {\n  let page = 1;\n  const perPage = 25;\n  const results = [];\n\n  while (true) {\n    const response = await this.helpers.httpRequest({\n      method: \"GET\",\n      url: `${BASE_URL}?status=all&page=${page}&per_page=${perPage}`,\n      headers: {\n        \"api_access_token\": TOKEN,\n        \"Content-Type\": \"application/json\",\n      },\n      json: true,\n    });\n\n    const payload = response.data?.payload || [];\n\n    if (payload.length === 0) break;\n\n    for (const conv of payload) {\n      results.push({\n        conversation_id: conv.id,\n        contact_id: conv.meta?.sender?.id,\n        name: conv.meta?.sender?.name || null,\n        phone_number: conv.meta?.sender?.phone_number || null,\n        account_id: conv.account_id,\n        labels: conv.labels || [],\n        status: conv.status,\n      });\n    }\n\n    page++;\n  }\n\n  return results.map(r => ({ json: r }));\n}\n\nreturn await getAllConversations();\n"
+        "jsCode": "const BASE_URL = \"https://crm.whitelabel.lat/api/v1/accounts/3/conversations/1/messages?before=4218\";\nconst TOKEN = \"uuWT9PNsY83ucax7HeqBEUSi\";\n\nasync function getMessages() {\n  const response = await this.helpers.httpRequest({\n    method: \"GET\",\n    url: BASE_URL,\n    headers: {\n      \"api_access_token\": TOKEN,\n      \"Content-Type\": \"application/json\",\n    },\n    json: true,\n  });\n\n  // El endpoint devuelve un array con \"meta\" y \"payload\"\n  const payload = Array.isArray(response) ? (response[0]?.payload || []) : [];\n\n  if (payload.length === 0) {\n    return [{ json: { info: \"No messages found\" } }];\n  }\n\n  const results = payload.map(msg => ({\n    id: msg.id,\n    content: msg.content,\n    content_type: msg.content_type,\n  }));\n\n  // n8n exige este formato\n  return results.map(r => ({ json: r }));\n}\n\nreturn await getMessages();\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2319,6 +2296,42 @@
           "name": "mony Hablaya"
         }
       }
+    },
+    {
+      "parameters": {
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/3/contacts/{{ $json.payload[0].id }}/conversations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "uuWT9PNsY83ucax7HeqBEUSi"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3120,
+        3136
+      ],
+      "id": "0550efd0-da3b-4c8d-befc-02ff36c895c1",
+      "name": "get_conversationId"
+    },
+    {
+      "parameters": {
+        "jsCode": "const ACCOUNT_ID = $input.first().json.body.account.id;\nconst BASE_URL = `https://crm.whitelabel.lat/api/v1/accounts/${ACCOUNT_ID}`;\nconst TOKEN = \"uuWT9PNsY83ucax7HeqBEUSi\";\n\n// Tomamos el evento entrante\nconst input = $input.first().json;\nconst conversationId = input.body.conversation.id;\nconst replyToId = input.body.content_attributes?.in_reply_to;\n\nasync function getMessage(conversationId, messageId) {\n  const url = `${BASE_URL}/conversations/${conversationId}/messages?before=${messageId + 1}`;\n\n  const response = await this.helpers.httpRequest({\n    method: \"GET\",\n    url,\n    headers: {\n      \"api_access_token\": TOKEN,\n      \"Content-Type\": \"application/json\",\n    },\n    json: true,\n  });\n\n  const messages = response.payload || [];\n  if (!Array.isArray(messages) || messages.length === 0) {\n    return null;\n  }\n\n  return messages.find(m => m.id === messageId) || null;\n}\n\nlet replyMessage = null;\n\nif (replyToId) {\n  replyMessage = await getMessage(conversationId, replyToId);\n}\n\n// Clonamos el input para no perder el formato original\nconst output = JSON.parse(JSON.stringify(input));\n\n// Si existe un reply, lo agregamos dentro del body\nif (replyMessage) {\n  output.body.reply_message = replyMessage;\n} else {\n  // Si no hay reply, mantenemos la estructura pero con content null\n  output.body.reply_message = { content: null };\n}\n\nreturn [ { json: output } ];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        4608
+      ],
+      "id": "c8969c9f-1f38-45c3-ad29-b33399acf027",
+      "name": "reply_message"
     }
   ],
   "pinData": {},
@@ -2385,6 +2398,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-08-29T20:39:24.899Z",
-  "versionId": "05633f1c-d30c-4b9e-9269-3504bb4525e4"
+  "updatedAt": "2025-08-30T05:04:29.887Z",
+  "versionId": "847bdf47-92b5-4f89-b12d-61f16717caa9"
 }
