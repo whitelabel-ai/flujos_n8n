@@ -702,7 +702,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }} \nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
+        "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }},\nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
           "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n   - si se registra una subscripcion, registrala tambien como transaccion ya que se supone que acaba de pagarla.\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`,\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `update_transactions`, `get_transactions`, `delete_transactions`.\n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `update_category_budget`, `get_user_categories`  \n- *Metas de Ahorro:* `get_saving_goals`, \n- *para registrar un ahorro* 'update_progres_saving_goals'(suma el monto actual de la meta a ahorrar mas el nuevo monto, siempre pasar el id exacto de la meta, obtenido en la tool 'get_saving_goals')\n- *Suscripciones:* `create_user_subscription`, `get_user_subscriptions`, `updated_user_subscriptions`  \n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *Siempre antes de crear una meta, debemos preguntar la fecha Objetivo, si en 1 mes, 3 meses o 1 año*\n- *las subscripciones del usuario se registra el pago automaticamente cada mes, para dejar de registrar debe inactivar la subscripcion* (puedes informarle al usuario cada que crees una subscripcion)\n\nIMPORTANTE: jamas registrar una transaccion sin haber consultado la tool 'get_user_categories'ya que dara error.\n- *Actúa siempre, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\", o voy a hacer, o 'voy a registrar' — hazlo, haz todas las ejecuciones que necesites y muestra el resultado.\n- JAMAS LE DES IDS a los usuarios o datos sensibles o internos como id de la transaccion, no pidas id ni entregues, son datos internos.\npor ahora crear categorias y dar analisis con graficas detalladas es una funcion premium\n"
         }
@@ -996,7 +996,7 @@
             {
               "id": "f4f107ad-f4e3-4616-a1ec-515f7324ba23",
               "name": "nombre",
-              "value": "={{ $json.nombre }}",
+              "value": "={{ $json.usuario_data.nombreCompleto }}",
               "type": "string"
             },
             {
@@ -1219,7 +1219,7 @@
             {
               "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
               "name": "mensaje",
-              "value": "={{ $('Start').item.json.messages[0].text.body }}",
+              "value": "={{ $('Start').item.json.messages[0].text }}",
               "type": "string"
             }
           ]
@@ -1229,7 +1229,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2960,
+        2944,
         -1264
       ],
       "id": "84c6e336-b293-438e-93cf-6da160ff014a",
@@ -2961,63 +2961,78 @@
         "json": {
           "metadata": {
             "account_id": "3",
-            "conversation_id": "339"
+            "conversation_id": "1"
           },
           "contacts": [
             {
               "profile": {
-                "name": "Steven"
+                "name": "Pedro"
               },
-              "wa_id": "573186606969"
+              "wa_id": "573228854498"
             }
           ],
           "messages": [
             {
-              "from": "+573186606969",
-              "id": "4228",
-              "timestamp": "1756501216",
+              "from": "+573228854498",
+              "id": "4595",
+              "timestamp": "1756530357",
               "text": {
-                "body": null
+                "body": "y esto lo registro?",
+                "reply_message": null
               },
               "file": {
-                "body": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBaUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--2fc6e0d8d9c8f80d1b102b11f523c88c0abb01cc/File.jpg"
+                "body": ""
               },
-              "type": "image"
+              "type": "text"
             }
           ],
           "field": [
             "registrado"
           ],
           "usuario_data": {
-            "id": "1ba2a961-65d7-43ac-b288-6b60782f68d4",
-            "nombreCompleto": "John Steven Murillo duque",
-            "email": "paonkidsboutique@gmail.com",
-            "numeroWhatsapp": "+573186606969",
+            "id": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+            "nombreCompleto": "Pedro Rodriguez",
+            "email": "pro.pedro0413@gmail.com",
+            "numeroWhatsapp": "+573228854498",
             "moneda": "COP",
             "estadoSuscripcion": "free",
-            "fechaRegistro": "2025-08-29T15:54:22.617Z",
-            "frecuenciaRecordatorios": "diario",
-            "frecuenciaInformes": "semanal",
+            "fechaRegistro": "2025-08-23T22:35:15.923Z",
+            "frecuenciaRecordatorios": "nunca",
+            "frecuenciaInformes": "mensual",
             "metasDeAhorro": [
               {
-                "id": "f2144e47-91be-423c-9e38-15b6c7a6df48",
-                "nombre": "organizar tus gastos",
-                "montoObjetivo": "1000000",
-                "montoActual": "0",
-                "fechaObjetivo": "2024-06-15T00:00:00.000Z",
+                "id": "55177fda-6c10-4641-a758-53a1c54da974",
+                "nombre": "Comprar un PC",
+                "montoObjetivo": "3000000",
+                "montoActual": "400000",
+                "fechaObjetivo": "2025-08-23T00:00:00.000Z",
                 "estado": "activa",
-                "fechaCreacion": "2025-08-29T15:54:41.563Z",
-                "idUsuario": "1ba2a961-65d7-43ac-b288-6b60782f68d4"
+                "fechaCreacion": "2025-08-24T04:47:09.954Z",
+                "idUsuario": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd"
               }
             ],
-            "suscripciones": [],
+            "suscripciones": [
+              {
+                "id": "c33712c7-0410-414a-b102-6a123d078b7a",
+                "nombre": "Amazon Prime Video",
+                "descripcion": "Suscripción a Amazon Prime Video",
+                "monto": "24000",
+                "moneda": "COP",
+                "frecuencia": "mensual",
+                "fechaInicio": "2025-08-24T00:00:00.000Z",
+                "fechaProximoPago": "2025-09-24T00:00:00.000Z",
+                "activa": true,
+                "idUsuario": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+                "idCategoria": 5
+              }
+            ],
             "estadisticas": {
               "ingresosMes": 0,
-              "gastosMes": 69900,
-              "balanceMes": -69900,
-              "totalTransaccionesMes": 3,
+              "gastosMes": 190000,
+              "balanceMes": -190000,
+              "totalTransaccionesMes": 7,
               "metasActivas": 1,
-              "suscripcionesActivas": 0
+              "suscripcionesActivas": 1
             }
           }
         }
@@ -3050,6 +3065,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-08-29T21:28:03.543Z",
-  "versionId": "89205630-9c87-41fa-a473-1dd0fbd303d5"
+  "updatedAt": "2025-08-30T05:14:58.146Z",
+  "versionId": "f9ed1bcb-c83d-4145-a9bc-ef8718b76efb"
 }
