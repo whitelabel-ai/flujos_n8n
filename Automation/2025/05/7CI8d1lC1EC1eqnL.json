@@ -32,7 +32,7 @@
       "main": [
         [
           {
-            "node": "Send Mail",
+            "node": "Valeia Estarter",
             "type": "main",
             "index": 0
           }
@@ -68,7 +68,7 @@
       "typeVersion": 1,
       "position": [
         0,
-        20
+        32
       ],
       "id": "6059af95-4733-407d-913f-247766e96a4d",
       "name": "Error Trigger"
@@ -96,38 +96,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        220,
-        20
+        224,
+        32
       ],
       "id": "0c8b1f30-fbfc-43df-9be6-13b3291e3bbf",
       "name": "Create Message"
-    },
-    {
-      "parameters": {
-        "sendTo": "pro.pedro0413@gmail.com",
-        "subject": "={{ $json.asunto }}",
-        "emailType": "text",
-        "message": "={{ $json.message }}",
-        "options": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
-      "position": [
-        660,
-        -80
-      ],
-      "id": "a08b92f6-a47b-44a9-beed-586ca48c306f",
-      "name": "Send Mail",
-      "webhookId": "4ba60e6b-10a6-42bc-b659-435614e98684",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "No30HHponDPtNWfb",
-          "name": "hola@whitelabel.lat"
-        }
-      },
-      "disabled": true
     },
     {
       "parameters": {
@@ -138,7 +111,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        900,
+        912,
         0
       ],
       "id": "32a0c4fc-7127-400d-8547-deea0592b660",
@@ -160,7 +133,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -60,
+        -64,
         -160
       ],
       "id": "fbee9b31-ec6e-4be9-aae9-eb22091c853f",
@@ -181,7 +154,7 @@
                 "conditions": [
                   {
                     "leftValue": "={{ $('Error Trigger').item.json.workflow.name }}",
-                    "rightValue": "test flujo 1",
+                    "rightValue": "Estarter <> valeia whatsapp",
                     "operator": {
                       "type": "string",
                       "operation": "equals"
@@ -251,8 +224,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        440,
-        20
+        448,
+        32
       ],
       "id": "6f7ef8c4-df24-42ea-b784-3b5235dc4ac2",
       "name": "alertas por workflow"
@@ -266,7 +239,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        380,
+        384,
         -160
       ],
       "id": "aca32cfb-e107-48b1-be5a-9c3c1a830643",
@@ -281,8 +254,8 @@
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
       "position": [
-        680,
-        180
+        688,
+        192
       ],
       "id": "4e4c8cef-c6ca-402e-96a6-8507e7d9f81d",
       "name": "Discord",
@@ -291,6 +264,28 @@
         "discordWebhookApi": {
           "id": "2rNIOJ7dmpcSUhuf",
           "name": "Logs Automation Whitelabel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        688,
+        -96
+      ],
+      "id": "4c7de626-d552-40e2-83b2-593c519d1630",
+      "name": "Valeia Estarter",
+      "webhookId": "b7da6804-4967-455e-98df-26fcf8da6d55",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "GPY00poaUNW1QvBw",
+          "name": "Valeia-Estarter"
         }
       }
     }
@@ -314,6 +309,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-07-12T16:48:39.605Z",
-  "versionId": "09cbe70f-4433-4ad9-8355-1970107a295e"
+  "updatedAt": "2025-09-02T22:06:29.694Z",
+  "versionId": "f40e762f-aaf5-4df8-a50d-59d5b6c08603"
 }
