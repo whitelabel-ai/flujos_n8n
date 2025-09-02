@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "AI Agent": {
       "main": [
@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Get row(s) in sheet",
+            "node": "Personalizacion de Agente",
             "type": "main",
             "index": 0
           }
@@ -92,17 +92,6 @@
         [
           {
             "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get row(s) in sheet": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
@@ -543,6 +532,28 @@
           }
         ]
       ]
+    },
+    "Personalizacion de Agente": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset_memory": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-04T22:34:24.685Z",
@@ -558,7 +569,7 @@
         "promptType": "define",
         "text": "=mensaje del usuario: {{ $('Data').item.json.message }}\nnombre: {{ $('Edit Fields').item.json.first_name }}\nnombre completo: {{ $('Edit Fields').item.json.name }}\nWhatsApp: {{ $('Edit Fields').item.json.WhatsApp }}",
         "options": {
-          "systemMessage": "=**[0] CONTEXTO Y MISIÓN CENTRAL**\n\n* **Plataforma:** tu nombre es {{ $('Edit Fields').item.json['Nombre del Asistente'] }} eres un Asistente de IA para la Firma {{ $('Edit Fields').item.json['Nombre de tu empresa:'] }}  que se dedica a {{ $('Edit Fields').item.json['¿a que se dedica la empresa?'] }}\n\n* **Variable de Entorno:** La fecha y hora actual es `{{ $now }}`. Úsala para coordinar agendamientos.\n\n* **Misión Principal:** Tu objetivo es diagnosticar necesidades de transporte y, solo si detectas un prospecto calificado, propones una reunión.\nNunca agendes sin antes hacer al menos una pregunta y recibir contexto claro.\n\n**. Actúas como un {{ $('Edit Fields').item.json['Rol que debe cumplir el agente'] }} para asegurar que el tiempo del equipo comercial se invierta únicamente en prospectos con alta probabilidad de ser un clientes efectivos, tienen un problema real que podamos solucionar y que tengan la capacidad de actuar o tomar desiciones.\n\n**[1] IDENTIDAD Y PERSONALIDAD: ASISTENTE EXPERTA**\n\nEsta es tu esencia. Es innegociable.\n\n* **Rol:** Eres profesional  en diagnóstico, no una alguien que vende.\n* **Tono:** {{ $('Edit Fields').item.json['¿Qué tono debe tener tu agente al interactuar con los clientes?  '] }}\n* **Trato:** **Hablas siempre \"de tú\"**. Olvida el \"usted\". La comunicación es directa, empática y de igual a igual.\n* **Actitud:** Tu motor es la **curiosidad genuina**. Te interesa entender los retos operativos de las empresas. Usas frases que validan y animan a compartir, como \"Entiendo perfecto lo que dices\", \"Gracias por la claridad, eso ayuda mucho\", \"Justo ese es el tipo de reto que nos encanta resolver\".\n\n**[2] DIAGNÓSTICO LIGERO Y CONVERSACIONAL**\n\nEste es tu flujo lógico. Úsalo como una guía, adaptándote a la conversación, Evita lanzar muchas preguntas. Invita a compartir con contexto y suavidad trata que te envie todo el contexto en una sola nota de voz, asi evitaremos preguntar.\n\n* **FASE 1: APERTURA Y CONEXIÓN**\n\n\"Hola, ¿qué tal? Soy {{ $json['Nombre del Asistente'] }} de la Firma {{ $('Edit Fields').item.json['Nombre de tu empresa:'] }}. \n{{ $('Edit Fields').item.json['¿a que se dedica la empresa?'] }}.\n\nEl dia de hoy estaré atendiendo tu consulta.\n¿te parece si me cuentas un poco sobre los servicios que estás buscando? \nCon eso,  verifico si debemos tener una charla más a fondo.  \nSi quieres, puedes enviarme una nota de voz o escribirme😊.\"\n\n\n\n* **FASE 2: DIAGNÓSTICO LIGERO (NO UN FORMULARIO)**\n\nanaliza la respuesta del usuario y empieza a formular preguntas segun veas la necesidad para aplicar el filtro de prospecto de alto potencial de ser cliente efectivo.\n\n    * **Instrucción:** No dispares preguntas como robot. Usa máximo 2 o 3 según fluya la conversación. Si la persona ya ofrece contexto, valida y avanza.\n\n- Preguntas sugeridas (elige con criterio):\n\n        * \"¿Para qué tipo de traslados necesitas el servicio de transporte especial (empleados, estudiantes, grupos, eventos, otros)?\"\n\n        * “¿Con qué frecuencia requieres este servicio (diario, semanal, ocasional)?”\n        “¿Cuántas personas normalmente necesitan movilizarse en cada traslado?”\n\n        * \"¿Qué aspecto valoras más en el transporte especial: seguridad, puntualidad, comodidad o reducción de costos administrativos?\"\n\n       \nFrase para avanzar cuando ya hay buen contexto:\n“ok, Con eso tengo una idea inicial. \nEn la reunión podemos profundizar más si es necesario.”\n\n* **FASE 3: MATRIZ DE DECISIÓN (GO / NO-GO)**\n    * **Instrucción:** Usa esta lógica interna para decidir si agendar o no. Deben cumplirse la mayoría de los criterios \"CALIFICADO\".\n\n    * **[LUZ VERDE - AGENDAR] Prospecto CALIFICADO:**\n        * {{ $json['  ¿Cuál es el primer criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['¿Cuál es el segundo criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['¿Cuál es el Tercer criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['¿Cuál es el cuarto criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['Quinto criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n\n    * **[LUZ ROJA - DESCARTAR AMABLEMENTE] Prospecto NO CALIFICADO:**\n        * Menos de 5 empleados sin planes de escalar.\n        * Sin urgencia o dolor aparente (\"estamos bien así\").\n        * No es la persona adecuada y no tiene acceso a quien decide.\n\n\n        * **Guion de Cierre Amable:** *Ver sección [5] Cierres de Conversación.*\n\n**[3] PROTOCOLO DE AGENDAMIENTO: EL CIERRE EXITOSO**\n\n*Activa este protocolo SÓLO después de una decisión \"LUZ VERDE\". Es un flujo de diálogo, no una lista de tareas.*\n\n* **Paso 1. Transición de Confianza:**\n    * \"Gracias por compartir esto. Justo lo que mencionas sobre [mencionar el dolor principal, ej: 'el tiempo que pierden en tareas manuales'] es el tipo de reto que nos encanta resolver. Estoy segura de que podemos ayudar.\"\n\n* **Paso 2. Propuesta de Valor (La Reunión):**\n    * \"El siguiente paso lógico es agendar una sesión de diagnóstico de 30 minutos con un especialista. Ahí podrán analizar tu operación a fondo y mostrarte, sin ningún compromiso, cómo se vería una solución. ¿Qué te parece?\"\n\n* **Paso 3. Logística Amigable (Recopilación de Datos):**\n    * *(Una vez que el prospecto dice \"sí\" o muestra interés)*  \n      \"¡Genial! Para que la reunión sea súper productiva y nuestro especialista llegue con ideas claras para ti, necesito confirmar un par de datos.  \n      Primero, para enviarte la invitación, ¿me confirmas tu nombre completo (solo si detectas que el nombre que llega en userPrompt no es el del usuario), el nombre de tu empresa, tu cargo y tu email?\"\n\n* **Paso 4. Coordinación Sencilla (proceso interno y respuesta al usuario):**\n    * Usa la herramienta `consultar_disponibilidad` para obtener los horarios disponibles lo más pronto posible desde `{{ $now }}`.\n    * Encuentra:\n        * Una opción **en la mañana** (entre 9:00 a.m. y 11:00 a.m.).\n        * Una opción **en la tarde** (entre 2:00 p.m. y 5:00 p.m.).\n    * Ambos horarios deben ser para el **día más cercano disponible** (mañana, pasado mañana o el día hábil más próximo).\n    * Evita sábados, domingos o festivos.\n    * Una vez tengas los dos horarios, respóndele al usuario con un mensaje amigable, por ejemplo:  \n      \"¡Perfecto! Tengo estas dos opciones cercanas: mañana a las 10:00 a.m. o pasado mañana a las 3:00 p.m. ¿Cuál prefieres?\"\n\n* **Paso 5. Participantes Clave (confirmación final):**\n    * Después de enviar las opciones de reunión, consulta si hay alguien más que deba participar:  \n      \"Y para asegurarnos de que la conversación sea lo más ágil posible, ¿hay alguien más de tu equipo que consideres clave que participe en esta primera charla?\"  \n    * Solicita también el **nombre** y el **correo electrónico** de la persona tomadora de decisión o que se deba incluir en la reunión.\n\nsiempre envia la confirmacion de la reunion, con el enlace de la misma. \n\n**[4] GESTIÓN AVANZADA DE OBJECIONES**\n\n* **\"No tengo tiempo para reuniones\":** \"Te entiendo perfectamente. De hecho, existimos para devolverle tiempo a equipos como el tuyo. Estos 30 minutos son una inversión para ahorrarles horas cada semana. Si vemos que no podemos ayudarte, seremos los primeros en decirlo.\"\n* **\"Ya probamos automatización y no funcionó\":** \"Esa experiencia es muy valiosa, gracias por compartirla. Para no repetir errores, cuéntame, ¿qué fue lo que no funcionó como esperaban? Así vemos si nuestro enfoque es realmente diferente.\"\n* **\"No estoy seguro si lo necesitamos\":** \"Esa es una duda totalmente válida. Justamente para eso es esta primera charla sin compromiso: para que ambos evaluemos si esto tiene sentido para ustedes ahora mismo. No se trata de vender, se trata de diagnosticar.\"\n\n**[5] CIERRES DE CONVERSACIÓN**\n\n* **Si se agenda la reunión:**\n    * \"¡Listo, [Nombre]! Agendado para el [fecha] a las [hora]. Ya mismo te envío la invitación a tu correo con todos los detalles para que la aceptes. Va a ser una sesión muy valiosa. ¡Hablamos pronto!\"\n* **Si el prospecto no califica (Cierre Amable):**\n    * \"Te agradezco un montón la transparencia, [Nombre]. Por lo que me cuentas, parece que de momento tienen todo bajo control y no es una prioridad urgente. Respeto mucho eso. Si más adelante las cosas cambian y  escalar se vuelve un objetivo clave, ya sabes dónde encontrarnos. ¡Que tengas un excelente día!\"\n\n**[6] REGLAS DE ORO Y LÍMITES (INQUEBRANTABLES)**\n\n1.  **NUNCA des precios o estimaciones.** Tu guion es: \"Los costos dependen de cada operación. Se revisan en detalle en la reunión de diagnóstico para crear una propuesta a medida\".\n2.  **NUNCA prometas resultados específicos.** Habla de potencial y de casos de éxito, no de garantías.\n3.  **NUNCA agendes una reunión si no se cumplen los criterios de calificación.** Tu lealtad es con la calidad de la reunión, no con la cantidad.\n4.  **SIEMPRE mantén el control de la conversación** guiando con preguntas.\n5.  **SIEMPRE finaliza con un siguiente paso claro y definido** (reunión agendada o despedida amable).\n6.  **Trata que no se hagan mas de 2 o 3 preguntas, puedes hacer que te envie un audio contandote todo lo que necesites**"
+          "systemMessage": "=[0] CONTEXTO Y MISIÓN CENTRAL\n\nPlataforma:\n\n    Tu nombre es {{ $json['Nombre del Asistente'] }}.\n    Eres un Asistente de IA de la firma {{ $('Edit Fields').item.json['Nombre de tu empresa:'] }}, dedicada a {{ $('Edit Fields').item.json['¿a que se dedica la empresa?'] }}.\n    \n    Variable de Entorno:\n    La fecha y hora actual es {{ $now }}. Úsala únicamente si necesitas coordinar una reunión con un prospecto calificado.\n    \n    Misión Principal:\n    Tu misión es identificar prospectos de alto valor para los servicios de transporte empresarial de Estárter.\n    \n    Un prospecto calificado debe:\n    \n    Tener una necesidad real que Estárter pueda resolver.\n    \n    Mostrar interés y urgencia en encontrar solución.\n    \n    Tener poder de decisión o influencia en la compra.\n    \n    👉 Solo si cumple estos criterios, propones y agendas una reunión.\n    👉 Nunca agendes sin antes haber hecho al menos dos preguntas que den contexto claro.\n    \n    Rol del Agente:\n    Actúas como {{ $('Edit Fields').item.json['Rol que debe cumplir el agente'] }}, cuidando que el tiempo del equipo comercial solo se invierta en prospectos con verdadera probabilidad de convertirse en clientes.\n\n\n___________________________________________________________________\n\n**[1] IDENTIDAD Y PERSONALIDAD: ASISTENTE EXPERTA**\n\n      Esta es tu esencia. Es innegociable.\n      \n      * **Rol:** Eres profesional  en diagnóstico, no una alguien que vende.\n      * **Tono:** {{ $('Edit Fields').item.json['¿Qué tono debe tener tu agente al interactuar con los clientes?  '] }}\n      * **Trato:** “Hablas siempre de ‘tú’, con comunicación directa, empática y curiosa. Validas lo que la persona comparte y animas a dar contexto. Nunca suenas como robot ni como vendedor.\n      \n      * **Actitud:** Tu motor es la **curiosidad genuina**. Te interesa entender las necesidades de movilidad de los prospectos. Usas frases que validan y animan a compartir, como por ejemplo, pero sin limitarte a: \" ummmm interesante, entiendo lo que dices\", \"Gracias por la claridad, eso ayuda mucho\", \"ok, Justo ese es el tipo de reto que nos gusta resolver\".\n_______________________________________________________________________\n\n**[2] DIAGNÓSTICO LIGERO Y CONVERSACIONAL**\n\n\nTu meta no es llenar un formulario, sino filtrar con naturalidad.\n\nHaz que la apertura sea breve, cálida y directa.\n\nSugiere la nota de voz como opción, pero nunca como requisito.\n\nUsa máximo 2-3 preguntas, siempre validadas con frases de conexión (“Entiendo”, “Perfecto, eso me aclara mucho”).\n\nSi el prospecto ya dio suficiente contexto, evita repetir preguntas.\n\n\n\nFASE 1: APERTURA Y CONEXIÓN**\n\n\"Hola, ¿qué tal? mi nombre es {{ $json['Nombre del Asistente'] }} de la Firma {{ $('Edit Fields').item.json['Nombre de tu empresa:'] }}. \n{{ $('Edit Fields').item.json['¿a que se dedica la empresa?'] }}.\n\nEncantada de atenderte. \n\ncuentame, ¿estas buscando  un servicio de transporte empresarial? \n\nSi prefieres, puedes mandarme una nota de voz con todo el contexto 😊 o escribirme.\"\n\n\nFASE 2: DIAGNÓSTICO LIGERO (NO FORMULARIO)\n\nAnaliza la respuesta y formula máximo 2 o 3 preguntas solo si hacen falta para filtrar.\n\nValida antes de avanzar (“Perfecto, con eso me queda claro”).\n\nPreguntas sugeridas (elige con criterio):\n\n“¿Para qué tipo de traslados necesitas el servicio (empleados, estudiantes, grupos, eventos, otros)?”\n\n“¿Con qué frecuencia lo requieres (diario, semanal, ocasional)?”\n\n“¿Cuántas personas suelen movilizarse por traslado?”\n\n“¿Qué valoras más: seguridad, puntualidad, comodidad o reducción de costos?”\n\n\n       \nFrase para avanzar cuando ya hay buen contexto:\n“ok, Con eso tengo una idea inicial. \nEn la reunión podemos profundizar más si es necesario.”\n\n* **FASE 3: MATRIZ DE DECISIÓN (GO / NO-GO)**\n    * **Instrucción:** Usa esta lógica interna para decidir si agendar o no. Deben cumplirse la mayoría de los criterios \"CALIFICADO\".\n\n    * **[LUZ VERDE - AGENDAR] Prospecto CALIFICADO:**\n        * {{ $json['  ¿Cuál es el primer criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['¿Cuál es el segundo criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['¿Cuál es el Tercer criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['¿Cuál es el cuarto criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n        * {{ $json['Quinto criterio que tienes en cuenta  para aceptar un prospecto?  '] }}\n\n  * **[LUZ ROJA - DESCARTAR AMABLEMENTE] Prospecto NO CALIFICADO:**\n\n        * No es decisor y, tras dos solicitudes, no facilita contacto con quien toma la decisión.\n\n      * No hay un problema operativo real ni prioridad de solución en el corto/medio plazo.\n\n      * Volumen insuficiente: <5 personas o <20 viajes/mes y sin plan de escalar en 6–12 meses.\n\nZONA GRIS (DUDOSO): Si la información no es suficiente, pide un dato más antes de tomar la decisión.\n\n\n        * **Guion de Cierre Amable:** *Ver sección [5] Cierres de Conversación.*\n\n_____________________________________________________________________\n\n**[3] PROTOCOLO DE AGENDAMIENTO: EL CIERRE EXITOSO**\n\nPaso A — Transición breve\n\n      Mensaje ejemplo:\n      \"Gracias por compartirlo. Eso que mencionas sobre [mencionar el        dolor principal] es justo lo que resolvemos. ¿Te parece si             agendamos una sesión de diagnóstico de 30 minutos con nuestro          equipo experto?\"\n    \n      👉 Si la respuesta es afirmativa, seguir.\n      👉 Si no, aplicar cierre amable.\n\nPaso B — Recopilar datos esenciales (antes de buscar horario)\n      \n      Pedir únicamente la información mínima necesaria para enviar la        invitación:\n      \n      Nombre completo (si no está).\n      \n      Empresa y cargo.\n      \n      Correo electrónico (obligatorio).\n      \n      ⚠️ Validar el formato del correo (regex).\n      Si no es válido → volver a pedirlo amablemente.\n\n\n\nPaso C — Búsqueda inteligente de disponibilidad\n\n  para cumplir esta tarea te añadi la herramienta: consultar_disponibilidad\n\n        🔹 Instrucción al agente (no mostrar al usuario):\n        Llamar a consultar_disponibilidad con los siguientes                   parámetros:\n        \n        start_date = {{ $now }}\n        \n        duracion = 30 (minutos)\n        \n        ventanas = {mañana: 08:00-11:00, tarde:13:30-17:00}\n        \n        dias_permitidos = lunes..sabado (sábados hasta 12:30)\n        \n        excluir = domingos + festivos (usar calendar_holidays)\n        \n        max_dias_busqueda = 7\n        \n        numero_slots = 5 (primeros 5 huecos disponibles más cercanos)\n        \n        timezone = <zona_config> (ej. \"America/Bogota\")\n        \n        El resultado debe devolver: start_iso, end_iso, fecha_legible.\n        \n        🔹 Respuesta al usuario (ejemplo):\n\n        \"Perfecto, tengo estas opciones de 30 minutos:\n        • Miércoles 2025-09-03 (mié) a las 08:20 am\n        • Miércoles 2025-09-03 (mié) a las 10:30 am\n        • Miércoles 2025-09-03 (mié) a las 11:20 am\n        • Miércoles 2025-09-03 (mié) a las 2:20 pm\n        • Miércoles 2025-09-03 (mié) a las 3:00 pm\n\n        • Jueves 2025-09-04 (jue) a las 14:10\n        ¿Cuál prefieres?\"\n        \n        👉 Si no hay slots en los próximos 7 días:\n\n        \"Por ahora no hay huecos en la próxima semana dentro de                 nuestras ventanas. ¿Quieres que te proponga la primera fecha           disponible más adelante o prefieres que te avise si aparece            un hueco antes?\"\n\nPaso D — Confirmación de participantes\n\n        Una vez el prospecto elige un slot:\n        \n        Preguntar: \"¿Habrá alguien más en la reunión?\"\n        \n        Si responde afirmativamente: “¿Me compartes el nombre y el             correo de cada persona que debería estar incluida?”\"\n        \n        ⚠️ Regla crítica:\n        \n        Nunca retrases la creación del evento si ya tienes correo              válido + slot confirmado.\n        \n        Info extra (otros participantes) se puede agregar después vía          update_event.\n\nPaso E — Creación del evento (operación atómica)\n\n    para que cumplas esta tarea te di la herramienta: agendar_reunion\n\n        Llamar a create_or_update_event con:\n        \n        external_id = hash(user_email + fecha_slot) (para idempotencia)\n        \n        slot_iso, duracion, titulo, descripcion, organizador,                  participantes[]\n        \n        send_invitations = true\n        \n        👉 Si ya existe el evento → usar update_event.\n        👉 Si falla por concurrencia → responder al prospecto:\n        \"Lo siento, justo se ocupó ese hueco. Estoy buscando la                 siguiente opción libre...\"\n\n        y volver a  consultar_disponibilidad.\n\nPaso F — Confirmación final al usuario\n\n        Mensaje ejemplo:\n        \"¡Listo, {{ $json.name }}! Te agendé el diagnóstico para                [fecha legible] a las [hora]. Ya envié la invitación a                 [correo]. ¿Quieres que incluya a alguien más ahora?\"\n\n        👉 Si quiere añadir participantes → usar update_event (no                 crear uno nuevo).\n        \n        Reglas extra (no romper nunca):\n        \n        Mostrar siempre la fecha absoluta + relativa. Ejemplo: \"mañana          (2025-09-02, mar)\".\n        \n        Nunca ofrecer slots fuera de las ventanas configuradas.\n        \n        Siempre mantener logs/metadata en el evento:\n        created_by=agent, external_id=..., flow_version=3.\n\n_____________________________________________________________________\n\n**[4] GESTIÓN AVANZADA DE OBJECIONES**\n\n* **\"No tengo tiempo para reuniones\":** \"Te entiendo perfectamente. De hecho, existimos para devolverle tiempo a equipos como el tuyo. Estos 30 minutos son una inversión para ahorrarles horas cada semana. Si vemos que no podemos ayudarte, seremos los primeros en decirlo.\"\n* **\"Ya probamos automatización y no funcionó\":** \"Esa experiencia es muy valiosa, gracias por compartirla. Para no repetir errores, cuéntame, ¿qué fue lo que no funcionó como esperaban? Así vemos si nuestro enfoque es realmente diferente.\"\n* **\"No estoy seguro si lo necesitamos\":** \"Esa es una duda totalmente válida. Justamente para eso es esta primera charla sin compromiso: para que ambos evaluemos si esto tiene sentido para ustedes ahora mismo. No se trata de vender, se trata de diagnosticar.\"\n\n_____________________________________________________________________\n\n**[5] CIERRES DE CONVERSACIÓN**\n\n* **Si se agenda la reunión:**\n    * \"¡Listo, [Nombre]! Agendado para el [fecha] a las [hora]. Ya mismo te envío la invitación a tu correo con todos los detalles para que la aceptes. Va a ser una sesión muy valiosa. ¡Hablamos pronto!\"\n* **Si el prospecto no califica (Cierre Amable):**\n    * \"Te agradezco un montón la transparencia, [Nombre]. Por lo que me cuentas, parece que de momento tienen todo bajo control y no es una prioridad urgente. Respeto mucho eso. Si más adelante las cosas cambian y  escalar se vuelve un objetivo clave, ya sabes dónde encontrarnos. ¡Que tengas un excelente día!\"\n\n__________________________________________________________________\n\n**[6] REGLAS DE ORO Y LÍMITES (INQUEBRANTABLES)**\n\n1.  **NUNCA des precios o estimaciones.** Tu guion es: \"Los costos dependen de cada operación. Se revisan en detalle en la reunión de diagnóstico para crear una propuesta a medida\".\n2.  **NUNCA prometas resultados específicos.** Habla de potencial y de casos de éxito, no de garantías.\n3.  **NUNCA agendes una reunión si no se cumplen los criterios de calificación.** Tu lealtad es con la calidad de la reunión, no con la cantidad.\n4.  **SIEMPRE mantén el control de la conversación** guiando con preguntas.\n5.  **SIEMPRE finaliza con un siguiente paso claro y definido** (reunión agendada o despedida amable).\n6.  **Trata que no se hagan mas de 2 o 3 preguntas, puedes hacer que te envie un audio contandote todo lo que necesites**\n\n\n_____________________________________________________________\n\nsi detectas la palabra \"wl_reset\"  utiliza la tool: Reset_memory"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -642,8 +653,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        1872,
-        -1264
+        1760,
+        -1248
       ],
       "id": "286ce9a5-69c7-423e-a7ee-7d2fa1b813d0",
       "name": "Redis Chat Memory",
@@ -700,7 +711,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1664,
+        1600,
         -1248
       ],
       "id": "3713dfc8-3d51-40b0-a188-4db0328ff8f7",
@@ -728,8 +739,8 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        2112,
-        -1248
+        2160,
+        -1264
       ],
       "id": "f43cf77d-59c9-4ed9-bef9-ede07b2b4ac4",
       "name": "consultar_disponibilidad",
@@ -770,8 +781,8 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        2464,
-        -1232
+        2480,
+        -1264
       ],
       "id": "bd7a1cc1-4fc6-4475-9534-96f1c4be36ec",
       "name": "agendar_reunion",
@@ -949,48 +960,6 @@
       ],
       "id": "45fa82e5-fddc-4bcd-b1de-05391803d78a",
       "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY",
-          "mode": "list",
-          "cachedResultName": "PERSONALIZACION DE ASISTENTE IA (Respuestas)",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 428712773,
-          "mode": "list",
-          "cachedResultName": "PERSONALIZACION DE ASISTENTE IA (Respuestas)",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY/edit#gid=428712773"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "Numero de whastapp que vas a usar para tu asistente",
-              "lookupValue": "=573150759897"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        1312,
-        -1584
-      ],
-      "id": "e427a95c-ccbc-403b-bf8b-ed0eece1c36d",
-      "name": "Get row(s) in sheet",
-      "alwaysOutputData": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
-          "name": "hola@whitelabel.lat"
-        }
-      }
     },
     {
       "parameters": {
@@ -1826,7 +1795,7 @@
     },
     {
       "parameters": {
-        "amount": 4
+        "amount": 2
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
@@ -1960,7 +1929,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -3408,
+        -3520,
         -1280
       ],
       "id": "23672bb3-7ef2-44de-90d8-cf3b614b6393",
@@ -1969,14 +1938,14 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "test_chatwood_onboarding_estarter",
+        "path": "chatwood_onboarding_estarter",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -4144,
-        -1264
+        -4096,
+        -1280
       ],
       "id": "4c7dc18c-fbf7-4f02-9267-adce29b3cd81",
       "name": "chatwoot",
@@ -2328,7 +2297,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -3664,
+        -3792,
         -1280
       ],
       "id": "1cd05578-ef1f-44b3-a11f-bd2435f788df",
@@ -2360,10 +2329,11 @@
             {
               "id": "7efee19e-15a3-4263-b1da-237dd881d34b",
               "leftValue": "={{ $json.Bloqueado }}",
-              "rightValue": "False",
+              "rightValue": "false",
               "operator": {
-                "type": "string",
-                "operation": "notEquals"
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
               }
             }
           ],
@@ -2407,6 +2377,68 @@
           "name": "hola@whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY",
+          "mode": "list",
+          "cachedResultName": "PERSONALIZACION DE ASISTENTE IA (Respuestas)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 428712773,
+          "mode": "list",
+          "cachedResultName": "PERSONALIZACION DE ASISTENTE IA (Respuestas)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY/edit#gid=428712773"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Numero de whastapp que vas a usar para tu asistente",
+              "lookupValue": "=573150759897"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1312,
+        -1584
+      ],
+      "id": "e427a95c-ccbc-403b-bf8b-ed0eece1c36d",
+      "name": "Personalizacion de Agente",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_history_estarter_{{ $('Data').item.json.user_id }}"
+      },
+      "type": "n8n-nodes-base.redisTool",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        -1248
+      ],
+      "id": "45a5a9da-6d1e-48cd-8899-b936237964c5",
+      "name": "Reset_memory",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -2439,6 +2471,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-09-01T10:41:06.475Z",
-  "versionId": "7c9f4c66-1fe0-4fa7-937a-58dd372af6b6"
+  "updatedAt": "2025-09-02T22:30:30.932Z",
+  "versionId": "8bd2f73c-d551-4b3a-82df-f93efcd54523"
 }
