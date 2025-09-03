@@ -522,17 +522,6 @@
         ]
       ]
     },
-    "consultar_eventos_dia": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Personalizacion de Agente": {
       "main": [
         [
@@ -545,6 +534,28 @@
       ]
     },
     "Reset_memory": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update_event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_eventos_dia": {
       "ai_tool": [
         [
           {
@@ -654,7 +665,7 @@
       "typeVersion": 1.5,
       "position": [
         1760,
-        -1248
+        -1360
       ],
       "id": "286ce9a5-69c7-423e-a7ee-7d2fa1b813d0",
       "name": "Redis Chat Memory",
@@ -711,8 +722,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1600,
-        -1248
+        1552,
+        -1296
       ],
       "id": "3713dfc8-3d51-40b0-a188-4db0328ff8f7",
       "name": "Google Gemini Chat Model",
@@ -739,7 +750,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        2160,
+        2112,
         -1264
       ],
       "id": "f43cf77d-59c9-4ed9-bef9-ede07b2b4ac4",
@@ -2352,34 +2363,6 @@
     },
     {
       "parameters": {
-        "operation": "getAll",
-        "calendar": {
-          "__rl": true,
-          "value": "c_c6586519956e46090f3bb622f584fc361b4b6e3d57970bf898ebd0167cc7d90b@group.calendar.google.com",
-          "mode": "list",
-          "cachedResultName": "Prueba de Agendamiento ValeIA"
-        },
-        "timeMin": "={{ $fromAI('After', ``, 'string') }}",
-        "timeMax": "={{ $fromAI('Before', ``, 'string') }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
-      "position": [
-        2304,
-        -1264
-      ],
-      "id": "215d0da8-5ea9-4dad-87bb-27aa7b4bf74d",
-      "name": "consultar_eventos_dia",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "RMuQyYsn6eGZTZPX",
-          "name": "hola@whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
         "documentId": {
           "__rl": true,
           "value": "1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY",
@@ -2428,7 +2411,7 @@
       "type": "n8n-nodes-base.redisTool",
       "typeVersion": 1,
       "position": [
-        1920,
+        1760,
         -1248
       ],
       "id": "45a5a9da-6d1e-48cd-8899-b936237964c5",
@@ -2437,6 +2420,61 @@
         "redis": {
           "id": "yzvE00xFtVHtaoZ1",
           "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "hola@whitelabel.lat",
+          "mode": "list",
+          "cachedResultName": "hola@whitelabel.lat"
+        },
+        "eventId": "={{ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1952,
+        -1264
+      ],
+      "id": "6859be3b-11db-47fd-b33f-7410ced6ab27",
+      "name": "Update_event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "RMuQyYsn6eGZTZPX",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "c_c6586519956e46090f3bb622f584fc361b4b6e3d57970bf898ebd0167cc7d90b@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Prueba de Agendamiento ValeIA"
+        },
+        "timeMin": "={{ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2304,
+        -1264
+      ],
+      "id": "215d0da8-5ea9-4dad-87bb-27aa7b4bf74d",
+      "name": "consultar_eventos_dia",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "RMuQyYsn6eGZTZPX",
+          "name": "hola@whitelabel.lat"
         }
       }
     }
@@ -2471,6 +2509,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-09-02T22:30:30.932Z",
-  "versionId": "8bd2f73c-d551-4b3a-82df-f93efcd54523"
+  "updatedAt": "2025-09-03T00:25:49.824Z",
+  "versionId": "e2d5af7c-1433-4fd9-a27a-19fc86143280"
 }
