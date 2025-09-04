@@ -1,11 +1,16 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Merge": {
       "main": [
         [
           {
-            "node": "Pedidos",
+            "node": "Get Stock",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge2",
             "type": "main",
             "index": 0
           }
@@ -15,16 +20,6 @@
     "Pedidos": {
       "main": [
         [
-          {
-            "node": "Get Proveedores",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Merge1",
-            "type": "main",
-            "index": 1
-          },
           {
             "node": "If",
             "type": "main",
@@ -213,12 +208,23 @@
     },
     "If": {
       "main": [
-        [],
         [
           {
-            "node": "No Operation, do nothing",
+            "node": "Split Out",
             "type": "main",
             "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Proveedores",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -255,6 +261,77 @@
           }
         ]
       ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Pedidos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Stock": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "update Stock",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update Stock": {
+      "main": [
+        [
+          {
+            "node": "Update Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Status1": {
+      "main": [
+        [
+          {
+            "node": "Update Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Pedido": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-05-23T15:09:09.625Z",
@@ -274,21 +351,21 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        -820,
-        240
+        -800,
+        -128
       ],
       "id": "d205e797-897a-482b-a746-050d8aa579c9",
       "name": "Merge"
     },
     {
       "parameters": {
-        "jsCode": "// Paso 1: eliminar duplicados (por row_number)\nconst uniqueRows = [];\nconst seen = new Set();\n\nfor (const item of items) {\n  const key = `${item.json.row_number}-${item.json.ID}-${item.json[\"N SOLICITUD\"]}`;\n  if (!seen.has(key)) {\n    uniqueRows.push(item.json);\n    seen.add(key);\n  }\n}\n\n// Paso 2: preparar pedidos por proveedor y por solicitud\nconst pedidosPorProveedor = {};\n\nfor (const row of uniqueRows) {\n  const cantidadTotal = parseInt(row[\"CANT_PALETS\"]) || 0;\n  const numPedido = row[\"NUM_PEDIDO\"];\n\n  if (cantidadTotal === 0) continue;\n\n  // Obtener proveedores y sus porcentajes\n  const proveedores = [];\n\n  for (const key of Object.keys(row)) {\n    const keyNormalized = key.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n    if (keyNormalized.startsWith(\"PROVEEDOR\")) {\n      const indexMatch = keyNormalized.match(/PROVEEDOR\\s*(\\d+)/);\n      if (indexMatch) {\n        const index = indexMatch[1];\n        const proveedorId = row[key]?.toString().trim();\n        if (proveedorId) {\n          const porcentajeKey = Object.keys(row).find(k => {\n            const kNorm = k.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n            return kNorm === `% ${index}` || kNorm === `%${index}`;\n          });\n          const porcentaje = porcentajeKey ? parseFloat(row[porcentajeKey]) : null;\n          proveedores.push({\n            proveedorId,\n            porcentaje: isNaN(porcentaje) ? null : porcentaje,\n            orden: parseInt(index) || 0  // Para mantener orden original\n          });\n        }\n      }\n    }\n  }\n\n  if (proveedores.length === 0) continue;\n\n  const conPorcentaje = proveedores.filter(p => p.porcentaje !== null);\n  const sinPorcentaje = proveedores.filter(p => p.porcentaje === null);\n\n  let asignaciones = [];\n\n  if (conPorcentaje.length > 0) {\n    // Asignar palets según porcentaje (inicialmente truncado)\n    let totalAsignado = 0;\n\n    for (const p of conPorcentaje) {\n      p.cantidad = Math.floor((cantidadTotal * p.porcentaje) / 100);\n      totalAsignado += p.cantidad;\n    }\n\n    const restante = cantidadTotal - totalAsignado;\n\n    // Ordenar por mayor porcentaje y menor orden (si empate)\n    const ordenPrioridad = [...conPorcentaje]\n      .sort((a, b) => b.porcentaje - a.porcentaje || a.orden - b.orden);\n\n    // Asignar el sobrante\n    for (let i = 0; i < restante; i++) {\n      ordenPrioridad[i % ordenPrioridad.length].cantidad += 1;\n    }\n\n    asignaciones = [...conPorcentaje];\n\n    // Repartir a los sin porcentaje (si hay)\n    if (sinPorcentaje.length > 0) {\n      const restanteLibre = cantidadTotal - asignaciones.reduce((s, p) => s + p.cantidad, 0);\n      const cantPorProveedor = Math.floor(restanteLibre / sinPorcentaje.length);\n      let sobrante = restanteLibre % sinPorcentaje.length;\n\n      for (const p of sinPorcentaje) {\n        p.cantidad = cantPorProveedor + (sobrante > 0 ? 1 : 0);\n        if (sobrante > 0) sobrante--;\n      }\n\n      asignaciones = [...asignaciones, ...sinPorcentaje];\n    }\n\n  } else {\n    // Reparto equitativo\n    const cantidadPorProveedor = Math.floor(cantidadTotal / proveedores.length);\n    let resto = cantidadTotal % proveedores.length;\n\n    for (const p of proveedores) {\n      p.cantidad = cantidadPorProveedor + (resto > 0 ? 1 : 0);\n      if (resto > 0) resto--;\n    }\n\n    asignaciones = [...proveedores];\n  }\n\n  // Agregar a pedidosPorProveedor\n  for (const asignacion of asignaciones) {\n    const { proveedorId, cantidad } = asignacion;\n\n    if (cantidad === 0) continue;\n\n    if (!pedidosPorProveedor[proveedorId]) {\n      pedidosPorProveedor[proveedorId] = [];\n    }\n\n    pedidosPorProveedor[proveedorId].push({\n      row_number: row.row_number,\n      ID_PRODUCTO: row.ID,\n      NUM_PEDIDO: numPedido,\n      PRODUCTO: row[\"PRODUCTOS\"],\n      CANT_PALETS: cantidad,\n      CAJAS: row[\"CAJAS\"],\n      CANT_CAJAS: row[\"CANT_CAJAS\"],\n      PALET: row[\"PALET\"],\n      CLIENTE: row[\"NOMBRE_CLIENTE\"],\n      CIF_CLIENTE: row[\"CIF_CLIENTE\"],\n      FECHA: row[\"FECHA\"],\n    });\n  }\n}\n\n// Paso 3: construir resultados\nconst results = [];\n\nfor (const [proveedorId, productos] of Object.entries(pedidosPorProveedor)) {\n  if (productos.length > 0) {\n    results.push({\n      json: {\n        PROVEEDOR_ID: proveedorId,\n        PRODUCTOS: productos\n      }\n    });\n  }\n}\n\nreturn results;\n"
+        "jsCode": "// Paso 1: separar stock del input\nlet stockData = [];\nlet pedidosData = [];\n\nfor (const item of items) {\n  if (item.json.Stock) {\n    stockData = item.json.Stock;\n  } else {\n    pedidosData.push(item.json);\n  }\n}\n\n// Crear un mapa de stock por producto\nconst stockMap = {};\nfor (const s of stockData) {\n  stockMap[s.PRODUCTO.trim().toUpperCase()] = {\n    disponible: parseInt(s.CANT_PALET) || 0,\n    cajas: parseInt(s.CANT_CAJAS) || 0,\n    row_number: s.row_number,\n    detalle: s\n  };\n}\n\n// Paso 2: eliminar duplicados (por row_number + pedido)\nconst uniqueRows = [];\nconst seen = new Set();\n\nfor (const row of pedidosData) {\n  const key = `${row.row_number}-${row.ID}-${row[\"NUM_PEDIDO\"]}`;\n  if (!seen.has(key)) {\n    uniqueRows.push(row);\n    seen.add(key);\n  }\n}\n\n// Paso 3: preparar pedidos por proveedor\nconst pedidosPorProveedor = {};\n\nfunction agregarPedido(proveedorId, row, cantidad, productoKey = null, stockRow = null) {\n  if (!pedidosPorProveedor[proveedorId]) {\n    pedidosPorProveedor[proveedorId] = [];\n  }\n\n  let restantePalets = null;\n  let restanteCajas = null;\n\n  if (proveedorId === \"STOCK\" && productoKey && stockRow) {\n    const disponiblePalets = stockMap[productoKey].disponible;\n    const disponibleCajas = stockMap[productoKey].cajas;\n\n    const totalCajas = parseInt(row[\"CANT_CAJAS\"]) || 0;\n    const totalPalets = parseInt(row[\"CANT_PALETS\"]) || 0;\n\n    restantePalets = disponiblePalets;\n    restanteCajas =\n      totalPalets > 0\n        ? Math.floor((disponiblePalets * totalCajas) / totalPalets)\n        : disponibleCajas;\n  }\n\n  pedidosPorProveedor[proveedorId].push({\n    row_number_pedido: row.row_number,\n    row_number_stock: stockRow || null,\n    ID_PRODUCTO: row.ID,\n    NUM_PEDIDO: row[\"NUM_PEDIDO\"],\n    PRODUCTO: row[\"PRODUCTOS\"],\n    CANT_PALETS: cantidad,\n    CAJAS: row[\"CAJAS\"],\n    CANT_CAJAS: row[\"CANT_CAJAS\"],\n    PALET: row[\"PALET\"],\n    CLIENTE: row[\"NOMBRE_CLIENTE\"],\n    CIF_CLIENTE: row[\"CIF_CLIENTE\"],\n    FECHA: row[\"FECHA\"],\n    ...(proveedorId === \"STOCK\"\n      ? {\n          CANT_PALETS_RESTANTES: restantePalets,\n          CANT_CAJAS_RESTANTES: restanteCajas\n        }\n      : {})\n  });\n}\n\n// Procesar pedidos\nfor (const row of uniqueRows) {\n  let cantidadTotal = parseInt(row[\"CANT_PALETS\"]) || 0;\n  if (cantidadTotal === 0) continue;\n\n  const productoKey = row[\"PRODUCTOS\"].trim().toUpperCase();\n\n  // Paso 3.1: revisar stock\n  if (stockMap[productoKey] && stockMap[productoKey].disponible > 0) {\n    const disponible = stockMap[productoKey].disponible;\n    const usado = Math.min(cantidadTotal, disponible);\n\n    // Restar stock\n    stockMap[productoKey].disponible -= usado;\n\n    // Agregar asignación al STOCK\n    if (usado > 0) {\n      agregarPedido(\"STOCK\", row, usado, productoKey, stockMap[productoKey].row_number);\n      cantidadTotal -= usado;\n    }\n  }\n\n  // Paso 3.2: si aún falta, repartir entre proveedores\n  if (cantidadTotal > 0) {\n    const proveedores = [];\n\n    for (const key of Object.keys(row)) {\n      const keyNorm = key.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n      if (keyNorm.startsWith(\"PROVEEDOR\")) {\n        const indexMatch = keyNorm.match(/PROVEEDOR\\s*(\\d+)/);\n        if (indexMatch) {\n          const index = indexMatch[1];\n          const proveedorId = row[key]?.toString().trim();\n          if (proveedorId) {\n            const porcentajeKey = Object.keys(row).find(k => {\n              const kNorm = k.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n              return kNorm === `% ${index}` || kNorm === `%${index}`;\n            });\n            const porcentaje = porcentajeKey ? parseFloat(row[porcentajeKey]) : null;\n            proveedores.push({\n              proveedorId,\n              porcentaje: isNaN(porcentaje) ? null : porcentaje,\n              orden: parseInt(index) || 0\n            });\n          }\n        }\n      }\n    }\n\n    if (proveedores.length === 0) continue;\n\n    const conPorcentaje = proveedores.filter(p => p.porcentaje !== null);\n    const sinPorcentaje = proveedores.filter(p => p.porcentaje === null);\n\n    let asignaciones = [];\n\n    if (conPorcentaje.length > 0) {\n      let totalAsignado = 0;\n      for (const p of conPorcentaje) {\n        p.cantidad = Math.floor((cantidadTotal * p.porcentaje) / 100);\n        totalAsignado += p.cantidad;\n      }\n\n      let restante = cantidadTotal - totalAsignado;\n      const ordenPrioridad = [...conPorcentaje]\n        .sort((a, b) => b.porcentaje - a.porcentaje || a.orden - b.orden);\n\n      for (let i = 0; i < restante; i++) {\n        ordenPrioridad[i % ordenPrioridad.length].cantidad += 1;\n      }\n\n      asignaciones = [...conPorcentaje];\n\n      if (sinPorcentaje.length > 0) {\n        const restanteLibre = cantidadTotal - asignaciones.reduce((s, p) => s + p.cantidad, 0);\n        const cantPorProveedor = Math.floor(restanteLibre / sinPorcentaje.length);\n        let sobrante = restanteLibre % sinPorcentaje.length;\n\n        for (const p of sinPorcentaje) {\n          p.cantidad = cantPorProveedor + (sobrante > 0 ? 1 : 0);\n          if (sobrante > 0) sobrante--;\n        }\n\n        asignaciones = [...asignaciones, ...sinPorcentaje];\n      }\n\n    } else {\n      const cantidadPorProveedor = Math.floor(cantidadTotal / proveedores.length);\n      let resto = cantidadTotal % proveedores.length;\n\n      for (const p of proveedores) {\n        p.cantidad = cantidadPorProveedor + (resto > 0 ? 1 : 0);\n        if (resto > 0) resto--;\n      }\n\n      asignaciones = [...proveedores];\n    }\n\n    for (const asignacion of asignaciones) {\n      if (asignacion.cantidad > 0) {\n        agregarPedido(asignacion.proveedorId, row, asignacion.cantidad);\n      }\n    }\n  }\n}\n\n// Paso 4: construir resultados de pedidos\nconst results = [];\nfor (const [proveedorId, productos] of Object.entries(pedidosPorProveedor)) {\n  results.push({\n    json: {\n      PROVEEDOR_ID: proveedorId,\n      PRODUCTOS: productos\n    }\n  });\n}\n\nreturn results;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -600,
-        240
+        96,
+        -128
       ],
       "id": "324de7a6-ed57-413b-8e5b-2473c8b48c7b",
       "name": "Pedidos"
@@ -322,8 +399,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -1040,
-        165
+        -1024,
+        -208
       ],
       "id": "bd627dc4-c8f0-45e2-8181-66172489e187",
       "name": "Get Products",
@@ -364,8 +441,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -1260,
-        240
+        -1248,
+        -128
       ],
       "id": "e8d3ccfa-3f84-41da-bb89-b87e96649706",
       "name": "Get Orders",
@@ -406,8 +483,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -380,
-        90
+        544,
+        -272
       ],
       "id": "7412f75c-fb4e-476d-8b8c-eaa6b692476b",
       "name": "Get Proveedores",
@@ -427,8 +504,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        -160,
-        165
+        768,
+        -208
       ],
       "id": "99e68bd7-758a-47f3-b94f-46af13653e8f",
       "name": "Merge1"
@@ -440,8 +517,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        620,
-        -360
+        -1248,
+        656
       ],
       "id": "f064d339-cf54-480e-b341-96d1fce3caee",
       "name": "Loop Over Items1"
@@ -453,8 +530,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        60,
-        165
+        992,
+        -208
       ],
       "id": "8ac00661-0a4e-4767-8ab9-fadbcd699554",
       "name": "MENSAJE_PRODUCTOS"
@@ -468,21 +545,21 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        500,
-        15
+        1440,
+        -352
       ],
       "id": "64366952-5984-42a3-9086-42b9d310a810",
       "name": "Loop Over Items"
     },
     {
       "parameters": {
-        "jsCode": "// 1. Extraer y unir todos los productos válidos (CANT_PALETS > 0)\nlet productosValidos = [];\n\nfor (const item of items) {\n  const proveedor = item.json;\n  const productos = proveedor.PRODUCTOS || [];\n  const status = \"Aprobacion\";\n\n  const filtrados = productos\n    .filter(p => p.CANT_PALETS > 0)\n    .map(p => ({\n      row_number: p.row_number,\n      ID_PRODUCTO: p.ID_PRODUCTO,\n      PROVEEDOR_ID: proveedor.PROVEEDOR_ID,\n      FINCA: proveedor.FINCA,\n      N_SOLICITUD: p.N_SOLICITUD,\n      PRODUCTO: p.PRODUCTO,\n      STATUS: status,\n    }));\n\n  productosValidos.push(...filtrados);\n}\n\n// 2. Eliminar duplicados por combinación ID_PRODUCTO + N_SOLICITUD + numero de fila\nconst vistos = new Set();\nconst productosUnicos = productosValidos.filter(p => {\n  const clave = `${p.N_SOLICITUD}-${p.row_number}`;\n  if (vistos.has(clave)) return false;\n  vistos.add(clave);\n  return true;\n});\n\n// 3. Devolver los productos únicos\nreturn productosUnicos.map(p => ({ json: p }));\n"
+        "jsCode": "// 1. Extraer y unir todos los productos válidos (CANT_PALETS > 0)\nlet productosValidos = [];\n\nfor (const item of items) {\n  const proveedor = item.json;\n  const productos = proveedor.PRODUCTOS || [];\n  const status = \"Aprobacion\";\n\n  const filtrados = productos\n    .filter(p => p.CANT_PALETS > 0)\n    .map(p => ({\n      row_number: p.row_number_pedido,\n      ID_PRODUCTO: p.ID_PRODUCTO,\n      PROVEEDOR_ID: proveedor.PROVEEDOR_ID,\n      FINCA: proveedor.FINCA,\n      N_SOLICITUD: p.N_SOLICITUD,\n      PRODUCTO: p.PRODUCTO,\n      STATUS: status,\n    }));\n\n  productosValidos.push(...filtrados);\n}\n\n// 2. Eliminar duplicados por combinación ID_PRODUCTO + N_SOLICITUD + numero de fila\nconst vistos = new Set();\nconst productosUnicos = productosValidos.filter(p => {\n  const clave = `${p.N_SOLICITUD}-${p.row_number}`;\n  if (vistos.has(clave)) return false;\n  vistos.add(clave);\n  return true;\n});\n\n// 3. Devolver los productos únicos\nreturn productosUnicos.map(p => ({ json: p }));\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        280,
-        15
+        1216,
+        -352
       ],
       "id": "1707438f-7a46-40d2-9655-4df6e8c89646",
       "name": "Productos Solicitados"
@@ -683,8 +760,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        940,
-        15
+        1888,
+        -352
       ],
       "id": "bd9bad2c-c87c-4bc5-87d6-23a198529b87",
       "name": "Update Status",
@@ -708,8 +785,8 @@
       "type": "n8n-nodes-evolution-api.evolutionApi",
       "typeVersion": 1,
       "position": [
-        400,
-        -440
+        -1472,
+        592
       ],
       "id": "a9b0af60-a491-4d1e-9c22-1a12fbb81c08",
       "name": "Send Order",
@@ -729,8 +806,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        -480
+        -1776,
+        544
       ],
       "id": "2bc06a75-8cae-4876-a763-71201726cecd",
       "name": "Sticky Note"
@@ -744,8 +821,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        440,
-        -60
+        1392,
+        -448
       ],
       "id": "1f3e66b0-9f57-4fb2-a7c8-d7fc12ec6b43",
       "name": "Sticky Note1"
@@ -757,8 +834,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        280,
-        315
+        1216,
+        -64
       ],
       "id": "d74158ea-2491-4118-96b4-d3dcfddf6fa7",
       "name": "Code"
@@ -905,8 +982,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        940,
-        315
+        1888,
+        -64
       ],
       "id": "1461f4aa-fb3d-4398-99ad-51d8350b771a",
       "name": "Google Sheets",
@@ -920,14 +997,14 @@
     {
       "parameters": {
         "content": "## UPDATE REQUEST TO SUPPLIER",
-        "height": 260,
-        "width": 640
+        "height": 308,
+        "width": 688
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        440,
-        240
+        1376,
+        -208
       ],
       "id": "60141390-30cf-40af-b979-a1fe8bd34a03",
       "name": "Sticky Note3"
@@ -939,8 +1016,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        720,
-        -60
+        1664,
+        -416
       ],
       "id": "c4ad6b4c-edd3-4439-ab87-3457015fbe6b",
       "name": "Wait",
@@ -955,8 +1032,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        500,
-        315
+        1440,
+        -64
       ],
       "id": "89030fa0-3929-4cc6-93c2-b42d28c97ed5",
       "name": "Loop Over Items3"
@@ -968,8 +1045,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        720,
-        240
+        1664,
+        -128
       ],
       "id": "3be68e3f-f139-4ae2-861b-0be047e24ce4",
       "name": "Wait1",
@@ -991,20 +1068,19 @@
               "rightValue": "STOCK",
               "operator": {
                 "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "operation": "contains"
               }
             }
           ],
-          "combinator": "and"
+          "combinator": "or"
         },
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -380,
-        415
+        320,
+        -128
       ],
       "id": "9d94153f-bbe2-4215-9999-0f28c8186058",
       "name": "If"
@@ -1014,8 +1090,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -160,
-        415
+        -1696,
+        368
       ],
       "id": "80315bc2-2f75-4c96-ae48-56d836df8b11",
       "name": "No Operation, do nothing"
@@ -1030,8 +1106,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -2440,
-        280
+        -2448,
+        288
       ],
       "id": "5083c9f2-1abf-407c-b4e2-f7f8a71bddc4",
       "name": "Sticky Note5"
@@ -1041,8 +1117,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        180,
-        -360
+        -1696,
+        656
       ],
       "id": "4ed0d7eb-5e48-4a95-9ae7-ef113f2e7817",
       "name": "Wait3",
@@ -1079,8 +1155,8 @@
       "type": "n8n-nodes-base.googleSheetsTrigger",
       "typeVersion": 1,
       "position": [
-        -1700,
-        240
+        -1696,
+        -128
       ],
       "id": "7fe64891-145a-42e5-8091-9ef4457afe25",
       "name": "Google Sheets Trigger",
@@ -1098,14 +1174,645 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1480,
-        240
+        -1472,
+        -128
       ],
       "id": "5552ed94-7114-4254-aeae-afa53dd4e659",
       "name": "add Pedido"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 181798758,
+          "mode": "list",
+          "cachedResultName": "STOCK",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PRODUCTO",
+              "lookupValue": "={{ $json.PRODUCTOS }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -576,
+        -64
+      ],
+      "id": "24978236-c8e7-45b7-980f-31e525ffd316",
+      "name": "Get Stock",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -128,
+        -128
+      ],
+      "id": "6134d557-60ff-42b2-b5d7-cb5f6b4000b6",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Stock",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -64
+      ],
+      "id": "bcca5e33-2d01-4cd0-b2ae-9ef4044fb503",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Paso 1: eliminar duplicados (por row_number)\nconst uniqueRows = [];\nconst seen = new Set();\n\nfor (const item of items) {\n  const key = `${item.json.row_number}-${item.json.ID}-${item.json[\"N SOLICITUD\"]}`;\n  if (!seen.has(key)) {\n    uniqueRows.push(item.json);\n    seen.add(key);\n  }\n}\n\n// Paso 2: preparar pedidos por proveedor y por solicitud\nconst pedidosPorProveedor = {};\n\nfor (const row of uniqueRows) {\n  const cantidadTotal = parseInt(row[\"CANT_PALETS\"]) || 0;\n  const numPedido = row[\"NUM_PEDIDO\"];\n\n  if (cantidadTotal === 0) continue;\n\n  // Obtener proveedores y sus porcentajes\n  const proveedores = [];\n\n  for (const key of Object.keys(row)) {\n    const keyNormalized = key.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n    if (keyNormalized.startsWith(\"PROVEEDOR\")) {\n      const indexMatch = keyNormalized.match(/PROVEEDOR\\s*(\\d+)/);\n      if (indexMatch) {\n        const index = indexMatch[1];\n        const proveedorId = row[key]?.toString().trim();\n        if (proveedorId) {\n          const porcentajeKey = Object.keys(row).find(k => {\n            const kNorm = k.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n            return kNorm === `% ${index}` || kNorm === `%${index}`;\n          });\n          const porcentaje = porcentajeKey ? parseFloat(row[porcentajeKey]) : null;\n          proveedores.push({\n            proveedorId,\n            porcentaje: isNaN(porcentaje) ? null : porcentaje,\n            orden: parseInt(index) || 0  // Para mantener orden original\n          });\n        }\n      }\n    }\n  }\n\n  if (proveedores.length === 0) continue;\n\n  const conPorcentaje = proveedores.filter(p => p.porcentaje !== null);\n  const sinPorcentaje = proveedores.filter(p => p.porcentaje === null);\n\n  let asignaciones = [];\n\n  if (conPorcentaje.length > 0) {\n    // Asignar palets según porcentaje (inicialmente truncado)\n    let totalAsignado = 0;\n\n    for (const p of conPorcentaje) {\n      p.cantidad = Math.floor((cantidadTotal * p.porcentaje) / 100);\n      totalAsignado += p.cantidad;\n    }\n\n    const restante = cantidadTotal - totalAsignado;\n\n    // Ordenar por mayor porcentaje y menor orden (si empate)\n    const ordenPrioridad = [...conPorcentaje]\n      .sort((a, b) => b.porcentaje - a.porcentaje || a.orden - b.orden);\n\n    // Asignar el sobrante\n    for (let i = 0; i < restante; i++) {\n      ordenPrioridad[i % ordenPrioridad.length].cantidad += 1;\n    }\n\n    asignaciones = [...conPorcentaje];\n\n    // Repartir a los sin porcentaje (si hay)\n    if (sinPorcentaje.length > 0) {\n      const restanteLibre = cantidadTotal - asignaciones.reduce((s, p) => s + p.cantidad, 0);\n      const cantPorProveedor = Math.floor(restanteLibre / sinPorcentaje.length);\n      let sobrante = restanteLibre % sinPorcentaje.length;\n\n      for (const p of sinPorcentaje) {\n        p.cantidad = cantPorProveedor + (sobrante > 0 ? 1 : 0);\n        if (sobrante > 0) sobrante--;\n      }\n\n      asignaciones = [...asignaciones, ...sinPorcentaje];\n    }\n\n  } else {\n    // Reparto equitativo\n    const cantidadPorProveedor = Math.floor(cantidadTotal / proveedores.length);\n    let resto = cantidadTotal % proveedores.length;\n\n    for (const p of proveedores) {\n      p.cantidad = cantidadPorProveedor + (resto > 0 ? 1 : 0);\n      if (resto > 0) resto--;\n    }\n\n    asignaciones = [...proveedores];\n  }\n\n  // Agregar a pedidosPorProveedor\n  for (const asignacion of asignaciones) {\n    const { proveedorId, cantidad } = asignacion;\n\n    if (cantidad === 0) continue;\n\n    if (!pedidosPorProveedor[proveedorId]) {\n      pedidosPorProveedor[proveedorId] = [];\n    }\n\n    pedidosPorProveedor[proveedorId].push({\n      row_number: row.row_number,\n      ID_PRODUCTO: row.ID,\n      NUM_PEDIDO: numPedido,\n      PRODUCTO: row[\"PRODUCTOS\"],\n      CANT_PALETS: cantidad,\n      CAJAS: row[\"CAJAS\"],\n      CANT_CAJAS: row[\"CANT_CAJAS\"],\n      PALET: row[\"PALET\"],\n      CLIENTE: row[\"NOMBRE_CLIENTE\"],\n      CIF_CLIENTE: row[\"CIF_CLIENTE\"],\n      FECHA: row[\"FECHA\"],\n    });\n  }\n}\n\n// Paso 3: construir resultados\nconst results = [];\n\nfor (const [proveedorId, productos] of Object.entries(pedidosPorProveedor)) {\n  if (productos.length > 0) {\n    results.push({\n      json: {\n        PROVEEDOR_ID: proveedorId,\n        PRODUCTOS: productos\n      }\n    });\n  }\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1696,
+        -640
+      ],
+      "id": "194f6095-1924-4fa9-8c48-cbca007f68f3",
+      "name": "Pedidos1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 181798758,
+          "mode": "list",
+          "cachedResultName": "STOCK",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number_stock }}",
+            "CANT_PALET": "={{ $json.CANT_PALETS_RESTANTES }}",
+            "CANT_CAJAS": "={{ $json.CANT_CAJAS_RESTANTES }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_PALET",
+              "displayName": "CANT_PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "REPORTE",
+              "displayName": "REPORTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        672,
+        -528
+      ],
+      "id": "135b6f77-fcd7-4bbe-b10c-5d8ac9817499",
+      "name": "update Stock",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Split Out').item.json.row_number_pedido }}",
+            "STATUS": "=STOCK"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIF_CLIENTE",
+              "displayName": "CIF_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOMBRE_CLIENTE",
+              "displayName": "NOMBRE_CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Stock",
+              "displayName": "Stock",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID_PRODUCTO",
+              "displayName": "ID_PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PROVEEDOR_ID",
+              "displayName": "PROVEEDOR_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "FINCA",
+              "displayName": "FINCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        896,
+        -528
+      ],
+      "id": "b6df8930-4233-46ea-9407-bc7df82fdebf",
+      "name": "Update Status1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "PRODUCTOS",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -528
+      ],
+      "id": "5328ba89-2417-4521-ae51-e3101c53c0cc",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NUM_PEDIDO": "={{ $('Split Out').item.json.NUM_PEDIDO }}",
+            "FECHA": "={{ $('Split Out').item.json.FECHA }}",
+            "PROVEEDOR_ID": "=STOCK",
+            "FINCA": "=STOCK",
+            "ID_PRODUCTO": "={{ $('Split Out').item.json.ID_PRODUCTO }}",
+            "PRODUCTO": "={{ $('Split Out').item.json.PRODUCTO }}",
+            "CANT_PALETS": "={{ $('Split Out').item.json.CANT_PALETS }}",
+            "CAJAS": "={{ $('Split Out').item.json.CAJAS }}",
+            "CANT_CAJAS": "={{ $('Split Out').item.json.CANT_CAJAS }}",
+            "PALET": "={{ $('Split Out').item.json.PALET }}",
+            "COMENTARIOS": "Se solicita del Stock",
+            "ENTREGA": "Stock",
+            "STATUS": "Solicitado"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PROVEEDOR_ID",
+              "displayName": "PROVEEDOR_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FINCA",
+              "displayName": "FINCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID_PRODUCTO",
+              "displayName": "ID_PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ENTREGA",
+              "displayName": "ENTREGA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "COMENTARIOS",
+              "displayName": "COMENTARIOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1120,
+        -528
+      ],
+      "id": "50fe6d97-a20c-4720-9c12-c07a8bf4853e",
+      "name": "Update Pedido",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Google Sheets Trigger": [
+      {
+        "json": {
+          "NUM_PEDIDO": "PED-3524",
+          "CIF_CLIENTE": "GB166860044",
+          "NOMBRE_CLIENTE": "MYFRESH PREPARED PRODUCE LTD",
+          "PRODUCTOS": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+          "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+          "CANT_PALETS": 40,
+          "CAJAS": "BANDEJA GENERICA 60X40X20 ETIQUETAS",
+          "CANT_CAJAS": 55,
+          "STATUS": "Pendiente",
+          "FECHA": "04/09/2025, 17:12:03",
+          "CAMBIOS": ""
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -1130,7 +1837,7 @@
     "node:Google Sheets Trigger": {
       "documentId": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
       "sheetId": 88857449,
-      "lastIndexChecked": 4
+      "lastIndexChecked": 10
     },
     "node:Schedule Trigger1": {
       "recurrenceRules": []
@@ -1138,6 +1845,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-15T16:45:05.451Z",
-  "versionId": "acd57d9d-e0f2-44e7-9580-597599af7bc5"
+  "updatedAt": "2025-09-04T22:15:16.843Z",
+  "versionId": "07df1c07-9af2-4103-aaa4-2df21c8bb684"
 }
