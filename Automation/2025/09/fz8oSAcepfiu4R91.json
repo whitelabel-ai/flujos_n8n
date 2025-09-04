@@ -1,0 +1,1414 @@
+{
+  "active": true,
+  "connections": {
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call Vapi1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Vapi1": {
+      "main": [
+        [
+          {
+            "node": "Acuerdo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acuerdo": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Data": {
+      "main": [
+        [
+          {
+            "node": "Acuerdo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data1": {
+      "main": [
+        [
+          {
+            "node": "Call Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data1": {
+      "main": [
+        [
+          {
+            "node": "Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Execution Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call Vapi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Vapi": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-01T22:14:28.452Z",
+  "id": "fz8oSAcepfiu4R91",
+  "isArchived": false,
+  "meta": null,
+  "name": "VOZ::telecomunicaciones colombia",
+  "nodes": [
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Telefono",
+              "value": "={{ $json.Phone }}"
+            },
+            {
+              "key": "RowID",
+              "value": "={{ $json.row_number }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        688,
+        368
+      ],
+      "id": "e3a3299d-007f-4d29-a810-f92ed3b7f4a5",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        368
+      ],
+      "id": "71afeb66-3ee0-457b-a050-651867c790f8",
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ebc8c00e-294e-4600-b04c-1688673c8491",
+              "name": "Empresa",
+              "value": "Telecomunicaciones Colombia",
+              "type": "string"
+            },
+            {
+              "id": "ee76d19f-1c8f-46e3-bbb5-340d83be706c",
+              "name": "AgenteNombre",
+              "value": "Valeia",
+              "type": "string"
+            },
+            {
+              "id": "ca9e963d-c8a7-4bfd-9b36-608146e4e47c",
+              "name": "Client",
+              "value": "={{ $json.Client.split(\" \")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "e6956c3d-7dd7-4f7e-aac9-80328e15c90a",
+              "name": "Phone",
+              "value": "={{ $json.Phone }}",
+              "type": "string"
+            },
+            {
+              "id": "c94d2151-8d2b-483e-b690-9ae1e38681d8",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "string"
+            },
+            {
+              "id": "3ae6c8d2-3e1f-4e27-83ca-ef14c814adc3",
+              "name": "Product",
+              "value": "={{ $json.Product }}",
+              "type": "string"
+            },
+            {
+              "id": "1fda8e0c-e4e7-4a14-8cc8-26bcc54797cd",
+              "name": "Call Summary",
+              "value": "={{ $json['Call Summary'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d08d255a-d081-4b8c-b6c1-06d8de29c006",
+              "name": "Next Step",
+              "value": "={{ $json['Next Step'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a2459995-3d48-47ef-a41a-54db5d455d71",
+              "name": "Client Feedback",
+              "value": "={{ $json['Client Feedback'] }}",
+              "type": "string"
+            },
+            {
+              "id": "0bf35bc0-af23-4c17-9d20-0e70daad859d",
+              "name": "Quote Status",
+              "value": "={{ $json['Quote Status'] }}",
+              "type": "string"
+            },
+            {
+              "id": "aea9c4ed-2cfb-40f2-bdc6-67bc273a53ac",
+              "name": "Next Call",
+              "value": "={{ $json['Next Call'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e8c096fb-dce9-491c-b405-053567beed67",
+              "name": "Status",
+              "value": "={{ $json.Status }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        368
+      ],
+      "id": "b2f401f3-572f-485b-8c9b-6e7a25bc6393",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"assistantId\": \"8750ea27-9ce2-4a15-af3a-46d5b774d3d9\",\n  \"assistantOverrides\": {\n    \"variableValues\": {\n      \"AgenteNombre\": \"{{ $json.AgenteNombre }}\",\n      \"Company\": \"{{ $json.Empresa }}\",\n      \"name\": \"{{ $json.Client }}\",\n      \"Phone\": \"{{ $json.Phone.replace('57','') }}\",\n      \"Call_Summary\": {{ JSON.stringify ($json['Call Summary']) }},\n      \"Client_Feedback\":{{ JSON.stringify ($json['Client Feedback']) }},\n      \"Next_Step\": {{ JSON.stringify ($json['Next Step']) }}\n    }\n  },\n  \"customer\": {\n    \"number\": \"+{{ $json.Phone }}\"\n  },\n  \"phoneNumberId\": \"9efa67ba-4ff4-4a2b-87ad-685cc861d774\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1552,
+        272
+      ],
+      "id": "601e25b4-7fa3-4b40-9857-47e5788f9d2e",
+      "name": "Call Vapi"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Status }}",
+                    "rightValue": "Call",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1cccfbad-8440-44b8-937e-e81dd5bf95e7"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Call"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b8de537c-cbeb-4782-ba08-1c876bd490d0",
+                    "leftValue": "={{ $json.Status }}",
+                    "rightValue": "= Scheduled Call",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": " Schedule Call"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1120,
+        368
+      ],
+      "id": "e7dae724-8d69-4ea4-a65f-687f191f5f47",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 69a50667-894b-4992-8cfe-d66f01e3de6d"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"assistantId\": \"8750ea27-9ce2-4a15-af3a-46d5b774d3d9\",\n  \"phoneNumberId\": \"9efa67ba-4ff4-4a2b-87ad-685cc861d774\",\n  \"assistantOverrides\": {\n    \"variableValues\": {\n      \"AgenteNombre\": \"{{ $json.AgenteNombre }}\",\n      \"Company\": \"{{ $json.Empresa }}\",\n      \"name\": \"{{ $json.Client }}\",\n      \"Phone\": \"{{ $json.Phone }}\",\n      \"row_number\": \"{{ $json.row_number }}\",\n      \"Call_Summary\": {{ JSON.stringify ($json['Call Summary']) }},\n      \"Next_Step\": {{ JSON.stringify ($json['Next Step']) }}\n    }\n  },\n  \"customer\": {\n    \"number\": \"+{{ $json.Phone }}\"\n  },\n    \"schedulePlan\": {\n        \"earliestAt\": \"{{ $json['Next Call'] }}\"\n    }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1552,
+        480
+      ],
+      "id": "b346b246-5dfc-4768-8c53-8a5b293227bd",
+      "name": "Call Vapi1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30",
+          "mode": "list",
+          "cachedResultName": "llamadas Tigo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit#gid=1398101872"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number }}",
+            "Status": "= Scheduled Call"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Client",
+              "displayName": "Client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product",
+              "displayName": "Product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Call Summary",
+              "displayName": "Call Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Next Step",
+              "displayName": "Next Step",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Feedback",
+              "displayName": "Client Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Quote Status",
+              "displayName": "Quote Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Next Call",
+              "displayName": "Next Call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Record",
+              "displayName": "Record",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1776,
+        480
+      ],
+      "id": "f7f7d2ee-a061-488c-b4fb-98964e72dbe1",
+      "name": "Acuerdo1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30",
+          "mode": "list",
+          "cachedResultName": "llamadas Tigo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit#gid=1398101872"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get row(s) in sheet1').item.json.row_number }}",
+            "Status": "={{ $json.Status ? $json.Status : \"Rejected\" }}",
+            "Next Step": "={{ $json['Next Step'] ? $json['Next Step'] : $('Data1').item.json['Next Step'] }}",
+            "Quote Status": "={{ $json['Quote Status'] ? $json['Quote Status'] : $('Data1').item.json['Quote Status']}}",
+            "Next Call": "={{ $json['Next Call'] ? $json['Next Call'] : $('Data1').item.json['Next Call'] }}",
+            "Call Summary": "={{ $json['Call Summary'] ? $json['Call Summary'] : $('Data1').item.json['Call Summary'] }}",
+            "Record": "==HYPERLINK(\"{{ $json.Record }}\", \"Escuchar\")",
+            "Client Feedback": "={{ $json.Client_Feedback ? $json.Client_Feedback : $('Data1').item.json['Client Feedback']}}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Client",
+              "displayName": "Client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product",
+              "displayName": "Product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Call Summary",
+              "displayName": "Call Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Next Step",
+              "displayName": "Next Step",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Feedback",
+              "displayName": "Client Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quote Status",
+              "displayName": "Quote Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Next Call",
+              "displayName": "Next Call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Record",
+              "displayName": "Record",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1344,
+        912
+      ],
+      "id": "284a5ad8-0b94-4ba9-a4d7-39cbb8e594d6",
+      "name": "Acuerdo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "50b2e96a-ef90-4415-9302-04e0fa42ba13",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        912
+      ],
+      "id": "88fd761c-5415-4287-94ee-55e0370b693d",
+      "name": "Webhook",
+      "webhookId": "50b2e96a-ef90-4415-9302-04e0fa42ba13"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dd5784d7-45db-4769-8ec7-23fd06e53234",
+              "name": "Call Summary",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.summary }}",
+              "type": "string"
+            },
+            {
+              "id": "af5c2e92-6e1f-4680-baa6-87737c6ce733",
+              "name": "Status",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Status }}",
+              "type": "string"
+            },
+            {
+              "id": "c89a72ea-5170-4267-8a86-207b02fe007d",
+              "name": "Next Step",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Next_Step }}",
+              "type": "string"
+            },
+            {
+              "id": "6b0b4b56-c529-4aba-9c69-eae9eefee681",
+              "name": "Quote Status",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Quote_Status }}",
+              "type": "string"
+            },
+            {
+              "id": "6f3b2fc9-669d-47c9-b260-1bbae1cd050e",
+              "name": "Client_Feedback",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Client_Feedback }}",
+              "type": "string"
+            },
+            {
+              "id": "c06e39dd-57ce-401d-a515-e7e5dde3fc2f",
+              "name": "Next Call",
+              "value": "={{ $('Webhook').item.json.body.message.analysis.structuredData.Next_Call }}",
+              "type": "string"
+            },
+            {
+              "id": "50216280-94af-414e-a194-f16436c77908",
+              "name": "Record",
+              "value": "={{ $('Webhook').item.json.body.message.stereoRecordingUrl }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        912
+      ],
+      "id": "540c8183-c613-46dd-a16e-a7a218e4c37d",
+      "name": "Call Data"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        1568,
+        912
+      ],
+      "id": "844910e4-ad46-40ea-a27a-cc1a6fd3e0b8",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ebc8c00e-294e-4600-b04c-1688673c8491",
+              "name": "Empresa",
+              "value": "EMS TECHNOLOGY ",
+              "type": "string"
+            },
+            {
+              "id": "ca9e963d-c8a7-4bfd-9b36-608146e4e47c",
+              "name": "Client",
+              "value": "={{ $json.Client.split(\" \")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "e6956c3d-7dd7-4f7e-aac9-80328e15c90a",
+              "name": "Phone",
+              "value": "={{ $json.Phone }}",
+              "type": "string"
+            },
+            {
+              "id": "c94d2151-8d2b-483e-b690-9ae1e38681d8",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "string"
+            },
+            {
+              "id": "38791c98-796f-4318-acc1-49d409ba3742",
+              "name": "Quote ID",
+              "value": "={{ $json['Quote ID'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e8338329-3bd9-4268-ae79-e8426973f7c8",
+              "name": "Quote Sent Date",
+              "value": "={{ $json['Quote Sent Date'] }}",
+              "type": "string"
+            },
+            {
+              "id": "edced74b-a0c7-4b5d-8438-b476563a4ee1",
+              "name": "Amount (USD)",
+              "value": "={{ $json['Amount (USD)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "3ae6c8d2-3e1f-4e27-83ca-ef14c814adc3",
+              "name": "Product",
+              "value": "={{ $json.Product }}",
+              "type": "string"
+            },
+            {
+              "id": "9d1f2fef-a0b3-4f3b-b0fc-971239c24ccf",
+              "name": "Quote Details",
+              "value": "={{ $json['Quote Details'] }}",
+              "type": "string"
+            },
+            {
+              "id": "1fda8e0c-e4e7-4a14-8cc8-26bcc54797cd",
+              "name": "Call Summary",
+              "value": "={{ $json['Call Summary'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d08d255a-d081-4b8c-b6c1-06d8de29c006",
+              "name": "Next Step",
+              "value": "={{ $json['Next Step'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a2459995-3d48-47ef-a41a-54db5d455d71",
+              "name": "Client Feedback",
+              "value": "={{ $json['Client Feedback'] }}",
+              "type": "string"
+            },
+            {
+              "id": "0bf35bc0-af23-4c17-9d20-0e70daad859d",
+              "name": "Quote Status",
+              "value": "={{ $json['Quote Status'] }}",
+              "type": "string"
+            },
+            {
+              "id": "aea9c4ed-2cfb-40f2-bdc6-67bc273a53ac",
+              "name": "Next Call",
+              "value": "={{ $json['Next Call'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        912
+      ],
+      "id": "fa904176-2b49-4f10-85bf-eb2b77e4980b",
+      "name": "Data1"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Telefono",
+              "value": "={{ $json.Phone }}"
+            },
+            {
+              "key": "RowID",
+              "value": "={{ $json.row_number }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        688,
+        912
+      ],
+      "id": "51e954c5-b9a9-4825-a0b1-eb66428a3ed7",
+      "name": "Execution Data1"
+    },
+    {
+      "parameters": {
+        "content": "## START CALL\n*All day to 8am, 2pm, 4pm",
+        "height": 380,
+        "width": 1620,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        240
+      ],
+      "id": "ce6c08ff-bdf7-467e-b47e-50dc506fd753",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## END OF CALL REPORT\n*Send Call Report to DataBase",
+        "height": 380,
+        "width": 1620,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        144,
+        688
+      ],
+      "id": "7bd534cc-771a-4bb8-9c4b-0090733107dd",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30",
+          "mode": "list",
+          "cachedResultName": "llamadas Tigo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit#gid=1398101872"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Call"
+            },
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Contactado + Agendado"
+            }
+          ]
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        464,
+        368
+      ],
+      "id": "a481c95e-1f15-4aac-a4c3-9dd0a8efadb0",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30",
+          "mode": "list",
+          "cachedResultName": "llamadas Tigo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K1HJDV8tNQeITaZ29qQDuecvqLoR0PhGfxMq7pOKq-o/edit#gid=1398101872"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Phone",
+              "lookupValue": "={{ $json.body.message.call.assistantOverrides.variableValues.Phone }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        464,
+        912
+      ],
+      "id": "b15a075c-88b5-44a6-bc4f-f751dc159dc4",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        272
+      ],
+      "id": "85990620-6aaf-451e-9469-34be2edb960f",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "telecomunicaciones-colombia",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        176,
+        544
+      ],
+      "id": "ffc5356e-6f68-477e-ab08-9daf93dd7fdc",
+      "name": "Webhook1",
+      "webhookId": "9244c15b-eb38-4f77-b437-2d7a58e4e84d"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30",
+          "mode": "list",
+          "cachedResultName": "llamadas Tigo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit#gid=1398101872"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Client": "={{ $json.body.Client }}",
+            "Phone": "={{ $json.body.Phone.replace('+','') }}",
+            "Status": "Call"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Client",
+              "displayName": "Client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Call Summary",
+              "displayName": "Call Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Next Step",
+              "displayName": "Next Step",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Client Feedback",
+              "displayName": "Client Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Quote Status",
+              "displayName": "Quote Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Next Call",
+              "displayName": "Next Call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Record",
+              "displayName": "Record",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        368,
+        544
+      ],
+      "id": "a18b7100-a95a-45a3-9080-797cb4a7788b",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30",
+          "mode": "list",
+          "cachedResultName": "llamadas Tigo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1398101872,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vEVHT6KxkDKLzdq3LCrlok-i2TjKku-1-dAIL7Zgn30/edit#gid=1398101872"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Client",
+              "lookupValue": "={{ $json.Client }}"
+            },
+            {
+              "lookupColumn": "Phone",
+              "lookupValue": "={{ $json.Phone }}"
+            }
+          ]
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        544,
+        544
+      ],
+      "id": "63c12d2f-2b0e-4fa2-96b3-e4b30897e1a1",
+      "name": "Get row(s) in sheet2",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+            "content-length": "52",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "es-419,es;q=0.9,en;q=0.8",
+            "content-type": "application/json",
+            "dnt": "1",
+            "origin": "https://zp1v56uxy8rdx5ypatb0ockcb9tr6a-oci3--5173--96435430.local-credentialless.webcontainer-api.io",
+            "priority": "u=1, i",
+            "referer": "https://zp1v56uxy8rdx5ypatb0ockcb9tr6a-oci3--5173--96435430.local-credentialless.webcontainer-api.io/",
+            "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "186.102.16.44",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "4f3b0c84f963",
+            "x-real-ip": "186.102.16.44"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "Client": "Pedro Rodriguez",
+            "Phone": "+573228854498"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook/telecomunicaciones-colombia",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-01T22:14:28.452Z",
+      "updatedAt": "2025-09-01T22:14:28.452Z",
+      "role": "workflow:owner",
+      "workflowId": "fz8oSAcepfiu4R91",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-05-23T16:21:56.783Z",
+      "updatedAt": "2025-05-23T16:21:56.783Z",
+      "id": "SdEjHNBeYrt6vLJK",
+      "name": "Demo"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2025-09-04T13:04:27.575Z",
+  "versionId": "a5ab725d-d05f-412d-ad58-2147bc4bd524"
+}
