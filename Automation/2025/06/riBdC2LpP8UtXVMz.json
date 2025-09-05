@@ -94,22 +94,11 @@
         ]
       ]
     },
-    "Send Order3": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items10",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Wait4": {
       "main": [
         [
           {
-            "node": "Send Order3",
+            "node": "Enviar texto",
             "type": "main",
             "index": 0
           }
@@ -259,12 +248,25 @@
           }
         ]
       ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-20T17:03:18.912Z",
   "id": "riBdC2LpP8UtXVMz",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "2. Envio de Pedidos a Encargados",
   "nodes": [
     {
@@ -281,8 +283,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -940,
-        440
+        -944,
+        448
       ],
       "id": "50d7fb99-b038-41f8-92c5-6fec50fd50c9",
       "name": "Schedule Trigger1"
@@ -317,7 +319,7 @@
       "typeVersion": 4.6,
       "position": [
         -720,
-        440
+        448
       ],
       "id": "9dfe4a19-b0c3-4c32-8f30-e6f4f6ca597c",
       "name": "Get row(s) in sheet",
@@ -357,8 +359,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -500,
-        360
+        -496,
+        368
       ],
       "id": "9c00105c-24fd-4240-b9ef-e48428d10acb",
       "name": "Get Proveedores2",
@@ -378,8 +380,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        -280,
-        440
+        -288,
+        448
       ],
       "id": "47b54112-c28c-4c9d-b098-52ebb13695d0",
       "name": "Merge3"
@@ -392,7 +394,7 @@
       "typeVersion": 2,
       "position": [
         160,
-        440
+        448
       ],
       "id": "66d52193-4909-45b8-9b75-4040d3a04229",
       "name": "MENSAJE_PRODUCTOS1"
@@ -404,8 +406,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -60,
-        440
+        -64,
+        448
       ],
       "id": "f556fde1-fdf7-499f-89af-c727ef2b700b",
       "name": "Code6"
@@ -417,36 +419,11 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        380,
-        140
+        384,
+        144
       ],
       "id": "c9e6e745-74f5-446f-bd99-07d99f3f1c23",
       "name": "Loop Over Items10"
-    },
-    {
-      "parameters": {
-        "resource": "messages-api",
-        "instanceName": "Pedro",
-        "remoteJid": "=+{{ $json.TELEFONO }}",
-        "messageText": "={{ $json.MENSAJE_PROVEEDOR }}",
-        "options_message": {
-          "delay": 1000
-        }
-      },
-      "type": "n8n-nodes-evolution-api.evolutionApi",
-      "typeVersion": 1,
-      "position": [
-        820,
-        140
-      ],
-      "id": "e45d1bd6-e1aa-4b70-98aa-ed592057b5be",
-      "name": "Send Order3",
-      "credentials": {
-        "evolutionApi": {
-          "id": "OFo9A7x3qE1W1DKN",
-          "name": "Evolution account Pedro"
-        }
-      }
     },
     {
       "parameters": {
@@ -457,8 +434,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        300,
-        -20
+        304,
+        -16
       ],
       "id": "25e520be-075d-40f2-bd8e-d5cf8660fbc1",
       "name": "Sticky Note7"
@@ -468,8 +445,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        600,
-        60
+        608,
+        64
       ],
       "id": "4e3d26ad-913b-4a87-9a45-190383d0322e",
       "name": "Wait4",
@@ -485,7 +462,7 @@
       "typeVersion": 3,
       "position": [
         1040,
-        440
+        448
       ],
       "id": "6473d5f7-3c2d-4761-85b7-bc15e32c7dac",
       "name": "Loop Over Items11"
@@ -497,8 +474,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        380,
-        440
+        384,
+        448
       ],
       "id": "36158188-8b01-45ea-aa60-b87075449930",
       "name": "Productos Solicitados2"
@@ -699,8 +676,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1480,
-        440
+        1488,
+        448
       ],
       "id": "26f48fd4-433c-4ce1-9618-e1f6bf0cb36b",
       "name": "Update Status3",
@@ -718,8 +695,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        380,
-        740
+        384,
+        752
       ],
       "id": "a168eee7-8baa-428f-87c0-bfae5dd86c78",
       "name": "Code7"
@@ -731,8 +708,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1260,
-        360
+        1264,
+        368
       ],
       "id": "4bdda33c-8644-4501-b1d4-6104fca6266c",
       "name": "Wait9",
@@ -748,7 +725,7 @@
       "typeVersion": 3,
       "position": [
         1040,
-        740
+        752
       ],
       "id": "70e34ec7-6310-4efd-9b46-9ced40186ff2",
       "name": "Loop Over Items12"
@@ -760,8 +737,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1260,
-        660
+        1264,
+        672
       ],
       "id": "4d640c11-048a-4b1f-a241-c991ffe46679",
       "name": "Wait10",
@@ -943,8 +920,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1480,
-        740
+        1488,
+        752
       ],
       "id": "affbb8e6-0292-4084-8d5b-517d779dd1da",
       "name": "Update row in sheet",
@@ -1000,8 +977,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        600,
-        660
+        608,
+        672
       ],
       "id": "96190708-755b-4d65-bc25-9248e64ae370",
       "name": "Get row(s) in sheet1",
@@ -1021,8 +998,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        820,
-        740
+        832,
+        752
       ],
       "id": "9c3437d6-5737-4e12-bc9e-a47f69b1a773",
       "name": "Merge5"
@@ -1068,8 +1045,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        600,
-        360
+        608,
+        368
       ],
       "id": "bf886673-209d-4a86-8c7e-133f19ad7183",
       "name": "Get row(s) in sheet2",
@@ -1089,8 +1066,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        820,
-        440
+        832,
+        448
       ],
       "id": "0139d549-0bcb-483e-8e26-d2e33e8a4071",
       "name": "Merge6"
@@ -1110,6 +1087,29 @@
       ],
       "id": "d6ebc303-fc37-46af-ba91-c5ccd3e82bbe",
       "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Pedro",
+        "remoteJid": "=+{{ $json.TELEFONO }}",
+        "messageText": "={{ $json.MENSAJE_PROVEEDOR }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        848,
+        112
+      ],
+      "id": "6d9fb6d9-7511-4cf0-b5a1-d8c87de75c22",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "OFo9A7x3qE1W1DKN",
+          "name": "Evolution account Pedro"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1135,6 +1135,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-04T21:58:12.263Z",
-  "versionId": "b6108717-302a-4d22-8604-1e4dc443e597"
+  "updatedAt": "2025-09-05T21:10:25.105Z",
+  "versionId": "ad4c19ea-1395-4699-a3c1-7f4272e4b109"
 }
