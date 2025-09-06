@@ -77,18 +77,6 @@
         ]
       ]
     },
-    "Loop Over Items1": {
-      "main": [
-        [],
-        [
-          {
-            "node": "Wait3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "MENSAJE_PRODUCTOS": {
       "main": [
         [
@@ -133,17 +121,6 @@
         [
           {
             "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send Order": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
             "type": "main",
             "index": 0
           }
@@ -225,17 +202,6 @@
             "node": "Merge1",
             "type": "main",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "Wait3": {
-      "main": [
-        [
-          {
-            "node": "Send Order",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -512,19 +478,6 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        -1248,
-        656
-      ],
-      "id": "f064d339-cf54-480e-b341-96d1fce3caee",
-      "name": "Loop Over Items1"
-    },
-    {
-      "parameters": {
         "jsCode": "const results = [];\nconst zonaHoraria = 'America/Bogota'; //cambiar el pais\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\n\n// Función para formatear fecha como \"DD/MM/YYYY\"\nfunction formatearFecha(fecha) {\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const año = fecha.getFullYear();\n  return `${dia}/${mes}/${año}`;\n}\n\n// Fecha de hoy\nconst fechaHoy = formatearFecha(ahora);\n\n// Fecha de mañana (hoy + 1 día)\nconst manana = new Date(ahora);\nmanana.setDate(manana.getDate() + 1);\nconst fechaManana = formatearFecha(manana);\n\n// Determinar saludo y entrega\nconst hora = ahora.getHours();\nconst esTarde = hora >= 17;\n\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\nconst entrega = esTarde ? `mañana - (${fechaManana})` : `hoy - (${fechaHoy})`;\nconst fechaentrega = esTarde ? `${fechaManana}` : `${fechaHoy}`;\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const productosPorPedido = {};\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      const numPedido = prod.NUM_PEDIDO || 'SIN_PEDIDO';\n      if (!productosPorPedido[numPedido]) {\n        productosPorPedido[numPedido] = [];\n      }\n\n      productosPorPedido[numPedido].push(\n        `- ${prod.CANT_PALETS} x ${prod.CANT_CAJAS} - ${prod.PRODUCTO} - ${prod.PALET} - ${prod.CAJAS}`\n      );\n    }\n  }\n\n  if (Object.keys(productosPorPedido).length > 0) {\n    let mensajeProductos = `${saludo}, para ${entrega}\\n\\n`;\n\n    for (const [numPedido, listaProductos] of Object.entries(productosPorPedido)) {\n      mensajeProductos += `➡️ *pedido N°: ${numPedido}*\\n`;\n      mensajeProductos += listaProductos.join('\\n\\n') + '\\n\\n';\n    }\n\n    mensajeProductos = mensajeProductos.trim();\n\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: mensajeProductos,\n        FECHA: fechaentrega,\n        ENTREGA: entrega\n      }\n    });\n  } else {\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: '',\n        FECHA: fechaHoy\n      }\n    });\n  }\n}\n\nreturn results;\n"
       },
       "type": "n8n-nodes-base.code",
@@ -774,46 +727,6 @@
     },
     {
       "parameters": {
-        "resource": "messages-api",
-        "instanceName": "Pedro",
-        "remoteJid": "=+{{ $json[\"Nº DE TELÉFONO\"] }}",
-        "messageText": "={{ $json.MENSAJE_PROVEEDOR }}",
-        "options_message": {
-          "delay": 1000
-        }
-      },
-      "type": "n8n-nodes-evolution-api.evolutionApi",
-      "typeVersion": 1,
-      "position": [
-        -1472,
-        592
-      ],
-      "id": "a9b0af60-a491-4d1e-9c22-1a12fbb81c08",
-      "name": "Send Order",
-      "credentials": {
-        "evolutionApi": {
-          "id": "OFo9A7x3qE1W1DKN",
-          "name": "Evolution account Pedro"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## SEND MESSAGE SUPPLIER\n### no se envia aqui, ya que se espera a la aprobacion de Maria Jose",
-        "height": 280,
-        "width": 700
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -1776,
-        544
-      ],
-      "id": "2bc06a75-8cae-4876-a763-71201726cecd",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
         "content": "## UPDATE STATUS",
         "height": 260,
         "width": 640
@@ -829,7 +742,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const results = [];\n\nconst status = \"Pendiente\";\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const finca = item.json.FINCA;\n  const proveedorId = item.json.PROVEEDOR_ID;\n  const fecha =item.json.FECHA;\n  const entrega = item.json.ENTREGA;\n\n\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      results.push({\n        json: {\n          NUM_PEDIDO: prod.NUM_PEDIDO,\n          FECHA: fecha,\n          PROVEEDOR_ID: proveedorId,\n          FINCA: finca,\n          ID_PRODUCTO: prod.ID_PRODUCTO,\n          PRODUCTO: prod.PRODUCTO,\n          CANT_PALETS: prod.CANT_PALETS,\n          CANT_CAJAS: prod.CANT_CAJAS,\n          PALET: prod.PALET,\n          CAJAS: prod.CAJAS,\n          ENTREGA: entrega,\n          STATUS: status,\n        }\n      });\n    }\n  }\n}\nreturn results;\n"
+        "jsCode": "const results = [];\n\nconst status = \"Pendiente\";\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const finca = item.json.FINCA;\n  const proveedorId = item.json.PROVEEDOR_ID;\n  const fecha =item.json.FECHA;\n  const entrega = item.json.ENTREGA;\n\n\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      results.push({\n        json: {\n          NUM_PEDIDO: prod.NUM_PEDIDO,\n          FECHA: fecha,\n          PROVEEDOR_ID: proveedorId,\n          FINCA: finca,\n          ID_PRODUCTO: prod.ID_PRODUCTO,\n          PRODUCTOS: prod.PRODUCTO,\n          CANT_PALETS: prod.CANT_PALETS,\n          CANT_CAJAS: prod.CANT_CAJAS,\n          PALET: prod.PALET,\n          CAJAS: prod.CAJAS,\n          ENTREGA: entrega,\n          STATUS: status,\n        }\n      });\n    }\n  }\n}\nreturn results;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1086,45 +999,6 @@
       "name": "If"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        -1696,
-        368
-      ],
-      "id": "80315bc2-2f75-4c96-ae48-56d836df8b11",
-      "name": "No Operation, do nothing"
-    },
-    {
-      "parameters": {
-        "content": "# SE RECIBE Y PROCESA LOS PEDIDOS DE LOS CLIENTES, SE ASIGNAN A LAS FINCAS EQUITATIVAMENTE",
-        "height": 340,
-        "width": 600,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -2448,
-        288
-      ],
-      "id": "5083c9f2-1abf-407c-b4e2-f7f8a71bddc4",
-      "name": "Sticky Note5"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        -1696,
-        656
-      ],
-      "id": "4ed0d7eb-5e48-4a95-9ae7-ef113f2e7817",
-      "name": "Wait3",
-      "webhookId": "b2cca949-bbbb-4ac2-a65b-c5cad2698fbb"
-    },
-    {
       "parameters": {
         "pollTimes": {
           "item": [
@@ -1247,19 +1121,6 @@
       ],
       "id": "bcca5e33-2d01-4cd0-b2ae-9ef4044fb503",
       "name": "Aggregate"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Paso 1: eliminar duplicados (por row_number)\nconst uniqueRows = [];\nconst seen = new Set();\n\nfor (const item of items) {\n  const key = `${item.json.row_number}-${item.json.ID}-${item.json[\"N SOLICITUD\"]}`;\n  if (!seen.has(key)) {\n    uniqueRows.push(item.json);\n    seen.add(key);\n  }\n}\n\n// Paso 2: preparar pedidos por proveedor y por solicitud\nconst pedidosPorProveedor = {};\n\nfor (const row of uniqueRows) {\n  const cantidadTotal = parseInt(row[\"CANT_PALETS\"]) || 0;\n  const numPedido = row[\"NUM_PEDIDO\"];\n\n  if (cantidadTotal === 0) continue;\n\n  // Obtener proveedores y sus porcentajes\n  const proveedores = [];\n\n  for (const key of Object.keys(row)) {\n    const keyNormalized = key.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n    if (keyNormalized.startsWith(\"PROVEEDOR\")) {\n      const indexMatch = keyNormalized.match(/PROVEEDOR\\s*(\\d+)/);\n      if (indexMatch) {\n        const index = indexMatch[1];\n        const proveedorId = row[key]?.toString().trim();\n        if (proveedorId) {\n          const porcentajeKey = Object.keys(row).find(k => {\n            const kNorm = k.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n            return kNorm === `% ${index}` || kNorm === `%${index}`;\n          });\n          const porcentaje = porcentajeKey ? parseFloat(row[porcentajeKey]) : null;\n          proveedores.push({\n            proveedorId,\n            porcentaje: isNaN(porcentaje) ? null : porcentaje,\n            orden: parseInt(index) || 0  // Para mantener orden original\n          });\n        }\n      }\n    }\n  }\n\n  if (proveedores.length === 0) continue;\n\n  const conPorcentaje = proveedores.filter(p => p.porcentaje !== null);\n  const sinPorcentaje = proveedores.filter(p => p.porcentaje === null);\n\n  let asignaciones = [];\n\n  if (conPorcentaje.length > 0) {\n    // Asignar palets según porcentaje (inicialmente truncado)\n    let totalAsignado = 0;\n\n    for (const p of conPorcentaje) {\n      p.cantidad = Math.floor((cantidadTotal * p.porcentaje) / 100);\n      totalAsignado += p.cantidad;\n    }\n\n    const restante = cantidadTotal - totalAsignado;\n\n    // Ordenar por mayor porcentaje y menor orden (si empate)\n    const ordenPrioridad = [...conPorcentaje]\n      .sort((a, b) => b.porcentaje - a.porcentaje || a.orden - b.orden);\n\n    // Asignar el sobrante\n    for (let i = 0; i < restante; i++) {\n      ordenPrioridad[i % ordenPrioridad.length].cantidad += 1;\n    }\n\n    asignaciones = [...conPorcentaje];\n\n    // Repartir a los sin porcentaje (si hay)\n    if (sinPorcentaje.length > 0) {\n      const restanteLibre = cantidadTotal - asignaciones.reduce((s, p) => s + p.cantidad, 0);\n      const cantPorProveedor = Math.floor(restanteLibre / sinPorcentaje.length);\n      let sobrante = restanteLibre % sinPorcentaje.length;\n\n      for (const p of sinPorcentaje) {\n        p.cantidad = cantPorProveedor + (sobrante > 0 ? 1 : 0);\n        if (sobrante > 0) sobrante--;\n      }\n\n      asignaciones = [...asignaciones, ...sinPorcentaje];\n    }\n\n  } else {\n    // Reparto equitativo\n    const cantidadPorProveedor = Math.floor(cantidadTotal / proveedores.length);\n    let resto = cantidadTotal % proveedores.length;\n\n    for (const p of proveedores) {\n      p.cantidad = cantidadPorProveedor + (resto > 0 ? 1 : 0);\n      if (resto > 0) resto--;\n    }\n\n    asignaciones = [...proveedores];\n  }\n\n  // Agregar a pedidosPorProveedor\n  for (const asignacion of asignaciones) {\n    const { proveedorId, cantidad } = asignacion;\n\n    if (cantidad === 0) continue;\n\n    if (!pedidosPorProveedor[proveedorId]) {\n      pedidosPorProveedor[proveedorId] = [];\n    }\n\n    pedidosPorProveedor[proveedorId].push({\n      row_number: row.row_number,\n      ID_PRODUCTO: row.ID,\n      NUM_PEDIDO: numPedido,\n      PRODUCTO: row[\"PRODUCTOS\"],\n      CANT_PALETS: cantidad,\n      CAJAS: row[\"CAJAS\"],\n      CANT_CAJAS: row[\"CANT_CAJAS\"],\n      PALET: row[\"PALET\"],\n      CLIENTE: row[\"NOMBRE_CLIENTE\"],\n      CIF_CLIENTE: row[\"CIF_CLIENTE\"],\n      FECHA: row[\"FECHA\"],\n    });\n  }\n}\n\n// Paso 3: construir resultados\nconst results = [];\n\nfor (const [proveedorId, productos] of Object.entries(pedidosPorProveedor)) {\n  if (productos.length > 0) {\n    results.push({\n      json: {\n        PROVEEDOR_ID: proveedorId,\n        PRODUCTOS: productos\n      }\n    });\n  }\n}\n\nreturn results;\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -1696,
-        -640
-      ],
-      "id": "194f6095-1924-4fa9-8c48-cbca007f68f3",
-      "name": "Pedidos1"
     },
     {
       "parameters": {
@@ -1639,14 +1500,14 @@
             "PROVEEDOR_ID": "=STOCK",
             "FINCA": "=STOCK",
             "ID_PRODUCTO": "={{ $('Split Out').item.json.ID_PRODUCTO }}",
-            "PRODUCTO": "={{ $('Split Out').item.json.PRODUCTO }}",
             "CANT_PALETS": "={{ $('Split Out').item.json.CANT_PALETS }}",
             "CAJAS": "={{ $('Split Out').item.json.CAJAS }}",
             "CANT_CAJAS": "={{ $('Split Out').item.json.CANT_CAJAS }}",
             "PALET": "={{ $('Split Out').item.json.PALET }}",
             "COMENTARIOS": "Se solicita del Stock",
             "ENTREGA": "Stock",
-            "STATUS": "Solicitado"
+            "STATUS": "Solicitado",
+            "PRODUCTOS": "={{ $('Split Out').item.json.PRODUCTO }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -1698,13 +1559,14 @@
               "removed": false
             },
             {
-              "id": "PRODUCTO",
-              "displayName": "PRODUCTO",
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "CANT_PALETS",
@@ -1798,16 +1660,46 @@
     "Google Sheets Trigger": [
       {
         "json": {
-          "NUM_PEDIDO": "PED-3524",
+          "NUM_PEDIDO": "PED-2924",
           "CIF_CLIENTE": "GB166860044",
           "NOMBRE_CLIENTE": "MYFRESH PREPARED PRODUCE LTD",
           "PRODUCTOS": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
           "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
-          "CANT_PALETS": 40,
-          "CAJAS": "BANDEJA GENERICA 60X40X20 ETIQUETAS",
+          "CANT_PALETS": 20,
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
           "CANT_CAJAS": 55,
           "STATUS": "Pendiente",
-          "FECHA": "04/09/2025, 17:12:03",
+          "FECHA": "06/09/2025, 10:22:52",
+          "CAMBIOS": ""
+        }
+      },
+      {
+        "json": {
+          "NUM_PEDIDO": "PED-2924",
+          "CIF_CLIENTE": "GB166860044",
+          "NOMBRE_CLIENTE": "MYFRESH PREPARED PRODUCE LTD",
+          "PRODUCTOS": "PIMIENTO CALIFORNIA ROJO I/160/180 GR",
+          "PALET": "MADERA 50X30X15 ETIQUETAS",
+          "CANT_PALETS": 5,
+          "CAJAS": "BANDEJA GENERICA 60X40X20 S/N ETIQ",
+          "CANT_CAJAS": 55,
+          "STATUS": "Pendiente",
+          "FECHA": "06/09/2025, 10:22:52",
+          "CAMBIOS": ""
+        }
+      },
+      {
+        "json": {
+          "NUM_PEDIDO": "PED-2924",
+          "CIF_CLIENTE": "GB166860044",
+          "NOMBRE_CLIENTE": "MYFRESH PREPARED PRODUCE LTD",
+          "PRODUCTOS": "PIMIENTO CALIFORNIA VERDE I/20 PIEZAS",
+          "PALET": "BOX AZARBE",
+          "CANT_PALETS": 30,
+          "CAJAS": "BANDEJA GENERICA 60X40X15 ETIQUETA",
+          "CANT_CAJAS": 55,
+          "STATUS": "Pendiente",
+          "FECHA": "06/09/2025, 10:22:52",
           "CAMBIOS": ""
         }
       }
@@ -1837,7 +1729,7 @@
     "node:Google Sheets Trigger": {
       "documentId": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
       "sheetId": 88857449,
-      "lastIndexChecked": 5
+      "lastIndexChecked": 4
     },
     "node:Schedule Trigger1": {
       "recurrenceRules": []
@@ -1845,6 +1737,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-04T22:15:16.843Z",
-  "versionId": "07df1c07-9af2-4103-aaa4-2df21c8bb684"
+  "updatedAt": "2025-09-06T15:24:34.944Z",
+  "versionId": "5344a962-69e7-4d67-998e-b16efa90867a"
 }
