@@ -177,8 +177,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        420,
-        540
+        432,
+        544
       ],
       "id": "48bedc28-c467-4af1-b815-95e8ebf8c1fa",
       "name": "Split Out2"
@@ -360,7 +360,7 @@
       "typeVersion": 4.6,
       "position": [
         800,
-        360
+        368
       ],
       "id": "c0abf4bc-8b8f-44b0-9dbb-38bc12fa6156",
       "name": "Update solicitud",
@@ -378,8 +378,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        600,
-        660
+        608,
+        672
       ],
       "id": "1d8c3214-eda3-46cf-a308-6c3cf60b889b",
       "name": "Loop Over Items5"
@@ -540,8 +540,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1640,
-        680
+        1648,
+        688
       ],
       "id": "8fddf1de-d8ec-4d91-9fbb-1e7f1dece1c2",
       "name": "Update Status Pedido1",
@@ -561,7 +561,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -40,
+        -48,
         160
       ],
       "id": "fc55da54-9654-44ac-b77e-fd5f1815ec3c",
@@ -595,8 +595,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        200,
-        1080
+        208,
+        1088
       ],
       "id": "345e69a9-650f-412d-9897-cbbeacfdfc52",
       "name": "Sobrantes1"
@@ -620,7 +620,7 @@
         "filtersUI": {
           "values": [
             {
-              "lookupColumn": "PRODUCTOS",
+              "lookupColumn": "PRODUCTO",
               "lookupValue": "={{ $json.PRODUCTO }}"
             }
           ]
@@ -630,8 +630,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        660,
-        1060
+        672,
+        1072
       ],
       "id": "78da2c15-3ca3-4c9b-905a-5280a5c7707b",
       "name": "Read stock data1",
@@ -650,8 +650,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        440,
-        1060
+        448,
+        1072
       ],
       "id": "ca440041-ecc3-4f88-9da8-2516c54e53b4",
       "name": "items1"
@@ -664,7 +664,7 @@
       "typeVersion": 2,
       "position": [
         880,
-        1060
+        1072
       ],
       "id": "ac999262-20d7-477d-b7e1-e9cae654e334",
       "name": "Code2"
@@ -697,8 +697,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1100,
-        1060
+        1104,
+        1072
       ],
       "id": "60d8a97c-f409-4038-b924-09f0e658107e",
       "name": "If2"
@@ -724,19 +724,28 @@
           "mappingMode": "defineBelow",
           "value": {
             "PALET": "={{ $json.data.PALET }}",
-            "PRODUCTOS": "={{ $json.data.PRODUCTOS }}",
-            "CANT_PALETS": "={{ $json.data.CANT_PALETS }}",
             "CAJAS": "={{ $json.data.CAJAS }}",
             "CANT_CAJAS": "={{ $json.data.CANT_CAJAS }}",
-            "row_number": "={{ $json.rowIndex }}"
+            "row_number": "={{ $json.rowIndex }}",
+            "PRODUCTO": "={{ $json.data.PRODUCTOS }}"
           },
           "matchingColumns": [
             "row_number"
           ],
           "schema": [
             {
-              "id": "PRODUCTOS",
-              "displayName": "PRODUCTOS",
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -754,13 +763,14 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "CANT_PALETS",
-              "displayName": "CANT_PALETS",
+              "id": "CANT_PALET",
+              "displayName": "CANT_PALET",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "CAJAS",
@@ -781,8 +791,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "salidas",
-              "displayName": "salidas",
+              "id": "REPORTE",
+              "displayName": "REPORTE",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -796,7 +806,7 @@
               "required": false,
               "defaultMatch": false,
               "display": true,
-              "type": "string",
+              "type": "number",
               "canBeUsedToMatch": true,
               "readOnly": true,
               "removed": false
@@ -810,7 +820,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1320,
+        1328,
         960
       ],
       "id": "7d5a2013-64f4-4dcf-907f-bd9aedd06a71",
@@ -917,8 +927,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1320,
-        1160
+        1328,
+        1168
       ],
       "id": "8ee9b6e7-2d90-4291-8510-d7c37021ccf3",
       "name": "Add Stock1",
@@ -938,7 +948,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -40,
+        -48,
         960
       ],
       "id": "e673ab62-ef51-4b8e-aa05-55d7ddfa87d4",
@@ -972,7 +982,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        220,
+        224,
         560
       ],
       "id": "16dff113-e73f-4481-ace0-7ccfbcfd482d",
@@ -985,8 +995,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1180,
-        680
+        1184,
+        688
       ],
       "id": "8fbb187a-a647-418a-bbe2-be0d1181906a",
       "name": "update"
@@ -1014,7 +1024,7 @@
               "lookupValue": "={{ $json.NUM_PEDIDO }}"
             },
             {
-              "lookupColumn": "PRODUCTO",
+              "lookupColumn": "PRODUCTOS",
               "lookupValue": "={{ $json.PRODUCTO }}"
             },
             {
@@ -1032,8 +1042,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        900,
-        680
+        912,
+        688
       ],
       "id": "b14d2312-9a03-490c-9773-ba21f62a8dbc",
       "name": "Get Solicitud",
@@ -1068,7 +1078,7 @@
             },
             {
               "lookupColumn": "PRODUCTOS",
-              "lookupValue": "={{ $json.PRODUCTO }}"
+              "lookupValue": "={{ $json.PRODUCTOS }}"
             },
             {
               "lookupColumn": "PALET",
@@ -1085,8 +1095,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1420,
-        680
+        1424,
+        688
       ],
       "id": "749d1a9e-e2da-4be7-a2e5-38a3fa09f858",
       "name": "Get Pedidos",
@@ -1105,8 +1115,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -280,
-        820
+        -288,
+        832
       ],
       "id": "a2013b1d-2ddf-4af5-903e-3fba73ddf396",
       "name": "When Executed by Another Workflow"
@@ -1131,6 +1141,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-04T22:23:00.569Z",
-  "versionId": "5746ebc8-8d52-44ed-8136-da4554412f16"
+  "updatedAt": "2025-09-06T15:21:26.810Z",
+  "versionId": "7122b9ce-aaca-4a30-94f6-b5bda63081d3"
 }
