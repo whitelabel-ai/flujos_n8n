@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "AI Agent": {
       "main": [
@@ -559,6 +559,82 @@
           }
         ]
       ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Get clientID_ InboxID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        []
+      ]
+    },
+    "Validar creditos": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "descontar credito usado1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get clientID_ InboxID": {
+      "main": [
+        [
+          {
+            "node": "Validar creditos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "descontar credito usado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-04T22:34:24.685Z",
@@ -975,8 +1051,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -288,
-        -1664
+        -320,
+        -1648
       ],
       "typeVersion": 1,
       "id": "84cf8c1a-85d0-496d-8223-044f9f479e0b",
@@ -1024,8 +1100,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3600,
-        -1472
+        3200,
+        -1616
       ],
       "id": "c534bf2c-ff65-4ffa-83ff-179b50a4d4d8",
       "name": "Wait11",
@@ -1084,8 +1160,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3824,
-        -1264
+        3760,
+        -1216
       ],
       "id": "d9240b35-4382-4eaa-8ac7-9edd1272d389",
       "name": "No Operation, do nothing11"
@@ -1118,8 +1194,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3808,
-        -1472
+        3440,
+        -1616
       ],
       "id": "412bd95e-86f8-4ae2-a45b-cb7266770fbd",
       "name": "If13"
@@ -1129,8 +1205,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4240,
-        -1456
+        3824,
+        -1472
       ],
       "id": "69d743c7-99dd-45a1-b743-980de428016b",
       "name": "No Operation, do nothing12"
@@ -1188,8 +1264,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3824,
-        -1072
+        4032,
+        -1056
       ],
       "id": "c85bffc6-57f9-410d-b7a3-b3cccaa42944",
       "name": "No Operation, do nothing13"
@@ -1219,8 +1295,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4032,
-        -1488
+        3712,
+        -1632
       ],
       "id": "0d99c30c-ae4e-46b1-8b7a-eec327e9748a",
       "name": "HTTP Request1"
@@ -1250,8 +1326,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3632,
-        -1312
+        3648,
+        -1344
       ],
       "id": "00ae85c0-5c0d-47f9-b24d-db7360b1a632",
       "name": "HTTP Request2"
@@ -1328,8 +1404,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3184,
-        -1472
+        3200,
+        -1456
       ],
       "id": "164db1bc-1dc9-467f-9f5c-ee07e88ff40a",
       "name": "HTTP Request4"
@@ -1943,7 +2019,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "chatwood_onboarding_estarter",
+        "path": "test_chatwood_onboarding_estarter",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
@@ -2458,6 +2534,415 @@
           "name": "hola@whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA",
+          "mode": "list",
+          "cachedResultName": "Contador de Mensajes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "creditos_usados": "={{ $json.creditos_usados }}",
+            "creditos_restantes": "={{ $json.creditos_restantes }}",
+            "cliente_id": "={{ $json.cliente_id }}"
+          },
+          "matchingColumns": [
+            "cliente_id"
+          ],
+          "schema": [
+            {
+              "id": "casa_matriz",
+              "displayName": "casa_matriz",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "nombre_cliente",
+              "displayName": "nombre_cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "cliente_id",
+              "displayName": "cliente_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contacto ",
+              "displayName": "contacto ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "sitio_web_Contacto",
+              "displayName": "sitio_web_Contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Human_in_the_Loop",
+              "displayName": "Human_in_the_Loop",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "model_agent",
+              "displayName": "model_agent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "inbox_id",
+              "displayName": "inbox_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Plan",
+              "displayName": "Plan",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "numero_creditos",
+              "displayName": "numero_creditos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "creditos_usados",
+              "displayName": "creditos_usados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "creditos_restantes",
+              "displayName": "creditos_restantes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "remaining_percentage",
+              "displayName": "remaining_percentage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "correo_10%",
+              "displayName": "correo_10%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "correo_5%",
+              "displayName": "correo_5%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Bloqueo",
+              "displayName": "Bloqueo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "enviado 10%",
+              "displayName": "enviado 10%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "enviado 5%",
+              "displayName": "enviado 5%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        5392,
+        -1424
+      ],
+      "id": "524d8716-431f-41e7-8300-23dbdc134437",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA",
+          "mode": "list",
+          "cachedResultName": "Contador de Mensajes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H-z5bQVGTaJJ_OlOq8OBh3cdKcE1-YTdQfwSaSdFqpA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "cliente_id",
+              "lookupValue": "={{ $json.client_id }}"
+            },
+            {
+              "lookupColumn": "inbox_id",
+              "lookupValue": "={{ $json.Inbox_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        4752,
+        -1424
+      ],
+      "id": "3d2470c2-903e-4da8-89a0-951820e64710",
+      "name": "Validar creditos",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Datos actuales\nconst usados = Number($json[\"creditos_usados\"]) || 0;\nconst restantes = Number($json[\"creditos_restantes\"]) || 0;\n\n// Calcular nuevos valores\nreturn [\n  {\n    ...$json,\n    creditos_usados: usados + 1,\n    creditos_restantes: restantes - 1\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5200,
+        -1424
+      ],
+      "id": "7267877f-f87e-47db-836d-c0d9dbc0c91f",
+      "name": "descontar credito usado1"
+    },
+    {
+      "parameters": {
+        "content": "## Descontar Creditos \n",
+        "height": 720,
+        "width": 864,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4704,
+        -1664
+      ],
+      "typeVersion": 1,
+      "id": "c4f26f52-92e0-4e4c-b02c-5f83e9580591",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b469ddb-5b6e-4469-b085-ee76564b41dd",
+              "name": "nombre_cliente",
+              "value": "={{ $json.nombre_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "2060fd9b-5c10-443f-a58f-a53cb59e55ce",
+              "name": "inbox_id",
+              "value": "={{ $json.inbox_id }}",
+              "type": "number"
+            },
+            {
+              "id": "90eb4318-073a-4ef0-a746-12572122c319",
+              "name": "cliente_id",
+              "value": "={{ $json.cliente_id }}",
+              "type": "number"
+            },
+            {
+              "id": "65a9f3d9-bc9d-4ea3-8f6b-fbd8fc67e0d3",
+              "name": "creditos_usados",
+              "value": "={{ $json.creditos_usados }}",
+              "type": "number"
+            },
+            {
+              "id": "eadd8e2d-f2bf-46ca-a9a6-fc3f62e9ffa7",
+              "name": "creditos_restantes",
+              "value": "={{ $json.creditos_restantes }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4976,
+        -1424
+      ],
+      "id": "dcbb7c5b-d702-438b-9a7d-ed3d44f9359a",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9bceaf1-b87b-4b8f-81c3-a9503d9178f2",
+              "name": "client_id",
+              "value": "={{ $('setData').item.json.client_id }}",
+              "type": "number"
+            },
+            {
+              "id": "8de009e4-ac00-4dab-8956-e2fcb8f6226a",
+              "name": "Inbox_id",
+              "value": "={{ $('setData').item.json.Inbox_id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3920,
+        -1632
+      ],
+      "id": "d953fb88-96d6-4933-99be-e90b773eec9e",
+      "name": "Get clientID_ InboxID"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        5632,
+        -1424
+      ],
+      "id": "6cfb2841-2e81-4f70-b4ae-962bf85c79f1",
+      "name": "No Operation, do nothing1"
     }
   ],
   "pinData": {},
@@ -2490,6 +2975,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-09-05T18:03:30.103Z",
-  "versionId": "a4b18838-79fe-4bdd-9bf5-e3d112cc3453"
+  "updatedAt": "2025-09-06T22:18:00.347Z",
+  "versionId": "d015868b-4c42-4575-8472-b3170575ba6c"
 }
