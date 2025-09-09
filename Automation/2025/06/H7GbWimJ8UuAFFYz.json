@@ -567,7 +567,7 @@
       "typeVersion": 3.2,
       "position": [
         -1072,
-        148
+        160
       ],
       "id": "fcbd2b3a-b016-49b7-984c-ee32ff978ad6",
       "name": "GRUPOS"
@@ -1038,7 +1038,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = items[0].json.data;\n\nconst uniqueCombos = new Set();\nconst result = [];\n\nfor (const entry of data) {\n  const key = `${entry.PRODUCTO} | ${entry.PALET} | ${entry.CAJAS}`;\n  \n  if (!uniqueCombos.has(key)) {\n    uniqueCombos.add(key);\n    result.push({\n      PRODUCTO: entry.PRODUCTO,\n      PALET: entry.PALET,\n      CAJAS: entry.CAJAS\n    });\n  }\n}\n\nreturn [{\n  json: {\n    data: result\n  }\n}];\n"
+        "jsCode": "const data = items[0].json.data;\n\nconst uniqueCombos = new Set();\nconst result = [];\n\nfor (const entry of data) {\n  const key = `${entry.PRODUCTO} | ${entry.PALET} | ${entry.CAJAS}`;\n  \n  if (!uniqueCombos.has(key)) {\n    uniqueCombos.add(key);\n    result.push({\n      PRODUCTO: entry.PRODUCTOS,\n      PALET: entry.PALET,\n      CAJAS: entry.CAJAS\n    });\n  }\n}\n\nreturn [{\n  json: {\n    data: result\n  }\n}];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1222,7 +1222,7 @@
       "typeVersion": 1.1,
       "position": [
         -1296,
-        148
+        160
       ],
       "id": "16db1430-6fa9-453c-b038-245438274e6e",
       "name": "When Executed by Another Workflow"
@@ -1957,6 +1957,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-04T22:23:30.275Z",
-  "versionId": "21d14a71-816f-4326-a3d6-9375fabfd5c5"
+  "updatedAt": "2025-09-09T18:11:18.122Z",
+  "versionId": "0868d35b-75f4-4c3f-a9d1-7326e6753c0f"
 }
