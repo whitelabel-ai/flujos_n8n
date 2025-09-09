@@ -88,7 +88,7 @@
       "main": [
         [
           {
-            "node": "Actualizar Stock1",
+            "node": "Actualizar Stock",
             "type": "main",
             "index": 0
           }
@@ -620,7 +620,7 @@
         "filtersUI": {
           "values": [
             {
-              "lookupColumn": "PRODUCTO",
+              "lookupColumn": "PRODUCTOS",
               "lookupValue": "={{ $json.PRODUCTO }}"
             }
           ]
@@ -705,7 +705,7 @@
     },
     {
       "parameters": {
-        "operation": "update",
+        "operation": "append",
         "documentId": {
           "__rl": true,
           "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
@@ -724,10 +724,11 @@
           "mappingMode": "defineBelow",
           "value": {
             "PALET": "={{ $json.data.PALET }}",
+            "PRODUCTOS": "={{ $json.data.PRODUCTOS }}",
             "CAJAS": "={{ $json.data.CAJAS }}",
             "CANT_CAJAS": "={{ $json.data.CANT_CAJAS }}",
-            "row_number": "={{ $json.rowIndex }}",
-            "PRODUCTO": "={{ $json.data.PRODUCTOS }}"
+            "CANT_PALET": "={{ $json.data.CANT_PALETS }}",
+            "FECHA": "={{ $now.format('yyyy/MM/dd') }}"
           },
           "matchingColumns": [
             "row_number"
@@ -741,11 +742,11 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": true
+              "removed": false
             },
             {
-              "id": "PRODUCTO",
-              "displayName": "PRODUCTO",
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -770,7 +771,7 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": true
+              "removed": false
             },
             {
               "id": "CAJAS",
@@ -793,124 +794,6 @@
             {
               "id": "REPORTE",
               "displayName": "REPORTE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "row_number",
-              "displayName": "row_number",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "readOnly": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        1328,
-        960
-      ],
-      "id": "7d5a2013-64f4-4dcf-907f-bd9aedd06a71",
-      "name": "Actualizar Stock1",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
-          "name": "hola@whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
-          "mode": "list",
-          "cachedResultName": "SOLICITUD DE PEDIDOS",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 181798758,
-          "mode": "list",
-          "cachedResultName": "STOCK",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "PALET": "={{ $json.data.PALET }}",
-            "PRODUCTOS": "={{ $json.data.PRODUCTOS }}",
-            "CANT_PALETS": "={{ $json.data.CANT_PALETS }}",
-            "CAJAS": "={{ $json.data.CAJAS }}",
-            "CANT_CAJAS": "={{ $json.data.CANT_CAJAS }}"
-          },
-          "matchingColumns": [
-            "row_number"
-          ],
-          "schema": [
-            {
-              "id": "PRODUCTOS",
-              "displayName": "PRODUCTOS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "PALET",
-              "displayName": "PALET",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CANT_PALETS",
-              "displayName": "CANT_PALETS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CAJAS",
-              "displayName": "CAJAS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CANT_CAJAS",
-              "displayName": "CANT_CAJAS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "salidas",
-              "displayName": "salidas",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1078,7 +961,7 @@
             },
             {
               "lookupColumn": "PRODUCTOS",
-              "lookupValue": "={{ $json.PRODUCTOS }}"
+              "lookupValue": "={{ $json.PRODUCTO }}"
             },
             {
               "lookupColumn": "PALET",
@@ -1120,9 +1003,177 @@
       ],
       "id": "a2013b1d-2ddf-4af5-903e-3fba73ddf396",
       "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 181798758,
+          "mode": "list",
+          "cachedResultName": "STOCK",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PALET": "={{ $json.data.PALET }}",
+            "PRODUCTOS": "={{ $json.data.PRODUCTOS }}",
+            "CAJAS": "={{ $json.data.CAJAS }}",
+            "CANT_CAJAS": "={{ $json.data.CANT_CAJAS }}",
+            "row_number": "={{ $json.rowIndex }}",
+            "CANT_PALET": "={{ $json.data.CANT_PALETS }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALET",
+              "displayName": "CANT_PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "REPORTE",
+              "displayName": "REPORTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1360,
+        992
+      ],
+      "id": "b2a9174e-83b8-4d5f-86a2-331e32a22914",
+      "name": "Actualizar Stock",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "pedido_completo": true,
+          "PROVEEDOR_ID": 2581,
+          "faltantes": [],
+          "sobrantes": [],
+          "confirmados": [
+            {
+              "row_number": 10,
+              "NUM_PEDIDO": "PED-3707",
+              "FECHA": "09/09/2025",
+              "PROVEEDOR_ID": 2581,
+              "PRODUCTO": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
+              "CANT_PALETS": 4,
+              "CANT_CAJAS": 55,
+              "PALET": "BOX AZARBE",
+              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+              "STATUS": "Confirmado"
+            },
+            {
+              "row_number": 11,
+              "NUM_PEDIDO": "PED-3707",
+              "FECHA": "09/09/2025",
+              "PROVEEDOR_ID": 2581,
+              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+              "CANT_PALETS": 1,
+              "CANT_CAJAS": 55,
+              "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+              "STATUS": "Confirmado"
+            }
+          ],
+          "comentarios_adicionales": "El encargado ha confirmado la totalidad del pedido original."
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -1141,6 +1192,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-06T15:21:26.810Z",
-  "versionId": "7122b9ce-aaca-4a30-94f6-b5bda63081d3"
+  "updatedAt": "2025-09-09T21:09:13.758Z",
+  "versionId": "36b5003d-9896-41d1-893a-4eb4ff471a86"
 }
