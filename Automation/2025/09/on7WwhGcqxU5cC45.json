@@ -1,0 +1,1437 @@
+{
+  "active": false,
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pedidos": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Products": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Orders": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Proveedores": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "MENSAJE_PRODUCTOS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MENSAJE_PRODUCTOS": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Proveedores",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "add Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add Pedido": {
+      "main": [
+        [
+          {
+            "node": "Get Orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Pedidos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Stock": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "update Stock",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update Stock": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Pedido": {
+      "main": [
+        []
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Update Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Get Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Get Stock",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-09T17:15:46.211Z",
+  "id": "on7WwhGcqxU5cC45",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "1.4. Procesar pedido desaprobado",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "PRODUCTOS",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -576,
+        -224
+      ],
+      "id": "4b873f46-b6c3-4b3d-b83f-924f53d063b0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Paso 1: separar stock del input\nlet stockData = [];\nlet pedidosData = [];\n\nfor (const item of items) {\n  if (item.json.Stock) {\n    stockData = item.json.Stock;\n  } else {\n    pedidosData.push(item.json);\n  }\n}\n\n// Crear un mapa de stock por producto\nconst stockMap = {};\nfor (const s of stockData) {\n  stockMap[s.PRODUCTOS.trim().toUpperCase()] = {\n    disponible: parseInt(s.CANT_PALET) || 0,\n    cajas: parseInt(s.CANT_CAJAS) || 0,\n    row_number: s.row_number,\n    detalle: s\n  };\n}\n\n// Paso 2: eliminar duplicados (por row_number + pedido)\nconst uniqueRows = [];\nconst seen = new Set();\n\nfor (const row of pedidosData) {\n  const key = `${row.row_number}-${row.ID}-${row[\"NUM_PEDIDO\"]}`;\n  if (!seen.has(key)) {\n    uniqueRows.push(row);\n    seen.add(key);\n  }\n}\n\n// Paso 3: preparar pedidos por proveedor\nconst pedidosPorProveedor = {};\n\nfunction agregarPedido(proveedorId, row, cantidad, productoKey = null, stockRow = null) {\n  if (!pedidosPorProveedor[proveedorId]) {\n    pedidosPorProveedor[proveedorId] = [];\n  }\n\n  let restantePalets = null;\n  let restanteCajas = null;\n\n  if (proveedorId === \"STOCK\" && productoKey && stockRow) {\n    const disponiblePalets = stockMap[productoKey].disponible;\n    const disponibleCajas = stockMap[productoKey].cajas;\n\n    const totalCajas = parseInt(row[\"CANT_CAJAS\"]) || 0;\n    const totalPalets = parseInt(row[\"CANT_PALETS\"]) || 0;\n\n    restantePalets = disponiblePalets;\n    restanteCajas =\n      totalPalets > 0\n        ? Math.floor((disponiblePalets * totalCajas) / totalPalets)\n        : disponibleCajas;\n  }\n\n  pedidosPorProveedor[proveedorId].push({\n    row_number_pedido: row.row_number,\n    row_number_stock: stockRow || null,\n    ID_PRODUCTO: row.ID,\n    NUM_PEDIDO: row[\"NUM_PEDIDO\"],\n    PRODUCTO: row[\"PRODUCTOS\"],\n    CANT_PALETS: cantidad,\n    CAJAS: row[\"CAJAS\"],\n    CANT_CAJAS: row[\"CANT_CAJAS\"],\n    PALET: row[\"PALET\"],\n    CLIENTE: row[\"NOMBRE_CLIENTE\"],\n    CIF_CLIENTE: row[\"CIF_CLIENTE\"],\n    FECHA: row[\"FECHA\"],\n    ...(proveedorId === \"STOCK\"\n      ? {\n          CANT_PALETS_RESTANTES: restantePalets,\n          CANT_CAJAS_RESTANTES: restanteCajas\n        }\n      : {})\n  });\n}\n\n// Procesar pedidos\nfor (const row of uniqueRows) {\n  let cantidadTotal = parseInt(row[\"CANT_PALETS\"]) || 0;\n  if (cantidadTotal === 0) continue;\n\n  const productoKey = row[\"PRODUCTOS\"].trim().toUpperCase();\n\n  // Paso 3.1: revisar stock\n  if (stockMap[productoKey] && stockMap[productoKey].disponible > 0) {\n    const disponible = stockMap[productoKey].disponible;\n    const usado = Math.min(cantidadTotal, disponible);\n\n    // Restar stock\n    stockMap[productoKey].disponible -= usado;\n\n    // Agregar asignación al STOCK\n    if (usado > 0) {\n      agregarPedido(\"STOCK\", row, usado, productoKey, stockMap[productoKey].row_number);\n      cantidadTotal -= usado;\n    }\n  }\n\n  // Paso 3.2: si aún falta, repartir entre proveedores\n  if (cantidadTotal > 0) {\n    const proveedores = [];\n\n    for (const key of Object.keys(row)) {\n      const keyNorm = key.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n      if (keyNorm.startsWith(\"PROVEEDOR\")) {\n        const indexMatch = keyNorm.match(/PROVEEDOR\\s*(\\d+)/);\n        if (indexMatch) {\n          const index = indexMatch[1];\n          const proveedorId = row[key]?.toString().trim();\n          if (proveedorId) {\n            const porcentajeKey = Object.keys(row).find(k => {\n              const kNorm = k.toString().trim().toUpperCase().replace(/\\s+/g, \" \");\n              return kNorm === `% ${index}` || kNorm === `%${index}`;\n            });\n            const porcentaje = porcentajeKey ? parseFloat(row[porcentajeKey]) : null;\n            proveedores.push({\n              proveedorId,\n              porcentaje: isNaN(porcentaje) ? null : porcentaje,\n              orden: parseInt(index) || 0\n            });\n          }\n        }\n      }\n    }\n\n    if (proveedores.length === 0) continue;\n\n    const conPorcentaje = proveedores.filter(p => p.porcentaje !== null);\n    const sinPorcentaje = proveedores.filter(p => p.porcentaje === null);\n\n    let asignaciones = [];\n\n    if (conPorcentaje.length > 0) {\n      let totalAsignado = 0;\n      for (const p of conPorcentaje) {\n        p.cantidad = Math.floor((cantidadTotal * p.porcentaje) / 100);\n        totalAsignado += p.cantidad;\n      }\n\n      let restante = cantidadTotal - totalAsignado;\n      const ordenPrioridad = [...conPorcentaje]\n        .sort((a, b) => b.porcentaje - a.porcentaje || a.orden - b.orden);\n\n      for (let i = 0; i < restante; i++) {\n        ordenPrioridad[i % ordenPrioridad.length].cantidad += 1;\n      }\n\n      asignaciones = [...conPorcentaje];\n\n      if (sinPorcentaje.length > 0) {\n        const restanteLibre = cantidadTotal - asignaciones.reduce((s, p) => s + p.cantidad, 0);\n        const cantPorProveedor = Math.floor(restanteLibre / sinPorcentaje.length);\n        let sobrante = restanteLibre % sinPorcentaje.length;\n\n        for (const p of sinPorcentaje) {\n          p.cantidad = cantPorProveedor + (sobrante > 0 ? 1 : 0);\n          if (sobrante > 0) sobrante--;\n        }\n\n        asignaciones = [...asignaciones, ...sinPorcentaje];\n      }\n\n    } else {\n      const cantidadPorProveedor = Math.floor(cantidadTotal / proveedores.length);\n      let resto = cantidadTotal % proveedores.length;\n\n      for (const p of proveedores) {\n        p.cantidad = cantidadPorProveedor + (resto > 0 ? 1 : 0);\n        if (resto > 0) resto--;\n      }\n\n      asignaciones = [...proveedores];\n    }\n\n    for (const asignacion of asignaciones) {\n      if (asignacion.cantidad > 0) {\n        agregarPedido(asignacion.proveedorId, row, asignacion.cantidad);\n      }\n    }\n  }\n}\n\n// Paso 4: construir resultados de pedidos\nconst results = [];\nfor (const [proveedorId, productos] of Object.entries(pedidosPorProveedor)) {\n  results.push({\n    json: {\n      PROVEEDOR_ID: proveedorId,\n      PRODUCTOS: productos\n    }\n  });\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        -224
+      ],
+      "id": "c2b66110-7c56-4f99-86f3-40818b978ebf",
+      "name": "Pedidos"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1662149016,
+          "mode": "list",
+          "cachedResultName": "PRODUCTOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1662149016"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PRODUCTOS",
+              "lookupValue": "={{ $json.PRODUCTOS }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -800,
+        -296
+      ],
+      "id": "59683469-0853-4891-a3ea-1ae210f81369",
+      "name": "Get Products",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Desaprobado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1248,
+        -224
+      ],
+      "id": "62e4bf39-b542-42b4-b013-ad55295d05c2",
+      "name": "Get Orders",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1216,
+        -224
+      ],
+      "id": "d8796365-21b3-41c4-85a1-506b9d6b7999",
+      "name": "Get Proveedores",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1440,
+        -152
+      ],
+      "id": "7d435ecc-4a0e-42fd-aa1c-c336a16f240e",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nconst zonaHoraria = 'America/Bogota'; //cambiar el pais\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\n\n// Función para formatear fecha como \"DD/MM/YYYY\"\nfunction formatearFecha(fecha) {\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const año = fecha.getFullYear();\n  return `${dia}/${mes}/${año}`;\n}\n\n// Fecha de hoy\nconst fechaHoy = formatearFecha(ahora);\n\n// Fecha de mañana (hoy + 1 día)\nconst manana = new Date(ahora);\nmanana.setDate(manana.getDate() + 1);\nconst fechaManana = formatearFecha(manana);\n\n// Determinar saludo y entrega\nconst hora = ahora.getHours();\nconst esTarde = hora >= 17;\n\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\nconst entrega = esTarde ? `mañana - (${fechaManana})` : `hoy - (${fechaHoy})`;\nconst fechaentrega = esTarde ? `${fechaManana}` : `${fechaHoy}`;\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const productosPorPedido = {};\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      const numPedido = prod.NUM_PEDIDO || 'SIN_PEDIDO';\n      if (!productosPorPedido[numPedido]) {\n        productosPorPedido[numPedido] = [];\n      }\n\n      productosPorPedido[numPedido].push(\n        `- ${prod.CANT_PALETS} x ${prod.CANT_CAJAS} - ${prod.PRODUCTO} - ${prod.PALET} - ${prod.CAJAS}`\n      );\n    }\n  }\n\n  if (Object.keys(productosPorPedido).length > 0) {\n    let mensajeProductos = `${saludo}, para ${entrega}\\n\\n`;\n\n    for (const [numPedido, listaProductos] of Object.entries(productosPorPedido)) {\n      mensajeProductos += `➡️ *pedido N°: ${numPedido}*\\n`;\n      mensajeProductos += listaProductos.join('\\n\\n') + '\\n\\n';\n    }\n\n    mensajeProductos = mensajeProductos.trim();\n\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: mensajeProductos,\n        FECHA: fechaentrega,\n        ENTREGA: entrega\n      }\n    });\n  } else {\n    results.push({\n      json: {\n        ...item.json,\n        MENSAJE_PROVEEDOR: '',\n        FECHA: fechaHoy\n      }\n    });\n  }\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1664,
+        -152
+      ],
+      "id": "9989a01f-af76-4341-852b-28db7647bd4e",
+      "name": "MENSAJE_PRODUCTOS"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nconst status = \"Pendiente\";\n\nfor (const item of items) {\n  const productos = item.json.PRODUCTOS;\n  const finca = item.json.FINCA;\n  const proveedorId = item.json.PROVEEDOR_ID;\n  const fecha =item.json.FECHA;\n  const entrega = item.json.ENTREGA;\n\n\n\n  for (const prod of productos) {\n    if (prod.CANT_PALETS > 0) {\n      results.push({\n        json: {\n          NUM_PEDIDO: prod.NUM_PEDIDO,\n          FECHA: fecha,\n          PROVEEDOR_ID: proveedorId,\n          FINCA: finca,\n          ID_PRODUCTO: prod.ID_PRODUCTO,\n          PRODUCTOS: prod.PRODUCTO,\n          CANT_PALETS: prod.CANT_PALETS,\n          CANT_CAJAS: prod.CANT_CAJAS,\n          PALET: prod.PALET,\n          CAJAS: prod.CAJAS,\n          ENTREGA: entrega,\n          STATUS: status,\n        }\n      });\n    }\n  }\n}\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        -152
+      ],
+      "id": "3238163a-0d0d-4388-91ea-360c360b62ae",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PROVEEDOR_ID",
+              "displayName": "PROVEEDOR_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FINCA",
+              "displayName": "FINCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID_PRODUCTO",
+              "displayName": "ID_PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ENTREGA",
+              "displayName": "ENTREGA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2560,
+        -152
+      ],
+      "id": "2a949d41-e6e0-410d-afde-2d518a6e8f55",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## UPDATE REQUEST TO SUPPLIER",
+        "height": 308,
+        "width": 688
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1256,
+        -300
+      ],
+      "id": "d7910507-aed3-4721-aa95-bc8ad1f10c13",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2112,
+        -152
+      ],
+      "id": "149f4d82-9fd5-4100-a25f-172f8e0bdad3",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2336,
+        -224
+      ],
+      "id": "b181ded5-34fa-48cd-9095-9b532dc05ddd",
+      "name": "Wait1",
+      "webhookId": "c97830a1-4d66-4a38-8207-596872583a65"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "808c656d-b50e-4c0c-a23e-9704f4dba824",
+              "leftValue": "={{ $json.PROVEEDOR_ID }}",
+              "rightValue": "STOCK",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        -224
+      ],
+      "id": "1f174759-0115-4cb1-9133-07234a53e093",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 10,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "event": "rowUpdate",
+        "options": {
+          "columnsToWatch": [
+            "STATUS"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1696,
+        -224
+      ],
+      "id": "f3e626d8-2683-4568-ab62-ab4e0b630722",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "JuzCfzrGaEijmft3",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return {status: true};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1472,
+        -224
+      ],
+      "id": "23d941cf-1b77-4c59-acfe-c99222d4d439",
+      "name": "add Pedido"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 181798758,
+          "mode": "list",
+          "cachedResultName": "STOCK",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PRODUCTOS",
+              "lookupValue": "={{ $json.PRODUCTOS }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        96,
+        -152
+      ],
+      "id": "4baf0dfd-12de-46cf-b1e7-65f333ebf9ae",
+      "name": "Get Stock",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        544,
+        -224
+      ],
+      "id": "a4c08b53-8d99-4cdc-9ac1-a330cd767a69",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Stock",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -152
+      ],
+      "id": "4fb48809-a2d2-4cf2-abfa-149986cb5bf9",
+      "name": "Aggregate",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 181798758,
+          "mode": "list",
+          "cachedResultName": "STOCK",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number_stock }}",
+            "CANT_PALET": "={{ $json.CANT_PALETS_RESTANTES }}",
+            "CANT_CAJAS": "={{ $json.CANT_CAJAS_RESTANTES }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_PALET",
+              "displayName": "CANT_PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "REPORTE",
+              "displayName": "REPORTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1440,
+        -416
+      ],
+      "id": "7a078716-5070-438b-af4d-5fe541e21346",
+      "name": "update Stock",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "PRODUCTOS",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        -416
+      ],
+      "id": "6fc802bf-282d-48b8-b29d-799ce26fe714",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NUM_PEDIDO": "={{ $('Split Out').item.json.NUM_PEDIDO }}",
+            "FECHA": "={{ $('Split Out').item.json.FECHA }}",
+            "PROVEEDOR_ID": "=STOCK",
+            "FINCA": "=STOCK",
+            "ID_PRODUCTO": "={{ $('Split Out').item.json.ID_PRODUCTO }}",
+            "CANT_PALETS": "={{ $('Split Out').item.json.CANT_PALETS }}",
+            "CAJAS": "={{ $('Split Out').item.json.CAJAS }}",
+            "CANT_CAJAS": "={{ $('Split Out').item.json.CANT_CAJAS }}",
+            "PALET": "={{ $('Split Out').item.json.PALET }}",
+            "COMENTARIOS": "Se solicita del Stock",
+            "ENTREGA": "Stock",
+            "STATUS": "Solicitado",
+            "PRODUCTOS": "={{ $('Split Out').item.json.PRODUCTO }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NUM_PEDIDO",
+              "displayName": "NUM_PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PROVEEDOR_ID",
+              "displayName": "PROVEEDOR_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FINCA",
+              "displayName": "FINCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID_PRODUCTO",
+              "displayName": "ID_PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CANT_PALETS",
+              "displayName": "CANT_PALETS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ENTREGA",
+              "displayName": "ENTREGA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "COMENTARIOS",
+              "displayName": "COMENTARIOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1888,
+        -416
+      ],
+      "id": "6b8a315c-4718-4914-812f-69497ab7cc53",
+      "name": "Update Pedido",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1664,
+        -416
+      ],
+      "id": "6e7e7407-5f32-47b1-8f80-58294256ce4c",
+      "name": "Wait",
+      "webhookId": "d513b8b2-fc62-43e0-bdd3-95e561be6485"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1024,
+        -296
+      ],
+      "id": "7a74eeb7-485b-4bb8-b980-e50463adcd8f",
+      "name": "Wait2",
+      "webhookId": "53d92bd9-eb42-4b33-a6a6-5c3a7168532d"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "PRODUCTOS",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        -352,
+        -152
+      ],
+      "id": "d12e31f1-fdd6-4317-9b25-f10b8db02e8a",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -128,
+        -152
+      ],
+      "id": "8d9ca2ba-dd90-4eaf-a0ad-dec4ed47ed77",
+      "name": "Wait3",
+      "webhookId": "49dfbd2f-d6cb-4fee-b19c-178c8e3ff971"
+    }
+  ],
+  "pinData": {
+    "Google Sheets Trigger": [
+      {
+        "json": {
+          "row_number": 2,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45906.43950231482,
+          "PROVEEDOR_ID": "STOCK",
+          "FINCA": "STOCK",
+          "ID_PRODUCTO": 172,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+          "CANT_PALETS": 5,
+          "CANT_CAJAS": 55,
+          "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "Stock",
+          "STATUS": "Desaprobado",
+          "COMENTARIOS": "Se solicita del Stock"
+        }
+      },
+      {
+        "json": {
+          "row_number": 3,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45906.43950231482,
+          "PROVEEDOR_ID": "STOCK",
+          "FINCA": "STOCK",
+          "ID_PRODUCTO": 242,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA ROJO I/160/180 GR",
+          "CANT_PALETS": 5,
+          "CANT_CAJAS": 55,
+          "PALET": "MADERA 50X30X15 ETIQUETAS",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "Stock",
+          "STATUS": "Desaprobado",
+          "COMENTARIOS": "Se solicita del Stock"
+        }
+      },
+      {
+        "json": {
+          "row_number": 4,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45906.43950231482,
+          "PROVEEDOR_ID": "STOCK",
+          "FINCA": "STOCK",
+          "ID_PRODUCTO": 268,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA VERDE I/20 PIEZAS",
+          "CANT_PALETS": 20,
+          "CANT_CAJAS": 55,
+          "PALET": "BOX AZARBE",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "Stock",
+          "STATUS": "Desaprobado",
+          "COMENTARIOS": "Se solicita del Stock"
+        }
+      },
+      {
+        "json": {
+          "row_number": 5,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45909,
+          "PROVEEDOR_ID": 2580,
+          "FINCA": "Bonanza",
+          "ID_PRODUCTO": 172,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+          "CANT_PALETS": 8,
+          "CANT_CAJAS": 55,
+          "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "hoy - (09/09/2025)",
+          "STATUS": "Desaprobado",
+          "COMENTARIOS": ""
+        }
+      },
+      {
+        "json": {
+          "row_number": 6,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45909,
+          "PROVEEDOR_ID": 2580,
+          "FINCA": "Bonanza",
+          "ID_PRODUCTO": 224,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
+          "CANT_PALETS": 10,
+          "CANT_CAJAS": 55,
+          "PALET": "BOX AZARBE",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "hoy - (09/09/2025)",
+          "STATUS": "Desaprobado",
+          "COMENTARIOS": ""
+        }
+      },
+      {
+        "json": {
+          "row_number": 7,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45909,
+          "PROVEEDOR_ID": 2581,
+          "FINCA": "Bonanza 2",
+          "ID_PRODUCTO": 172,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+          "CANT_PALETS": 4,
+          "CANT_CAJAS": 55,
+          "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "hoy - (09/09/2025)",
+          "STATUS": "Aprobado",
+          "COMENTARIOS": ""
+        }
+      },
+      {
+        "json": {
+          "row_number": 8,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45909,
+          "PROVEEDOR_ID": 2581,
+          "FINCA": "Bonanza 2",
+          "ID_PRODUCTO": 224,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
+          "CANT_PALETS": 6,
+          "CANT_CAJAS": 55,
+          "PALET": "BOX AZARBE",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "hoy - (09/09/2025)",
+          "STATUS": "Aprobado",
+          "COMENTARIOS": ""
+        }
+      },
+      {
+        "json": {
+          "row_number": 9,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45909,
+          "PROVEEDOR_ID": 2582,
+          "FINCA": "Godoy",
+          "ID_PRODUCTO": 172,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+          "CANT_PALETS": 3,
+          "CANT_CAJAS": 55,
+          "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "hoy - (09/09/2025)",
+          "STATUS": "Desaprobado",
+          "COMENTARIOS": ""
+        }
+      },
+      {
+        "json": {
+          "row_number": 10,
+          "NUM_PEDIDO": "PED-3707",
+          "FECHA": 45909,
+          "PROVEEDOR_ID": 2582,
+          "FINCA": "Godoy",
+          "ID_PRODUCTO": 224,
+          "PRODUCTOS": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
+          "CANT_PALETS": 4,
+          "CANT_CAJAS": 55,
+          "PALET": "BOX AZARBE",
+          "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+          "ENTREGA": "hoy - (09/09/2025)",
+          "STATUS": "Desaprobado",
+          "COMENTARIOS": ""
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-09T17:15:46.211Z",
+      "updatedAt": "2025-09-09T17:15:46.211Z",
+      "role": "workflow:owner",
+      "workflowId": "on7WwhGcqxU5cC45",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Google Sheets Trigger": {
+      "documentId": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+      "sheetId": 581820534,
+      "lastRevision": 4367,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI&revision=4367&exportFormat=xlsx"
+    },
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-09-09T17:14:55.367Z",
+      "updatedAt": "2025-09-09T17:14:55.367Z",
+      "id": "d6o8G5WjfSQCxJdK",
+      "name": "Whatsapp"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-09T21:05:40.032Z",
+  "versionId": "ff0eed3f-965b-4e10-8ec0-d1103dbe8301"
+}
