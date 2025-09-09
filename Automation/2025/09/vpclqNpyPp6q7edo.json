@@ -1,0 +1,971 @@
+{
+  "active": false,
+  "connections": {
+    "GRUPOS": {
+      "main": [
+        [
+          {
+            "node": "Datagroups",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Datagroups1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Datagroups": {
+      "main": [
+        [
+          {
+            "node": "Execution Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Productos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "productos unicos": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Productos": {
+      "main": [
+        [
+          {
+            "node": "productos unicos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "add reporte",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "GRUPOS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Datagroups1": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Productos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "productos unicos1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Productos1": {
+      "main": [
+        [
+          {
+            "node": "productos unicos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "add reporte1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-09T17:17:26.686Z",
+  "id": "vpclqNpyPp6q7edo",
+  "isArchived": false,
+  "meta": null,
+  "name": "3.1. Recibir reporte Ingresos/Egresos",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.data.key.participant }}",
+                    "rightValue": "=573228854498",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "f9cd0753-0a09-4ebe-9e66-e301906ed600"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Domingo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3733c572-130f-42e3-8638-33892f9dd3bf",
+                    "leftValue": "={{ $json.body.data.key.participant }}",
+                    "rightValue": "573045809637",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Ingreso a Bodega"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1072,
+        -80
+      ],
+      "id": "28f51c66-3520-4c20-83c4-31e6bf1b0b9c",
+      "name": "GRUPOS"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19685da7-d325-456c-ba75-669f53f667ab",
+              "name": "NOMBRE",
+              "value": "={{ $json.NOMBRE }}",
+              "type": "string"
+            },
+            {
+              "id": "9ef83bfa-1544-4ce2-b316-d23c727495c1",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d0808961-590a-4be2-b482-e89ac806793c",
+              "name": "Message",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            },
+            {
+              "id": "12ed8d66-1c80-45fa-89f0-b494a79b2c6f",
+              "name": "FECHA",
+              "value": "={{ $now.format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "db70bf6e-e14e-43d1-a867-6ac464da82db",
+              "name": "Fecha ayer",
+              "value": "={{ $now.minus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "50f2f710-56e2-4efe-84dd-cc7f426dc2e1",
+              "name": "fecha mañana",
+              "value": "={{$now.plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -848,
+        -280
+      ],
+      "id": "7850519c-9bab-45db-98a2-2d5acb70148c",
+      "name": "Datagroups"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=nombre del que reporta: {{ $('Datagroups').item.json.NOMBRE }}\n\n📦 STOCK REPORTADO: {{ $('Datagroups').item.json.Message }}\n\nLISTA DE PEDIDOS: {{ JSON.stringify($json.data) }} \n\nFECHA: {{ $('Datagroups').item.json.FECHA }}",
+        "options": {
+          "systemMessage": "=Tu tarea es analizar el reporte de stock enviado por un empleado en formato de texto libre, llamado `STOCK REPORTADO`, y compararlo con la `LISTA DE PEDIDOS` (estructura JSON) que contiene los productos esperados, junto con su palet y tipo de caja asignado.\n\nEl objetivo es generar una lista normalizada y estructurada con la siguiente lógica:\n\n## 🧾 FORMATO DE ENTRADA:\n\n1. STOCK REPORTADO: texto libre escrito por un humano. Ejemplo:\n\"Amarillo, bolsa de zarve 10, godoy 55, berenjena P, palet americano 25, godoy negra 60, verde bolsa de zarve 30, godoy 60.\"\n\n2. LISTA DE PEDIDOS (JSON):\n{{ JSON.stringify($json.data) }}\n\n## 📌 OBJETIVO:\n\nDevuelve una nueva lista de productos con los siguientes criterios:\n\n### 1. Coincidencias:\n\nBusca coincidencias entre lo reportado en STOCK REPORTADO y los elementos de la LISTA DE PEDIDOS. Las coincidencias pueden ser:\n- Por color (Rojo, Verde, Amarillo, Naranja, etc.)\n- Por tipo (gg, god, m, std, emma, neg, P, etc.)\n- Por nombre parcial (como \"godoy\", \"zarve\", \"negra\", \"euro\", \"americano\")\n- Por número (cantidad asociada, como 10, 25, 55)\n\nCuando se identifique una coincidencia:\n- Devuelve el PRODUCTO, PALET y CAJAS de la LISTA DE PEDIDOS.\n- Extrae y asigna la CANT_PALET si hay una palabra que coincide con un tipo de palet (ej. \"palet americano 25\" → cantidad 25).\n- Extrae y asigna la CANT_CAJAS si hay una palabra que coincide con una caja (ej. \"godoy 60\" → caja godoy → cantidad 60).\n\n### 2. Ambigüedad:\n\nSi hay varias coincidencias posibles en LISTA DE PALETS o LISTA DE CAJAS, elige la opción más genérica o la que tenga menos detalles.  \nPor ejemplo:\n- Si solo se dice \"euro\", selecciona PALET EURO RETORNABLE.\n- Si dice \"godoy\" sin más detalles, selecciona CAJA GODOY 40x30x12.\n\n### 3. Sin coincidencia:\n\nSi un ítem del STOCK REPORTADO no coincide con ningún producto de la LISTA DE PEDIDOS, devuélvelo exactamente como fue escrito por el empleado bajo el campo \"PRODUCTO\" sin alterarlo. No intentes adivinar ni modificar.\n\n### 4. Normalización:\n\nCada ítem devuelto debe tener la siguiente estructura:\n\n{\n  \"FECHA\": \"{{ $('Datagroups').item.json.FECHA }}\",\n  \"PRODUCTO\": \"nombre estandarizado del producto\",\n  \"PALET\": \"palet correspondiente\",\n  \"CANT_PALET\": cantidad si se reportó,\n  \"CAJAS\": \"caja correspondiente\",\n  \"CANT_CAJAS\": cantidad si se reportó,\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\nSi no hay coincidencia:\n\n{\n  \"FECHA\": \"{{ $('Datagroups').item.json.FECHA }}\",\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\n### 5. Separación de productos:\n\nCada producto debe tratarse como un bloque completo que empieza con una palabra clave identificativa (como un color o tipo) y termina justo antes de que empiece otro.  \nNunca dividas un grupo como \"Amarillo, bolsa de zarve 10, godoy 55\" en varios productos. Eso es un solo bloque.\n\n### 6. Condiciones adicionales:\n\n- Comparación insensible a mayúsculas/minúsculas.\n- Ignora comas, puntos y otros separadores.\n- Tolerancia básica a errores ortográficos (\"zarve\" ≈ \"azarbe\", \"godoy negra\" ≈ \"bandeja negra\").\n- Acepta si la cantidad viene antes o después del nombre (\"25 zarve\" o \"zarve 25\").\n\n## 📥 DATOS DE ENTRADA:\n\nNOMBRE: {{ $('Datagroups').item.json.NOMBRE }}\nFECHA: {{ $('Datagroups').item.json.FECHA }}\nSTOCK REPORTADO: {{ $('Datagroups').item.json.Message }}\n\n## ✅ Devuelve solo un array JSON válido, sin explicaciones adicionales ni texto fuera del array.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -384
+      ],
+      "id": "0cf8b32b-7050-42be-bdf5-b0558e223c64",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        344,
+        -160
+      ],
+      "id": "804975aa-a970-407b-8ee8-9eefccb85be9",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json.FECHA }}"
+            },
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json['Fecha ayer'] }}"
+            },
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json['fecha mañana'] }}"
+            }
+          ]
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -400,
+        -280
+      ],
+      "id": "fe0622a5-e639-49b7-95af-ddb3bcb5ad3d",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items[0].json.data;\n\nconst uniqueCombos = new Set();\nconst result = [];\n\nfor (const entry of data) {\n  const key = `${entry.PRODUCTO} | ${entry.PALET} | ${entry.CAJAS}`;\n  \n  if (!uniqueCombos.has(key)) {\n    uniqueCombos.add(key);\n    result.push({\n      PRODUCTO: entry.PRODUCTO,\n      PALET: entry.PALET,\n      CAJAS: entry.CAJAS\n    });\n  }\n}\n\nreturn [{\n  json: {\n    data: result\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        -280
+      ],
+      "id": "e5216650-8d94-41ea-98cd-6fc1c0e8506f",
+      "name": "productos unicos"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -280
+      ],
+      "id": "cc6e077f-dd84-422f-916b-25ea73308d95",
+      "name": "Productos"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el texto plano del agente\nconst raw = items[0].json.output;\n\n// Intentar extraer el JSON entre los delimitadores ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\n// Si no encuentra un bloque válido, intentar parsear como JSON directo\nconst cleanJsonString = match ? match[1] : raw;\n\n// Intentar parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(cleanJsonString);\n} catch (error) {\n  throw new Error(\"No se pudo parsear el JSON: \" + error.message);\n}\n\n// Verificamos que sea un array\nif (!Array.isArray(parsed)) {\n  throw new Error(\"El JSON parseado no es un array.\");\n}\n\n// Devolvemos cada objeto como item independiente\nreturn parsed.map(obj => ({ json: obj }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        -280
+      ],
+      "id": "618383e9-55a9-4378-8cc5-525cedd4fc3f",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 660283765,
+          "mode": "list",
+          "cachedResultName": "REPORTE DOMINGO",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=660283765"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PRODUCTO",
+              "displayName": "PRODUCTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALET",
+              "displayName": "CANT_PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "REPORTE",
+              "displayName": "REPORTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        848,
+        -280
+      ],
+      "id": "650c614b-c528-4b23-a1ab-6dcdaa3e1fbd",
+      "name": "add reporte",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Message",
+              "value": "={{ $json.Message }}"
+            },
+            {
+              "key": "Telefono",
+              "value": "={{ $json[\"Nº DE TELÉFONO\"] }}"
+            },
+            {
+              "key": "Finca",
+              "value": "={{ $json.FINCA }}"
+            },
+            {
+              "key": "Fecha",
+              "value": "={{ $json.FECHA }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -280
+      ],
+      "id": "07685ae4-e7e6-4b25-9dab-0381b48803c9",
+      "name": "Execution Data1"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1296,
+        -80
+      ],
+      "id": "35681e18-0d3c-4eff-b453-e8501893eaf7",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19685da7-d325-456c-ba75-669f53f667ab",
+              "name": "NOMBRE",
+              "value": "={{ $json.NOMBRE }}",
+              "type": "string"
+            },
+            {
+              "id": "9ef83bfa-1544-4ce2-b316-d23c727495c1",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d0808961-590a-4be2-b482-e89ac806793c",
+              "name": "Message",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            },
+            {
+              "id": "4d277582-d64f-456a-bc14-a454eeb0987a",
+              "name": "quotedMessage.conversation",
+              "value": "={{ $json.quotedMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "12ed8d66-1c80-45fa-89f0-b494a79b2c6f",
+              "name": "FECHA",
+              "value": "={{ $('Webhook').item.json.body.date_time.toDateTime().format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "db70bf6e-e14e-43d1-a867-6ac464da82db",
+              "name": "Fecha ayer",
+              "value": "={{ DateTime.fromISO($('Webhook').item.json.body.date_time).minus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "50f2f710-56e2-4efe-84dd-cc7f426dc2e1",
+              "name": "fecha mañana",
+              "value": "={{ DateTime.fromISO($('Webhook').item.json.body.date_time).plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -848,
+        120
+      ],
+      "id": "4c2ed1e1-a6e4-4e42-852a-c26d5bb12f5e",
+      "name": "Datagroups1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=nombre del que reporta: {{ $('Datagroups1').item.json.NOMBRE }}\n\n📦 STOCK REPORTADO: {{ $('Datagroups1').item.json.Message }}\n\nLISTA DE PEDIDOS: {{ JSON.stringify($json.data) }} \n\nFECHA: {{ $('Datagroups1').item.json.FECHA }}",
+        "options": {
+          "systemMessage": "=Tu tarea es analizar el reporte de stock enviado por un empleado en formato de texto libre, llamado `STOCK REPORTADO`, y compararlo con la `LISTA DE PEDIDOS` (estructura JSON) que contiene los productos esperados, junto con su palet y tipo de caja asignado.\n\nEl objetivo es generar una lista normalizada y estructurada con la siguiente lógica:\n\n## 🧾 FORMATO DE ENTRADA:\n\n1. STOCK REPORTADO: texto libre escrito por un humano. Ejemplo:\n\"Amarillo, bolsa de zarve 10, godoy 55, berenjena P, palet americano 25, godoy negra 60, verde bolsa de zarve 30, godoy 60.\"\n\n2. LISTA DE PEDIDOS (JSON):\n{{ JSON.stringify($json.data) }}\n\n## 📌 OBJETIVO:\n\nDevuelve una nueva lista de productos con los siguientes criterios:\n\n### 1. Coincidencias:\n\nBusca coincidencias entre lo reportado en STOCK REPORTADO y los elementos de la LISTA DE PEDIDOS. Las coincidencias pueden ser:\n- Por color (Rojo, Verde, Amarillo, Naranja, etc.)\n- Por tipo (gg, god, m, std, emma, neg, P, etc.)\n- Por nombre parcial (como \"godoy\", \"zarve\", \"negra\", \"euro\", \"americano\")\n- Por número (cantidad asociada, como 10, 25, 55)\n\nCuando se identifique una coincidencia:\n- Devuelve el PRODUCTO, PALET y CAJAS de la LISTA DE PEDIDOS.\n- Extrae y asigna la CANT_PALET si hay una palabra que coincide con un tipo de palet (ej. \"palet americano 25\" → cantidad 25).\n- Extrae y asigna la CANT_CAJAS si hay una palabra que coincide con una caja (ej. \"godoy 60\" → caja godoy → cantidad 60).\n\n### 2. Ambigüedad:\n\nSi hay varias coincidencias posibles en LISTA DE PALETS o LISTA DE CAJAS, elige la opción más genérica o la que tenga menos detalles.  \nPor ejemplo:\n- Si solo se dice \"euro\", selecciona PALET EURO RETORNABLE.\n- Si dice \"godoy\" sin más detalles, selecciona CAJA GODOY 40x30x12.\n\n### 3. Sin coincidencia:\n\nSi un ítem del STOCK REPORTADO no coincide con ningún producto de la LISTA DE PEDIDOS, devuélvelo exactamente como fue escrito por el empleado bajo el campo \"PRODUCTO\" sin alterarlo. No intentes adivinar ni modificar.\n\n### 4. Normalización:\n\nCada ítem devuelto debe tener la siguiente estructura:\n\n{\n  \"FECHA\": \"{{ $('Datagroups1').item.json.FECHA }}\",\n  \"PRODUCTO\": \"nombre estandarizado del producto\",\n  \"PALET\": \"palet correspondiente\",\n  \"CANT_PALET\": cantidad si se reportó,\n  \"CAJAS\": \"caja correspondiente\",\n  \"CANT_CAJAS\": cantidad si se reportó,\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\nSi no hay coincidencia:\n\n{\n  \"FECHA\": \"{{ $('Datagroups1').item.json.FECHA }}\",\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\n### 5. Separación de productos:\n\nCada producto debe tratarse como un bloque completo que empieza con una palabra clave identificativa (como un color o tipo) y termina justo antes de que empiece otro.  \nNunca dividas un grupo como \"Amarillo, bolsa de zarve 10, godoy 55\" en varios productos. Eso es un solo bloque.\n\n### 6. Condiciones adicionales:\n\n- Comparación insensible a mayúsculas/minúsculas.\n- Ignora comas, puntos y otros separadores.\n- Tolerancia básica a errores ortográficos (\"zarve\" ≈ \"azarbe\", \"godoy negra\" ≈ \"bandeja negra\").\n- Acepta si la cantidad viene antes o después del nombre (\"25 zarve\" o \"zarve 25\").\n\n## 📥 DATOS DE ENTRADA:\n\nNOMBRE: {{ $('Datagroups1').item.json.NOMBRE }}\nFECHA: {{ $('Datagroups1').item.json.FECHA }}\nSTOCK REPORTADO: {{ $('Datagroups1').item.json.Message }}\n\n## ✅ Devuelve solo un array JSON válido, sin explicaciones adicionales ni texto fuera del array.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        272,
+        120
+      ],
+      "id": "585fe9cf-9719-427e-be90-47e533506f3d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        344,
+        344
+      ],
+      "id": "3782adcf-ead2-4464-8cb8-dc24ebf98956",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json.FECHA }}"
+            },
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json['Fecha ayer'] }}"
+            },
+            {
+              "lookupColumn": "FECHA",
+              "lookupValue": "={{ $json['fecha mañana'] }}"
+            }
+          ]
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -400,
+        120
+      ],
+      "id": "980861ec-bed4-4331-b16f-2458598088c0",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items[0].json.data;\n\nconst uniqueCombos = new Set();\nconst result = [];\n\nfor (const entry of data) {\n  const key = `${entry.PRODUCTO} | ${entry.PALET} | ${entry.CAJAS}`;\n  \n  if (!uniqueCombos.has(key)) {\n    uniqueCombos.add(key);\n    result.push({\n      PRODUCTO: entry.PRODUCTO,\n      PALET: entry.PALET,\n      CAJAS: entry.CAJAS\n    });\n  }\n}\n\nreturn [{\n  json: {\n    data: result\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        120
+      ],
+      "id": "06e4c1cf-15c5-47a0-80c1-a8539a1a64f7",
+      "name": "productos unicos1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        120
+      ],
+      "id": "16464fc7-eea9-4fe8-b332-de4929a455df",
+      "name": "Productos1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el texto plano del agente\nconst raw = items[0].json.output;\n\n// Intentar extraer el JSON entre los delimitadores ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\n// Si no encuentra un bloque válido, intentar parsear como JSON directo\nconst cleanJsonString = match ? match[1] : raw;\n\n// Intentar parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(cleanJsonString);\n} catch (error) {\n  throw new Error(\"No se pudo parsear el JSON: \" + error.message);\n}\n\n// Verificamos que sea un array\nif (!Array.isArray(parsed)) {\n  throw new Error(\"El JSON parseado no es un array.\");\n}\n\n// Devolvemos cada objeto como item independiente\nreturn parsed.map(obj => ({ json: obj }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        120
+      ],
+      "id": "06f8d873-67fe-40fe-b0ca-40f14ae79560",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 181798758,
+          "mode": "list",
+          "cachedResultName": "STOCK",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PALET",
+              "displayName": "PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_PALET",
+              "displayName": "CANT_PALET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAJAS",
+              "displayName": "CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CANT_CAJAS",
+              "displayName": "CANT_CAJAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "REPORTE",
+              "displayName": "REPORTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        848,
+        120
+      ],
+      "id": "56750156-137b-4b50-9638-6dbc019c1c05",
+      "name": "add reporte1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Message",
+              "value": "={{ $json.Message }}"
+            },
+            {
+              "key": "Telefono",
+              "value": "={{ $json[\"Nº DE TELÉFONO\"] }}"
+            },
+            {
+              "key": "Finca",
+              "value": "={{ $json.FINCA }}"
+            },
+            {
+              "key": "Fecha",
+              "value": "={{ $json.FECHA }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        120
+      ],
+      "id": "ca2ae5ee-029d-4078-b77c-361d8e0fd7ea",
+      "name": "Execution Data"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Message": "<audio>Buenas tardes. Tengo pimiento California amarillo, eh, de madera etiquetas, 20 pallets. De pimiento California rojo, de madera etiquetas, tengo eh 17 pallets. De pimiento California verde, box asarve, tengo solo 10. De pimiento California naranja, eh box asarve, tengo solo cinco.</audio>",
+          "Nº DE TELÉFONO": null,
+          "PROVEEDOR_ID": null,
+          "FINCA": null,
+          "FECHA": "09/09/2025",
+          "fecha mañana": "10/09/2025"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-09T17:17:26.686Z",
+      "updatedAt": "2025-09-09T17:17:26.686Z",
+      "role": "workflow:owner",
+      "workflowId": "vpclqNpyPp6q7edo",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-09T22:16:16.961Z",
+  "versionId": "2b336ebe-da1b-438c-877e-1b451870deb9"
+}
