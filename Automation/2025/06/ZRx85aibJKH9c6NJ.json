@@ -114,17 +114,6 @@
         ]
       ]
     },
-    "Send Order": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Merge2": {
       "main": [
         [
@@ -309,7 +298,7 @@
         [],
         [
           {
-            "node": "Send Order",
+            "node": "Send message",
             "type": "main",
             "index": 0
           }
@@ -359,12 +348,25 @@
           }
         ]
       ]
+    },
+    "Send message": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-20T16:49:58.756Z",
   "id": "ZRx85aibJKH9c6NJ",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "3. Procesar Pedido Incompleto",
   "nodes": [
     {
@@ -457,7 +459,7 @@
       "typeVersion": 1,
       "position": [
         -2768,
-        384
+        352
       ],
       "id": "f0772ca5-daab-4f73-ab7a-723395442bc5",
       "name": "Split Out1"
@@ -570,31 +572,6 @@
       ],
       "id": "0a6adad7-bf88-4ed7-9e64-c49efa966f3c",
       "name": "MENSAJE_PRODUCTOS"
-    },
-    {
-      "parameters": {
-        "resource": "messages-api",
-        "instanceName": "Pedro",
-        "remoteJid": "=+{{ $json[\"Nº DE TELÉFONO\"] }}",
-        "messageText": "={{ $('MENSAJE_PRODUCTOS').item.json.MENSAJE_PROVEEDOR }}",
-        "options_message": {
-          "delay": 1000
-        }
-      },
-      "type": "n8n-nodes-evolution-api.evolutionApi",
-      "typeVersion": 1,
-      "position": [
-        -1008,
-        -288
-      ],
-      "id": "25ffa92b-06fc-4fb7-acce-5edd06db9c95",
-      "name": "Send Order",
-      "credentials": {
-        "evolutionApi": {
-          "id": "OFo9A7x3qE1W1DKN",
-          "name": "Evolution account Pedro"
-        }
-      }
     },
     {
       "parameters": {
@@ -1778,7 +1755,6 @@
           "value": {
             "NUM_PEDIDO": "={{ $json.data.NUM_PEDIDO }}",
             "PROVEEDOR_ID": "={{ $json.data.PROVEEDOR_ID }}",
-            "PRODUCTO": "={{ $json.data.PRODUCTO }}",
             "PALET": "={{ $json.data.PALET }}",
             "CANT_PALETS": "={{ $json.data.CANT_PALETS }}",
             "CAJAS": "={{ $json.data.CAJAS }}",
@@ -1788,7 +1764,7 @@
             "FINCA": "={{ $json.data.FINCA }}",
             "ID_PRODUCTO": "={{ $json.data.ID_PRODUCTO }}",
             "ENTREGA": "={{ $json.data.ENTREGA }}",
-            "comentarios": "=se solicita adicional {{ $('items2').item.json.CANT_PALETS }} Palets de {{ $('items2').item.json.PRODUCTO }} (faltante del proveedorId: {{ $('Faltantes').item.json.PROVEEDOR_ID }} )"
+            "PRODUCTOS": "={{ $json.data.PRODUCTO }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -1838,13 +1814,14 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "PRODUCTO",
-              "displayName": "PRODUCTO",
+              "id": "PRODUCTOS",
+              "displayName": "PRODUCTOS",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "CANT_PALETS",
@@ -1901,13 +1878,14 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "comentarios",
-              "displayName": "comentarios",
+              "id": "COMENTARIOS",
+              "displayName": "COMENTARIOS",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -1974,7 +1952,7 @@
               "lookupValue": "={{ $json.PROVEEDOR_ID }}"
             },
             {
-              "lookupColumn": "PRODUCTO",
+              "lookupColumn": "PRODUCTOS",
               "lookupValue": "={{ $json.PRODUCTO }}"
             },
             {
@@ -2316,9 +2294,85 @@
           "name": "hola@whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=663372310202428",
+        "recipientPhoneNumber": "=+{{ $json[\"Nº DE TELÉFONO\"] }}",
+        "textBody": "={{ $('MENSAJE_PRODUCTOS').item.json.MENSAJE_PROVEEDOR }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        -272
+      ],
+      "id": "3b7cfadc-d3aa-4fcc-8457-9d4afa59862c",
+      "name": "Send message",
+      "webhookId": "c71ef124-b74c-491f-ac61-1c7960d2d9ed",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "5UFcul7y3FYz9Hxd",
+          "name": "Estarter"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "PROVEEDOR_ID": 2581,
+          "faltantes": [
+            {
+              "row_number": 7,
+              "NUM_PEDIDO": "PED-3707",
+              "FECHA": "09/09/2025",
+              "PROVEEDOR_ID": 2581,
+              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+              "CANT_PALETS": 1,
+              "CANT_CAJAS": 55,
+              "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+              "STATUS": "Solicitado",
+              "comentarios": "Faltante: 1 palet de PIMIENTO CALIFORNIA AMARILLO."
+            }
+          ],
+          "sobrantes": [],
+          "confirmados": [
+            {
+              "row_number": 7,
+              "NUM_PEDIDO": "PED-3707",
+              "FECHA": "09/09/2025",
+              "PROVEEDOR_ID": 2581,
+              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
+              "CANT_PALETS": 3,
+              "CANT_CAJAS": 55,
+              "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
+              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+              "STATUS": "Confirmado",
+              "comentarios": "Se confirman 3 de 4 palets solicitados."
+            },
+            {
+              "row_number": 8,
+              "NUM_PEDIDO": "PED-3707",
+              "FECHA": "09/09/2025",
+              "PROVEEDOR_ID": 2581,
+              "PRODUCTO": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
+              "CANT_PALETS": 6,
+              "CANT_CAJAS": 55,
+              "PALET": "BOX AZARBE",
+              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
+              "STATUS": "Confirmado"
+            }
+          ],
+          "comentarios_adicionales": "El pedido no se confirma en su totalidad. Faltan 1 palet de PIMIENTO CALIFORNIA AMARILLO."
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -2337,6 +2391,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-06T15:22:57.576Z",
-  "versionId": "326776e6-99e8-4380-99a3-cc1b2527906c"
+  "updatedAt": "2025-09-09T21:12:37.224Z",
+  "versionId": "e794fe8e-f67b-418a-891b-3866b583050f"
 }
