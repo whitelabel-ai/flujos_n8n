@@ -1,0 +1,522 @@
+{
+  "active": false,
+  "connections": {
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "confirmacion pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dataResumen": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "confirmacion pedido": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "dataResumen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Return1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-09T23:11:46.098Z",
+  "id": "SaBmWxygv8ej3E2l",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Get Resumen Confirmados",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Confirmado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -144,
+        32
+      ],
+      "id": "033f7fe7-9182-4667-9726-16a9e076bca5",
+      "name": "Google Sheets3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Configuración inicial\nconst zonaHoraria = 'America/Bogota';\nconst telefonoNode = 'dataResumen';   // nodo de donde saco el teléfono\nconst encargadoNode = 'Get suplier1'; // nodo de donde saco el encargado\nconst proveedorId = $input.first().json.PROVEEDOR_ID;\n\n// Obtener fecha y hora actuales con zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Intentar leer variables externas con fallback\nlet telefono = '';\ntry {\n  telefono = $(telefonoNode).first().json['Nº DE TELÉFONO'] || '';\n} catch (e) {\n  telefono = '';\n}\n\nlet encargado = '';\ntry {\n  encargado = $input.first().json.FINCA || '';\n} catch (e) {\n  encargado = '';\n}\n\n// Filtrar items válidos: deben tener un producto definido (ajusta según tu caso)\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTOS);\n\n// Si no hay productos válidos, devolver mensaje bonito\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos Confirmados por el Proveedor *${encargado}* el día de hoy. ¡Que tengas un excelente día! ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: telefono,\n      },\n    },\n  ];\n}\n\n// Agrupar productos por finca y por número de pedido\nconst agrupados = {};\nlet fechaEntrega = '';\nlet entregaTexto = '';\n\nfor (const item of itemsValidos) {\n  const finca = item.json.FINCA;\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  if (!agrupados[finca]) agrupados[finca] = {};\n  if (!agrupados[finca][numPedido]) agrupados[finca][numPedido] = [];\n\n  agrupados[finca][numPedido].push(\n    `- ${item.json.CANT_PALETS} x ${item.json.CANT_CAJAS} - ${item.json.PRODUCTOS} - ${item.json.PALET} - ${item.json.CAJAS}`\n  );\n\n  fechaEntrega = item.json.FECHA;\n  entregaTexto = item.json.ENTREGA;\n}\n\n// Construir mensajes para cada finca\nconst mensajes = [];\n\nfor (const finca in agrupados) {\n  let mensaje = `${saludo} - \\nSe envía Reporte de pedidos solicitados la finca *${encargado}* para el ${fechaEntrega}.\\nPor favor responder las novedades o confirmar el status del pedido. (Confirmando numero de pedido y ID del proveedor: *${proveedorId}*\\n\\n`;\n\n  for (const numPedido in agrupados[finca]) {\n    mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n    mensaje += agrupados[finca][numPedido].join('\\n\\n') + '\\n\\n';\n  }\n\n  mensajes.push({\n    json: {\n      FINCA: finca,\n      MENSAJE_RESUMEN: mensaje.trim(),\n      FECHA: fechaEntrega,\n      ENTREGA: entregaTexto,\n      TELEFONO: telefono,\n      PROVEEDOR_ID: proveedorId,\n    },\n  });\n}\n\nreturn mensajes;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        176,
+        32
+      ],
+      "id": "0b3fdc2f-c90f-4da9-a23e-4d2a579e67a3",
+      "name": "confirmacion pedido"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6c322d42-a17f-43e0-a1c5-1809dd586999",
+              "name": "Message",
+              "value": "={{ $('Start').item.json.Message }}",
+              "type": "string"
+            },
+            {
+              "id": "5d52e8ca-e823-4ded-bbb7-7f98124891f0",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "aed120c4-08d5-4e03-ada9-7966054f8d66",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "309d96c7-076b-4cca-a725-ae1de16f9de5",
+              "name": "FINCA",
+              "value": "={{ $json.FINCA }}",
+              "type": "string"
+            },
+            {
+              "id": "86ff34a0-f64e-41cc-9be6-250fb29c388b",
+              "name": "FECHA",
+              "value": "={{ $now.format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "e8cd66ef-2f43-4d59-84bd-a98475ca4835",
+              "name": "fecha mañana",
+              "value": "={{$now.plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -416,
+        32
+      ],
+      "id": "58b92fed-0e0e-486a-978b-c8ce15da449b",
+      "name": "dataResumen"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1004db91-8994-428e-b18f-b52445816a4b",
+              "name": "MENSAJE_RESUMEN",
+              "value": "={{ $json.MENSAJE_RESUMEN }}",
+              "type": "string"
+            },
+            {
+              "id": "7de93984-8395-4cd6-a95d-0f64c83fa848",
+              "name": "FINCA",
+              "value": "={{ $json.FINCA }}",
+              "type": "string"
+            },
+            {
+              "id": "88172e06-9228-4e79-bb3d-0b1c65100d8e",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "179c2b06-7e5e-42ef-aaca-025bb011f8e4",
+              "name": "TELEFONO",
+              "value": "={{ $json.TELEFONO }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        32
+      ],
+      "id": "5398f914-54f6-4529-96bc-a55d87a512ae",
+      "name": "Return"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Message",
+              "type": "any"
+            }
+          ]
+        }
+      },
+      "id": "fd3e0db5-361a-47d8-8e2e-31d1a3eccf13",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -1440,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.Message }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "PROVEEDOR_ID",
+              "type": "number",
+              "description": "numero del id del proveedor",
+              "required": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        -1232,
+        32
+      ],
+      "id": "0f2ec74b-811c-4368-b173-976f19efc339",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1312,
+        240
+      ],
+      "id": "423adb4b-7e62-4cad-993e-68eaef13d083",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.output.PROVEEDOR_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -880,
+        32
+      ],
+      "id": "40b4350c-4f9b-49a1-8ca0-15a749245e3e",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2f99cda3-d649-4edc-a17e-479ae66f4e7e",
+              "leftValue": "={{ $json.PROVEEDOR_ID }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -672,
+        32
+      ],
+      "id": "b6439d0b-8267-473f-8bbb-f2806b825bb2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1004db91-8994-428e-b18f-b52445816a4b",
+              "name": "MENSAJE_RESUMEN",
+              "value": "=debes enviar un id de provedor valido: \\n\n{{ $json.mensaje }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -64,
+        -128
+      ],
+      "id": "9a58d38b-470c-4246-8336-38a6b58eea9f",
+      "name": "Return1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -512,
+        -128
+      ],
+      "id": "af627bf0-4c70-4f24-ba00-55a92858b7f2",
+      "name": "Get row(s) in sheet1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Recorremos todos los items que entran al nodo\nconst lista = items.map(item => {\n  const p = item.json;\n  return `${p.FINCA.trim()} - ${p.PROVEEDOR_ID}`;\n}).join('\\n');\n\n// Devolvemos un solo mensaje\nreturn [{\n  json: {\n    mensaje: lista\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        -128
+      ],
+      "id": "aa53b584-892d-489b-8b4b-347cdfdd2ed2",
+      "name": "Code"
+    }
+  ],
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "Message": "<audio>reporte proveedor 2581</audio>"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-09T23:11:46.098Z",
+      "updatedAt": "2025-09-09T23:11:46.098Z",
+      "role": "workflow:owner",
+      "workflowId": "SaBmWxygv8ej3E2l",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-10T01:29:18.807Z",
+  "versionId": "53dc004b-bcac-4c0b-9251-d9e17b901265"
+}
