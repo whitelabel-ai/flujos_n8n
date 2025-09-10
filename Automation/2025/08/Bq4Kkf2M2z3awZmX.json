@@ -110,7 +110,7 @@
       "main": [
         [
           {
-            "node": "se ha enviado antes?",
+            "node": "Se ha enviado antes?1",
             "type": "main",
             "index": 0
           }
@@ -193,32 +193,14 @@
       "main": [
         [
           {
-            "node": "Notificacion 10% Creditos",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
             "node": "No Operation, do nothing2",
             "type": "main",
             "index": 0
           }
-        ]
-      ]
-    },
-    "se ha enviado antes?": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
         ],
         [
           {
-            "node": "Notificacion 5% Creditos1",
+            "node": "Notificacion 10% Creditos",
             "type": "main",
             "index": 0
           }
@@ -255,6 +237,24 @@
         [
           {
             "node": "Notificacion creditos agotados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Se ha enviado antes?1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notificacion 5% Creditos1",
             "type": "main",
             "index": 0
           }
@@ -314,8 +314,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        432,
-        -1456
+        448,
+        -1296
       ],
       "id": "a30d641e-0107-4e96-81ab-b12ff19c55c3",
       "name": "Notificacion 10% Creditos",
@@ -535,7 +535,7 @@
           "conditions": [
             {
               "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
-              "leftValue": "={{ $('Edit Fields2').item.json['correo_10%'] }}",
+              "leftValue": "={{ $json['correo_10%'] }}",
               "rightValue": "TRUE",
               "operator": {
                 "type": "boolean",
@@ -578,7 +578,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "row_number": "={{ $('Validar creditos').item.json.row_number }}",
-            "enviado 10%": "TRUE"
+            "enviado 10%": "={{true}}"
           },
           "matchingColumns": [
             "row_number"
@@ -793,8 +793,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        624,
-        -1456
+        640,
+        -1296
       ],
       "id": "41224297-251f-46ca-ba6b-5b977f7bcbe6",
       "name": "Update row in sheet",
@@ -810,7 +810,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        352,
+        560,
         -1056
       ],
       "id": "dd782763-0f82-4929-94d5-82d43b235b9e",
@@ -913,7 +913,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "row_number": "={{ $('Validar creditos').item.json.row_number }}",
-            "enviado 5%": "TRUE"
+            "enviado 5%": "={{true}}"
           },
           "matchingColumns": [
             "row_number"
@@ -1202,6 +1202,12 @@
         "assignments": {
           "assignments": [
             {
+              "id": "8350b3b3-4501-41cb-9231-a9c51c06543f",
+              "name": "correo_5%",
+              "value": "={{ $json['correo_5%'] }}",
+              "type": "boolean"
+            },
+            {
               "id": "c8c9e868-678b-4ddc-b85b-b963dfd47dc0",
               "name": "enviado 5%",
               "value": "={{ $json['enviado 5%'] }}",
@@ -1248,6 +1254,12 @@
       "parameters": {
         "assignments": {
           "assignments": [
+            {
+              "id": "10cf0bd7-38bc-483b-a7db-0c8f7b1e4315",
+              "name": "correo_10%",
+              "value": "={{ $json['correo_10%'] }}",
+              "type": "boolean"
+            },
             {
               "id": "8c08f656-3b47-4f67-b423-73e851ea27ae",
               "name": "enviado 10%",
@@ -1300,8 +1312,8 @@
     {
       "parameters": {
         "sendTo": "={{ $json.email }}",
-        "subject": "=😥Lo sentimos, {{ $json['contacto '] }} tus creditos se agotaron",
-        "message": "=<p>Hola {{ $json['contacto '] }},</p>  <p>🚀 Tus creditos para <strong>{{ $json.model_agent }}</strong> Se han Agotado</strong>.</p>  <p>Recarga ahora y sigue sacando provecho de la Inteligencia Artificial diseñada especialmente para ti. </p>  <p> <a href=\"https://tusitio.com/recargar\" style=\"background-color:#ff6f00;color:#fff;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:6px;display:inline-block;font-size:16px;\"> 💳 RECARGA AHORA   </a> </p>  <p>El momento de actuar es ahora. Tus clientes ya están respondiendo.\n\n<br> El equipo de Zaion Agency</p> ",
+        "subject": "=😥Lo sentimos, tus creditos para {{ $json.model_agent }} se agotaron",
+        "message": "=<p>Hola,</p>{{ $('SET 0%').item.json['primer nombre'] }} <p>\n🚀 Tus creditos para <strong>{{ $json.model_agent }}</strong> Se han Agotado</strong>.</p>  <p>Recarga ahora y sigue sacando provecho de la Inteligencia Artificial diseñada especialmente para ti. </p>  <p> <a href=\"https://tusitio.com/recargar\" style=\"background-color:#ff6f00;color:#fff;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:6px;display:inline-block;font-size:16px;\"> 💳 RECARGA AHORA   </a> </p>  <p>El momento de actuar es ahora. Tus clientes ya están respondiendo.\nAtt.\n\n<br> El equipo de Zaion Agency</p> ",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
@@ -1356,8 +1368,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        528,
-        -1248
+        448,
+        -1456
       ],
       "id": "d91800c1-3061-4ea1-a260-b68fe1a2e5d1",
       "name": "No Operation, do nothing2"
@@ -1367,8 +1379,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        96,
-        -848
+        80,
+        -880
       ],
       "id": "355a7100-92a4-4a0a-8ce2-05ca4d5a66d2",
       "name": "No Operation, do nothing3"
@@ -1377,12 +1389,6 @@
       "parameters": {
         "assignments": {
           "assignments": [
-            {
-              "id": "b783063d-0403-4aed-a580-dbcc53f1c6ad",
-              "name": "contacto ",
-              "value": "={{ $('Edit Fields2').item.json['contacto '] }}",
-              "type": "string"
-            },
             {
               "id": "3e756689-0b9a-45c8-a0e3-b349fce7def0",
               "name": "email",
@@ -1393,6 +1399,18 @@
               "id": "7464b78b-6262-4e66-a37a-36e8da9ff9bc",
               "name": "model_agent",
               "value": "={{ $('Edit Fields2').item.json.model_agent }}",
+              "type": "string"
+            },
+            {
+              "id": "7b9f71f6-f950-4875-8318-2f689285f564",
+              "name": "casa_matriz",
+              "value": "={{ $json.casa_matriz }}",
+              "type": "string"
+            },
+            {
+              "id": "69a531f2-860e-4bca-9581-eceffa02f100",
+              "name": "primer nombre",
+              "value": "={{ $json['primer nombre'] }}",
               "type": "string"
             }
           ]
@@ -1440,7 +1458,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "row_number": "={{ $('Validar creditos').item.json.row_number }}",
-            "Enviado 0%": "TRUE"
+            "Enviado 0%": "={{true}}"
           },
           "matchingColumns": [
             "row_number"
@@ -1745,39 +1763,6 @@
           "conditions": [
             {
               "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
-              "leftValue": "={{ $json['enviado 5%'] }}",
-              "rightValue": "TRUE",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        96,
-        -1040
-      ],
-      "id": "a81224ef-5656-4f29-ad02-13a87ed6c923",
-      "name": "se ha enviado antes?"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "33986b50-528b-43f2-a76a-b03c520d8a5f",
               "leftValue": "={{ $('Edit Fields2').item.json['correo_0%'] }}",
               "rightValue": "TRUE",
               "operator": {
@@ -1844,6 +1829,39 @@
       ],
       "id": "cda764b0-0513-40e5-86bb-35682755c88d",
       "name": "se ha enviado antes?2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b9d447ba-7c0a-441a-9ff2-8c1be918bd5c",
+              "leftValue": "={{ $json['enviado 5%'] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        160,
+        -1040
+      ],
+      "id": "33d05df5-d519-49bd-983a-fdefba39af7f",
+      "name": "Se ha enviado antes?1"
     }
   ],
   "pinData": {
@@ -1877,6 +1895,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-07T01:30:02.320Z",
-  "versionId": "7edf010e-d0ab-4296-a274-c56bae9eeebc"
+  "updatedAt": "2025-09-10T03:21:56.995Z",
+  "versionId": "0acef45b-b59d-4ca7-a64d-7b7ebccda2e0"
 }
