@@ -1,117 +1,11 @@
 {
   "active": false,
   "connections": {
-    "GRUPOS": {
-      "main": [
-        [
-          {
-            "node": "Datagroups",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Datagroups1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Datagroups": {
-      "main": [
-        [
-          {
-            "node": "Execution Data1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent1": {
-      "main": [
-        [
-          {
-            "node": "Code3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Gemini Chat Model1": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Sheets": {
-      "main": [
-        [
-          {
-            "node": "Productos",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "productos unicos": {
-      "main": [
-        [
-          {
-            "node": "AI Agent1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Productos": {
-      "main": [
-        [
-          {
-            "node": "productos unicos",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code3": {
-      "main": [
-        [
-          {
-            "node": "add reporte",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execution Data1": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When Executed by Another Workflow": {
       "main": [
         [
           {
-            "node": "GRUPOS",
+            "node": "Redirection",
             "type": "main",
             "index": 0
           }
@@ -205,397 +99,507 @@
           }
         ]
       ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "quoteMessage": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "quoteMessage",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completo?": {
+      "main": [
+        [
+          {
+            "node": "Pedido Completo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pedido Incompleto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent3": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Completo?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data2": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resumen Confirmados": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execution Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redirection": {
+      "main": [
+        [
+          {
+            "node": "Datagroups1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Resumen Confirmados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resumen Confirmados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resumen Confirmados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Resumen Confirmados": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Send message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow1": {
+      "main": [
+        [
+          {
+            "node": "Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "quoteMessage1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "quoteMessage1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent4": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Send message4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completo?1": {
+      "main": [
+        [
+          {
+            "node": "Pedido Completo1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pedido Incompleto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent5": {
+      "main": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent5",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Completo?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data3": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Send message5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execution Data3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data1": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-09-09T17:17:26.686Z",
   "id": "vpclqNpyPp6q7edo",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "3.1. Recibir reporte Ingresos/Egresos",
   "nodes": [
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $json.body.data.key.participant }}",
-                    "rightValue": "=573228854498",
-                    "operator": {
-                      "type": "string",
-                      "operation": "contains"
-                    },
-                    "id": "f9cd0753-0a09-4ebe-9e66-e301906ed600"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Domingo"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "3733c572-130f-42e3-8638-33892f9dd3bf",
-                    "leftValue": "={{ $json.body.data.key.participant }}",
-                    "rightValue": "573045809637",
-                    "operator": {
-                      "type": "string",
-                      "operation": "contains"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Ingreso a Bodega"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        -1072,
-        -80
-      ],
-      "id": "28f51c66-3520-4c20-83c4-31e6bf1b0b9c",
-      "name": "GRUPOS"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "19685da7-d325-456c-ba75-669f53f667ab",
-              "name": "NOMBRE",
-              "value": "={{ $json.NOMBRE }}",
-              "type": "string"
-            },
-            {
-              "id": "9ef83bfa-1544-4ce2-b316-d23c727495c1",
-              "name": "Nº DE TELÉFONO",
-              "value": "={{ $json['Nº DE TELÉFONO'] }}",
-              "type": "string"
-            },
-            {
-              "id": "d0808961-590a-4be2-b482-e89ac806793c",
-              "name": "Message",
-              "value": "={{ $json.message }}",
-              "type": "string"
-            },
-            {
-              "id": "12ed8d66-1c80-45fa-89f0-b494a79b2c6f",
-              "name": "FECHA",
-              "value": "={{ $now.format('dd/MM/yyyy') }}",
-              "type": "string"
-            },
-            {
-              "id": "db70bf6e-e14e-43d1-a867-6ac464da82db",
-              "name": "Fecha ayer",
-              "value": "={{ $now.minus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
-              "type": "string"
-            },
-            {
-              "id": "50f2f710-56e2-4efe-84dd-cc7f426dc2e1",
-              "name": "fecha mañana",
-              "value": "={{$now.plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -848,
-        -280
-      ],
-      "id": "7850519c-9bab-45db-98a2-2d5acb70148c",
-      "name": "Datagroups"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=nombre del que reporta: {{ $('Datagroups').item.json.NOMBRE }}\n\n📦 STOCK REPORTADO: {{ $('Datagroups').item.json.Message }}\n\nLISTA DE PEDIDOS: {{ JSON.stringify($json.data) }} \n\nFECHA: {{ $('Datagroups').item.json.FECHA }}",
-        "options": {
-          "systemMessage": "=Tu tarea es analizar el reporte de stock enviado por un empleado en formato de texto libre, llamado `STOCK REPORTADO`, y compararlo con la `LISTA DE PEDIDOS` (estructura JSON) que contiene los productos esperados, junto con su palet y tipo de caja asignado.\n\nEl objetivo es generar una lista normalizada y estructurada con la siguiente lógica:\n\n## 🧾 FORMATO DE ENTRADA:\n\n1. STOCK REPORTADO: texto libre escrito por un humano. Ejemplo:\n\"Amarillo, bolsa de zarve 10, godoy 55, berenjena P, palet americano 25, godoy negra 60, verde bolsa de zarve 30, godoy 60.\"\n\n2. LISTA DE PEDIDOS (JSON):\n{{ JSON.stringify($json.data) }}\n\n## 📌 OBJETIVO:\n\nDevuelve una nueva lista de productos con los siguientes criterios:\n\n### 1. Coincidencias:\n\nBusca coincidencias entre lo reportado en STOCK REPORTADO y los elementos de la LISTA DE PEDIDOS. Las coincidencias pueden ser:\n- Por color (Rojo, Verde, Amarillo, Naranja, etc.)\n- Por tipo (gg, god, m, std, emma, neg, P, etc.)\n- Por nombre parcial (como \"godoy\", \"zarve\", \"negra\", \"euro\", \"americano\")\n- Por número (cantidad asociada, como 10, 25, 55)\n\nCuando se identifique una coincidencia:\n- Devuelve el PRODUCTO, PALET y CAJAS de la LISTA DE PEDIDOS.\n- Extrae y asigna la CANT_PALET si hay una palabra que coincide con un tipo de palet (ej. \"palet americano 25\" → cantidad 25).\n- Extrae y asigna la CANT_CAJAS si hay una palabra que coincide con una caja (ej. \"godoy 60\" → caja godoy → cantidad 60).\n\n### 2. Ambigüedad:\n\nSi hay varias coincidencias posibles en LISTA DE PALETS o LISTA DE CAJAS, elige la opción más genérica o la que tenga menos detalles.  \nPor ejemplo:\n- Si solo se dice \"euro\", selecciona PALET EURO RETORNABLE.\n- Si dice \"godoy\" sin más detalles, selecciona CAJA GODOY 40x30x12.\n\n### 3. Sin coincidencia:\n\nSi un ítem del STOCK REPORTADO no coincide con ningún producto de la LISTA DE PEDIDOS, devuélvelo exactamente como fue escrito por el empleado bajo el campo \"PRODUCTO\" sin alterarlo. No intentes adivinar ni modificar.\n\n### 4. Normalización:\n\nCada ítem devuelto debe tener la siguiente estructura:\n\n{\n  \"FECHA\": \"{{ $('Datagroups').item.json.FECHA }}\",\n  \"PRODUCTO\": \"nombre estandarizado del producto\",\n  \"PALET\": \"palet correspondiente\",\n  \"CANT_PALET\": cantidad si se reportó,\n  \"CAJAS\": \"caja correspondiente\",\n  \"CANT_CAJAS\": cantidad si se reportó,\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\nSi no hay coincidencia:\n\n{\n  \"FECHA\": \"{{ $('Datagroups').item.json.FECHA }}\",\n  \"REPORTE\": \"nombre del producto como se reportó completo\"\n}\n\n### 5. Separación de productos:\n\nCada producto debe tratarse como un bloque completo que empieza con una palabra clave identificativa (como un color o tipo) y termina justo antes de que empiece otro.  \nNunca dividas un grupo como \"Amarillo, bolsa de zarve 10, godoy 55\" en varios productos. Eso es un solo bloque.\n\n### 6. Condiciones adicionales:\n\n- Comparación insensible a mayúsculas/minúsculas.\n- Ignora comas, puntos y otros separadores.\n- Tolerancia básica a errores ortográficos (\"zarve\" ≈ \"azarbe\", \"godoy negra\" ≈ \"bandeja negra\").\n- Acepta si la cantidad viene antes o después del nombre (\"25 zarve\" o \"zarve 25\").\n\n## 📥 DATOS DE ENTRADA:\n\nNOMBRE: {{ $('Datagroups').item.json.NOMBRE }}\nFECHA: {{ $('Datagroups').item.json.FECHA }}\nSTOCK REPORTADO: {{ $('Datagroups').item.json.Message }}\n\n## ✅ Devuelve solo un array JSON válido, sin explicaciones adicionales ni texto fuera del array.\n"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2,
-      "position": [
-        272,
-        -384
-      ],
-      "id": "0cf8b32b-7050-42be-bdf5-b0558e223c64",
-      "name": "AI Agent1"
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        344,
-        -160
-      ],
-      "id": "804975aa-a970-407b-8ee8-9eefccb85be9",
-      "name": "Google Gemini Chat Model1",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "jQiccHfpS9BFKE4C",
-          "name": "automation.whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
-          "mode": "list",
-          "cachedResultName": "SOLICITUD DE PEDIDOS",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 581820534,
-          "mode": "list",
-          "cachedResultName": "Solicitud a Proveedor",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "FECHA",
-              "lookupValue": "={{ $json.FECHA }}"
-            },
-            {
-              "lookupColumn": "FECHA",
-              "lookupValue": "={{ $json['Fecha ayer'] }}"
-            },
-            {
-              "lookupColumn": "FECHA",
-              "lookupValue": "={{ $json['fecha mañana'] }}"
-            }
-          ]
-        },
-        "combineFilters": "OR",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        -400,
-        -280
-      ],
-      "id": "fe0622a5-e639-49b7-95af-ddb3bcb5ad3d",
-      "name": "Google Sheets",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
-          "name": "hola@whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const data = items[0].json.data;\n\nconst uniqueCombos = new Set();\nconst result = [];\n\nfor (const entry of data) {\n  const key = `${entry.PRODUCTO} | ${entry.PALET} | ${entry.CAJAS}`;\n  \n  if (!uniqueCombos.has(key)) {\n    uniqueCombos.add(key);\n    result.push({\n      PRODUCTO: entry.PRODUCTO,\n      PALET: entry.PALET,\n      CAJAS: entry.CAJAS\n    });\n  }\n}\n\nreturn [{\n  json: {\n    data: result\n  }\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        48,
-        -280
-      ],
-      "id": "e5216650-8d94-41ea-98cd-6fc1c0e8506f",
-      "name": "productos unicos"
-    },
-    {
-      "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        -176,
-        -280
-      ],
-      "id": "cc6e077f-dd84-422f-916b-25ea73308d95",
-      "name": "Productos"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Obtener el texto plano del agente\nconst raw = items[0].json.output;\n\n// Intentar extraer el JSON entre los delimitadores ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\n// Si no encuentra un bloque válido, intentar parsear como JSON directo\nconst cleanJsonString = match ? match[1] : raw;\n\n// Intentar parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(cleanJsonString);\n} catch (error) {\n  throw new Error(\"No se pudo parsear el JSON: \" + error.message);\n}\n\n// Verificamos que sea un array\nif (!Array.isArray(parsed)) {\n  throw new Error(\"El JSON parseado no es un array.\");\n}\n\n// Devolvemos cada objeto como item independiente\nreturn parsed.map(obj => ({ json: obj }));\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        624,
-        -280
-      ],
-      "id": "618383e9-55a9-4378-8cc5-525cedd4fc3f",
-      "name": "Code3"
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
-          "mode": "list",
-          "cachedResultName": "SOLICITUD DE PEDIDOS",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 660283765,
-          "mode": "list",
-          "cachedResultName": "REPORTE DOMINGO",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=660283765"
-        },
-        "columns": {
-          "mappingMode": "autoMapInputData",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "FECHA",
-              "displayName": "FECHA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "PRODUCTO",
-              "displayName": "PRODUCTO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "PALET",
-              "displayName": "PALET",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CANT_PALET",
-              "displayName": "CANT_PALET",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CAJAS",
-              "displayName": "CAJAS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CANT_CAJAS",
-              "displayName": "CANT_CAJAS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "REPORTE",
-              "displayName": "REPORTE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        848,
-        -280
-      ],
-      "id": "650c614b-c528-4b23-a1ab-6dcdaa3e1fbd",
-      "name": "add reporte",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
-          "name": "hola@whitelabel.lat"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "dataToSave": {
-          "values": [
-            {
-              "key": "=Message",
-              "value": "={{ $json.Message }}"
-            },
-            {
-              "key": "Telefono",
-              "value": "={{ $json[\"Nº DE TELÉFONO\"] }}"
-            },
-            {
-              "key": "Finca",
-              "value": "={{ $json.FINCA }}"
-            },
-            {
-              "key": "Fecha",
-              "value": "={{ $json.FECHA }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executionData",
-      "typeVersion": 1,
-      "position": [
-        -624,
-        -280
-      ],
-      "id": "07685ae4-e7e6-4b25-9dab-0381b48803c9",
-      "name": "Execution Data1"
-    },
     {
       "parameters": {
         "inputSource": "passthrough"
@@ -603,8 +607,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -1296,
-        -80
+        -1488,
+        -8
       ],
       "id": "35681e18-0d3c-4eff-b453-e8501893eaf7",
       "name": "When Executed by Another Workflow"
@@ -632,12 +636,6 @@
               "type": "string"
             },
             {
-              "id": "4d277582-d64f-456a-bc14-a454eeb0987a",
-              "name": "quotedMessage.conversation",
-              "value": "={{ $json.quotedMessage }}",
-              "type": "string"
-            },
-            {
               "id": "12ed8d66-1c80-45fa-89f0-b494a79b2c6f",
               "name": "FECHA",
               "value": "={{ $('Webhook').item.json.body.date_time.toDateTime().format('dd/MM/yyyy') }}",
@@ -662,8 +660,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -848,
-        120
+        -1040,
+        -488
       ],
       "id": "4c2ed1e1-a6e4-4e42-852a-c26d5bb12f5e",
       "name": "Datagroups1"
@@ -679,8 +677,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        272,
-        120
+        80,
+        -488
       ],
       "id": "585fe9cf-9719-427e-be90-47e533506f3d",
       "name": "AI Agent"
@@ -693,8 +691,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        344,
-        344
+        152,
+        -264
       ],
       "id": "3782adcf-ead2-4464-8cb8-dc24ebf98956",
       "name": "Google Gemini Chat Model",
@@ -743,8 +741,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -400,
-        120
+        -592,
+        -488
       ],
       "id": "980861ec-bed4-4331-b16f-2458598088c0",
       "name": "Google Sheets1",
@@ -762,8 +760,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        48,
-        120
+        -144,
+        -488
       ],
       "id": "06e4c1cf-15c5-47a0-80c1-a8539a1a64f7",
       "name": "productos unicos1"
@@ -776,8 +774,8 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        -176,
-        120
+        -368,
+        -488
       ],
       "id": "16464fc7-eea9-4fe8-b332-de4929a455df",
       "name": "Productos1"
@@ -789,8 +787,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        624,
-        120
+        432,
+        -488
       ],
       "id": "06f8d873-67fe-40fe-b0ca-40f14ae79560",
       "name": "Code"
@@ -807,10 +805,10 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": 181798758,
+          "value": 660283765,
           "mode": "list",
-          "cachedResultName": "STOCK",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=181798758"
+          "cachedResultName": "REPORTE DOMINGO",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=660283765"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
@@ -889,8 +887,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        848,
-        120
+        656,
+        -488
       ],
       "id": "56750156-137b-4b50-9638-6dbc019c1c05",
       "name": "add reporte1",
@@ -927,23 +925,1473 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1,
       "position": [
-        -624,
-        120
+        -816,
+        -488
       ],
       "id": "ca2ae5ee-029d-4078-b77c-361d8e0fd7ea",
       "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=663372310202428",
+        "recipientPhoneNumber": "=+{{ $('When Executed by Another Workflow').item.json[\"Nº DE TELÉFONO\"] }}",
+        "textBody": "={{ $json.MENSAJE_RESUMEN }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        -296
+      ],
+      "id": "625e536b-3d8a-4f83-9278-c406b6f94d2d",
+      "name": "Send message",
+      "webhookId": "8eec64b4-e21c-483e-b8b5-4e0a68306b24",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "5UFcul7y3FYz9Hxd",
+          "name": "Estarter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "762bc065-3bfd-4dd4-984b-9655acc99631",
+              "name": "Message",
+              "value": "={{ $('When Executed by Another Workflow').item.json.Message }}",
+              "type": "string"
+            },
+            {
+              "id": "464d2010-cc03-471f-9373-8ae771bdd7c8",
+              "name": "quotedMessage.conversation",
+              "value": "={{ $json.MENSAJE_RESUMEN }}",
+              "type": "string"
+            },
+            {
+              "id": "6c980848-43f4-49e7-b159-6b54f8a22149",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $('When Executed by Another Workflow').item.json[\"Nº DE TELÉFONO\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bb12cd5-d419-4618-a3af-86bed40d25a2",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "fb039b84-777b-4b0e-ba05-b794521ce090",
+              "name": "FINCA",
+              "value": "={{ $json.FINCA }}",
+              "type": "string"
+            },
+            {
+              "id": "750d6acb-efbd-48a6-89f9-f5e0ac68e612",
+              "name": "FECHA",
+              "value": "={{ $now.format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "70ce485c-53b6-4e68-87e9-c46b197233cc",
+              "name": "fecha mañana",
+              "value": "={{ $now.plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -816,
+        -8
+      ],
+      "id": "46f05e6a-e1a8-4487-980a-7d756dd96636",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensaje = $json[\"quotedMessage\"].conversation;\n\n// Extraer fecha del pedido\nconst fechaRegex = /\\((\\d{2}\\/\\d{2}\\/\\d{4})\\)/;\nconst fechaMatch = mensaje.match(fechaRegex);\nconst fechaPedido = fechaMatch ? fechaMatch[1] : null;\n\n// Extraer bloques de pedidos\nconst pedidos = [];\nconst bloquesPedidos = mensaje.split(/➡️ \\*?pedido N°: ([\\w-]+)\\*?/i);\n\nfor (let i = 1; i < bloquesPedidos.length; i += 2) {\n    const numeroPedido = bloquesPedidos[i].trim();\n    const contenido = bloquesPedidos[i + 1];\n  \n\n    const productos = contenido\n        .split(/\\r?\\n/)\n        .filter(linea => linea.trim().startsWith('-'))\n        .map(linea => {\n            const itemMatch = linea.match(/^- (\\d+) x (\\d+) - ([^-]+) - ([^-]+) - (.+)$/);\n          // con decimales: (\\d+(?:\\.\\d+)?) x (\\d+(?:\\.\\d+)?)\n            if (itemMatch) {\n                return {\n                    NUM_PEDIDO: numeroPedido,\n                    PRODUCTO: itemMatch[3].trim(),\n                    CANT_PALETS: parseInt(itemMatch[1]),\n                    CANT_CAJAS: parseInt(itemMatch[2]),\n                    PALET: itemMatch[4].trim(),\n                    CAJAS: itemMatch[5].trim(),\n                };\n            }\n            return null;\n        })\n        .filter(Boolean); // Elimina null\n\n    pedidos.push(...productos);\n}\n\nreturn {\n    productos: pedidos,\n    totalRegistros: pedidos.length,\n    telefono: $json[\"Nº DE TELÉFONO\"],\n    FECHA: fechaPedido,\n    PROVEEDOR_ID: $input.first().json.PROVEEDOR_ID,\n    FINCA: $input.first().json.FINCA\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        -8
+      ],
+      "id": "93d40076-f608-42f4-8053-385521b40071",
+      "name": "quoteMessage"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "37d7de3c-cfea-4d2f-ac71-829ef510e978",
+              "leftValue": "={{ $json.Message }}",
+              "rightValue": ". .",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -144,
+        88
+      ],
+      "id": "ad328c70-b56a-4752-b876-7a81b8d5f18a",
+      "name": "If4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        144,
+        184
+      ],
+      "id": "fe798231-50cf-4cbe-948c-6e561b9fd588",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "=Eres un sistema de validación de integridad de atributos en respuestas JSON de pedidos agrícolas.\n\n### Objetivo:\nTu única responsabilidad es verificar que todos los objetos dentro de las listas (`faltantes`, `confirmados`, `sobrantes`) y atributos de nivel superior tengan los **nombres de atributos correctos**, completos y normalizados.\n\n### Instrucciones estrictas:\n\n- **No debes cambiar la lógica, contenido o clasificación de los productos.**\n- No debes agregar, eliminar ni mover productos entre listas. Solo debes corregir atributos incorrectos.\n- Asegúrate de que los nombres de los atributos coincidan exactamente con estos:\n\n```\nrow_number\nPROVEEDOR_ID\nNUM_PEDIDO\nFECHA\nPRODUCTO\nCANT_PALETS\nCANT_CAJAS\nPALET\nCAJAS\nSTATUS\nCOMENTARIOS\ncomentarios_adicionales\nMensaje para el proveedor\nMensaje para el Encargado\nMensaje de Novedades\nTELEFONO\n\n````\n\n- Si hay atributos mal escritos (por ejemplo: `PROVEVEEDOR_ID`, `CANT_PALET`), debes corregirlos por su forma exacta.\n- Si algún atributo obligatorio está faltando (por ejemplo: `FECHA`, `PROVEEDOR_ID`), intenta completarlo utilizando un valor global presente en el JSON principal.\n- **Mantén el mismo orden de listas y elementos**, solo corrige los nombres y completa valores faltantes si es posible.\n- Los valores pueden ser string o numéricos según el agente 1. No modifiques el tipo, solo asegura que existan y estén bien nombrados.\n- Devuelve únicamente el JSON corregido (no uses markdown, ni comillas, ni etiquetas como ```json).\n\n### Entrada esperada:\nUn JSON generado por otro agente, que puede contener errores ortográficos o estructurales en los atributos.\n\n### Salida esperada:\nEl mismo JSON, corregido solo a nivel de nombres de atributos, asegurando la estructura correcta según el estándar definido.\n````\n\n---\n\n### Ejemplo de error que corregiría el agente:\n\n**Entrada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALET\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n\n\n**Salida esperada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALETS\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        88
+      ],
+      "id": "f182b2e4-ee86-41ae-9c6d-28e12d63cbf5",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "productos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        656,
+        88
+      ],
+      "id": "cb54f62b-0c48-422f-a24b-e7c1e4ca987a",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        88
+      ],
+      "id": "7ec6728a-a6d3-4a11-8299-463695f002ae",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "={{ $json.NUM_PEDIDO }}"
+            },
+            {
+              "lookupColumn": "PRODUCTOS",
+              "lookupValue": "={{ $json.PRODUCTO }}"
+            },
+            {
+              "lookupColumn": "CANT_PALETS",
+              "lookupValue": "={{ $json.CANT_PALETS }}"
+            },
+            {
+              "lookupColumn": "CANT_CAJAS",
+              "lookupValue": "={{ $json.CANT_CAJAS }}"
+            },
+            {
+              "lookupColumn": "PALET",
+              "lookupValue": "={{ $json.PALET }}"
+            },
+            {
+              "lookupColumn": "CAJAS",
+              "lookupValue": "={{ $json.CAJAS }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Confirmado"
+            },
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $('quoteMessage').item.json.PROVEEDOR_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        880,
+        88
+      ],
+      "id": "45fc2b25-354e-49b5-932f-2e91a2b93474",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "af2dcb53-1921-4058-b7fd-af10d62d9eea",
+              "leftValue": "={{ $json.totalRegistros }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        -8
+      ],
+      "id": "a94337b7-367d-4628-ba35-02ef636251a7",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=663372310202428",
+        "recipientPhoneNumber": "=+{{ $json.telefono }}",
+        "textBody": "= no hay productos para Recibir el día de hoy. ¡Que tengas un excelente día! ☀️\nSi crees que es un error solicita un Reporte enviando el ID del proveedor",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -104
+      ],
+      "id": "02c12374-8dda-4c13-a57e-c9d5ecd291b7",
+      "name": "Send message1",
+      "webhookId": "8eec64b4-e21c-483e-b8b5-4e0a68306b24",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "5UFcul7y3FYz9Hxd",
+          "name": "Estarter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4fdeb343-54a3-4338-b002-60acb12c2b6d",
+              "leftValue": "={{ $json.faltantes }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "array",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2256,
+        88
+      ],
+      "id": "d4af9680-3396-4dff-af92-ec05cc0a6b36",
+      "name": "Completo?"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "wqiWmfy8NuXCjRYy",
+          "mode": "list",
+          "cachedResultName": "3.2. Recibir Pedido Completo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2480,
+        -8
+      ],
+      "id": "0e3ba307-7f01-4d43-9f51-7ff324541cb5",
+      "name": "Pedido Completo",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "xSnHbD32mCgxbniV",
+          "mode": "list",
+          "cachedResultName": "3.3. Recibir Pedido Incompleto"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2480,
+        192
+      ],
+      "id": "2eb6fe5a-d12b-4f68-9740-60674a9cd969",
+      "name": "Pedido Incompleto"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=📦 PEDIDO ORIGINAL:\n{{ JSON.stringify ($json.data) }}\n\n📨 MENSAJE DEL ENCARGADO:\n{{ $('Data').item.json.Message }}\n\nFECHA: {{ $now.format('dd/MM/yyyy') }}\nPROVEEDOR_ID: {{ $('quoteMessage').item.json.PROVEEDOR_ID }}\nFINCA: {{ $('quoteMessage').item.json.FINCA }}\nTELEFONO: {{ $('quoteMessage').item.json.telefono }}",
+        "options": {
+          "systemMessage": "=Eres un sistema de validación de recepción de pedidos agrícolas en bodega. Tu tarea es analizar si el proveedor ha entregado correctamente todos los productos del pedido, comparando el mensaje del encargado de bodega con la lista original de productos solicitados.\n\n ### Instrucciones importantes:\n\n * Los nombres de los campos en la respuesta JSON deben **mantenerse exactamente iguales**, incluyendo mayúsculas y guiones bajos. **No debes cambiar nunca ningún nombre de atributo.**\n\n   * Por ejemplo: `row_number`,  `PROVEEDOR_ID`, `NUM_PEDIDO`, `CANT_PALETS`, `CANT_CAJAS`, `PALET`, `CAJAS`, `FECHA`, `PRODUCTO`, `STATUS`, `comentarios`, `comentarios_adicionales`.\n   * Es obligatorio respetar estos nombres sin alteraciones ortográficas o estilísticas.\n\n ### Reglas de interpretación:\n\n * El formato del pedido es una lista de productos, cada uno con un número de pedido, descripción del producto, cantidad de palets, cantidad de cajas por palet, tipo de palet y tipo de caja.\n * En el mensaje del encargado, cuando menciona “X palets x Y” significa X palets con Y cajas por cada palet.\n * Si el mensaje indica solo “X palets” o “X x Y” pero no especifica cajas, debes asumir que cada palet tiene la misma cantidad de cajas solicitadas originalmente.\n * Si el mensaje dice menos o más palets o cajas que las solicitadas, debes marcar el producto como \"faltante\" o \"sobrante\", según sea el caso y \"confirmado\" solo la cantidad que confirma.\n * Si no menciona un producto en absoluto, se considera faltante, salvo que el mensaje dé a entender que el resto están confirmados (por ejemplo, si dice \"solo falta X\", \"ok\", etc.).\n * Si menciona más palets o más cajas que las solicitadas, se considera que hay sobrantes.\n * Debes ser tolerante con descripciones similares o nombres abreviados del producto.\n * Siempre que sea posible, haz coincidir los productos basándote en la descripción, aunque el nombre no coincida exactamente.\n\n ### Salida esperada:\n\n Devuelve una **respuesta en formato JSON válido** con la siguiente estructura exacta:\nincluyendo la cantidad de tokens consumidos en la consulta\n{\n  \"pedido_completo\": true | false,\n  \"PROVEEDOR_ID\": \"...\",\n  \"faltantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", \n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo la cantidad faltante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Solicitado\",\n      \"COMENTARIOS\": \"...\" //  de la novedad\n    }\n  ],\n  \"sobrantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\",\n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ...,  // solo la cantidad sobrante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\"\n    }\n  ],\n  \"confirmados\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", // siempre se debe enviar\n      \"PROVEEDOR_ID\": \"...\",  //siempre se debe enviar\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo los confirmados\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Recibido\",\n      \"COMENTARIOS\": \"...\" este valor solo se envia si hay novedades con el producto, si hay faltantes, si no se omite.\n    }\n  ],\n  \"Mensaje para el Encargado\": \"...\", //siempre dar un breve mensaje de confirmacion al Encargado de Bodegacon confirmando la operacion.\n  \"Mensaje para el proveedor\": \"...\", //siempre dar un breve mensaje de confirmacion al Proveedor de los productos Recibidos en Bodega.\n  \"TELEFONO\": [TELEFONO],\n  \"Mensaje de Novedades\": \"...\" //este valor solo se envia si hay novedades con la recepcion, describiendo la novedad, si todo esta bien se omite.\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        -16
+      ],
+      "id": "d5dd647a-1b62-4a26-9ca2-aaebbbca67bd",
+      "name": "AI Agent3"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        208
+      ],
+      "id": "2f5823f9-6e6d-4297-83c1-dd8734b93df1",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let raw = items[0].json.output;\n\n// Si viene con bloques ```json, extraer solo el contenido\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\nif (match) {\n  raw = match[1];\n}\n\n// Intentamos parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch (err) {\n  throw new Error(\"Error al parsear el JSON: \" + err.message);\n}\n\nreturn [{ json: parsed }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        88
+      ],
+      "id": "742b75c2-dc73-4ee0-9664-2add02d573fb",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Message",
+              "value": "={{ $json.Message }}"
+            },
+            {
+              "key": "Telefono",
+              "value": "={{ $json[\"Nº DE TELÉFONO\"] }}"
+            },
+            {
+              "key": "Finca",
+              "value": "={{ $json.FINCA }}"
+            },
+            {
+              "key": "Fecha",
+              "value": "={{ $json.FECHA }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        88
+      ],
+      "id": "9ae8d743-85f4-4e16-8fae-d8375b49f131",
+      "name": "Execution Data2"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "SaBmWxygv8ej3E2l",
+          "mode": "list",
+          "cachedResultName": "Get Resumen Confirmados"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Message": "={{ $json.Message }}"
+          },
+          "matchingColumns": [
+            "Message"
+          ],
+          "schema": [
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -1040,
+        -8
+      ],
+      "id": "0ee635ac-b335-450c-bda5-8c9d657b09b7",
+      "name": "Resumen Confirmados"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a330d558-f526-4c8a-a46a-1cd0b6775f23",
+              "leftValue": "={{ $json.PROVEEDOR_ID }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -592,
+        -8
+      ],
+      "id": "4907f610-8bbc-4cbf-aa29-b3c647c2dca7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=663372310202428",
+        "recipientPhoneNumber": "=+{{ $json[\"Nº DE TELÉFONO\"] }}",
+        "textBody": "={{ $json.quotedMessage.conversation }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -200
+      ],
+      "id": "52a00a50-609a-46b8-878b-58ade904674a",
+      "name": "Send message2",
+      "webhookId": "8eec64b4-e21c-483e-b8b5-4e0a68306b24",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "5UFcul7y3FYz9Hxd",
+          "name": "Estarter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3976c62a-7f52-4828-8080-1fa510c77cb5",
+                    "leftValue": "={{ $json[\"Nº DE TELÉFONO\"] }}",
+                    "rightValue": "573175406065",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Domingo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Message.toLowerCase().trim() }}",
+                    "rightValue": "=reporte",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "f9cd0753-0a09-4ebe-9e66-e301906ed600"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reporte"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3733c572-130f-42e3-8638-33892f9dd3bf",
+                    "leftValue": "={{ $json.Message.toLowerCase().trim() }}",
+                    "rightValue": "ingres",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Ingreso a Bodega"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a4833a6b-7685-4f6a-9214-ee199f4bdce0",
+                    "leftValue": "={{ $json.Message.toLowerCase().trim() }}",
+                    "rightValue": "recib",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Ingreso a Bodega"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ec367a8b-d3c9-44fa-a458-ba626a851048",
+                    "leftValue": "={{ $json.Message.toLowerCase().trim() }}",
+                    "rightValue": "salid",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Salida de pedido"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f945180c-2f7c-4ac0-a2cd-bf1ab0c4a2fa",
+                    "leftValue": "={{ $json.Message.toLowerCase().trim() }}",
+                    "rightValue": "despacho",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reporte de Pedidos"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1264,
+        -72
+      ],
+      "id": "28f51c66-3520-4c20-83c4-31e6bf1b0b9c",
+      "name": "Redirection"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "SaBmWxygv8ej3E2l",
+          "mode": "list",
+          "cachedResultName": "Get Resumen Confirmados"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Message": "={{ $json.Message }}"
+          },
+          "matchingColumns": [
+            "Message"
+          ],
+          "schema": [
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -1040,
+        -296
+      ],
+      "id": "aaec3eb0-17b9-427b-a3ff-6a2a4056e471",
+      "name": "Get Resumen Confirmados"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "PMLLkJbG7j1wzPCB",
+          "mode": "list",
+          "cachedResultName": "Get Pedidos Recibidos"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Message": "={{ $json.Message }}"
+          },
+          "matchingColumns": [
+            "Message"
+          ],
+          "schema": [
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -1040,
+        576
+      ],
+      "id": "19af70af-caa1-442e-9b7d-b692f0968969",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=663372310202428",
+        "recipientPhoneNumber": "=+{{ $('When Executed by Another Workflow').item.json[\"Nº DE TELÉFONO\"] }}",
+        "textBody": "={{ $json.MENSAJE_RESUMEN }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        576
+      ],
+      "id": "faa7c910-2087-4a72-9a37-84a3f78717fb",
+      "name": "Send message3",
+      "webhookId": "8eec64b4-e21c-483e-b8b5-4e0a68306b24",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "5UFcul7y3FYz9Hxd",
+          "name": "Estarter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "PMLLkJbG7j1wzPCB",
+          "mode": "list",
+          "cachedResultName": "Get Pedidos Recibidos"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Message": "={{ $json.Message }}"
+          },
+          "matchingColumns": [
+            "Message"
+          ],
+          "schema": [
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -1040,
+        384
+      ],
+      "id": "7ea00704-17b4-46ad-8eb8-96c6e7e6f222",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "762bc065-3bfd-4dd4-984b-9655acc99631",
+              "name": "Message",
+              "value": "={{ $('When Executed by Another Workflow').item.json.Message }}",
+              "type": "string"
+            },
+            {
+              "id": "464d2010-cc03-471f-9373-8ae771bdd7c8",
+              "name": "quotedMessage.conversation",
+              "value": "={{ $json.MENSAJE_RESUMEN }}",
+              "type": "string"
+            },
+            {
+              "id": "6c980848-43f4-49e7-b159-6b54f8a22149",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $('When Executed by Another Workflow').item.json[\"Nº DE TELÉFONO\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "750d6acb-efbd-48a6-89f9-f5e0ac68e612",
+              "name": "FECHA",
+              "value": "={{ $now.format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "70ce485c-53b6-4e68-87e9-c46b197233cc",
+              "name": "fecha mañana",
+              "value": "={{ $now.plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -816,
+        384
+      ],
+      "id": "4c569dd7-94c5-4030-b66f-f211303e6410",
+      "name": "Data1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensaje = $json[\"quotedMessage\"].conversation;\n\n// Extraer bloques de pedidos\nconst pedidos = [];\nconst bloquesPedidos = mensaje.split(/➡️ \\*?Pedido N°: ([\\w-]+)\\*?/i);\n\nfor (let i = 1; i < bloquesPedidos.length; i += 2) {\n    const numeroPedido = bloquesPedidos[i].trim();\n    const contenido = bloquesPedidos[i + 1];\n\n    // Extraer nombre del cliente\n    const clienteMatch = contenido.match(/Cliente:\\s*(.+)/i);\n    const cliente = clienteMatch ? clienteMatch[1].trim() : null;\n\n    // Extraer productos\n    const productos = contenido\n        .split(/\\r?\\n/)\n        .filter(linea => linea.trim().startsWith('-'))\n        .map(linea => {\n            // Formato esperado:\n            // - 20 palets (55 cajas) - PRODUCTO\n            const itemMatch = linea.match(/- (\\d+)\\s*palets?\\s*\\((\\d+)\\s*cajas?\\)\\s*-\\s*(.+)$/i);\n            if (itemMatch) {\n                return {\n                    NUM_PEDIDO: numeroPedido,\n                    NOMBRE_CLIENTE: cliente,\n                    PRODUCTO: itemMatch[3].trim(),\n                    CANT_PALETS: parseInt(itemMatch[1]),\n                    CANT_CAJAS: parseInt(itemMatch[2])\n                };\n            }\n            return null;\n        })\n        .filter(Boolean);\n\n    pedidos.push(...productos);\n}\n\nreturn {\n    productos: pedidos,\n    totalRegistros: pedidos.length,\n    telefono: $json[\"Nº DE TELÉFONO\"],\n    FECHA: $json[\"FECHA\"]  // usamos la que viene en input\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        384
+      ],
+      "id": "743aa243-0008-4e59-b9f8-a554b93403f7",
+      "name": "quoteMessage1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "37d7de3c-cfea-4d2f-ac71-829ef510e978",
+              "leftValue": "={{ $json.Message }}",
+              "rightValue": ". .",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -144,
+        480
+      ],
+      "id": "40b71ae5-59aa-42fd-a945-08dfc187cc8b",
+      "name": "If5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        144,
+        576
+      ],
+      "id": "a1278ee5-7609-4362-876d-4b77024f4626",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "=Eres un sistema de validación de integridad de atributos en respuestas JSON de pedidos agrícolas.\n\n### Objetivo:\nTu única responsabilidad es verificar que todos los objetos dentro de las listas (`faltantes`, `confirmados`, `sobrantes`) y atributos de nivel superior tengan los **nombres de atributos correctos**, completos y normalizados.\n\n### Instrucciones estrictas:\n\n- **No debes cambiar la lógica, contenido o clasificación de los productos.**\n- No debes agregar, eliminar ni mover productos entre listas. Solo debes corregir atributos incorrectos.\n- Asegúrate de que los nombres de los atributos coincidan exactamente con estos:\n\n```\nrow_number\nPROVEEDOR_ID\nNUM_PEDIDO\nFECHA\nPRODUCTO\nCANT_PALETS\nCANT_CAJAS\nPALET\nCAJAS\nSTATUS\nCOMENTARIOS\ncomentarios_adicionales\nMensaje para el proveedor\nMensaje para el Encargado\nMensaje de Novedades\nTELEFONO\n\n````\n\n- Si hay atributos mal escritos (por ejemplo: `PROVEVEEDOR_ID`, `CANT_PALET`), debes corregirlos por su forma exacta.\n- Si algún atributo obligatorio está faltando (por ejemplo: `FECHA`, `PROVEEDOR_ID`), intenta completarlo utilizando un valor global presente en el JSON principal.\n- **Mantén el mismo orden de listas y elementos**, solo corrige los nombres y completa valores faltantes si es posible.\n- Los valores pueden ser string o numéricos según el agente 1. No modifiques el tipo, solo asegura que existan y estén bien nombrados.\n- Devuelve únicamente el JSON corregido (no uses markdown, ni comillas, ni etiquetas como ```json).\n\n### Entrada esperada:\nUn JSON generado por otro agente, que puede contener errores ortográficos o estructurales en los atributos.\n\n### Salida esperada:\nEl mismo JSON, corregido solo a nivel de nombres de atributos, asegurando la estructura correcta según el estándar definido.\n````\n\n---\n\n### Ejemplo de error que corregiría el agente:\n\n**Entrada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALET\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n\n\n**Salida esperada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALETS\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        488
+      ],
+      "id": "74b8476f-4279-4b23-8512-bca6e6e1f8f1",
+      "name": "AI Agent4"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "productos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        656,
+        488
+      ],
+      "id": "91372d1d-f9ea-4469-80f2-13c14c5bcb4b",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        488
+      ],
+      "id": "e4730e99-24a3-4cc0-90e8-b87f6728378b",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "={{ $json.NUM_PEDIDO }}"
+            },
+            {
+              "lookupColumn": "PRODUCTOS",
+              "lookupValue": "={{ $json.PRODUCTO }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Recibido"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        880,
+        488
+      ],
+      "id": "e5ef1b83-e23f-4372-a3a9-2617d22d64d7",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "af2dcb53-1921-4058-b7fd-af10d62d9eea",
+              "leftValue": "={{ $json.totalRegistros }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        384
+      ],
+      "id": "d96755a6-2755-4109-9b29-0c19799c6135",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=663372310202428",
+        "recipientPhoneNumber": "=+{{ $json.telefono }}",
+        "textBody": "= no hay productos para Despachar el día de hoy. ¡Que tengas un excelente día! ☀️\nSi crees que es un error solicita un Reporte enviando el ID del proveedor",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        656,
+        280
+      ],
+      "id": "2eec9371-e7d8-49ad-a35e-e3fe95123de4",
+      "name": "Send message4",
+      "webhookId": "8eec64b4-e21c-483e-b8b5-4e0a68306b24",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "5UFcul7y3FYz9Hxd",
+          "name": "Estarter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4fdeb343-54a3-4338-b002-60acb12c2b6d",
+              "leftValue": "={{ $json.faltantes }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "array",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2256,
+        488
+      ],
+      "id": "aeae028e-8a4c-4e87-9cb0-34f4213de9c0",
+      "name": "Completo?1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "NRMPkYz2gqvoalpJ",
+          "mode": "list",
+          "cachedResultName": "3.4. Enviar Pedido Completo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2480,
+        384
+      ],
+      "id": "08436ac6-3bd9-4b67-afa2-0c7ea42b5e58",
+      "name": "Pedido Completo1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "xSnHbD32mCgxbniV",
+          "mode": "list",
+          "cachedResultName": "3.3. Recibir Pedido Incompleto"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2480,
+        584
+      ],
+      "id": "4f8a8bb0-9a33-4364-b210-041df90295b5",
+      "name": "Pedido Incompleto1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=📦 PEDIDO ORIGINAL:\n{{ JSON.stringify ($json.data) }}\n\n📨 MENSAJE DEL ENCARGADO:\n{{ $('Data1').item.json.Message }}\n\nFECHA: {{ $now.format('dd/MM/yyyy') }}\n\nTELEFONO: {{ $('quoteMessage1').item.json.telefono }}",
+        "options": {
+          "systemMessage": "=Eres un sistema de validación de envíos agrícolas al cliente final. Tu tarea es analizar si el encargado de envíos ha despachado correctamente todos los productos del pedido, comparando el mensaje del encargado de envíos con la lista original de productos solicitados.\n\n ### Instrucciones importantes:\n\n * Los nombres de los campos en la respuesta JSON deben **mantenerse exactamente iguales**, incluyendo mayúsculas y guiones bajos. **No debes cambiar nunca ningún nombre de atributo.**\n\n   * Por ejemplo: `row_number`,  `PROVEEDOR_ID`, `NUM_PEDIDO`, `CANT_PALETS`, `CANT_CAJAS`, `PALET`, `CAJAS`, `FECHA`, `PRODUCTO`, `STATUS`, `comentarios`, `comentarios_adicionales`.\n   * Es obligatorio respetar estos nombres sin alteraciones ortográficas o estilísticas.\n\n ### Reglas de interpretación:\n\n * El formato del pedido es una lista de productos, cada uno con un número de pedido, descripción del producto, cantidad de palets, cantidad de cajas por palet, tipo de palet y tipo de caja.\n * En el mensaje del encargado, cuando menciona “X palets x Y” significa X palets con Y cajas por cada palet.\n * Si el mensaje indica solo “X palets” o “X x Y” pero no especifica cajas, debes asumir que cada palet tiene la misma cantidad de cajas solicitadas originalmente.\n\n * Si no menciona un producto en absoluto, se considera faltante, salvo que el mensaje dé a entender que el resto están confirmados (por ejemplo, si dice \"solo falta X\", \"ok\", etc.).\n\n * Debes ser tolerante con descripciones similares o nombres abreviados del producto.\n * Siempre que sea posible, haz coincidir los productos basándote en la descripción, aunque el nombre no coincida exactamente.\n\n ### Salida esperada:\n\n Devuelve una **respuesta en formato JSON válido** con la siguiente estructura exacta:\n{\n  \"pedido_completo\": true | false,\n\n  \"confirmados\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", // siempre se debe enviar\n      \"PROVEEDOR_ID\": \"...\",  //siempre se debe enviar\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo los confirmados\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Despachado\",\n    }\n  ],\n  \"Mensaje para el Encargado\": \"...\", //siempre dar un breve mensaje de confirmacion al encargado de envíos confirmando El envío, Enviando numero de pedido.\n  \"TELEFONO\": [TELEFONO],\n  \"Mensaje de Novedades\": \"...\" //este valor solo se envia si hay novedades con la recepcion, describiendo la novedad, si todo esta bien se omite.\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        488
+      ],
+      "id": "57cc2b3d-4d1f-4b16-9f59-8da642d3dc96",
+      "name": "AI Agent5"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        712
+      ],
+      "id": "4c67b581-0a7c-4de5-83a5-a79af3460721",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let raw = items[0].json.output;\n\n// Si viene con bloques ```json, extraer solo el contenido\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\nif (match) {\n  raw = match[1];\n}\n\n// Intentamos parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch (err) {\n  throw new Error(\"Error al parsear el JSON: \" + err.message);\n}\n\nreturn [{ json: parsed }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        488
+      ],
+      "id": "adfbb4cc-1e83-42a6-bdcb-c0b7d19f6efd",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=Message",
+              "value": "={{ $json.Message }}"
+            },
+            {
+              "key": "Telefono",
+              "value": "={{ $json[\"Nº DE TELÉFONO\"] }}"
+            },
+            {
+              "key": "Fecha",
+              "value": "={{ $json.FECHA }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        480
+      ],
+      "id": "7f3ca0af-1c1e-4b94-aeec-c09a51b4f7f6",
+      "name": "Execution Data3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a330d558-f526-4c8a-a46a-1cd0b6775f23",
+              "leftValue": "={{ $json.quotedMessage.conversation }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -592,
+        384
+      ],
+      "id": "32fd99d0-ddb1-4464-a1b8-67c4bf0addc9",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=663372310202428",
+        "recipientPhoneNumber": "=+{{ $json[\"Nº DE TELÉFONO\"] }}",
+        "textBody": "={{ $json.quotedMessage.conversation }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        280
+      ],
+      "id": "e73dc2e5-d78d-43d0-9210-62c88cb1c5dc",
+      "name": "Send message5",
+      "webhookId": "8eec64b4-e21c-483e-b8b5-4e0a68306b24",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "5UFcul7y3FYz9Hxd",
+          "name": "Estarter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 687114083,
+          "mode": "list",
+          "cachedResultName": "CONFIGURACIONES",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=687114083"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1488,
+        -816
+      ],
+      "id": "1f199a15-6e37-40ba-ac51-7780833b0db2",
+      "name": "Get row(s) in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Número que llega desde el trigger\nconst numeroPersona = $('When Executed by Another Workflow').first().json[\"Nº DE TELÉFONO\"];\n\n// Lista de números válidos que llegan como input al nodo\nconst numerosValidos = items;\n\n// Buscar si el número existe en la lista\nconst existe = numerosValidos.some(item => String(item.json.Telefono) === String(numeroPersona));\n\n// Devolver true o false\nreturn [\n  {\n    json: {\n      existe\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1264,
+        -816
+      ],
+      "id": "72c592dc-d1f8-4fbc-abf3-37d8a62a518e",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9006e34b-590e-49fa-8ca5-a926ea5f3e2a",
+              "leftValue": "={{ $json.existe }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1040,
+        -816
+      ],
+      "id": "2d0a1fce-732c-4e64-afbe-857c7df9edb5",
+      "name": "If6"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Message": "<audio>Buenas tardes. Tengo pimiento California amarillo, eh, de madera etiquetas, 20 pallets. De pimiento California rojo, de madera etiquetas, tengo eh 17 pallets. De pimiento California verde, box asarve, tengo solo 10. De pimiento California naranja, eh box asarve, tengo solo cinco.</audio>",
-          "Nº DE TELÉFONO": null,
+          "Message": "Salida 0196",
+          "Nº DE TELÉFONO": "573112528964",
           "PROVEEDOR_ID": null,
           "FINCA": null,
-          "FECHA": "09/09/2025",
-          "fecha mañana": "10/09/2025"
+          "FECHA": "10/09/2025",
+          "fecha mañana": "11/09/2025"
         }
       }
     ]
@@ -966,6 +2414,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-09T22:16:16.961Z",
-  "versionId": "2b336ebe-da1b-438c-877e-1b451870deb9"
+  "updatedAt": "2025-09-10T07:53:26.708Z",
+  "versionId": "c8bb2e05-69d5-4fb8-978a-df4ccb60cad7"
 }
