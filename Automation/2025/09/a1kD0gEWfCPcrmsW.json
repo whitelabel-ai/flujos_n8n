@@ -409,7 +409,7 @@
       "typeVersion": 3.4,
       "position": [
         -816,
-        144
+        320
       ],
       "id": "577d4556-293e-4510-aa3c-018c4ace766c",
       "name": "Data"
@@ -444,7 +444,7 @@
       "typeVersion": 4.6,
       "position": [
         -1936,
-        48
+        32
       ],
       "id": "4006ec85-32e3-423b-aa35-29142eac2143",
       "name": "Get suplier",
@@ -458,13 +458,13 @@
     },
     {
       "parameters": {
-        "jsCode": "const mensaje = $json[\"quotedMessage\"].conversation;\n\n// Extraer fecha del pedido\nconst fechaRegex = /\\((\\d{2}\\/\\d{2}\\/\\d{4})\\)/;\nconst fechaMatch = mensaje.match(fechaRegex);\nconst fechaPedido = fechaMatch ? fechaMatch[1] : null;\n\n// Extraer bloques de pedidos\nconst pedidos = [];\nconst bloquesPedidos = mensaje.split(/➡️ \\*?pedido N°: ([\\w-]+)\\*?/i);\n\nfor (let i = 1; i < bloquesPedidos.length; i += 2) {\n    const numeroPedido = bloquesPedidos[i].trim();\n    const contenido = bloquesPedidos[i + 1];\n  \n\n    const productos = contenido\n        .split(/\\r?\\n/)\n        .filter(linea => linea.trim().startsWith('-'))\n        .map(linea => {\n            const itemMatch = linea.match(/^- (\\d+) x (\\d+) - ([^-]+) - ([^-]+) - (.+)$/);\n          // con decimales: (\\d+(?:\\.\\d+)?) x (\\d+(?:\\.\\d+)?)\n            if (itemMatch) {\n                return {\n                    NUM_PEDIDO: numeroPedido,\n                    PRODUCTO: itemMatch[3].trim(),\n                    CANT_PALETS: parseInt(itemMatch[1]),\n                    CANT_CAJAS: parseInt(itemMatch[2]),\n                    PALET: itemMatch[4].trim(),\n                    CAJAS: itemMatch[5].trim(),\n                };\n            }\n            return null;\n        })\n        .filter(Boolean); // Elimina null\n\n    pedidos.push(...productos);\n}\n\nreturn {\n    productos: pedidos,\n    totalRegistros: pedidos.length,\n    telefono: $json[\"Nº DE TELÉFONO\"],\n    FECHA: fechaPedido,\n    PROVEEDOR_ID: $input.first().json.PROVEEDOR_ID,\n    FINCA: $input.first().json.FINCA\n};\n"
+        "jsCode": "const mensaje = $json[\"quotedMessage\"].conversation;\n\n// Extraer fecha del pedido\nconst fechaRegex = /\\((\\d{2}\\/\\d{2}\\/\\d{4})\\)/;\nconst fechaMatch = mensaje.match(fechaRegex);\nconst fechaPedido = fechaMatch ? fechaMatch[1] : null;\n\n// Extraer bloques de pedidos\nconst pedidos = [];\nconst bloquesPedidos = mensaje.split(/➡️ \\*?pedido N°: ([\\w-]+)\\*?/i);\n\nfor (let i = 1; i < bloquesPedidos.length; i += 2) {\n    const numeroPedido = bloquesPedidos[i].trim();\n    const contenido = bloquesPedidos[i + 1];\n  \n\n    const productos = contenido\n        .split(/\\r?\\n/)\n        .filter(linea => linea.trim().startsWith('-'))\n        .map(linea => {\n            const itemMatch = linea.match(/^- (\\d+) x (\\d+) - ([^-]+) - ([^-]+) - (.+)$/);\n          // con decimales: (\\d+(?:\\.\\d+)?) x (\\d+(?:\\.\\d+)?)\n            if (itemMatch) {\n                return {\n                    NUM_PEDIDO: numeroPedido,\n                    PRODUCTO: itemMatch[3].trim(),\n                    CANT_PALETS: parseInt(itemMatch[1]),\n                    CANT_CAJAS: parseInt(itemMatch[2]),\n                    PALET: itemMatch[4].trim(),\n                    CAJAS: itemMatch[5].trim(),\n                };\n            }\n            return null;\n        })\n        .filter(Boolean); // Elimina null\n\n    pedidos.push(...productos);\n}\n\nreturn {\n    productos: pedidos,\n    totalRegistros: pedidos.length,\n    telefono: $json[\"Nº DE TELÉFONO\"],\n    FECHA: fechaPedido,\n    PROVEEDOR_ID: $input.first().json.PROVEEDOR_ID,\n    FINCA: $input.first().json.FINCA,\n    Message: $('Data').first().json.Message\n};\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         -144,
-        48
+        224
       ],
       "id": "9d9b1fcc-2638-4ddf-a6eb-7169fbfe3f04",
       "name": "quoteMessage"
@@ -472,7 +472,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=📦 PEDIDO ORIGINAL:\n{{ JSON.stringify ($json.data) }}\n\n📨 MENSAJE DEL ENCARGADO:\n{{ $('Data').item.json.Message }}\n\nFECHA: {{ $('quoteMessage').item.json.FECHA }}\nPROVEEDOR_ID: {{ $('quoteMessage').item.json.PROVEEDOR_ID }}\nFINCA: {{ $('quoteMessage').item.json.FINCA }}\nTELEFONO: {{ $('quoteMessage').item.json.telefono }}",
+        "text": "=📦 PEDIDO ORIGINAL:\n{{ JSON.stringify ($json.data) }}\n\n📨 MENSAJE DEL ENCARGADO:\n{{ $('quoteMessage').item.json.Message }}\n\nFECHA: {{ $('quoteMessage').item.json.FECHA }}\nPROVEEDOR_ID: {{ $('quoteMessage').item.json.PROVEEDOR_ID }}\nFINCA: {{ $('quoteMessage').item.json.FINCA }}\nTELEFONO: {{ $('quoteMessage').item.json.telefono }}",
         "options": {
           "systemMessage": "= Eres un sistema de validación de pedidos agrícolas. Tu tarea es analizar si el proveedor ha confirmado correctamente todos los productos del pedido, comparando el mensaje del encargado con la lista original de productos solicitados.\n\n ### Instrucciones importantes:\n\n * Los nombres de los campos en la respuesta JSON deben **mantenerse exactamente iguales**, incluyendo mayúsculas y guiones bajos. **No debes cambiar nunca ningún nombre de atributo.**\n\n   * Por ejemplo: `row_number`,  `PROVEEDOR_ID`, `NUM_PEDIDO`, `CANT_PALETS`, `CANT_CAJAS`, `PALET`, `CAJAS`, `FECHA`, `PRODUCTO`, `STATUS`, `comentarios`, `comentarios_adicionales`.\n   * Es obligatorio respetar estos nombres sin alteraciones ortográficas o estilísticas.\n\n ### Reglas de interpretación:\n\n * El formato del pedido es una lista de productos, cada uno con un número de pedido, descripción del producto, cantidad de palets, cantidad de cajas por palet, tipo de palet y tipo de caja.\n * En el mensaje del encargado, cuando menciona “X palets x Y” significa X palets con Y cajas por cada palet.\n * Si el mensaje indica solo “X palets” o “X x Y” pero no especifica cajas, debes asumir que cada palet tiene la misma cantidad de cajas solicitadas originalmente.\n * Si el mensaje dice menos o más palets o cajas que las solicitadas, debes marcar el producto como \"faltante\" o \"sobrante\", según sea el caso y \"confirmado\" solo la cantidad que confirma.\n * Si no menciona un producto en absoluto, se considera faltante, salvo que el mensaje dé a entender que el resto están confirmados (por ejemplo, si dice \"solo falta X\", \"ok\", etc.).\n * Si menciona más palets o más cajas que las solicitadas, se considera que hay sobrantes.\n * Debes ser tolerante con descripciones similares o nombres abreviados del producto.\n * Siempre que sea posible, haz coincidir los productos basándote en la descripción, aunque el nombre no coincida exactamente.\n\n ### Salida esperada:\n\n Devuelve una **respuesta en formato JSON válido** con la siguiente estructura exacta:\nincluyendo la cantidad de tokens consumidos en la consulta\n{\n  \"pedido_completo\": true | false,\n  \"PROVEEDOR_ID\": \"...\",\n  \"faltantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", \n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo la cantidad faltante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Solicitado\",\n      \"COMENTARIOS\": \"...\" //  de la novedad\n    }\n  ],\n  \"sobrantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\",\n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ...,  // solo la cantidad sobrante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\"\n    }\n  ],\n  \"confirmados\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", // siempre se debe enviar\n      \"PROVEEDOR_ID\": \"...\",  //siempre se debe enviar\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo los confirmados\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Confirmado\",\n      \"COMENTARIOS\": \"...\" este valor solo se envia si hay novedades con el producto, si hay faltantes, si no se omite.\n    }\n  ],\n  \"comentarios_adicionales\": \"...\",\n  \"Mensaje para el proveedor\": \"...\" //siempre dar un breve mensaje de confirmacion al proveedor de los productos confirmados, los que rechazan se solicitaran a otro proveedor, pero no se le informa. \n}"
         }
@@ -480,8 +480,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        960,
-        48
+        1184,
+        320
       ],
       "id": "5172b805-de36-4646-8df2-6d4ea2942ed5",
       "name": "AI Agent"
@@ -494,8 +494,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1040,
-        272
+        1264,
+        544
       ],
       "id": "a61f6f69-53d1-4fcd-afc6-2d4624e381d9",
       "name": "Google Gemini Chat Model",
@@ -513,8 +513,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1664,
-        48
+        1888,
+        320
       ],
       "id": "7e87f8b1-c50d-4462-a3b6-e4074fba3820",
       "name": "Code"
@@ -561,7 +561,7 @@
       "typeVersion": 3.4,
       "position": [
         -1712,
-        240
+        224
       ],
       "id": "c444b243-d7f0-4cb2-9c92-af57f9c83fe2",
       "name": "Texto"
@@ -602,7 +602,7 @@
       "typeVersion": 3.4,
       "position": [
         -1712,
-        48
+        32
       ],
       "id": "2e884336-5fdd-4228-8d9a-98578a5c910e",
       "name": "audio"
@@ -637,10 +637,11 @@
       "typeVersion": 4.6,
       "position": [
         -1936,
-        240
+        224
       ],
       "id": "fbcc9c1c-fcbe-4458-ae08-02e3d5b7069f",
       "name": "Get suplier1",
+      "alwaysOutputData": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "CM7JsKen8ouMDNPD",
@@ -692,7 +693,7 @@
       "typeVersion": 2.2,
       "position": [
         -368,
-        144
+        320
       ],
       "id": "b2e0eb0d-cbed-450d-a523-649a200df0ab",
       "name": "If4"
@@ -703,7 +704,7 @@
       "typeVersion": 1,
       "position": [
         -144,
-        240
+        416
       ],
       "id": "661d62c3-0b4a-4111-9221-960591d23b45",
       "name": "No Operation, do nothing"
@@ -719,8 +720,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        1312,
-        48
+        1536,
+        320
       ],
       "id": "97877125-194e-404a-b5cc-b70ea74682b6",
       "name": "AI Agent2"
@@ -733,8 +734,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        288,
-        48
+        304,
+        320
       ],
       "id": "00edac5b-c043-4f6a-81b5-781ccfbc8312",
       "name": "Split Out"
@@ -747,8 +748,8 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        736,
-        48
+        752,
+        320
       ],
       "id": "d9a181c2-9958-4ef9-a5d4-858e244b95e6",
       "name": "Aggregate"
@@ -810,8 +811,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        512,
-        48
+        528,
+        320
       ],
       "id": "58d2ca8b-aa9b-46d9-8327-4bd18e271f2a",
       "name": "Get row(s) in sheet",
@@ -849,7 +850,7 @@
       "typeVersion": 1,
       "position": [
         -592,
-        144
+        320
       ],
       "id": "fc54f9a4-1c53-4c2a-b546-67f7e4cfa6bd",
       "name": "Execution Data"
@@ -875,8 +876,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        -1056,
-        -272
+        -1040,
+        -64
       ],
       "id": "1f811b67-94bd-4020-a8e4-63b51a51d14f",
       "name": "Execute Workflow2"
@@ -967,7 +968,7 @@
       "typeVersion": 3.2,
       "position": [
         -2832,
-        128
+        112
       ],
       "id": "21d98668-e5a1-416c-bf34-01577dabb4a8",
       "name": "type message Whatsap"
@@ -986,8 +987,8 @@
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
       "position": [
-        -3056,
-        144
+        -3088,
+        128
       ],
       "id": "37026526-950f-4d2d-a546-e235643acb11",
       "name": "Start",
@@ -1009,7 +1010,7 @@
       "typeVersion": 1,
       "position": [
         -2608,
-        48
+        32
       ],
       "id": "d0a96d21-bc98-4808-8cab-dd002e119518",
       "name": "Download media",
@@ -1032,7 +1033,7 @@
       "typeVersion": 4.2,
       "position": [
         -2384,
-        48
+        32
       ],
       "id": "3b64e8b8-1c90-434f-acf1-b34409ae240b",
       "name": "HTTP Request1",
@@ -1059,7 +1060,7 @@
       "typeVersion": 1,
       "position": [
         -2160,
-        48
+        32
       ],
       "id": "13f593da-d65c-4616-b5f8-da77e54b7870",
       "name": "Transcribe a recording",
@@ -1123,7 +1124,7 @@
       "typeVersion": 1,
       "position": [
         -816,
-        -64
+        128
       ],
       "id": "a24d97ce-74aa-4fb9-bd3c-1b6f8a4204c9",
       "name": "Send message",
@@ -1153,7 +1154,7 @@
                     "leftValue": "={{ $json.PROVEEDOR_ID }}",
                     "rightValue": "ingres",
                     "operator": {
-                      "type": "string",
+                      "type": "number",
                       "operation": "empty",
                       "singleValue": true
                     }
@@ -1220,7 +1221,7 @@
       "typeVersion": 3.2,
       "position": [
         -1264,
-        128
+        112
       ],
       "id": "95fe0f47-f2b2-4352-a7fb-d7efea804b5b",
       "name": "Redirection"
@@ -1273,7 +1274,7 @@
       "typeVersion": 3.4,
       "position": [
         -1488,
-        144
+        128
       ],
       "id": "ff9a04fd-e75d-4985-a276-25458131cfb7",
       "name": "InitData"
@@ -1368,7 +1369,7 @@
       "typeVersion": 1.2,
       "position": [
         -1040,
-        -64
+        128
       ],
       "name": "Call Get Resumen",
       "id": "e3f28649-896f-48ad-ac9c-6e0278c1f084"
@@ -1463,7 +1464,7 @@
       "typeVersion": 1.2,
       "position": [
         -1040,
-        144
+        320
       ],
       "name": "Call Get Resumen1",
       "id": "7c752899-6ad6-4789-9741-781249697ae9"
@@ -1495,8 +1496,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        64,
-        48
+        80,
+        224
       ],
       "id": "81c0f4ee-b48b-4592-837a-ed36500ffe34",
       "name": "If1"
@@ -1512,8 +1513,8 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        320,
-        -208
+        304,
+        128
       ],
       "id": "6593b38f-00d8-4220-bc75-f1f548b9295d",
       "name": "Send message1",
@@ -1553,8 +1554,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1888,
-        48
+        2112,
+        320
       ],
       "id": "8df6df5a-040f-4156-9192-52420986e2fc",
       "name": "Completo?"
@@ -1580,8 +1581,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2112,
-        -64
+        2336,
+        224
       ],
       "id": "000b8007-4f4f-4c35-a9b1-8a9124a2a829",
       "name": "Pedido Completo",
@@ -1608,8 +1609,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2112,
-        144
+        2336,
+        416
       ],
       "id": "51eae9ba-38ee-4e68-b729-e02e2d3a89ab",
       "name": "Pedido Incompleto"
@@ -1627,23 +1628,20 @@
           "contacts": [
             {
               "profile": {
-                "name": "Hello🙂"
+                "name": "Andrés Corral"
               },
-              "wa_id": "573008564836"
+              "wa_id": "573045809637"
             }
           ],
           "messages": [
             {
-              "from": "573008564836",
-              "id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhggQUNFMjQ2MjFCM0IyOTM4NkY0QjMzNERCQkY0OTQ5QzMA",
-              "timestamp": "1757455076",
-              "type": "audio",
-              "audio": {
-                "mime_type": "audio/ogg; codecs=opus",
-                "sha256": "UUy3Og9xBK0qY1rw6htbCTkjsAie7IlqvM0qaYcvRbs=",
-                "id": "1445706970045616",
-                "voice": true
-              }
+              "from": "573045809637",
+              "id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhgUM0Y3QUU3N0U3N0JDODJBQzZEN0MA",
+              "timestamp": "1757511734",
+              "text": {
+                "body": "confirmo 4x55 amarillo y 4x55 naranja"
+              },
+              "type": "text"
             }
           ],
           "field": "messages"
@@ -1680,6 +1678,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-09-09T22:16:34.320Z",
-  "versionId": "560a46c2-3843-47be-8ea4-760374cc8858"
+  "updatedAt": "2025-09-10T13:57:43.828Z",
+  "versionId": "92749dbc-c62c-4c5a-922e-3777745d282c"
 }
