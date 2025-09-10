@@ -1,0 +1,796 @@
+{
+  "active": false,
+  "connections": {
+    "dataResumen": {
+      "main": [
+        [
+          {
+            "node": "confirmacion pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "confirmacion pedido": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "confirmacion pedido1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "dataResumen1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Return1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "confirmacion pedido1": {
+      "main": [
+        [
+          {
+            "node": "Return2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dataResumen1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Return3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "dataResumen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-10T02:34:19.468Z",
+  "id": "PMLLkJbG7j1wzPCB",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Get Pedidos Recibidos",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// Configuración inicial\nconst zonaHoraria = 'America/Bogota';\nconst telefonoNode = 'dataResumen';   // nodo de donde saco el teléfono\nconst encargadoNode = 'Get suplier1'; // nodo de donde saco el encargado\nconst proveedorId = $input.first().json.PROVEEDOR_ID || '';\n\n// Obtener fecha y hora actuales con zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Intentar leer variables externas con fallback\nlet telefono = '';\ntry {\n  telefono = $(telefonoNode).first().json['Nº DE TELÉFONO'] || '';\n} catch (e) {\n  telefono = '';\n}\n\nlet encargado = '';\ntry {\n  encargado = $(encargadoNode).first().json.FINCA || '';\n} catch (e) {\n  encargado = '';\n}\n\n// Filtrar items válidos\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTOS);\n\n// Si no hay productos válidos, devolver mensaje genérico\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos confirmados para enviar de *${encargado}* el día de hoy. ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: telefono,\n        PROVEEDOR_ID: proveedorId,\n      },\n    },\n  ];\n}\n\n// Agrupar productos por número de pedido\nconst agrupados = {};\nfor (const item of itemsValidos) {\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  const cliente = item.json.NOMBRE_CLIENTE || 'SIN_CLIENTE';\n\n  if (!agrupados[numPedido]) {\n    agrupados[numPedido] = {\n      cliente,\n      productos: []\n    };\n  }\n\n  agrupados[numPedido].productos.push(\n    `- ${item.json.CANT_PALETS} palets (${item.json.CANT_CAJAS} cajas) - ${item.json.PRODUCTOS}\\n `\n  );\n}\n\n// Construir mensaje resumen\nlet mensaje = `${saludo}, se envía el reporte de *pedidos listos para entregar* 📦\\n`;\nmensaje += `Por favor confirma la salida de los pedidos o indica novedades:\\n\\n`;\n\nfor (const numPedido in agrupados) {\n  const dataPedido = agrupados[numPedido];\n  mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n  mensaje += `Cliente: ${dataPedido.cliente}\\n`;\n  mensaje += dataPedido.productos.join('\\n') + '\\n\\n';\n}\n\n// Salida final\nreturn [\n  {\n    json: {\n      MENSAJE_RESUMEN: mensaje.trim(),\n      FECHA: new Date().toISOString().split('T')[0],\n      ENTREGA: '', // tu input no trae este campo\n      TELEFONO: telefono,\n      PROVEEDOR_ID: proveedorId,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -192,
+        144
+      ],
+      "id": "e1778635-2b87-45d0-bc26-a9d292ca04e3",
+      "name": "confirmacion pedido"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6c322d42-a17f-43e0-a1c5-1809dd586999",
+              "name": "Message",
+              "value": "={{ $('Start').item.json.Message }}",
+              "type": "string"
+            },
+            {
+              "id": "69a6165d-a98b-4e5c-900a-e6f5940b3c1a",
+              "name": "NUM_PEDIDO",
+              "value": "={{ $json.NUM_PEDIDO }}",
+              "type": "string"
+            },
+            {
+              "id": "e8ac610f-46d3-4ec1-ae32-4b23c6627dd7",
+              "name": "PRODUCTOS",
+              "value": "={{ $json.PRODUCTOS }}",
+              "type": "string"
+            },
+            {
+              "id": "7ec320eb-31d8-4078-af7d-93f2d79f0535",
+              "name": "NOMBRE_CLIENTE",
+              "value": "={{ $json.NOMBRE_CLIENTE }}",
+              "type": "string"
+            },
+            {
+              "id": "0e7ff6a1-173c-4d9d-a061-688ec9971827",
+              "name": "CANT_PALETS",
+              "value": "={{ $json.CANT_PALETS }}",
+              "type": "number"
+            },
+            {
+              "id": "ffb284bb-ea92-4287-8f1e-98ba337a9bee",
+              "name": "CAJAS",
+              "value": "={{ $json.CAJAS }}",
+              "type": "string"
+            },
+            {
+              "id": "722f0154-e834-4d11-a1f1-043b4b8a9605",
+              "name": "CANT_CAJAS",
+              "value": "={{ $json.CANT_CAJAS }}",
+              "type": "number"
+            },
+            {
+              "id": "b18991c5-2648-4952-92f1-ce87ae2d7403",
+              "name": "STATUS",
+              "value": "={{ $json.STATUS }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -416,
+        144
+      ],
+      "id": "a2c128f7-dd68-4603-840b-0b81cc04e3b4",
+      "name": "dataResumen"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1004db91-8994-428e-b18f-b52445816a4b",
+              "name": "MENSAJE_RESUMEN",
+              "value": "={{ $json.MENSAJE_RESUMEN }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        144
+      ],
+      "id": "4ecbf461-6857-4733-be17-a80ae8b3f109",
+      "name": "Return"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Message",
+              "type": "any"
+            }
+          ]
+        }
+      },
+      "id": "e690ee01-44f5-4695-86de-3eac660f87cf",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -1632,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 88857449,
+          "mode": "list",
+          "cachedResultName": "Pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=88857449"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NUM_PEDIDO",
+              "lookupValue": "=PED-{{ $json.output.NUM_PEDIDO }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1056,
+        144
+      ],
+      "id": "95eb1d49-f65d-48e9-94e6-6aff88178395",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
+            },
+            {
+              "lookupColumn": "STATUS",
+              "lookupValue": "Confirmado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -960,
+        656
+      ],
+      "id": "d621a3fb-b630-49d9-acfd-4fee6e598084",
+      "name": "Google Sheets3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.Message }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "NUM_PEDIDO",
+              "description": "Solo el numero del pedido completo sin eliminar el o si llega",
+              "required": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        -1408,
+        32
+      ],
+      "id": "24f48454-6083-4ba7-bfa5-a29e84651c3e",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        256
+      ],
+      "id": "424af995-2c3e-468d-8a9e-0b50caac98b4",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2f99cda3-d649-4edc-a17e-479ae66f4e7e",
+              "leftValue": "={{ $json.PROVEEDOR_ID }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1408,
+        560
+      ],
+      "id": "98ee5c13-2dba-4d8b-81b0-3c71cec632e0",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1004db91-8994-428e-b18f-b52445816a4b",
+              "name": "MENSAJE_RESUMEN",
+              "value": "=debes enviar un id de provedor valido: \\n\n{{ $json.mensaje }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        464
+      ],
+      "id": "13245d5c-d912-4ee4-aa64-1fb4a7f0c5a2",
+      "name": "Return1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1184,
+        464
+      ],
+      "id": "c792e0da-1fa3-4ea2-9c64-a2cf122aabc5",
+      "name": "Get row(s) in sheet1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Recorremos todos los items que entran al nodo\nconst lista = items.map(item => {\n  const p = item.json;\n  return `${p.FINCA.trim()} - ${p.PROVEEDOR_ID}`;\n}).join('\\n');\n\n// Devolvemos un solo mensaje\nreturn [{\n  json: {\n    mensaje: lista\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        464
+      ],
+      "id": "81e17e0f-b1f9-4567-bb34-f028ae6584f5",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Configuración inicial\nconst zonaHoraria = 'America/Bogota';\nconst telefonoNode = 'dataResumen';   // nodo de donde saco el teléfono\nconst encargadoNode = 'Get suplier1'; // nodo de donde saco el encargado\nconst proveedorId = $input.first().json.PROVEEDOR_ID;\n\n// Obtener fecha y hora actuales con zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Intentar leer variables externas con fallback\nlet telefono = '';\ntry {\n  telefono = $(telefonoNode).first().json['Nº DE TELÉFONO'] || '';\n} catch (e) {\n  telefono = '';\n}\n\nlet encargado = '';\ntry {\n  encargado = $input.first().json.FINCA || '';\n} catch (e) {\n  encargado = '';\n}\n\n// Filtrar items válidos: deben tener un producto definido (ajusta según tu caso)\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTOS);\n\n// Si no hay productos válidos, devolver mensaje bonito\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos Confirmados por el Proveedor *${encargado}* el día de hoy. ¡Que tengas un excelente día! ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: telefono,\n      },\n    },\n  ];\n}\n\n// Agrupar productos por finca y por número de pedido\nconst agrupados = {};\nlet fechaEntrega = '';\nlet entregaTexto = '';\n\nfor (const item of itemsValidos) {\n  const finca = item.json.FINCA;\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  if (!agrupados[finca]) agrupados[finca] = {};\n  if (!agrupados[finca][numPedido]) agrupados[finca][numPedido] = [];\n\n  agrupados[finca][numPedido].push(\n    `- ${item.json.CANT_PALETS} x ${item.json.CANT_CAJAS} - ${item.json.PRODUCTOS} - ${item.json.PALET} - ${item.json.CAJAS}`\n  );\n\n  fechaEntrega = item.json.FECHA;\n  entregaTexto = item.json.ENTREGA;\n}\n\n// Construir mensajes para cada finca\nconst mensajes = [];\n\nfor (const finca in agrupados) {\n  let mensaje = `${saludo} - \\nSe envía Reporte de pedidos solicitados la finca *${encargado}* para el ${fechaEntrega}.\\nPor favor responder las novedades o confirmar el status del pedido. (Confirmando numero de pedido y ID del proveedor: *${proveedorId}*\\n\\n`;\n\n  for (const numPedido in agrupados[finca]) {\n    mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n    mensaje += agrupados[finca][numPedido].join('\\n\\n') + '\\n\\n';\n  }\n\n  mensajes.push({\n    json: {\n      FINCA: finca,\n      MENSAJE_RESUMEN: mensaje.trim(),\n      FECHA: fechaEntrega,\n      ENTREGA: entregaTexto,\n      TELEFONO: telefono,\n      PROVEEDOR_ID: proveedorId,\n    },\n  });\n}\n\nreturn mensajes;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -736,
+        656
+      ],
+      "id": "1c75d08c-25df-451e-a6c4-a2ddf3266278",
+      "name": "confirmacion pedido1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6c322d42-a17f-43e0-a1c5-1809dd586999",
+              "name": "Message",
+              "value": "={{ $('Start').item.json.Message }}",
+              "type": "string"
+            },
+            {
+              "id": "5d52e8ca-e823-4ded-bbb7-7f98124891f0",
+              "name": "Nº DE TELÉFONO",
+              "value": "={{ $json['Nº DE TELÉFONO'] }}",
+              "type": "string"
+            },
+            {
+              "id": "aed120c4-08d5-4e03-ada9-7966054f8d66",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "309d96c7-076b-4cca-a725-ae1de16f9de5",
+              "name": "FINCA",
+              "value": "={{ $json.FINCA }}",
+              "type": "string"
+            },
+            {
+              "id": "86ff34a0-f64e-41cc-9be6-250fb29c388b",
+              "name": "FECHA",
+              "value": "={{ $now.format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "e8cd66ef-2f43-4d59-84bd-a98475ca4835",
+              "name": "fecha mañana",
+              "value": "={{$now.plus({ days: 1 }).toFormat('dd/MM/yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1184,
+        656
+      ],
+      "id": "cc440c1f-210b-49dc-b0ce-60b413d478b7",
+      "name": "dataResumen1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1004db91-8994-428e-b18f-b52445816a4b",
+              "name": "MENSAJE_RESUMEN",
+              "value": "={{ $json.MENSAJE_RESUMEN }}",
+              "type": "string"
+            },
+            {
+              "id": "7de93984-8395-4cd6-a95d-0f64c83fa848",
+              "name": "FINCA",
+              "value": "={{ $json.FINCA }}",
+              "type": "string"
+            },
+            {
+              "id": "88172e06-9228-4e79-bb3d-0b1c65100d8e",
+              "name": "PROVEEDOR_ID",
+              "value": "={{ $json.PROVEEDOR_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "179c2b06-7e5e-42ef-aaca-025bb011f8e4",
+              "name": "TELEFONO",
+              "value": "={{ $json.TELEFONO }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -512,
+        656
+      ],
+      "id": "7cda9077-b8ae-481b-b70c-4e612caedf1d",
+      "name": "Return2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1996169798,
+          "mode": "list",
+          "cachedResultName": "Proveedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=1996169798"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.output.PROVEEDOR_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1632,
+        560
+      ],
+      "id": "19e3cefd-d311-4871-a227-f062521f9bf3",
+      "name": "Get row(s) in sheet2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Entrada del nodo\nconst itemsInput = items;\n\n// Verificar si TODOS los items tienen STATUS = \"Recibido\"\nconst allRecibido = itemsInput.every(item => item.json.STATUS === \"Recibido\");\nconst pedido = $('Information Extractor').first().json.output.NUM_PEDIDO\n\nif (allRecibido) {\n  // Si todos están \"Recibido\", devolver todos los items originales\n  return itemsInput;\n} else {\n  // Si alguno no está \"Recibido\", devolver un único false\n  return [{ json: { result: false, pedido: pedido } }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -848,
+        144
+      ],
+      "id": "6d4ab7ed-1788-4806-964a-e6ef4daa6633",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2f53f817-84b2-4604-ad83-a152a450d739",
+              "leftValue": "={{ $json.result }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -640,
+        144
+      ],
+      "id": "295c8f72-8679-4de6-bc28-768b5cf3590b",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1004db91-8994-428e-b18f-b52445816a4b",
+              "name": "MENSAJE_RESUMEN",
+              "value": "=El pedido no esta listo aun para entregar, \nverifica que el numero de pedido sea el correcto: {{ $json.pedido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        -80
+      ],
+      "id": "b4d7ac6b-9932-4e2f-a760-cd98c07eb088",
+      "name": "Return3"
+    }
+  ],
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "Message": "informe pedido 0196"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-10T02:34:19.468Z",
+      "updatedAt": "2025-09-10T02:34:19.468Z",
+      "role": "workflow:owner",
+      "workflowId": "PMLLkJbG7j1wzPCB",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-10T07:45:17.033Z",
+  "versionId": "1f39934d-30af-4d87-83b8-f752dc2a1b9e"
+}
