@@ -160,8 +160,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -144,
-        32
+        -192,
+        64
       ],
       "id": "033f7fe7-9182-4667-9726-16a9e076bca5",
       "name": "Google Sheets3",
@@ -175,13 +175,13 @@
     },
     {
       "parameters": {
-        "jsCode": "// Configuración inicial\nconst zonaHoraria = 'America/Bogota';\nconst telefonoNode = 'dataResumen';   // nodo de donde saco el teléfono\nconst encargadoNode = 'Get suplier1'; // nodo de donde saco el encargado\nconst proveedorId = $input.first().json.PROVEEDOR_ID;\n\n// Obtener fecha y hora actuales con zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Intentar leer variables externas con fallback\nlet telefono = '';\ntry {\n  telefono = $(telefonoNode).first().json['Nº DE TELÉFONO'] || '';\n} catch (e) {\n  telefono = '';\n}\n\nlet encargado = '';\ntry {\n  encargado = $input.first().json.FINCA || '';\n} catch (e) {\n  encargado = '';\n}\n\n// Filtrar items válidos: deben tener un producto definido (ajusta según tu caso)\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTOS);\n\n// Si no hay productos válidos, devolver mensaje bonito\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos Confirmados por el Proveedor *${encargado}* el día de hoy. ¡Que tengas un excelente día! ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: telefono,\n      },\n    },\n  ];\n}\n\n// Agrupar productos por finca y por número de pedido\nconst agrupados = {};\nlet fechaEntrega = '';\nlet entregaTexto = '';\n\nfor (const item of itemsValidos) {\n  const finca = item.json.FINCA;\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  if (!agrupados[finca]) agrupados[finca] = {};\n  if (!agrupados[finca][numPedido]) agrupados[finca][numPedido] = [];\n\n  agrupados[finca][numPedido].push(\n    `- ${item.json.CANT_PALETS} x ${item.json.CANT_CAJAS} - ${item.json.PRODUCTOS} - ${item.json.PALET} - ${item.json.CAJAS}`\n  );\n\n  fechaEntrega = item.json.FECHA;\n  entregaTexto = item.json.ENTREGA;\n}\n\n// Construir mensajes para cada finca\nconst mensajes = [];\n\nfor (const finca in agrupados) {\n  let mensaje = `${saludo} - \\nSe envía Reporte de pedidos solicitados la finca *${encargado}* para el ${fechaEntrega}.\\nPor favor responder las novedades o confirmar el status del pedido. (Confirmando numero de pedido y ID del proveedor: *${proveedorId}*\\n\\n`;\n\n  for (const numPedido in agrupados[finca]) {\n    mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n    mensaje += agrupados[finca][numPedido].join('\\n\\n') + '\\n\\n';\n  }\n\n  mensajes.push({\n    json: {\n      FINCA: finca,\n      MENSAJE_RESUMEN: mensaje.trim(),\n      FECHA: fechaEntrega,\n      ENTREGA: entregaTexto,\n      TELEFONO: telefono,\n      PROVEEDOR_ID: proveedorId,\n    },\n  });\n}\n\nreturn mensajes;\n"
+        "jsCode": "// Configuración inicial\nconst zonaHoraria = 'America/Bogota';\nconst telefonoNode = 'dataResumen';   // nodo de donde saco el teléfono\nconst encargadoNode = 'Get suplier1'; // nodo de donde saco el encargado\nconst proveedorId = $input.first().json.PROVEEDOR_ID;\n\n// Obtener fecha y hora actuales con zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Intentar leer variables externas con fallback\nlet telefono = '';\ntry {\n  telefono = $(telefonoNode).first().json['Nº DE TELÉFONO'] || '';\n} catch (e) {\n  telefono = '';\n}\n\nlet encargado = '';\ntry {\n  encargado = $input.first().json.FINCA || '';\n} catch (e) {\n  encargado = '';\n}\n\n// Filtrar items válidos: deben tener un producto definido\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTOS);\n\n// Si no hay productos válidos, devolver mensaje bonito\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos Confirmados por el Proveedor *${encargado}* el día de hoy. ¡Que tengas un excelente día! ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: telefono,\n      },\n    },\n  ];\n}\n\n// Agrupar productos por finca y por número de pedido\nconst agrupados = {};\nlet fechaEntrega = '';\nlet entregaTexto = '';\n\nfor (const item of itemsValidos) {\n  const finca = item.json.FINCA;\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  if (!agrupados[finca]) agrupados[finca] = {};\n  if (!agrupados[finca][numPedido]) agrupados[finca][numPedido] = {};\n\n  // clave única para consolidar: producto + palet + cajas\n  const clave = `${item.json.PRODUCTOS}__${item.json.PALET}__${item.json.CAJAS}`;\n\n  if (!agrupados[finca][numPedido][clave]) {\n    agrupados[finca][numPedido][clave] = {\n      producto: item.json.PRODUCTOS,\n      palet: item.json.PALET,\n      cajas: item.json.CAJAS,\n      cantCajas: item.json.CANT_CAJAS,\n      cantPalets: 0,\n    };\n  }\n\n  agrupados[finca][numPedido][clave].cantPalets += Number(item.json.CANT_PALETS) || 0;\n\n  fechaEntrega = item.json.FECHA;\n  entregaTexto = item.json.ENTREGA;\n}\n\n// Construir mensajes para cada finca\nconst mensajes = [];\n\nfor (const finca in agrupados) {\n  let mensaje = `${saludo} - \\nSe envía Reporte de pedidos solicitados la finca *${encargado}* para el ${fechaEntrega}.\\nPor favor responder las novedades o confirmar el status del pedido. (Confirmando numero de pedido y ID del proveedor: *${proveedorId}*)\\n\\n`;\n\n  for (const numPedido in agrupados[finca]) {\n    mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n\n    const productosTexto = Object.values(agrupados[finca][numPedido]).map(p =>\n      `- ${p.cantPalets} x ${p.cantCajas} - ${p.producto} - ${p.palet} - ${p.cajas}`\n    );\n\n    mensaje += productosTexto.join('\\n\\n') + '\\n\\n';\n  }\n\n  mensajes.push({\n    json: {\n      FINCA: finca,\n      MENSAJE_RESUMEN: mensaje.trim(),\n      FECHA: fechaEntrega,\n      ENTREGA: entregaTexto,\n      TELEFONO: telefono,\n      PROVEEDOR_ID: proveedorId,\n    },\n  });\n}\n\nreturn mensajes;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        176,
-        32
+        32,
+        64
       ],
       "id": "0b3fdc2f-c90f-4da9-a23e-4d2a579e67a3",
       "name": "confirmacion pedido"
@@ -234,7 +234,7 @@
       "typeVersion": 3.4,
       "position": [
         -416,
-        32
+        64
       ],
       "id": "58b92fed-0e0e-486a-978b-c8ce15da449b",
       "name": "dataResumen"
@@ -274,8 +274,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        464,
-        32
+        256,
+        64
       ],
       "id": "5398f914-54f6-4529-96bc-a55d87a512ae",
       "name": "Return"
@@ -297,7 +297,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
         -1440,
-        32
+        -32
       ]
     },
     {
@@ -318,8 +318,8 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1.2,
       "position": [
-        -1232,
-        32
+        -1216,
+        -32
       ],
       "id": "0f2ec74b-811c-4368-b173-976f19efc339",
       "name": "Information Extractor"
@@ -331,8 +331,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -1312,
-        240
+        -1144,
+        192
       ],
       "id": "423adb4b-7e62-4cad-993e-68eaef13d083",
       "name": "Google Gemini Chat Model",
@@ -372,8 +372,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -880,
-        32
+        -864,
+        -32
       ],
       "id": "40b4350c-4f9b-49a1-8ca0-15a749245e3e",
       "name": "Get row(s) in sheet",
@@ -413,8 +413,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -672,
-        32
+        -640,
+        -32
       ],
       "id": "b6439d0b-8267-473f-8bbb-f2806b825bb2",
       "name": "If"
@@ -426,7 +426,7 @@
             {
               "id": "1004db91-8994-428e-b18f-b52445816a4b",
               "name": "MENSAJE_RESUMEN",
-              "value": "=debes enviar un id de provedor valido: \\n\n{{ $json.mensaje }}",
+              "value": "=debes enviar un id de provedor valido: \\n\\n\n{{ $json.mensaje }}",
               "type": "string"
             }
           ]
@@ -436,7 +436,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -64,
+        32,
         -128
       ],
       "id": "9a58d38b-470c-4246-8336-38a6b58eea9f",
@@ -463,7 +463,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -512,
+        -416,
         -128
       ],
       "id": "af627bf0-4c70-4f24-ba00-55a92858b7f2",
@@ -483,7 +483,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -304,
+        -192,
         -128
       ],
       "id": "aa53b584-892d-489b-8b4b-347cdfdd2ed2",
@@ -517,6 +517,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-10T01:29:18.807Z",
-  "versionId": "53dc004b-bcac-4c0b-9251-d9e17b901265"
+  "updatedAt": "2025-09-11T22:06:08.818Z",
+  "versionId": "87aa23e2-77ce-487f-afb1-3be311baf7c3"
 }
