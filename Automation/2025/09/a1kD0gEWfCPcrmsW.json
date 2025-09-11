@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Data": {
       "main": [
@@ -134,33 +134,11 @@
         ]
       ]
     },
-    "Split Out": {
-      "main": [
-        [
-          {
-            "node": "Get row(s) in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Aggregate": {
       "main": [
         [
           {
             "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get row(s) in sheet": {
-      "main": [
-        [
-          {
-            "node": "Aggregate",
             "type": "main",
             "index": 0
           }
@@ -316,7 +294,7 @@
         ],
         [
           {
-            "node": "Split Out",
+            "node": "Get solicitud",
             "type": "main",
             "index": 0
           }
@@ -344,6 +322,17 @@
     "Pedido Completo": {
       "main": [
         []
+      ]
+    },
+    "Get solicitud": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -408,7 +397,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -816,
+        -848,
         320
       ],
       "id": "577d4556-293e-4510-aa3c-018c4ace766c",
@@ -443,7 +432,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -1936,
+        -1968,
         32
       ],
       "id": "4006ec85-32e3-423b-aa35-29142eac2143",
@@ -463,7 +452,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -144,
+        -176,
         224
       ],
       "id": "9d9b1fcc-2638-4ddf-a6eb-7169fbfe3f04",
@@ -474,13 +463,13 @@
         "promptType": "define",
         "text": "=📦 PEDIDO ORIGINAL:\n{{ JSON.stringify ($json.data) }}\n\n📨 MENSAJE DEL ENCARGADO:\n{{ $('quoteMessage').item.json.Message }}\n\nFECHA: {{ $('quoteMessage').item.json.FECHA }}\nPROVEEDOR_ID: {{ $('quoteMessage').item.json.PROVEEDOR_ID }}\nFINCA: {{ $('quoteMessage').item.json.FINCA }}\nTELEFONO: {{ $('quoteMessage').item.json.telefono }}",
         "options": {
-          "systemMessage": "= Eres un sistema de validación de pedidos agrícolas. Tu tarea es analizar si el proveedor ha confirmado correctamente todos los productos del pedido, comparando el mensaje del encargado con la lista original de productos solicitados.\n\n ### Instrucciones importantes:\n\n * Los nombres de los campos en la respuesta JSON deben **mantenerse exactamente iguales**, incluyendo mayúsculas y guiones bajos. **No debes cambiar nunca ningún nombre de atributo.**\n\n   * Por ejemplo: `row_number`,  `PROVEEDOR_ID`, `NUM_PEDIDO`, `CANT_PALETS`, `CANT_CAJAS`, `PALET`, `CAJAS`, `FECHA`, `PRODUCTO`, `STATUS`, `comentarios`, `comentarios_adicionales`.\n   * Es obligatorio respetar estos nombres sin alteraciones ortográficas o estilísticas.\n\n ### Reglas de interpretación:\n\n * El formato del pedido es una lista de productos, cada uno con un número de pedido, descripción del producto, cantidad de palets, cantidad de cajas por palet, tipo de palet y tipo de caja.\n * En el mensaje del encargado, cuando menciona “X palets x Y” significa X palets con Y cajas por cada palet.\n * Si el mensaje indica solo “X palets” o “X x Y” pero no especifica cajas, debes asumir que cada palet tiene la misma cantidad de cajas solicitadas originalmente.\n * Si el mensaje dice menos o más palets o cajas que las solicitadas, debes marcar el producto como \"faltante\" o \"sobrante\", según sea el caso y \"confirmado\" solo la cantidad que confirma.\n * Si no menciona un producto en absoluto, se considera faltante, salvo que el mensaje dé a entender que el resto están confirmados (por ejemplo, si dice \"solo falta X\", \"ok\", etc.).\n * Si menciona más palets o más cajas que las solicitadas, se considera que hay sobrantes.\n * Debes ser tolerante con descripciones similares o nombres abreviados del producto.\n * Siempre que sea posible, haz coincidir los productos basándote en la descripción, aunque el nombre no coincida exactamente.\n\n ### Salida esperada:\n\n Devuelve una **respuesta en formato JSON válido** con la siguiente estructura exacta:\nincluyendo la cantidad de tokens consumidos en la consulta\n{\n  \"pedido_completo\": true | false,\n  \"PROVEEDOR_ID\": \"...\",\n  \"faltantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", \n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo la cantidad faltante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Solicitado\",\n      \"COMENTARIOS\": \"...\" //  de la novedad\n    }\n  ],\n  \"sobrantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\",\n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ...,  // solo la cantidad sobrante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\"\n    }\n  ],\n  \"confirmados\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", // siempre se debe enviar\n      \"PROVEEDOR_ID\": \"...\",  //siempre se debe enviar\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo los confirmados\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Confirmado\",\n      \"COMENTARIOS\": \"...\" este valor solo se envia si hay novedades con el producto, si hay faltantes, si no se omite.\n    }\n  ],\n  \"comentarios_adicionales\": \"...\",\n  \"Mensaje para el proveedor\": \"...\" //siempre dar un breve mensaje de confirmacion al proveedor de los productos confirmados, los que rechazan se solicitaran a otro proveedor, pero no se le informa. \n}"
+          "systemMessage": "= Eres un sistema de validación de pedidos agrícolas. Tu tarea es analizar si el proveedor ha confirmado correctamente todos los productos del pedido, comparando el mensaje del encargado con la lista original de productos solicitados.\n\n ### Instrucciones importantes:\n\n * Los nombres de los campos en la respuesta JSON deben **mantenerse exactamente iguales**, incluyendo mayúsculas y guiones bajos. **No debes cambiar nunca ningún nombre de atributo.**\n\n   * Por ejemplo: `row_number`,  `PROVEEDOR_ID`, `NUM_PEDIDO`, `CANT_PALETS`, `CANT_CAJAS`, `PALET`, `CAJAS`, `FECHA`, `PRODUCTO`, `STATUS`, `comentarios`, `comentarios_adicionales`.\n   * Es obligatorio respetar estos nombres sin alteraciones ortográficas o estilísticas.\n\n ### Reglas de interpretación:\n\n * El formato del pedido es una lista de productos, cada uno con un número de pedido, descripción del producto, cantidad de palets, cantidad de cajas por palet, tipo de palet y tipo de caja.\n * En el mensaje del encargado, cuando menciona “X palets x Y” significa X palets con Y cajas por cada palet.\n * Si el mensaje indica solo “X palets” o “X x Y” pero no especifica cajas, debes asumir que cada palet tiene la misma cantidad de cajas solicitadas originalmente.\n * Si el mensaje dice menos o más palets o cajas que las solicitadas, debes marcar el producto como \"faltante\" o \"sobrante\", según sea el caso y \"confirmado\" solo la cantidad que confirma.\n * Si no menciona un producto en absoluto, se considera faltante, salvo que el mensaje dé a entender que el resto están confirmados (por ejemplo, si dice \"solo falta X\", \"ok\", etc.).\n * Si menciona más palets o más cajas que las solicitadas, se considera que hay sobrantes.\n * Debes ser tolerante con descripciones similares o nombres abreviados del producto.\n * Siempre que sea posible, haz coincidir los productos basándote en la descripción, aunque el nombre no coincida exactamente.\n\n ### Salida esperada:\n\n Devuelve una **respuesta en formato JSON válido** con la siguiente estructura exacta:\nincluyendo la cantidad de tokens consumidos en la consulta\n{\n  \"pedido_completo\": true | false,\n  \"PROVEEDOR_ID\": \"...\",\n  \"faltantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", \n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo la cantidad faltante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Solicitado\",\n      \"COMENTARIOS\": \"...\" //  de la novedad\n    }\n  ],\n  \"sobrantes\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\",\n      \"PROVEEDOR_ID\": \"...\",\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ...,  // solo la cantidad sobrante\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\"\n    }\n  ],\n  \"confirmados\": [\n    {\n      \"row_number\": \"...\",\n      \"NUM_PEDIDO\": \"...\",\n      \"FECHA\": \"...\", // siempre se debe enviar\n      \"PROVEEDOR_ID\": \"...\",  //siempre se debe enviar\n      \"PRODUCTO\": \"...\",\n      \"CANT_PALETS\": ..., // solo los confirmados\n      \"CANT_CAJAS\": ...,\n      \"PALET\": \"...\",\n      \"CAJAS\": \"...\",\n      \"STATUS\": \"Confirmado\",\n      \"COMENTARIOS\": \"...\" este valor solo se envia si hay novedades con el producto, si hay faltantes, si no se omite.\n    }\n  ],\n  \"comentarios_adicionales\": \"...\",\n  \"Mensaje para el proveedor\": \"...\" //siempre dar un breve mensaje de confirmacion al proveedor de los productos confirmados, los que rechazan se solicitaran a otro proveedor, pero no se le informa. \n}\n\nIMPORTANTE: Lo que se envia en faltante es porque el proveedor mensiono que no lo envia o envia incompleto, si el proveedor dice que lo envia mañana u otra cosa, no se agrega a faltantes ya que ahi es solo lo que el proveedor no va a enviar nunca, lo que rechaza."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        1184,
+        720,
         320
       ],
       "id": "5172b805-de36-4646-8df2-6d4ea2942ed5",
@@ -494,7 +483,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1264,
+        792,
         544
       ],
       "id": "a61f6f69-53d1-4fcd-afc6-2d4624e381d9",
@@ -513,7 +502,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1888,
+        1424,
         320
       ],
       "id": "7e87f8b1-c50d-4462-a3b6-e4074fba3820",
@@ -560,7 +549,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1712,
+        -1744,
         224
       ],
       "id": "c444b243-d7f0-4cb2-9c92-af57f9c83fe2",
@@ -601,7 +590,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1712,
+        -1744,
         32
       ],
       "id": "2e884336-5fdd-4228-8d9a-98578a5c910e",
@@ -636,7 +625,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -1936,
+        -1968,
         224
       ],
       "id": "fbcc9c1c-fcbe-4458-ae08-02e3d5b7069f",
@@ -692,7 +681,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -368,
+        -400,
         320
       ],
       "id": "b2e0eb0d-cbed-450d-a523-649a200df0ab",
@@ -703,7 +692,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -144,
+        -176,
         416
       ],
       "id": "661d62c3-0b4a-4111-9221-960591d23b45",
@@ -714,31 +703,17 @@
         "promptType": "define",
         "text": "={{ $json.output }}",
         "options": {
-          "systemMessage": "=Eres un sistema de validación de integridad de atributos en respuestas JSON de pedidos agrícolas.\n\n### Objetivo:\nTu única responsabilidad es verificar que todos los objetos dentro de las listas (`faltantes`, `confirmados`, `sobrantes`) y atributos de nivel superior tengan los **nombres de atributos correctos**, completos y normalizados.\n\n### Instrucciones estrictas:\n\n- **No debes cambiar la lógica, contenido o clasificación de los productos.**\n- No debes agregar, eliminar ni mover productos entre listas. Solo debes corregir atributos incorrectos.\n- Asegúrate de que los nombres de los atributos coincidan exactamente con estos:\n\n```\nrow_number\nPROVEEDOR_ID\nNUM_PEDIDO\nFECHA\nPRODUCTO\nCANT_PALETS\nCANT_CAJAS\nPALET\nCAJAS\nSTATUS\nCOMENTARIOS\ncomentarios_adicionales\nMensaje para el proveedor\n\n````\n\n- Si hay atributos mal escritos (por ejemplo: `PROVEVEEDOR_ID`, `CANT_PALET`), debes corregirlos por su forma exacta.\n- Si algún atributo obligatorio está faltando (por ejemplo: `FECHA`, `PROVEEDOR_ID`), intenta completarlo utilizando un valor global presente en el JSON principal.\n- **Mantén el mismo orden de listas y elementos**, solo corrige los nombres y completa valores faltantes si es posible.\n- Los valores pueden ser string o numéricos según el agente 1. No modifiques el tipo, solo asegura que existan y estén bien nombrados.\n- Devuelve únicamente el JSON corregido (no uses markdown, ni comillas, ni etiquetas como ```json).\n\n### Entrada esperada:\nUn JSON generado por otro agente, que puede contener errores ortográficos o estructurales en los atributos.\n\n### Salida esperada:\nEl mismo JSON, corregido solo a nivel de nombres de atributos, asegurando la estructura correcta según el estándar definido.\n````\n\n---\n\n### Ejemplo de error que corregiría el agente:\n\n**Entrada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALET\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n\n\n**Salida esperada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALETS\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n"
+          "systemMessage": "=Eres un sistema de validación de integridad de atributos en respuestas JSON de pedidos agrícolas.\n\n### Objetivo:\nTu única responsabilidad es verificar que todos los objetos dentro de las listas (`faltantes`, `confirmados`, `sobrantes`) y atributos de nivel superior tengan los **nombres de atributos correctos**, completos y normalizados.\n\n### Instrucciones estrictas:\n\n- **No debes cambiar la lógica, contenido o clasificación de los productos.**\n- No debes agregar, eliminar ni mover productos entre listas. Solo debes corregir atributos incorrectos.\n- Asegúrate de que los nombres de los atributos coincidan exactamente con estos:\n\n```\nrow_number\nPROVEEDOR_ID\nNUM_PEDIDO\nFECHA\nPRODUCTO\nCANT_PALETS\nCANT_CAJAS\nPALET\nCAJAS\nSTATUS\nCOMENTARIOS\ncomentarios_adicionales\nMensaje para el proveedor\n\n````\n\n- Si hay atributos mal escritos (por ejemplo: `PROVEVEEDOR_ID`, `CANT_PALET`), debes corregirlos por su forma exacta.\n- Si algún atributo obligatorio está faltando (por ejemplo: `FECHA`, `PROVEEDOR_ID`), intenta completarlo utilizando un valor global presente en el JSON principal.\n- **Mantén el mismo orden de listas y elementos**, solo corrige los nombres y completa valores faltantes si es posible.\n- Los valores pueden ser string o numéricos según el agente 1. No modifiques el tipo, solo asegura que existan y estén bien nombrados.\n- Devuelve únicamente el JSON corregido (no uses markdown, ni comillas, ni etiquetas como ```json).\n\n### Entrada esperada:\nUn JSON generado por otro agente, que puede contener errores ortográficos o estructurales en los atributos.\n\n### Salida esperada:\nEl mismo JSON, corregido solo a nivel de nombres de atributos, asegurando la estructura correcta según el estándar definido.\n````\n\n---\n\n### Ejemplo de error que corregiría el agente:\n\n**Entrada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALET\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n\n\n**Salida esperada:**\n\n{\n  \"confirmados\": [\n    {\n      \"row_number\": \"1\",\n      \"NUM_PEDIDO\": \"P-123\",\n      \"FECHA\": \"10/06/2025\",\n      \"PROVEEDOR_ID\": \"1234\",\n      \"PRODUCTO\": \"TOMATE\",\n      \"CANT_PALETS\": 2,\n      \"CANT_CAJAS\": 40,\n      \"PALET\": \"EURO\",\n      \"CAJAS\": \"BANDEJA\",\n      \"STATUS\": \"Confirmado\"\n    }\n  ]\n}\n\nMUY IMPORTANTE QUE EL ATRIBUTO 'PROVEEDOR_ID' debe enviarse exacto asi: 'PROVEEDOR_ID', si llega diferente como PROVEVEEDOR_ID, se corregira."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        1536,
+        1072,
         320
       ],
       "id": "97877125-194e-404a-b5cc-b70ea74682b6",
       "name": "AI Agent2"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "productos",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        304,
-        320
-      ],
-      "id": "00edac5b-c043-4f6a-81b5-781ccfbc8312",
-      "name": "Split Out"
     },
     {
       "parameters": {
@@ -748,80 +723,11 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        752,
+        496,
         320
       ],
       "id": "d9a181c2-9958-4ef9-a5d4-858e244b95e6",
       "name": "Aggregate"
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
-          "mode": "list",
-          "cachedResultName": "SOLICITUD DE PEDIDOS",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 581820534,
-          "mode": "list",
-          "cachedResultName": "Solicitud a Proveedor",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "NUM_PEDIDO",
-              "lookupValue": "={{ $json.NUM_PEDIDO }}"
-            },
-            {
-              "lookupColumn": "PRODUCTOS",
-              "lookupValue": "={{ $json.PRODUCTO }}"
-            },
-            {
-              "lookupColumn": "CANT_PALETS",
-              "lookupValue": "={{ $json.CANT_PALETS }}"
-            },
-            {
-              "lookupColumn": "CANT_CAJAS",
-              "lookupValue": "={{ $json.CANT_CAJAS }}"
-            },
-            {
-              "lookupColumn": "PALET",
-              "lookupValue": "={{ $json.PALET }}"
-            },
-            {
-              "lookupColumn": "CAJAS",
-              "lookupValue": "={{ $json.CAJAS }}"
-            },
-            {
-              "lookupColumn": "STATUS",
-              "lookupValue": "Solicitado"
-            },
-            {
-              "lookupColumn": "PROVEEDOR_ID",
-              "lookupValue": "={{ $('quoteMessage').item.json.PROVEEDOR_ID }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        528,
-        320
-      ],
-      "id": "58d2ca8b-aa9b-46d9-8327-4bd18e271f2a",
-      "name": "Get row(s) in sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "CM7JsKen8ouMDNPD",
-          "name": "hola@whitelabel.lat"
-        }
-      }
     },
     {
       "parameters": {
@@ -849,7 +755,7 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1,
       "position": [
-        -592,
+        -624,
         320
       ],
       "id": "fc54f9a4-1c53-4c2a-b546-67f7e4cfa6bd",
@@ -876,7 +782,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        -1040,
+        -1072,
         -64
       ],
       "id": "1f811b67-94bd-4020-a8e4-63b51a51d14f",
@@ -967,7 +873,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -2832,
+        -2864,
         112
       ],
       "id": "21d98668-e5a1-416c-bf34-01577dabb4a8",
@@ -1009,7 +915,7 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        -2608,
+        -2640,
         32
       ],
       "id": "d0a96d21-bc98-4808-8cab-dd002e119518",
@@ -1032,7 +938,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -2384,
+        -2416,
         32
       ],
       "id": "3b64e8b8-1c90-434f-acf1-b34409ae240b",
@@ -1059,7 +965,7 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        -2160,
+        -2192,
         32
       ],
       "id": "13f593da-d65c-4616-b5f8-da77e54b7870",
@@ -1106,7 +1012,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -3056,
+        -3088,
         -288
       ],
       "id": "cfd53319-b54e-4e2a-a9a8-a4a723fcf6bf",
@@ -1123,7 +1029,7 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        -816,
+        -848,
         128
       ],
       "id": "a24d97ce-74aa-4fb9-bd3c-1b6f8a4204c9",
@@ -1220,7 +1126,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -1264,
+        -1296,
         112
       ],
       "id": "95fe0f47-f2b2-4352-a7fb-d7efea804b5b",
@@ -1273,7 +1179,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1488,
+        -1520,
         128
       ],
       "id": "ff9a04fd-e75d-4985-a276-25458131cfb7",
@@ -1368,7 +1274,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        -1040,
+        -1072,
         128
       ],
       "name": "Call Get Resumen",
@@ -1380,7 +1286,7 @@
           "__rl": true,
           "value": "qfTWrTVXeRBj0XBv",
           "mode": "list",
-          "cachedResultName": "Get Resumen"
+          "cachedResultName": "Get Resumen Solicitado"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -1463,7 +1369,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        -1040,
+        -1072,
         320
       ],
       "name": "Call Get Resumen1",
@@ -1496,7 +1402,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        80,
+        48,
         224
       ],
       "id": "81c0f4ee-b48b-4592-837a-ed36500ffe34",
@@ -1513,7 +1419,7 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        304,
+        272,
         128
       ],
       "id": "6593b38f-00d8-4220-bc75-f1f548b9295d",
@@ -1554,7 +1460,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2112,
+        1648,
         320
       ],
       "id": "8df6df5a-040f-4156-9192-52420986e2fc",
@@ -1581,7 +1487,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2336,
+        1872,
         224
       ],
       "id": "000b8007-4f4f-4c35-a9b1-8a9124a2a829",
@@ -1609,46 +1515,59 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2336,
+        1872,
         416
       ],
       "id": "51eae9ba-38ee-4e68-b729-e02e2d3a89ab",
       "name": "Pedido Incompleto"
-    }
-  ],
-  "pinData": {
-    "Start": [
-      {
-        "json": {
-          "messaging_product": "whatsapp",
-          "metadata": {
-            "display_phone_number": "573150759897",
-            "phone_number_id": "663372310202428"
-          },
-          "contacts": [
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI",
+          "mode": "list",
+          "cachedResultName": "SOLICITUD DE PEDIDOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 581820534,
+          "mode": "list",
+          "cachedResultName": "Solicitud a Proveedor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Xq63Q1Fp7Oxu1ZCBgp8KPL8wJbjYmY6dH519Je813SI/edit#gid=581820534"
+        },
+        "filtersUI": {
+          "values": [
             {
-              "profile": {
-                "name": "Andrés Corral"
-              },
-              "wa_id": "573045809637"
-            }
-          ],
-          "messages": [
+              "lookupColumn": "STATUS",
+              "lookupValue": "Solicitado"
+            },
             {
-              "from": "573045809637",
-              "id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhgUM0Y3QUU3N0U3N0JDODJBQzZEN0MA",
-              "timestamp": "1757511734",
-              "text": {
-                "body": "confirmo 4x55 amarillo y 4x55 naranja"
-              },
-              "type": "text"
+              "lookupColumn": "PROVEEDOR_ID",
+              "lookupValue": "={{ $json.PROVEEDOR_ID }}"
             }
-          ],
-          "field": "messages"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        272,
+        320
+      ],
+      "id": "58d2ca8b-aa9b-46d9-8327-4bd18e271f2a",
+      "name": "Get solicitud",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
         }
       }
-    ]
-  },
+    }
+  ],
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -1678,6 +1597,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-09-10T13:57:43.828Z",
-  "versionId": "92749dbc-c62c-4c5a-922e-3777745d282c"
+  "updatedAt": "2025-09-11T22:06:34.465Z",
+  "versionId": "029a3027-d37a-4c66-9274-91642ad85d2b"
 }
