@@ -191,7 +191,7 @@
   "nodes": [
     {
       "parameters": {
-        "jsCode": "// Configuración inicial\nconst zonaHoraria = 'America/Bogota';\nconst telefonoNode = 'dataResumen';   // nodo de donde saco el teléfono\nconst encargadoNode = 'Get suplier1'; // nodo de donde saco el encargado\nconst proveedorId = $input.first().json.PROVEEDOR_ID || '';\n\n// Obtener fecha y hora actuales con zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Intentar leer variables externas con fallback\nlet telefono = '';\ntry {\n  telefono = $(telefonoNode).first().json['Nº DE TELÉFONO'] || '';\n} catch (e) {\n  telefono = '';\n}\n\nlet encargado = '';\ntry {\n  encargado = $(encargadoNode).first().json.FINCA || '';\n} catch (e) {\n  encargado = '';\n}\n\n// Filtrar items válidos\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTOS);\n\n// Si no hay productos válidos, devolver mensaje genérico\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos confirmados para enviar de *${encargado}* el día de hoy. ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: telefono,\n        PROVEEDOR_ID: proveedorId,\n      },\n    },\n  ];\n}\n\n// Agrupar productos por número de pedido\nconst agrupados = {};\nfor (const item of itemsValidos) {\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  const cliente = item.json.NOMBRE_CLIENTE || 'SIN_CLIENTE';\n\n  if (!agrupados[numPedido]) {\n    agrupados[numPedido] = {\n      cliente,\n      productos: []\n    };\n  }\n\n  agrupados[numPedido].productos.push(\n    `- ${item.json.CANT_PALETS} palets (${item.json.CANT_CAJAS} cajas) - ${item.json.PRODUCTOS}\\n `\n  );\n}\n\n// Construir mensaje resumen\nlet mensaje = `${saludo}, se envía el reporte de *pedidos listos para entregar* 📦\\n`;\nmensaje += `Por favor confirma la salida de los pedidos o indica novedades:\\n\\n`;\n\nfor (const numPedido in agrupados) {\n  const dataPedido = agrupados[numPedido];\n  mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n  mensaje += `Cliente: ${dataPedido.cliente}\\n`;\n  mensaje += dataPedido.productos.join('\\n') + '\\n\\n';\n}\n\n// Salida final\nreturn [\n  {\n    json: {\n      MENSAJE_RESUMEN: mensaje.trim(),\n      FECHA: new Date().toISOString().split('T')[0],\n      ENTREGA: '', // tu input no trae este campo\n      TELEFONO: telefono,\n      PROVEEDOR_ID: proveedorId,\n    },\n  },\n];\n"
+        "jsCode": "// Configuración inicial\nconst zonaHoraria = 'America/Bogota';\nconst telefonoNode = 'dataResumen';   // nodo de donde saco el teléfono\nconst encargadoNode = 'Get suplier1'; // nodo de donde saco el encargado\nconst proveedorId = $input.first().json.PROVEEDOR_ID || '';\n\n// Obtener fecha y hora actuales con zona horaria\nconst ahora = new Date(new Date().toLocaleString('en-US', { timeZone: zonaHoraria }));\nconst hora = ahora.getHours();\nconst saludo = hora < 12 ? 'Buen día' : 'Buena tarde';\n\n// Intentar leer variables externas con fallback\nlet telefono = '';\ntry {\n  telefono = $(telefonoNode).first().json['Nº DE TELÉFONO'] || '';\n} catch (e) {\n  telefono = '';\n}\n\nlet encargado = '';\ntry {\n  encargado = $(encargadoNode).first().json.FINCA || '';\n} catch (e) {\n  encargado = '';\n}\n\n// Filtrar items válidos\nconst itemsValidos = items.filter(i => i.json && i.json.PRODUCTOS);\n\n// Si no hay productos válidos, devolver mensaje genérico\nif (!itemsValidos || itemsValidos.length === 0) {\n  return [\n    {\n      json: {\n        MENSAJE_RESUMEN: `${saludo}, no hay productos confirmados para enviar de *${encargado}* el día de hoy. ☀️`,\n        FECHA: new Date().toISOString().split('T')[0],\n        ENTREGA: '',\n        TELEFONO: telefono,\n        PROVEEDOR_ID: proveedorId,\n      },\n    },\n  ];\n}\n\n// Agrupar productos por número de pedido\nconst agrupados = {};\nfor (const item of itemsValidos) {\n  const numPedido = item.json.NUM_PEDIDO || 'SIN_PEDIDO';\n  const cliente = item.json.NOMBRE_CLIENTE || 'SIN_CLIENTE';\n\n  if (!agrupados[numPedido]) {\n    agrupados[numPedido] = {\n      cliente,\n      productos: {}\n    };\n  }\n\n  // clave única: producto + palet + cajas\n  const clave = `${item.json.PRODUCTOS}__${item.json.PALET}__${item.json.CAJAS}`;\n\n  if (!agrupados[numPedido].productos[clave]) {\n    agrupados[numPedido].productos[clave] = {\n      producto: item.json.PRODUCTOS,\n      palet: item.json.PALET,\n      cajas: item.json.CAJAS,\n      cantCajas: item.json.CANT_CAJAS,\n      cantPalets: 0,\n    };\n  }\n\n  agrupados[numPedido].productos[clave].cantPalets += Number(item.json.CANT_PALETS) || 0;\n}\n\n// Construir mensaje resumen\nlet mensaje = `${saludo}, se envía el reporte de *pedidos listos para entregar* 📦\\n`;\nmensaje += `Por favor confirma la salida de los pedidos o indica novedades:\\n\\n`;\n\nfor (const numPedido in agrupados) {\n  const dataPedido = agrupados[numPedido];\n  mensaje += `➡️ *Pedido N°: ${numPedido}*\\n`;\n  mensaje += `Cliente: ${dataPedido.cliente}\\n`;\n\n  const productosTexto = Object.values(dataPedido.productos).map(p =>\n    `- ${p.cantPalets} X ${p.cantCajas} - ${p.producto} - ${p.palet} - ${p.cajas}`\n  );\n\n  mensaje += productosTexto.join('\\n\\n') + '\\n\\n';\n}\n\n// Salida final\nreturn [\n  {\n    json: {\n      MENSAJE_RESUMEN: mensaje.trim(),\n      FECHA: new Date().toISOString().split('T')[0],\n      ENTREGA: '', // tu input no trae este campo\n      TELEFONO: telefono,\n      PROVEEDOR_ID: proveedorId,\n    },\n  },\n];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -228,6 +228,12 @@
               "id": "7ec320eb-31d8-4078-af7d-93f2d79f0535",
               "name": "NOMBRE_CLIENTE",
               "value": "={{ $json.NOMBRE_CLIENTE }}",
+              "type": "string"
+            },
+            {
+              "id": "f994307c-9a7f-4dc6-ada1-0a68d92f0eff",
+              "name": "PALET",
+              "value": "={{ $json.PALET }}",
               "type": "string"
             },
             {
@@ -768,7 +774,7 @@
     "Start": [
       {
         "json": {
-          "Message": "informe pedido 0196"
+          "Message": "despacho pedido 8324"
         }
       }
     ]
@@ -791,6 +797,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-10T07:45:17.033Z",
-  "versionId": "1f39934d-30af-4d87-83b8-f752dc2a1b9e"
+  "updatedAt": "2025-09-11T21:00:37.812Z",
+  "versionId": "fd5dd25f-9073-415b-affd-d225db11e15b"
 }
