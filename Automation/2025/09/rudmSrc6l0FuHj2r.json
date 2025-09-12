@@ -1,0 +1,877 @@
+{
+  "active": false,
+  "connections": {
+    "Get Video": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2": {
+      "main": [
+        [
+          {
+            "node": "Get Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Video1": {
+      "main": [
+        [
+          {
+            "node": "Wait ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait ": {
+      "main": [
+        [
+          {
+            "node": " 🔵 Get 1080p",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If 1": {
+      "main": [
+        [
+          {
+            "node": "Send Video2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Video": {
+      "main": [
+        [
+          {
+            "node": "Wait 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video1": {
+      "main": [
+        [
+          {
+            "node": " 🟢 Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3": {
+      "main": [
+        [
+          {
+            "node": "Get Video1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Video2": {
+      "main": [
+        [
+          {
+            "node": "Wait 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bot ID": {
+      "main": [
+        [
+          {
+            "node": "Get Img Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Img Path": {
+      "main": [
+        [
+          {
+            "node": "Get Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Bot ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " 🟢 Switch": {
+      "main": [
+        [
+          {
+            "node": "Send Video1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " 🔴 with Fallback": {
+      "main": [
+        [
+          {
+            "node": "Wait 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " 🔵 Get 1080p": {
+      "main": [
+        [
+          {
+            "node": "If 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-12T08:26:03.364Z",
+  "id": "rudmSrc6l0FuHj2r",
+  "isArchived": false,
+  "meta": null,
+  "name": "Veo3 Techniques",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/veo/record-info",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.data.taskId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        528
+      ],
+      "id": "cc2862d3-6e34-435f-957d-760a3a758a50",
+      "name": "Get Video"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        528
+      ],
+      "id": "098fcd87-b647-4aa3-b44e-0c2d40b6d37a",
+      "name": "Wait 2",
+      "webhookId": "cf23022b-1ab8-42a0-aa2e-e1ad33b4aeb6"
+    },
+    {
+      "parameters": {
+        "content": "# Feature 2: Fallback",
+        "height": 80,
+        "width": 768,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        320
+      ],
+      "id": "3ebd2808-d4cc-43df-90b1-f167fb2f8e91",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Feature 3: High-Res Mode",
+        "height": 80,
+        "width": 816,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        928,
+        320
+      ],
+      "id": "ce9a1af6-5967-4063-af14-77b0dc597de9",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"prompt\":\"{{ $json.output.prompt.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }} \",\n  \"model\": \"veo3_fast\",\n  \"aspectRatio\": \"16:9\",\n  \"imageUrls\": \"https://api.telegram.org/file/bot{{ $('Bot ID').item.json['bot id'] }}/{{ $('Get Img Path').item.json.result.file_path }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        944,
+        496
+      ],
+      "id": "f9a80edd-9766-49c7-a09b-c3ca0fe51c94",
+      "name": "Create Video1"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        496
+      ],
+      "id": "9e4e1648-ac14-4a11-b6f8-702cdf1ae2a7",
+      "name": "Wait ",
+      "webhookId": "cf23022b-1ab8-42a0-aa2e-e1ad33b4aeb6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4c895d90-e8bd-42cf-ab58-511c85e8c782",
+              "leftValue": "={{ $json.msg }}",
+              "rightValue": "=success",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1424,
+        496
+      ],
+      "id": "5cfe6a5e-f80e-47ac-bb45-23202de311c9",
+      "name": "If 1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"prompt\":\"{{ $json.output.prompt.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }} \",\n  \"model\": \"veo3_fast\",\n  \"aspectRatio\": \"16:9\",\n  \"imageUrls\": \"https://api.telegram.org/file/bot{{ $('Bot ID').item.json['bot id'] }}/{{ $('Get Img Path').item.json.result.file_path }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        416
+      ],
+      "id": "1984e375-9568-4908-a49f-75ed360a26a6",
+      "name": "Create Video"
+    },
+    {
+      "parameters": {
+        "operation": "sendVideo",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "file": "={{ $json.data.response.resultUrls[0] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        416
+      ],
+      "id": "7872f074-c8cb-4c16-b48a-f373b9bf5a28",
+      "name": "Send Video",
+      "webhookId": "9acbe4dc-92fd-4e6f-b19a-5d2a963957ea"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.data.successFlag }}",
+                    "rightValue": 1,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "id": "957f40c4-00b8-4caa-9bd7-065dcaf2cb49"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Success"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "52ad92ea-901f-4af8-a462-84b045dd2803",
+                    "leftValue": "={{ $json.data.successFlag }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "In Progress"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "33856ccc-6169-44c4-b086-d0cb34a20091",
+                    "leftValue": "={{ $json.data.successFlag }}",
+                    "rightValue": 3,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Error"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        432,
+        512
+      ],
+      "id": "88ff9c72-9eec-427c-8cc8-8d3120b879a5",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.data.errorMessage }}"
+      },
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        640,
+        624
+      ],
+      "id": "e7e6224e-a2bf-4c49-8f32-7bfe8df6e263",
+      "name": "Stop and Error"
+    },
+    {
+      "parameters": {
+        "operation": "sendVideo",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "file": "={{ $json.data.result_url }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1600,
+        496
+      ],
+      "id": "8d0ff590-0733-4ddb-a135-ac8bedc857a6",
+      "name": "Send Video2",
+      "webhookId": "9acbe4dc-92fd-4e6f-b19a-5d2a963957ea"
+    },
+    {
+      "parameters": {
+        "content": "# Feature 1: Switch",
+        "height": 80,
+        "width": 768,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        320
+      ],
+      "id": "22a081b2-6599-41ab-b1df-aec385079689",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/veo/record-info",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.data.taskId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -608,
+        528
+      ],
+      "id": "02d3dfd2-acda-4da2-9ebf-0b7dd95ef07f",
+      "name": "Get Video1"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -720,
+        528
+      ],
+      "id": "5795e741-2fdb-40f9-b64e-24f0fba96f44",
+      "name": "Wait 3",
+      "webhookId": "cf23022b-1ab8-42a0-aa2e-e1ad33b4aeb6"
+    },
+    {
+      "parameters": {
+        "operation": "sendVideo",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "file": "={{ $json.data.response.resultUrls[0] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        432
+      ],
+      "id": "c29bfec7-75e5-4416-8da8-2b46a8f45138",
+      "name": "Send Video1",
+      "webhookId": "9acbe4dc-92fd-4e6f-b19a-5d2a963957ea"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"prompt\":\"{{ $json.output.prompt.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }} \",\n  \"model\": \"veo3_fast\",\n  \"aspectRatio\": \"16:9\",\n  \"imageUrls\": \"https://api.telegram.org/file/bot{{ $('Bot ID').item.json['bot id'] }}/{{ $('Get Img Path').item.json.result.file_path }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -912,
+        528
+      ],
+      "id": "2a2bacce-b521-4e58-a9b6-e64499110269",
+      "name": "Create Video2"
+    },
+    {
+      "parameters": {
+        "content": "## Input image and prompt from telegram",
+        "height": 144,
+        "width": 784,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8ce269b5-910e-481b-b243-da7a8e7a6069",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "493c3932-bd76-4de4-baee-87ad3590751d",
+              "name": "bot id",
+              "value": "your bot id here",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        80
+      ],
+      "id": "ece36e74-14df-46e4-a6c2-47a3380ce784",
+      "name": "Bot ID"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{ $('Bot ID').item.json['bot id'] }}/getFile?file_id={{ $('Telegram Trigger').first(0,0).json.message.photo[2].file_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        80
+      ],
+      "id": "6381b701-1205-4813-9542-932d309ad16e",
+      "name": "Get Img Path"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "91bdde28-82ae-497f-a1e5-8eb443f36e37",
+              "name": "output.prompt",
+              "value": "={{ $('Telegram Trigger').item.json.message.caption }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        576,
+        80
+      ],
+      "id": "91c47ed6-6afc-460b-b30d-333e8fc39add",
+      "name": "Get Prompt"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        80
+      ],
+      "id": "dfd75974-50b4-46a7-9ed0-6aa28d76e48e",
+      "name": "Telegram Trigger",
+      "webhookId": "167e9c21-a6c6-4b93-9ca7-5f9da6624be5"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.data.successFlag }}",
+                    "rightValue": 1,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "id": "957f40c4-00b8-4caa-9bd7-065dcaf2cb49"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Success"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "52ad92ea-901f-4af8-a462-84b045dd2803",
+                    "leftValue": "={{ $json.data.successFlag }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "In Progress"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "33856ccc-6169-44c4-b086-d0cb34a20091",
+                    "leftValue": "={{ $json.data.successFlag }}",
+                    "rightValue": 3,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Error"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -496,
+        512
+      ],
+      "id": "02eba328-09eb-4651-839b-6633557443a0",
+      "name": " 🟢 Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"prompt\":\"{{ $json.output.prompt.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }}\",\n  \"model\": \"veo3_fast\",\n  \"aspectRatio\": \"16:9\",\n  \"imageUrls\": \"https://api.telegram.org/file/bot{{ $('Bot ID').item.json['bot id'] }}/{{ $('Get Img Path').item.json.result.file_path }}\",\n  \"enableFallback\": true\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        624
+      ],
+      "id": "247e9295-6d5a-49d2-bb5c-3fd9408e1e87",
+      "name": " 🔴 with Fallback"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/veo/get-1080p-video",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $('Create Video1').first().json.data.taskId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1232,
+        496
+      ],
+      "id": "9c91cb16-2fa8-44bc-a1c8-290db4588406",
+      "name": " 🔵 Get 1080p"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "text": "={{ $json.data.errorMessage }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        624
+      ],
+      "id": "2d9947e2-4529-48aa-bbd8-fb00296fe929",
+      "name": "Send Error",
+      "webhookId": "9acbe4dc-92fd-4e6f-b19a-5d2a963957ea"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-12T08:26:03.364Z",
+      "updatedAt": "2025-09-12T08:26:03.364Z",
+      "role": "workflow:owner",
+      "workflowId": "rudmSrc6l0FuHj2r",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-12T08:26:19.337Z",
+  "versionId": "cb1dd734-55d1-468b-8b52-72502164b797"
+}
