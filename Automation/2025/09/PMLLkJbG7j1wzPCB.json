@@ -38,7 +38,7 @@
       "main": [
         [
           {
-            "node": "Code1",
+            "node": "All Recibidos",
             "type": "main",
             "index": 0
           }
@@ -151,17 +151,6 @@
         ]
       ]
     },
-    "Code1": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If1": {
       "main": [
         [
@@ -174,6 +163,17 @@
         [
           {
             "node": "dataResumen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Recibidos": {
+      "main": [
+        [
+          {
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -701,19 +701,6 @@
     },
     {
       "parameters": {
-        "jsCode": "// Entrada del nodo\nconst itemsInput = items;\n\n// Verificar si TODOS los items tienen STATUS = \"Recibido\"\nconst allRecibido = itemsInput.every(item => item.json.STATUS === \"Recibido\");\nconst pedido = $('Information Extractor').first().json.output.NUM_PEDIDO\n\nif (allRecibido) {\n  // Si todos están \"Recibido\", devolver todos los items originales\n  return itemsInput;\n} else {\n  // Si alguno no está \"Recibido\", devolver un único false\n  return [{ json: { result: false, pedido: pedido } }];\n}\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -848,
-        144
-      ],
-      "id": "6d4ab7ed-1788-4806-964a-e6ef4daa6633",
-      "name": "Code1"
-    },
-    {
-      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -768,13 +755,26 @@
       ],
       "id": "b4d7ac6b-9932-4e2f-a760-cd98c07eb088",
       "name": "Return3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Entrada del nodo\nconst itemsInput = items;\n\n// Verificar si TODOS los items tienen STATUS = \"Recibido\"\nconst allRecibido = itemsInput.every(item => item.json.STATUS === \"Recibido\");\nconst pedido = $('Information Extractor').first().json.output.NUM_PEDIDO\n\nif (allRecibido) {\n  // Si todos están \"Recibido\", devolver todos los items originales\n  return itemsInput;\n} else {\n  // Si alguno no está \"Recibido\", devolver un único false\n  return [{ json: { result: false, pedido: pedido } }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -848,
+        144
+      ],
+      "id": "6d4ab7ed-1788-4806-964a-e6ef4daa6633",
+      "name": "All Recibidos"
     }
   ],
   "pinData": {
     "Start": [
       {
         "json": {
-          "Message": "despacho pedido 8324"
+          "Message": "confirmo salida del pedido 2030"
         }
       }
     ]
@@ -797,6 +797,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-11T21:00:37.812Z",
-  "versionId": "fd5dd25f-9073-415b-affd-d225db11e15b"
+  "updatedAt": "2025-09-13T15:02:54.217Z",
+  "versionId": "8b7cc6cc-5067-4636-8305-d655a7f73764"
 }
