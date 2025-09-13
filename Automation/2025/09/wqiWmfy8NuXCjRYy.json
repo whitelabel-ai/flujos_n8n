@@ -55,7 +55,7 @@
       "main": [
         [
           {
-            "node": "Code2",
+            "node": "append/update",
             "type": "main",
             "index": 0
           }
@@ -67,17 +67,6 @@
         [
           {
             "node": "Read stock data1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code2": {
-      "main": [
-        [
-          {
-            "node": "If2",
             "type": "main",
             "index": 0
           }
@@ -235,6 +224,17 @@
         [
           {
             "node": "Update solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "append/update": {
+      "main": [
+        [
+          {
+            "node": "If2",
             "type": "main",
             "index": 0
           }
@@ -736,19 +736,6 @@
       ],
       "id": "556f32ec-3aee-4fd2-883f-dd2d2430be76",
       "name": "items1"
-    },
-    {
-      "parameters": {
-        "jsCode": "const existentes = $input.all(); // Datos del stock \nconst nuevos = $items(\"items1\"); // Lo que viene de \"items\"\n\nconst resultados = [];\n\nfor (const nuevo of nuevos) {\n  const prod = nuevo.json[\"PRODUCTO\"];\n  const palet = nuevo.json[\"PALET\"];\n  const cantPalets = parseInt(nuevo.json[\"CANT_PALETS\"] || 0);\n  const cajas = nuevo.json[\"CAJAS\"];\n  const cantCajas = parseInt(nuevo.json[\"CANT_CAJAS\"] || 0);\n\n  // Buscar si ya existe ese producto + palet en la hoja\n  const existente = existentes.find(e =>\n    e.json[\"PRODUCTOS\"] === prod &&\n    e.json[\"PALET\"] === palet\n  );\n\n  if (existente) {\n    const totalPalets = parseInt(existente.json[\"CANT_PALETS\"] || 0) + cantPalets;\n    const totalCajas = parseInt(existente.json[\"CANT_CAJAS\"] || 0) ;\n\n    resultados.push({\n      json: {\n        mode: 'update',\n        rowIndex: existente.json[\"row_number\"],\n        data: {\n          \"PRODUCTOS\": prod,\n          \"PALET\": palet,\n          \"CANT_PALETS\": totalPalets,\n          \"CAJAS\": cajas,\n          \"CANT_CAJAS\": totalCajas\n        }\n      }\n    });\n  } else {\n    resultados.push({\n      json: {\n        mode: 'append',\n        data: {\n          \"PRODUCTOS\": prod,\n          \"PALET\": palet,\n          \"CANT_PALETS\": cantPalets,\n          \"CAJAS\": cajas,\n          \"CANT_CAJAS\": cantCajas\n        }\n      }\n    });\n  }\n}\n\nreturn resultados;\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        768,
-        704
-      ],
-      "id": "1550cc38-3d83-4117-b63b-f2e54b4c3b72",
-      "name": "Code2"
     },
     {
       "parameters": {
@@ -1358,164 +1345,84 @@
       "id": "5e1ae9f4-417e-4a39-b4d8-e555bd4320e8",
       "name": "Wait1",
       "webhookId": "e1d4e792-2513-49a0-86dc-d4d603ca8002"
+    },
+    {
+      "parameters": {
+        "jsCode": "const existentes = $input.all(); // Datos del stock actual\nconst nuevos = $items(\"items1\"); // Lo que se va a agregar al stock\n\nconst resultados = [];\n\nfor (const nuevo of nuevos) {\n  const prod = nuevo.json[\"PRODUCTO\"];\n  const palet = nuevo.json[\"PALET\"];\n  const cantPalets = parseInt(nuevo.json[\"CANT_PALETS\"] || 0);\n  const cajas = nuevo.json[\"CAJAS\"];\n  const cantCajas = parseInt(nuevo.json[\"CANT_CAJAS\"] || 0);\n\n  // Buscar si ya existe ese producto + palet en la hoja\n  const existente = existentes.find(e =>\n    e.json[\"PRODUCTOS\"] === prod &&\n    e.json[\"PALET\"] === palet\n  );\n\n  if (existente) {\n    const totalPalets = parseInt(existente.json[\"CANT_PALETS\"] || 0) + cantPalets;\n    const totalCajas = cantCajas || 0 ;\n\n    resultados.push({\n      json: {\n        mode: 'update',\n        rowIndex: existente.json[\"row_number\"],\n        data: {\n          \"PRODUCTOS\": prod,\n          \"PALET\": palet,\n          \"CANT_PALETS\": totalPalets,\n          \"CAJAS\": cajas,\n          \"CANT_CAJAS\": totalCajas\n        }\n      }\n    });\n  } else {\n    resultados.push({\n      json: {\n        mode: 'append',\n        data: {\n          \"PRODUCTOS\": prod,\n          \"PALET\": palet,\n          \"CANT_PALETS\": cantPalets,\n          \"CAJAS\": cajas,\n          \"CANT_CAJAS\": cantCajas\n        }\n      }\n    });\n  }\n}\n\nreturn resultados;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        704
+      ],
+      "id": "1550cc38-3d83-4117-b63b-f2e54b4c3b72",
+      "name": "append/update"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "pedido_completo": true,
-          "PROVEEDOR_ID": "2580",
+          "pedido_completo": false,
+          "PROVEEDOR_ID": "2581",
           "faltantes": [],
-          "sobrantes": [],
-          "confirmados": [
-            {
-              "row_number": 2,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2580,
-              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
-              "CANT_PALETS": 10,
-              "CANT_CAJAS": 55,
-              "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
-            {
-              "row_number": 6,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2581,
-              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
-              "CANT_PALETS": 6,
-              "CANT_CAJAS": 55,
-              "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
-            {
-              "row_number": 10,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2582,
-              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO I/180/220 GR",
-              "CANT_PALETS": 4,
-              "CANT_CAJAS": 55,
-              "PALET": "MADERA LEMPS 60X40X12 ETIQUETAS",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
-            {
-              "row_number": 3,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2580,
-              "PRODUCTO": "PIMIENTO CALIFORNIA ROJO I/160/180 GR",
-              "CANT_PALETS": 3,
-              "CANT_CAJAS": 55,
-              "PALET": "MADERA 50X30X15 ETIQUETAS",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
+          "sobrantes": [
             {
               "row_number": 7,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
+              "NUM_PEDIDO": "PED-2030",
+              "FECHA": "13/09/2025",
               "PROVEEDOR_ID": 2581,
-              "PRODUCTO": "PIMIENTO CALIFORNIA ROJO I/160/180 GR",
-              "CANT_PALETS": 1,
+              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO CONSERVA",
+              "CANT_PALETS": 6,
               "CANT_CAJAS": 55,
-              "PALET": "MADERA 50X30X15 ETIQUETAS",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
+              "PALET": "ALMACENAJE I",
+              "CAJAS": "BANDEJA ANJAMAR 60X40X11.5 ETIQUETAS"
+            }
+          ],
+          "confirmados": [
             {
-              "row_number": 11,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2582,
-              "PRODUCTO": "PIMIENTO CALIFORNIA ROJO I/160/180 GR",
-              "CANT_PALETS": 1,
+              "row_number": 7,
+              "NUM_PEDIDO": "PED-2030",
+              "FECHA": "13/09/2025",
+              "PROVEEDOR_ID": 2581,
+              "PRODUCTO": "PIMIENTO CALIFORNIA AMARILLO CONSERVA",
+              "CANT_PALETS": 4,
               "CANT_CAJAS": 55,
-              "PALET": "MADERA 50X30X15 ETIQUETAS",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
-            {
-              "row_number": 4,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2580,
-              "PRODUCTO": "PIMIENTO CALIFORNIA VERDE I/20 PIEZAS",
-              "CANT_PALETS": 10,
-              "CANT_CAJAS": 55,
-              "PALET": "BOX AZARBE",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
+              "PALET": "ALMACENAJE I",
+              "CAJAS": "BANDEJA ANJAMAR 60X40X11.5 ETIQUETAS",
+              "STATUS": "Recibido",
+              "COMENTARIOS": "Se recibieron 6 palets adicionales de este producto."
             },
             {
               "row_number": 8,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
+              "NUM_PEDIDO": "PED-2030",
+              "FECHA": "13/09/2025",
               "PROVEEDOR_ID": 2581,
-              "PRODUCTO": "PIMIENTO CALIFORNIA VERDE I/20 PIEZAS",
-              "CANT_PALETS": 3,
+              "PRODUCTO": "PIMIENTO CALIFORNIA NARANJA CONSERVA",
+              "CANT_PALETS": 8,
               "CANT_CAJAS": 55,
-              "PALET": "BOX AZARBE",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
-            {
-              "row_number": 12,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2582,
-              "PRODUCTO": "PIMIENTO CALIFORNIA VERDE I/20 PIEZAS",
-              "CANT_PALETS": 4,
-              "CANT_CAJAS": 55,
-              "PALET": "BOX AZARBE",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
-            {
-              "row_number": 5,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2580,
-              "PRODUCTO": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
-              "CANT_PALETS": 10,
-              "CANT_CAJAS": 55,
-              "PALET": "BOX AZARBE",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
+              "PALET": "ALMACENAJE I",
+              "CAJAS": "BANDEJA ANJAMAR 60X40X11.5 ETIQUETAS",
+              "STATUS": "Recibido"
             },
             {
               "row_number": 9,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
+              "NUM_PEDIDO": "PED-2030",
+              "FECHA": "13/09/2025",
               "PROVEEDOR_ID": 2581,
-              "PRODUCTO": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
-              "CANT_PALETS": 3,
-              "CANT_CAJAS": 55,
-              "PALET": "BOX AZARBE",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
-            },
-            {
-              "row_number": 13,
-              "NUM_PEDIDO": "PED-3707",
-              "FECHA": "09/09/2025",
-              "PROVEEDOR_ID": 2582,
-              "PRODUCTO": "PIMIENTO CALIFORNIA NARANJA I/20 PIEZAS",
+              "PRODUCTO": "PIMIENTO CALIFORNIA NARANJA CONSERVA",
               "CANT_PALETS": 4,
               "CANT_CAJAS": 55,
-              "PALET": "BOX AZARBE",
-              "CAJAS": "BANDEJA GENERICA 60X40X18 ETIQUETA",
-              "STATUS": "Despachado"
+              "PALET": "ALMACENAJE I",
+              "CAJAS": "BANDEJA ANJAMAR 60X40X11.5 ETIQUETAS",
+              "STATUS": "Recibido"
             }
           ],
-          "Mensaje para el proveedor": "Confirmada la salida del pedido PED-3707.",
-          "TELEFONO": "573228854498"
+          "Mensaje para el Encargado": "Confirmado: Se ha procesado la recepción del pedido del proveedor 2581. Se recibieron 10 palets de PIMIENTO CALIFORNIA AMARILLO CONSERVA (6 de ellos como sobrante) y el resto de los productos según lo solicitado.",
+          "Mensaje para el proveedor": "Estimado proveedor 2581, confirmamos la recepción en bodega de: 4 palets de PIMIENTO CALIFORNIA AMARILLO CONSERVA, 8 palets de PIMIENTO CALIFORNIA NARANJA CONSERVA, y 4 palets de PIMIENTO CALIFORNIA NARANJA CONSERVA. Se ha registrado un sobrante de 6 palets de PIMIENTO CALIFORNIA AMARILLO CONSERVA. Agradecemos su entrega.",
+          "TELEFONO": "573112528964",
+          "Mensaje de Novedades": "Se detectaron 6 palets sobrantes de PIMIENTO CALIFORNIA AMARILLO CONSERVA. El pedido se considera incompleto debido a los sobrantes."
         }
       }
     ]
@@ -1545,6 +1452,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-09-11T21:55:07.946Z",
-  "versionId": "85e4ed66-ab7a-4c1b-b373-638c6668b96e"
+  "updatedAt": "2025-09-13T14:58:16.392Z",
+  "versionId": "acfd6c3e-9ecc-45c0-8a93-bbccad856820"
 }
