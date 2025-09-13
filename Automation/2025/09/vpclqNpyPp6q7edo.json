@@ -395,17 +395,6 @@
         ]
       ]
     },
-    "Split Out1": {
-      "main": [
-        [
-          {
-            "node": "Get row(s) in sheet1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Aggregate1": {
       "main": [
         [
@@ -439,7 +428,7 @@
         ],
         [
           {
-            "node": "Split Out1",
+            "node": "Get row(s) in sheet1",
             "type": "main",
             "index": 0
           }
@@ -653,7 +642,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        152,
+        160,
         -272
       ],
       "id": "3782adcf-ead2-4464-8cb8-dc24ebf98956",
@@ -1267,7 +1256,7 @@
       "typeVersion": 2,
       "position": [
         1104,
-        -24
+        -32
       ],
       "id": "d5dd647a-1b62-4a26-9ca2-aaebbbca67bd",
       "name": "AI Agent3"
@@ -1280,8 +1269,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1176,
-        200
+        1184,
+        208
       ],
       "id": "2f5823f9-6e6d-4297-83c1-dd8734b93df1",
       "name": "Google Gemini Chat Model2",
@@ -1753,7 +1742,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const mensaje = $json[\"quotedMessage\"].conversation;\n\n// Extraer bloques de pedidos\nconst pedidos = [];\nconst bloquesPedidos = mensaje.split(/➡️ \\*?Pedido N°: ([\\w-]+)\\*?/i);\n\nfor (let i = 1; i < bloquesPedidos.length; i += 2) {\n    const numeroPedido = bloquesPedidos[i].trim();\n    const contenido = bloquesPedidos[i + 1];\n\n    // Extraer nombre del cliente\n    const clienteMatch = contenido.match(/Cliente:\\s*(.+)/i);\n    const cliente = clienteMatch ? clienteMatch[1].trim() : null;\n\n    // Extraer productos\n    const productos = contenido\n        .split(/\\r?\\n/)\n        .filter(linea => linea.trim().startsWith('-'))\n        .map(linea => {\n            // Formato esperado:\n            // - 20 palets (55 cajas) - PRODUCTO\n            const itemMatch = linea.match(/- (\\d+)\\s*palets?\\s*\\((\\d+)\\s*cajas?\\)\\s*-\\s*(.+)$/i);\n            if (itemMatch) {\n                return {\n                    NUM_PEDIDO: numeroPedido,\n                    NOMBRE_CLIENTE: cliente,\n                    PRODUCTO: itemMatch[3].trim(),\n                    CANT_PALETS: parseInt(itemMatch[1]),\n                    CANT_CAJAS: parseInt(itemMatch[2])\n                };\n            }\n            return null;\n        })\n        .filter(Boolean);\n\n    pedidos.push(...productos);\n}\n\nreturn {\n    productos: pedidos,\n    totalRegistros: pedidos.length,\n    telefono: $json[\"Nº DE TELÉFONO\"],\n    FECHA: $json[\"FECHA\"]  // usamos la que viene en input\n};\n"
+        "jsCode": "const mensaje = $json[\"quotedMessage\"].conversation;\n\n// Extraer bloques de pedidos\nconst pedidos = [];\nconst bloquesPedidos = mensaje.split(/➡️ \\*?Pedido N°: ([\\w-]+)\\*?/i);\n\nlet numeroPedidoGeneral = null;\n\nfor (let i = 1; i < bloquesPedidos.length; i += 2) {\n    const numeroPedido = bloquesPedidos[i].trim();\n    if (!numeroPedidoGeneral) {\n        numeroPedidoGeneral = numeroPedido; // guardamos el primero\n    }\n    const contenido = bloquesPedidos[i + 1];\n\n    // Extraer nombre del cliente\n    const clienteMatch = contenido.match(/Cliente:\\s*(.+)/i);\n    const cliente = clienteMatch ? clienteMatch[1].trim() : null;\n\n    // Extraer productos\n    const productos = contenido\n        .split(/\\r?\\n/)\n        .filter(linea => linea.trim().startsWith('-'))\n        .map(linea => {\n            // Formato 1: - 20 palets (55 cajas) - PRODUCTO\n            let itemMatch = linea.match(/- (\\d+)\\s*palets?\\s*\\((\\d+)\\s*cajas?\\)\\s*-\\s*(.+)$/i);\n\n            // Formato 2: - 20 X 55 - PRODUCTO\n            if (!itemMatch) {\n                itemMatch = linea.match(/- (\\d+)\\s*[xX]\\s*(\\d+)\\s*-\\s*(.+)$/i);\n            }\n\n            if (itemMatch) {\n                return {\n                    NUM_PEDIDO: numeroPedido,\n                    NOMBRE_CLIENTE: cliente,\n                    PRODUCTO: itemMatch[3].trim(),\n                    CANT_PALETS: parseInt(itemMatch[1]),\n                    CANT_CAJAS: parseInt(itemMatch[2])\n                };\n            }\n            return null;\n        })\n        .filter(Boolean);\n\n    pedidos.push(...productos);\n}\n\nreturn {\n    NUM_PEDIDO: numeroPedidoGeneral,\n    totalRegistros: pedidos.length,\n    telefono: $json[\"Nº DE TELÉFONO\"],\n    FECHA: $json[\"FECHA\"],  // usamos la que viene en input\n    productos: pedidos\n};\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1827,20 +1816,6 @@
     },
     {
       "parameters": {
-        "fieldToSplitOut": "productos",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        656,
-        464
-      ],
-      "id": "91372d1d-f9ea-4469-80f2-13c14c5bcb4b",
-      "name": "Split Out1"
-    },
-    {
-      "parameters": {
         "aggregate": "aggregateAllItemData",
         "options": {}
       },
@@ -1876,10 +1851,6 @@
               "lookupValue": "={{ $json.NUM_PEDIDO }}"
             },
             {
-              "lookupColumn": "PRODUCTOS",
-              "lookupValue": "={{ $json.PRODUCTO }}"
-            },
-            {
               "lookupColumn": "STATUS",
               "lookupValue": "Recibido"
             }
@@ -1890,7 +1861,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        880,
+        672,
         464
       ],
       "id": "e5ef1b83-e23f-4372-a3a9-2617d22d64d7",
@@ -1940,7 +1911,7 @@
         "operation": "send",
         "phoneNumberId": "=663372310202428",
         "recipientPhoneNumber": "=+{{ $json.telefono }}",
-        "textBody": "= no hay productos para Despachar el día de hoy. ¡Que tengas un excelente día! ☀️\nSi crees que es un error solicita un Reporte enviando el ID del proveedor",
+        "textBody": "= no hay productos para Despachar el día de hoy. ¡Que tengas un excelente día! ☀️\nSi crees que es un error solicita un Reporte enviando el numero de pedido",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.whatsApp",
@@ -2073,7 +2044,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1528,
+        1536,
         688
       ],
       "id": "4c67b581-0a7c-4de5-83a5-a79af3460721",
@@ -2230,12 +2201,12 @@
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Message": "Salida 0196",
+          "Message": "confirmo salida del pedido 2030",
           "Nº DE TELÉFONO": "573112528964",
           "PROVEEDOR_ID": null,
           "FINCA": null,
-          "FECHA": "10/09/2025",
-          "fecha mañana": "11/09/2025"
+          "FECHA": "12/09/2025",
+          "fecha mañana": "13/09/2025"
         }
       }
     ]
@@ -2258,6 +2229,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-11T22:06:17.731Z",
-  "versionId": "9523158d-0cf3-47bc-a717-b56397755be3"
+  "updatedAt": "2025-09-13T15:14:36.066Z",
+  "versionId": "c93aa89e-4ec4-40d1-8bfb-398f446f044d"
 }
