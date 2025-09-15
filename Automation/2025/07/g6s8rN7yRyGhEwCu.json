@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Message a model1",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -44,6 +44,11 @@
         [
           {
             "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
             "type": "ai_languageModel",
             "index": 0
           }
@@ -105,13 +110,7 @@
     },
     "HTTP Request": {
       "main": [
-        [
-          {
-            "node": "Redis5",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Wait11": {
@@ -519,6 +518,113 @@
           }
         ]
       ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Convert to File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Languaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Languaje": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-23T21:31:14.625Z",
@@ -534,7 +640,7 @@
         "promptType": "define",
         "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }}",
         "options": {
-          "systemMessage": "={{ $json.PROMPT }}"
+          "systemMessage": "={{ $json.PROMPT }}\n\n7. Adaptación total al idioma del usuario\nSi el usuario escribe en español → responde en español.\nSi el usuario escribe en inglés → traduce automáticamente todas tus frases, ejemplos, guiones y estilo a un inglés natural y profesional, manteniendo el mismo tono y personalidad definidos en este prompt."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -571,8 +677,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        32,
-        -384
+        16,
+        -352
       ],
       "id": "ad665da9-e90e-4703-b015-534f5ca4057c",
       "name": "Redis Chat Memory",
@@ -778,8 +884,8 @@
     },
     {
       "parameters": {
-        "operation": "keys",
-        "keyPattern": "chat_history_valeia_573228854498"
+        "operation": "delete",
+        "key": "chat_history_valeia_573005792037"
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
@@ -830,8 +936,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -480,
-        96
+        -608,
+        32
       ],
       "id": "e8eb0649-0cca-4e98-8c71-c59b2d7893c7",
       "name": "HTTP Request",
@@ -844,33 +950,13 @@
     },
     {
       "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $json.conversation_id }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        -256,
-        96
-      ],
-      "id": "e55c0795-bd8a-455a-811d-e3ff92054ba2",
-      "name": "Redis5",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "amount": 2
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -64,
-        96
+        -384,
+        32
       ],
       "id": "a892edce-8199-4441-a8b9-ad2ed310b4ed",
       "name": "Wait11",
@@ -883,8 +969,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -480,
-        272
+        -608,
+        208
       ],
       "id": "7a96126d-528e-43ce-93e2-97293d4fb4da",
       "name": "Wait12",
@@ -918,8 +1004,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -256,
-        272
+        -384,
+        208
       ],
       "id": "1e8694e1-75ed-46c7-8c1e-23e54d65e85f",
       "name": "If12"
@@ -929,8 +1015,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        160,
-        304
+        32,
+        240
       ],
       "id": "4915c985-7e20-4603-a3f6-71bdcf708aca",
       "name": "No Operation, do nothing11"
@@ -963,8 +1049,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        144,
-        96
+        -176,
+        32
       ],
       "id": "e4a31bea-b24c-425a-9ec1-c22306e5d6dc",
       "name": "If13"
@@ -974,8 +1060,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        576,
-        112
+        256,
+        48
       ],
       "id": "b0acdfd4-b8e4-43ad-96c6-1dd23d509164",
       "name": "No Operation, do nothing12"
@@ -987,8 +1073,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -480,
-        496
+        -608,
+        432
       ],
       "id": "d377c327-d150-49a4-93c5-15735d074230",
       "name": "Wait13",
@@ -1022,8 +1108,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -256,
-        496
+        -384,
+        432
       ],
       "id": "c594d63e-d3d2-45f3-b7db-546e1167ce24",
       "name": "If14"
@@ -1033,8 +1119,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        160,
-        496
+        32,
+        432
       ],
       "id": "59f2cd74-da26-4d3b-9887-eab4646da160",
       "name": "No Operation, do nothing13"
@@ -1062,8 +1148,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        368,
-        80
+        32,
+        16
       ],
       "id": "a7a41322-c5b9-46b5-9047-f116b8be7d04",
       "name": "HTTP Request1",
@@ -1097,8 +1183,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -32,
-        256
+        -160,
+        192
       ],
       "id": "4db53bea-03c8-40b5-9c68-062223044f89",
       "name": "HTTP Request2",
@@ -1132,8 +1218,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -16,
-        480
+        -144,
+        416
       ],
       "id": "39f6e552-f32c-40df-9b15-21ac825357e6",
       "name": "HTTP Request3",
@@ -1154,8 +1240,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -912,
-        32
+        -1040,
+        -32
       ],
       "id": "a4340918-7114-4e56-9ff4-15a8c3cab7b5",
       "name": "Sticky Note2"
@@ -1181,8 +1267,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        -832,
-        96
+        -960,
+        32
       ],
       "id": "833e4da0-c980-427c-829b-3aeb1995aeb2",
       "name": "Message a model1",
@@ -1656,7 +1742,7 @@
     },
     {
       "parameters": {
-        "amount": 10
+        "amount": 8
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
@@ -2100,6 +2186,279 @@
       ],
       "id": "12202c1a-1226-45f2-bcd8-8faa9e24c466",
       "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "07228d53-a050-4cc9-bee0-79cc1f10248d",
+              "leftValue": "={{ $('initData').item.json.tipo_mensaje }}",
+              "rightValue": "audio",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        -656
+      ],
+      "id": "e111b594-bf26-42ec-97f4-9cd3bf48b688",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message_type",
+              "value": "outgoing"
+            },
+            {
+              "name": "private",
+              "value": "false"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachments[]",
+              "inputDataFieldName": "=data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1856,
+        -816
+      ],
+      "id": "2075dccf-a44d-4bd2-89e5-e87dcf50d9d5",
+      "name": "HTTP Request4",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ijWOk4uGRwt4GzN5",
+          "name": "Valeia - Hablaya"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "audioContent",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1648,
+        -816
+      ],
+      "id": "79327051-30e2-4222-99f7-9951d7190262",
+      "name": "Convert to File4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://texttospeech.googleapis.com/v1/text:synthesize",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"audioConfig\": {\n    \"audioEncoding\": \"MP3\",\n    \"pitch\": 0,\n    \"speakingRate\": 1\n  },\n  \"input\": {\n    \"text\": {{ JSON.stringify($json.output.mensaje) }}\n  },\n  \"voice\": {\n    \"languageCode\": \"es-US\",\n    \"name\": \"es-US-Chirp3-HD-Aoede\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1456,
+        -816
+      ],
+      "id": "44f3a342-7e4e-4b21-914d-84cd1d165863",
+      "name": "HTTP Request5",
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "9Z0zKL8ENum6cJNe",
+          "name": "google-tts"
+        },
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=mensaje: {{ $json.output }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=Recibirás un mensaje de texto escrito por un usuario. Tu única tarea es devolver exactamente el mismo mensaje pero optimizado para ser convertido a voz.\n\nReglas:\n\n1. No cambies el contenido ni el significado del mensaje.\n2. Solo corrige tildes y acentos si faltan.\n3. Ajusta la puntuación mínima necesaria para que la lectura en voz sea natural.\n4. Elimina emoticonos, emojis o símbolos innecesarios.\n5. No agregues explicaciones, saludos, ni nada adicional."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        784,
+        -688
+      ],
+      "id": "a2783fbc-0de2-4cfe-9d09-187b4a67c1a6",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"lenguaje\": \"'es' o 'en' segun corresponda\",\n  \"mensaje\": \"texto optimizado para voz\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        912,
+        -512
+      ],
+      "id": "2a15e524-b28a-49ee-a37f-087e9649fb47",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dff174ff-8507-4cc1-a0ae-702d2a4dfcdc",
+              "leftValue": "={{ $json.output.lenguaje }}",
+              "rightValue": "es",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1104,
+        -688
+      ],
+      "id": "e39c3e6e-eea1-493c-9abc-e82db6ff1fe9",
+      "name": "Languaje"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message_type",
+              "value": "outgoing"
+            },
+            {
+              "name": "private",
+              "value": "false"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachments[]",
+              "inputDataFieldName": "=data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1856,
+        -624
+      ],
+      "id": "bb3fee56-826e-4b6d-8f2e-0e94ccae5c1e",
+      "name": "HTTP Request6",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ijWOk4uGRwt4GzN5",
+          "name": "Valeia - Hablaya"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "audioContent",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1648,
+        -624
+      ],
+      "id": "34a90da8-c0d7-4a5f-884c-664ec87a0403",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://texttospeech.googleapis.com/v1/text:synthesize",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"audioConfig\": {\n    \"audioEncoding\": \"MP3\",\n    \"pitch\": 0,\n    \"speakingRate\": 1\n  },\n  \"input\": {\n    \"text\": {{ JSON.stringify($json.output.mensaje) }}\n  },\n  \"voice\": {\n    \"languageCode\": \"en-US\",\n    \"name\": \"en-US-Chirp3-HD-Achernar\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1456,
+        -624
+      ],
+      "id": "fd4d705f-c022-44d7-b1cd-7a77e60a4db2",
+      "name": "HTTP Request7",
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "9Z0zKL8ENum6cJNe",
+          "name": "google-tts"
+        },
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
     }
   ],
   "pinData": {
@@ -2109,7 +2468,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "2306",
+            "content-length": "3145",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -2130,60 +2489,75 @@
             "additional_attributes": {},
             "content_attributes": {},
             "content_type": "text",
-            "content": "hola",
+            "content": null,
             "conversation": {
               "additional_attributes": {},
               "can_reply": true,
               "channel": "Channel::Whatsapp",
               "contact_inbox": {
-                "id": 1,
-                "contact_id": 1,
+                "id": 413,
+                "contact_id": 413,
                 "inbox_id": 1,
-                "source_id": "573228854498",
-                "created_at": "2025-08-27T05:25:41.969Z",
-                "updated_at": "2025-08-27T05:25:41.969Z",
+                "source_id": "573005792037",
+                "created_at": "2025-09-15T14:41:38.106Z",
+                "updated_at": "2025-09-15T14:41:38.106Z",
                 "hmac_verified": false,
-                "pubsub_token": "D8ZpspXq6tm88UtbjKezy6cj"
+                "pubsub_token": "3kpr7dZg2qJGk5prvkymTLf7"
               },
-              "id": 1,
+              "id": 3,
               "inbox_id": 1,
               "messages": [
                 {
-                  "id": 1,
-                  "content": "hola",
+                  "id": 9192,
+                  "content": null,
                   "account_id": 2,
                   "inbox_id": 1,
-                  "conversation_id": 1,
+                  "conversation_id": 3,
                   "message_type": 0,
-                  "created_at": 1756272342,
-                  "updated_at": "2025-08-27T05:25:42.071Z",
+                  "created_at": 1757962056,
+                  "updated_at": "2025-09-15T18:47:36.293Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZGRUUwRjcyOEEyM0QzMUM5OUQA",
+                  "source_id": "wamid.HBgMNTczMDA1NzkyMDM3FQIAEhggQUMzMzJDMzM3OEE1RkQyOUFDMUMyQ0RDMjUzQjJBRTMA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
-                  "sender_id": 1,
+                  "sender_id": 413,
                   "external_source_ids": {},
                   "additional_attributes": {},
-                  "processed_message_content": "hola",
+                  "processed_message_content": null,
                   "sentiment": {},
                   "conversation": {
                     "assignee_id": null,
                     "unread_count": 1,
-                    "last_activity_at": 1756272342,
+                    "last_activity_at": 1757962056,
                     "contact_inbox": {
-                      "source_id": "573228854498"
+                      "source_id": "573005792037"
                     }
                   },
+                  "attachments": [
+                    {
+                      "id": 790,
+                      "message_id": 9192,
+                      "file_type": "audio",
+                      "account_id": 2,
+                      "extension": null,
+                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb29CIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--60c4467c22b5b2fa52ebfc68b4d3a82a82b69b4c/File.ogg",
+                      "thumb_url": "",
+                      "file_size": 14208,
+                      "width": null,
+                      "height": null,
+                      "transcribed_text": ""
+                    }
+                  ],
                   "sender": {
                     "additional_attributes": {},
                     "custom_attributes": {},
                     "email": null,
-                    "id": 1,
+                    "id": 413,
                     "identifier": null,
-                    "name": "Pedro Rodriguez",
-                    "phone_number": "+573228854498",
+                    "name": "Daniel lopez charry",
+                    "phone_number": "+573005792037",
                     "thumbnail": "",
                     "blocked": false,
                     "type": "contact"
@@ -2196,10 +2570,10 @@
                   "additional_attributes": {},
                   "custom_attributes": {},
                   "email": null,
-                  "id": 1,
+                  "id": 413,
                   "identifier": null,
-                  "name": "Pedro Rodriguez",
-                  "phone_number": "+573228854498",
+                  "name": "Daniel lopez charry",
+                  "phone_number": "+573005792037",
                   "thumbnail": "",
                   "blocked": false,
                   "type": "contact"
@@ -2214,16 +2588,16 @@
               "unread_count": 1,
               "first_reply_created_at": null,
               "priority": null,
-              "waiting_since": 1756272342,
-              "agent_last_seen_at": 0,
+              "waiting_since": 1757947298,
+              "agent_last_seen_at": 1757961647,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1756272342,
-              "timestamp": 1756272342,
-              "created_at": 1756272342,
-              "updated_at": 1756272342.0739856
+              "last_activity_at": 1757962056,
+              "timestamp": 1757962056,
+              "created_at": 1757947298,
+              "updated_at": 1757962056.2952733
             },
-            "created_at": "2025-08-27T05:25:42.071Z",
-            "id": 1,
+            "created_at": "2025-09-15T18:47:36.293Z",
+            "id": 9192,
             "inbox": {
               "id": 1,
               "name": "Valeia-Whatsapp"
@@ -2239,14 +2613,29 @@
               "avatar": "",
               "custom_attributes": {},
               "email": null,
-              "id": 1,
+              "id": 413,
               "identifier": null,
-              "name": "Pedro Rodriguez",
-              "phone_number": "+573228854498",
+              "name": "Daniel lopez charry",
+              "phone_number": "+573005792037",
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZGRUUwRjcyOEEyM0QzMUM5OUQA",
+            "source_id": "wamid.HBgMNTczMDA1NzkyMDM3FQIAEhggQUMzMzJDMzM3OEE1RkQyOUFDMUMyQ0RDMjUzQjJBRTMA",
+            "attachments": [
+              {
+                "id": 790,
+                "message_id": 9192,
+                "file_type": "audio",
+                "account_id": 2,
+                "extension": null,
+                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb29CIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--60c4467c22b5b2fa52ebfc68b4d3a82a82b69b4c/File.ogg",
+                "thumb_url": "",
+                "file_size": 14208,
+                "width": null,
+                "height": null,
+                "transcribed_text": ""
+              }
+            ],
             "event": "message_created"
           },
           "webhookUrl": "https://automation.whitelabel.lat/webhook/valeia-chatwoot",
@@ -2284,6 +2673,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-08-27T07:22:23.054Z",
-  "versionId": "52b25ed0-a9f3-4bbb-8f02-8b801a3ee106"
+  "updatedAt": "2025-09-15T18:55:54.389Z",
+  "versionId": "4f3e8761-c629-4867-b5e7-9b5ba4e51f7a"
 }
