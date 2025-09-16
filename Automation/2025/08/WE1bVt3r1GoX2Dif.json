@@ -647,6 +647,17 @@
           }
         ]
       ]
+    },
+    "soporte": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-25T21:47:06.940Z",
@@ -2954,6 +2965,39 @@
       ],
       "id": "a4178585-9acb-4646-bb44-5000331035c9",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "toolDescription": "usas esta tool para transferir a un humano para obtener soporte cuando no puedes resolver una conversacion, o el usuario desea hablar con soporte.",
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/toggle_status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "open"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        4336,
+        -448
+      ],
+      "id": "a5691f5c-ce64-4e03-9f29-442c10dac7c9",
+      "name": "soporte",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     }
   ],
   "pinData": {
@@ -3052,6 +3096,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-08-31T22:31:29.022Z",
-  "versionId": "27c2111f-e56f-428d-bedf-f59ffeed5476"
+  "updatedAt": "2025-09-16T00:14:48.322Z",
+  "versionId": "dcfcc788-4638-4ab0-90bf-487b54525438"
 }
