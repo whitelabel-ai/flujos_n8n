@@ -340,6 +340,17 @@
           }
         ]
       ]
+    },
+    "soporte": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-25T21:46:17.503Z",
@@ -1730,6 +1741,39 @@
           "name": "Mony"
         }
       }
+    },
+    {
+      "parameters": {
+        "toolDescription": "usas esta tool para transferir a un humano para obtener soporte cuando no puedes resolver una conversacion, o el usuario desea hablar con soporte.",
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.metadata.account_id }}/conversations/{{ $('initData').item.json.metadata.conversation_id }}/toggle_status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "open"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2944,
+        3888
+      ],
+      "id": "d4da0d8a-530b-4742-8267-43cfb0c4e966",
+      "name": "soporte",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1859,6 +1903,6 @@
   },
   "tags": [],
   "triggerCount": 8,
-  "updatedAt": "2025-08-29T20:56:32.194Z",
-  "versionId": "9a284aea-6820-4aeb-87b2-4d8f58ed0cab"
+  "updatedAt": "2025-09-16T00:15:22.808Z",
+  "versionId": "4870b49e-21b6-4db2-b4ca-31750251f17f"
 }
