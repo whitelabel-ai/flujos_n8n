@@ -572,6 +572,22 @@
           }
         ]
       ]
+    },
+    "initData1": {
+      "main": [
+        [
+          {
+            "node": "change prioridad",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "change prioridad1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-25T21:46:33.295Z",
@@ -2332,6 +2348,97 @@
       ],
       "id": "c8969c9f-1f38-45c3-ad29-b33399acf027",
       "name": "reply_message"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5ee0da44-2f91-4b7d-956a-2fdb75239a38",
+              "name": "metadata",
+              "value": "={\n  \"account_id\": \"3\",\n  \"conversation_id\": \"365\"\n}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        4848
+      ],
+      "id": "6f0b056b-686d-4842-95fb-a17bf0206381",
+      "name": "initData1"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData1').item.json.metadata.account_id }}/conversations/{{ $('initData1').item.json.metadata.conversation_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "open"
+            },
+            {
+              "name": "priority",
+              "value": "urgent"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        624,
+        4848
+      ],
+      "id": "2ee5aaa7-641f-467a-9756-f87a8bde5e2a",
+      "name": "change prioridad",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData1').item.json.metadata.account_id }}/conversations/{{ $('initData1').item.json.metadata.conversation_id }}/toggle_status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "open"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        624,
+        4992
+      ],
+      "id": "67333302-7da3-499a-98e0-a2beeb1e4fac",
+      "name": "change prioridad1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "AvCyIF7yhNyF4QRt",
+          "name": "mony Hablaya"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -2398,6 +2505,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-08-30T05:04:29.887Z",
-  "versionId": "847bdf47-92b5-4f89-b12d-61f16717caa9"
+  "updatedAt": "2025-09-16T00:14:16.281Z",
+  "versionId": "0d7ebbf8-d816-4fc1-8311-466345775614"
 }
