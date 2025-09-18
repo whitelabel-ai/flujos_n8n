@@ -1,0 +1,244 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-17T22:36:40.754Z",
+  "id": "Q10OvFSij1QXt6rw",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "NocoDB prueba de concepto",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -656,
+        0
+      ],
+      "id": "d6943cda-aea0-4a87-9fe6-2a5a8d96cc13",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c471d5d3-b9a7-447d-adff-587aecf3cb4f",
+              "name": "cantidad de request",
+              "value": 1,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -368,
+        0
+      ],
+      "id": "92991e41-3cc7-4702-87c3-f8904259bfd7",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        144,
+        0
+      ],
+      "id": "29f9316e-4dad-4877-9713-e920852056d2",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener la cantidad de requests del input\nconst cantidadRequest = $input.first().json['cantidad de request'];\n\n// Validar que sea un número válido\nif (!cantidadRequest || cantidadRequest <= 0 || !Number.isInteger(cantidadRequest)) {\n  return [{\n    json: { error: 'La cantidad de request debe ser un número entero mayor a 0' }\n  }];\n}\n\n// Crear un array con la cantidad de objetos solicitada\nconst items = [];\n\nfor (let i = 0; i < cantidadRequest; i++) {\n  items.push({\n    json: {\n      index: i + 1, // Índice comenzando en 1\n      total: cantidadRequest,\n      requestNumber: i + 1\n    }\n  });\n}\n\n// Retornar el array de objetos para el Loop Over Items\nreturn items;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        0
+      ],
+      "id": "f91f5d31-20b9-4f5f-b4d3-7a37a26ca565",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "get"
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        864,
+        -208
+      ],
+      "id": "40db848d-1dda-468c-9c41-3d51049de296",
+      "name": "Get a row1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        640,
+        -208
+      ],
+      "id": "86a9d87a-e87f-4f83-a19f-85716de90e84",
+      "name": "Get many rows",
+      "credentials": {
+        "nocoDb": {
+          "id": "NgAtyc2uBlLDMbte",
+          "name": "NocoDB account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/mfcdw8uodeo8utk/records",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "offset",
+              "value": "0"
+            },
+            {
+              "name": "limit",
+              "value": "25"
+            },
+            {
+              "name": "where"
+            },
+            {
+              "name": "viewId",
+              "value": "vw5aq5k4a076rb9o"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "9T3gHvf3-o6Ue-E5PJq2MSa4KrkSEw2BctgBX5Dy"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        384,
+        16
+      ],
+      "id": "81b13fc7-8f67-485c-9792-b4ce94ec7a3a",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-17T22:36:40.754Z",
+      "updatedAt": "2025-09-17T22:36:40.754Z",
+      "role": "workflow:owner",
+      "workflowId": "Q10OvFSij1QXt6rw",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-18T19:28:33.409Z",
+  "versionId": "7112ef53-867a-483e-b67e-2e04248ba1ad"
+}
