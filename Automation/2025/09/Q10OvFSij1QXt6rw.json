@@ -46,11 +46,6 @@
         ]
       ]
     },
-    "Get many rows": {
-      "main": [
-        []
-      ]
-    },
     "HTTP Request": {
       "main": [
         [
@@ -142,42 +137,6 @@
     },
     {
       "parameters": {
-        "operation": "get"
-      },
-      "type": "n8n-nodes-base.baserow",
-      "typeVersion": 1,
-      "position": [
-        864,
-        -208
-      ],
-      "id": "40db848d-1dda-468c-9c41-3d51049de296",
-      "name": "Get a row1",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "returnAll": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        640,
-        -208
-      ],
-      "id": "86a9d87a-e87f-4f83-a19f-85716de90e84",
-      "name": "Get many rows",
-      "credentials": {
-        "nocoDb": {
-          "id": "NgAtyc2uBlLDMbte",
-          "name": "NocoDB account"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "url": "https://nocodb.whitelabel.lat/api/v2/tables/mfcdw8uodeo8utk/records",
         "sendQuery": true,
         "queryParameters": {
@@ -218,6 +177,25 @@
       ],
       "id": "81b13fc7-8f67-485c-9792-b4ce94ec7a3a",
       "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        624,
+        16
+      ],
+      "id": "e5ca3290-d4db-494c-97da-1423bd137e9f",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "w2iYCn7gO1uaxvIg",
+          "name": "Langfuse account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -239,6 +217,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T19:28:33.409Z",
-  "versionId": "7112ef53-867a-483e-b67e-2e04248ba1ad"
+  "updatedAt": "2025-09-19T01:35:11.692Z",
+  "versionId": "04947961-71cf-490c-b8c9-bccca385e5d7"
 }
