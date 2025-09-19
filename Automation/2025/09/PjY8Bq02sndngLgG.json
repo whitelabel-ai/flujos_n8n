@@ -1,0 +1,162 @@
+{
+  "active": false,
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-19T02:12:29.432Z",
+  "id": "PjY8Bq02sndngLgG",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SeeDream image generation",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 93c383d035dd7103b33d1d0c23076a82"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"bytedance/seedream-v4-text-to-image\",\n  \"callBackUrl\": \"https://automation.whitelabel.lat/api/callback\",\n  \"input\": {\n    \"prompt\": \"{{ $json.User_massage }}\",\n    \"image_size\": \"square_hd\",\n    \"image_resolution\": \"1K\",\n    \"max_images\": 1\n  }\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ef2f9cba-f8fa-49ca-84a5-67be13fd10d3",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "amount": 25
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        608,
+        0
+      ],
+      "id": "413736e7-48de-416a-98d7-8d2a6a3a4620",
+      "name": "Wait",
+      "webhookId": "28602f65-673f-4f72-b350-86a30dd03687"
+    },
+    {
+      "parameters": {
+        "url": "https://api.kie.ai/api/v1/jobs/recordInfo",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.data.taskId }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 93c383d035dd7103b33d1d0c23076a82"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "2329a747-c801-4bac-b230-cd4a230a9680",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c5e2e99f-9dee-4ce5-b48a-631cec767745",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "User_massage": "Fotografía editorial de alta costura, estilo minimalista y moderno, de una mujer adulta delgada con proporciones promedio, de piel clara y cabello largo y suelto de color rojo. Viste un top blanco de algodón ceñido y corto, y leggings negros de algodón ceñidos hasta el tobillo. La mujer está reclinada en el suelo de un estudio, con una pose neutra y las manos a los lados. La toma es de cuerpo entero desde una vista de pájaro, con la cámara a 35mm y una apertura de f/4. La iluminación suave y uniforme proviene de arriba, creando sombras de bordes suaves. El fondo es un tapete sólido y neutro, sin objetos. La composición es centrada y simétrica. La paleta de colores es principalmente blanco, negro y rojo, con saturación y contraste medios. No debe incluir elementos surrealistas, distorsión, desenfoque de movimiento, texto, logotipos, marcas de agua, reflejos de lente, extremidades o caras duplicadas"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-19T02:12:29.432Z",
+      "updatedAt": "2025-09-19T02:12:29.432Z",
+      "role": "workflow:owner",
+      "workflowId": "PjY8Bq02sndngLgG",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-19T02:37:59.557Z",
+  "versionId": "aa3564fd-bb00-4aa4-a5ff-ba7d55acfefa"
+}
