@@ -1,0 +1,204 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        []
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-20T12:40:36.573Z",
+  "id": "k0HiAcQpHtDmUSzH",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Onbording para LLantas´n´tires",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        -32
+      ],
+      "id": "ee21829a-392e-4745-abde-657895da30f2",
+      "name": "Telegram Trigger",
+      "webhookId": "f9e96179-4231-4c24-920b-09c597afa3f2",
+      "credentials": {
+        "telegramApi": {
+          "id": "POQojvCnUZ7h69VU",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7815ae0a-7a95-453a-843d-94ccd0c341e7"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        544,
+        -16
+      ],
+      "id": "c36fe1d2-a252-4e73-bf59-4edb664d9be8",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "*¡Hola\\!* 👋 Bienvenido a Llantas N’Tires    ¿Qué quieres hacer hoy\\?*",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "🧐Asesoria",
+                    "additionalFields": {
+                      "callback_data": "Asesoria"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "✅ Ya tengo la referencia",
+                    "additionalFields": {
+                      "callback_data": "referencia"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "📅 Agendar instalación",
+                    "additionalFields": {
+                      "callback_data": "agenda"
+                    }
+                  }
+                ]
+              }
+            },
+            {}
+          ]
+        },
+        "additionalFields": {
+          "parse_mode": "MarkdownV2"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        -32
+      ],
+      "id": "755d93e1-b3f9-46a3-ba6e-46c1708a6e0e",
+      "name": "Send a text message",
+      "webhookId": "879427f7-5f10-4bf1-b8d0-251ae561e1db",
+      "credentials": {
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 4
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        112,
+        -32
+      ],
+      "id": "7fe694a6-450e-4824-ac84-2f1357ea0027",
+      "name": "Wait",
+      "webhookId": "a499eec6-565d-445c-85a6-3543bcb7ebaa"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-20T12:40:36.573Z",
+      "updatedAt": "2025-09-20T12:40:36.573Z",
+      "role": "workflow:owner",
+      "workflowId": "k0HiAcQpHtDmUSzH",
+      "projectId": "nfeOgNZ0Q89hgHph"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-20T22:31:26.651Z",
+  "versionId": "07ce9095-256c-49d2-b8e5-4d442d4308f6"
+}
