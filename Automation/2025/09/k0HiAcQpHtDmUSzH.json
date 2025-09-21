@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -14,15 +14,179 @@
     },
     "Switch": {
       "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bienvenida Inicial": {
+      "main": [
         []
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Wait": {
       "main": [
         [
           {
+            "node": "Bienvenida Inicial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Resp. Asesoria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Resp. Referencia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Resp. Agenda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resp. Asesoria": {
+      "main": [
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
             "node": "Send a text message",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -40,15 +204,16 @@
     {
       "parameters": {
         "updates": [
-          "message"
+          "message",
+          "callback_query"
         ],
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -96,
-        -32
+        -656,
+        0
       ],
       "id": "ee21829a-392e-4745-abde-657895da30f2",
       "name": "Telegram Trigger",
@@ -74,13 +239,59 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "",
-                    "rightValue": "",
+                    "leftValue": "={{ $json.callback_clean }}",
+                    "rightValue": "asesoria",
                     "operator": {
                       "type": "string",
                       "operation": "equals"
                     },
-                    "id": "7815ae0a-7a95-453a-843d-94ccd0c341e7"
+                    "id": "d444a7e1-e0da-427d-a9e0-99602772ce97"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f3b23e90-dd40-4671-a4eb-08f238b2f229",
+                    "leftValue": "={{ $json.callback_clean }}",
+                    "rightValue": "referencia",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5c14ffed-f34b-41af-9879-c65b3175bffc",
+                    "leftValue": "={{ $json.callback_clean }}",
+                    "rightValue": "agenda",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
                   }
                 ],
                 "combinator": "and"
@@ -93,16 +304,16 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        544,
-        -16
+        128,
+        144
       ],
-      "id": "c36fe1d2-a252-4e73-bf59-4edb664d9be8",
+      "id": "edc46772-e689-4eb8-a52b-9156c0488950",
       "name": "Switch"
     },
     {
       "parameters": {
-        "chatId": "={{ $json.message.chat.id }}",
-        "text": "*¡Hola\\!* 👋 Bienvenido a Llantas N’Tires    ¿Qué quieres hacer hoy\\?*",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "¡Hola! 👋 Bienvenido a Llantas n'Tires  ¿Como Podemos ayudarte hoy?",
         "replyMarkup": "inlineKeyboard",
         "inlineKeyboard": {
           "rows": [
@@ -110,9 +321,9 @@
               "row": {
                 "buttons": [
                   {
-                    "text": "🧐Asesoria",
+                    "text": "🧐 Quiero asesoria para comprar una llanta",
                     "additionalFields": {
-                      "callback_data": "Asesoria"
+                      "callback_data": "asesoria"
                     }
                   }
                 ]
@@ -122,7 +333,7 @@
               "row": {
                 "buttons": [
                   {
-                    "text": "✅ Ya tengo la referencia",
+                    "text": "✅ Ya tengo la referencia de la llanta quiero comprarla",
                     "additionalFields": {
                       "callback_data": "referencia"
                     }
@@ -134,7 +345,7 @@
               "row": {
                 "buttons": [
                   {
-                    "text": "📅 Agendar instalación",
+                    "text": "📅 Quiero Agendar la instalación de la llanta",
                     "additionalFields": {
                       "callback_data": "agenda"
                     }
@@ -145,18 +356,16 @@
             {}
           ]
         },
-        "additionalFields": {
-          "parse_mode": "MarkdownV2"
-        }
+        "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        320,
-        -32
+        96,
+        -144
       ],
       "id": "755d93e1-b3f9-46a3-ba6e-46c1708a6e0e",
-      "name": "Send a text message",
+      "name": "Bienvenida Inicial",
       "webhookId": "879427f7-5f10-4bf1-b8d0-251ae561e1db",
       "credentials": {
         "telegramApi": {
@@ -167,17 +376,345 @@
     },
     {
       "parameters": {
+        "jsCode": "// Obtener el valor del botón presionado directamente\n$json.callback_clean = $json.callback_query.data.trim().toLowerCase();\n\nreturn $json;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        160
+      ],
+      "id": "95f3ab45-81f1-42fd-95f7-c6c37c21abde",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "961141f6-ae33-49d8-b081-102a1b7bdc89",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -448,
+        0
+      ],
+      "id": "c2f0b679-c1a5-4156-b396-db765c6021ff",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "text": "Vamos a asesorarte para comprar la llanta correcta para tu vehículo.  Para empezar, necesito hacerte unas preguntas rápidas.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        -112
+      ],
+      "id": "1bce2cf9-42c7-4d6c-9542-787849f061a0",
+      "name": "Resp. Asesoria",
+      "webhookId": "aa910415-ce09-4214-850f-1ae5ee4965e5",
+      "credentials": {
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "text": "Excelente,  dime la referencia para buscar en nuestro Inventario",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        160
+      ],
+      "id": "c8746ff2-a5c6-4ad2-9c6a-4fbcef74754c",
+      "name": "Resp. Referencia",
+      "webhookId": "aa910415-ce09-4214-850f-1ae5ee4965e5",
+      "credentials": {
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "text": "voy a buscar las opciones mas cercanas ",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        528
+      ],
+      "id": "8fa533b4-b28d-4814-9303-f4bf5afeeae7",
+      "name": "Resp. Agenda",
+      "webhookId": "aa910415-ce09-4214-850f-1ae5ee4965e5",
+      "credentials": {
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -144,
+        -112
+      ],
+      "id": "eddd0c13-94bd-4306-97ab-43001eb0b505",
+      "name": "Wait",
+      "webhookId": "b755442c-9184-4da1-aa59-144034f6f138"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        16
+      ],
+      "id": "7252f242-0b68-427f-8f4e-40f26fdde9bd",
+      "name": "Wait1",
+      "webhookId": "4070ef9b-e40b-4e6c-9ded-e41d53ebd529"
+    },
+    {
+      "parameters": {
         "amount": 4
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        112,
-        -32
+        432,
+        160
       ],
-      "id": "7fe694a6-450e-4824-ac84-2f1357ea0027",
-      "name": "Wait",
-      "webhookId": "a499eec6-565d-445c-85a6-3543bcb7ebaa"
+      "id": "1075d636-8737-4c15-a942-e5cebeba56dc",
+      "name": "Wait2",
+      "webhookId": "b2ddf2e6-fa8e-44ee-8cb7-584457c40c10"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        304
+      ],
+      "id": "1cf5e395-6372-4215-b262-9eb7fb921830",
+      "name": "Wait3",
+      "webhookId": "7476a988-3fdb-499c-bff9-7ce046b6e9d1"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "message": "esto solo tomara un minuto",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "¿Que Marca y tipo de Vehiculo tienes? (Chevrolet Onix,Kia Picanto , Hiunday Accent etc)"
+            },
+            {
+              "fieldLabel": "¿Que año/Modelo es?",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "¿Cual es el tamaño actual de la llanta? ejemplo:  205/55 R16"
+            },
+            {
+              "fieldLabel": "¿Tipo de conducción / uso del vehículo? ejemplo: Autopista, carretera, Trocha, mixto."
+            },
+            {
+              "fieldLabel": "¿Cual es la Frecuencia de uso y carga habitual? ejemplo: Diario, ocasional, viajes largos.  Con carga de pasajeros o carga pesada."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        -112
+      ],
+      "id": "f30b841d-9563-43dc-9b04-1eedfc8d1bf0",
+      "name": "Send message and wait for response",
+      "webhookId": "a5178de9-1eda-445e-9867-f1b6cf50a971",
+      "credentials": {
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4eb309c1-e9b8-47ba-82a0-97e2eedfb0b9",
+              "name": "Tipo_Vehiculo",
+              "value": "={{ $json.data['¿Que Marca y tipo de Vehiculo tienes? (Chevrolet Onix,Kia Picanto , Hiunday Accent etc)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "06d15c38-87e6-46b6-a692-e34fcd773a8e",
+              "name": "Año/Modelo",
+              "value": "={{ $json.data['¿Que año/Modelo es?'] }}",
+              "type": "number"
+            },
+            {
+              "id": "39a1f57f-b9c8-4559-a1b7-370ffe6e75af",
+              "name": "Tamaño_actual_Llanta",
+              "value": "={{ $json.data['¿Cual es el tamaño actual de la llanta? ejemplo:  205/55 R16'] }}",
+              "type": "string"
+            },
+            {
+              "id": "058e6143-600a-4d37-8e81-a2727c6af7e1",
+              "name": "uso_frecuente",
+              "value": "={{ $json.data['¿Tipo de conducción / uso del vehículo? ejemplo: Autopista, carretera, Trocha, mixto.'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d349bba3-ef8c-484f-85cf-9a6fef6047e1",
+              "name": "frecuencia de uso_carga",
+              "value": "={{ $json.data['¿Cual es la Frecuencia de uso y carga habitual? ejemplo: Diario, ocasional, viajes largos.  Con carga de pasajeros o carga pesada.'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1168,
+        -112
+      ],
+      "id": "c237b77e-ff21-42b4-ae8a-caacf8948613",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Tomamos los datos del Set Node\nconst data = $json;\n\n// Armamos el prompt para la IA\nconst prompt = `\nEl cliente tiene un vehículo ${data.Tipo_Vehiculo} (${data[\"Año/Modelo\"]}),\ncon llantas de tamaño ${data.Tamaño_actual_Llanta},\nuso frecuente: ${data.uso_frecuente},\nfrecuencia de carga: ${data.frecuencia_carga}.\nPor favor, recomiéndale las mejores llantas para su vehículo y explica por qué.\n`;\n\n// Devolvemos un objeto listo para el nodo AI\nreturn [\n  {\n    json: {\n      prompt: prompt\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1376,
+        -112
+      ],
+      "id": "0e63bec6-711c-4018-8b77-31992912148d",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {
+          "systemMessage": "Eres un asistente experto en llantas para vehículos. Tu tarea es brindar recomendaciones personalizadas de llantas según tipo de vehículo, marca, modelo, año, tamaño de llanta, uso frecuente, frecuencia de carga, presupuesto y preferencias del usuario.\n\nReglas y estilo:\n\nSeguridad primero: Antes de recomendar, verifica que la combinación de marca, modelo, año y tamaño de llanta sea plausible. Si hay un riesgo por usar un tamaño distinto al de fábrica, informa claramente al usuario y explica los posibles efectos (precisión del velocímetro, estabilidad, roce, consumo de combustible, etc.).\n\nClaridad y organización: Divide la respuesta en secciones con subtítulos claros:\n\nAdvertencia de seguridad (si aplica)\n\nCaracterísticas ideales para el uso del vehículo\n\nOpciones de llantas recomendadas (mínimo 2, máximo 3, con ventajas y desventajas)\n\nConsejos rápidos de mantenimiento\n\nRecomendaciones concretas: Siempre ofrece 2-3 opciones de llantas con ventajas y desventajas y explica por qué cada opción es adecuada para el vehículo y uso del usuario.\n\nTono y estilo: Profesional, cercano, amigable y fácil de entender.\n\nAdaptabilidad: Si el usuario tiene limitaciones de presupuesto o preferencias, ajusta las recomendaciones respetando esos límites.\n\nNo inventar datos concretos: Nunca des precios exactos, disponibilidad en tiendas locales o modelos desconocidos. Si no se puede dar un dato, indícalo de manera profesional.\n\nConsejos adicionales: Incluye información útil sobre presión de llantas, rotación, alineación y mantenimiento, siempre de forma clara y breve.\n\nObjetivo final: Que el usuario reciba una recomendación confiable, clara y segura para su vehículo, incluyendo advertencias cuando use medidas de llantas no estándar."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1616,
+        -112
+      ],
+      "id": "ceb13d58-f44f-423b-af95-ae47f86a3664",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "contextWindowLength": 25
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1664,
+        128
+      ],
+      "id": "95ead276-6a82-4c56-b8fd-a01f36adc16b",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        112
+      ],
+      "id": "db346176-ee18-4752-aaed-c543c932d387",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XIMrvFKKXQQFKrhj",
+          "name": "LLantas n´ Tires"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1984,
+        -112
+      ],
+      "id": "45bd2e4b-de71-4e41-a5a4-2e2ee6d31a81",
+      "name": "Send a text message",
+      "webhookId": "e15ae04c-4326-4161-b317-205964f4eaa7",
+      "credentials": {
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -185,7 +722,8 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "shared": [
     {
@@ -198,7 +736,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-09-20T22:31:26.651Z",
-  "versionId": "07ce9095-256c-49d2-b8e5-4d442d4308f6"
+  "triggerCount": 1,
+  "updatedAt": "2025-09-21T21:07:03.113Z",
+  "versionId": "1a0e189f-4dd3-4232-b53e-df810d04c3d7"
 }
