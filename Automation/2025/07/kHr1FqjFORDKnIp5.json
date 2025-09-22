@@ -294,6 +294,94 @@
           }
         ]
       ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agenda Adoreal1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agenda Mappa1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agenda Whitelabel1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agenda Personal1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent with Langfuse": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-07-16T17:11:09.576Z",
@@ -319,7 +407,8 @@
         0
       ],
       "id": "5313bdc0-270b-4732-a339-f5616ce40222",
-      "name": "AI Agent"
+      "name": "AI Agent",
+      "disabled": true
     },
     {
       "parameters": {
@@ -840,7 +929,8 @@
           "id": "iDWZwExyaEtemxqA",
           "name": "Workant"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -975,7 +1065,8 @@
         -672
       ],
       "id": "8f2722db-4f07-4cf2-accc-b2cef70f7f87",
-      "name": "When clicking ‘Execute workflow’"
+      "name": "When clicking ‘Execute workflow’",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1024,7 +1115,253 @@
         256
       ],
       "id": "98c37e0a-6499-4982-9d64-123417e4a48a",
-      "name": "Schedule Trigger"
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Que eventos tengo?",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "Eres el asistente personal de Andrés. Tu función es gestionar su agenda compilando diferentes agendas e informarle sobre todos los eventos que tiene.\n\nPara lograr tu ejetivo tienes las herramientas: \n\n\"Agenda Adoreal\"\n\"Agenda Mappa\"\n\"Agenda Personal\"\n\"Agenda Whitelabel\"\n\nDebes enviarle el mensaje separando la los eventos por agenda.\n\nIgnora los eventos que tengan como titulo: Busy, busy, out of office, lunch\n\n## CONTEXTO TEMPORAL\nFecha y hora actual: {{ $now.format('cccc, yyyy-MM-dd HH:mm') }}\nZona horaria: {{ $now.format('z') }}\n\n## FORMATO DE RESPUESTA\nResponde siempre en Markdown"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        -128
+      ],
+      "id": "2b5cfa51-2706-4ca9-ba99-8a6ddafe68f2",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "w2iYCn7gO1uaxvIg",
+          "name": "Langfuse account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-06-05",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        112
+      ],
+      "id": "c05e1089-0c48-4e24-b183-b8354ebbf436",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "fromAllCalendars": false,
+        "calendarId": {
+          "__rl": true,
+          "value": "AAMkAGRhZTIyNWY0LTAwYzEtNDQwYi1hMGUzLWYzNjNlOGQyNWZmMABGAAAAAADG4r0_gV9ITY3DO1mr_eNSBwCmfm1fbYtYQKkso_9FD2FdAAAAAAEGAACmfm1fbYtYQKkso_9FD2FdAAAAACC0AAA=",
+          "mode": "list",
+          "cachedResultName": "Calendario"
+        },
+        "returnAll": true,
+        "filters": {
+          "custom": ""
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlookTool",
+      "typeVersion": 2,
+      "position": [
+        1984,
+        176
+      ],
+      "id": "81c4a279-4e50-4bef-8288-9a004e657c44",
+      "name": "Agenda Adoreal1",
+      "webhookId": "235f98af-eab2-45d4-96c9-bee4c7cea75a",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "GkZE7g6pqvN5dLci",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1296,
+        -128
+      ],
+      "id": "e43d88ec-0c11-4d50-ba0b-63794c4014a6",
+      "name": "Telegram Trigger",
+      "webhookId": "c6d0c7b4-fd76-4a54-85d8-5df776754717",
+      "credentials": {
+        "telegramApi": {
+          "id": "iDWZwExyaEtemxqA",
+          "name": "Workant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "176878701",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1984,
+        -96
+      ],
+      "id": "fc825938-83e2-40e3-9689-88fffd1c5915",
+      "name": "Send a text message1",
+      "webhookId": "18a658e0-c142-438f-ae70-3ab50d6b69a8",
+      "credentials": {
+        "telegramApi": {
+          "id": "iDWZwExyaEtemxqA",
+          "name": "Workant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "andres@mappa.ai",
+          "mode": "list",
+          "cachedResultName": "andres@mappa.ai"
+        },
+        "returnAll": true,
+        "timeMax": "={{ $now.plus({ day: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1824,
+        192
+      ],
+      "id": "999896aa-8b75-472a-9a9c-737de6e9ad2c",
+      "name": "Agenda Mappa1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Q0ztMJVO6QGlJf7z",
+          "name": "Mappa"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "hola@whitelabel.lat",
+          "mode": "list",
+          "cachedResultName": "hola@whitelabel.lat"
+        },
+        "returnAll": true,
+        "timeMax": "={{ $now.plus({ day: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2144,
+        176
+      ],
+      "id": "bd2e54aa-e653-4ae1-a5d2-941f610053b4",
+      "name": "Agenda Whitelabel1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "RMuQyYsn6eGZTZPX",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "andresco70@gmail.com",
+          "mode": "list",
+          "cachedResultName": "andres corrral"
+        },
+        "returnAll": true,
+        "timeMax": "={{ $now.plus({ day: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2304,
+        176
+      ],
+      "id": "5c45a885-533b-492b-99db-90887bef4d01",
+      "name": "Agenda Personal1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "AH3OiZ8CUZ7yhAry",
+          "name": "Andrés Personal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        192
+      ],
+      "id": "f75f0147-88cc-4000-a0a6-55f3d46222e3",
+      "name": "Get many tasks in Google Tasks1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            },
+            {
+              "triggerAtHour": 13
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1296,
+        160
+      ],
+      "id": "64ee406f-92d6-44ca-bad9-c65e5cab608b",
+      "name": "Schedule Trigger1",
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -1049,7 +1386,7 @@
     }
   },
   "tags": [],
-  "triggerCount": 2,
-  "updatedAt": "2025-07-29T00:32:29.698Z",
-  "versionId": "ac3c6f21-9d99-4347-b8a8-dabded5e5a91"
+  "triggerCount": 1,
+  "updatedAt": "2025-09-22T18:46:15.460Z",
+  "versionId": "a6cb6ba9-ae3c-4c88-bcc5-75e6682df5b7"
 }
