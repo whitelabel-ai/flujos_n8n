@@ -1,0 +1,130 @@
+{
+  "active": false,
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-22T18:28:01.012Z",
+  "id": "bpVK4ChbDcgN9wUO",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 11",
+  "nodes": [
+    {
+      "parameters": {
+        "langfuseMetadata": {
+          "sessionId": "default-session-id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "7ef6db22-50d1-4f0c-a04f-1e41828a0309",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "w2iYCn7gO1uaxvIg",
+          "name": "Langfuse account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -96,
+        32
+      ],
+      "id": "ed24cba9-3863-46a2-8bc3-1f33b050532c",
+      "name": "When chat message received",
+      "webhookId": "805d9592-4301-4398-90c2-3601033b21bf"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        224,
+        400
+      ],
+      "id": "791c8c84-cc8a-4b17-ab95-b7428e5b6b59",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        304,
+        224
+      ],
+      "id": "16a23174-be36-47fd-988c-a497e7b149b5",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "kuAijbcGhZkbdIR2",
+          "name": "whitelabel mony"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-22T18:28:01.012Z",
+      "updatedAt": "2025-09-22T18:28:01.012Z",
+      "role": "workflow:owner",
+      "workflowId": "bpVK4ChbDcgN9wUO",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-22T18:32:18.814Z",
+  "versionId": "7ba7d188-1d6d-4d8d-9510-c5eba25c057b"
+}
