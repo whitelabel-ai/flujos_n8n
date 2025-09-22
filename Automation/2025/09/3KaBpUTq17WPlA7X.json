@@ -1,0 +1,143 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-22T19:31:23.498Z",
+  "id": "3KaBpUTq17WPlA7X",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "borrar",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "af300d05-8aba-4174-a64c-b4bc11e06d9a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "promptName": "profesor",
+        "label": "latest",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "58b7787b-86c0-497a-87b9-21385f01c440",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "w2iYCn7gO1uaxvIg",
+          "name": "Langfuse account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "hola",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "= {{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "0870e3c2-733a-4897-b8c5-1f23f5adbba7",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "w2iYCn7gO1uaxvIg",
+          "name": "Langfuse account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        464,
+        224
+      ],
+      "id": "6a07baa9-43cf-4b65-9f27-d3c0c6ac2503",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "kuAijbcGhZkbdIR2",
+          "name": "whitelabel mony"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-22T19:31:23.498Z",
+      "updatedAt": "2025-09-22T19:31:23.498Z",
+      "role": "workflow:owner",
+      "workflowId": "3KaBpUTq17WPlA7X",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-22T20:10:38.475Z",
+  "versionId": "5990bac8-08d4-40ea-9d3e-69dc959fa327"
+}
