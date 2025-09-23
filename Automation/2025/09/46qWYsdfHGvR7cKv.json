@@ -1,0 +1,220 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent with Langfuse": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-22T23:10:50.302Z",
+  "id": "46qWYsdfHGvR7cKv",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 14",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        0
+      ],
+      "id": "e97a88a4-c2e5-4c93-b6f7-95a3bbdc1514",
+      "name": "Telegram Trigger",
+      "webhookId": "2adc012d-38a4-4e46-a28a-4b2d289cc0d0",
+      "credentials": {
+        "telegramApi": {
+          "id": "LgIJqq0407oZiVXB",
+          "name": "reskilling test"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "langfuseMetadata": {
+          "sessionId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "userId": "={{ $('Telegram Trigger').item.json.message.chat.username }}"
+        },
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        480,
+        0
+      ],
+      "id": "be2cf707-f609-488f-8052-0a0fb0905d6e",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "w2iYCn7gO1uaxvIg",
+          "name": "Langfuse account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptName": "joker",
+        "label": "latest",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "47fa34cf-545a-4f87-a6f2-8bc0fa378c88",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "w2iYCn7gO1uaxvIg",
+          "name": "Langfuse account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        528,
+        224
+      ],
+      "id": "10df5cef-b7f9-40c2-94c2-f57d7ba5ab20",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "kuAijbcGhZkbdIR2",
+          "name": "whitelabel mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "9f793eaa-ec51-4efb-8b94-e7385debaf1f",
+      "name": "Send a text message",
+      "webhookId": "a4d5ca40-13d4-4080-95e6-254702c98eee",
+      "credentials": {
+        "telegramApi": {
+          "id": "iDWZwExyaEtemxqA",
+          "name": "Workant"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "json": {
+          "update_id": 208179799,
+          "message": {
+            "message_id": 12,
+            "from": {
+              "id": 176878701,
+              "is_bot": false,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "language_code": "es"
+            },
+            "chat": {
+              "id": 176878701,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "type": "private"
+            },
+            "date": 1758582805,
+            "text": "una abuela cocinando huevos"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-22T23:10:50.302Z",
+      "updatedAt": "2025-09-22T23:10:50.302Z",
+      "role": "workflow:owner",
+      "workflowId": "46qWYsdfHGvR7cKv",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-22T23:15:25.791Z",
+  "versionId": "3e6d7795-43d8-490e-a723-6335e65ef185"
+}
