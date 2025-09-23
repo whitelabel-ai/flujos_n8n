@@ -192,20 +192,15 @@
         ]
       ]
     },
-    "Send a text message1": {
+    "Code3": {
       "main": [
         [
           {
-            "node": "Wait4",
+            "node": "un momento, estamos revisando nuestro inventario",
             "type": "main",
             "index": 0
           }
         ]
-      ]
-    },
-    "Code3": {
-      "main": [
-        []
       ]
     },
     "Edit Fields1": {
@@ -381,11 +376,6 @@
             "node": "Asesoria ",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Code3",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -428,6 +418,28 @@
         [
           {
             "node": "Onbording Asesoria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "un momento, estamos revisando nuestro inventario": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Asesoria ": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
             "type": "main",
             "index": 0
           }
@@ -782,7 +794,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1024,
+        1072,
         -272
       ],
       "id": "c237b77e-ff21-42b4-ae8a-caacf8948613",
@@ -860,7 +872,7 @@
       "typeVersion": 2,
       "position": [
         1872,
-        -272
+        -384
       ],
       "id": "e21e3f85-efe7-4f6c-8e6b-0c7dda4703c2",
       "name": "Code2"
@@ -900,41 +912,41 @@
     },
     {
       "parameters": {
-        "text": "Estamos revisando nuestro inventario... 🔎",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1024,
-        416
-      ],
-      "id": "8ce2695e-4e10-4659-8a00-7337e0f2cf05",
-      "name": "Send a text message1",
-      "webhookId": "a9e6114a-55be-426e-9c5f-13907d373fbb",
-      "credentials": {
-        "telegramApi": {
-          "id": "1CNcHuDCxtwKoVN7",
-          "name": "Telegram account 2"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "jsCode": "const text = $json[\"message\"][\"text\"];\nconst regex = /(\\d{3})\\/(\\d{2})\\s?R(\\d{2})/i;\nconst match = text.match(regex);\n\nif (match) {\n  return [{\n    referencia: `${match[1]}/${match[2]} R${match[3]}`,\n    mensajeOriginal: text\n  }];\n} else {\n  return [{\n    referencia: null,\n    mensajeOriginal: text\n  }];\n}\n"
+        "jsCode": "const text = $json[\"data\"][\"text\"].trim();\n\n// Regex: busca marca (letras) + medida (ej. 225/45/r17 o 225/45 R17)\nconst regex = /([a-zA-Z]+)\\s+(\\d{3})\\/(\\d{2})\\s*\\/?\\s*R?(\\d{2})/i;\nconst match = text.match(regex);\n\nif (match) {\n  return [{\n    marca: match[1].charAt(0).toUpperCase() + match[1].slice(1).toLowerCase(), // \"pireli\" → \"Pireli\"\n    referencia: `${match[2]}/${match[3]} R${match[4]}`,\n    mensajeOriginal: text\n  }];\n} else {\n  return [{\n    marca: null,\n    referencia: null,\n    mensajeOriginal: text\n  }];\n}\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        800,
-        416
+        816,
+        448
       ],
       "id": "689bdfb7-712c-41d0-88e8-19cd9ef9b873",
       "name": "Code3"
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "273cf771-e911-4b9c-99f3-8ae9d5493127",
+              "name": "marca",
+              "value": "={{ $('Code3').item.json.marca }}",
+              "type": "string"
+            },
+            {
+              "id": "56d2634b-3334-4753-8134-8a1536bfcc74",
+              "name": "referencia",
+              "value": "={{ $('Code3').item.json.referencia }}",
+              "type": "string"
+            },
+            {
+              "id": "02930294-070b-4449-910a-6d02780400e9",
+              "name": "mensajeOriginal",
+              "value": "={{ $('Code3').item.json.mensajeOriginal }}",
+              "type": "string"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -954,7 +966,7 @@
       "typeVersion": 1.1,
       "position": [
         1264,
-        416
+        448
       ],
       "id": "b49725ec-b031-4bda-bf83-d8faeb8017b6",
       "name": "Wait4",
@@ -1036,8 +1048,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2304,
-        -272
+        2592,
+        -448
       ],
       "id": "46a2c9a7-af63-474e-8522-478b6747e2b8",
       "name": "Quieres comprar alguna de estas opciones?",
@@ -1058,8 +1070,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2496,
-        224
+        2448,
+        192
       ],
       "id": "0cbf84d6-842f-45b6-b57c-692514c41668",
       "name": "✅ Hemos encontrado tu referencia/ Comprar",
@@ -1069,8 +1081,7 @@
           "id": "1CNcHuDCxtwKoVN7",
           "name": "Telegram account 2"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1085,7 +1096,7 @@
       "typeVersion": 1.2,
       "position": [
         2096,
-        -272
+        -384
       ],
       "id": "45bd2e4b-de71-4e41-a5a4-2e2ee6d31a81",
       "name": "Answer Assoria",
@@ -1248,7 +1259,7 @@
       "typeVersion": 1.2,
       "position": [
         2720,
-        224
+        192
       ],
       "id": "5ed4cf9b-a8a3-4c26-8c23-e90397403767",
       "name": "Quieres comprar alguna de estas opciones?1",
@@ -1258,8 +1269,7 @@
           "id": "1CNcHuDCxtwKoVN7",
           "name": "Telegram account 2"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1336,7 +1346,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        560,
+        544,
         448
       ],
       "id": "eb13bffb-6d1f-460c-aba1-d279ae70868b",
@@ -1392,8 +1402,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2944,
-        544
+        2960,
+        640
       ],
       "id": "dd67ff71-7374-4ab8-aab8-f7b0cd0bd802",
       "name": "Asesoria "
@@ -1429,7 +1439,8 @@
           "id": "mbYsL5GzOjiChSg5",
           "name": "Inventario Llantas n tires DB"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1445,22 +1456,6 @@
       "typeVersion": 1,
       "id": "2d9c235a-ea20-45f2-8ffe-ada73eb8efc1",
       "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "content": "## Buscar/Cotizar Referencia\n",
-        "height": 656,
-        "width": 2704,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        480,
-        176
-      ],
-      "typeVersion": 1,
-      "id": "6abcaa5d-3e81-424a-ab7c-a4dc78c583b5",
-      "name": "Sticky Note1"
     },
     {
       "parameters": {
@@ -1511,6 +1506,30 @@
       "typeVersion": 1,
       "id": "85070d04-46b6-4fd0-b254-f7a6987604d8",
       "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "text": "Un momento, estamos revisando nuestro inventario... 🔎",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1040,
+        448
+      ],
+      "id": "8ce2695e-4e10-4659-8a00-7337e0f2cf05",
+      "name": "un momento, estamos revisando nuestro inventario",
+      "webhookId": "a9e6114a-55be-426e-9c5f-13907d373fbb",
+      "credentials": {
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1533,6 +1552,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-22T22:32:22.844Z",
-  "versionId": "bc35be90-5ffb-4530-83fd-d715f30d1a38"
+  "updatedAt": "2025-09-23T21:05:33.923Z",
+  "versionId": "c51a2d52-7cf3-40d3-927c-632ec2cbad7d"
 }
