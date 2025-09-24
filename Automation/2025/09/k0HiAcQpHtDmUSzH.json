@@ -339,17 +339,6 @@
     },
     "✅ Hemos encontrado tu referencia/ Comprar": {
       "main": [
-        [
-          {
-            "node": "Quieres comprar alguna de estas opciones?1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Quieres comprar alguna de estas opciones?1": {
-      "main": [
         []
       ]
     },
@@ -681,7 +670,9 @@
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
         "text": "voy a buscar las opciones mas cercanas ",
-        "additionalFields": {}
+        "additionalFields": {
+          "appendAttribution": false
+        }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -742,7 +733,9 @@
       "webhookId": "b2ddf2e6-fa8e-44ee-8cb7-584457c40c10"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "amount": 1
+      },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
@@ -893,6 +886,18 @@
           "cachedResultName": "Hoja 1",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ooug27MCKXpwZJh-LFj8FdwYQDIUAtnOl7YmOOHB0kQ/edit#gid=0"
         },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Marca",
+              "lookupValue": "={{ $json.marca }}"
+            },
+            {
+              "lookupColumn": "Medida",
+              "lookupValue": "={{ $json.referencia }}"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.googleSheets",
@@ -903,6 +908,7 @@
       ],
       "id": "1e912b17-3685-46ad-ad37-30cd431754c3",
       "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "mbYsL5GzOjiChSg5",
@@ -917,7 +923,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        816,
+        800,
         448
       ],
       "id": "689bdfb7-712c-41d0-88e8-19cd9ef9b873",
@@ -984,12 +990,12 @@
           "conditions": [
             {
               "id": "77ce984b-14a8-4874-a745-34719d9ef1a2",
-              "leftValue": "",
+              "leftValue": "={{ $json.Medida }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "operation": "notEmpty",
+                "singleValue": true
               }
             }
           ],
@@ -1018,12 +1024,11 @@
           "conditions": [
             {
               "id": "c5744d26-3227-4262-b39b-099b7fbf209e",
-              "leftValue": "",
-              "rightValue": "",
+              "leftValue": "={{ $json.Disponibilidad }}",
+              "rightValue": 0,
               "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "type": "number",
+                "operation": "gt"
               }
             }
           ],
@@ -1064,14 +1069,17 @@
     },
     {
       "parameters": {
-        "text": "=✅ Hemos encontrado tu referencia **{{$json[\"referencia\"]}}** en inventario.    Marca: {{$json[\"Marca\"]}}   Modelo: {{$json[\"Modelo\"]}}   Tipo de uso: {{$json[\"Tipo de uso\"]}}   Precio: {{$json[\"Precio\"]}}    👉 [Pagar ahora]({{$json[\"Link de pago\"]}})",
-        "additionalFields": {}
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "text": "=✅ Hemos encontrado la referencia **{{ $('Edit Fields1').item.json.mensajeOriginal }} en  nuestro inventario. \nTenemos {{ $json.Disponibilidad }} Unidades Disponibles\n¿Quieres realizar la compra?\n{{ $json.Link_Compra }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2448,
-        192
+        2496,
+        224
       ],
       "id": "0cbf84d6-842f-45b6-b57c-692514c41668",
       "name": "✅ Hemos encontrado tu referencia/ Comprar",
@@ -1172,6 +1180,12 @@
       ],
       "id": "ef351314-62d4-4517-b363-218203d2a20c",
       "name": "Consultar disponibilidad",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "FLcfVnydGza1vVe1",
+          "name": "Calendar LLantas n´ Tires"
+        }
+      },
       "disabled": true
     },
     {
@@ -1253,35 +1267,19 @@
     {
       "parameters": {
         "operation": "sendAndWait",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        2720,
-        192
-      ],
-      "id": "5ed4cf9b-a8a3-4c26-8c23-e90397403767",
-      "name": "Quieres comprar alguna de estas opciones?1",
-      "webhookId": "c3356be2-810a-4c49-a405-e9b8770e0913",
-      "credentials": {
-        "telegramApi": {
-          "id": "1CNcHuDCxtwKoVN7",
-          "name": "Telegram account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "sendAndWait",
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
         "message": "=😔 Lo sentimos, la referencia **{{ $json[\"referencia\"] }}** no está disponible en nuestro inventario.  \n\nPero no te preocupes, tienes dos opciones:  \n\n1️⃣ Envíanos otra referencia en el formato correcto (ejemplo: 205/55 R16).  \n2️⃣ Solicita una asesoría personalizada para recomendarte neumáticos equivalentes y seguros para tu vehículo. 🚗🔧  \n\nPor favor, responde con la opción que prefieras:\n- **Otra referencia**  \n- **Asesoría**\n",
-        "options": {}
+        "responseType": "freeText",
+        "options": {
+          "messageButtonLabel": "Respond",
+          "responseFormTitle": ""
+        }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2480,
-        416
+        2496,
+        464
       ],
       "id": "dedd3a4f-f408-447e-b695-8bba1e2b8492",
       "name": "Buscar Otra referencia / sol. Asesoria",
@@ -1291,8 +1289,7 @@
           "id": "1CNcHuDCxtwKoVN7",
           "name": "Telegram account 2"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1328,7 +1325,7 @@
       "typeVersion": 3.2,
       "position": [
         2736,
-        544
+        464
       ],
       "id": "2501f0eb-2882-40e3-965d-3de889c044b8",
       "name": "Otra referencia / Asesoria"
@@ -1362,13 +1359,15 @@
     {
       "parameters": {
         "operation": "sendAndWait",
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
         "message": "=⚠️ No logré identificar la referencia. Por favor envíamela de nuevo  en el formato correcto: 205/55 R16. o agrega otra referencia\n",
+        "responseType": "freeText",
         "options": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2128,
+        2160,
         432
       ],
       "id": "488431c6-90ec-4d7d-ba77-066d8b495c77",
@@ -1379,8 +1378,7 @@
           "id": "1CNcHuDCxtwKoVN7",
           "name": "Telegram account 2"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1456,22 +1454,6 @@
       "typeVersion": 1,
       "id": "2d9c235a-ea20-45f2-8ffe-ada73eb8efc1",
       "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "content": "## Agendar Postura de llantas \n",
-        "height": 368,
-        "width": 2128,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        480,
-        960
-      ],
-      "typeVersion": 1,
-      "id": "87a10f87-ca2a-4947-a192-a92f34007084",
-      "name": "Sticky Note2"
     },
     {
       "parameters": {
@@ -1552,6 +1534,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-23T21:05:33.923Z",
-  "versionId": "c51a2d52-7cf3-40d3-927c-632ec2cbad7d"
+  "updatedAt": "2025-09-24T21:06:26.444Z",
+  "versionId": "7ea91290-36eb-474a-909b-e7246398e201"
 }
