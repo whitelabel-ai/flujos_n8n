@@ -44,6 +44,11 @@
           }
         ]
       ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-09-22T23:10:50.302Z",
@@ -64,7 +69,7 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -144,
+        64,
         0
       ],
       "id": "e97a88a4-c2e5-4c93-b6f7-95a3bbdc1514",
@@ -82,8 +87,8 @@
         "promptType": "define",
         "text": "={{ $('Telegram Trigger').item.json.message.text }}",
         "langfuseMetadata": {
-          "sessionId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-          "userId": "={{ $('Telegram Trigger').item.json.message.chat.username }}"
+          "sessionId": "=SiD {{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "userId": "=UiD  {{ $('Telegram Trigger').item.json.message.chat.username }}"
         },
         "options": {
           "systemMessage": "={{ $json.prompt }}"
@@ -113,7 +118,7 @@
       "type": "@langfuse/n8n-nodes-langfuse.langfuse",
       "typeVersion": 1,
       "position": [
-        208,
+        288,
         0
       ],
       "id": "47fa34cf-545a-4f87-a6f2-8bc0fa378c88",
@@ -133,7 +138,7 @@
       "typeVersion": 1,
       "position": [
         528,
-        224
+        240
       ],
       "id": "10df5cef-b7f9-40c2-94c2-f57d7ba5ab20",
       "name": "Google Gemini Chat Model",
@@ -168,23 +173,39 @@
       "disabled": true
     },
     {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -256
+      ],
+      "id": "64e5b563-d83e-4e13-b3fe-54277d376d41",
+      "name": "When clicking ‘Execute workflow’",
+      "disabled": true
+    },
+    {
       "parameters": {
-        "additionalFields": {}
+        "resource": "opportunity",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {}
       },
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        0,
-        0
+        -16,
+        288
       ],
       "id": "fae2127d-37f4-400d-8d83-5422984fd39c",
-      "name": "Create a contact",
+      "name": "Get many opportunities",
       "credentials": {
         "odooApi": {
           "id": "TLimMooAV1rLHwPf",
           "name": "Odoo account"
         }
-      }
+      },
+      "disabled": true
     }
   ],
   "pinData": {
@@ -210,7 +231,7 @@
               "type": "private"
             },
             "date": 1758582805,
-            "text": "una abuela cocinando huevos"
+            "text": "un mecanico arreglando un avion"
           }
         }
       }
@@ -234,6 +255,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-24T13:16:49.300Z",
-  "versionId": "8e14fcdc-bb6d-484e-9f0d-964c3990556e"
+  "updatedAt": "2025-09-25T16:26:07.004Z",
+  "versionId": "c5032b0d-dcda-4267-a69e-ba03bba0093a"
 }
