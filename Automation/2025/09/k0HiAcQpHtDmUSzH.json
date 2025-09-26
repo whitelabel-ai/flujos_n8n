@@ -279,30 +279,20 @@
     },
     "Resp. Agenda": {
       "main": [
-        []
-      ]
-    },
-    "Consultar disponibilidad": {
-      "main": [
-        []
-      ]
-    },
-    "Code4": {
-      "main": [
         [
           {
-            "node": "seleccione opcion",
+            "node": "Consultar disponibilidad",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "seleccione opcion": {
+    "Consultar disponibilidad": {
       "main": [
         [
           {
-            "node": "confimar",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -423,11 +413,22 @@
         ]
       ]
     },
-    "HTTP Request": {
+    "Code in JavaScript": {
       "main": [
         [
           {
-            "node": "Code4",
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "confimar",
             "type": "main",
             "index": 0
           }
@@ -1170,23 +1171,12 @@
           "mode": "list",
           "cachedResultName": "test llantas n´Tires"
         },
-        "returnAll": true,
-        "timeMin": "={{ $now.toISO() }}\n",
-        "timeMax": "={{ $now.plus({ week: 1 }).toISO() }}\n\n",
-        "options": {
-          "query": "all",
-          "timeZone": {
-            "__rl": true,
-            "value": "America/Bogota",
-            "mode": "list",
-            "cachedResultName": "America/Bogota"
-          }
-        }
+        "options": {}
       },
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        912,
+        864,
         1104
       ],
       "id": "ef351314-62d4-4517-b363-218203d2a20c",
@@ -1200,42 +1190,6 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1344,
-        1104
-      ],
-      "id": "cdce09f2-4434-430f-ac33-64475ce134ad",
-      "name": "Code4",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "sendAndWait",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1568,
-        1104
-      ],
-      "id": "874c22a1-3175-4965-9c8d-8e35b69cc826",
-      "name": "seleccione opcion",
-      "webhookId": "f4cc5c1a-ca4d-442e-a10e-7a35f5e89e9f",
-      "credentials": {
-        "telegramApi": {
-          "id": "1CNcHuDCxtwKoVN7",
-          "name": "Telegram account 2"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "calendar": {
           "__rl": true,
           "mode": "list",
@@ -1246,7 +1200,7 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        2016,
+        1808,
         1104
       ],
       "id": "23649fcb-8354-43d4-bfa3-1dbd1dbebdbf",
@@ -1260,7 +1214,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1792,
+        1536,
         1104
       ],
       "id": "a6a3e0e3-172d-49b0-a726-52d38769754d",
@@ -1525,29 +1479,88 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://www.googleapis.com/calendar/v3/freeBusy/query",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "googleCalendarOAuth2Api",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"timeMin\": \"{{ $json.parameters.after }}\",\n  \"timeMax\": \"{{ $json.parameters.before }}\",\n  \"items\": [\n    {\n      \"id\": \"tu-ID-de-calendario@group.calendar.google.com\"\n    }\n  ]\n}",
-        "options": {}
+        "jsCode": "// ------------------------\n// Function Node (n8n)\n// ------------------------\n\n// Configuración del taller\nconst startHour = 8;        // apertura\nconst endHour = 18;         // cierre\nconst slotDuration = 60;    // minutos\nconst timeZone = 'America/Bogota';\n\n// Helpers\nconst pad = n => String(n).padStart(2, '0');\n\n// Día objetivo: hoy (ajusta si quieres otra fecha)\nconst today = new Date();\nconst targetDateStr = today.toLocaleDateString('en-CA', { timeZone }); // YYYY-MM-DD\n\n// 1. Extraer eventos confirmados\nconst events = [];\nfor (const item of items) {\n  const ev = item.json;\n  if (!ev.start || !ev.end) continue;\n\n  const start = new Date(ev.start.dateTime || ev.start.date);\n  const end = new Date(ev.end.dateTime || ev.end.date);\n  events.push({ start, end });\n}\n\n// 2. Generar todos los slots del día\nlet slots = [];\nfor (let h = startHour; h < endHour; h++) {\n  const slotStart = new Date(today);\n  slotStart.setHours(h, 0, 0, 0);\n\n  const slotEnd = new Date(slotStart);\n  slotEnd.setMinutes(slotEnd.getMinutes() + slotDuration);\n\n  slots.push({ start: slotStart, end: slotEnd });\n}\n\n// 3. Filtrar los ocupados\nconst freeSlots = slots.filter(slot => {\n  return !events.some(ev => {\n    return (\n      (slot.start >= ev.start && slot.start < ev.end) ||\n      (slot.end > ev.start && slot.end <= ev.end) ||\n      (slot.start <= ev.start && slot.end >= ev.end)\n    );\n  });\n});\n\n// 4. Devolver en formato de botones con fecha incluida\nreturn [{\n  json: {\n    message: `📅 Horarios disponibles para el ${targetDateStr}:`,\n    reply_markup: {\n      inline_keyboard: freeSlots.map(slot => {\n        const timeStr = `${pad(slot.start.getHours())}:${pad(slot.start.getMinutes())}`;\n        const label = `${targetDateStr} ${timeStr}`;\n        return [{ text: label, callback_data: label }];\n      })\n    }\n  }\n}];\n"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        1120,
+        1072,
         1104
       ],
-      "id": "ac6ac8a3-74ec-445e-a040-b022cda1f74a",
-      "name": "HTTP Request",
+      "id": "0109f975-a1e9-408a-a6ff-56b914c44202",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "chatId": "6779476283",
+        "text": "={{ $json.message }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[0][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[1][0].callback_data }}"
+                    }
+                  },
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[1][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[1][0].callback_data }}"
+                    }
+                  },
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[2][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[2][0].callback_data }}"
+                    }
+                  },
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[3][0].callback_data }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[3][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1280,
+        1104
+      ],
+      "id": "674f996b-9615-4143-919a-c93bea79f28b",
+      "name": "Send a text message",
+      "webhookId": "8ab8bfbb-b015-4a5b-871a-92e517d84631",
       "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "FLcfVnydGza1vVe1",
-          "name": "Calendar LLantas n´ Tires"
+        "telegramApi": {
+          "id": "1CNcHuDCxtwKoVN7",
+          "name": "Telegram account 2"
         }
       }
+    },
+    {
+      "parameters": {
+        "path": "e6160821-d484-452b-ab98-4d1af66f935b",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1232,
+        240
+      ],
+      "id": "5956166b-f221-4a7e-b672-8da4b0f6a5b6",
+      "name": "Webhook",
+      "webhookId": "e6160821-d484-452b-ab98-4d1af66f935b"
     }
   ],
   "pinData": {},
@@ -1570,6 +1583,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-24T22:57:35.779Z",
-  "versionId": "8a833516-351c-4f6e-aa1a-3f95f6e82297"
+  "updatedAt": "2025-09-26T17:11:33.169Z",
+  "versionId": "deaf804f-3184-4114-a69c-e0f4044e6e9c"
 }
