@@ -3,13 +3,7 @@
   "connections": {
     "Telegram Trigger": {
       "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Switch": {
@@ -130,7 +124,7 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Get a prompt",
             "type": "main",
             "index": 0
           }
@@ -141,19 +135,8 @@
       "ai_memory": [
         [
           {
-            "node": "AI Agent",
+            "node": "AI Agent with Langfuse",
             "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
-      "main": [
-        [
-          {
-            "node": "Code2",
-            "type": "main",
             "index": 0
           }
         ]
@@ -163,7 +146,7 @@
       "ai_languageModel": [
         [
           {
-            "node": "AI Agent",
+            "node": "AI Agent with Langfuse",
             "type": "ai_languageModel",
             "index": 0
           }
@@ -183,13 +166,7 @@
     },
     "Get row(s) in sheet": {
       "main": [
-        [
-          {
-            "node": "Referencia Encontrada?",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Code3": {
@@ -207,7 +184,7 @@
       "main": [
         [
           {
-            "node": "Get row(s) in sheet",
+            "node": "Get many rows",
             "type": "main",
             "index": 0
           }
@@ -369,17 +346,6 @@
         ]
       ]
     },
-    "Inventario ": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Asesoria 1": {
       "main": [
         [
@@ -406,7 +372,7 @@
       "main": [
         [
           {
-            "node": "Get row(s) in sheet",
+            "node": "Get many rows",
             "type": "main",
             "index": 0
           }
@@ -434,6 +400,61 @@
           }
         ]
       ]
+    },
+    "Get a row in NocoDB": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent with Langfuse": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Referencia Encontrada?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Llantas n´ Tires": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-20T12:40:36.573Z",
@@ -455,8 +476,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1232,
-        432
+        -1568,
+        208
       ],
       "id": "ee21829a-392e-4745-abde-657895da30f2",
       "name": "Telegram Trigger",
@@ -466,7 +487,8 @@
           "id": "POQojvCnUZ7h69VU",
           "name": "Telegram account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -787,7 +809,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1072,
+        960,
         -272
       ],
       "id": "c237b77e-ff21-42b4-ae8a-caacf8948613",
@@ -800,28 +822,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1248,
+        1104,
         -272
       ],
       "id": "0e63bec6-711c-4018-8b77-31992912148d",
       "name": "Code1"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "={{ $json.prompt }}",
-        "options": {
-          "systemMessage": "=\nRol: Actúa como un asistente experto en neumáticos para vehículos, con un enfoque en la seguridad, el rendimiento y la personalización. Tu objetivo es guiar al usuario hacia la mejor elección de neumáticos, proporcionando recomendaciones informadas y claras.\nGenera  maximo 1500 caracteres en tu respuesta\n____________________________________\nTono y estilo: Mantén un tono profesional, amigable y fácil de entender. Evita la jerga técnica excesiva.\n___________________________________\n\nTarea: Genera una recomendación personalizada de neumáticos para un usuario, basándote en la siguiente información que el usuario te proporcionará:\n\nVehículo: Marca, modelo, año\n\nTamaño de neumático: Ancho, perfil, diámetro (ejemplo: 205/55 R16)\n\nUso principal: (ej. Ciudad, carretera, todoterreno, pista, uso mixto)\n\nFrecuencia de carga: (ej. Diaria con carga pesada, ocasional, ligera)\n\n-----------------------------------------\nRestricciones y reglas:\n\nValidación de seguridad: Antes de cualquier recomendación, valida que el tamaño de neumático proporcionado por el usuario sea plausible para el vehículo. Si el tamaño no es el de fábrica o podría causar problemas (como roce, error en el velocímetro, etc.), inicia la respuesta con una advertencia de seguridad clara y explica los posibles efectos.\n\n-----------------------------------------\n\nEstructura y formato: Organiza la respuesta de manera clara y profesional utilizando las siguientes secciones con subtítulos en negrita:\n\nAdvertencia de seguridad (solo si aplica)\n\nAnálisis de uso y necesidades\n\nOpciones de neumáticos recomendadas\n\n--------------------------------------------\nContenido de las recomendaciones:\n\nEn la sección \"Opciones de neumáticos recomendadas\", ofrece tres opciones distintas (mínimo dos). Para cada opción, incluye:\n\nNombre del neumático (ej. Marca Modelo)\n\nVentajas claras (por qué es una buena opción para el usuario)\n\nAjusta las recomendaciones para que se alineen con las preferencias del usuario \n\n\n----------------------------------------------\n\nHonestidad y confiabilidad: Nunca inventes datos. No menciones precios exactos ni la disponibilidad en tiendas. Si un dato no es verificable, indícalo de forma profesional.\n-------------------------------------------------------------------\n\n🎯 Objetivo: El resultado final debe ser exactamente tres (3) referencias de neumáticos que se ajusten al vehículo consultado.  \n\n🔑 Reglas de formato:  \n- Cada referencia de neumático debe estar en el formato estándar: [Ancho]/[Perfil] R[Diámetro]  \n  (ejemplo correcto: 205/55 R16).  \n- NO usar otros formatos como 205-55-16, 205 55R16 ni variantes similares.  \n- Si el cliente no especifica la medida completa, solicitar los tres datos (ancho, perfil y diámetro).  \n\n📦 Resultado esperado:  \n- Lista de 3 referencias sugeridas en formato correcto.  \n- Indicar disponibilidad para revisión en inventario.  \n- Incluir link de compra asociado a cada referencia.  \n\n"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
-      "position": [
-        1472,
-        -368
-      ],
-      "id": "ceb13d58-f44f-423b-af95-ae47f86a3664",
-      "name": "AI Agent"
     },
     {
       "parameters": {
@@ -833,7 +838,7 @@
       "typeVersion": 1.3,
       "position": [
         1600,
-        -128
+        -160
       ],
       "id": "95ead276-6a82-4c56-b8fd-a01f36adc16b",
       "name": "Simple Memory"
@@ -864,8 +869,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1872,
-        -384
+        2016,
+        -288
       ],
       "id": "e21e3f85-efe7-4f6c-8e6b-0c7dda4703c2",
       "name": "Code2"
@@ -903,8 +908,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1696,
-        416
+        2832,
+        -448
       ],
       "id": "1e912b17-3685-46ad-ad37-30cd431754c3",
       "name": "Get row(s) in sheet",
@@ -914,7 +919,8 @@
           "id": "mbYsL5GzOjiChSg5",
           "name": "Inventario Llantas n tires DB"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1103,8 +1109,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2096,
-        -384
+        2208,
+        -288
       ],
       "id": "45bd2e4b-de71-4e41-a5a4-2e2ee6d31a81",
       "name": "Answer Assoria",
@@ -1149,7 +1155,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        816,
+        768,
         -272
       ],
       "id": "f30b841d-9563-43dc-9b04-1eedfc8d1bf0",
@@ -1372,40 +1378,6 @@
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1Ooug27MCKXpwZJh-LFj8FdwYQDIUAtnOl7YmOOHB0kQ",
-          "mode": "list",
-          "cachedResultName": "Inventario llantas n´Tires Prueba",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ooug27MCKXpwZJh-LFj8FdwYQDIUAtnOl7YmOOHB0kQ/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Hoja 1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ooug27MCKXpwZJh-LFj8FdwYQDIUAtnOl7YmOOHB0kQ/edit#gid=0"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheetsTool",
-      "typeVersion": 4.7,
-      "position": [
-        1744,
-        -144
-      ],
-      "id": "77d52192-09ba-4db7-8665-7a3b0011b9ef",
-      "name": "Inventario ",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "mbYsL5GzOjiChSg5",
-          "name": "Inventario Llantas n tires DB"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "content": "## Onboarding Asesoria\n",
         "height": 544,
         "width": 2048
@@ -1549,19 +1521,104 @@
     },
     {
       "parameters": {
-        "path": "e6160821-d484-452b-ab98-4d1af66f935b",
+        "authentication": "nocoDbApiToken"
+      },
+      "type": "n8n-nodes-base.nocoDbTool",
+      "typeVersion": 3,
+      "position": [
+        1776,
+        -160
+      ],
+      "id": "d2bb0e7a-9be6-4381-b66d-4f9b11923e90",
+      "name": "Get a row in NocoDB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "SCVsgkuKqpGPiGvk",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptName": "Llantas n´Tires",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        -432
+      ],
+      "id": "c063007a-1a15-4d18-82e7-e0bfdf17525f",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "iBaUfiTOCXCanQdR",
+          "name": "Llantas n´Tires"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "\nRol: Actúa como un asistente experto en neumáticos para vehículos, con un enfoque en la seguridad, el rendimiento y la personalización. Tu objetivo es guiar al usuario hacia la mejor elección de neumáticos, proporcionando recomendaciones informadas y claras.\nGenera  maximo 1500 caracteres en tu respuesta\n____________________________________\nTono y estilo: Mantén un tono profesional, amigable y fácil de entender. Evita la jerga técnica excesiva.\n___________________________________\n\nTarea: Genera una recomendación personalizada de neumáticos para un usuario, basándote en la siguiente información que el usuario te proporcionará:\n\nVehículo: Marca, modelo, año\n\nTamaño de neumático: Ancho, perfil, diámetro (ejemplo: 205/55 R16)\n\nUso principal: (ej. Ciudad, carretera, todoterreno, pista, uso mixto)\n\nFrecuencia de carga: (ej. Diaria con carga pesada, ocasional, ligera)\n\n-----------------------------------------\nRestricciones y reglas:\n\nValidación de seguridad: Antes de cualquier recomendación, valida que el tamaño de neumático proporcionado por el usuario sea plausible para el vehículo. Si el tamaño no es el de fábrica o podría causar problemas (como roce, error en el velocímetro, etc.), inicia la respuesta con una advertencia de seguridad clara y explica los posibles efectos.\n\n-----------------------------------------\n\nEstructura y formato: Organiza la respuesta de manera clara y profesional utilizando las siguientes secciones con subtítulos en negrita:\n\nAdvertencia de seguridad (solo si aplica)\n\nAnálisis de uso y necesidades\n\nOpciones de neumáticos recomendadas\n\n--------------------------------------------\nContenido de las recomendaciones:\n\nEn la sección \"Opciones de neumáticos recomendadas\", ofrece tres opciones distintas (mínimo dos). Para cada opción, incluye:\n\nNombre del neumático (ej. Marca Modelo)\n\nVentajas claras (por qué es una buena opción para el usuario)\n\nAjusta las recomendaciones para que se alineen con las preferencias del usuario \n\n\n----------------------------------------------\n\nHonestidad y confiabilidad: Nunca inventes datos. No menciones precios exactos ni la disponibilidad en tiendas. Si un dato no es verificable, indícalo de forma profesional.\n-------------------------------------------------------------------\n\n🎯 Objetivo: El resultado final debe ser exactamente tres (3) referencias de neumáticos que se ajusten al vehículo consultado.  \n\n🔑 Reglas de formato:  \n- Cada referencia de neumático debe estar en el formato estándar: [Ancho]/[Perfil] R[Diámetro]  \n  (ejemplo correcto: 205/55 R16).  \n- NO usar otros formatos como 205-55-16, 205 55R16 ni variantes similares.  \n- Si el cliente no especifica la medida completa, solicitar los tres datos (ancho, perfil y diámetro).  \n\n📦 Resultado esperado:  \n- Lista de 3 referencias sugeridas en formato correcto.  \n- Indicar disponibilidad para revisión en inventario.  \n- Incluir link de compra asociado a cada referencia.  \n\n"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        -432
+      ],
+      "id": "4f744bd1-5de5-42cf-ad1d-04d3c0dc424c",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "iBaUfiTOCXCanQdR",
+          "name": "Llantas n´Tires"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1728,
+        416
+      ],
+      "id": "93b8998f-0d8d-483d-bdb1-e8b794c35add",
+      "name": "Get many rows",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "SCVsgkuKqpGPiGvk",
+          "name": "NocoDB Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "test_llantasnTires",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
         -1232,
-        240
+        432
       ],
       "id": "5956166b-f221-4a7e-b672-8da4b0f6a5b6",
-      "name": "Webhook",
-      "webhookId": "e6160821-d484-452b-ab98-4d1af66f935b",
-      "disabled": true
+      "name": "Llantas n´ Tires",
+      "webhookId": "e6160821-d484-452b-ab98-4d1af66f935b"
     }
   ],
   "pinData": {},
@@ -1584,6 +1641,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-27T16:26:49.088Z",
-  "versionId": "cab6393e-5956-44f3-b98f-a81d3684ed73"
+  "updatedAt": "2025-09-30T00:13:31.038Z",
+  "versionId": "e1e71411-8c4c-4863-b2a2-2093fd460289"
 }
