@@ -1,11 +1,6 @@
 {
   "active": false,
   "connections": {
-    "Telegram Trigger": {
-      "main": [
-        []
-      ]
-    },
     "Switch": {
       "main": [
         [
@@ -56,13 +51,7 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Wait": {
@@ -449,6 +438,17 @@
       "main": [
         [
           {
+            "node": "ChatwootData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatwootData": {
+      "main": [
+        [
+          {
             "node": "If",
             "type": "main",
             "index": 0
@@ -465,31 +465,6 @@
   },
   "name": "Onbording para LLantas´n´tires",
   "nodes": [
-    {
-      "parameters": {
-        "updates": [
-          "message",
-          "callback_query"
-        ],
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegramTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -1568,
-        208
-      ],
-      "id": "ee21829a-392e-4745-abde-657895da30f2",
-      "name": "Telegram Trigger",
-      "webhookId": "f9e96179-4231-4c24-920b-09c597afa3f2",
-      "credentials": {
-        "telegramApi": {
-          "id": "POQojvCnUZ7h69VU",
-          "name": "Telegram account"
-        }
-      },
-      "disabled": true
-    },
     {
       "parameters": {
         "rules": {
@@ -666,7 +641,7 @@
           "conditions": [
             {
               "id": "961141f6-ae33-49d8-b081-102a1b7bdc89",
-              "leftValue": "={{ $json.message.text }}",
+              "leftValue": "={{ $json.mensaje }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
@@ -1580,7 +1555,8 @@
           "id": "iBaUfiTOCXCanQdR",
           "name": "Llantas n´Tires"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1613,15 +1589,261 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -1232,
+        -1424,
         432
       ],
       "id": "5956166b-f221-4a7e-b672-8da4b0f6a5b6",
       "name": "Llantas n´ Tires",
       "webhookId": "e6160821-d484-452b-ab98-4d1af66f935b"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
+              "name": "nombre",
+              "value": "={{ $json.body.conversation.messages[0].sender.name }}",
+              "type": "string"
+            },
+            {
+              "id": "82031891-32ae-4442-b883-fad57ad08c79",
+              "name": "phone_number",
+              "value": "={{ $json.body.conversation.messages[0].sender.phone_number.replace('+','') }}",
+              "type": "string"
+            },
+            {
+              "id": "5c3775e2-f487-46c3-8f1d-4247ef9a158e",
+              "name": "mensaje",
+              "value": "={{ $json.body.conversation.messages[0].content \n}}",
+              "type": "string"
+            },
+            {
+              "id": "f4df444f-b19e-4d6b-8518-75a70576282b",
+              "name": "Content_Type",
+              "value": "={{ $json.body.content_type }}",
+              "type": "string"
+            },
+            {
+              "id": "c6b5261d-a252-4328-af15-9699dfc5ba2b",
+              "name": "receptor",
+              "value": "={{ $json.body.message_type }}",
+              "type": "string"
+            },
+            {
+              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
+              "name": "tags",
+              "value": "={{ $json.body.conversation.labels }}",
+              "type": "array"
+            },
+            {
+              "id": "2189dde7-a49e-4226-be25-22f3e62caf99",
+              "name": "conversation_id",
+              "value": "={{ $json.body.conversation.messages[0].conversation_id }}",
+              "type": "string"
+            },
+            {
+              "id": "c8242d40-84d3-4c64-adcc-d15b8de57a9a",
+              "name": "account_id",
+              "value": "={{ $json.body.account.id }}",
+              "type": "number"
+            },
+            {
+              "id": "0d13abaf-bcd9-4d8f-b8bb-511b45ee9909",
+              "name": "body.conversation.messages[0].inbox_id",
+              "value": "={{ $json.body.conversation.contact_inbox.inbox_id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1200,
+        432
+      ],
+      "id": "13c782c6-1ef2-487e-a4ca-13708b77b712",
+      "name": "ChatwootData"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Llantas n´ Tires": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+            "content-length": "2346",
+            "accept": "application/json",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "content-type": "application/json",
+            "x-forwarded-for": "54.82.14.220",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "03a1118431ed",
+            "x-real-ip": "54.82.14.220"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "account": {
+              "id": 2,
+              "name": "Valeia"
+            },
+            "additional_attributes": {},
+            "content_attributes": {},
+            "content_type": "text",
+            "content": "hola",
+            "conversation": {
+              "additional_attributes": {},
+              "can_reply": true,
+              "channel": "Channel::Whatsapp",
+              "contact_inbox": {
+                "id": 471,
+                "contact_id": 471,
+                "inbox_id": 1,
+                "source_id": "573008564836",
+                "created_at": "2025-09-29T21:52:19.174Z",
+                "updated_at": "2025-09-29T21:52:19.174Z",
+                "hmac_verified": false,
+                "pubsub_token": "2MB4EjzktHrBioUF2JET2NSb"
+              },
+              "id": 5,
+              "inbox_id": 1,
+              "messages": [
+                {
+                  "id": 12395,
+                  "content": "hola",
+                  "account_id": 2,
+                  "inbox_id": 1,
+                  "conversation_id": 5,
+                  "message_type": 0,
+                  "created_at": 1759535236,
+                  "updated_at": "2025-10-03T23:47:16.592Z",
+                  "private": false,
+                  "status": "sent",
+                  "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhgWM0VCMDI5QUIwNDkyMjVBQTExNDAxMQA=",
+                  "content_type": "text",
+                  "content_attributes": {},
+                  "sender_type": "Contact",
+                  "sender_id": 471,
+                  "external_source_ids": {},
+                  "additional_attributes": {},
+                  "processed_message_content": "hola",
+                  "sentiment": {},
+                  "conversation": {
+                    "assignee_id": null,
+                    "unread_count": 1,
+                    "last_activity_at": 1759535236,
+                    "contact_inbox": {
+                      "source_id": "573008564836"
+                    }
+                  },
+                  "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": null,
+                    "id": 471,
+                    "identifier": null,
+                    "name": "Hello🙂",
+                    "phone_number": "+573008564836",
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                  }
+                }
+              ],
+              "labels": [],
+              "meta": {
+                "sender": {
+                  "additional_attributes": {},
+                  "custom_attributes": {},
+                  "email": null,
+                  "id": 471,
+                  "identifier": null,
+                  "name": "Hello🙂",
+                  "phone_number": "+573008564836",
+                  "thumbnail": "",
+                  "blocked": false,
+                  "type": "contact"
+                },
+                "assignee": null,
+                "team": null,
+                "hmac_verified": false
+              },
+              "status": "pending",
+              "custom_attributes": {},
+              "snoozed_until": null,
+              "unread_count": 1,
+              "first_reply_created_at": "2025-09-29T21:53:08.188Z",
+              "priority": null,
+              "waiting_since": 1759532749,
+              "agent_last_seen_at": 1759532751,
+              "contact_last_seen_at": 0,
+              "last_activity_at": 1759535236,
+              "timestamp": 1759535236,
+              "created_at": 1759182739,
+              "updated_at": 1759535236.594325
+            },
+            "created_at": "2025-10-03T23:47:16.592Z",
+            "id": 12395,
+            "inbox": {
+              "id": 1,
+              "name": "Valeia-Whatsapp"
+            },
+            "message_type": "incoming",
+            "private": false,
+            "sender": {
+              "account": {
+                "id": 2,
+                "name": "Valeia"
+              },
+              "additional_attributes": {},
+              "avatar": "",
+              "custom_attributes": {},
+              "email": null,
+              "id": 471,
+              "identifier": null,
+              "name": "Hello🙂",
+              "phone_number": "+573008564836",
+              "thumbnail": "",
+              "blocked": false
+            },
+            "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhgWM0VCMDI5QUIwNDkyMjVBQTExNDAxMQA=",
+            "event": "message_created"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook-test/test_llantasnTires",
+          "executionMode": "test"
+        }
+      }
+    ],
+    "ChatwootData": [
+      {
+        "json": {
+          "nombre": "Hello🙂",
+          "phone_number": "573008564836",
+          "mensaje": "hola",
+          "Content_Type": "text",
+          "receptor": "incoming",
+          "tags": [],
+          "conversation_id": "5",
+          "account_id": 2,
+          "body": {
+            "conversation": {
+              "messages": [
+                {
+                  "inbox_id": 1
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -1641,6 +1863,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-30T00:13:31.038Z",
-  "versionId": "e1e71411-8c4c-4863-b2a2-2093fd460289"
+  "updatedAt": "2025-10-04T01:59:48.390Z",
+  "versionId": "ff250ca7-0e4f-46d7-a051-4f89ac366d3e"
 }
