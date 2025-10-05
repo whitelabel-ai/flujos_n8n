@@ -1,0 +1,1781 @@
+{
+  "active": true,
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "get_saving_goals",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call Onboarding Register",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "data": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "meta": {
+      "main": [
+        [
+          {
+            "node": "Call Agente Transaccional",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call Onboarding Register",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "data1": {
+      "main": [
+        [
+          {
+            "node": "meta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delet user": {
+      "main": [
+        [
+          {
+            "node": "onboarding delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onboarding delete": {
+      "main": [
+        [
+          {
+            "node": "transaction delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transaction delete": {
+      "main": [
+        [
+          {
+            "node": "push_message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onboarding delete1": {
+      "main": [
+        [
+          {
+            "node": "transaction delete1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transaction delete1": {
+      "main": [
+        [
+          {
+            "node": "push_message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "delete number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete number": {
+      "main": [
+        [
+          {
+            "node": "onboarding delete1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Users": {
+      "main": [
+        [
+          {
+            "node": "delet user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get-profile-by-phone": {
+      "main": [
+        [
+          {
+            "node": "data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_saving_goals": {
+      "main": [
+        [
+          {
+            "node": "data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "reply_message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "get-profile-by-phone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_conversation": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reply_message": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-25T21:46:54.076Z",
+  "id": "ayMXNtsNigR3wBBF",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "1.0 Mony",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.existe }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9c38cf88-8498-4e41-b8b6-9c9bf0465b55"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Registrado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d20501b2-6c3d-42b4-9617-995adf90e423",
+                    "leftValue": "={{ $json.existe }}",
+                    "rightValue": "false",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Sin Registrar"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2128,
+        -1264
+      ],
+      "id": "ca4e20df-54bd-4594-a27d-06fb2a414774",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90dc24fa-85a0-4b98-ad7f-a0f2ab094722",
+              "name": "existe",
+              "value": "={{ $json.existe }}",
+              "type": "string"
+            },
+            {
+              "id": "70bf3769-05a5-4f09-9ead-f39029fc7167",
+              "name": "usuario_data",
+              "value": "={{ $json.user_data }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1904,
+        -1264
+      ],
+      "id": "271926c3-8fb5-4d88-96bd-ea8a50d20d61",
+      "name": "data"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "7udG9O5kmPeeOaXL",
+          "mode": "list",
+          "cachedResultName": "Onboarding"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}",
+            "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
+            "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
+            "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+            "usuario_data": "={{ $('data').item.json.usuario_data }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "metadata",
+              "displayName": "metadata",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contacts",
+              "displayName": "contacts",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "messages",
+              "displayName": "messages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "field",
+              "displayName": "field",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "usuario_data",
+              "displayName": "usuario_data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        3024,
+        -1248
+      ],
+      "id": "76a15b2f-27ed-4150-9649-0f5e29217bf8",
+      "name": "Call Onboarding Register"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "WE1bVt3r1GoX2Dif",
+          "mode": "list",
+          "cachedResultName": "Agente Transaccional"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}",
+            "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
+            "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
+            "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+            "usuario_data": "={{ $json.usuario_data }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "metadata",
+              "displayName": "metadata",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contacts",
+              "displayName": "contacts",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "messages",
+              "displayName": "messages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "field",
+              "displayName": "field",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "usuario_data",
+              "displayName": "usuario_data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        3216,
+        -1296
+      ],
+      "name": "Call Agente Transaccional",
+      "id": "c605a7d2-1704-4ef5-a2f1-2c49bea6a4bc"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.meta }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "array",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    },
+                    "id": "9c38cf88-8498-4e41-b8b6-9c9bf0465b55"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "meta registrada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d20501b2-6c3d-42b4-9617-995adf90e423",
+                    "leftValue": "={{ $json.meta }}",
+                    "rightValue": "false",
+                    "operator": {
+                      "type": "array",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Sin Registrar"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2784,
+        -1280
+      ],
+      "id": "42b398d6-d71d-4b6e-8c82-bfee0c42e4b4",
+      "name": "meta"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90dc24fa-85a0-4b98-ad7f-a0f2ab094722",
+              "name": "meta",
+              "value": "={{ $json.metas }}",
+              "type": "array"
+            },
+            {
+              "id": "70bf3769-05a5-4f09-9ead-f39029fc7167",
+              "name": "usuario_data",
+              "value": "={{ $('data').item.json.usuario_data }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2560,
+        -1280
+      ],
+      "id": "e117dcea-bc60-4779-9b40-1ddf290a7c9a",
+      "name": "data1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\nALTER TABLE transacciones \nALTER COLUMN id SET DEFAULT uuid_generate_v4();\n\n-- Suscripciones Usuario\nALTER TABLE suscripciones_usuario\nALTER COLUMN id SET DEFAULT uuid_generate_v4();\n\n-- Metas de Ahorro\nALTER TABLE metas_ahorro\nALTER COLUMN id SET DEFAULT uuid_generate_v4();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        368,
+        -848
+      ],
+      "id": "e52976c1-0857-4e25-8b77-04dd61eed487",
+      "name": "crear UUI postgres",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH datos_usuario AS (\n  SELECT \n    id,\n    numero_whatsapp\n  FROM usuarios\n  WHERE id = 'a18605bf-c5de-47fe-bf58-ca7d98a91a5d'\n),\nborrado AS (\n  -- 1️⃣ Borrar logs de anuncios\n  DELETE FROM logs_vistas_anuncios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_recordatorios AS (\n  DELETE FROM recordatorios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_metas AS (\n  DELETE FROM metas_ahorro \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_usuario AS (\n  DELETE FROM suscripciones_usuario \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_mony AS (\n  DELETE FROM suscripciones_mony \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_transacciones AS (\n  DELETE FROM transacciones \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_categorias AS (\n  DELETE FROM categorias \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_usuario AS (\n  DELETE FROM usuarios \n  WHERE id = (SELECT id FROM datos_usuario)\n)\nSELECT \n  true AS success,\n  id,\n  numero_whatsapp\nFROM datos_usuario;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        592,
+        -624
+      ],
+      "id": "a2207570-eb57-43f1-b0e8-645a38d143ef",
+      "name": "delet user",
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_history_mony_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -624
+      ],
+      "id": "dae5314a-eb0a-4c21-ae7f-39b923e19bbb",
+      "name": "onboarding delete",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=MONY_chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -624
+      ],
+      "id": "91ce9c81-7a0d-4900-add9-8f332b0eb0c7",
+      "name": "transaction delete",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        -624
+      ],
+      "id": "091ebd5d-0265-469d-9eac-c96085621b95",
+      "name": "push_message",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_history_mony_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -400
+      ],
+      "id": "289db6d7-e0dd-42d6-9af7-c0132ad7cedd",
+      "name": "onboarding delete1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=MONY_chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -400
+      ],
+      "id": "ac650faa-1e47-4921-9145-62da5f685392",
+      "name": "transaction delete1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        -400
+      ],
+      "id": "4e692ade-4506-427b-8a37-ca0f1fb5cfe0",
+      "name": "push_message1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -400
+      ],
+      "id": "36d6bb66-d215-47ee-a6ac-e1ca7c5befd0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "43859a53-b296-4aa4-8453-a3eabec83f0a",
+              "name": "numero_whatsapp",
+              "value": "=573045809637",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -400
+      ],
+      "id": "3fd29df2-5ac9-4fe9-86a6-7d89215859c4",
+      "name": "delete number"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "usuarios",
+          "mode": "list",
+          "cachedResultName": "usuarios"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        368,
+        -624
+      ],
+      "id": "a50f808b-08e4-475f-a4eb-a24524c80291",
+      "name": "Users",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "3BmLjpi7AvK0Sx6n",
+          "name": "MONY_DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## DELETE USER\n",
+        "height": 384,
+        "width": 1104
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -624
+      ],
+      "id": "c1596ad9-1358-42c2-ad68-0d8b13f43ccc",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "url": "https://api.mony.whitelabel.lat/api/v1/users/profile-by-phone",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "=+{{ $json.contacts[0].wa_id }}"
+            },
+            {
+              "name": "includeCategories",
+              "value": "false"
+            },
+            {
+              "name": "includeSuscripcionesMony",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        -1264
+      ],
+      "id": "bcdbd78a-466a-4ce6-b8ec-3fef7f738d8e",
+      "name": "get-profile-by-phone",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.mony.whitelabel.lat/api/v1/saving-goals",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $json.usuario_data.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2336,
+        -1280
+      ],
+      "id": "5a1405f2-1af5-4652-9f61-6b61716ac6fd",
+      "name": "get_saving_goals",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mony",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        320,
+        -1168
+      ],
+      "id": "c666a14a-4046-4fc4-b095-6941bfd09d41",
+      "name": "Webhook",
+      "webhookId": "afc7954a-020f-4194-89fd-fa609358b4b0"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24753cf1-0e65-46ba-8117-cafa44f119a0",
+              "name": "metadata",
+              "value": "={\n\"account_id\": \n\"{{ $json.body.account.id }}\",\n\"conversation_id\": \n\"{{ $json.body.conversation.messages[0].conversation_id }}\"\n}",
+              "type": "object"
+            },
+            {
+              "id": "e6ac796a-86cf-4dce-a3f3-1f3b8ea8e180",
+              "name": "contacts",
+              "value": "=[{\n\"profile\": \n{\n\"name\": \n\"{{ $json.body.conversation.meta.sender.name.split(' ')[0] }}\"\n},\n\"wa_id\": \n\"{{ $json.body.conversation.messages[0].conversation.contact_inbox.source_id }}\"\n}]",
+              "type": "array"
+            },
+            {
+              "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
+              "name": "messages",
+              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($json.body.conversation.messages[0].content) }}, \"reply_message\": {{ JSON.stringify($json.body.reply_message.content) }} },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
+              "type": "array"
+            },
+            {
+              "id": "8bf1bf21-59a9-4c92-8e31-7e20a7cae8d4",
+              "name": "field",
+              "value": "={{ $json.body.conversation.labels }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": false
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        -1264
+      ],
+      "id": "942fcc0a-03c5-4b79-95f7-ccbf0fec60bb",
+      "name": "WhatsApp Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "abaa9de2-4388-46df-9440-7c458be2669a",
+              "leftValue": "={{ $json.body.message_type }}",
+              "rightValue": "incoming",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "2b50ffbe-a3c8-4299-b6f3-86f9f79de33b",
+              "leftValue": "={{ $json.body.conversation.labels }}",
+              "rightValue": "=apagar-agente",
+              "operator": {
+                "type": "array",
+                "operation": "notContains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "899cff65-f00c-430b-9ef7-9fcf0d8f7cdb",
+              "leftValue": "={{ $json.body.conversation.channel }}",
+              "rightValue": "Channel::Telegram",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        528,
+        -1168
+      ],
+      "id": "8a0004c5-9337-4f3c-96b7-b6977d0f44cd",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        912,
+        -1056
+      ],
+      "id": "ec2dd217-fed6-454f-9ed8-8f358156aa05",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "name",
+              "value": "={{ $json.contacts[0].profile.name }}"
+            },
+            {
+              "key": "phone",
+              "value": "={{ $json.messages[0].from }}"
+            },
+            {
+              "key": "message",
+              "value": "={{ $json.messages[0].text.body }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1.1,
+      "position": [
+        1456,
+        -1264
+      ],
+      "id": "a9176d51-fbd2-4736-8b53-34d613a2e951",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/3/conversations/{{ $json.body.conversation.messages[0].conversation_id }}/messages?before={{ $json.body.content_attributes.in_reply_to+1 }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "uuWT9PNsY83ucax7HeqBEUSi"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1488,
+        -1648
+      ],
+      "id": "79328b4c-c834-482a-9954-a7fb9ab363f9",
+      "name": "get_conversation"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "payload",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1696,
+        -1648
+      ],
+      "id": "c08c986b-e189-4941-a529-bfc6b3860f1e",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "57660469-ae83-4222-ba37-03bb07029537",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "={{ $('Repli?').item.json.body.content_attributes.in_reply_to }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1904,
+        -1648
+      ],
+      "id": "e0ed0b2a-f4db-425e-84c6-a6bc501d41bb",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "jsCode": "const ACCOUNT_ID = $input.first().json.body.account.id;\nconst BASE_URL = `https://crm.whitelabel.lat/api/v1/accounts/${ACCOUNT_ID}`;\nconst TOKEN = \"uuWT9PNsY83ucax7HeqBEUSi\";\n\n// Tomamos el evento entrante\nconst input = $input.first().json;\nconst conversationId = input.body.conversation.id;\nconst replyToId = input.body.content_attributes?.in_reply_to;\n\nasync function getMessage(conversationId, messageId) {\n  const url = `${BASE_URL}/conversations/${conversationId}/messages?before=${messageId + 1}`;\n\n  const response = await this.helpers.httpRequest({\n    method: \"GET\",\n    url,\n    headers: {\n      \"api_access_token\": TOKEN,\n      \"Content-Type\": \"application/json\",\n    },\n    json: true,\n  });\n\n  const messages = response.payload || [];\n  if (!Array.isArray(messages) || messages.length === 0) {\n    return null;\n  }\n\n  return messages.find(m => m.id === messageId) || null;\n}\n\nlet replyMessage = null;\n\nif (replyToId) {\n  replyMessage = await getMessage(conversationId, replyToId);\n}\n\n// Clonamos el input para no perder el formato original\nconst output = JSON.parse(JSON.stringify(input));\n\n// Si existe un reply, lo agregamos dentro del body\nif (replyMessage) {\n  output.body.reply_message = replyMessage;\n} else {\n  // Si no hay reply, mantenemos la estructura pero con content null\n  output.body.reply_message = { content: null };\n}\n\nreturn [ { json: output } ];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        -1216
+      ],
+      "id": "c543f064-619e-473a-a087-3968c0931efa",
+      "name": "reply_message"
+    }
+  ],
+  "pinData": {
+    "get_conversation": [
+      {
+        "json": {
+          "meta": {
+            "labels": [
+              "registrado"
+            ],
+            "additional_attributes": {},
+            "contact": {
+              "additional_attributes": {},
+              "custom_attributes": {},
+              "email": null,
+              "id": 2,
+              "identifier": null,
+              "name": "Pedro Rodriguez",
+              "phone_number": "+573228854498",
+              "thumbnail": "",
+              "blocked": false,
+              "type": "contact"
+            },
+            "assignee": {
+              "id": 3,
+              "name": "Pedro",
+              "available_name": "Pedro Rodriguez",
+              "avatar_url": "",
+              "type": "user",
+              "availability_status": "online",
+              "thumbnail": ""
+            },
+            "agent_last_seen_at": "2025-08-30T03:34:33.118Z",
+            "assignee_last_seen_at": "2025-08-30T03:34:33.118Z"
+          },
+          "payload": [
+            {
+              "id": 4192,
+              "content": "Aquí tienes un resumen de tus transacciones registradas este mes:\n\n*   **27 de agosto:**\n    *   Almuerzo en la calle: $20.000 COP (Alimentación)\n    *   Insumos odontológicos: $36.000 COP (Salud)\n    *   Aceite para la moto: $25.000 COP (Transporte)\n*   **25 de agosto:**\n    *   Pago de deuda a Andrés: $50.000 COP (Otros Gastos)\n",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756499866,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSODUyQjU5QjFFMjk4NEFCQzhFAA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4194,
+              "content": "*   **24 de agosto:**\n    *   Pago de suscripción a Netflix: $24.000 COP (Entretenimiento)\n    *   Pago de suscripción a Netflix: $24.000 COP (Entretenimiento)\n*   **23 de agosto:**\n    *   Pan en la panadería de la esquina: $5.000 COP (Alimentación)\n",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756499868,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSNTkyRThENzExMzQ4QTEyNTZEAA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4195,
+              "content": "¡Espero que esta información te sea útil para tener un mejor control de tus finanzas! ¿Hay algo más en lo que pueda ayudarte hoy? 🧐",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756499870,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSODU5NjBGNzZCNzQzNzdENDU1AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4199,
+              "content": "mony la transacción del 24 de agosto esta repetida, 2 a Netflix, fue una sola a Netflix y la otra a amazon prime por 30.000",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 0,
+              "content_type": "text",
+              "status": "sent",
+              "content_attributes": {},
+              "created_at": 1756499923,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZCNkMwRkY1Q0JERjlFQzY1QzIA",
+              "sender": {
+                "additional_attributes": {},
+                "custom_attributes": {},
+                "email": null,
+                "id": 2,
+                "identifier": null,
+                "name": "Pedro Rodriguez",
+                "phone_number": "+573228854498",
+                "thumbnail": "",
+                "blocked": false,
+                "type": "contact"
+              }
+            },
+            {
+              "id": 4202,
+              "content": "¡Entendido, Pedro! Gracias por la aclaración. He registrado tu gasto de $30.000 COP para *Amazon Prime* el 24 de agosto.\n\nQuiero comentarte algo importante: por ahora, no tengo la capacidad de modificar o eliminar transacciones que ya has registrado. Esto significa que la entrada duplicada de *Netflix* seguirá apareciendo en tu historial. Estoy trabajando para que *Mony* pueda hacer esto en el futuro.",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756499970,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSRUMxNzgyNEE0ODIyQzhDQzY3AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4203,
+              "content": "Por el momento, te recomiendo que, si ves una transacción duplicada, simplemente la tengas en cuenta al revisar tus movimientos.\n\nAquí te muestro cómo quedan tus transacciones del 24 de agosto con esta nueva adición:\n\n*   *24 de agosto:*\n    *   Suscripción a *Netflix*: $24.000 COP (Entretenimiento)\n    *   Suscripción a *Netflix*: $24.000 COP (Entretenimiento)\n    *   Suscripción *Amazon Prime*: $30.000 COP (Entretenimiento)",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756499972,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSQzdCN0JDODg4OTQxNkY2OTVGAA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4204,
+              "content": "¿Hay algo más en lo que pueda ayudarte hoy? Quizás quieras revisar tus suscripciones para asegurarte de que estén todas correctas. 😊",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756499974,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSRTM5NDIxMEE5MjI4OTQ4M0E4AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4205,
+              "content": "¡Gracias por la aclaración, Pedro! Lo entiendo perfectamente. Vamos a corregir eso.\n\nHe actualizado una de las transacciones de Netflix del 24 de agosto para que ahora sea tu suscripción a *Amazon Prime por $30.000 COP*.\n\nSin embargo, quiero recordarte que, por el momento, Mony aún no puede eliminar transacciones directamente. Esto significa que la entrada de Amazon Prime que registramos anteriormente también seguirá apareciendo en tu historial, generando una duplicidad temporal para Amazon Prime. Estoy trabajando en mejorar esta funcionalidad para el futuro.",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500193,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSRkZCOEQ2OTdBMjBDRDE1OUVFAA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4206,
+              "content": "Por ahora, tus transacciones del 24 de agosto quedan así:\n\n*   **24 de agosto:**\n    *   Suscripción a Netflix: $24.000 COP (Entretenimiento)\n    *   Suscripción a Amazon Prime: $30.000 COP (Entretenimiento) *(Esta es la que acabamos de corregir)*\n    *   Suscripción a Amazon Prime: $30.000 COP (Entretenimiento) *(Esta es la que registré previamente)*",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500195,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSM0ZBNkEzRThEOUUxOUYyODA1AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4207,
+              "content": "Discúlpame por la limitación, y te agradezco mucho tu paciencia. ¡Siempre estoy aquí para ayudarte a mantener tus finanzas lo más claras posible!\n\n¿Hay algo más en lo que pueda ayudarte hoy?",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500197,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSRkMzMEMyN0Q1OTE4ODY4RTQ4AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4208,
+              "content": "intenta nuevamente ya que creo que quedaron varias repetidas, verifica y actualiza",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 0,
+              "content_type": "text",
+              "status": "sent",
+              "content_attributes": {},
+              "created_at": 1756500317,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0Y2MzQ2MkQ2OTM1MkQyNkY1RUUA",
+              "sender": {
+                "additional_attributes": {},
+                "custom_attributes": {},
+                "email": null,
+                "id": 2,
+                "identifier": null,
+                "name": "Pedro Rodriguez",
+                "phone_number": "+573228854498",
+                "thumbnail": "",
+                "blocked": false,
+                "type": "contact"
+              }
+            },
+            {
+              "id": 4209,
+              "content": "¡Entendido, Pedro! Lamento mucho la confusión con las transacciones. Tienes toda la razón, vamos a revisar y dejar tu historial lo más claro posible para el 24 de agosto.\n\nMi objetivo es que tengas una sola transacción de Netflix y una de Amazon Prime para esa fecha.\n\nHe revisado tus movimientos y he realizado la siguiente corrección: He tomado una de las transacciones que antes figuraba como 'Pago de suscripción a Netflix' y la he actualizado para que ahora sea tu suscripción a *Amazon Prime por $30.000 COP*.",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500355,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSN0U0Q0Y0NENFNEFBQzgxOTA4AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4210,
+              "content": "Sin embargo, como te mencioné antes, Mony no tiene la capacidad de eliminar transacciones por el momento. Esto significa que, aunque hemos corregido y actualizado, verás los siguientes movimientos para el 24 de agosto:\n\n*   **24 de agosto:**\n    *   • Suscripción a Netflix: $24.000 COP (Entretenimiento)\n    *   • Suscripción a Amazon Prime: $30.000 COP (Entretenimiento) *(Esta es la que acabamos de corregir de Netflix)*\n    *   • Suscripción a Amazon Prime: $30.000 COP (Entretenimiento) *(Esta es la que habías registrado previamente, y que, por la limitación, no puedo eliminar)*",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500357,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSNTQyRUUxRUU1NkM3NDBFREJGAA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4211,
+              "content": "Entiendo que no es la solución ideal tener una duplicidad de Amazon Prime, y te pido disculpas por esta limitación en mis funcionalidades actuales. Estoy trabajando constantemente para mejorar.\n\nPara tu control, puedes considerar que tus gastos reales de suscripciones el 24 de agosto fueron:\n*   Una de Netflix por $24.000 COP.\n*   Una de Amazon Prime por $30.000 COP.",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500359,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSNzdBQjg5ODMyNDQ4MzdBNEM1AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4212,
+              "content": "¿Hay algo más en lo que pueda ayudarte a organizar tus finanzas hoy, Pedro? Quizás quieres que revisemos tus metas de ahorro.",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500361,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSQzQ3OEQ3NTVFMDc0QjRFMkJEAA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4213,
+              "content": "revisa nuevamente a ver si ya puedes eliminar la transacción",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 0,
+              "content_type": "text",
+              "status": "sent",
+              "content_attributes": {},
+              "created_at": 1756500785,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZCMjAyM0RBNkE3NzNDQzNCMjAA",
+              "sender": {
+                "additional_attributes": {},
+                "custom_attributes": {},
+                "email": null,
+                "id": 2,
+                "identifier": null,
+                "name": "Pedro Rodriguez",
+                "phone_number": "+573228854498",
+                "thumbnail": "",
+                "blocked": false,
+                "type": "contact"
+              }
+            },
+            {
+              "id": 4214,
+              "content": "¡Listo, Pedro! Ya revisé tus transacciones del 24 de agosto.\n\nAquí están las que tienes registradas para ese día:\n\n*   *Suscripción a Netflix:* $24.000 COP\n*   *Suscripción Amazon Prime:* $30.000 COP\n*   *Suscripción Amazon Prime:* $30.000 COP\n\nComo puedes ver, hay una transacción de Netflix y dos de Amazon Prime.",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500807,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSOEYwQzAxOTZEMTI3QTQ4MDA1AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4215,
+              "content": "Para corregir esto y dejar solo una de cada una, necesitaría que me confirmes cuál de las dos transacciones de Amazon Prime quieres que elimine. Por favor, indícame el ID de la transacción que deseas eliminar. ✅",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756500809,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSMzJBMkYzRTUxMjk1RjhGMjg5AA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            },
+            {
+              "id": 4216,
+              "content": "elimina la tercera,",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 0,
+              "content_type": "text",
+              "status": "sent",
+              "content_attributes": {},
+              "created_at": 1756501013,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAEhgUM0ZCNDVGMjEzQzBDQ0I2Q0M3RTYA",
+              "sender": {
+                "additional_attributes": {},
+                "custom_attributes": {},
+                "email": null,
+                "id": 2,
+                "identifier": null,
+                "name": "Pedro Rodriguez",
+                "phone_number": "+573228854498",
+                "thumbnail": "",
+                "blocked": false,
+                "type": "contact"
+              }
+            },
+            {
+              "id": 4217,
+              "content": "¡Listo, Pedro! He eliminado la tercera transacción de Amazon Prime, la que tenía el ID *35c0cef0-4ba8-4bf6-a1b3-361836213417*. ✅",
+              "inbox_id": 2,
+              "conversation_id": 1,
+              "message_type": 1,
+              "content_type": "text",
+              "status": "read",
+              "content_attributes": {},
+              "created_at": 1756501030,
+              "private": false,
+              "source_id": "wamid.HBgMNTczMjI4ODU0NDk4FQIAERgSODNGN0EzNjM2RkNGMjI5MjEyAA==",
+              "sender": {
+                "id": 2,
+                "name": "Mony",
+                "avatar_url": "",
+                "type": "agent_bot"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+            "content-length": "2389",
+            "accept": "application/json",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "content-type": "application/json",
+            "x-forwarded-for": "54.82.14.220",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "03a1118431ed",
+            "x-real-ip": "54.82.14.220"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "account": {
+              "id": 3,
+              "name": "Mony"
+            },
+            "additional_attributes": {},
+            "content_attributes": {},
+            "content_type": "text",
+            "content": "30.000 lavada de carro",
+            "conversation": {
+              "additional_attributes": {},
+              "can_reply": true,
+              "channel": "Channel::Whatsapp",
+              "contact_inbox": {
+                "id": 416,
+                "contact_id": 416,
+                "inbox_id": 2,
+                "source_id": "573057044860",
+                "created_at": "2025-09-18T22:27:36.918Z",
+                "updated_at": "2025-09-18T22:27:36.918Z",
+                "hmac_verified": false,
+                "pubsub_token": "qJbjHZQFMtYdxutgMETxXoVh"
+              },
+              "id": 412,
+              "inbox_id": 2,
+              "messages": [
+                {
+                  "id": 10072,
+                  "content": "30.000 lavada de carro",
+                  "account_id": 3,
+                  "inbox_id": 2,
+                  "conversation_id": 412,
+                  "message_type": 0,
+                  "created_at": 1758573594,
+                  "updated_at": "2025-09-22T20:39:54.348Z",
+                  "private": false,
+                  "status": "sent",
+                  "source_id": "wamid.HBgMNTczMDU3MDQ0ODYwFQIAEhggQTUzRUVCRDJFQjdCNjgwMUU3RDU1MzVDOUVEQTFDODYA",
+                  "content_type": "text",
+                  "content_attributes": {},
+                  "sender_type": "Contact",
+                  "sender_id": 416,
+                  "external_source_ids": {},
+                  "additional_attributes": {},
+                  "processed_message_content": "30.000 lavada de carro",
+                  "sentiment": {},
+                  "conversation": {
+                    "assignee_id": null,
+                    "unread_count": 1,
+                    "last_activity_at": 1758573594,
+                    "contact_inbox": {
+                      "source_id": "573057044860"
+                    }
+                  },
+                  "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": null,
+                    "id": 416,
+                    "identifier": null,
+                    "name": "N",
+                    "phone_number": "+573057044860",
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                  }
+                }
+              ],
+              "labels": [
+                "registrado"
+              ],
+              "meta": {
+                "sender": {
+                  "additional_attributes": {},
+                  "custom_attributes": {},
+                  "email": null,
+                  "id": 416,
+                  "identifier": null,
+                  "name": "N",
+                  "phone_number": "+573057044860",
+                  "thumbnail": "",
+                  "blocked": false,
+                  "type": "contact"
+                },
+                "assignee": null,
+                "team": null,
+                "hmac_verified": false
+              },
+              "status": "pending",
+              "custom_attributes": {},
+              "snoozed_until": null,
+              "unread_count": 1,
+              "first_reply_created_at": null,
+              "priority": null,
+              "waiting_since": 1758234456,
+              "agent_last_seen_at": 1758476485,
+              "contact_last_seen_at": 0,
+              "last_activity_at": 1758573594,
+              "timestamp": 1758573594,
+              "created_at": 1758234456,
+              "updated_at": 1758573594.3511906
+            },
+            "created_at": "2025-09-22T20:39:54.348Z",
+            "id": 10072,
+            "inbox": {
+              "id": 2,
+              "name": "Whatsapp Mony"
+            },
+            "message_type": "incoming",
+            "private": false,
+            "sender": {
+              "account": {
+                "id": 3,
+                "name": "Mony"
+              },
+              "additional_attributes": {},
+              "avatar": "",
+              "custom_attributes": {},
+              "email": null,
+              "id": 416,
+              "identifier": null,
+              "name": "N",
+              "phone_number": "+573057044860",
+              "thumbnail": "",
+              "blocked": false
+            },
+            "source_id": "wamid.HBgMNTczMDU3MDQ0ODYwFQIAEhggQTUzRUVCRDJFQjdCNjgwMUU3RDU1MzVDOUVEQTFDODYA",
+            "event": "message_created"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook/mony",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7CI8d1lC1EC1eqnL"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-08-25T21:46:54.076Z",
+      "updatedAt": "2025-08-25T21:46:54.076Z",
+      "role": "workflow:owner",
+      "workflowId": "ayMXNtsNigR3wBBF",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": {
+    "node:Programar Recordatorios": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-08-27T07:22:21.261Z",
+      "updatedAt": "2025-08-27T07:22:21.261Z",
+      "id": "yewU12nVfiCDIjkl",
+      "name": "PRODUCCION"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-22T20:45:04.604Z",
+  "versionId": "ca44d261-e23a-4a69-a770-f6dbc1daf417"
+}
