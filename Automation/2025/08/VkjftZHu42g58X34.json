@@ -1,0 +1,430 @@
+{
+  "active": false,
+  "connections": {
+    "Reminder Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "Reminder Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "Reminder Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Reminder Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reminder Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Telegram": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Cron": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Reminder Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Data Cron",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Data Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-12T00:06:50.230Z",
+  "id": "VkjftZHu42g58X34",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "chatId": "={{ $('Data').item.json.chat_id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1248,
+        -112
+      ],
+      "id": "d87aa9f4-c08b-4fa8-bbac-1a610cf06ff8",
+      "name": "Send a text message",
+      "webhookId": "4b29296a-4614-47bb-b04f-249886bba37c",
+      "credentials": {
+        "telegramApi": {
+          "id": "1btZ0ekaY8glxmzq",
+          "name": "2 - Semillero"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "pro.pedro0413@gmail.com",
+          "mode": "list",
+          "cachedResultName": "pro.pedro0413@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "color": "2",
+          "conferenceDataUi": {
+            "conferenceDataValues": {
+              "conferenceSolution": "hangoutsMeet"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1008,
+        96
+      ],
+      "id": "deb22202-a32e-4292-a20b-18ef27888472",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZzftNjdS2XERKRri",
+          "name": "Calendar Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "pro.pedro0413@gmail.com",
+          "mode": "list",
+          "cachedResultName": "pro.pedro0413@gmail.com"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        848,
+        96
+      ],
+      "id": "59d58188-bc5b-4538-a588-048b0e1c0060",
+      "name": "Get many events in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZzftNjdS2XERKRri",
+          "name": "Calendar Pedro"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Nombre: {{ $json.first_name }},\nmensaje: {{ $json.message }}",
+        "options": {
+          "systemMessage": "=\n# Prompt para Agente n8n - Mensajería diaria animada con Telegram y Google Calendar\n\n## Contexto general\nEres un asistente personal virtual que interactúa con usuarios a través de Telegram. Tu objetivo es brindarles un saludo cálido y personalizado todas las mañanas a las 8 am, listar las reuniones que tienen ese día (extraídas de Google Calendar), y cerrar con una frase motivadora que les impulse a tener un gran día.\n\nAdemás, tienes la capacidad para crear nuevas reuniones o consultar las existentes en el calendario del usuario a través de la tool de Google Calendar.\n\n\n\n## Comportamiento esperado\n\n1. *Saludo personalizado:*\n   - Usa el nombre para saludar con entusiasmo.\n   - Incluye emoticones alegres y cálidos (ej: ☀️, 👋, 😊).\n\n2. *Listado de reuniones para el día actual:*\n   - Consulta Google Calendar para obtener todas las reuniones del día del usuario.\n   - Si no hay reuniones, informa de forma positiva y motivadora que el día está libre para ser productivo.\n   - Si hay reuniones, lista cada reunión con:\n     - Hora de inicio (formato local, ej: 10:00 AM)\n     - Nombre o título de la reunión\n     - Opcionalmente la ubicación o canal si está disponible\n   - Usa bullets o emojis para separar cada evento y que sea legible en Telegram.\n\n3. *Frase motivadora de cierre:*\n   - Incluye una frase inspiradora para empezar el día con energía.\n   - Usa emoticones para reforzar el mensaje (ej: 💪, 🌟, 🚀).\n\n4. *Funcionalidad adicional:*\n   - Si el mensaje recibido solicita crear una reunión, procesa la creación usando Google Calendar y confirma con un mensaje claro y amigable.\n   - Si el mensaje pide consultar reuniones específicas o fechas diferentes, responde acorde a la consulta usando la tool de Google Calendar.\n   \n5. *Formato de salida:*\n   - Texto plano compatible con Telegram (Markdown básico o HTML simple).\n   - Estructura clara, legible y con emojis.\n   - Sin textos largos ni redundantes.\n\n\n## Instrucciones para responder al mensaje del usuario:\n\n- Siempre saluda usando el nombre.\n- Siempre responde con el listado correcto del día o la confirmación de la creación/consulta de reunión.\n- Si el usuario no tiene reuniones, di algo positivo como:  \n  \"Hoy no tienes reuniones agendadas. ¡Aprovecha este tiempo para avanzar en tus proyectos! ✨😊\"\n- Si el usuario pide crear una reunión, confirma la creación con:  \n  \"¡Perfecto! He creado tu reunión: [Título] el [Fecha y hora]. 📅✅\"\n- Usa un tono amigable, animado y profesional.\n- Mantén el formato para Telegram.\n\n---\n\n## Resumen:\n\n- Saludo cálido y personalizado con emojis.\n- Listado de reuniones del día desde Google Calendar.\n- Frase motivadora final.\n- Capacidad para crear y consultar reuniones.\n- Salida limpia y formateada para Telegram.\n\n---\n\n¿Listo para alegrar la mañana de {{ $json.first_name }} y ayudarle a gestionar su agenda? ¡Vamos allá! 🎉😊\n\nIMPORTANTE:\n- siempre saluda por el nombre del usuario\n- no incluya caracteres no permitidos para enviar por telegram\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        -112
+      ],
+      "id": "b6154861-621e-4ba7-aec3-3782bc3064d0",
+      "name": "Reminder Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Data').item.json.chat_id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        704,
+        96
+      ],
+      "id": "65689ad9-9dc6-4ce3-b3d9-a8a09dc100f5",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        560,
+        96
+      ],
+      "id": "b42aca66-a4d0-40f5-9507-c882c25f2840",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e668adfe-5526-4156-ac1d-701587a3d8f3",
+              "name": "chat_id",
+              "value": "={{ $json.message.chat.id }}",
+              "type": "number"
+            },
+            {
+              "id": "e72c6d43-0286-41c5-8548-a56a2b0e8e43",
+              "name": "first_name",
+              "value": "={{ $json.message.chat.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "2ee8a9c0-bbda-4328-bc1b-abb2041c2cf7",
+              "name": "message",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "7903d126-7306-4059-80d7-9c56aab5ed70",
+      "name": "Data Telegram"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e668adfe-5526-4156-ac1d-701587a3d8f3",
+              "name": "chat_id",
+              "value": "=1469588614",
+              "type": "number"
+            },
+            {
+              "id": "e72c6d43-0286-41c5-8548-a56a2b0e8e43",
+              "name": "first_name",
+              "value": "=Pedro",
+              "type": "string"
+            },
+            {
+              "id": "2ee8a9c0-bbda-4328-bc1b-abb2041c2cf7",
+              "name": "message",
+              "value": "=dame un resumen de las reuniones del dia de hoy",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        -160
+      ],
+      "id": "8e0c9b53-c91b-4a91-9b12-644a9540db80",
+      "name": "Data Cron"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0e264176-6ca3-4f86-bb37-2c1821fda170",
+              "name": "chat_id",
+              "value": "={{ $json.chat_id }}",
+              "type": "number"
+            },
+            {
+              "id": "b96b0649-1695-4092-8677-e90912cb7e91",
+              "name": "first_name",
+              "value": "={{ $json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "80845f76-d703-4851-a011-273fb56a47d1",
+              "name": "message",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        -112
+      ],
+      "id": "78593243-204c-4ce4-bf53-14277eba5f77",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "054b0e3c-4b48-4d04-a876-fee3add99a66",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "77c59fa3-39dc-4019-a2e0-1157701c5424",
+      "name": "Telegram Trigger",
+      "webhookId": "b444694a-e231-4889-ac7d-a400e0348eda",
+      "credentials": {
+        "telegramApi": {
+          "id": "1btZ0ekaY8glxmzq",
+          "name": "2 - Semillero"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-08-12T00:06:50.230Z",
+      "updatedAt": "2025-08-12T00:06:50.230Z",
+      "role": "workflow:owner",
+      "workflowId": "VkjftZHu42g58X34",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2025-08-15T16:43:38.178Z",
+  "versionId": "72631e84-78b0-43b2-a628-57e1647b8993"
+}
