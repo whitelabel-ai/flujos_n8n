@@ -1,0 +1,270 @@
+{
+  "active": false,
+  "connections": {
+    "AI Agent with Langfuse": {
+      "main": [
+        [
+          {
+            "node": "Evaluation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many issues in Linear": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a page in Notion": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluation": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-09T22:26:24.062Z",
+  "id": "po1e3lNr7zjaIpBN",
+  "isArchived": false,
+  "meta": null,
+  "name": "Mia - Managment",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=[FECHA_ACTUAL] = {{ $now.format('dd-MM-yyyy') }}",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        256,
+        48
+      ],
+      "id": "7c1ae2df-9686-4274-8702-ae3183236596",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "JYYFJIjlOJE6PupZ",
+          "name": "Managment Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        304,
+        320
+      ],
+      "id": "831b2285-027e-469b-80b8-ba6bb7e06ea3",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xCrv1gBV3pJitThp",
+          "name": "Varios Whitelabel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptName": "Mia",
+        "label": "latest",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        48
+      ],
+      "id": "2cd31b63-3360-4f80-a987-65bfd97a2952",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "JYYFJIjlOJE6PupZ",
+          "name": "Managment Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get many issues in Linear",
+        "authentication": "oAuth2",
+        "operation": "getAll",
+        "limit": 10
+      },
+      "type": "n8n-nodes-base.linearTool",
+      "typeVersion": 1.1,
+      "position": [
+        496,
+        304
+      ],
+      "id": "06924bd9-02ec-41d1-a959-a4977d6033e3",
+      "name": "Get many issues in Linear",
+      "credentials": {
+        "linearOAuth2Api": {
+          "id": "4nrQ9uoT78aaGSgD",
+          "name": "Linear account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "text": "Preguntas aclaratorias",
+        "returnAll": true,
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notionTool",
+      "typeVersion": 2.2,
+      "position": [
+        656,
+        304
+      ],
+      "id": "61045302-7cbc-4c03-80fd-27fe081d93e6",
+      "name": "Search a page in Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "jWWM1rTAyxYomO7Y",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        48
+      ],
+      "id": "64ab8bf8-aa9a-4d1a-8415-fb45e67bb879",
+      "name": "Discord",
+      "webhookId": "662501cf-c966-4379-b0e3-be24dfff13e5",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "J4VifoDcXPsP1aAN",
+          "name": "Mia - Managment"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "setMetrics",
+        "metric": "stringSimilarity",
+        "expectedAnswer": "Pulso del Equipo Whitelabel - 8 de octubre de 2025 Buenos días, equipo de management. Aquí está el resumen del estado del equipo para hoy.  📊 Reporte de Tareas en Linear Trabajo en Curso fabohorquezcn:  WHI-379: Information Centre - forms  WHI-378: Information Centre - publication guidelines  ⚠️ Tareas que Requieren Atención No se han detectado tareas bloqueadas o atascadas.  🗒️ Resumen de Reuniones en Notion Reunión de Sincronización de Desarrollo Contexto: Revisión del estado de avance del desarrollo web, enfocada en la versión móvil, mejoras implementadas y la organización de contenidos.  Problema Discutido: Se identificaron varios bloqueos por falta de contenido (secciones 'What We Do', 'Laveitivi', galería) y la necesidad de definir y desarrollar funcionalidades clave, como el filtrado de archivos, la gestión dinámica de formularios y la funcionalidad del mapa de contacto.  Decisiones Clave:  Se acordó priorizar el trabajo en las secciones más sencillas ('Decisions' e 'Information Center') para generar avances rápidos.  Laura creará tareas específicas en el gestor de proyectos para dar seguimiento a todos los puntos discutidos.  Alejo debe verificar la correcta ubicación en el mapa de la sección 'Contact'.  Se realizarán consultas al cliente para definir los contenidos pendientes y la funcionalidad del botón \"Get Directions\".",
+        "actualAnswer": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.7,
+      "position": [
+        608,
+        48
+      ],
+      "id": "cc3956ab-5ff4-4ba3-bda5-b586cd07e15c",
+      "name": "Evaluation"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        48
+      ],
+      "id": "b75b9aa8-b668-4f86-a824-03d0ef8a5976",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-09T22:26:24.062Z",
+      "updatedAt": "2025-10-09T22:26:24.062Z",
+      "role": "workflow:owner",
+      "workflowId": "po1e3lNr7zjaIpBN",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-09T22:26:24.062Z",
+  "versionId": "fc501411-400f-4edd-8273-4d5b3c84ff17"
+}
