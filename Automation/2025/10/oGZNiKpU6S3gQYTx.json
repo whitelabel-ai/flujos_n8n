@@ -1,0 +1,164 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "leer_db_clientes",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "leer_db_generica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "leer_db_clientes": {
+      "main": [
+        [
+          {
+            "node": "comparar_coincidencias",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "leer_db_generica": {
+      "main": [
+        [
+          {
+            "node": "comparar_coincidencias",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-19T01:45:02.543Z",
+  "id": "oGZNiKpU6S3gQYTx",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "db_equipos_Acondicionando sas",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "94ce7f9e-9b23-4c2a-8352-7b80c3d77dbf",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Recibir los dos inputs\nconst clientes = $items(\"leer_db_clientes\", 0, 0).map(item => item.json);\nconst generica = $items(\"leer_db_generica\", 0, 0).map(item => item.json);\n\nlet resultados = [];\n\n// Recorrer cada registro de la DB genérica\nfor (const eq of generica) {\n  // Buscar coincidencia por RAZON SOCIAL en la DB de clientes\n  const coincidencia = clientes.find(c =>\n    c[\"razon_social\"] &&\n    eq[\"RAZON SOCIAL\"] &&\n    c[\"razon_social\"].trim().toLowerCase() === eq[\"RAZON SOCIAL\"].trim().toLowerCase()\n  );\n\n  if (coincidencia) {\n    resultados.push({\n      client_id: coincidencia[\"client_id\"],\n      tipo_documento: coincidencia[\"tipo_documento\"],\n      razon_social: coincidencia[\"razon_social\"],\n      telefono_contacto: coincidencia[\"telefono_contacto\"],\n      persona_encargada: coincidencia[\"persona_encargada\"],\n      direccion_principal: coincidencia[\"direccion_principal\"],\n      ...eq // Aquí agregas todos los campos del equipo encontrado\n    });\n  }\n}\n\n// Retornar el resultado como salida del nodo\nreturn resultados.map(r => ({ json: r }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        -32
+      ],
+      "id": "9c926bf3-967f-4db6-ba0d-d3ef5221c28d",
+      "name": "comparar_coincidencias",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1EGWK9hI2bM25UvUKDdvTGX36R8Ir9pwPtjTxu1TtuC8",
+          "mode": "list",
+          "cachedResultName": "db_clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EGWK9hI2bM25UvUKDdvTGX36R8Ir9pwPtjTxu1TtuC8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2041464503,
+          "mode": "list",
+          "cachedResultName": "clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EGWK9hI2bM25UvUKDdvTGX36R8Ir9pwPtjTxu1TtuC8/edit#gid=2041464503"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        -144
+      ],
+      "id": "de7cbd8c-9fd5-4c58-b34f-f132282490ee",
+      "name": "leer_db_clientes",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "mbYsL5GzOjiChSg5",
+          "name": "Acondicionados sas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1McFNv4Qm41NN8kkXww_ym1keDLL4bkD0duBsoLR3olI",
+          "mode": "list",
+          "cachedResultName": "db_generica",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1McFNv4Qm41NN8kkXww_ym1keDLL4bkD0duBsoLR3olI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 543687500,
+          "mode": "list",
+          "cachedResultName": "Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1McFNv4Qm41NN8kkXww_ym1keDLL4bkD0duBsoLR3olI/edit#gid=543687500"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        128
+      ],
+      "id": "f5692221-a2e7-4194-9883-0ac827642294",
+      "name": "leer_db_generica",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "mbYsL5GzOjiChSg5",
+          "name": "Acondicionados sas"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-19T01:45:02.543Z",
+      "updatedAt": "2025-10-19T01:45:02.543Z",
+      "role": "workflow:owner",
+      "workflowId": "oGZNiKpU6S3gQYTx",
+      "projectId": "nfeOgNZ0Q89hgHph"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-19T04:20:42.538Z",
+  "versionId": "92902261-2176-4a03-9643-1dfc5d2714f0"
+}
