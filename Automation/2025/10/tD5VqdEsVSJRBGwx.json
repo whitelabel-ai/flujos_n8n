@@ -1,0 +1,151 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-23T01:27:35.737Z",
+  "id": "tD5VqdEsVSJRBGwx",
+  "isArchived": false,
+  "meta": null,
+  "name": "Especialista en QA y Operaciones (SRE)",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c4656df5-216a-4e1c-a28c-64513c0cc898",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptName": "Especialista en QA y Operaciones (SRE)",
+        "label": "latest",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "93551ab4-3164-47f3-b7c2-d83f44d26ebd",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "ib0q9jw8tb01ZaAR",
+          "name": "n8n Preflight Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When Executed by Another Workflow').item.json.query }}",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "2bab25f3-33c6-475e-9623-547452ee8b5f",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "ib0q9jw8tb01ZaAR",
+          "name": "n8n Preflight Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        464,
+        256
+      ],
+      "id": "d3283310-21da-41aa-b168-fd75b01add9d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xCrv1gBV3pJitThp",
+          "name": "Varios Whitelabel"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "Inicia un n8n Preflight para un nuevo proyecto."
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-23T01:27:35.737Z",
+      "updatedAt": "2025-10-23T01:27:35.737Z",
+      "role": "workflow:owner",
+      "workflowId": "tD5VqdEsVSJRBGwx",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-23T01:27:43.612Z",
+  "versionId": "f47782b1-98e3-4b23-acd8-60d6467f07b6"
+}
