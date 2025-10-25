@@ -113,7 +113,7 @@
       "main": [
         [
           {
-            "node": "Get info business",
+            "node": "Get all agents",
             "type": "main",
             "index": 0
           }
@@ -133,13 +133,7 @@
     },
     "Data": {
       "main": [
-        [
-          {
-            "node": "Qubra",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Google Gemini Chat Model": {
@@ -226,22 +220,55 @@
         ]
       ]
     },
-    "Get info business": {
+    "Get all agents": {
       "main": [
         [
           {
-            "node": "Get categories",
+            "node": "Filter",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get question from business": {
+    "Filter": {
       "main": [
         [
           {
-            "node": "Data",
+            "node": "Data Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Agent & Business": {
+      "main": [
+        [
+          {
+            "node": "Qubra",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a business": {
+      "main": [
+        [
+          {
+            "node": "Data Agent & Business",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Agent": {
+      "main": [
+        [
+          {
+            "node": "Get a business",
             "type": "main",
             "index": 0
           }
@@ -267,7 +294,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -336,
+        -400,
         1024
       ],
       "id": "c763c16e-115e-4ed4-8e92-f327f9d6131e",
@@ -383,8 +410,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        336,
-        896
+        304,
+        880
       ],
       "id": "fef5aec4-9284-415e-84fb-9ac483ad05f8",
       "name": "type message Whatsap"
@@ -413,8 +440,8 @@
             },
             {
               "id": "1abd896c-ea14-41a2-9500-ef9393cc170f",
-              "name": "businessId",
-              "value": "={{ $('ChatwootData').item.json.businessId }}",
+              "name": "agentId",
+              "value": "={{ $('ChatwootData').item.json.agentId }}",
               "type": "string"
             }
           ]
@@ -461,6 +488,12 @@
               "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
               "name": "mensaje",
               "value": "=<audio>{{ $json.content.parts[0].text }}</audio>",
+              "type": "string"
+            },
+            {
+              "id": "e4e0ad5b-ef37-475c-8c1e-9d8a94461b7b",
+              "name": "agentId",
+              "value": "={{ $('ChatwootData').item.json.agentId }}",
               "type": "string"
             }
           ]
@@ -558,8 +591,8 @@
             },
             {
               "id": "289f0a9d-b47b-46ff-83d5-3e89462f395f",
-              "name": "businessId",
-              "value": "={{ $json.body.businessId }}",
+              "name": "agentId",
+              "value": "={{ $json.body.agentId }}",
               "type": "string"
             }
           ]
@@ -569,7 +602,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -112,
+        -176,
         1024
       ],
       "id": "5d7a04cc-e197-4a81-9b80-5efd8e9041dd",
@@ -628,7 +661,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -112,
+        -176,
         832
       ],
       "id": "ee1c34e7-37b8-445f-ade5-18d307e45e93",
@@ -643,7 +676,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -336,
+        -400,
         832
       ],
       "id": "57d4e2a3-27df-4970-8a02-a89b4bb3ed1b",
@@ -716,7 +749,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        112,
+        48,
         928
       ],
       "id": "b6e88130-2d7f-47bb-a5ba-03473c655600",
@@ -746,8 +779,8 @@
             },
             {
               "id": "a4895cfb-af6e-49c8-a57c-23a43d43e913",
-              "name": "businessId",
-              "value": "={{ $json.businessId }}",
+              "name": "agentId",
+              "value": "={{ $json.agentId }}",
               "type": "string"
             }
           ]
@@ -757,8 +790,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1232,
-        928
+        1296,
+        848
       ],
       "id": "a68383e0-e0f9-4e29-9b43-65b4124c89fb",
       "name": "setData"
@@ -797,7 +830,7 @@
             {
               "id": "4e6ed31c-2d8f-4415-bdaf-404a870f1cc2",
               "name": "first_name",
-              "value": "={{ $('setData').item.json.nombre.split(\" \")[0] }}",
+              "value": "=",
               "type": "string"
             },
             {
@@ -809,7 +842,37 @@
             {
               "id": "b89d5418-df60-419b-84f6-5bc7bc0dd09b",
               "name": "message",
-              "value": "={{ $json.mensaje }}",
+              "value": "={{ $('setData').item.json.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "32e3f14f-f9f9-4914-8b3d-a8ed2dc551cf",
+              "name": "agentName",
+              "value": "={{ $json.agentName }}",
+              "type": "string"
+            },
+            {
+              "id": "62e236b4-d494-4a53-8888-6a15412e7b80",
+              "name": "agentDescription",
+              "value": "={{ $json.agentDescription }}",
+              "type": "string"
+            },
+            {
+              "id": "792d4574-9c87-43f7-9ac9-ba48d37a011a",
+              "name": "questionsPrompt",
+              "value": "={{ $json.questionsPrompt }}",
+              "type": "string"
+            },
+            {
+              "id": "6e43b04b-b710-4b63-a869-f49432b8b465",
+              "name": "businessName",
+              "value": "={{ $('Get a business').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "454e873e-acdd-435f-b100-890c934a854f",
+              "name": "businessDescription",
+              "value": "={{ $('Get a business').item.json.description }}",
               "type": "string"
             }
           ]
@@ -819,8 +882,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2208,
-        928
+        1680,
+        656
       ],
       "id": "739d792e-7d10-47ca-ade1-b66d35e1eb30",
       "name": "Data"
@@ -829,7 +892,7 @@
       "parameters": {
         "content": "## AGENT MAIN",
         "height": 600,
-        "width": 848
+        "width": 1312
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -850,8 +913,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2096,
-        688
+        2560,
+        704
       ],
       "id": "6cb96f71-df4f-41ff-af4e-ffb497683090",
       "name": "Sticky Note2"
@@ -864,8 +927,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2208,
-        1216
+        1952,
+        1088
       ],
       "id": "5e445a78-043f-4c5c-8981-26c18b236626",
       "name": "Google Gemini Chat Model",
@@ -879,15 +942,15 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "=chat_history_qubra_{{ $('Data').item.json.user_id }}",
+        "sessionKey": "=chat_history_qubra_{{ $json.user_id }}",
         "sessionTTL": 500000,
         "contextWindowLength": 25
       },
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        2384,
-        1280
+        2128,
+        1152
       ],
       "id": "93519c38-752a-4abf-9333-1c231a177562",
       "name": "Redis Chat Memory1",
@@ -919,8 +982,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2768,
-        928
+        2640,
+        912
       ],
       "id": "cbbb0c81-3e40-4306-82b3-65fbc8d6aa19",
       "name": "Message a model1",
@@ -942,8 +1005,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        3120,
-        928
+        3008,
+        912
       ],
       "id": "e10bbbda-ade3-4ac8-8be2-e55b78672466",
       "name": "Respond to Webhook"
@@ -953,14 +1016,14 @@
         "promptType": "define",
         "text": "=mensaje del usuario: \"{{ $json.message }}\",",
         "options": {
-          "systemMessage": "=# Identidad de Qubra\n\nEres Qubra, el \"Curador Digital\" y agente conversacional oficial de Vanguardistas.\n\nTu misión es guiar a empresarios, dueños de pymes y marcas personales en un viaje consultivo y estratégico para descubrir su esencia, diagnosticar sus retos y preparar la información necesaria para que se genere un informe profesional de diagnóstico.\n\nNo eres un chatbot genérico: eres un consultor empático, estratégico y motivador, con personalidad artística y profesional.\n\nfecha y hora hoy: {{ $now }}\n\n## Personalidad\n\nCombinas 4 arquetipos:\n\n- 🎨 Artista Creador: Usas metáforas y un lenguaje cercano, inspirador, creativo. Ayudas al usuario a “pintar” la esencia de su marca con autenticidad.\n\n- 📊 Estratega Analítico: Haces preguntas inteligentes, detectas patrones, sintetizas con claridad. Desarmas problemas de manera lógica y accesible.\n\n- 🏗️ Constructor de Futuro: Orientas hacia el cambio, mostrando nuevas perspectivas y posibilidades de mejora, evitando soluciones genéricas.\n\n- 🤝 Socio Estratégico: Te pones en los zapatos del usuario, entiendes su negocio y contexto real, y traduces lo complejo en ideas claras y aplicables.\n\nTu tono es cercano, profesional, claro, estratégico, empático y auténtico.\n\n---\n\n# Principios Fundamentales de Qubra\n\n✅ Autenticidad y Propósito: Cada interacción debe reflejar la singularidad del usuario y conectar con lo que da sentido a su marca. Nunca dar respuestas genéricas ni superficiales.\n\n✅ Claridad y Simplicidad (anti-tecnicismos): Evita jerga técnica o lenguaje frío. Explica siempre en términos humanos y accesibles, para que todo sea comprensible y accionable.\n\n✅ Empatía y Validación Emocional: Reconoce frustraciones, miedos y deseos. No solo valides con frases amables: demuestra comprensión real y genera confianza a través del acompañamiento.\n\n✅ Disrupción y Perspectivas Únicas: No te limites a repetir problemas. Muestra nuevas formas de ver el negocio, oportunidades inesperadas y caminos personalizados.\n\n✅ Socio Estratégico: Habla como un aliado del negocio, vinculando siempre el diagnóstico con la vida real del usuario (ventas, clientes, tiempo, esfuerzo).\n\n❌ Nunca usar un tono vendedor agresivo.\n\n❌ Nunca ofrecer soluciones enlatadas o impersonales.\n\n❌ Nunca abrumar con exceso de información.\n\n❌ Nunca juzgar o minimizar las respuestas del usuario."
+          "systemMessage": "=# Identidad del agente Qubra llamado: \"{{ $json.agentName }}\"\n\n{{ $json.agentDescription }}\n\nNo eres un chatbot genérico: eres *un consultor empático, estratégico y motivador*, con personalidad artística y profesional.\n\nfecha y hora hoy: {{ $now }}\n\nPara ayudarte a conocer mejor la empresa, este es el contexto que debes conocer:\nNombre de la empresa: \"{{ $json.businessName }}\"\nDescripción de la empresa: \"{{ $json.businessDescription }}\"\n\n## Personalidad\n\nCombinas 4 arquetipos:\n\n- 🎨*Artista Creador:* Usas metáforas y un lenguaje cercano, inspirador, creativo. Ayudas al usuario a “pintar” la esencia de su marca con autenticidad.\n- 📊 *Estratega Analítico:* Haces preguntas inteligentes, detectas patrones, sintetizas con claridad. Desarmas problemas de manera lógica y accesible.\n- 🏗️ *Constructor de Futuro:* Orientas hacia el cambio, mostrando nuevas perspectivas y posibilidades de mejora, evitando soluciones genéricas.\n- 🤝 *Socio Estratégico:* Te pones en los zapatos del usuario, entiendes su negocio y contexto real, y traduces lo complejo en ideas claras y aplicables.\n\nTu tono es *cercano, profesional, claro, estratégico, empático y auténtico*.\n\n---\n\n# Principios Fundamentales de Qubra\n\n✅ *Autenticidad y Propósito:* Cada interacción debe reflejar la singularidad del usuario y conectar con lo que da sentido a su marca. Nunca dar respuestas genéricas ni superficiales.\n✅ *Claridad y Simplicidad (anti-tecnicismos):* Evita jerga técnica o lenguaje frío. Explica siempre en términos humanos y accesibles, para que todo sea comprensible y accionable.\n✅ *Empatía y Validación Emocional:* Reconoce frustraciones, miedos y deseos. No solo valides con frases amables: demuestra comprensión real y genera confianza a través del acompañamiento.\n✅ *Disrupción y Perspectivas Únicas:* No te limites a repetir problemas. Muestra nuevas formas de ver el negocio, oportunidades inesperadas y caminos personalizados.\n✅ *Socio Estratégico:* Habla como un aliado del negocio, vinculando siempre el diagnóstico con la vida real del usuario (ventas, clientes, tiempo, esfuerzo).\n\n❌ Nunca usar un tono vendedor agresivo.\n❌ Nunca ofrecer soluciones enlatadas o impersonales.\n❌ Nunca abrumar con exceso de información.\n❌ Nunca juzgar o minimizar las respuestas del usuario.\n\n---\n\n# Objetivo de Qubra\n\n1. Guiar al usuario en una conversación diagnóstica estructurada, para descubrir su realidad actual en marketing, procesos y tecnología.\n2. Responder preguntas sobre Vanguardistas y su metodología cuando sea necesario.\n3. Capturar todas las respuestas del usuario, validarlas y almacenarlas en memoria, para luego enviarlas a la `tool` *Generar Informe*.\n4. Al final, invitar al usuario a recibir su informe por email y pedir el correo de contacto.\n\n---\n\n# Flujo General de Conversación\n{{ $json.questionsPrompt }}\n\n# Manejo de Preguntas del Usuario\n\n- *Si la pregunta es sobre la metodología o la empresa:* usa la `tool` *Buscar en Documentación (RAG)* para responder con precisión y sencillez.\n- *Si la pregunta es fuera de contexto:* redirige con cortesía hacia la conversación diagnóstica. Ejemplo:\n  > “Es un tema interesante. Para darte un diagnóstico útil para tu negocio, ¿te parece si seguimos explorando tu presencia digital?”\n\n---\n\n# Reglas de Qubra\n\n✅ Siempre guiar la conversación hacia el diagnóstico.\n✅ Ser empático y profesional, nunca robótico ni vendedor agresivo.\n✅ Reconocer frustraciones y esperanzas, mostrando comprensión real.\n✅ Recordar el contexto completo y usar referencias a respuestas previas.\n✅ Guardar y estructurar respuestas en memoria, para enviarlas a la `tool` Generar Informe.\n✅ Pedir y validar el correo antes de finalizar la sesión.\n✅ Mantener el tono Vanguardista: humano, estratégico, artístico, inspirador y auténtico.\n\n❌ Nunca dar un diagnóstico final dentro del chat (eso lo hace la tool del informe).\n❌ Nunca improvisar información que no esté en la documentación de Vanguardistas.\n❌ Nunca terminar la conversación sin ofrecer el próximo paso (el informe).\n\n---\n\n# Tools disponibles\n\n1. *Generar Informe:* recibe el historial completo de conversación (preguntas y respuestas) y crea el informe diagnóstico para el usuario.\n2. *Buscar en Documentación (RAG):* permite consultar la documentación de Vanguardistas para responder preguntas de proceso/metodología.\n3. *Guardar Progreso en DB (opcional):* guarda estado de respuestas en caso de desconexión del chat.\n\n---\n\n# Instrucciones técnicas\n\n- Mantén toda la información del usuario organizada en un objeto estructurado (ejemplo JSON) con campos:\n\n  - `nombre`\n  - `empresa`\n  - `correo`\n  - `respuestas_marketing`\n  - `respuestas_procesos`\n  - `respuestas_tecnologia`\n  - `respuestas_propósito`\n  - `preguntas_extra`\n\n- Una vez el usuario haya respondido lo suficiente, *invoca la tool Generar Informe* enviando el historial de conversación + datos estructurados.\nIMPORTANTE, Si faltan respuestas para alguna etapa, Qubra nunca debe mandar a la tool. Debe detectar huecos y pedir lo que falta con calidez.\n\n- Cierra siempre agradeciendo, resaltando lo valioso de las respuestas del usuario(muy brevemente, corto) y confirmando el envío del informe al correo que el usuario te confirmo y dices algo como espera 1 minuto estamos generando tu diagnostigo.\n- anexa la respuesta de la tool Generar Informe, al final después del cierre, ejemplo:\n  \"mensaje cierre\"\n  Informe: \"todo el contenido del informe sin modificar nada\"\n\nIMPORTANTE siempre antes de dar el cierre invoca la tool *Generar Informe*"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        2368,
-        928
+        2000,
+        848
       ],
       "id": "5b3cbad3-a19b-4500-9154-1970f52cae35",
       "name": "Qubra",
@@ -975,6 +1038,7 @@
           "__rl": true,
           "value": "kU6PQmiycPyk0PMH",
           "mode": "list",
+          "cachedResultUrl": "/workflow/kU6PQmiycPyk0PMH",
           "cachedResultName": "informe"
         },
         "workflowInputs": {
@@ -1134,8 +1198,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        2576,
-        1248
+        2304,
+        1088
       ],
       "id": "2f60064a-6ded-46c4-a30f-c0a996168d66",
       "name": "Generar Informe"
@@ -1188,6 +1252,132 @@
     },
     {
       "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "30fbed33-2e16-4ab5-bb44-fe52b61f11ce",
+              "leftValue": "={{ $json.agentId }}",
+              "rightValue": "={{ $('setData').item.json.agentId }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        1040
+      ],
+      "id": "4c5b707e-0bc6-492b-a300-48d158c70dea",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "p292gja07xvw4en",
+        "table": "m2zssas9n6sddx3",
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1488,
+        848
+      ],
+      "id": "485d5f1f-6078-44f2-9ff8-73f1444dee6a",
+      "name": "Get all agents",
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "retryOnFail": false,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "uRuRbHNOx2HQX2Af",
+          "name": "Qubra NocoDB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ef8fb1be-0093-4b10-a383-fdbff63d540d",
+              "name": "agentName",
+              "value": "={{ $('Data Agent').item.json.agentName }}",
+              "type": "string"
+            },
+            {
+              "id": "5779516a-1faf-455c-9062-b32190df8b51",
+              "name": "agentDescription",
+              "value": "={{ $('Data Agent').item.json.agentDescription }}",
+              "type": "string"
+            },
+            {
+              "id": "b4675e66-bd37-45dd-bbd1-19700a431d15",
+              "name": "businessName",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "94755913-f5be-4733-824f-17badaf54657",
+              "name": "businessDescription",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "a4b7f46a-b076-4d53-ad35-010cf3a0ca3a",
+              "name": "questionsPrompt",
+              "value": "={{ $('Data Agent').item.json.questionsPrompt }}",
+              "type": "string"
+            },
+            {
+              "id": "630e396a-0dda-40b5-820b-0236219d124f",
+              "name": "fullname",
+              "value": "={{ $('setData').item.json.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "abba96c3-8da4-441d-9169-6b27de6809c6",
+              "name": "message",
+              "value": "={{ $('setData').item.json.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "dd42e681-8574-4678-aa9f-a2fc110b9539",
+              "name": "user_id",
+              "value": "={{ $('setData').item.json.phone_number }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1696,
+        848
+      ],
+      "id": "f51a5e46-e5e9-4139-805f-7012202aae0c",
+      "name": "Data Agent & Business"
+    },
+    {
+      "parameters": {
         "authentication": "nocoDbApiToken",
         "projectId": "p292gja07xvw4en",
         "table": "m3ayktud7ld7xjb",
@@ -1196,11 +1386,11 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        1440,
-        928
+        1696,
+        1040
       ],
-      "id": "485d5f1f-6078-44f2-9ff8-73f1444dee6a",
-      "name": "Get info business",
+      "id": "47035f72-158f-4aa7-aa8f-146edb6f996c",
+      "name": "Get a business",
       "credentials": {
         "nocoDbApiToken": {
           "id": "uRuRbHNOx2HQX2Af",
@@ -1210,58 +1400,44 @@
     },
     {
       "parameters": {
-        "authentication": "nocoDbApiToken",
-        "operation": "getAll",
-        "projectId": "p292gja07xvw4en",
-        "table": "mhfhw24xx3w7nho",
-        "returnAll": true,
-        "options": {
-          "fields": [
-            "type,Id,section,Businesses_id,section_description,key_points,question"
-          ],
-          "where": "=(Businesses_id,eq,{{ $json.Id }})"
-        }
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7da725a6-5ed4-4851-9c6a-edfba1ef8395",
+              "name": "agentName",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "844c5dc7-c1d8-4830-b056-ccc4815e5c4f",
+              "name": "agentDescription",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "6528f9c6-e313-4d39-89d4-888f30dbf0b2",
+              "name": "questionsPrompt",
+              "value": "={{ $json.questions_prompt }}",
+              "type": "string"
+            },
+            {
+              "id": "b23f630c-9a43-4757-9dba-32029a68f070",
+              "name": "businessId",
+              "value": "={{ $json.businessId.Id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
       },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        1856,
-        800
+        1488,
+        1040
       ],
-      "id": "efe775a3-e002-4126-83fc-7040f5d1eef9",
-      "name": "Get question from business",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "uRuRbHNOx2HQX2Af",
-          "name": "Qubra NocoDB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "operation": "getAll",
-        "projectId": "p292gja07xvw4en",
-        "table": "mcml8t0sf04gf5z",
-        "returnAll": true,
-        "options": {
-          "where": "={{ 'Businesses_id' === $json.Id}}"
-        }
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        1664,
-        1008
-      ],
-      "id": "2a2ee70c-ce51-4a6a-b1b1-7f922eab6152",
-      "name": "Get categories",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "uRuRbHNOx2HQX2Af",
-          "name": "Qubra NocoDB"
-        }
-      }
+      "id": "9eb1cf89-ab9e-4279-a8cb-29e50a8d024e",
+      "name": "Data Agent"
     }
   ],
   "pinData": {
@@ -1295,47 +1471,6 @@
           "field": "messages"
         }
       }
-    ],
-    "Webhook": [
-      {
-        "json": {
-          "headers": {
-            "host": "automation.whitelabel.lat",
-            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
-            "content-length": "1269",
-            "accept": "*/*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "es-419,es;q=0.9",
-            "content-type": "application/json",
-            "origin": "https://vanguardistas.co",
-            "priority": "u=1, i",
-            "referer": "https://vanguardistas.co/",
-            "sec-ch-ua": "\"Not;A=Brand\";v=\"99\", \"Brave\";v=\"139\", \"Chromium\";v=\"139\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Linux\"",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "cross-site",
-            "sec-gpc": "1",
-            "x-forwarded-for": "217.9.247.5",
-            "x-forwarded-host": "automation.whitelabel.lat",
-            "x-forwarded-port": "443",
-            "x-forwarded-proto": "https",
-            "x-forwarded-server": "4f3b0c84f963",
-            "x-real-ip": "217.9.247.5"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "message": "For me, the success of this process won't be measured solely by hard numbers, but by the impact we make on our clients' lives. I will have achieved success when, looking back, I see three tangible results:  A community, not just an audience: The greatest indicator of success would be having created a steady stream of \"creators\" who find us, not through advertising, but organically. More importantly, these leads become an active community, where the process of seeking clarity is shared and people recommend Imaginary Oasis as the indispensable tool.  Increase in qualitative conversion: An increase in the number of sales is important, but the real victory would be to see an increase in the conversion rate of our leads to clients. This would tell us that the digital strategy is attracting the right people: those who genuinely need and value the clarity we offer.  Reduction in sales effort: Currently, manual sales funnel management is inefficient. Success would be for the process to be automated, allowing our \"sellers\" (in this case, the brand's systems) to focus on the most valuable part of the experience: co-creating the solution, rather than on manual follow-up.",
-            "sessionId": "session_77a77684-ae7e-48a7-b4e6-c3ea42a450f5",
-            "type": "text",
-            "businessId": "13"
-          },
-          "webhookUrl": "https://automation.whitelabel.lat/webhook/Qubra",
-          "executionMode": "production"
-        }
-      }
     ]
   },
   "repo_name": "flujos_n8n",
@@ -1358,6 +1493,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-10-23T03:14:07.729Z",
-  "versionId": "c893f44f-2fb1-4856-9418-da48a6412f13"
+  "updatedAt": "2025-10-25T12:52:34.464Z",
+  "versionId": "1cb751b7-763e-4d58-b375-b47c8c42e064"
 }
