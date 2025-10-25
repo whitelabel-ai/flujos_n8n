@@ -436,6 +436,7 @@
           "__rl": true,
           "value": "WE1bVt3r1GoX2Dif",
           "mode": "list",
+          "cachedResultUrl": "/workflow/WE1bVt3r1GoX2Dif",
           "cachedResultName": "Agente Transaccional"
         },
         "workflowInputs": {
@@ -949,7 +950,7 @@
             {
               "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
               "name": "messages",
-              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($json.body.conversation.messages[0].content) }}, \"reply_message\": {{ JSON.stringify($json.body.reply_message.content) }} },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
+              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($json.body.conversation.messages[0].content) }}, \"reply_message\": {{ JSON.stringify($json.body.reply_message.content) }} },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\", \"transcribed_text\": \"{{ $json.body.attachments[0].transcribed_text }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
               "type": "array"
             },
             {
@@ -1010,16 +1011,6 @@
               "operator": {
                 "type": "string",
                 "operation": "notEquals"
-              }
-            },
-            {
-              "id": "0cba8aeb-16a0-4655-b220-2ebf366fd950",
-              "leftValue": "={{ $json.body.conversation.messages[0].attachments[0].transcribed_text }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notExists",
-                "singleValue": true
               }
             }
           ],
@@ -1607,7 +1598,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "3337",
+            "content-length": "4173",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -1634,69 +1625,77 @@
               "can_reply": true,
               "channel": "Channel::Whatsapp",
               "contact_inbox": {
-                "id": 472,
-                "contact_id": 472,
+                "id": 394,
+                "contact_id": 394,
                 "inbox_id": 2,
-                "source_id": "573115217480",
-                "created_at": "2025-09-30T21:43:15.107Z",
-                "updated_at": "2025-09-30T21:43:15.107Z",
+                "source_id": "573045809637",
+                "created_at": "2025-09-03T17:10:06.722Z",
+                "updated_at": "2025-09-03T17:10:06.722Z",
                 "hmac_verified": false,
-                "pubsub_token": "tsLGdczwU1DjenjPRWFczJj1"
+                "pubsub_token": "S3P4EoctGAL4Ss3Y6JBhHq8L"
               },
-              "id": 468,
+              "id": 391,
               "inbox_id": 2,
               "messages": [
                 {
-                  "id": 17333,
+                  "id": 18144,
                   "content": null,
                   "account_id": 3,
                   "inbox_id": 2,
-                  "conversation_id": 468,
+                  "conversation_id": 391,
                   "message_type": 0,
-                  "created_at": 1760742275,
-                  "updated_at": "2025-10-17T23:04:35.987Z",
+                  "created_at": 1761355716,
+                  "updated_at": "2025-10-25T01:28:36.718Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMTE1MjE3NDgwFQIAEhgUMkFERjhCMDg3MTRBRkQ1QUNEMDQA",
+                  "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhggQUM2RTJEREM1M0E1MEI5RkQ5RkMzMEIwOUFDRUQ0NUIA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
-                  "sender_id": 472,
+                  "sender_id": 394,
                   "external_source_ids": {},
                   "additional_attributes": {},
                   "processed_message_content": null,
                   "sentiment": {},
                   "conversation": {
                     "assignee_id": null,
-                    "unread_count": 6,
-                    "last_activity_at": 1760742275,
+                    "unread_count": 2,
+                    "last_activity_at": 1761355716,
                     "contact_inbox": {
-                      "source_id": "573115217480"
+                      "source_id": "573045809637"
                     }
                   },
                   "attachments": [
                     {
-                      "id": 1374,
-                      "message_id": 17333,
+                      "id": 1418,
+                      "message_id": 18144,
                       "file_type": "audio",
                       "account_id": 3,
                       "extension": null,
-                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBajBDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6e3b0c1d74371a640f1bf2a978b3263371194879/File.ogg",
+                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbVlDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6f59a3926969a4e5b41e70f2b835f29f2a51ad09/File.ogg",
                       "thumb_url": "",
-                      "file_size": 10481,
+                      "file_size": 8465,
                       "width": null,
                       "height": null,
-                      "transcribed_text": "Revolviste toda la información, revolviste los ingresos con los gastos."
+                      "transcribed_text": "$44,000 pesos en empanadas"
                     }
                   ],
                   "sender": {
-                    "additional_attributes": {},
-                    "custom_attributes": {},
-                    "email": null,
-                    "id": 472,
-                    "identifier": null,
-                    "name": "Yudy Andrea Guerrero V",
-                    "phone_number": "+573115217480",
+                    "additional_attributes": {
+                      "created_at_ip": "38.199.29.38",
+                      "avatar_url_hash": "5eb0326a6a8ee9e602d785becb82b7a2c90a87759abd2698773f85c0db5065ac",
+                      "last_avatar_sync_at": "2025-10-12T01:37:12Z"
+                    },
+                    "custom_attributes": {
+                      "moneda": "COP",
+                      "signup_date": "2025-08-24T05:55:59.164Z",
+                      "subscription_status": "free"
+                    },
+                    "email": "andresco70@gmail.com",
+                    "id": 394,
+                    "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
+                    "name": "Andrés Corral",
+                    "phone_number": "+573045809637",
                     "thumbnail": "",
                     "blocked": false,
                     "type": "contact"
@@ -1704,17 +1703,26 @@
                 }
               ],
               "labels": [
-                "registrado"
+                "registrado",
+                "monylover"
               ],
               "meta": {
                 "sender": {
-                  "additional_attributes": {},
-                  "custom_attributes": {},
-                  "email": null,
-                  "id": 472,
-                  "identifier": null,
-                  "name": "Yudy Andrea Guerrero V",
-                  "phone_number": "+573115217480",
+                  "additional_attributes": {
+                    "created_at_ip": "38.199.29.38",
+                    "avatar_url_hash": "5eb0326a6a8ee9e602d785becb82b7a2c90a87759abd2698773f85c0db5065ac",
+                    "last_avatar_sync_at": "2025-10-12T01:37:12Z"
+                  },
+                  "custom_attributes": {
+                    "moneda": "COP",
+                    "signup_date": "2025-08-24T05:55:59.164Z",
+                    "subscription_status": "free"
+                  },
+                  "email": "andresco70@gmail.com",
+                  "id": 394,
+                  "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
+                  "name": "Andrés Corral",
+                  "phone_number": "+573045809637",
                   "thumbnail": "",
                   "blocked": false,
                   "type": "contact"
@@ -1726,22 +1734,22 @@
               "status": "pending",
               "custom_attributes": {},
               "snoozed_until": null,
-              "unread_count": 6,
-              "first_reply_created_at": null,
+              "unread_count": 2,
+              "first_reply_created_at": "2025-10-24T20:58:56.538Z",
               "priority": null,
-              "waiting_since": 1759268595,
-              "agent_last_seen_at": 1759960460,
+              "waiting_since": 1761351158,
+              "agent_last_seen_at": 1761339685,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1760742275,
-              "timestamp": 1760742275,
-              "created_at": 1759268595,
-              "updated_at": 1760742275.989653,
+              "last_activity_at": 1761355716,
+              "timestamp": 1761355716,
+              "created_at": 1756919406,
+              "updated_at": 1761355716.720515,
               "applied_sla": null,
               "sla_events": [],
               "sla_policy_id": null
             },
-            "created_at": "2025-10-17T23:04:35.987Z",
-            "id": 17333,
+            "created_at": "2025-10-25T01:28:36.718Z",
+            "id": 18144,
             "inbox": {
               "id": 2,
               "name": "Whatsapp Mony"
@@ -1753,31 +1761,39 @@
                 "id": 3,
                 "name": "Mony"
               },
-              "additional_attributes": {},
+              "additional_attributes": {
+                "created_at_ip": "38.199.29.38",
+                "avatar_url_hash": "5eb0326a6a8ee9e602d785becb82b7a2c90a87759abd2698773f85c0db5065ac",
+                "last_avatar_sync_at": "2025-10-12T01:37:12Z"
+              },
               "avatar": "",
-              "custom_attributes": {},
-              "email": null,
-              "id": 472,
-              "identifier": null,
-              "name": "Yudy Andrea Guerrero V",
-              "phone_number": "+573115217480",
+              "custom_attributes": {
+                "moneda": "COP",
+                "signup_date": "2025-08-24T05:55:59.164Z",
+                "subscription_status": "free"
+              },
+              "email": "andresco70@gmail.com",
+              "id": 394,
+              "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
+              "name": "Andrés Corral",
+              "phone_number": "+573045809637",
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMTE1MjE3NDgwFQIAEhgUMkFERjhCMDg3MTRBRkQ1QUNEMDQA",
+            "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhggQUM2RTJEREM1M0E1MEI5RkQ5RkMzMEIwOUFDRUQ0NUIA",
             "attachments": [
               {
-                "id": 1374,
-                "message_id": 17333,
+                "id": 1418,
+                "message_id": 18144,
                 "file_type": "audio",
                 "account_id": 3,
                 "extension": null,
-                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBajBDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6e3b0c1d74371a640f1bf2a978b3263371194879/File.ogg",
+                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbVlDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6f59a3926969a4e5b41e70f2b835f29f2a51ad09/File.ogg",
                 "thumb_url": "",
-                "file_size": 10481,
+                "file_size": 8465,
                 "width": null,
                 "height": null,
-                "transcribed_text": "Revolviste toda la información, revolviste los ingresos con los gastos."
+                "transcribed_text": "$44,000 pesos en empanadas"
               }
             ],
             "event": "message_updated"
@@ -1819,6 +1835,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-10-17T23:08:09.299Z",
-  "versionId": "233875ca-9754-4820-bcb4-281c656f397b"
+  "updatedAt": "2025-10-25T01:45:22.335Z",
+  "versionId": "7cd27491-c276-4f28-bc36-ac1134d13edb"
 }
