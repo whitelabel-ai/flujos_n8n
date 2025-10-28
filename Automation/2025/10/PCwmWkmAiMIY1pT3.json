@@ -1,0 +1,217 @@
+{
+  "active": false,
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent with Langfuse": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-25T23:55:29.280Z",
+  "id": "PCwmWkmAiMIY1pT3",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Mia Discord",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.message }}",
+        "langfuseMetadata": {
+          "sessionId": "=TEST {{ $('Webhook').item.json.body.platform }}",
+          "userId": "=UI  {{ $('Webhook').item.json.body.username }}"
+        },
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        1952,
+        -192
+      ],
+      "id": "a6340688-30fb-4d0a-ba06-53636026806b",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "JYYFJIjlOJE6PupZ",
+          "name": "Managment Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        96
+      ],
+      "id": "1c4cf140-5f1d-4484-ae0d-73df972e8cbf",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xCrv1gBV3pJitThp",
+          "name": "Varios Whitelabel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptName": "Mia",
+        "label": "latest",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        1776,
+        -192
+      ],
+      "id": "3b0dffac-965d-49fc-8149-8f3287f130db",
+      "name": "Get a prompt1",
+      "credentials": {
+        "langfuseApi": {
+          "id": "JYYFJIjlOJE6PupZ",
+          "name": "Managment Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.user_id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2256,
+        128
+      ],
+      "id": "4aa04f47-a8e2-4d35-8907-d6801b0a5294",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mia",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1360,
+        -192
+      ],
+      "id": "1235a5f3-311b-4ae4-b0c5-68fd19a02462",
+      "name": "Webhook",
+      "webhookId": "37501844-15e8-4ea9-b3c8-183b5e913b52"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2592,
+        -192
+      ],
+      "id": "831c63c0-17e1-467d-bd6e-fac63aebcd03",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-25T23:55:29.280Z",
+      "updatedAt": "2025-10-25T23:55:29.280Z",
+      "role": "workflow:owner",
+      "workflowId": "PCwmWkmAiMIY1pT3",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-10-22T20:44:43.784Z",
+      "updatedAt": "2025-10-22T20:44:43.784Z",
+      "id": "FTxkqQgvBiK3wbey",
+      "name": "Utility"
+    },
+    {
+      "createdAt": "2025-10-22T20:44:43.771Z",
+      "updatedAt": "2025-10-22T20:44:43.771Z",
+      "id": "17p741uy8BI7EZr9",
+      "name": "Andrés"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-28T21:42:36.185Z",
+  "versionId": "66e49954-54f6-417a-a61f-eec10e81f773"
+}
