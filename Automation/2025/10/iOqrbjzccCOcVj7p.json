@@ -212,17 +212,6 @@
         ]
       ]
     },
-    "Transcribe a recording1": {
-      "main": [
-        [
-          {
-            "node": "DataAudio",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Analyze image1": {
       "main": [
         [
@@ -261,6 +250,17 @@
         [
           {
             "node": "ChatwootData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording1": {
+      "main": [
+        [
+          {
+            "node": "DataAudio",
             "type": "main",
             "index": 0
           }
@@ -590,7 +590,8 @@
         128
       ],
       "id": "ec453b92-2a2c-4f5a-bbb5-e34ba8a4e453",
-      "name": "No Operation, do nothing4"
+      "name": "No Operation, do nothing4",
+      "disabled": true
     },
     {
       "parameters": {
@@ -700,7 +701,8 @@
         240
       ],
       "id": "8897fbed-5e6c-448b-bf08-18f82b62611d",
-      "name": "Push Message1"
+      "name": "Push Message1",
+      "disabled": true
     },
     {
       "parameters": {
@@ -950,27 +952,6 @@
     },
     {
       "parameters": {
-        "resource": "audio",
-        "modelId": {
-          "__rl": true,
-          "value": "models/gemini-2.5-flash",
-          "mode": "list",
-          "cachedResultName": "models/gemini-2.5-flash"
-        },
-        "audioUrls": "={{ $json.data_url }}",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        -176,
-        -64
-      ],
-      "id": "bf173587-10aa-4e08-8ea2-05fe128862f5",
-      "name": "Transcribe a recording1"
-    },
-    {
-      "parameters": {
         "resource": "image",
         "operation": "analyze",
         "modelId": {
@@ -990,7 +971,8 @@
         464
       ],
       "id": "fa2c2686-555c-4f92-a861-8a81b87fd356",
-      "name": "Analyze image1"
+      "name": "Analyze image1",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1012,7 +994,8 @@
         288
       ],
       "id": "5c81fd03-a21c-4ec0-b6a5-f12abe39b5d7",
-      "name": "Analyze document"
+      "name": "Analyze document",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1026,7 +1009,8 @@
         -32
       ],
       "id": "e3f9a273-1d77-46e9-a5d3-170b15368513",
-      "name": "Redis"
+      "name": "Redis",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1042,7 +1026,8 @@
         240
       ],
       "id": "a1a9bb22-f159-41b2-8df3-6955c20131c6",
-      "name": "Redis2"
+      "name": "Redis2",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1066,6 +1051,28 @@
       ],
       "id": "7a7ade36-d9df-4d9f-847a-1d0af5586efb",
       "name": "env"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "audioUrls": "={{ $json.data_url }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -64
+      ],
+      "id": "bf173587-10aa-4e08-8ea2-05fe128862f5",
+      "name": "Transcribe a recording1",
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -1077,8 +1084,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-10-20T14:08:03.570Z",
       "updatedAt": "2025-10-20T14:08:03.570Z",
+      "createdAt": "2025-10-20T14:08:03.570Z",
       "role": "workflow:owner",
       "workflowId": "iOqrbjzccCOcVj7p",
       "projectId": "nfeOgNZ0Q89hgHph"
@@ -1087,6 +1094,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-20T15:48:01.435Z",
-  "versionId": "7ec54c03-9a9c-45b4-9a9e-82ebd9082e21"
+  "updatedAt": "2025-10-28T22:59:34.687Z",
+  "versionId": "4ab4a1e4-f48e-43e0-a189-da6cccfd0fd8"
 }
