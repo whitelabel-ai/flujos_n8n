@@ -1,0 +1,211 @@
+{
+  "active": false,
+  "connections": {
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-29T19:48:31.698Z",
+  "id": "tvlycJ6SOKIi7bqQ",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RAG",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1B10A-DZcqR8NODQT9m3YHsiMXULvrdxVh78WW1nSPcA",
+          "mode": "list",
+          "cachedResultName": "Plan de estudios FSP",
+          "cachedResultUrl": "https://docs.google.com/document/d/1B10A-DZcqR8NODQT9m3YHsiMXULvrdxVh78WW1nSPcA/edit?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        912,
+        384
+      ],
+      "id": "7c0d8029-f7e1-4bab-acc8-9d46638f61ea",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zaV2y8aJFPAFMtmH",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "marketing",
+          "mode": "list",
+          "cachedResultName": "marketing"
+        },
+        "options": {
+          "pineconeNamespace": "cursos_permanentes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        384
+      ],
+      "id": "89adb231-5764-47b2-8fe7-6c87c632bce5",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "v2QGs7VSLhgfEmdg",
+          "name": "Qualtity Consultant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        1136,
+        608
+      ],
+      "id": "e430f586-cad8-42ef-9a06-92dffb5617cb",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "UYsXoFpwT6Oh1GeF",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        624
+      ],
+      "id": "8f518a8c-e9a8-4522-8371-e651e8b4a9fa",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 1500,
+        "chunkOverlap": 150
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        848
+      ],
+      "id": "3e2867e3-89c8-414c-872e-ea2dfa63b99c",
+      "name": "Character Text Splitter"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        704,
+        384
+      ],
+      "id": "9029068c-284b-40bd-a1cd-82652a63f72d",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-29T19:48:31.698Z",
+      "createdAt": "2025-10-29T19:48:31.698Z",
+      "role": "workflow:owner",
+      "workflowId": "tvlycJ6SOKIi7bqQ",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-10-29T19:45:31.067Z",
+      "createdAt": "2025-10-29T19:45:31.067Z",
+      "id": "j9pkK83UEAzZmVNa",
+      "name": "Produccion"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-29T19:50:36.523Z",
+  "versionId": "2bd4f8fc-5c2c-4ac1-8736-266c87db87d0"
+}
