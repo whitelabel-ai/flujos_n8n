@@ -266,12 +266,58 @@
           }
         ]
       ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Personalizacion de Agente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Personalizacion de Agente": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-10-20T14:08:03.570Z",
   "id": "iOqrbjzccCOcVj7p",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Onbording  acondionando",
   "nodes": [
     {
@@ -576,7 +622,7 @@
       "typeVersion": 3.4,
       "position": [
         48,
-        96
+        128
       ],
       "id": "6d743b8e-f8f1-4544-8168-c9f4e56c4976",
       "name": "DataText"
@@ -590,8 +636,7 @@
         128
       ],
       "id": "ec453b92-2a2c-4f5a-bbb5-e34ba8a4e453",
-      "name": "No Operation, do nothing4",
-      "disabled": true
+      "name": "No Operation, do nothing4"
     },
     {
       "parameters": {
@@ -702,7 +747,12 @@
       ],
       "id": "8897fbed-5e6c-448b-bf08-18f82b62611d",
       "name": "Push Message1",
-      "disabled": true
+      "credentials": {
+        "redis": {
+          "id": "aOZFOdM8yzoYuvTr",
+          "name": "Redis account 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -967,12 +1017,17 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        -160,
-        464
+        -176,
+        544
       ],
       "id": "fa2c2686-555c-4f92-a861-8a81b87fd356",
       "name": "Analyze image1",
-      "disabled": true
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XIMrvFKKXQQFKrhj",
+          "name": "LLantas n´ Tires"
+        }
+      }
     },
     {
       "parameters": {
@@ -990,12 +1045,17 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        -192,
-        288
+        -176,
+        320
       ],
       "id": "5c81fd03-a21c-4ec0-b6a5-f12abe39b5d7",
       "name": "Analyze document",
-      "disabled": true
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XIMrvFKKXQQFKrhj",
+          "name": "LLantas n´ Tires"
+        }
+      }
     },
     {
       "parameters": {
@@ -1010,7 +1070,12 @@
       ],
       "id": "e3f9a273-1d77-46e9-a5d3-170b15368513",
       "name": "Redis",
-      "disabled": true
+      "credentials": {
+        "redis": {
+          "id": "aOZFOdM8yzoYuvTr",
+          "name": "Redis account 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -1022,12 +1087,17 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        1168,
+        1152,
         240
       ],
       "id": "a1a9bb22-f159-41b2-8df3-6955c20131c6",
       "name": "Redis2",
-      "disabled": true
+      "credentials": {
+        "redis": {
+          "id": "aOZFOdM8yzoYuvTr",
+          "name": "Redis account 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -1072,7 +1142,286 @@
       ],
       "id": "bf173587-10aa-4e08-8ea2-05fe128862f5",
       "name": "Transcribe a recording1",
-      "disabled": true
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XIMrvFKKXQQFKrhj",
+          "name": "LLantas n´ Tires"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Onboarding Acondicionando",
+        "height": 800,
+        "width": 3440
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1408,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "b5efa737-faae-40ec-9aa8-6489d45d9f31",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Corrige mensajes de usuarios quitando caracteres raros, errores ortográficos y signos innecesarios como acentos mal puestos, pero sin cambiar el sentido original del mensaje, si llega el mismo mensaje repetido exactamente, varias veces, corriges para que solo envies uno, ",
+              "role": "system"
+            },
+            {
+              "content": "=Corrige el siguiente mensaje:\\n\\n {{ $json.message }}\n\\n\\nDevuelve solo el mensaje corregido"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 200,
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2192,
+        -32
+      ],
+      "id": "ac8a7e57-781a-44e2-978f-fd3cc6eaae27",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "LAwCImTGAtZQGBhp",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b89d5418-df60-419b-84f6-5bc7bc0dd09b",
+              "name": "message",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "f312aa42-4354-4954-92ff-9549a49c1d5b",
+              "name": "user_id",
+              "value": "={{ $('setData').item.json.phone_number }}",
+              "type": "string"
+            },
+            {
+              "id": "4e6ed31c-2d8f-4415-bdaf-404a870f1cc2",
+              "name": "first_name",
+              "value": "={{ $('setData').item.json.nombre.split(\" \")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "75372881-4219-4c13-bb9a-615314982292",
+              "name": "name",
+              "value": "={{ $('initData').item.json.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "9b51ce59-b4c4-434d-baac-793706d93483",
+              "name": "WhatsApp",
+              "value": "={{ $('initData').item.json.phone_number }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2528,
+        -32
+      ],
+      "id": "4ab87cfb-0bc8-44db-b169-e09665ae4996",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12c7a801-4ed8-4955-b1fe-06855956424d",
+              "name": "user_id",
+              "value": "={{ $('Data').item.json.user_id }}",
+              "type": "string"
+            },
+            {
+              "id": "f311cb58-a0a2-4e34-bdd6-42c2a4df8b52",
+              "name": "first_name",
+              "value": "={{ $('Data').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "09e31c5b-cc4a-47f3-b290-84d2199f042b",
+              "name": "name",
+              "value": "={{ $('Data').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "6549b826-8a41-4dbf-879f-10463d115265",
+              "name": "WhatsApp",
+              "value": "={{ $('Data').item.json.WhatsApp }}",
+              "type": "string"
+            },
+            {
+              "id": "59b192c0-4470-4334-b3e0-105d4f9c46e8",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "ae18ba3e-84a8-43ec-8b61-4abcc228d7ab",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "b9c722be-ad45-4685-9031-4a019f6b2747",
+              "name": "ID whastapp",
+              "value": "={{ $json['Numero de whastapp que vas a usar para tu asistente'] }}",
+              "type": "number"
+            },
+            {
+              "id": "e43b714c-d5a1-48a8-a06e-1691d8dfd7f5",
+              "name": "Nombre del Asistente",
+              "value": "={{ $json['Nombre que tendrá tu asistente IA:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "8089fcec-621c-4454-9c2b-3f8063767818",
+              "name": "Nombre de tu empresa:",
+              "value": "={{ $json['Nombre de tu empresa o marca:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "4c8a7667-9ac3-4506-af35-06ce98cd444e",
+              "name": "¿a que se dedica la empresa?",
+              "value": "={{ $json['¿a que se dedica tu empresa?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "c4ade1f6-274e-439d-a9c1-6a43c6f3c351",
+              "name": "Objetivo principal del agente :",
+              "value": "={{ $json['El objetivo principal de tu agente IA sera:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "4c5514b5-3000-463e-bbd6-8191eb5dcf1d",
+              "name": "tipo de reuniones agendará el agente",
+              "value": "={{ $json['  ¿Qué tipo de reuniones desea agendar tu agente?  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "03aef901-3c82-4367-8507-77ef391f5017",
+              "name": "Rol que debe cumplir el agente",
+              "value": "={{ $json['Rol que debe cumplir el agente'] }}",
+              "type": "string"
+            },
+            {
+              "id": "1269f201-bd6b-477d-9c1f-cf05da780c7a",
+              "name": "¿Qué tono debe tener tu agente al interactuar con los clientes?  ",
+              "value": "={{ $json['¿Qué tono debe tener tu agente de IA al interactuar con los clientes?  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "8d0b4259-0d08-4c8f-abe0-1f8c19dcc848",
+              "name": "  ¿Cuál es el primer criterio que tienes en cuenta  para aceptar un prospecto?  ",
+              "value": "={{ $json['  ¿Cuál es el primer criterio que tienes en cuenta  para aceptar un prospecto?  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "f41309ba-a5d0-4990-8b06-cfc062c39ae7",
+              "name": "¿Cuál es el segundo criterio que tienes en cuenta  para aceptar un prospecto?  ",
+              "value": "={{ $json['¿Cuál es el segundo criterio que tienes en cuenta  para aceptar un prospecto?  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "51126861-d924-4df1-9029-6f95eb98be13",
+              "name": "¿Cuál es el Tercer criterio que tienes en cuenta  para aceptar un prospecto?  ",
+              "value": "={{ $json['¿Cuál es el Tercer criterio que tienes en cuenta  para aceptar un prospecto?  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "97870856-9f96-4dc3-a21c-a1e5dc94889f",
+              "name": "¿Cuál es el cuarto criterio que tienes en cuenta  para aceptar un prospecto?  ",
+              "value": "={{ $json['¿Cuál es el cuarto criterio que tienes en cuenta  para aceptar un prospecto?  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "0a2b0cbe-0dae-4da6-9a45-03913a4d9bf1",
+              "name": "Quinto criterio que tienes en cuenta  para aceptar un prospecto?  ",
+              "value": "={{ $json['Quinto criterio que tienes en cuenta  para aceptar un prospecto?  '] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3088,
+        -32
+      ],
+      "id": "42b1ea2d-a4e3-472e-99e3-4581472b6e5c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY",
+          "mode": "list",
+          "cachedResultName": "PERSONALIZACION DE ASISTENTE IA (Respuestas)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 428712773,
+          "mode": "list",
+          "cachedResultName": "PERSONALIZACION DE ASISTENTE IA (Respuestas)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ObgWNW-K89NU7WPWoOnPxBaQ_Aj2CBaio7iigAELKyY/edit#gid=428712773"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Numero de whastapp que vas a usar para tu asistente",
+              "lookupValue": "=573150759897"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2800,
+        -32
+      ],
+      "id": "0b220c70-e845-48e1-89d1-1c564b5577ec",
+      "name": "Personalizacion de Agente",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Yx6GDFFVZXuzpXAL",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1094,6 +1443,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-28T22:59:34.687Z",
-  "versionId": "4ab4a1e4-f48e-43e0-a189-da6cccfd0fd8"
+  "updatedAt": "2025-10-30T21:33:34.593Z",
+  "versionId": "ac809757-854e-4693-8921-16cebbd39117"
 }
