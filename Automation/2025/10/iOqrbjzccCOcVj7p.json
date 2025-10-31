@@ -310,6 +310,61 @@
           }
         ]
       ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows in NocoDB": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-10-20T14:08:03.570Z",
@@ -1375,11 +1430,12 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3088,
+        2896,
         -32
       ],
       "id": "42b1ea2d-a4e3-472e-99e3-4581472b6e5c",
-      "name": "Edit Fields"
+      "name": "Edit Fields",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1410,7 +1466,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        2800,
+        2720,
         -32
       ],
       "id": "0b220c70-e845-48e1-89d1-1c564b5577ec",
@@ -1421,7 +1477,144 @@
           "id": "Yx6GDFFVZXuzpXAL",
           "name": "Google Sheets account"
         }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptName": "Acondicionando ",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        3312,
+        -32
+      ],
+      "id": "856873db-057f-477d-9f22-dad6daf56938",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "ueBoibsz0D9LIqGe",
+          "name": "Langfuse account 2"
+        }
       }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "mensaje del Usuario:\nNombre del Usuario: \nWhastapp:\n\n",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "You are a helpful assistant"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        3504,
+        -32
+      ],
+      "id": "bf6ecd62-7b59-45fa-ba5d-c786160ad046",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "iBaUfiTOCXCanQdR",
+          "name": "Llantas n´Tires"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3408,
+        192
+      ],
+      "id": "3ed28222-d956-483c-8cd0-75b8d9bccce5",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XIMrvFKKXQQFKrhj",
+          "name": "LLantas n´ Tires"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDbTool",
+      "typeVersion": 3,
+      "position": [
+        3744,
+        176
+      ],
+      "id": "b844a2e4-5bf2-4837-8fbc-aa9eadfdbae2",
+      "name": "Get many rows in NocoDB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=chat_history_estarter_{{ $('Data').item.json.user_id }}",
+        "sessionTTL": 500000,
+        "contextWindowLength": 25
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        3568,
+        192
+      ],
+      "id": "2ed0d326-f100-4333-b590-ddd3be53fe3d",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "aOZFOdM8yzoYuvTr",
+          "name": "Redis account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **Reemplaza siempre la palabra \"Dosis\" por \"Cantidad\"**.  \n- **No incluyas datos sensibles** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n# IMPORTANTE\nJamás generes una salida de este tipo [object Object],[object Object],[object Object] \n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        4272,
+        96
+      ],
+      "id": "fadca20e-3660-4dd9-9b6e-1258b7625dc2",
+      "name": "OpenAI1",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000
     }
   ],
   "pinData": {},
@@ -1443,6 +1636,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-30T21:33:34.593Z",
-  "versionId": "ac809757-854e-4693-8921-16cebbd39117"
+  "updatedAt": "2025-10-31T01:39:15.933Z",
+  "versionId": "66fa17b7-4dea-4617-8efb-d0efd863f4a1"
 }
