@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Google Gemini Chat Model": {
       "ai_languageModel": [
@@ -60,7 +60,7 @@
       "main": [
         [
           {
-            "node": "If",
+            "node": "Get a prompt1",
             "type": "main",
             "index": 0
           }
@@ -180,19 +180,34 @@
         ]
       ]
     },
-    "If": {
+    "When clicking ‘Execute workflow’": {
       "main": [
         [
           {
-            "node": "Get a prompt1",
+            "node": "Get a prompt",
             "type": "main",
             "index": 0
           }
-        ],
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
         [
           {
-            "node": "No Operation, do nothing",
+            "node": "AI Agent with Langfuse1",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse1",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -297,12 +312,13 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        2704,
-        -16
+        2912,
+        0
       ],
       "id": "f0aac89e-c39c-4e88-a52a-98cae782dd8a",
       "name": "Webhook",
-      "webhookId": "bec93771-b5be-4062-ac5b-8e6cdbcd4cd5"
+      "webhookId": "bec93771-b5be-4062-ac5b-8e6cdbcd4cd5",
+      "disabled": true
     },
     {
       "parameters": {
@@ -375,8 +391,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2864,
-        -16
+        3120,
+        0
       ],
       "id": "bf9bcd35-21e0-420c-ab08-f5932fb01f42",
       "name": "ChatwootData"
@@ -748,59 +764,78 @@
       }
     },
     {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "abaa9de2-4388-46df-9440-7c458be2669a",
-              "leftValue": "={{ $json.receptor }}",
-              "rightValue": "incoming",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            },
-            {
-              "id": "2b50ffbe-a3c8-4299-b6f3-86f9f79de33b",
-              "leftValue": "={{ $json.tags }}",
-              "rightValue": "=apagar-agente",
-              "operator": {
-                "type": "array",
-                "operation": "notContains",
-                "rightType": "any"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3104,
-        0
-      ],
-      "id": "b6519f20-b438-4cb5-a1bf-f92c71269c20",
-      "name": "If"
-    },
-    {
       "parameters": {},
-      "type": "n8n-nodes-base.noOp",
+      "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        3312,
-        176
+        3648,
+        928
       ],
-      "id": "114ac0ab-43f8-4aa5-b7b6-57e123397d18",
-      "name": "No Operation, do nothing"
+      "id": "a5abc528-1b7b-47e6-80c6-6c70491a019f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "promptName": "Test",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        3824,
+        928
+      ],
+      "id": "ff046508-6ef1-40ee-b759-7dee23153cd4",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "vWyuA7a7zxFiJbyx",
+          "name": "Acondicionando"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "test",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        4032,
+        928
+      ],
+      "id": "1debb084-3f76-48bc-a61e-866d347c35ea",
+      "name": "AI Agent with Langfuse1",
+      "credentials": {
+        "langfuseApi": {
+          "id": "MFfFmCYEwcJ7irbN",
+          "name": "Quality Consultant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4032,
+        1168
+      ],
+      "id": "2f4b5bd8-31b5-4c34-af79-e74009cea7e3",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "kuAijbcGhZkbdIR2",
+          "name": "whitelabel mony"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1013,6 +1048,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-10-29T20:07:47.712Z",
-  "versionId": "8657ae6b-aa19-4633-9d96-4acaa5d5599a"
+  "updatedAt": "2025-11-01T14:41:59.703Z",
+  "versionId": "fe63f44f-4c59-41c2-9c77-d891df042f53"
 }
