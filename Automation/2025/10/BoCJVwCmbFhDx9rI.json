@@ -1,11 +1,6 @@
 {
   "active": false,
   "connections": {
-    "AI Agent": {
-      "main": [
-        []
-      ]
-    },
     "Data": {
       "main": [
         [
@@ -17,34 +12,12 @@
         ]
       ]
     },
-    "Redis Chat Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Message a model": {
       "main": [
         [
           {
             "node": "Data",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -634,22 +607,11 @@
         ]
       ]
     },
-    "Data db_clientes": {
+    "consultar_cliente": {
       "ai_tool": [
         [
           {
             "node": "AI Agent with Langfuse",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Data db_clientes1": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
             "type": "ai_tool",
             "index": 0
           }
@@ -665,23 +627,6 @@
   },
   "name": "Acondicionados IA Agente",
   "nodes": [
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=mensaje del usuario: {{ $('Data').item.json.message }}\nnombre: {{ $('Edit Fields').item.json.first_name }}\nnombre completo: {{ $('Edit Fields').item.json.name }}\nWhatsApp: {{ $('Edit Fields').item.json.WhatsApp }}",
-        "options": {
-          "systemMessage": "eres un asistente virtual de la firma Acondicionados, \n\ntienes acceso a una base de datos de clientes, tu funcion es trqaer la informacion que el coordinador de operaciones te solicita sobre la informacion de los clientes. \n\ntienes la herramienta de nocoDB Data db_clientes1 para realizar las consultas y responderle al coordinador d eoperaciones"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.9,
-      "position": [
-        5824,
-        544
-      ],
-      "id": "f1618b85-229c-4667-b5a3-2a1e7c9df0ef",
-      "name": "AI Agent"
-    },
     {
       "parameters": {
         "assignments": {
@@ -731,29 +676,6 @@
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "=chat_history_estarter_{{ $('Data').item.json.user_id }}",
-        "sessionTTL": 500000,
-        "contextWindowLength": 25
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
-      "typeVersion": 1.5,
-      "position": [
-        5840,
-        736
-      ],
-      "id": "0d7933a8-6247-4014-9628-7477e4734966",
-      "name": "Redis Chat Memory",
-      "credentials": {
-        "redis": {
-          "id": "aOZFOdM8yzoYuvTr",
-          "name": "Redis account 2"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "modelId": {
           "__rl": true,
           "value": "gpt-4o-mini",
@@ -788,25 +710,6 @@
         "openAiApi": {
           "id": "LAwCImTGAtZQGBhp",
           "name": "OpenAi account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        5648,
-        736
-      ],
-      "id": "6e135a6a-fb83-4742-8048-ca45df2b6eb1",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "XIMrvFKKXQQFKrhj",
-          "name": "LLantas n´ Tires"
         }
       }
     },
@@ -935,7 +838,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        5408,
+        5600,
         80
       ],
       "id": "42d1e9d3-b768-47cb-86bf-4fb32ae6e98e",
@@ -978,7 +881,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        7168,
+        7376,
         80
       ],
       "id": "5a4dd307-a9cc-460a-a08c-f0f0c3de9517",
@@ -999,7 +902,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        7536,
+        7744,
         48
       ],
       "id": "71c4bedd-120f-4e67-876b-8e94ee14649b",
@@ -1013,7 +916,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        7520,
+        7728,
         368
       ],
       "id": "50fc201b-4fac-4375-8a60-b90a0bc5f8b3",
@@ -1048,7 +951,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        7744,
+        7952,
         368
       ],
       "id": "e0ef3828-e1aa-4b3d-8fe0-e30a497e66af",
@@ -1059,7 +962,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        8112,
+        8320,
         448
       ],
       "id": "85b5371c-3360-45da-8d47-da5cf2606c28",
@@ -1093,7 +996,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        7776,
+        7984,
         48
       ],
       "id": "a3076085-e3da-48d9-b651-a74be22edfe6",
@@ -1104,8 +1007,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        8128,
-        128
+        8336,
+        144
       ],
       "id": "e2913568-0052-4251-a276-441cd8de76a4",
       "name": "No Operation, do nothing12"
@@ -1117,7 +1020,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        7520,
+        7728,
         592
       ],
       "id": "23b15c0d-e247-4d45-ad3c-aefede5edb0b",
@@ -1152,7 +1055,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        7744,
+        7952,
         592
       ],
       "id": "603a8ef0-60ae-4c2a-bb0b-a0e6b2b67ed3",
@@ -1163,7 +1066,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        8112,
+        8320,
         672
       ],
       "id": "b3df3121-7106-4040-a5a0-eb2eb9b487aa",
@@ -1188,14 +1091,14 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte2) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte1) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8400,
-        32
+        8336,
+        -16
       ],
       "id": "8ae88587-da5e-4865-bdcc-4e913a175d91",
       "name": "HTTP Request1"
@@ -1225,7 +1128,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8416,
+        8624,
         352
       ],
       "id": "5d97943d-26dc-4b10-973b-41417b9cf6fd",
@@ -1256,7 +1159,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8416,
+        8624,
         576
       ],
       "id": "1a113295-70e1-4dd4-8ef1-5b421a4317c3",
@@ -1265,15 +1168,15 @@
     {
       "parameters": {
         "content": "## RESPONS AGENT",
-        "height": 856,
-        "width": 1768,
+        "height": 984,
+        "width": 1320,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        6768,
-        0
+        7216,
+        -128
       ],
       "id": "0f6c8de2-dcc6-4785-a655-a79cfcb2e7d9",
       "name": "Sticky Note2"
@@ -1297,13 +1200,13 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte1) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte2) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        7680,
+        7888,
         224
       ],
       "id": "15923cb3-2f97-4a4c-ba86-ed5a1174430b",
@@ -2332,7 +2235,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        5168,
+        5296,
         80
       ],
       "id": "fb47c10d-8695-4f5c-9e3d-486b2414aae2",
@@ -2582,7 +2485,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        9840,
+        10048,
         240
       ],
       "id": "f9da3c21-6f5d-4302-bb09-bd6c59d516bb",
@@ -2628,7 +2531,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        9296,
+        9504,
         240
       ],
       "id": "682e007a-870b-4e4f-81fd-e69bd8417869",
@@ -2648,28 +2551,12 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        9648,
+        9856,
         240
       ],
       "id": "dfa2d7cf-ed11-4226-90d5-cea8f37c8c01",
       "name": "descontar credito usado1",
       "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "## Descontar Creditos \n",
-        "height": 720,
-        "width": 1008,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        8624,
-        0
-      ],
-      "typeVersion": 1,
-      "id": "90f59636-feae-43ff-bf7d-8e1c7e4dff67",
-      "name": "Sticky Note6"
     },
     {
       "parameters": {
@@ -2712,7 +2599,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        9456,
+        9664,
         240
       ],
       "id": "03cb617b-7bdb-46b2-860c-ef5b123853c1",
@@ -2742,7 +2629,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        9104,
+        9312,
         240
       ],
       "id": "5f8abdf5-247a-461e-9b6c-2197da737cf0",
@@ -2754,7 +2641,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        10080,
+        10288,
         240
       ],
       "id": "dc601923-9a95-40e7-a0ad-9489d2d1815d",
@@ -2784,7 +2671,7 @@
       "type": "@langfuse/n8n-nodes-langfuse.langfuse",
       "typeVersion": 1,
       "position": [
-        5792,
+        6000,
         80
       ],
       "id": "c5b61467-ed25-46c1-958f-2294d84cbd53",
@@ -2799,16 +2686,16 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Name user {{ $('Edit Fields').item.json.first_name }} \nmessage user{{ $('Data').item.json.message }}\nWhatsapp {{ $('Data').item.json.WhatsApp }}",
+        "text": "={{ $('Data').item.json.message }}\n",
         "langfuseMetadata": {},
         "options": {
-          "systemMessage": "=You are a helpful assistant {{ $json.prompt }}"
+          "systemMessage": "={{ $json.prompt }}"
         }
       },
       "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
       "typeVersion": 2,
       "position": [
-        6080,
+        6288,
         80
       ],
       "id": "9ce87f55-c61c-4222-9f53-726e9d3f2339",
@@ -2827,8 +2714,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        5920,
-        256
+        6128,
+        272
       ],
       "id": "66c41455-b522-42ab-9bd7-fcb56d46b49b",
       "name": "Google Gemini Chat Model1",
@@ -2842,14 +2729,14 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "=chat_history_estarter_{{ $('Data').item.json.user_id }}",
+        "sessionKey": "=chat_history{{ $('Data').item.json.user_id }}",
         "sessionTTL": 500000,
         "contextWindowLength": 25
       },
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        6176,
+        6320,
         272
       ],
       "id": "e6741c7e-7654-451e-a691-b839a4ac3b47",
@@ -2863,47 +2750,95 @@
     },
     {
       "parameters": {
-        "authentication": "nocoDbApiToken",
-        "projectId": "psvqelib8ua87ly",
-        "table": "miesc7wjregj42j",
-        "id": "cliente_id"
+        "workflowId": {
+          "__rl": true,
+          "value": "clyOBudxjRZZYuYI",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/clyOBudxjRZZYuYI",
+          "cachedResultName": "Get Data Base"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nit",
+              "displayName": "Nit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "razon_social",
+              "displayName": "razon_social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
       },
-      "type": "n8n-nodes-base.nocoDbTool",
-      "typeVersion": 3,
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
       "position": [
-        6384,
-        256
+        6208,
+        -144
       ],
-      "id": "c7f8213a-2fbb-404c-afb9-bb9488cefc36",
-      "name": "Data db_clientes",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
+      "name": "Call Get Data Base",
+      "id": "33cf1fb7-2b63-4793-aa88-15fec25239b3"
     },
     {
       "parameters": {
-        "authentication": "nocoDbApiToken",
-        "projectId": "psvqelib8ua87ly",
-        "table": "miesc7wjregj42j",
-        "id": "cbikcamex9txq7l"
-      },
-      "type": "n8n-nodes-base.nocoDbTool",
-      "typeVersion": 3,
-      "position": [
-        6112,
-        752
-      ],
-      "id": "e980e4fe-c921-4949-be5f-33b6355a9e2e",
-      "name": "Data db_clientes1",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
+        "description": "Llama a esta herramienta cuando el usuario solicite informacion de la base de datos. \n",
+        "workflowId": {
+          "__rl": true,
+          "value": "clyOBudxjRZZYuYI",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/clyOBudxjRZZYuYI",
+          "cachedResultName": "Get Data Base"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `el nombre unico del cliente`, 'string') }}"
+          },
+          "matchingColumns": [
+            "razon_social"
+          ],
+          "schema": [
+            {
+              "id": "razon_social",
+              "displayName": "razon_social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         }
-      }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        6512,
+        272
+      ],
+      "id": "673d161a-0474-4214-8d98-58e151e3e6bf",
+      "name": "consultar_cliente"
     }
   ],
   "pinData": {},
@@ -2911,7 +2846,10 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   },
   "shared": [
     {
@@ -2932,6 +2870,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-01T21:22:53.512Z",
-  "versionId": "cc09e942-9a3d-49d1-9f5b-68d3586189c6"
+  "updatedAt": "2025-11-02T05:28:43.171Z",
+  "versionId": "adf30ba8-6746-4d94-aa8d-3fe60514f26e"
 }
