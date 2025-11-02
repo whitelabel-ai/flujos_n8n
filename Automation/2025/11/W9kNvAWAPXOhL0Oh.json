@@ -1,0 +1,370 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get a prompt1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get a prompt2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GLM 4.6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a prompt2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-02T04:15:03.904Z",
+  "id": "W9kNvAWAPXOhL0Oh",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 17",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "23fcdef8-66af-4c47-94f6-13d72433b2ab",
+      "name": "Telegram Trigger",
+      "webhookId": "baf97753-3e2d-4528-8df4-c4291b8d6a6f",
+      "credentials": {
+        "telegramApi": {
+          "id": "iDWZwExyaEtemxqA",
+          "name": "Workant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "langfuseMetadata": {
+          "sessionId": "GML"
+        },
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        816,
+        0
+      ],
+      "id": "a975ce9b-2c36-4f66-9a27-19c80c6bc657",
+      "name": "AI Agent with Langfuse",
+      "credentials": {
+        "langfuseApi": {
+          "id": "AtunhixEekYKqeOt",
+          "name": "Test Modelos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "langfuseMetadata": {
+          "sessionId": "geminiOpenRouter"
+        },
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        848,
+        -448
+      ],
+      "id": "c9f2d1e2-e159-44db-beb4-efb5407c4908",
+      "name": "AI Agent with Langfuse1",
+      "credentials": {
+        "langfuseApi": {
+          "id": "AtunhixEekYKqeOt",
+          "name": "Test Modelos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -256
+      ],
+      "id": "85bf1375-61b7-4da1-bf16-8dd692a1ec95",
+      "name": "Gemini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Jd4LfVFpEeyIqiSB",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "z-ai/glm-4.6",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        864,
+        208
+      ],
+      "id": "8cea7461-a038-43d7-8b4e-760196c218aa",
+      "name": "GLM 4.6",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Jd4LfVFpEeyIqiSB",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "langfuseMetadata": {
+          "sessionId": "geminiPro"
+        },
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        832,
+        400
+      ],
+      "id": "92fc46d4-c1f9-421b-9725-094733dbef64",
+      "name": "AI Agent with Langfuse2",
+      "credentials": {
+        "langfuseApi": {
+          "id": "AtunhixEekYKqeOt",
+          "name": "Test Modelos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        880,
+        608
+      ],
+      "id": "8dbbfd19-157f-4261-bd90-b5aa46b2ea6d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xCrv1gBV3pJitThp",
+          "name": "Varios Whitelabel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptName": "geminiOpenRouter",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        624,
+        -448
+      ],
+      "id": "a7bfc0e3-029e-494c-81e9-2ea0b639f166",
+      "name": "Get a prompt",
+      "credentials": {
+        "langfuseApi": {
+          "id": "AtunhixEekYKqeOt",
+          "name": "Test Modelos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptName": "geminiPro",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        592,
+        400
+      ],
+      "id": "2d25ed7b-fc27-4237-876b-6472b3bcf5bc",
+      "name": "Get a prompt1",
+      "credentials": {
+        "langfuseApi": {
+          "id": "AtunhixEekYKqeOt",
+          "name": "Test Modelos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptName": "GLM",
+        "requestOptions": {}
+      },
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        512,
+        0
+      ],
+      "id": "7f777aa1-338b-4755-9ad5-de49905eec5b",
+      "name": "Get a prompt2",
+      "credentials": {
+        "langfuseApi": {
+          "id": "AtunhixEekYKqeOt",
+          "name": "Test Modelos"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "json": {
+          "update_id": 923608002,
+          "message": {
+            "message_id": 149,
+            "from": {
+              "id": 176878701,
+              "is_bot": false,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "language_code": "es"
+            },
+            "chat": {
+              "id": 176878701,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "type": "private"
+            },
+            "date": 1762057051,
+            "text": "que hace la empresa?"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-02T04:15:03.904Z",
+      "createdAt": "2025-11-02T04:15:03.904Z",
+      "role": "workflow:owner",
+      "workflowId": "W9kNvAWAPXOhL0Oh",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-02T04:18:41.382Z",
+  "versionId": "33326ab6-6d04-493f-a7da-f6c639541af3"
+}
