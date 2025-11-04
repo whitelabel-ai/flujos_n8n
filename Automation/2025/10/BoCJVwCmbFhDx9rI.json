@@ -907,7 +907,8 @@
       ],
       "id": "71c4bedd-120f-4e67-876b-8e94ee14649b",
       "name": "Wait11",
-      "webhookId": "421fa124-d19b-4b79-99dc-a3a3b6a82453"
+      "webhookId": "421fa124-d19b-4b79-99dc-a3a3b6a82453",
+      "disabled": true
     },
     {
       "parameters": {
@@ -921,7 +922,8 @@
       ],
       "id": "50fc201b-4fac-4375-8a60-b90a0bc5f8b3",
       "name": "Wait12",
-      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1025,7 +1027,8 @@
       ],
       "id": "23b15c0d-e247-4d45-ad3c-aefede5edb0b",
       "name": "Wait13",
-      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1164,22 +1167,6 @@
       ],
       "id": "1a113295-70e1-4dd4-8ef1-5b421a4317c3",
       "name": "HTTP Request3"
-    },
-    {
-      "parameters": {
-        "content": "## RESPONS AGENT",
-        "height": 984,
-        "width": 1320,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        7216,
-        -128
-      ],
-      "id": "0f6c8de2-dcc6-4785-a655-a79cfcb2e7d9",
-      "name": "Sticky Note2"
     },
     {
       "parameters": {
@@ -1689,7 +1676,8 @@
       ],
       "id": "102a0ad4-4d0d-46f3-97d4-c7e280f605a0",
       "name": "Wait1",
-      "webhookId": "c42fd9d6-416c-4950-8662-76e241fbd897"
+      "webhookId": "c42fd9d6-416c-4950-8662-76e241fbd897",
+      "disabled": true
     },
     {
       "parameters": {
@@ -2031,7 +2019,7 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        1312,
+        1344,
         416
       ],
       "id": "707c4bc9-d6bc-43c0-8593-f3e14b19ea3f",
@@ -2729,7 +2717,7 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "=chat_history{{ $('Data').item.json.user_id }}",
+        "sessionKey": "={{ $('Data').item.json.user_id }}",
         "sessionTTL": 500000,
         "contextWindowLength": 25
       },
@@ -2791,7 +2779,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        6208,
+        6352,
         -144
       ],
       "name": "Call Get Data Base",
@@ -2802,16 +2790,14 @@
         "description": "Llama a esta herramienta cuando el usuario solicite informacion de la base de datos. \n",
         "workflowId": {
           "__rl": true,
-          "value": "clyOBudxjRZZYuYI",
+          "value": "c1LB7anqKcnE41cH",
           "mode": "list",
-          "cachedResultUrl": "/workflow/clyOBudxjRZZYuYI",
+          "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
           "cachedResultName": "Get Data Base"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
-          "value": {
-            "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `el nombre unico del cliente`, 'string') }}"
-          },
+          "value": {},
           "matchingColumns": [
             "razon_social"
           ],
@@ -2823,8 +2809,7 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
+              "type": "string"
             }
           ],
           "attemptToConvertTypes": false,
@@ -2834,10 +2819,10 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        6512,
-        272
+        6528,
+        288
       ],
-      "id": "673d161a-0474-4214-8d98-58e151e3e6bf",
+      "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
       "name": "consultar_cliente"
     }
   ],
@@ -2870,6 +2855,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-02T05:28:43.171Z",
-  "versionId": "adf30ba8-6746-4d94-aa8d-3fe60514f26e"
+  "updatedAt": "2025-11-04T22:31:52.393Z",
+  "versionId": "1d7a6b72-0ab5-4391-881b-0a0db0f467fd"
 }
