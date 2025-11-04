@@ -1,0 +1,123 @@
+{
+  "active": false,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-04T16:44:51.496Z",
+  "id": "c1LB7anqKcnE41cH",
+  "isArchived": false,
+  "meta": null,
+  "name": "Get Data Base",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "razon_social"
+            }
+          ]
+        }
+      },
+      "id": "b4a7513b-6ba3-4303-8234-f86a0f6ff474",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -256,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d0b0045-a070-40e1-9c80-98b7c04cc05a",
+              "name": "Response",
+              "value": "={{ $json }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        -48
+      ],
+      "id": "1c53c253-fc77-4d2a-a715-18940913badb",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "miesc7wjregj42j",
+        "returnAll": true,
+        "options": {
+          "where": "=(razon_social,like,{{ $json.razon_social }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -48,
+        -48
+      ],
+      "id": "2b455650-af8a-4d42-bf06-cef261ae464c",
+      "name": "Get many rows",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-04T16:44:51.496Z",
+      "createdAt": "2025-11-04T16:44:51.496Z",
+      "role": "workflow:owner",
+      "workflowId": "c1LB7anqKcnE41cH",
+      "projectId": "nfeOgNZ0Q89hgHph"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-04T16:47:46.809Z",
+  "versionId": "49ba262f-ad97-47f8-9ba0-d986889d101a"
+}
