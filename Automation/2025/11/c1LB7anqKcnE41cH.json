@@ -5,18 +5,50 @@
       "main": [
         [
           {
-            "node": "Get many rows",
+            "node": "clientes",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "equipos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "cronograma_mantenimientos",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get many rows": {
+    "equipos": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clientes": {
       "main": [
         [
           {
             "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cronograma_mantenimientos": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
             "type": "main",
             "index": 0
           }
@@ -36,6 +68,12 @@
           "values": [
             {
               "name": "razon_social"
+            },
+            {
+              "name": "equipo_id"
+            },
+            {
+              "name": "servicio_id"
             }
           ]
         }
@@ -45,8 +83,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -256,
-        -48
+        -336,
+        -16
       ]
     },
     {
@@ -66,11 +104,60 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        160,
-        -48
+        352,
+        -160
       ],
       "id": "1c53c253-fc77-4d2a-a715-18940913badb",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "mmq5nuty7wa96po",
+        "returnAll": true,
+        "options": {
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        128,
+        32
+      ],
+      "id": "53df9b97-a05f-4020-aede-e739152a6521",
+      "name": "equipos",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d0b0045-a070-40e1-9c80-98b7c04cc05a",
+              "name": "Response",
+              "value": "={{ $json }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        32
+      ],
+      "id": "fa18745d-8b92-4384-aa65-7bbcdb5f3cbd",
+      "name": "Edit Fields1"
     },
     {
       "parameters": {
@@ -86,11 +173,60 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -48,
-        -48
+        128,
+        -160
       ],
       "id": "2b455650-af8a-4d42-bf06-cef261ae464c",
-      "name": "Get many rows",
+      "name": "clientes",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d0b0045-a070-40e1-9c80-98b7c04cc05a",
+              "name": "Response",
+              "value": "={{ $json }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        224
+      ],
+      "id": "07d574db-8e8d-4b95-b7c2-1ab0700e2a5e",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "mi1tzhj7r32fhmq",
+        "returnAll": true,
+        "options": {
+          "where": "=(servicio_id,like,{{ $json.servicio_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        128,
+        224
+      ],
+      "id": "89e92b5c-ef66-4390-b7e8-005fddd6ff0e",
+      "name": "cronograma_mantenimientos",
       "credentials": {
         "nocoDbApiToken": {
           "id": "PngKKQ0D2nKSCDu8",
@@ -118,6 +254,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-04T16:47:46.809Z",
-  "versionId": "49ba262f-ad97-47f8-9ba0-d986889d101a"
+  "updatedAt": "2025-11-05T21:30:10.787Z",
+  "versionId": "a9e30f0d-f8d2-48a7-8a86-93ae77670995"
 }
