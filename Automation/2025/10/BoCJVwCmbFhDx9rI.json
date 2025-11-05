@@ -34,37 +34,11 @@
         ]
       ]
     },
-    "OpenAI1": {
-      "main": [
-        [
-          {
-            "node": "Wait11",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait12",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait13",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Request4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Wait11": {
       "main": [
         [
           {
-            "node": "If13",
+            "node": "parte 1",
             "type": "main",
             "index": 0
           }
@@ -75,43 +49,7 @@
       "main": [
         [
           {
-            "node": "If12",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If12": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing11",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If13": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing12",
+            "node": "parte 3",
             "type": "main",
             "index": 0
           }
@@ -122,36 +60,7 @@
       "main": [
         [
           {
-            "node": "If14",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If14": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request3",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing13",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request4": {
-      "main": [
-        [
-          {
-            "node": "Get clientID_ InboxID",
+            "node": "Parte 4",
             "type": "main",
             "index": 0
           }
@@ -578,7 +487,7 @@
       "main": [
         [
           {
-            "node": "OpenAI1",
+            "node": "Parseador",
             "type": "main",
             "index": 0
           }
@@ -608,6 +517,148 @@
       ]
     },
     "consultar_cliente": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "parte 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "parte 1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "parte 2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "parte 3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parte 4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Get clientID_ InboxID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parseador": {
+      "main": [
+        [
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_equipos": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cronograma_servicios": {
       "ai_tool": [
         [
           {
@@ -862,53 +913,17 @@
     },
     {
       "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** solo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **Reemplaza siempre la palabra \"Dosis\" por \"Cantidad\"**.  \n- **No incluyas datos sensibles** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n# IMPORTANTE\nJamás generes una salida de este tipo [object Object],[object Object],[object Object] \n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
-            }
-          ]
-        },
-        "jsonOutput": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.8,
-      "position": [
-        7376,
-        80
-      ],
-      "id": "5a4dd307-a9cc-460a-a08c-f0f0c3de9517",
-      "name": "OpenAI1",
-      "retryOnFail": true,
-      "waitBetweenTries": 2000,
-      "credentials": {
-        "openAiApi": {
-          "id": "LAwCImTGAtZQGBhp",
-          "name": "OpenAi account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
         "amount": 2
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        7744,
-        48
+        7792,
+        -240
       ],
       "id": "71c4bedd-120f-4e67-876b-8e94ee14649b",
       "name": "Wait11",
-      "webhookId": "421fa124-d19b-4b79-99dc-a3a3b6a82453",
-      "disabled": true
+      "webhookId": "421fa124-d19b-4b79-99dc-a3a3b6a82453"
     },
     {
       "parameters": {
@@ -922,42 +937,7 @@
       ],
       "id": "50fc201b-4fac-4375-8a60-b90a0bc5f8b3",
       "name": "Wait12",
-      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
-              "leftValue": "={{ $json.message.content.parte3}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        7952,
-        368
-      ],
-      "id": "e0ef3828-e1aa-4b3d-8fe0-e30a497e66af",
-      "name": "If12"
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
     },
     {
       "parameters": {},
@@ -971,46 +951,12 @@
       "name": "No Operation, do nothing11"
     },
     {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "709f4717-003f-4f9f-b841-18d2f2f4ddb4",
-              "leftValue": "={{ $json.message.content.parte2}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        7984,
-        48
-      ],
-      "id": "a3076085-e3da-48d9-b651-a74be22edfe6",
-      "name": "If13"
-    },
-    {
       "parameters": {},
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        8336,
-        144
+        8304,
+        -96
       ],
       "id": "e2913568-0052-4251-a276-441cd8de76a4",
       "name": "No Operation, do nothing12"
@@ -1027,42 +973,7 @@
       ],
       "id": "23b15c0d-e247-4d45-ad3c-aefede5edb0b",
       "name": "Wait13",
-      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
-              "leftValue": "={{ $json.message.content.parte4}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        7952,
-        592
-      ],
-      "id": "603a8ef0-60ae-4c2a-bb0b-a0e6b2b67ed3",
-      "name": "If14"
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
     },
     {
       "parameters": {},
@@ -1100,8 +1011,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8336,
-        -16
+        8304,
+        -256
       ],
       "id": "8ae88587-da5e-4865-bdcc-4e913a175d91",
       "name": "HTTP Request1"
@@ -1167,37 +1078,6 @@
       ],
       "id": "1a113295-70e1-4dd4-8ef1-5b421a4317c3",
       "name": "HTTP Request3"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "api_access_token",
-              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte2) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        7888,
-        224
-      ],
-      "id": "15923cb3-2f97-4a4c-ba86-ed5a1174430b",
-      "name": "HTTP Request4"
     },
     {
       "parameters": {
@@ -2122,22 +2002,6 @@
     },
     {
       "parameters": {
-        "content": "## Test: \n**1. descuento en Sheet 26/08/2025 15:21:16**\n      cre_usa =  ok\n  cre_rest= ok\n%_rest = ok\n\n**2. notificaciones**  \ncorreo10% = OK\nCorreo 5% = OK\nCorreo/Cre_Agotados = ok\n\n**3. Mensaje al usuario cuando creditos agotados**\nWhatsappMessage= ok\n\n**4. Flujo normal cuando hay creditos**\ncorre mensaje= ok\n\n**FIN DE QA 26/08/2025 16:15**",
-        "height": 416,
-        "width": 320,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        3712,
-        304
-      ],
-      "typeVersion": 1,
-      "id": "19fc9b8f-45d5-4607-9847-7c6f4e76d023",
-      "name": "Sticky Note5"
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -2637,22 +2501,6 @@
     },
     {
       "parameters": {
-        "content": "## Test 25/08/2025 21:03 \n **text** = ok\n **audio** = ok\n **document**=  Recibe pero solo PDF\n **image**= ok",
-        "height": 208,
-        "width": 304,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        32,
-        96
-      ],
-      "typeVersion": 1,
-      "id": "2c019f53-06ef-4682-b7ad-18694cdde942",
-      "name": "Sticky Note4"
-    },
-    {
-      "parameters": {
         "promptName": "Consulta",
         "requestOptions": {}
       },
@@ -2702,7 +2550,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        6128,
+        6032,
         272
       ],
       "id": "66c41455-b522-42ab-9bd7-fcb56d46b49b",
@@ -2724,7 +2572,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        6320,
+        6224,
         272
       ],
       "id": "e6741c7e-7654-451e-a691-b839a4ac3b47",
@@ -2797,7 +2645,9 @@
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
-          "value": {},
+          "value": {
+            "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `llama a esta tool cuando pidan informacion de clientes`, 'string') }}"
+          },
           "matchingColumns": [
             "razon_social"
           ],
@@ -2810,6 +2660,26 @@
               "display": true,
               "canBeUsedToMatch": true,
               "type": "string"
+            },
+            {
+              "id": "equipo_id",
+              "displayName": "equipo_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "Servicio_id",
+              "displayName": "Servicio_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -2819,11 +2689,357 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        6528,
+        6432,
         288
       ],
       "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
       "name": "consultar_cliente"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        7792,
+        112
+      ],
+      "id": "046deae4-99f4-438a-8174-3e608ebdb061",
+      "name": "Wait",
+      "webhookId": "ab691256-a33d-4e5e-b5d8-8cccd92a0134"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        8304,
+        256
+      ],
+      "id": "680717e1-e7c2-47c4-8063-708f4be49fe8",
+      "name": "No Operation, do nothing2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "709f4717-003f-4f9f-b841-18d2f2f4ddb4",
+              "leftValue": "={{ $json.message.content.parte1}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        7968,
+        -240
+      ],
+      "id": "a3076085-e3da-48d9-b651-a74be22edfe6",
+      "name": "parte 1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "709f4717-003f-4f9f-b841-18d2f2f4ddb4",
+              "leftValue": "={{ $json.message.content.parte2}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        7968,
+        112
+      ],
+      "id": "3e3c2c9e-6da5-435b-87d4-eb18cd8b8f3c",
+      "name": "parte 2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
+              "leftValue": "={{ $json.message.content.parte3}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        7952,
+        368
+      ],
+      "id": "e0ef3828-e1aa-4b3d-8fe0-e30a497e66af",
+      "name": "parte 3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b98c759-b4b7-4353-a5e4-d2ff1c030744",
+              "leftValue": "={{ $json.message.content.parte4}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        7952,
+        592
+      ],
+      "id": "603a8ef0-60ae-4c2a-bb0b-a0e6b2b67ed3",
+      "name": "Parte 4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "={{ $('ChatwootData').item.json.api_access_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": {{ JSON.stringify($json.message.content.parte2) }},\n  \"message_type\": \"outgoing\",\n  \"private\": \"false\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        8304,
+        96
+      ],
+      "id": "15923cb3-2f97-4a4c-ba86-ed5a1174430b",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Divide el siguiente mensaje en hasta **4 partes más pequeñas** \n\nsolo si es necesario, asegurándote de que cada parte tenga sentido completo.  \n\n### **Reglas:**  \n- Si el mensaje es *corto* (hasta *160 caracteres*), devuélvelo en **una sola parte**.  \n- Si es *mediano* (hasta *400 caracteres*), divídelo en **2 partes**.  \n- Si es *largo* (hasta *600 caracteres*), divídelo en **3 partes**. \n- Si es *muy largo* (más de *600 caracteres*), agrégale una **parte4**.  \n\n- **Evita dividir el mensaje innecesariamente**. Usa la **menor cantidad de partes posible**.  \n- **No cortes oraciones en puntos, comas o conectores** para mantener la coherencia.  \n- **Reemplaza siempre la palabra \"Dosis\" por \"Cantidad\"**.  \n- **No incluyas datos sensibles** en la respuesta, como:  \n  - `user_id: <número>`  \n  - `subscriber_id: <número>`  \n  - `first_name: <nombre>`  \n  - **Elimina estos datos sin dejar rastros.**  \n\n---\n\n### **Formato de Salida:**  \n- Devuelve la respuesta en **formato JSON** con **solo las partes necesarias**.  \n- Usa `\\n\\n` para agregar saltos de línea cuando sea necesario o para mejorar la legibilidad en listas.  \n- **Nunca uses comillas `\"` para resaltar palabras**. En su lugar, usa un solo asterisco: *palabra*.  \n\n#### **Ejemplo de salida:**  \n\n{\n  \"parte1\": \"Texto de la primera parte.\",\n  \"parte2\": \"Texto de la segunda parte.\"\n}\n\n# IMPORTANTE\nJamás generes una salida de este tipo [object Object],[object Object],[object Object] \n\n---\n\n### **Mensaje:**  \n{{ $json.output }}  \n\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        6976,
+        80
+      ],
+      "id": "5a4dd307-a9cc-460a-a08c-f0f0c3de9517",
+      "name": "Parseador",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "openAiApi": {
+          "id": "LAwCImTGAtZQGBhp",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "c1LB7anqKcnE41cH",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
+          "cachedResultName": "Get Data Base"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "equipo_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('equipo_id', `llama a esta tool cuando el usuario requiera consultar informacion de los equipos`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "razon_social",
+              "displayName": "razon_social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "equipo_id",
+              "displayName": "equipo_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "cronograma_mantenimientos",
+              "displayName": "cronograma_mantenimientos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        6656,
+        288
+      ],
+      "id": "c20f7974-9613-4e10-a261-abcbab913cb4",
+      "name": "consultar_equipos"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "c1LB7anqKcnE41cH",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
+          "cachedResultName": "Get Data Base"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "cronograma_mantenimientos": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('cronograma_mantenimientos', `llama a esta Tool cuando el usuario solicite informacion del cronograma de mantenimientos de los equipos`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "razon_social",
+              "displayName": "razon_social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "equipo_id",
+              "displayName": "equipo_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "cronograma_mantenimientos",
+              "displayName": "cronograma_mantenimientos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        6848,
+        272
+      ],
+      "id": "c222a22b-2758-469c-b10f-b186713baf2e",
+      "name": "cronograma_servicios"
     }
   ],
   "pinData": {},
@@ -2855,6 +3071,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-04T22:31:52.393Z",
-  "versionId": "1d7a6b72-0ab5-4391-881b-0a0db0f467fd"
+  "updatedAt": "2025-11-05T21:36:24.798Z",
+  "versionId": "10413540-2d95-480c-8f94-f243581c1ff4"
 }
