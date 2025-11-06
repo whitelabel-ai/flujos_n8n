@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Data": {
       "main": [
@@ -658,7 +658,7 @@
         ]
       ]
     },
-    "cronograma_servicios": {
+    "cronograma_mantenimientos": {
       "ai_tool": [
         [
           {
@@ -1998,7 +1998,8 @@
         224
       ],
       "id": "3634b9ef-0515-4d2d-94d0-498c75bd4929",
-      "name": "HTTP Request"
+      "name": "HTTP Request",
+      "disabled": true
     },
     {
       "parameters": {
@@ -2507,8 +2508,8 @@
       "type": "@langfuse/n8n-nodes-langfuse.langfuse",
       "typeVersion": 1,
       "position": [
-        6000,
-        80
+        5840,
+        16
       ],
       "id": "c5b61467-ed25-46c1-958f-2294d84cbd53",
       "name": "Get a prompt",
@@ -2531,8 +2532,8 @@
       "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
       "typeVersion": 2,
       "position": [
-        6288,
-        80
+        6256,
+        16
       ],
       "id": "9ce87f55-c61c-4222-9f53-726e9d3f2339",
       "name": "AI Agent with Langfuse",
@@ -2550,8 +2551,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        6032,
-        272
+        6000,
+        288
       ],
       "id": "66c41455-b522-42ab-9bd7-fcb56d46b49b",
       "name": "Google Gemini Chat Model1",
@@ -2573,7 +2574,7 @@
       "typeVersion": 1.5,
       "position": [
         6224,
-        272
+        288
       ],
       "id": "e6741c7e-7654-451e-a691-b839a4ac3b47",
       "name": "Redis Chat Memory1",
@@ -2588,9 +2589,9 @@
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "clyOBudxjRZZYuYI",
+          "value": "c1LB7anqKcnE41cH",
           "mode": "list",
-          "cachedResultUrl": "/workflow/clyOBudxjRZZYuYI",
+          "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
           "cachedResultName": "Get Data Base"
         },
         "workflowInputs": {
@@ -2599,24 +2600,31 @@
           "matchingColumns": [],
           "schema": [
             {
-              "id": "Nit",
-              "displayName": "Nit",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
               "id": "razon_social",
               "displayName": "razon_social",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
+              "type": "string"
+            },
+            {
+              "id": "equipo_id",
+              "displayName": "equipo_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "servicio_id",
+              "displayName": "servicio_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
             }
           ],
           "attemptToConvertTypes": false,
@@ -2627,8 +2635,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        6352,
-        -144
+        6336,
+        -240
       ],
       "name": "Call Get Data Base",
       "id": "33cf1fb7-2b63-4793-aa88-15fec25239b3"
@@ -2646,7 +2654,7 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `llama a esta tool cuando pidan informacion de clientes`, 'string') }}"
+            "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `razon social del clente`, 'string') }}"
           },
           "matchingColumns": [
             "razon_social"
@@ -2672,8 +2680,8 @@
               "removed": true
             },
             {
-              "id": "Servicio_id",
-              "displayName": "Servicio_id",
+              "id": "servicio_id",
+              "displayName": "servicio_id",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2689,7 +2697,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        6432,
+        6416,
         288
       ],
       "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
@@ -2924,6 +2932,7 @@
     },
     {
       "parameters": {
+        "description": "llama a esta tool cuando el usuario requiera consultar informacion de los equipos",
         "workflowId": {
           "__rl": true,
           "value": "c1LB7anqKcnE41cH",
@@ -2934,7 +2943,7 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "equipo_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('equipo_id', `llama a esta tool cuando el usuario requiera consultar informacion de los equipos`, 'string') }}"
+            "equipo_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('equipo_id', `equipo_id`, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -2958,8 +2967,8 @@
               "type": "string"
             },
             {
-              "id": "cronograma_mantenimientos",
-              "displayName": "cronograma_mantenimientos",
+              "id": "servicio_id",
+              "displayName": "servicio_id",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2975,7 +2984,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        6656,
+        6624,
         288
       ],
       "id": "c20f7974-9613-4e10-a261-abcbab913cb4",
@@ -2983,6 +2992,7 @@
     },
     {
       "parameters": {
+        "description": "llama esta herramienta cuando te pidan infomacion sobre las fechas de mantenimiento de los equipos",
         "workflowId": {
           "__rl": true,
           "value": "c1LB7anqKcnE41cH",
@@ -2993,7 +3003,7 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "cronograma_mantenimientos": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('cronograma_mantenimientos', `llama a esta Tool cuando el usuario solicite informacion del cronograma de mantenimientos de los equipos`, 'string') }}"
+            "servicio_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('servicio_id', ``, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -3018,8 +3028,8 @@
               "removed": true
             },
             {
-              "id": "cronograma_mantenimientos",
-              "displayName": "cronograma_mantenimientos",
+              "id": "servicio_id",
+              "displayName": "servicio_id",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3036,10 +3046,10 @@
       "typeVersion": 2.2,
       "position": [
         6848,
-        272
+        288
       ],
       "id": "c222a22b-2758-469c-b10f-b186713baf2e",
-      "name": "cronograma_servicios"
+      "name": "cronograma_mantenimientos"
     }
   ],
   "pinData": {},
@@ -3071,6 +3081,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-05T21:36:24.798Z",
-  "versionId": "10413540-2d95-480c-8f94-f243581c1ff4"
+  "updatedAt": "2025-11-06T17:34:22.430Z",
+  "versionId": "9b6ed171-ad8c-427f-a732-b58ffce21672"
 }
