@@ -5,17 +5,7 @@
       "main": [
         [
           {
-            "node": "clientes",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "equipos",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "cronograma_mantenimientos",
+            "node": "Switch",
             "type": "main",
             "index": 0
           }
@@ -44,11 +34,36 @@
         ]
       ]
     },
-    "cronograma_mantenimientos": {
+    "servicios": {
       "main": [
         [
           {
             "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "clientes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "equipos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "servicios",
             "type": "main",
             "index": 0
           }
@@ -83,8 +98,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -336,
-        -16
+        -592,
+        48
       ]
     },
     {
@@ -104,8 +119,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        352,
-        -160
+        400,
+        -224
       ],
       "id": "1c53c253-fc77-4d2a-a715-18940913badb",
       "name": "Edit Fields"
@@ -124,8 +139,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        128,
-        32
+        144,
+        48
       ],
       "id": "53df9b97-a05f-4020-aede-e739152a6521",
       "name": "equipos",
@@ -153,8 +168,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        352,
-        32
+        400,
+        48
       ],
       "id": "fa18745d-8b92-4384-aa65-7bbcdb5f3cbd",
       "name": "Edit Fields1"
@@ -173,8 +188,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        128,
-        -160
+        144,
+        -224
       ],
       "id": "2b455650-af8a-4d42-bf06-cef261ae464c",
       "name": "clientes",
@@ -202,8 +217,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        352,
-        224
+        400,
+        256
       ],
       "id": "07d574db-8e8d-4b95-b7c2-1ab0700e2a5e",
       "name": "Edit Fields2"
@@ -222,17 +237,103 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        128,
-        224
+        144,
+        256
       ],
       "id": "89e92b5c-ef66-4390-b7e8-005fddd6ff0e",
-      "name": "cronograma_mantenimientos",
+      "name": "servicios",
       "credentials": {
         "nocoDbApiToken": {
           "id": "PngKKQ0D2nKSCDu8",
           "name": "Tool Acondicionados SAS"
         }
       }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.razon_social }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "21e1b95d-8224-4a6d-933d-7a05bcaef015"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "79b9e61f-9385-41b5-b51e-223ba5b77edc",
+                    "leftValue": "={{ $json.equipo_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "edb309f8-cb30-4538-bd60-2e8dd3932765",
+                    "leftValue": "={{ $json.servicio_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -384,
+        32
+      ],
+      "id": "13969ca4-9f2f-4919-a142-c2618fa46358",
+      "name": "Switch"
     }
   ],
   "pinData": {},
@@ -240,7 +341,11 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "saveExecutionProgress": true
   },
   "shared": [
     {
@@ -254,6 +359,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-05T21:30:10.787Z",
-  "versionId": "a9e30f0d-f8d2-48a7-8a86-93ae77670995"
+  "updatedAt": "2025-11-06T19:31:44.552Z",
+  "versionId": "3764de06-888d-4f5c-930a-04bfddcdbc10"
 }
