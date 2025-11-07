@@ -668,6 +668,17 @@
           }
         ]
       ]
+    },
+    "Call 'Get Data Base'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-10-31T01:43:05.573Z",
@@ -2526,7 +2537,7 @@
         "text": "={{ $('Data').item.json.message }}\n",
         "langfuseMetadata": {},
         "options": {
-          "systemMessage": "={{ $json.prompt }}"
+          "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}}"
         }
       },
       "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
@@ -2635,8 +2646,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        6336,
-        -240
+        6240,
+        -160
       ],
       "name": "Call Get Data Base",
       "id": "33cf1fb7-2b63-4793-aa88-15fec25239b3"
@@ -2697,7 +2708,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        6416,
+        6736,
         288
       ],
       "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
@@ -2916,8 +2927,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        6976,
-        80
+        7104,
+        16
       ],
       "id": "5a4dd307-a9cc-460a-a08c-f0f0c3de9517",
       "name": "Parseador",
@@ -2984,7 +2995,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        6624,
+        6896,
         288
       ],
       "id": "c20f7974-9613-4e10-a261-abcbab913cb4",
@@ -3045,11 +3056,70 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        6848,
+        7088,
         288
       ],
       "id": "c222a22b-2758-469c-b10f-b186713baf2e",
       "name": "cronograma_mantenimientos"
+    },
+    {
+      "parameters": {
+        "description": "utiliza esta herramienta cuando el usuario te solicite informacion sobre los meses de mantenimientpo",
+        "workflowId": {
+          "__rl": true,
+          "value": "c1LB7anqKcnE41cH",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
+          "cachedResultName": "Get Data Base"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "razon_social",
+              "displayName": "razon_social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "equipo_id",
+              "displayName": "equipo_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "servicio_id",
+              "displayName": "servicio_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        6416,
+        224
+      ],
+      "id": "fef431a6-20b5-4ab6-bb06-18a87febc2a5",
+      "name": "Call 'Get Data Base'"
     }
   ],
   "pinData": {},
@@ -3081,6 +3151,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-06T17:34:22.430Z",
-  "versionId": "9b6ed171-ad8c-427f-a732-b58ffce21672"
+  "updatedAt": "2025-11-07T17:42:08.762Z",
+  "versionId": "0037a9bb-733f-4aaa-838d-d3fd45646f02"
 }
