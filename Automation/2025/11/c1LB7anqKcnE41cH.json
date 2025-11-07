@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -69,6 +69,115 @@
           }
         ]
       ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "accent clean",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clientes1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "clientes3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clientes2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mensaje de error1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "accent clean": {
+      "main": [
+        [
+          {
+            "node": "clientes1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clientes3": {
+      "main": [
+        [
+          {
+            "node": "busqueda por coincidencia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "busqueda por coincidencia": {
+      "main": [
+        [
+          {
+            "node": "clientes2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-11-04T16:44:51.496Z",
@@ -89,6 +198,9 @@
             },
             {
               "name": "servicio_id"
+            },
+            {
+              "name": "mes_mantenimientos"
             }
           ]
         }
@@ -98,7 +210,7 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -592,
+        -736,
         48
       ]
     },
@@ -119,8 +231,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        400,
-        -224
+        384,
+        -416
       ],
       "id": "1c53c253-fc77-4d2a-a715-18940913badb",
       "name": "Edit Fields"
@@ -139,7 +251,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        144,
+        -128,
         48
       ],
       "id": "53df9b97-a05f-4020-aede-e739152a6521",
@@ -168,7 +280,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        400,
+        112,
         48
       ],
       "id": "fa18745d-8b92-4384-aa65-7bbcdb5f3cbd",
@@ -188,17 +300,19 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        144,
-        -224
+        -144,
+        -208
       ],
       "id": "2b455650-af8a-4d42-bf06-cef261ae464c",
       "name": "clientes",
+      "alwaysOutputData": true,
       "credentials": {
         "nocoDbApiToken": {
           "id": "PngKKQ0D2nKSCDu8",
           "name": "Tool Acondicionados SAS"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -217,8 +331,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        400,
-        256
+        112,
+        272
       ],
       "id": "07d574db-8e8d-4b95-b7c2-1ab0700e2a5e",
       "name": "Edit Fields2"
@@ -237,8 +351,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        144,
-        256
+        -144,
+        272
       ],
       "id": "89e92b5c-ef66-4390-b7e8-005fddd6ff0e",
       "name": "servicios",
@@ -334,6 +448,288 @@
       ],
       "id": "13969ca4-9f2f-4919-a142-c2618fa46358",
       "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3577d1e9-d3a6-491c-85ba-4ff1ccb9b6e0",
+              "leftValue": "={{ $json.Id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        64,
+        -208
+      ],
+      "id": "9171d4e2-ff45-4d11-bd7e-95fe3a1311ed",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "miesc7wjregj42j",
+        "returnAll": true,
+        "options": {
+          "where": "=(razon_social,like,{{ $json.razon_social }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        592,
+        -192
+      ],
+      "id": "c99052e2-54f7-4695-a816-3359dc3152d0",
+      "name": "clientes1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3577d1e9-d3a6-491c-85ba-4ff1ccb9b6e0",
+              "leftValue": "={{ $json.Id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        -192
+      ],
+      "id": "0e47ae02-4558-4906-8259-3a7a7dc01f57",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d0b0045-a070-40e1-9c80-98b7c04cc05a",
+              "name": "Response",
+              "value": "={{ $json }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        -400
+      ],
+      "id": "36376e93-7695-46f0-be38-6bb84f31f84b",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "miesc7wjregj42j",
+        "returnAll": true,
+        "options": {
+          "where": "=(razon_social,like,{{ $json.razon_social }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1504,
+        -80
+      ],
+      "id": "08ada8ba-3864-4790-9740-7b2268180e43",
+      "name": "clientes2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d0b0045-a070-40e1-9c80-98b7c04cc05a",
+              "name": "Response",
+              "value": "={{ $json }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2032,
+        -208
+      ],
+      "id": "5a40df6c-deb1-42ac-9b8c-5fecdba8abbb",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "081f769e-6c52-4e98-b433-8dd93ee1e16d",
+              "name": "mensaje_de_error",
+              "value": "Este cliente no está registrado. Revisa si lo escribiste correctamente y vuelve a intentarlo",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2032,
+        48
+      ],
+      "id": "86ff7001-13ed-4442-b22f-6e5f93cd6420",
+      "name": "Mensaje de error1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3577d1e9-d3a6-491c-85ba-4ff1ccb9b6e0",
+              "leftValue": "={{ $json.Id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1744,
+        -80
+      ],
+      "id": "e98de0a1-b60d-424b-b7b1-321e653a4ec7",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Function node (n8n)\nconst itemsStart = $('Start').all(); // obtiene TODOS los items del Start\n\nconst quitarAcentos = (str) => {\n  if (!str || typeof str !== \"string\") return str;\n  return str.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\");\n};\n\nreturn itemsStart.map(item => {\n  const data = item.json;\n\n  data.razon_social = quitarAcentos(data.razon_social);\n  data.servicio_id = quitarAcentos(data.servicio_id);\n\n  return { json: data };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        336,
+        -192
+      ],
+      "id": "fef7538a-dea5-4d3e-a7d2-15c40ce6256a",
+      "name": "accent clean"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "miesc7wjregj42j",
+        "returnAll": true,
+        "options": {
+          "where": "=(razon_social,like,{{ $json.razon_social }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1056,
+        -80
+      ],
+      "id": "3e06df02-2ef4-469a-89e9-db0427eab51f",
+      "name": "clientes3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1) Palabra que viene del Start\nconst termino = $('Start').first().json.razon_social || \"\";\n\n// 2) Lista de clientes que llega como input a este nodo\nconst clientes = items.map(i => i.json);\n\n// 3) Normalizar para comparación sin tildes ni mayúsculas\nfunction norm(str) {\n  return (str || \"\")\n    .toString()\n    .normalize(\"NFD\")\n    .replace(/[\\u0300-\\u036f]/g, \"\")\n    .toLowerCase()\n    .trim();\n}\n\nconst buscar = norm(termino);\n\n// 4) Si no hay término, no devolvemos nada\nif (!buscar) {\n  return []; // el Switch siguiente manejará esto\n}\n\n// 5) Buscar coincidencia exacta o muy cercana\nlet mejor = null;\nlet mejorDistancia = Infinity;\n\nfunction distancia(a, b) {\n  a = norm(a); b = norm(b);\n  if (a === b) return 0;\n  if (!a || !b) return Infinity;\n  \n  const dp = Array(b.length + 1).fill(null).map(() =>\n    Array(a.length + 1).fill(0)\n  );\n  for (let i = 0; i <= b.length; i++) dp[i][0] = i;\n  for (let j = 0; j <= a.length; j++) dp[0][j] = j;\n\n  for (let i = 1; i <= b.length; i++) {\n    for (let j = 1; j <= a.length; j++) {\n      const cost = b[j - 1] === a[i - 1] ? 0 : 1;\n      dp[i][j] = Math.min(\n        dp[i-1][j] + 1,\n        dp[i][j-1] + 1,\n        dp[i-1][j-1] + cost\n      );\n    }\n  }\n  return dp[b.length][a.length];\n}\n\nfor (const c of clientes) {\n  const nombre = c.razon_social || c.nombre || \"\";\n  const d = distancia(buscar, nombre);\n  if (d < mejorDistancia) {\n    mejorDistancia = d;\n    mejor = c;\n  }\n}\n\n// 6) Umbral de tolerancia (ajusta si deseas)\nif (mejorDistancia <= 2 && mejor) {\n  // ✅ Devolvemos UN SOLO ITEM\n  return [{ json: mejor }];\n}\n\n// 7) ❗ Si no encontró nada, devolvemos vacío\nreturn [];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        -80
+      ],
+      "id": "1408a0de-1173-47a5-a067-263139b2f12d",
+      "name": "busqueda por coincidencia",
+      "alwaysOutputData": false
     }
   ],
   "pinData": {},
@@ -359,6 +755,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-06T19:31:44.552Z",
-  "versionId": "3764de06-888d-4f5c-930a-04bfddcdbc10"
+  "updatedAt": "2025-11-07T21:49:19.531Z",
+  "versionId": "ed1cbb63-1206-4dc8-861d-a5076f7b9856"
 }
