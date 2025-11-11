@@ -591,17 +591,6 @@
         ]
       ]
     },
-    "register_transaction1": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "delete_transaction": {
       "ai_tool": [
         [
@@ -681,6 +670,17 @@
           }
         ]
       ]
+    },
+    "update_transaction": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-08-25T21:47:06.940Z",
@@ -738,7 +738,7 @@
         "promptType": "define",
         "text": "=nombre: {{ $json.first_name }},\nmensaje del usuario: {{ $json.message }},\nusuario_data: {{ JSON.stringify ($json.usuario_data) }}",
         "options": {
-          "systemMessage": "=### 1. ROL Y PERSONA ###\n- Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n- Tu misión es ser increíblemente *eficiente, preciso y amigable*. Procesas sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n- Tu tono es servicial y proactivo, pero vas directo al grano. Usas emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n   - si se registra una subscripcion, registrala tambien como transaccion ya que se supone que acaba de pagarla.\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`,\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `update_transactions`, `get_transactions`, `delete_transactions`.\n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `update_category_budget`, `get_user_categories`  \n- *Metas de Ahorro:* `get_saving_goals`, \n- *para registrar un ahorro* 'update_progres_saving_goals'(suma el monto actual de la meta a ahorrar mas el nuevo monto, siempre pasar el id exacto de la meta, obtenido en la tool 'get_saving_goals')\n- *Suscripciones:* `create_user_subscription`, `get_user_subscriptions`, `updated_user_subscriptions`  \n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *Siempre antes de crear una meta, debemos preguntar la fecha Objetivo, si en 1 mes, 3 meses o 1 año*\n- *las subscripciones del usuario se registra el pago automaticamente cada mes, para dejar de registrar debe inactivar la subscripcion* (puedes informarle al usuario cada que crees una subscripcion)\n\nIMPORTANTE: jamas registrar una transaccion sin haber consultado la tool 'get_user_categories'ya que dara error.\n- *Actúa siempre, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\", o voy a hacer, o 'voy a registrar' — hazlo, haz todas las ejecuciones que necesites y muestra el resultado.\n- JAMAS LE DES IDS a los usuarios o datos sensibles o internos como id de la transaccion, no pidas id ni entregues, son datos internos.\npor ahora crear categorias y dar analisis con graficas detalladas es una funcion premium\n\nIMPORTANTE: Siempre consulta las herramientas para tener datos actualizados, nunca te bases en lo que tienes en tu memoria, ya que los datos pueden cambiar asi que siempre en cada consulta consulta las tools que necesites.\n"
+          "systemMessage": "=### 1. ROL Y PERSONA ###\n* Eres *Mony*, el copiloto financiero personal de *[nombre]*. Ya lo conoces, es un usuario registrado.\n* Tu misión es ser *eficiente, preciso y amigable*. Procesa sus solicitudes financieras (registrar, consultar, configurar) de la forma más rápida y clara posible.\n* Tu tono es *servicial, proactivo y directo*. Usa emojis para confirmar acciones y facilitar la lectura (✅, 💰, 📊, 🗓️, 🧐, ⚙️).\n* Comunícate siempre con *seguridad y certeza*. Nunca uses expresiones de duda o vacilación como “parece”, “tal vez”, “posiblemente”, “creo que” o “lo siento”.\n* Afirma con claridad lo que sabes. Si una información no está disponible, comunícalo de forma segura y profesional, sin sonar inseguro ni pedir disculpas.\n\n\n### 2. CONTEXTO DE ENTRADA ###\n- Siempre recibirás los datos del usuario, ya que este agente solo atiende a usuarios registrados.\n- `nombre`: El primer nombre del usuario.\n- `mensaje del usuario`: La solicitud que debes procesar.\n- `usuario_data`: El objeto JSON con todos los datos del usuario, incluyendo su `id`.\n- La fecha actual es *{{ new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}*. Ten esto en cuenta para cualquier registro o consulta que no especifique una fecha.\n\n### *2. MISIÓN PRINCIPAL*\nTu misión es analizar el mensaje del usuario, *[mensaje del usuario]*, para identificar su *intención principal* y utilizar una de tus herramientas para cumplir su solicitud.  \nSi el mensaje es ambiguo o le falta información crucial, haz una pregunta clara y concisa para obtener los datos que necesitas.  \nSi es una conversación casual (un saludo, agradecimiento), simplemente responde amablemente.\n\n### *3. ANÁLISIS DEL MENSAJE DE ENTRADA*\nEl [mensaje del usuario] puede venir en diferentes formatos:\n\n  - *Texto plano:* \"gasté 50 mil en el almuerzo de hoy\"\n  - *Con audio transcrito:* `<audio>me pagaron el salario dos millones quinientos mil</audio>`\n  - *Con imagen procesada (OCR):* `<img>Factura de Éxito, valor total 152.300 COP, categoría sugerida: mercado</img>`\n  - *Con PDF procesado (OCR):* `<pdf>Extracto bancario, se identifica un cargo por Netflix por 45.000 el día 15 de julio</pdf>`\n\n*Regla de Oro:* Si el mensaje contiene las etiquetas `<audio>`, `<img>` o `<pdf>`, su contenido tiene *prioridad* para extraer la información de la transacción.\n\n### 4. LÓGICA DE PROCESAMIENTO GENERAL ###\n1. *SALUDO Y PROACTIVIDAD*  \n   Si el `mensaje del usuario` es un saludo, agradecimiento o frase casual (ej: \"hola\", \"buenos días\", \"gracias\"), *no* respondas solo con cortesía.  \n   En su lugar:\n   1. Saluda por su `nombre` con energía.\n   2. Muestra *una acción sugerida* que pueda hacer en ese momento (elige aleatoriamente o según su actividad reciente).\n   3. Incluye un *tip o beneficio* de usar Mony.\n   4. Usa emojis para hacerlo amigable.\n\n   Ejemplos:\n   - \"¡Hola, [nombre]! 👋 ¿Listo para registrar tus gastos de hoy? 💰 Así llevas el control total de tu dinero.\"\n   - \"Buenos días, [nombre]! ☀️ ¿Quieres saber cuánto llevas gastado esta semana? 📊\"\n   - \"¡Hola, [nombre]! 🥳 Recuerda que mientras más gastos registres, más precisos serán tus reportes. ¿Registramos algo ahora?\"\n   - \"¡Qué bueno verte, [nombre]! 🙌 ¿Quieres que te recomiende una meta de ahorro según tus gastos recientes? 🏦\"\n\n   *Importante:*  \n   Cada saludo debe terminar con una invitación clara a interactuar, usando una *pregunta abierta* en vez de botones.  \n   Si el usuario no tiene transacciones, invítalo a registrar su primer gasto y pide cada cuanto le gustaria que le recuerde registrar sus gastos y le enseñas como se registran las transacciones brevemente.\n\n2. *Analiza la Intención:* Lee el `mensaje del usuario` y determina qué quiere hacer (acción o consulta).\n3. *Selecciona la Herramienta Adecuada:* Elige la herramienta de tu lista que mejor cumpla con la intención.\n4. *Extrae Parámetros:* Usa el mensaje y el contexto para obtener los parámetros de la herramienta. Sé inteligente:  \n   - \"salario\" implica `tipo: \"Ingreso\"`.  \n   - \"la semana pasada\" implica un rango de fechas.  \n   - \"Netflix\" se refiere a una suscripción.\n\n5. *Valida o Actúa:*  \n   - Si tienes todos los datos, llama a la herramienta (`call_tool`).  \n   - Si falta un dato crucial (ej: el monto de un gasto), haz una pregunta directa en texto. Ejemplo:  \n     \"¡Claro, [nombre]! Registro el gasto en 'gasolina'. ¿Podrías decirme el monto por favor? 🧐\"\n6. *Maneja Conversación Casual:* Si es un saludo o agradecimiento, responde amablemente sin llamar a herramientas.\n\n### 5. LÓGICA DE CATEGORIZACIÓN (REGLA CRÍTICA) ###\nAl registrar una transacción (`register_transaction`), sigue estos pasos obligatoriamente:\n1. *Consulta Categorías:* Llama SIEMPRE primero a la herramienta `get_user_categories`,\n2. *Intenta Coincidir:* Compara la descripción del gasto con las categorías del usuario.\n3. *Clarifica si es Ambiguo:*  \n   Si encaja en varias categorías, pregunta en texto:  \n   \"Entendido. Ese gasto podría ser 'Comida', 'Restaurantes' u 'Ocio'. ¿Cuál prefieres usar?\"\n4. *Ofrece Crear:*  \n   Si la categoría no existe, pregunta:  \n   \"Veo que mencionaste 'Paseo del perro', pero no tienes esa categoría. ¿Quieres crearla o usar otra?\"\n\n### 6. HERRAMIENTAS DISPONIBLES (TOOLS) ###\n- *Transacciones:* `register_transaction`, `update_transactions`, `get_transactions`, `delete_transactions`.\n- *Categorías:* `get_user_categories`, `create_user_category`  \n- *Presupuestos:* `update_category_budget`, `get_user_categories`  \n- *Metas de Ahorro:* `get_saving_goals`, \n- *para registrar un ahorro* 'update_progres_saving_goals'(suma el monto actual de la meta a ahorrar mas el nuevo monto, siempre pasar el id exacto de la meta, obtenido en la tool 'get_saving_goals')\n- *Suscripciones:* `create_user_subscription`, `get_user_subscriptions`, `updated_user_subscriptions`  \n\n### 7. REGLAS DE ORO Y LÍMITES ###\n- *Actúa, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\" — hazlo y muestra el resultado.\n- *Confirma acciones:* Después de una acción exitosa, confirma breve y con emoji. Ej:  \n  \"✅ Gasto de $50.000 en 'Comida' registrado.\"\n- *Si no entiendes, pregunta:*  \n  \"No te entendí muy bien, ¿podrías decírmelo de otra forma?\"\n- *Nunca inventes información:* Si no encuentras datos, dilo.  \n  \"No encontré ninguna transacción de 'Transporte' para la semana pasada.\"\n- *Siempre antes de crear una meta, debemos preguntar la fecha Objetivo, si en 1 mes, 3 meses o 1 año*\n- *las subscripciones del usuario se registra el pago automaticamente cada mes, para dejar de registrar debe inactivar la subscripcion* (puedes informarle al usuario cada que crees una subscripcion)\n\nIMPORTANTE: jamas registrar una transaccion sin haber consultado la tool 'get_user_categories'ya que dara error.\n- *Actúa siempre, no anuncies:* Nunca digas \"Voy a buscar...\" o \"Tienes razón...\", o voy a hacer, o 'voy a registrar' — hazlo, haz todas las ejecuciones que necesites y muestra el resultado.\n- JAMAS LE DES IDS a los usuarios o datos sensibles o internos como id de la transaccion, no pidas id ni entregues, son datos internos.\npor ahora crear categorias y dar analisis con graficas detalladas es una funcion premium\n\nIMPORTANTE: Siempre consulta las herramientas para tener datos actualizados, nunca te bases en lo que tienes en tu memoria, ya que los datos pueden cambiar asi que siempre en cada consulta consulta las tools que necesites.\n\n- si una tool te devuelve el error PLAN_RESTRICTION, obten los datos que te devuelve la tool y envia al usuario un mensaje de upgrade, siempre enviando el upgradeUrl, para que pueda subscribirse."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1656,7 +1656,7 @@
       "parameters": {
         "toolDescription": "Registra una nueva transacción de Ingreso o Gasto en la cuenta del usuario.",
         "method": "POST",
-        "url": "https://api.mony.whitelabel.lat/api/v1/transactions",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/transactions",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -1701,7 +1701,13 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
@@ -1721,7 +1727,7 @@
     {
       "parameters": {
         "toolDescription": "obtiene las categorias de un usuario",
-        "url": "https://api.mony.whitelabel.lat/api/v1/categories",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/categories",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendQuery": true,
@@ -1753,7 +1759,7 @@
     {
       "parameters": {
         "toolDescription": "Recupera todas las transacciones del usuario en un período de tiempo definido, siempre consulta tambien el mes anterior para tener mas contexto",
-        "url": "https://api.mony.whitelabel.lat/api/v1/transactions",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/transactions",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendQuery": true,
@@ -1807,7 +1813,7 @@
       "parameters": {
         "toolDescription": "Establece o actualiza el presupuesto mensual para cada categoría de gasto específica",
         "method": "PATCH",
-        "url": "=https://api.mony.whitelabel.lat/api/v1/categories/{{ $fromAI('categoryId', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/categories/{{ $fromAI('categoryId', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -1828,7 +1834,13 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
@@ -1848,7 +1860,7 @@
     {
       "parameters": {
         "toolDescription": "Consulta el estado de las metas de ahorro activas del usuario",
-        "url": "https://api.mony.whitelabel.lat/api/v1/saving-goals",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/saving-goals",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendQuery": true,
@@ -1906,7 +1918,7 @@
       "parameters": {
         "toolDescription": "Actualiza específicamente el monto actual ahorrado. Cambia automáticamente el estado a \"completada\" si se alcanza el objetivo, debes pasar el id de la meta, obtenido en la tool 'get_saving_goals'",
         "method": "PATCH",
-        "url": "=https://api.mony.whitelabel.lat/api/v1/saving-goals/{{ $fromAI('metaId', `id de la meta, obtenido en la tool '\\''get_saving_goals'\\''`, 'string') }}/amount",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/saving-goals/{{ $fromAI('metaId', `id de la meta, obtenido en la tool '\\''get_saving_goals'\\''`, 'string') }}/amount",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -1927,7 +1939,13 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
@@ -1948,7 +1966,7 @@
       "parameters": {
         "toolDescription": "Guarda una nueva meta de ahorro para el usuario",
         "method": "POST",
-        "url": "https://api.mony.whitelabel.lat/api/v1/saving-goals",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/saving-goals",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -1985,7 +2003,13 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
@@ -2005,7 +2029,7 @@
     {
       "parameters": {
         "toolDescription": "Consulta el todas las subscripciones del usuario del usuario",
-        "url": "https://api.mony.whitelabel.lat/api/v1/user-subscriptions",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/user-subscriptions",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -2038,7 +2062,7 @@
       "parameters": {
         "toolDescription": "Registra una nueva suscripción o gasto recurrente del usuario, como Netflix o el gimnasio",
         "method": "POST",
-        "url": "https://api.mony.whitelabel.lat/api/v1/user-subscriptions",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/user-subscriptions",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -2091,7 +2115,13 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
@@ -2112,7 +2142,7 @@
       "parameters": {
         "toolDescription": "actualiza la subscripcion si esta activa o no, el monto u otros parametros si se necesitan actualizar",
         "method": "PATCH",
-        "url": "=https://api.mony.whitelabel.lat/api/v1/user-subscriptions/{{ $fromAI('subscriptionId', `id de la Subscripcion, obtenido en la tool '\\''get_user_subscriptions'\\''`, 'string') }}",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/user-subscriptions/{{ $fromAI('subscriptionId', `id de la Subscripcion, obtenido en la tool '\\''get_user_subscriptions'\\''`, 'string') }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -2157,7 +2187,13 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
@@ -2696,7 +2732,7 @@
       "parameters": {
         "toolDescription": "crea una categoria para el usuario solo si no existe ninguna para registrar lo que necesita o requiere una nueva,\nNOTA, el icono y el color no se lo pides al usuario, lo estableces tu",
         "method": "POST",
-        "url": "https://api.mony.whitelabel.lat/api/v1/categories",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/categories",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -2741,7 +2777,13 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
@@ -2834,75 +2876,9 @@
     },
     {
       "parameters": {
-        "toolDescription": "Actualiza los datos de una transaccion especifica si hubo un error al registrarla",
-        "method": "PATCH",
-        "url": "=https://api.mony.whitelabel.lat/api/v1/transactions/{{ $fromAI('transactionId', `id de la transaccion, obtenido en la tool '\\''get_transactions'\\''`, 'string') }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "x-user-id",
-              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "descripcion",
-              "value": "={{ $fromAI('descripcion', `Descripción de la transacción`, 'string') }}"
-            },
-            {
-              "name": "monto",
-              "value": "={{ $fromAI('monto', ` Monto de la transacción`, 'number') }}"
-            },
-            {
-              "name": "tipo",
-              "value": "={{ $fromAI('tipo', `Gasto o Ingreso`, 'string') }}"
-            },
-            {
-              "name": "fechaTransaccion",
-              "value": "={{ $fromAI('fecha_transaccion', `formato ISO: YYYY-MM-DD`, 'string') }}"
-            },
-            {
-              "name": "idCategoria",
-              "value": "={{ $fromAI('id_categoria', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}"
-            },
-            {
-              "name": "moneda",
-              "value": "={{ $fromAI('moneda', `Código de moneda`, 'string') }}"
-            },
-            {
-              "name": "idFuente",
-              "value": "1"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequestTool",
-      "typeVersion": 4.2,
-      "position": [
-        4704,
-        -240
-      ],
-      "id": "847fad36-c6e4-430a-a04e-91e0851928b1",
-      "name": "register_transaction1",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "VvugYsKO6X1LCmbE",
-          "name": "Mony"
-        }
-      }
-    },
-    {
-      "parameters": {
         "toolDescription": "elimina una transaccion en especifico, debe usarse con mucho cuidado y con confirmacion del usuario, el id de la transaccion lo obtienes de get_transactions, nunca se lo pides al usuario, solo confirmas los datos de la transaccion a eliminar que concuerden, fecha, monto, descripcion.",
         "method": "DELETE",
-        "url": "=https://api.mony.whitelabel.lat/api/v1/transactions/{{ $fromAI('transactionId', `id de la transaccion, obtenido en la tool '\\''get_transactions'\\''`, 'string') }}",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/transactions/{{ $fromAI('transactionId', `id de la transaccion, obtenido en la tool '\\''get_transactions'\\''`, 'string') }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -2914,12 +2890,18 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        4560,
+        4528,
         -240
       ],
       "id": "2f48e299-3bbf-482f-aa5d-1c297388696d",
@@ -3116,6 +3098,78 @@
       ],
       "id": "6572c219-f83d-4f16-97b4-fe2e53c11940",
       "name": "No Operation, do nothing2"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Actualiza los datos de una transaccion especifica si hubo un error al registrarla",
+        "method": "PATCH",
+        "url": "={{ $('initData').item.json.metadata.Base_Url }}/api/v1/transactions/{{ $fromAI('transactionId', `id de la transaccion, obtenido en la tool '\\''get_transactions'\\''`, 'string') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "value": "={{ $fromAI('userId', `id del usuario`, 'string') }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "descripcion",
+              "value": "={{ $fromAI('descripcion', `Descripción de la transacción`, 'string') }}"
+            },
+            {
+              "name": "monto",
+              "value": "={{ $fromAI('monto', ` Monto de la transacción`, 'number') }}"
+            },
+            {
+              "name": "tipo",
+              "value": "={{ $fromAI('tipo', `Gasto o Ingreso`, 'string') }}"
+            },
+            {
+              "name": "fechaTransaccion",
+              "value": "={{ $fromAI('fecha_transaccion', `formato ISO: YYYY-MM-DD`, 'string') }}"
+            },
+            {
+              "name": "idCategoria",
+              "value": "={{ $fromAI('id_categoria', `id de la categoria, obtenido en la tool '\\''get_user_categories'\\''`, 'number') }}"
+            },
+            {
+              "name": "moneda",
+              "value": "={{ $fromAI('moneda', `Código de moneda`, 'string') }}"
+            },
+            {
+              "name": "idFuente",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        4704,
+        -240
+      ],
+      "id": "847fad36-c6e4-430a-a04e-91e0851928b1",
+      "name": "update_transaction",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VvugYsKO6X1LCmbE",
+          "name": "Mony"
+        }
+      }
     }
   ],
   "pinData": {
@@ -3124,81 +3178,96 @@
         "json": {
           "metadata": {
             "account_id": "3",
-            "conversation_id": "473"
+            "conversation_id": "863",
+            "channel": "Channel::Telegram",
+            "Base_Url": "https://api.mony-dev.whitelabel.lat"
           },
           "contacts": [
             {
               "profile": {
-                "name": "Laura"
+                "name": "Pedro"
               },
-              "wa_id": "573054797716"
+              "wa_id": "1469588614"
             }
           ],
           "messages": [
             {
-              "from": "+573054797716",
-              "id": "20008",
-              "timestamp": "1762193820",
+              "from": "+573228854498",
+              "id": "22292",
+              "timestamp": "1762883392",
               "text": {
-                "body": null,
+                "body": "no por ahora no",
                 "reply_message": null
               },
               "file": {
-                "body": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBc0FDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--a2d245eb2975d59f1e6d3d3fc0b9c848509b0957/File.jpg",
+                "body": "",
                 "transcribed_text": ""
               },
-              "type": "image"
+              "type": "text"
             }
           ],
           "field": [
-            "registrado"
+            "registrado",
+            "pro",
+            "resolved",
+            "premium"
           ],
           "usuario_data": {
-            "id": "97593a52-bef7-4fa6-9b74-c14afe114419",
-            "nombreCompleto": "Laura Valentina Medina",
-            "email": "lvmedina17@gmail.com",
-            "numeroWhatsapp": "+573054797716",
+            "id": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+            "nombreCompleto": "Pedro Rodriguez",
+            "email": "pro.pedro0413@gmail.com",
+            "numeroWhatsapp": "+573228854498",
             "pais": "CO",
             "moneda": "COP",
             "estadoSuscripcion": "free",
-            "fechaRegistro": "2025-10-06T14:58:23.711Z",
+            "fechaRegistro": "2025-08-23T22:35:15.923Z",
             "resetPasswordToken": null,
             "resetPasswordExpires": null,
             "frecuenciaRecordatorios": "diario",
             "frecuenciaInformes": "semanal",
             "metasDeAhorro": [
               {
-                "id": "8335667c-2b2c-4ab9-bac3-630aabb01a75",
-                "nombre": "Mi Primera Meta",
-                "montoObjetivo": "0",
-                "montoActual": "0",
-                "fechaObjetivo": "2024-10-27T00:00:00.000Z",
+                "id": "55177fda-6c10-4641-a758-53a1c54da974",
+                "nombre": "Comprar un PC",
+                "montoObjetivo": "3000100",
+                "montoActual": "500000",
+                "fechaObjetivo": "2025-08-23T00:00:00.000Z",
                 "estado": "activa",
-                "fechaCreacion": "2025-10-21T01:14:08.046Z",
-                "idUsuario": "97593a52-bef7-4fa6-9b74-c14afe114419"
+                "fechaCreacion": "2025-08-24T04:47:09.954Z",
+                "idUsuario": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd"
+              },
+              {
+                "id": "443d0c18-4cfe-467b-b20f-575ecf3f1894",
+                "nombre": "organizar mis gastos",
+                "montoObjetivo": "50000",
+                "montoActual": "20000",
+                "fechaObjetivo": "2025-12-31T00:00:00.000Z",
+                "estado": "activa",
+                "fechaCreacion": "2025-08-23T23:56:39.113Z",
+                "idUsuario": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd"
               }
             ],
             "suscripciones": [
               {
-                "id": "4f5bca1f-644b-4772-89ce-80e046c29229",
-                "nombre": "Spotify",
-                "descripcion": "Mod Estudiantes",
-                "monto": "10100",
+                "id": "c33712c7-0410-414a-b102-6a123d078b7a",
+                "nombre": "Amazon Prime Video",
+                "descripcion": "Suscripción a Amazon Prime Video",
+                "monto": "24000",
                 "moneda": "COP",
                 "frecuencia": "mensual",
-                "fechaInicio": "2025-10-25T00:00:00.000Z",
-                "fechaProximoPago": "2025-11-25T00:00:00.000Z",
+                "fechaInicio": "2025-08-24T00:00:00.000Z",
+                "fechaProximoPago": "2025-11-24T00:00:00.000Z",
                 "activa": true,
-                "idUsuario": "97593a52-bef7-4fa6-9b74-c14afe114419",
-                "idCategoria": 2020
+                "idUsuario": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+                "idCategoria": 5
               }
             ],
             "estadisticas": {
-              "ingresosMes": 2650000,
-              "gastosMes": 1063289,
-              "balanceMes": 1586711,
-              "totalTransaccionesMes": 7,
-              "metasActivas": 1,
+              "ingresosMes": 90000,
+              "gastosMes": 175000,
+              "balanceMes": -85000,
+              "totalTransaccionesMes": 24,
+              "metasActivas": 2,
               "suscripcionesActivas": 1
             }
           }
@@ -3233,6 +3302,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-11-03T18:20:29.091Z",
-  "versionId": "5fa06e9a-70d0-4555-be50-d32b9cdfc770"
+  "updatedAt": "2025-11-11T18:25:25.223Z",
+  "versionId": "8c225e76-33d0-4dc4-9859-3b6f8ee2e6e5"
 }
