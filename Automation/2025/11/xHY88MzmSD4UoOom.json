@@ -1,0 +1,82 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-11T20:01:31.880Z",
+  "id": "xHY88MzmSD4UoOom",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Nocodb tools",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6338bb4a-8c93-49ea-852d-9ea3ce63f1f8",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "mi1tzhj7r32fhmq",
+        "options": {
+          "where": "(fecha_prox_mantenimiento,gte,2025-11-11)~and(fecha_prox_mantenimiento,lte,2025-11-30)"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f057ad11-03e2-4465-aab2-4d77703a77a3",
+      "name": "Get many rows",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-11T20:01:31.880Z",
+      "createdAt": "2025-11-11T20:01:31.880Z",
+      "role": "workflow:owner",
+      "workflowId": "xHY88MzmSD4UoOom",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-11T21:07:40.336Z",
+  "versionId": "ae094e34-d4ac-4553-a3fc-53ddee379761"
+}
