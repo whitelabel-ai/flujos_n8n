@@ -180,17 +180,6 @@
         ]
       ]
     },
-    "WhatsApp Trigger": {
-      "main": [
-        [
-          {
-            "node": "Execution Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If": {
       "main": [
         [
@@ -246,7 +235,29 @@
       "main": [
         [
           {
+            "node": "Get Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Variables": {
+      "main": [
+        [
+          {
             "node": "WhatsApp Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
             "type": "main",
             "index": 0
           }
@@ -847,7 +858,7 @@
     },
     {
       "parameters": {
-        "url": "https://api.mony.whitelabel.lat/api/v1/users/profile-by-phone",
+        "url": "={{ $json.metadata.Base_Url }}/api/v1/users/profile-by-phone",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendQuery": true,
@@ -886,7 +897,7 @@
     },
     {
       "parameters": {
-        "url": "https://api.mony.whitelabel.lat/api/v1/saving-goals",
+        "url": "={{ $('WhatsApp Trigger').item.json.metadata.Base_Url }}/api/v1/saving-goals",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -930,49 +941,6 @@
       "id": "c666a14a-4046-4fc4-b095-6941bfd09d41",
       "name": "Webhook",
       "webhookId": "afc7954a-020f-4194-89fd-fa609358b4b0"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "24753cf1-0e65-46ba-8117-cafa44f119a0",
-              "name": "metadata",
-              "value": "={\n\"account_id\": \n\"{{ $json.body.account.id }}\",\n\"conversation_id\": \n\"{{ $json.body.conversation.messages[0].conversation_id }}\"\n}",
-              "type": "object"
-            },
-            {
-              "id": "e6ac796a-86cf-4dce-a3f3-1f3b8ea8e180",
-              "name": "contacts",
-              "value": "=[{\n\"profile\": \n{\n\"name\": \n\"{{ $json.body.conversation.meta.sender.name.replace('\\n', ' ').split(' ')[0] }}\"\n},\n\"wa_id\": \n\"{{ $json.body.conversation.messages[0].conversation.contact_inbox.source_id }}\"\n}]",
-              "type": "array"
-            },
-            {
-              "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
-              "name": "messages",
-              "value": "= [{ \"from\":  \"{{ $json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($json.body.conversation.messages[0].content) }}, \"reply_message\": {{ JSON.stringify($json.body.reply_message.content) }} },\n\"file\":  { \"body\":  \"{{ $json.body.conversation.messages[0].attachments[0].data_url }}\", \"transcribed_text\": \"{{ $json.body.attachments[0].transcribed_text }}\" },\n\"type\":  \"{{ $json.body.attachments?.[0]?.file_type || $json.body.conversation.messages?.[0]?.content_type }}\" }]",
-              "type": "array"
-            },
-            {
-              "id": "8bf1bf21-59a9-4c92-8e31-7e20a7cae8d4",
-              "name": "field",
-              "value": "={{ $json.body.conversation.labels }}",
-              "type": "array"
-            }
-          ]
-        },
-        "options": {
-          "ignoreConversionErrors": false
-        }
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1232,
-        -1264
-      ],
-      "id": "942fcc0a-03c5-4b79-95f7-ccbf0fec60bb",
-      "name": "WhatsApp Trigger"
     },
     {
       "parameters": {
@@ -1148,6 +1116,77 @@
       ],
       "id": "c543f064-619e-473a-a087-3968c0931efa",
       "name": "reply_message"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eRuwWNpeS3Marqhu",
+          "mode": "list",
+          "cachedResultName": "Mony",
+          "cachedResultUrl": "/projects/jOPTDk8NtR0eZIqG/datatables/eRuwWNpeS3Marqhu"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "channel",
+              "keyValue": "={{ $json.body.conversation.channel }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        992,
+        -1248
+      ],
+      "id": "d5041cca-a459-44b9-9fd6-7c2298f75d24",
+      "name": "Get Variables"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24753cf1-0e65-46ba-8117-cafa44f119a0",
+              "name": "metadata",
+              "value": "={\n\"account_id\": \"{{ $('reply_message').item.json.body.account.id }}\",\n\"conversation_id\": \n\"{{ $('reply_message').item.json.body.conversation.messages[0].conversation_id }}\",\n\"channel\": \"{{ $('reply_message').item.json.body.conversation.channel }}\",\n\"Base_Url\": \"{{ $json.Base_Url }}\"\n}",
+              "type": "object"
+            },
+            {
+              "id": "e6ac796a-86cf-4dce-a3f3-1f3b8ea8e180",
+              "name": "contacts",
+              "value": "=[{\n\"profile\": \n{\n\"name\": \n\"{{ $('reply_message').item.json.body.conversation.meta.sender.name.replace('\\n', ' ').split(' ')[0] }}\"\n},\n\"wa_id\": \n\"{{ $('reply_message').item.json.body.conversation.messages[0].conversation.contact_inbox.source_id }}\"\n}]",
+              "type": "array"
+            },
+            {
+              "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
+              "name": "messages",
+              "value": "= [{ \"from\":  \"{{ $('reply_message').item.json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $('reply_message').item.json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $('reply_message').item.json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($('reply_message').item.json.body.conversation.messages[0].content) }}, \"reply_message\": {{ JSON.stringify($('reply_message').item.json.body.reply_message.content) }} },\n\"file\":  { \"body\":  \"{{ $('reply_message').item.json.body.conversation.messages[0].attachments[0].data_url }}\", \"transcribed_text\": \"{{ $('reply_message').item.json.body.attachments[0].transcribed_text }}\" },\n\"type\":  \"{{ $('reply_message').item.json.body.attachments?.[0]?.file_type || $('reply_message').item.json.body.conversation.messages?.[0]?.content_type }}\" }]",
+              "type": "array"
+            },
+            {
+              "id": "8bf1bf21-59a9-4c92-8e31-7e20a7cae8d4",
+              "name": "field",
+              "value": "={{ $('reply_message').item.json.body.conversation.labels }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": false
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        -1248
+      ],
+      "id": "7ed62947-dd79-4f88-9f2b-7ff761a3fb39",
+      "name": "WhatsApp Trigger"
     }
   ],
   "pinData": {
@@ -1598,7 +1637,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "4173",
+            "content-length": "4083",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -1617,85 +1656,93 @@
               "name": "Mony"
             },
             "additional_attributes": {},
-            "content_attributes": {},
+            "content_attributes": {
+              "in_reply_to": null
+            },
             "content_type": "text",
-            "content": null,
+            "content": "hola",
             "conversation": {
-              "additional_attributes": {},
-              "can_reply": true,
-              "channel": "Channel::Whatsapp",
-              "contact_inbox": {
-                "id": 394,
-                "contact_id": 394,
-                "inbox_id": 2,
-                "source_id": "573045809637",
-                "created_at": "2025-09-03T17:10:06.722Z",
-                "updated_at": "2025-09-03T17:10:06.722Z",
-                "hmac_verified": false,
-                "pubsub_token": "S3P4EoctGAL4Ss3Y6JBhHq8L"
+              "additional_attributes": {
+                "browser": {
+                  "device_name": "Unknown",
+                  "browser_name": "Chrome",
+                  "platform_name": "Windows",
+                  "browser_version": "138.0.0.0",
+                  "platform_version": "10.0"
+                },
+                "referer": "https://mony.whitelabel.lat/dashboard",
+                "initiated_at": {
+                  "timestamp": "Sat Oct 11 2025 17:33:35 GMT-0500 (hora estándar de Colombia)"
+                },
+                "browser_language": "es"
               },
-              "id": 391,
-              "inbox_id": 2,
+              "can_reply": true,
+              "channel": "Channel::WebWidget",
+              "contact_inbox": {
+                "id": 774,
+                "contact_id": 809,
+                "inbox_id": 7,
+                "source_id": "2bcbd8c8-1c35-452b-844f-bd9c707cddff",
+                "created_at": "2025-10-11T14:30:27.118Z",
+                "updated_at": "2025-10-11T22:33:21.628Z",
+                "hmac_verified": false,
+                "pubsub_token": "cMgUgthMcDU3ZEX2cvapY65v"
+              },
+              "id": 791,
+              "inbox_id": 7,
               "messages": [
                 {
-                  "id": 18144,
-                  "content": null,
+                  "id": 22213,
+                  "content": "hola",
                   "account_id": 3,
-                  "inbox_id": 2,
-                  "conversation_id": 391,
+                  "inbox_id": 7,
+                  "conversation_id": 791,
                   "message_type": 0,
-                  "created_at": 1761355716,
-                  "updated_at": "2025-10-25T01:28:36.718Z",
+                  "created_at": 1762869325,
+                  "updated_at": "2025-11-11T13:55:25.628Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhggQUM2RTJEREM1M0E1MEI5RkQ5RkMzMEIwOUFDRUQ0NUIA",
+                  "source_id": null,
                   "content_type": "text",
-                  "content_attributes": {},
+                  "content_attributes": {
+                    "in_reply_to": null
+                  },
                   "sender_type": "Contact",
-                  "sender_id": 394,
+                  "sender_id": 809,
                   "external_source_ids": {},
                   "additional_attributes": {},
-                  "processed_message_content": null,
+                  "processed_message_content": "hola",
                   "sentiment": {},
                   "conversation": {
                     "assignee_id": null,
-                    "unread_count": 2,
-                    "last_activity_at": 1761355716,
+                    "unread_count": 3,
+                    "last_activity_at": 1762869325,
                     "contact_inbox": {
-                      "source_id": "573045809637"
+                      "source_id": "2bcbd8c8-1c35-452b-844f-bd9c707cddff"
                     }
                   },
-                  "attachments": [
-                    {
-                      "id": 1418,
-                      "message_id": 18144,
-                      "file_type": "audio",
-                      "account_id": 3,
-                      "extension": null,
-                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbVlDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6f59a3926969a4e5b41e70f2b835f29f2a51ad09/File.ogg",
-                      "thumb_url": "",
-                      "file_size": 8465,
-                      "width": null,
-                      "height": null,
-                      "transcribed_text": "$44,000 pesos en empanadas"
-                    }
-                  ],
                   "sender": {
                     "additional_attributes": {
-                      "created_at_ip": "38.199.29.38",
-                      "avatar_url_hash": "5eb0326a6a8ee9e602d785becb82b7a2c90a87759abd2698773f85c0db5065ac",
-                      "last_avatar_sync_at": "2025-10-12T01:37:12Z"
+                      "username": null,
+                      "company_name": "Persona",
+                      "country_code": "CO",
+                      "created_at_ip": "138.84.40.68",
+                      "language_code": "es",
+                      "avatar_url_hash": "205349d5a3b60cf88d078a4ea739ec911ca4069e3dea0a3d5c6d878f8ff481c1",
+                      "last_avatar_sync_at": "2025-10-11T21:37:16Z",
+                      "social_telegram_user_id": 1469588614,
+                      "social_telegram_user_name": null
                     },
                     "custom_attributes": {
                       "moneda": "COP",
-                      "signup_date": "2025-08-24T05:55:59.164Z",
-                      "subscription_status": "free"
+                      "signup_date": "2025-08-23T22:35:15.923Z",
+                      "subscription_status": "pro_empresarial"
                     },
-                    "email": "andresco70@gmail.com",
-                    "id": 394,
-                    "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
-                    "name": "Andrés Corral",
-                    "phone_number": "+573045809637",
+                    "email": "pro.pedro0413@gmail.com",
+                    "id": 809,
+                    "identifier": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+                    "name": "Pedro Rodriguez",
+                    "phone_number": "+573228854498",
                     "thumbnail": "",
                     "blocked": false,
                     "type": "contact"
@@ -1703,26 +1750,31 @@
                 }
               ],
               "labels": [
-                "registrado",
-                "monylover"
+                "registrado"
               ],
               "meta": {
                 "sender": {
                   "additional_attributes": {
-                    "created_at_ip": "38.199.29.38",
-                    "avatar_url_hash": "5eb0326a6a8ee9e602d785becb82b7a2c90a87759abd2698773f85c0db5065ac",
-                    "last_avatar_sync_at": "2025-10-12T01:37:12Z"
+                    "username": null,
+                    "company_name": "Persona",
+                    "country_code": "CO",
+                    "created_at_ip": "138.84.40.68",
+                    "language_code": "es",
+                    "avatar_url_hash": "205349d5a3b60cf88d078a4ea739ec911ca4069e3dea0a3d5c6d878f8ff481c1",
+                    "last_avatar_sync_at": "2025-10-11T21:37:16Z",
+                    "social_telegram_user_id": 1469588614,
+                    "social_telegram_user_name": null
                   },
                   "custom_attributes": {
                     "moneda": "COP",
-                    "signup_date": "2025-08-24T05:55:59.164Z",
-                    "subscription_status": "free"
+                    "signup_date": "2025-08-23T22:35:15.923Z",
+                    "subscription_status": "pro_empresarial"
                   },
-                  "email": "andresco70@gmail.com",
-                  "id": 394,
-                  "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
-                  "name": "Andrés Corral",
-                  "phone_number": "+573045809637",
+                  "email": "pro.pedro0413@gmail.com",
+                  "id": 809,
+                  "identifier": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+                  "name": "Pedro Rodriguez",
+                  "phone_number": "+573228854498",
                   "thumbnail": "",
                   "blocked": false,
                   "type": "contact"
@@ -1734,25 +1786,25 @@
               "status": "pending",
               "custom_attributes": {},
               "snoozed_until": null,
-              "unread_count": 2,
-              "first_reply_created_at": "2025-10-24T20:58:56.538Z",
+              "unread_count": 3,
+              "first_reply_created_at": "2025-10-11T22:39:57.003Z",
               "priority": null,
-              "waiting_since": 1761351158,
-              "agent_last_seen_at": 1761339685,
-              "contact_last_seen_at": 0,
-              "last_activity_at": 1761355716,
-              "timestamp": 1761355716,
-              "created_at": 1756919406,
-              "updated_at": 1761355716.720515,
+              "waiting_since": 1760569674,
+              "agent_last_seen_at": 1760222426,
+              "contact_last_seen_at": 1762869321,
+              "last_activity_at": 1762869325,
+              "timestamp": 1762869325,
+              "created_at": 1760222012,
+              "updated_at": 1762869325.6298985,
               "applied_sla": null,
               "sla_events": [],
               "sla_policy_id": null
             },
-            "created_at": "2025-10-25T01:28:36.718Z",
-            "id": 18144,
+            "created_at": "2025-11-11T13:55:25.628Z",
+            "id": 22213,
             "inbox": {
-              "id": 2,
-              "name": "Whatsapp Mony"
+              "id": 7,
+              "name": "Mony"
             },
             "message_type": "incoming",
             "private": false,
@@ -1762,41 +1814,32 @@
                 "name": "Mony"
               },
               "additional_attributes": {
-                "created_at_ip": "38.199.29.38",
-                "avatar_url_hash": "5eb0326a6a8ee9e602d785becb82b7a2c90a87759abd2698773f85c0db5065ac",
-                "last_avatar_sync_at": "2025-10-12T01:37:12Z"
+                "username": null,
+                "company_name": "Persona",
+                "country_code": "CO",
+                "created_at_ip": "138.84.40.68",
+                "language_code": "es",
+                "avatar_url_hash": "205349d5a3b60cf88d078a4ea739ec911ca4069e3dea0a3d5c6d878f8ff481c1",
+                "last_avatar_sync_at": "2025-10-11T21:37:16Z",
+                "social_telegram_user_id": 1469588614,
+                "social_telegram_user_name": null
               },
               "avatar": "",
               "custom_attributes": {
                 "moneda": "COP",
-                "signup_date": "2025-08-24T05:55:59.164Z",
-                "subscription_status": "free"
+                "signup_date": "2025-08-23T22:35:15.923Z",
+                "subscription_status": "pro_empresarial"
               },
-              "email": "andresco70@gmail.com",
-              "id": 394,
-              "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
-              "name": "Andrés Corral",
-              "phone_number": "+573045809637",
+              "email": "pro.pedro0413@gmail.com",
+              "id": 809,
+              "identifier": "aba24b95-eb5a-4bda-8ab0-ac4afe73addd",
+              "name": "Pedro Rodriguez",
+              "phone_number": "+573228854498",
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMDQ1ODA5NjM3FQIAEhggQUM2RTJEREM1M0E1MEI5RkQ5RkMzMEIwOUFDRUQ0NUIA",
-            "attachments": [
-              {
-                "id": 1418,
-                "message_id": 18144,
-                "file_type": "audio",
-                "account_id": 3,
-                "extension": null,
-                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbVlDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6f59a3926969a4e5b41e70f2b835f29f2a51ad09/File.ogg",
-                "thumb_url": "",
-                "file_size": 8465,
-                "width": null,
-                "height": null,
-                "transcribed_text": "$44,000 pesos en empanadas"
-              }
-            ],
-            "event": "message_updated"
+            "source_id": null,
+            "event": "message_created"
           },
           "webhookUrl": "https://automation.whitelabel.lat/webhook/mony",
           "executionMode": "production"
@@ -1835,6 +1878,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-10-25T01:45:22.335Z",
-  "versionId": "7cd27491-c276-4f28-bc36-ac1134d13edb"
+  "updatedAt": "2025-11-11T13:59:03.213Z",
+  "versionId": "9d1b5fd0-7a8f-4d22-bb76-2dd3f884edfa"
 }
