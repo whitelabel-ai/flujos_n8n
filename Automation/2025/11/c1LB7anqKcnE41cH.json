@@ -67,6 +67,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "servicios",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -210,8 +217,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -736,
-        48
+        -768,
+        64
       ]
     },
     {
@@ -331,7 +338,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        112,
+        144,
         272
       ],
       "id": "07d574db-8e8d-4b95-b7c2-1ab0700e2a5e",
@@ -345,13 +352,13 @@
         "table": "mi1tzhj7r32fhmq",
         "returnAll": true,
         "options": {
-          "where": "=(servicio_id,like,{{ $json.servicio_id }})"
+          "where": "=(fecha_prox_mantenimiento,like,{{ $json.mes_mantenimientos }})"
         }
       },
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -144,
+        -128,
         272
       ],
       "id": "89e92b5c-ef66-4390-b7e8-005fddd6ff0e",
@@ -430,6 +437,29 @@
                       "type": "string",
                       "operation": "exists",
                       "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "927cb9b1-fc3d-4e30-bae5-53d639dafa36",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
                     }
                   }
                 ],
@@ -732,7 +762,18 @@
       "alwaysOutputData": false
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "razon_social": null,
+          "equipo_id": null,
+          "servicio_id": null,
+          "mes_mantenimientos": "12/2025"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -755,6 +796,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-07T21:49:19.531Z",
-  "versionId": "ed1cbb63-1206-4dc8-861d-a5076f7b9856"
+  "updatedAt": "2025-11-11T19:51:04.451Z",
+  "versionId": "175ffe31-b536-4343-a12c-203931b141dc"
 }
