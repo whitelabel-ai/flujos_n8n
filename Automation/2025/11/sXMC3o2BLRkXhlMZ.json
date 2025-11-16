@@ -1,0 +1,310 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Langfuse Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Langfuse Prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent with Langfuse": {
+      "main": [
+        [
+          {
+            "node": "Create a score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zep": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a score": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-16T02:25:55.554Z",
+  "id": "sXMC3o2BLRkXhlMZ",
+  "isArchived": false,
+  "meta": null,
+  "name": "Agente Coordinador",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "78fea20a-bd5d-4f0d-bd17-5cdd5a7c6e7b",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        48,
+        32
+      ],
+      "webhookId": "2ce1397d-36d6-45ba-b5cf-18e5e162672a",
+      "credentials": {
+        "telegramApi": {
+          "id": "lZ9E2yRzldM6NmO8",
+          "name": "Jazmin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptName": "<__PLACEHOLDER_VALUE__Langfuse prompt name__>",
+        "label": "<__PLACEHOLDER_VALUE__Prompt version or leave empty for latest__>",
+        "requestOptions": {}
+      },
+      "id": "6ee6ce10-4510-4fa5-b166-48a345239ba5",
+      "name": "Get Langfuse Prompt",
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        272,
+        32
+      ],
+      "credentials": {
+        "langfuseApi": {
+          "id": "7MKcbbH4I1FJMU1f",
+          "name": "Jazmin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "langfuseMetadata": {},
+        "options": {
+          "systemMessage": "You are a helpful AI assistant with access to a knowledge base through Pinecone vector store. Use the retrieval tool to search for relevant information when answering user questions. Provide accurate and helpful responses based on the retrieved context."
+        }
+      },
+      "id": "147479da-6577-4477-9f3e-46d4bc1a36ec",
+      "name": "AI Agent with Langfuse",
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        464,
+        32
+      ],
+      "credentials": {
+        "langfuseCustomApi": {
+          "id": "k9vnL2FHlJlGgUZg",
+          "name": "Jazmin - agent - node"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search the knowledge base for relevant information to answer user questions",
+        "pineconeIndex": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<__PLACEHOLDER_VALUE__Pinecone index name__>"
+        },
+        "options": {}
+      },
+      "id": "dd6f3de4-f07c-4cf6-9cbf-66e71f1ca0c0",
+      "name": "Pinecone Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        752,
+        256
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "id": "292f4571-a0a8-41f9-9f86-19f959b47a6f",
+      "name": "Send Telegram Response",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        32
+      ],
+      "webhookId": "8ba629ec-87ed-43d3-a5c5-f5d08e919088",
+      "credentials": {
+        "telegramApi": {
+          "id": "lZ9E2yRzldM6NmO8",
+          "name": "Jazmin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "86a8cb94-7dca-44bb-93fb-1654ee7e4a00",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        832,
+        464
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
+      },
+      "id": "ae89e7c9-cf4b-4fe5-88ac-fb32332a37d4",
+      "name": "Zep",
+      "type": "@n8n/n8n-nodes-langchain.memoryZep",
+      "position": [
+        576,
+        288
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "zepApi": {
+          "id": "0YRafV7HZBQTj6TN",
+          "name": "Zep Api account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        432,
+        240
+      ],
+      "id": "0c2160e9-f10d-4b15-8cbc-a44afec1cd07",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "H0qvKW0CLjMzptnh",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "score",
+        "scoreName": "test",
+        "scoreValue": 1,
+        "additionalFields": {}
+      },
+      "type": "@x_tructure/n8n-nodes-langfuse-all.langfuse",
+      "typeVersion": 1,
+      "position": [
+        832,
+        -96
+      ],
+      "id": "7a71e343-30ee-4de2-949c-799d1b886abc",
+      "name": "Create a score",
+      "credentials": {
+        "langfuseApi": {
+          "id": "7MKcbbH4I1FJMU1f",
+          "name": "Jazmin"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-16T02:25:55.554Z",
+      "createdAt": "2025-11-16T02:25:55.554Z",
+      "role": "workflow:owner",
+      "workflowId": "sXMC3o2BLRkXhlMZ",
+      "projectId": "yKxAA7Mrhj0grbEK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-16T20:57:36.301Z",
+  "versionId": "228cdbd6-7467-4d66-b95d-74d049e59e95"
+}
