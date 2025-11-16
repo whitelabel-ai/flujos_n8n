@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Get a prompt1": {
       "main": [
@@ -23,39 +23,6 @@
         ]
       ]
     },
-    "Mia": {
-      "main": [
-        [
-          {
-            "node": "Get a prompt",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get a prompt": {
-      "main": [
-        [
-          {
-            "node": "AI Agent with Langfuse",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent with Langfuse": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Gemini": {
       "ai_languageModel": [
         [
@@ -67,7 +34,23 @@
         ]
       ]
     },
-    "Memory": {
+    "gemini": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Get Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "Mia",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zep1": {
       "ai_memory": [
         [
           {
@@ -78,29 +61,18 @@
         ]
       ]
     },
-    "memory": {
-      "ai_memory": [
+    "Mia": {
+      "main": [
         [
           {
-            "node": "AI Agent with Langfuse",
-            "type": "ai_memory",
+            "node": "Respond to Webhook",
+            "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "gemini": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent with Langfuse",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Tasks": {
+    "Create an event in PostHog": {
       "ai_tool": [
         [
           {
@@ -129,8 +101,8 @@
       "type": "@langfuse/n8n-nodes-langfuse.langfuse",
       "typeVersion": 1,
       "position": [
-        1424,
-        -192
+        2592,
+        32
       ],
       "id": "3b0dffac-965d-49fc-8149-8f3287f130db",
       "name": "Get a prompt1",
@@ -153,8 +125,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        1168,
-        -192
+        2368,
+        32
       ],
       "id": "1235a5f3-311b-4ae4-b0c5-68fd19a02462",
       "name": "Webhook",
@@ -168,8 +140,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        2672,
-        -192
+        3952,
+        32
       ],
       "id": "831c63c0-17e1-467d-bd6e-fac63aebcd03",
       "name": "Respond to Webhook"
@@ -189,54 +161,15 @@
       "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
       "typeVersion": 2,
       "position": [
-        1632,
-        -192
+        2848,
+        32
       ],
       "id": "a6340688-30fb-4d0a-ba06-53636026806b",
       "name": "Mia",
       "credentials": {
-        "langfuseApi": {
-          "id": "5DdeK0hWANhT5Y5a",
-          "name": "Mia"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "requestOptions": {}
-      },
-      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
-      "typeVersion": 1,
-      "position": [
-        1984,
-        -192
-      ],
-      "id": "b5caf9ca-d9c3-4be9-9f85-2fa001233dea",
-      "name": "Get a prompt",
-      "credentials": {
-        "langfuseApi": {
-          "id": "AtunhixEekYKqeOt",
-          "name": "Test Modelos"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "langfuseMetadata": {},
-        "options": {}
-      },
-      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
-      "typeVersion": 2,
-      "position": [
-        2288,
-        -192
-      ],
-      "id": "8d20ebfe-fcc1-4a6b-a2ed-72a8753decb7",
-      "name": "AI Agent with Langfuse",
-      "credentials": {
-        "langfuseApi": {
-          "id": "AtunhixEekYKqeOt",
-          "name": "Test Modelos"
+        "langfuseCustomApi": {
+          "id": "yrl2b8Hp9nPFYRGg",
+          "name": "Langfuse account 3"
         }
       }
     },
@@ -247,8 +180,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1600,
-        80
+        2816,
+        256
       ],
       "id": "1c4cf140-5f1d-4484-ae0d-73df972e8cbf",
       "name": "Gemini",
@@ -267,8 +200,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        1728,
-        80
+        2368,
+        1104
       ],
       "id": "5198f5af-4ca6-40d4-8843-95387dc1126b",
       "name": "Memory",
@@ -287,8 +220,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        2384,
-        160
+        2912,
+        464
       ],
       "id": "bdbe911c-2b96-4952-8c7b-371f31abe91e",
       "name": "memory",
@@ -306,8 +239,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2256,
-        80
+        3280,
+        464
       ],
       "id": "91d838fb-9b8e-421a-aca9-731f15524e8a",
       "name": "gemini",
@@ -327,8 +260,8 @@
       "type": "n8n-nodes-base.linearTool",
       "typeVersion": 1.1,
       "position": [
-        1776,
-        -368
+        3056,
+        256
       ],
       "id": "aecd2604-d77e-475b-a733-c821732265ec",
       "name": "Get Tasks",
@@ -341,112 +274,60 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://api.mem0.ai/v1/memories",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "app_id",
-              "value": "Mia"
-            },
-            {
-              "name": "user_id",
-              "value": "andres"
-            },
-            {
-              "name": "agent_id",
-              "value": "1"
-            },
-            {
-              "name": "run_id",
-              "value": "0"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Token m0-uczobburbHo8c7RBic6krTM5PZ4jpQOiRPk8IXtb"
-            }
-          ]
-        },
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "messages",
-              "value": "[   {     \"role\": \"user\",     \"content\": \"Hi, I'm Alex. I'm a vegetarian and I'm allergic to nuts.\"   },   {     \"role\": \"assistant\",      \"content\": \"Hello Alex! I see that you're a vegetarian with a nut allergy.\"   } ]"
-            }
-          ]
-        },
-        "options": {}
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
+      "id": "a8912f89-2994-4694-81c3-952a6e1d73b3",
+      "name": "Zep",
+      "type": "@n8n/n8n-nodes-langchain.memoryZep",
       "position": [
-        2592,
-        160
+        2368,
+        464
       ],
-      "id": "56282889-a516-4077-9232-bff0253c92a7",
-      "name": "HTTP Request"
-    }
-  ],
-  "pinData": {
-    "Webhook": [
-      {
-        "json": {
-          "headers": {
-            "host": "automation.whitelabel.lat",
-            "user-agent": "Python/3.13 aiohttp/3.13.2",
-            "content-length": "666",
-            "accept": "*/*",
-            "accept-encoding": "gzip, deflate",
-            "content-type": "application/json",
-            "x-forwarded-for": "34.11.127.27",
-            "x-forwarded-host": "automation.whitelabel.lat",
-            "x-forwarded-port": "443",
-            "x-forwarded-proto": "https",
-            "x-forwarded-server": "03a1118431ed",
-            "x-real-ip": "34.11.127.27"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "message": "hola mia",
-            "user_id": "467411608680005651",
-            "username": "andrescorral",
-            "platform": "discord",
-            "metadata": {
-              "message_id": "1438034770683756618",
-              "created_at": "2025-11-12T05:16:46.725000+00:00",
-              "edited_at": null,
-              "user": {
-                "id": "467411608680005651",
-                "username": "andrescorral",
-                "discriminator": "0",
-                "display_name": "🐉 Andrés Corral",
-                "bot": false,
-                "avatar_url": "https://cdn.discordapp.com/avatars/467411608680005651/fb6352c6bc75dbb08207110c250318db.png?size=1024"
-              },
-              "channel": {
-                "id": "1432829027135262790",
-                "type": "private",
-                "name": null
-              },
-              "guild": null,
-              "conversation_id": "1432829027135262790",
-              "thread_id": "1432829027135262790"
-            }
-          },
-          "webhookUrl": "https://automation.whitelabel.lat/webhook/mia",
-          "executionMode": "production"
+      "typeVersion": 1.3,
+      "credentials": {
+        "zepApi": {
+          "id": "0YRafV7HZBQTj6TN",
+          "name": "Zep Api account"
         }
       }
-    ]
-  },
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
+      },
+      "id": "2b14ef95-b686-436b-a777-cff4e921d1d6",
+      "name": "Zep1",
+      "type": "@n8n/n8n-nodes-langchain.memoryZep",
+      "position": [
+        2944,
+        256
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "zepApi": {
+          "id": "0YRafV7HZBQTj6TN",
+          "name": "Zep Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.postHogTool",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        240
+      ],
+      "id": "f9dde189-d2f2-435e-ac6a-42748e2f2fe3",
+      "name": "Create an event in PostHog",
+      "disabled": true
+    }
+  ],
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -455,11 +336,11 @@
   },
   "shared": [
     {
-      "updatedAt": "2025-11-15T17:05:47.569Z",
-      "createdAt": "2025-11-15T17:05:47.569Z",
+      "updatedAt": "2025-11-15T22:57:26.437Z",
+      "createdAt": "2025-11-15T22:57:26.437Z",
       "role": "workflow:owner",
       "workflowId": "PCwmWkmAiMIY1pT3",
-      "projectId": "aix07FVWZm3Huc5c"
+      "projectId": "BsEkts84hFqBpbNv"
     }
   ],
   "staticData": null,
@@ -478,6 +359,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-15T17:05:47.627Z",
-  "versionId": "de38a3c9-cb5d-40ff-96f9-e99652323b79"
+  "updatedAt": "2025-11-16T02:13:18.312Z",
+  "versionId": "32050cae-85e0-460f-859b-2917ade5d751"
 }
