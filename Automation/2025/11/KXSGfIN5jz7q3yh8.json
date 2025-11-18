@@ -1,0 +1,117 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Upload fileSearch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-18T05:39:37.136Z",
+  "id": "KXSGfIN5jz7q3yh8",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 20",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        0
+      ],
+      "id": "72b0876f-48a3-49f2-b412-30e3f57e8885",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1-6m1NTx2poZodsK61rPaZlwgQpRK3fqX",
+          "mode": "list",
+          "cachedResultName": " DICIEMBRE MANTENIMIENTO NEVERA consultorio 202.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1-6m1NTx2poZodsK61rPaZlwgQpRK3fqX/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -48,
+        0
+      ],
+      "id": "b48eaa4f-afe8-40e5-b53e-718c34c7ebdd",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "prp58vnDQXfpcpii",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "uploadStoreName": "fileSearchStores/test1-saw2ehf1hjs4",
+        "uploadDisplayName": "test",
+        "uploadMimeType": "application/pdf"
+      },
+      "type": "n8n-nodes-gemini-file-search-store.geminiFileSearch",
+      "typeVersion": 1,
+      "position": [
+        256,
+        0
+      ],
+      "id": "67d2481c-c5c4-46b5-bdfc-83165c258be3",
+      "name": "Upload fileSearch",
+      "credentials": {
+        "geminiApi": {
+          "id": "mJpUVUJxoPIIo4B9",
+          "name": "Gemini account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-18T05:39:37.136Z",
+      "createdAt": "2025-11-18T05:39:37.136Z",
+      "role": "workflow:owner",
+      "workflowId": "KXSGfIN5jz7q3yh8",
+      "projectId": "wc1Sxw5ieho7N29o"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-18T15:38:41.159Z",
+  "versionId": "5ccbdf09-27a5-47c4-b68d-70c9327c97ad"
+}
