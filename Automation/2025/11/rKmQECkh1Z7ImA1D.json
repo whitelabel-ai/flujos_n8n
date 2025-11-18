@@ -1,0 +1,451 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Existe Parent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get subItem": {
+      "main": [
+        [
+          {
+            "node": "Existe Sub Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Element": {
+      "main": [
+        [
+          {
+            "node": "Get subItem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Existe Parent": {
+      "main": [
+        [
+          {
+            "node": "Get Element",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Existe Sub Item": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get Service",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Service": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Precio": {
+      "main": [
+        [
+          {
+            "node": "Set Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Set Precio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-18T18:32:47.439Z",
+  "id": "rKmQECkh1Z7ImA1D",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 21",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "update-values",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1840,
+        320
+      ],
+      "id": "917a377c-dc0c-4d94-a58b-fce42146a403",
+      "name": "Webhook",
+      "webhookId": "c89aa0fa-d0c0-4c77-a381-3545c95cba4e"
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "get",
+        "itemId": "={{ $('Webhook').item.json.event.pulseId.toString() }}"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        -1184,
+        320
+      ],
+      "id": "5bd9bb14-dd2b-4e5b-843d-c5ed864f1a45",
+      "name": "Get subItem",
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "get",
+        "itemId": "={{ $('Webhook').item.json.event.parentItemId }}"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        -1392,
+        320
+      ],
+      "id": "b08799b1-e211-4d66-942d-dd6f8c8beabd",
+      "name": "Get Element",
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b77635d0-e009-4e19-8c15-41dd13d315d6",
+              "leftValue": "={{ $('Webhook').item.json.event.parentItemId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1616,
+        320
+      ],
+      "id": "a0c92ef1-76f6-4c9e-848f-f0d18320c097",
+      "name": "Existe Parent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1f2b1304-fa37-46b1-a400-f7bac8ca9304",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -992,
+        320
+      ],
+      "id": "d5881f1e-ec44-472a-b0b4-65eb4b771330",
+      "name": "Existe Sub Item"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "be5e6a2d-9b4d-420b-b490-49ea91acd26a",
+              "leftValue": "={{ $('Get subItem').item.json.column_values[0].column.title }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "4e12d217-5e84-46be-9f50-336a90a1682c",
+              "leftValue": "={{ $('Get subItem').item.json.column_values[2].value }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        304
+      ],
+      "id": "a412c6f6-7ead-4108-80dc-3d93e026cf3c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "get",
+        "itemId": "={{ \n  (() => {\n    const col = $json.column_values.find(x => x.id === \"board_relation\");\n    if (!col || !col.value) return null;\n    try {\n      const v = JSON.parse(col.value);\n      return v?.linkedPulseIds?.[0]?.linkedPulseId ?? null;\n    } catch (e) {\n      return null;\n    }\n  })()\n}}\n"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        224
+      ],
+      "id": "f0f4cd1b-a564-4cba-a916-a08ca781926e",
+      "name": "Get Service",
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "changeColumnValue",
+        "boardId": "6381258653",
+        "itemId": "=9248497956",
+        "columnId": "n_meros__1"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        208
+      ],
+      "id": "a4470c82-2ce3-4eb8-abdf-e1c05a3eed72",
+      "name": "Set Precio",
+      "alwaysOutputData": true,
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "changeColumnValue",
+        "boardId": "6381258653",
+        "itemId": "={{ $('Get subItem').item.json.id }}",
+        "columnId": "n_meros__1",
+        "value": "={{ $('Get subItem').item.json.column_values[1].text }}"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        176,
+        208
+      ],
+      "id": "e4a6a38b-da80-45e3-bc86-dcf503c42e51",
+      "name": "Set Name",
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d48c8834-90ef-4c43-a39f-dddef4d4978f",
+              "name": "id",
+              "value": "={{ $('Get subItem').item.json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "c202c874-4c84-4357-9e2d-1192ff416f93",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "cb185799-9573-4a04-8ba0-51d8672c8cd9",
+              "name": "precio",
+              "value": "={{ $json.column_values[1].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        224
+      ],
+      "id": "d7551bc9-2359-41be-af33-3c0b25a01d48",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "event": {
+            "app": "monday",
+            "type": "update_column_value",
+            "triggerTime": "2025-11-18T15:02:41.669Z",
+            "subscriptionId": 422137026,
+            "isRetry": false,
+            "userId": -4,
+            "originalTriggerUuid": null,
+            "boardId": 6381258653,
+            "groupId": "topics",
+            "pulseId": 9248497956,
+            "pulseName": "1",
+            "columnId": "n_meros6__1",
+            "columnType": "numeric",
+            "columnTitle": "Increase",
+            "value": {
+              "value": 2,
+              "unit": null
+            },
+            "previousValue": {
+              "value": 1,
+              "unit": null
+            },
+            "changedAt": 1763478160.8868785,
+            "isTopGroup": true,
+            "triggerUuid": "49a2c806c7ac13abfb836411c8c30d80",
+            "parentItemId": "9248486608",
+            "parentItemBoardId": "6380914195"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-18T18:32:47.439Z",
+      "createdAt": "2025-11-18T18:32:47.439Z",
+      "role": "workflow:owner",
+      "workflowId": "rKmQECkh1Z7ImA1D",
+      "projectId": "HkjiorTsa82BndL3"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-18T18:32:47.439Z",
+  "versionId": "4f462bbc-d99a-4070-8388-098c73733cc2"
+}
