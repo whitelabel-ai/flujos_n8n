@@ -1,0 +1,755 @@
+{
+  "active": false,
+  "connections": {
+    "Sentiment Analysis": {
+      "main": [
+        [
+          {
+            "node": "Construir mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notificar comprador Urgente Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Notficar Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger formulario": {
+      "main": [
+        [
+          {
+            "node": "Normalizar datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar datos": {
+      "main": [
+        [
+          {
+            "node": "Excluir platzi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Excluir platzi": {
+      "main": [
+        [
+          {
+            "node": "Clasificar mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clasificar mensaje": {
+      "main": [
+        [
+          {
+            "node": "Ruta por intencion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cerebro": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Clasificar mensaje",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Sentiment Analysis",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cerebro1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Construir mensaje",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ruta por intencion": {
+      "main": [
+        [
+          {
+            "node": "Notificar lead slack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar info Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sentiment Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notificar compra Slack",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enviar mensaje Comprador Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar mensaje Comprador Gmail": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construir mensaje": {
+      "main": [
+        [
+          {
+            "node": "Enviar mensaje estructurado según la necesidad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar mensaje estructurado según la necesidad": {
+      "main": [
+        [
+          {
+            "node": "Guardar recursos administrativos del usuario sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-18T15:03:02.294Z",
+  "id": "EmNyoHXdFVrGPWXb",
+  "isArchived": false,
+  "meta": null,
+  "name": "Clasificador inteligente lead",
+  "nodes": [
+    {
+      "parameters": {
+        "inputText": "={{ $('Normalizar datos').item.json.mensaje }}",
+        "options": {
+          "categories": "Positive, Negative"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.sentimentAnalysis",
+      "typeVersion": 1.1,
+      "position": [
+        -64,
+        576
+      ],
+      "id": "ac8f040a-aa76-402e-9267-659afefbba95",
+      "name": "Sentiment Analysis"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        352,
+        928
+      ],
+      "id": "41c9d6e8-056d-42c0-bf07-2654d315f7c5",
+      "name": "Wait",
+      "webhookId": "f6bed2d1-84ce-4468-ad7c-62e01622c7a8"
+    },
+    {
+      "parameters": {
+        "formTitle": "Lead",
+        "formDescription": "Quiero comprar tu producto.\n\nrellena los campos para así poder iniciar un proceso de comunicación entre nosotros. (Todos los campos son requeridos).",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "name",
+              "placeholder": "pepo",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "email",
+              "fieldType": "email",
+              "placeholder": "pepoperesozo@gmail.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "mensaje",
+              "fieldType": "textarea",
+              "placeholder": "me interesa demo",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -1312,
+        384
+      ],
+      "id": "d0be5931-fa2e-4886-8ffe-4c73720727c0",
+      "name": "Trigger formulario",
+      "webhookId": "5505a30b-02a7-40be-9618-b77093f8a1d4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3832767a-fcab-4e2f-8f43-880d8d369562",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "4c3afccd-9716-4984-b7a7-55ede635d5fc",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "6a4eeda1-8379-422d-8051-5aa70d975e33",
+              "name": "mensaje",
+              "value": "={{ $json.mensaje }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1088,
+        384
+      ],
+      "id": "e4e4f06d-b2b3-4002-b19c-7908fee0b5ac",
+      "name": "Normalizar datos"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "28e9a1b3-2935-4e40-8831-d8f8c7842a82",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "@platzi.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -864,
+        384
+      ],
+      "id": "1a1c10a0-5ecf-482b-886f-37f79ebeb97f",
+      "name": "Excluir platzi"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.mensaje }}",
+        "options": {
+          "systemMessage": "cataloga este mensaje en una de estas opciones: info, demo, compra y soporte.\n\nla respuesta tiene que ser una categoría en minúsculas."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -640,
+        384
+      ],
+      "id": "223e2d9b-f865-4c4f-87e2-d59ed4d0ae44",
+      "name": "Clasificar mensaje"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        608
+      ],
+      "id": "b447c783-b617-44e2-ac9f-d6b37d1bc2b0",
+      "name": "Cerebro"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        368,
+        560
+      ],
+      "id": "a2b8b57a-4458-44ef-8909-ac108dda4fc0",
+      "name": "Cerebro1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "demo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "37fc2c3b-3e13-44b8-889c-cb744c236b05"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Demo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7d976cf5-5990-4fb7-ac80-31ff6430c0de",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "info",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Info"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e7f52f81-2f4f-46be-98ce-cdd446a84af1",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "soporte",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Soporte"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2ff6b00e-4667-44ed-b895-d2a49f487f29",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "compra",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Compra"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -288,
+        352
+      ],
+      "id": "6c39ab1e-e152-44bc-87a4-7d697cf2fb0c",
+      "name": "Ruta por intencion"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09T0FM0CE6",
+          "mode": "list",
+          "cachedResultName": "sellers-test"
+        },
+        "text": "=Tenemos un nuevo seller: {{ $('Excluir platzi').item.json.name }}  \n\nque tiene por correo: {{ $('Excluir platzi').item.json.email }} \n\ncomunicarse con el para iniciar charlas.\n\nTengamos en cuenta su mensaje: {{ $('Normalizar datos').item.json.mensaje }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7f3cb2e4-a3e3-4f02-af42-f5ec5d898801",
+      "name": "Notificar lead slack",
+      "webhookId": "9c270fce-5b1f-46e8-9162-cddf6c920d6f"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Normalizar datos').item.json.email }}",
+        "subject": "Información para compradores.",
+        "message": "=Hola: {{ $('Excluir platzi').item.json.name }} hemos visto su mensaje en el que solicita informacion, en el siguiente enlace podra encontrar lo que desea: https://n8n.io",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        192
+      ],
+      "id": "104dd618-12c3-42d0-9751-aab95d153c0c",
+      "name": "Enviar info Gmail",
+      "webhookId": "6c0cd434-831c-4894-966e-ad5d6d569c27"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09T0FM0CE6",
+          "mode": "list",
+          "cachedResultName": "sellers-test"
+        },
+        "text": "=Tenemos un interesado en comprar aprovechemos el interez: {{ $('Excluir platzi').item.json.name }}  \n\nque tiene por correo: {{ $('Excluir platzi').item.json.email }} \n\ncomunicarse con el para iniciar charlas.\n\nTengamos en cuenta su mensaje: {{ $('Normalizar datos').item.json.mensaje }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        384
+      ],
+      "id": "3e6c58bf-e031-4185-8b7f-5245d3df9d00",
+      "name": "Notificar compra Slack",
+      "webhookId": "9c270fce-5b1f-46e8-9162-cddf6c920d6f"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Normalizar datos').item.json.email }}",
+        "subject": "Para potenciales compradores.",
+        "message": "=Hola: {{ $('Excluir platzi').item.json.name }} gracias por interesarze en comprar nuestro producto, bienvenido a la familia",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        928
+      ],
+      "id": "58489a1b-a805-4a9b-989d-048c787f723c",
+      "name": "Enviar mensaje Comprador Gmail",
+      "webhookId": "6c0cd434-831c-4894-966e-ad5d6d569c27"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09SYE4E830",
+          "mode": "list",
+          "cachedResultName": "soporte-test"
+        },
+        "text": "=Tenemos un comprador que necesita ser atendido urgentemente: {{ $('Excluir platzi').item.json.name }}  \n\nque tiene por correo: {{ $('Excluir platzi').item.json.email }} \n\ncomunicarse con el para iniciar charlas.\n\nTengamos en cuenta su mensaje: {{ $('Normalizar datos').item.json.mensaje }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        352,
+        736
+      ],
+      "id": "f0ac56fa-3aa0-43c2-b533-81d96de0064e",
+      "name": "Notificar comprador Urgente Slack",
+      "webhookId": "9c270fce-5b1f-46e8-9162-cddf6c920d6f"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Normalizar datos').item.json.mensaje }}",
+        "options": {
+          "systemMessage": "Genera una respuesta en modo texto que solucione el problema del cliente.\nSi es genérico, pregúntale cómo le podemos ayudar y que nos dé más detalles."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        288,
+        336
+      ],
+      "id": "b72f48f9-376b-49f9-a463-87896fb5f479",
+      "name": "Construir mensaje"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "user",
+        "user": {
+          "__rl": true,
+          "value": "U09MLP4LSMR",
+          "mode": "list",
+          "cachedResultName": "andresamullano"
+        },
+        "text": "=recuerden hacer el segumiento.\n\nde: {{ $('Excluir platzi').item.json.name }}  \n\ncorreo: {{ $('Excluir platzi').item.json.email }} \n\n",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        640,
+        928
+      ],
+      "id": "a06bce59-d3a5-4ca9-ae69-d1664df383c3",
+      "name": "Notficar Slack",
+      "webhookId": "9c270fce-5b1f-46e8-9162-cddf6c920d6f"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Normalizar datos').item.json.email }}",
+        "subject": "Soporte para compradores.",
+        "message": "=\n<!DOCTYPE html>\n<html>\n  <body style=\"Margin:0;padding:0;background-color:#f4f4f4;\">\n    <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#f4f4f4;\">\n      <tr>\n        <td align=\"center\">\n          <!-- Contenedor principal -->\n          <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#ffffff;border-radius:8px;box-shadow:0 2px 8px #e0e0e0;\">\n            <!-- Cabecera personalizada -->\n            <tr>\n              <td align=\"center\" style=\"background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%); padding: 40px 0 25px 0; border-radius:8px 8px 0 0;\">\n                <h1 style=\"color:#fff; font-family:Arial,Helvetica,sans-serif; margin:0; font-size:2.2em; letter-spacing:1px;\">¡Bienvenido/a a Nuestra Comunidad!</h1>\n                <p style=\"color:#dbeafe; font-family:Arial,Helvetica,sans-serif; margin-top:12px; font-size:1.1em;\">\n                  Nos alegra tenerte con nosotros ❤️\n                </p>\n              </td>\n            </tr>\n            <!-- Cuerpo personalizado del mensaje -->\n            <tr>\n              <td style=\"padding: 32px 28px 32px 28px; font-family:Arial,Helvetica,sans-serif; color:#1e293b; font-size:1.1em; line-height:1.7;\">\n            {{ $('Excluir platzi').item.json.name }}  {{ $json.output }}\n              </td>\n            </tr>\n            <!-- Pie de página simple -->\n            <tr>\n              <td align=\"center\" style=\"padding: 16px 0 10px 0; border-top:1px solid #e0e7ef; background-color:#f8fafc; color:#64748b; font-size:0.9em; font-family:Arial,Helvetica,sans-serif;\">\n                © 2025 Tu Empresa. Todos los derechos reservados.\n              </td>\n            </tr>\n          </table>\n        </td>\n      </tr>\n    </table>\n  </body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        432
+      ],
+      "id": "6a9d11df-6e7c-48f3-9235-3f0d02f6dbb2",
+      "name": "Enviar mensaje estructurado según la necesidad",
+      "webhookId": "6c0cd434-831c-4894-966e-ad5d6d569c27"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1IpTyHfh29MdVUFiXfvi484aqSVHndShPZNe3y0pMmT0",
+          "mode": "list",
+          "cachedResultName": "Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IpTyHfh29MdVUFiXfvi484aqSVHndShPZNe3y0pMmT0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IpTyHfh29MdVUFiXfvi484aqSVHndShPZNe3y0pMmT0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "fecha de incidencia": "={{ $('Trigger formulario').item.json.submittedAt }}",
+            "nombre": "={{ $('Normalizar datos').item.json.name }}",
+            "email": "={{ $('Normalizar datos').item.json.email }}",
+            "error del cliente": "={{ $('Normalizar datos').item.json.mensaje }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fecha de incidencia",
+              "displayName": "fecha de incidencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error del cliente",
+              "displayName": "error del cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        864,
+        432
+      ],
+      "id": "5b42d708-996d-4164-9b79-5a0b9fe7d939",
+      "name": "Guardar recursos administrativos del usuario sheets"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-18T15:03:02.294Z",
+      "createdAt": "2025-11-18T15:03:02.294Z",
+      "role": "workflow:owner",
+      "workflowId": "EmNyoHXdFVrGPWXb",
+      "projectId": "s48f8ZkY9UxLCxeQ"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-11-18T15:02:51.366Z",
+      "createdAt": "2025-11-18T15:02:51.366Z",
+      "id": "iCMUneQBbt9pyytF",
+      "name": "trabajo"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-18T15:03:02.294Z",
+  "versionId": "38de0a29-2e16-4e8d-ab2d-d7a7b0babd76"
+}
