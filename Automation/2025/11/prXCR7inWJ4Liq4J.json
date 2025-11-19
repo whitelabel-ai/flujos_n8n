@@ -1,0 +1,226 @@
+{
+  "active": false,
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read URLs Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read URLs Sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter Pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Pendientes": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-19T02:06:14.254Z",
+  "id": "prXCR7inWJ4Liq4J",
+  "isArchived": false,
+  "meta": null,
+  "name": "Extraccion PDF → Historicos",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d71359f0-2291-487b-916b-3ce8195ea49f",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        16,
+        -16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "0eb2f2f0-2c3e-4d62-b13d-b52bb662c60f",
+      "name": "Read URLs Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        240,
+        -16
+      ],
+      "typeVersion": 4.7
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"Estado_Extraccion\"] }}",
+              "operation": "equal",
+              "value2": "Pendiente"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e1d3d4a3-63bb-4c2c-87ef-e42b1217475a",
+      "name": "Filter Pendientes",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        480,
+        -16
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0d16ef7d-89fa-4d84-b29e-750dff8dd6d6",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        704,
+        -128
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"URL_PDF\"] }}",
+        "options": {}
+      },
+      "id": "4fc9deeb-7d18-4fda-9db5-58efd3e58352",
+      "name": "Download PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        704,
+        80
+      ],
+      "typeVersion": 4.3
+    },
+    {
+      "parameters": {},
+      "id": "51b443ec-645d-41aa-99cc-1e9d48d8de6a",
+      "name": "Gemini Analyze Document",
+      "type": "n8n-nodes-base.aiGoogleGemini",
+      "position": [
+        1200,
+        -16
+      ],
+      "typeVersion": 1,
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c55aacbc-6d85-4b5d-a831-8b60c2e78c19",
+      "name": "Prepare Output",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1456,
+        -16
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "f43823a2-b34a-4684-81e9-438d6ccb122c",
+      "name": "Append Destino",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1696,
+        -16
+      ],
+      "typeVersion": 4.7
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "a95f2cae-4e23-40d0-a5d2-2dff741d1f70",
+      "name": "Update Origen",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1952,
+        -16
+      ],
+      "typeVersion": 4.7
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-19T02:06:14.254Z",
+      "createdAt": "2025-11-19T02:06:14.254Z",
+      "role": "workflow:owner",
+      "workflowId": "prXCR7inWJ4Liq4J",
+      "projectId": "nfeOgNZ0Q89hgHph"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-19T02:06:14.254Z",
+  "versionId": "5e8bbb04-94d7-4466-a16b-f3a29021e34a"
+}
