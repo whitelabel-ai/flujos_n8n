@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Telegram Trigger": {
       "main": [
@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "Create a score",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -36,7 +36,13 @@
     },
     "Pinecone Vector Store": {
       "ai_tool": [
-        []
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
       ]
     },
     "Embeddings OpenAI": {
@@ -45,17 +51,6 @@
           {
             "node": "Pinecone Vector Store",
             "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Zep": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent with Langfuse",
-            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -72,11 +67,121 @@
         ]
       ]
     },
-    "Create a score": {
+    "Zep": {
+      "ai_memory": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        []
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Langfuse Prompt1": {
+      "main": [
+        [
+          {
+            "node": "Marketing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Marketing",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Marketing",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Marketing",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
       "main": [
         [
           {
             "node": "Send Telegram Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Langfuse Prompt1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Marketing": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Response1",
             "type": "main",
             "index": 0
           }
@@ -87,7 +192,9 @@
   "createdAt": "2025-11-16T02:25:55.554Z",
   "id": "sXMC3o2BLRkXhlMZ",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Agente Coordinador",
   "nodes": [
     {
@@ -102,8 +209,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        48,
-        32
+        320,
+        -112
       ],
       "webhookId": "2ce1397d-36d6-45ba-b5cf-18e5e162672a",
       "credentials": {
@@ -115,8 +222,8 @@
     },
     {
       "parameters": {
-        "promptName": "<__PLACEHOLDER_VALUE__Langfuse prompt name__>",
-        "label": "<__PLACEHOLDER_VALUE__Prompt version or leave empty for latest__>",
+        "promptName": "=Orquestador",
+        "label": "latest",
         "requestOptions": {}
       },
       "id": "6ee6ce10-4510-4fa5-b166-48a345239ba5",
@@ -124,8 +231,8 @@
       "type": "@langfuse/n8n-nodes-langfuse.langfuse",
       "typeVersion": 1,
       "position": [
-        272,
-        32
+        528,
+        -112
       ],
       "credentials": {
         "langfuseApi": {
@@ -137,10 +244,14 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $json.message.text }}",
-        "langfuseMetadata": {},
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "langfuseMetadata": {
+          "sessionId": "=Test {{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "userId": "=Test  {{ $('Telegram Trigger').item.json.message.chat.first_name }} {{ $('Telegram Trigger').item.json.message.chat.last_name }}"
+        },
         "options": {
-          "systemMessage": "You are a helpful AI assistant with access to a knowledge base through Pinecone vector store. Use the retrieval tool to search for relevant information when answering user questions. Provide accurate and helpful responses based on the retrieved context."
+          "systemMessage": "={{ $json.prompt }}",
+          "returnIntermediateSteps": true
         }
       },
       "id": "147479da-6577-4477-9f3e-46d4bc1a36ec",
@@ -148,16 +259,15 @@
       "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
       "typeVersion": 2,
       "position": [
-        464,
-        32
+        768,
+        -112
       ],
       "credentials": {
         "langfuseCustomApi": {
           "id": "k9vnL2FHlJlGgUZg",
           "name": "Jazmin - agent - node"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -165,34 +275,45 @@
         "toolDescription": "Search the knowledge base for relevant information to answer user questions",
         "pineconeIndex": {
           "__rl": true,
-          "mode": "id",
-          "value": "<__PLACEHOLDER_VALUE__Pinecone index name__>"
+          "value": "=marketing",
+          "mode": "id"
         },
-        "options": {}
+        "options": {
+          "pineconeNamespace": "=INFO GENERAL QUALITY ACADEMICS"
+        }
       },
       "id": "dd6f3de4-f07c-4cf6-9cbf-66e71f1ca0c0",
       "name": "Pinecone Vector Store",
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        1424,
-        288
+        1168,
+        160
       ],
-      "disabled": true
+      "credentials": {
+        "pineconeApi": {
+          "id": "tCmUrd48LCli0V4p",
+          "name": "Quality Consultant"
+        }
+      }
     },
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
         "text": "={{ $json.output }}",
-        "additionalFields": {}
+        "replyMarkup": "forceReply",
+        "forceReply": {},
+        "additionalFields": {
+          "appendAttribution": false
+        }
       },
       "id": "292f4571-a0a8-41f9-9f86-19f959b47a6f",
       "name": "Send Telegram Response",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1120,
-        32
+        1408,
+        -416
       ],
       "webhookId": "8ba629ec-87ed-43d3-a5c5-f5d08e919088",
       "credentials": {
@@ -204,6 +325,7 @@
     },
     {
       "parameters": {
+        "model": "text-embedding-3-large",
         "options": {}
       },
       "id": "86a8cb94-7dca-44bb-93fb-1654ee7e4a00",
@@ -211,31 +333,15 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        832,
-        464
+        1168,
+        336
       ],
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
-      },
-      "id": "ae89e7c9-cf4b-4fe5-88ac-fb32332a37d4",
-      "name": "Zep",
-      "type": "@n8n/n8n-nodes-langchain.memoryZep",
-      "position": [
-        576,
-        288
-      ],
-      "typeVersion": 1.3,
       "credentials": {
-        "zepApi": {
-          "id": "0YRafV7HZBQTj6TN",
-          "name": "Zep Api account"
+        "openAiApi": {
+          "id": "izRAHrW2LMxYF5JG",
+          "name": "OpenAi account 3"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -244,8 +350,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        432,
-        240
+        544,
+        144
       ],
       "id": "0c2160e9-f10d-4b15-8cbc-a44afec1cd07",
       "name": "Google Gemini Chat Model",
@@ -258,34 +364,405 @@
     },
     {
       "parameters": {
-        "resource": "score",
-        "scoreName": "test",
-        "scoreValue": 1,
-        "additionalFields": {}
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
       },
-      "type": "@x_tructure/n8n-nodes-langfuse-all.langfuse",
+      "id": "ae89e7c9-cf4b-4fe5-88ac-fb32332a37d4",
+      "name": "Zep",
+      "type": "@n8n/n8n-nodes-langchain.memoryZep",
+      "position": [
+        1792,
+        -816
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "zepApi": {
+          "id": "0YRafV7HZBQTj6TN",
+          "name": "Zep Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.message.text }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "marketing",
+              "description": "Toda consulta sobre cursos, ventas, certificaciones"
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "Please classify the text provided by the user into one of the following categories: {categories}, and use the provided formatting instructions below. Don't explain, and only output the json."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        -816
+      ],
+      "id": "c4a438bf-721d-4b00-a6ce-18ef95467723",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        832,
+        720,
+        -560
+      ],
+      "id": "15c09767-7fef-460b-bd16-7919f9f09cb1",
+      "name": "Google Gemini Chat Model1",
+      "notesInFlow": false,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "H0qvKW0CLjMzptnh",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=id_{{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        864,
+        176
+      ],
+      "id": "9ac74c66-1c38-45ed-93f4-f5910c963ab2",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.pinecone.io/indexes",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Api-Key",
+              "value": "pcsk_5vfUTF_SXLLqKGZm3fcSgwC1XrFtCemjc6EFyrieUG2c3DAQ9CukZ7RDmXJ95uzrczmyHU"
+            },
+            {
+              "name": "X-Pinecone-API-Version",
+              "value": "2025-04"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1568,
+        -832
+      ],
+      "id": "803471fe-1511-4c68-95dc-c738a9df773c",
+      "name": "Pinecone Indexes",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "https://marketing-u7ho7oe.svc.aped-4627-b74a.pinecone.io/namespaces",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Api-Key",
+              "value": "pcsk_5vfUTF_SXLLqKGZm3fcSgwC1XrFtCemjc6EFyrieUG2c3DAQ9CukZ7RDmXJ95uzrczmyHU"
+            },
+            {
+              "name": "X-Pinecone-API-Version",
+              "value": "2025-04"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1360,
+        -832
+      ],
+      "id": "f5224ff9-1d23-4ca2-96e4-cf9bc49e7bcf",
+      "name": "Pinecone Marketing Namespaces"
+    },
+    {
+      "parameters": {
+        "promptName": "=marketing",
+        "label": "latest",
+        "requestOptions": {}
+      },
+      "id": "7d044f84-4112-4e62-ab3a-3b9262d38344",
+      "name": "Get Langfuse Prompt1",
+      "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+      "typeVersion": 1,
+      "position": [
+        1440,
         -96
       ],
-      "id": "7a71e343-30ee-4de2-949c-799d1b886abc",
-      "name": "Create a score",
       "credentials": {
         "langfuseApi": {
           "id": "7MKcbbH4I1FJMU1f",
           "name": "Jazmin"
         }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search the knowledge base for relevant information to answer user questions",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "=marketing",
+          "mode": "id"
+        },
+        "options": {
+          "pineconeNamespace": "=cursos y diplomados"
+        }
       },
-      "disabled": true
+      "id": "e9e5e677-19f4-4ea7-a862-cb164ebf4e2a",
+      "name": "Pinecone Vector Store1",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        2112,
+        272
+      ],
+      "credentials": {
+        "pineconeApi": {
+          "id": "tCmUrd48LCli0V4p",
+          "name": "Quality Consultant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "id": "ecedf805-60ff-48d7-b2a1-99c1f995ff7d",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2112,
+        496
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "izRAHrW2LMxYF5JG",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        272
+      ],
+      "id": "149c4ba2-f96c-4f80-bf25-8abaa45f96ef",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "H0qvKW0CLjMzptnh",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=id_{{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        1920,
+        272
+      ],
+      "id": "2e6554a8-f84d-40ff-9e10-5d820274cb55",
+      "name": "Redis Chat Memory1",
+      "credentials": {
+        "redis": {
+          "id": "yzvE00xFtVHtaoZ1",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f68def99-afac-4713-a0a9-428ad1bd2b7d",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "solicitud_usuario",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        -112
+      ],
+      "id": "603ff7e7-857c-4d9d-97b0-f38d4664c689",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Usa esta herramienta para obtener link de pagos y PDF's de los cursos y diplomados",
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pssedhkwubcbg34",
+        "table": "mmk7sq4izx00ir6",
+        "returnAll": true,
+        "downloadAttachments": true,
+        "downloadFieldNames": "={{ $fromAI('Download_Fields', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDbTool",
+      "typeVersion": 3,
+      "position": [
+        2368,
+        64
+      ],
+      "id": "2bae03c3-3820-451d-97c0-9d2249745652",
+      "name": "NocoDB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('AI Agent with Langfuse').item.json.output }}",
+        "langfuseMetadata": {
+          "sessionId": "=Test {{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "userId": "=Test  {{ $('Telegram Trigger').item.json.message.chat.first_name }} {{ $('Telegram Trigger').item.json.message.chat.last_name }}"
+        },
+        "options": {
+          "systemMessage": "={{ $json.prompt }}",
+          "returnIntermediateSteps": true
+        }
+      },
+      "id": "b86b1c23-9a64-4d56-b464-1aac62fc7dc4",
+      "name": "Marketing",
+      "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+      "typeVersion": 2,
+      "position": [
+        1696,
+        -112
+      ],
+      "credentials": {
+        "langfuseCustomApi": {
+          "id": "k9vnL2FHlJlGgUZg",
+          "name": "Jazmin - agent - node"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "6cc6196f-4fc4-42ba-8b10-0e96a4bb507f",
+      "name": "Send Telegram Response1",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2864,
+        -336
+      ],
+      "webhookId": "8ba629ec-87ed-43d3-a5c5-f5d08e919088",
+      "credentials": {
+        "telegramApi": {
+          "id": "lZ9E2yRzldM6NmO8",
+          "name": "Jazmin"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "json": {
+          "update_id": 489753467,
+          "message": {
+            "message_id": 418,
+            "from": {
+              "id": 176878701,
+              "is_bot": false,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "language_code": "es"
+            },
+            "chat": {
+              "id": 176878701,
+              "first_name": "Andres",
+              "last_name": "Corral",
+              "username": "AndresCorralCOL",
+              "type": "private"
+            },
+            "date": 1763565857,
+            "text": "tienen algun cursos de six sigma?"
+          }
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   },
   "shared": [
     {
@@ -299,6 +776,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-11-18T03:36:48.336Z",
-  "versionId": "af9fb416-94e0-402c-8815-85175186841e"
+  "updatedAt": "2025-11-19T22:15:48.503Z",
+  "versionId": "36bbfa36-32d2-4ea3-8caf-6110df46a653"
 }
