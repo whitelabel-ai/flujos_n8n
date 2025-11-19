@@ -1,0 +1,208 @@
+{
+  "active": false,
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-11-18T15:04:41.900Z",
+  "id": "l7Em7Gr0IdZ4P5Uy",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Linkedin Post Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pbyzm06qhp068f6",
+        "table": "mfpu4n1rjjsiyyk",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Idea",
+              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Idea }}"
+            },
+            {
+              "fieldName": "Perfil",
+              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Autor }}"
+            },
+            {
+              "fieldName": "Contenido Linkedin",
+              "fieldValue": "={{ $json['Post Generado'] }}"
+            },
+            {
+              "fieldName": "Aprobado",
+              "fieldValue": "Falso"
+            },
+            {
+              "fieldName": "Publicado",
+              "fieldValue": "Falso"
+            },
+            {
+              "fieldName": "Fecha y Hora",
+              "fieldValue": "={{ $('Google Sheets Trigger').item.json['Fecha y hora'] }}"
+            },
+            {
+              "fieldName": "Categoria",
+              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Categoria }}"
+            },
+            {
+              "fieldName": "Prioridad",
+              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Prioridad }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        240,
+        496
+      ],
+      "id": "babdd335-ee11-464b-b16d-1dd46bcf5963",
+      "name": "Create a row",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "od6Ytt9qSUlGVvJb",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1XxuTAy50zNgOL020Oduf3WGnTmCo-CJ7cUYqYuRSKfg",
+          "mode": "list",
+          "cachedResultName": "Sheets Linkedin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XxuTAy50zNgOL020Oduf3WGnTmCo-CJ7cUYqYuRSKfg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet Idea",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XxuTAy50zNgOL020Oduf3WGnTmCo-CJ7cUYqYuRSKfg/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        496
+      ],
+      "id": "fd1b0d7c-a862-49e9-9987-36d890922c0b",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "u3deCik31FamwyAF",
+          "name": "Google Sheets Trigger account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un experto en marketing digital.\nGenera un post para LinkedIn a partir de la siguiente idea.\n\nIdea: {{$json[\"Idea\"]}}\nAutor: {{$json[\"Autor\"]}}\nCategoría: {{$json[\"Categoria\"]}}\nPrioridad: {{$json[\"Prioridad\"]}}\n\nDevuelve solo el texto del post, sin explicación adicional.\n",
+        "options": {
+          "systemMessage": "=Eres un experto en marketing digital.\nGenera un post para LinkedIn a partir de la siguiente idea.\n\nIdea: {{$json[\"Idea\"]}}\nAutor: {{$json[\"Autor\"]}}\nCategoría: {{$json[\"Categoria\"]}}\nPrioridad: {{$json[\"Prioridad\"]}}\n\nDevuelve solo el texto del post, sin explicación adicional.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        496
+      ],
+      "id": "bdcda101-5a1d-4d67-85d8-99409830c126",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -8,
+        720
+      ],
+      "id": "cc03fce0-2418-4352-b24c-7c3aeecc16b6",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-18T15:04:41.900Z",
+      "createdAt": "2025-11-18T15:04:41.900Z",
+      "role": "workflow:owner",
+      "workflowId": "l7Em7Gr0IdZ4P5Uy",
+      "projectId": "s48f8ZkY9UxLCxeQ"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-19T21:05:38.608Z",
+  "versionId": "ccc48153-0524-4838-aa44-ecc450161a97"
+}
