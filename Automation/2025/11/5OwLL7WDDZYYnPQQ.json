@@ -3,13 +3,7 @@
   "connections": {
     "Every 15 Minutes": {
       "main": [
-        [
-          {
-            "node": "Workflow Configuration",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Workflow Configuration": {
@@ -66,6 +60,17 @@
           }
         ]
       ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-11-19T21:06:02.296Z",
@@ -81,7 +86,7 @@
         "rule": {
           "interval": [
             {
-              "field": "hours"
+              "field": "minutes"
             }
           ]
         }
@@ -91,9 +96,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        320,
-        128
-      ]
+        368,
+        -112
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -101,8 +107,8 @@
           "assignments": [
             {
               "id": "id-1",
-              "name": "nocoDbTableName",
-              "value": "Post Linkedin",
+              "name": "nocoDbTableId",
+              "value": "mfpu4n1rjjsiyyk",
               "type": "string"
             },
             {
@@ -136,11 +142,9 @@
         "authentication": "nocoDbApiToken",
         "operation": "getAll",
         "projectId": "pbyzm06qhp068f6",
-        "table": "={{ $('Workflow Configuration').first().json.nocoDbTableName }}",
+        "table": "={{ $json.nocoDbTableId }}",
         "returnAll": true,
-        "options": {
-          "where": "={{ '(status,eq,' + $('Workflow Configuration').first().json.statusApproved + ')' }}"
-        }
+        "options": {}
       },
       "id": "2cc822ca-3ef1-4eb0-abc4-3b497ebca036",
       "name": "Get Approved Posts",
@@ -159,14 +163,14 @@
     },
     {
       "parameters": {
-        "jsCode": "const now = new Date();\nconst readyPosts = $input.all().filter(item => {\n  const scheduledDateTime = new Date(item.json.scheduled_datetime);\n  return scheduledDateTime <= now;\n});\n\nreturn readyPosts;"
+        "jsCode": "const now = new Date();\nconst readyPosts = $input.all().filter(item => {\n  // Combina Fecha y Hora a formato de fecha completa\n  const fecha = item.json[\"Fecha y Hora\"];\n  const hora = item.json[\"time\"];\n  const scheduledDateTime = new Date(`${fecha}T${hora}`);\n\n  return scheduledDateTime <= now;\n});\n\nreturn readyPosts;\n"
       },
       "id": "71409b30-29d3-47bf-a3c4-c50cc0eec19a",
       "name": "Filter Posts Ready to Publish",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        992,
+        976,
         128
       ]
     },
@@ -205,7 +209,8 @@
     },
     {
       "parameters": {
-        "text": "={{ $json.content }}",
+        "person": "M-MPEA1I9X",
+        "text": "={{ $json['Contenido Linkedin'] }}",
         "additionalFields": {
           "visibility": "PUBLIC"
         }
@@ -230,7 +235,7 @@
         "authentication": "nocoDbApiToken",
         "operation": "update",
         "projectId": "pbyzm06qhp068f6",
-        "table": "={{ $('Workflow Configuration').first().json.nocoDbTableName }}",
+        "table": "={{ $('Workflow Configuration').first().json.nocoDbTableId }}",
         "fieldsUi": {
           "fieldValues": [
             {
@@ -258,6 +263,17 @@
           "name": "NocoDB Token account"
         }
       }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        304,
+        128
+      ],
+      "id": "1d498d64-2939-40a1-99a7-c064d39cf944",
+      "name": "When clicking ‘Execute workflow’"
     }
   ],
   "pinData": {},
@@ -279,6 +295,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-19T22:05:39.283Z",
-  "versionId": "42edb923-520d-4f63-909e-6b26ca358825"
+  "updatedAt": "2025-11-20T21:55:28.898Z",
+  "versionId": "a40003d8-4737-4227-94c1-9ad200b1f938"
 }
