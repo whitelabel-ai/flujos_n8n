@@ -1,0 +1,558 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many board groups": {
+      "main": [
+        [
+          {
+            "node": "Elige el grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Item": {
+      "main": [
+        [
+          {
+            "node": "Get many board groups",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Elige el grupo": {
+      "main": [
+        [
+          {
+            "node": "Move an item to a group",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atendido/Cerrado": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Change a column value for a board item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move an item to a group": {
+      "main": [
+        [
+          {
+            "node": "no esta eliminado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "no esta eliminado": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Atendido/Cerrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-20T07:31:33.823Z",
+  "id": "cTeahTByAqToiDAY",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 22",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "caso-cerrado",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1488,
+        304
+      ],
+      "id": "2a8ce942-cfe8-4133-b574-a63de2445855",
+      "name": "Webhook",
+      "webhookId": "9a2f8616-2202-4831-a283-76cc4058388f"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1264,
+        304
+      ],
+      "id": "6d542312-bc46-45fc-8dd0-069eff1adbbc",
+      "name": "Wait",
+      "webhookId": "6e0aa33f-2246-41bf-adc2-8d1e3a482b4c"
+    },
+    {
+      "parameters": {
+        "resource": "boardGroup",
+        "operation": "getAll",
+        "boardId": "={{ $json.board.id }}"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        304
+      ],
+      "id": "611f0aa8-1484-4059-a40c-4f70fa9f3422",
+      "name": "Get many board groups",
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "get",
+        "itemId": "={{ $('Webhook').item.json.pulseId.toString() }}"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        304
+      ],
+      "id": "a2c52648-9cba-4411-9354-a28b06bae3ce",
+      "name": "Get Item",
+      "alwaysOutputData": true,
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e8e35d5a-401b-4317-aa1e-61b625af522c",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "={{\n(() => {\n  const label = $('Webhook').item.json.value.label.text;\n  const boardId = $('Get Item').item.json.board.id;\n\n  if (label === \"Caso Cerrado / Cobrado\") {\n    return boardId == 6380914195 \n      ? \"Casos Atendidos y Cerrados\" \n      : \"Casos Atendidos\";\n  }\n\n  if (label === \"En Atención\" || label === \"Atendido / Por Cobrar\") {\n    return \"Casos Activos\";\n  }\n\n  return null;\n})()\n}}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -624,
+        304
+      ],
+      "id": "d286d552-d800-4b49-8ab2-71f210a2bcbf",
+      "name": "Elige el grupo"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.value.label.text }}",
+                    "rightValue": "Caso Cerrado / Cobrado",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "52a3b4bc-e857-403c-80cb-94ccf015e490"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Caso Cerrado / Cobrado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7f770d1f-c91f-4b63-8ea1-4d0b63057cad",
+                    "leftValue": "={{ $('Webhook').item.json.value.label.text }}",
+                    "rightValue": "En Atención",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "En Atención"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        288,
+        256
+      ],
+      "id": "6468e8af-7913-4312-a685-68239f95c54b",
+      "name": "Atendido/Cerrado"
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "move",
+        "boardId": "={{ $('Get Item').item.json.board.id }}",
+        "itemId": "={{ $('Get Item').item.json.id }}",
+        "groupId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        288
+      ],
+      "id": "2fe668d8-00fd-446f-abb2-8b884c734f4e",
+      "name": "Move an item to a group",
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f3f18694-fb51-4236-b00c-d36cffea75d2",
+              "leftValue": "={{ $('Get Item').item.json.state }}",
+              "rightValue": "active",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -144,
+        272
+      ],
+      "id": "5c75b641-37a3-4a17-a4e8-34ecc4b1cb04",
+      "name": "no esta eliminado"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "40204326-36f6-4266-b54a-377c5ad47b6d",
+              "name": "item.id",
+              "value": "={{ $('Get Item').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "2a606b94-3955-42ce-be72-2233c6965d9c",
+              "name": "board.id",
+              "value": "={{ $('Get Item').item.json.board.id }}",
+              "type": "string"
+            },
+            {
+              "id": "d8c345e3-5c7d-4dea-812d-91ea8a5c7a09",
+              "name": "Grupos",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Grupos$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "e3ddd325-c657-4d49-8f8e-1153267e28fb",
+              "name": "Fecha Cobro.id",
+              "value": "={{  $('Get Item').item.json.board.id == 6380914195 ? ( $('Get Item').item.json.column_values.find(cv => /^F\\.? Cobro$/i.test(cv.title))?.id ?? 0 ) : ( $('Get Item').item.json.column_values.find(cv => /^Fecha Cobro$/i.test(cv.title))?.id ?? 0 ) }}",
+              "type": "string"
+            },
+            {
+              "id": "a40c45d2-5942-4829-bf4a-91bec0089569",
+              "name": "Total",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Total$/i.test(cv.title))?.value ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "cb35d43f-2d33-432e-85a9-14989028f041",
+              "name": "€ Abono.value",
+              "value": "={{\n  (() => {\n    const cvs = $('Get Item').item.json.column_values || [];\n\n    const findByTitle = (re) => cvs.find(cv => re.test(cv.title));\n\n    // 1) Intentar € Abono (usamos .value si existe, si no .text)\n    const euroCol = findByTitle(/^€ Abono$/i);\n    const euroRaw = euroCol ? (euroCol.value ?? euroCol.text ?? '') : '';\n\n    const parseNumber = (s) => {\n      if (s === null || s === undefined) return NaN;\n      let str = String(s).trim();\n      // Quitar comillas que a veces vienen como '\"100\"'\n      str = str.replace(/^\"+|\"+$/g, '');\n      // Normalizar: quitar caracteres no numéricos salvo . , and -\n      // Luego quitar separador de miles simple (puntos) y convertir coma decimal a punto\n      const cleaned = str.replace(/[^\\d\\.\\,\\-]/g, '').replace(/\\./g, '').replace(/,/g, '.');\n      const n = Number(cleaned);\n      return isNaN(n) ? NaN : n;\n    };\n\n    const euroNum = parseNumber(euroRaw);\n    if (!isNaN(euroNum) && String(euroRaw).trim() !== '') return euroNum;\n\n    // 2) Sino, si Recepcion Pago == \"Dólares\" -> sumar Total\n    const recep = findByTitle(/^Recepcion Pago$/i);\n    const recepText = recep?.text ?? '';\n\n    if (String(recepText).trim() === 'Dólares') {\n      const totalCol = findByTitle(/^Total$/i);\n      const totalText = totalCol?.text ?? '0';\n      if (!totalText) return 0;\n      // Split por coma y sumar (se normaliza cada token)\n      return String(totalText)\n        .split(',')\n        .map(t => parseNumber(t))\n        .filter(n => !isNaN(n))\n        .reduce((a, b) => a + b, 0);\n    }\n\n    return 0;\n  })()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "cde52d22-4401-4c03-a3fb-0d411cbf6486",
+              "name": "€ Abono.id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^€ Abono$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "9b25ea56-410a-417b-94df-32399a45119e",
+              "name": "Bs Abono.id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Bs Abono$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "dc965453-1dca-433f-a4d8-f6d49a48c438",
+              "name": "Bs Abono.value",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Bs Abono$/i.test(cv.title))?.value ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "cb63ec94-236b-4029-a288-27fe3bce03d4",
+              "name": "Descripción Bs.id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Descripción Bs$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "86bb6767-7b5a-4534-bd5a-ef8d6df9d72e",
+              "name": "Descripción $.id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => (cv.title || '').trim().toLowerCase() === 'descripción $')?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "7a5f615f-fa5a-4602-ad20-a1a26813ffb5",
+              "name": "Tasa Bs",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Tasa Bs$/i.test(cv.title))?.value ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "4101048a-a556-47f9-9730-58b45612f3a5",
+              "name": "Config Recibo.id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Config Recibo$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "f87576e9-2a29-4e59-a411-4a080542dc69",
+              "name": "Monto Recibo Bs.id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Monto Recibo Bs$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "09d04f41-ffd2-43a9-b094-5ff105bd4433",
+              "name": "Estado.Id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Estado$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "3bfb73e2-d757-42d3-ad74-30bd53ec706f",
+              "name": "Abonado.id",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Abonado$/i.test(cv.title))?.id ?? null}}",
+              "type": "string"
+            },
+            {
+              "id": "61700d96-e6cf-4233-821a-21993455dd4f",
+              "name": "Abonado.value",
+              "value": "={{$('Get Item').item.json[\"column_values\"].find(cv => /^Abonado$/i.test(cv.title))?.value ?? null}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        64,
+        176
+      ],
+      "id": "d86907b2-bbf4-44de-af4e-53b7c53fc8e0",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "resource": "boardItem",
+        "operation": "changeColumnValue",
+        "boardId": "={{ $json.board.id }}",
+        "itemId": "={{ $json.item.id }}",
+        "columnId": "={{ $json.Grupos }}",
+        "value": "=\"Atendidos Cerrados\""
+      },
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        496,
+        352
+      ],
+      "id": "f9e78159-e561-4a0e-b9d1-95adde5a8d6a",
+      "name": "Change a column value for a board item",
+      "credentials": {
+        "mondayComApi": {
+          "id": "VnR2vxM5eHsZpypK",
+          "name": "testMonday"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "app": "monday",
+          "type": "update_column_value",
+          "triggerTime": "2025-11-19T22:10:19.691Z",
+          "subscriptionId": 491333819,
+          "isRetry": false,
+          "userId": 58193585,
+          "originalTriggerUuid": null,
+          "boardId": 6380914195,
+          "groupId": "topics",
+          "pulseId": 10513710928,
+          "pulseName": "Jonathan Cordero - Chipi",
+          "columnId": "status",
+          "columnType": "color",
+          "columnTitle": "Estado",
+          "value": {
+            "label": {
+              "index": 0,
+              "text": "En Atención",
+              "style": {
+                "color": "#faa1f1",
+                "border": "#faa1f1",
+                "var_name": "bubble"
+              },
+              "is_done": false
+            },
+            "post_id": null
+          },
+          "previousValue": {
+            "label": {
+              "index": 16,
+              "text": "Procesando Pago",
+              "style": {
+                "color": "#df2f4a",
+                "border": "#ce3048",
+                "var_name": "red-shadow"
+              },
+              "is_done": false
+            },
+            "post_id": null
+          },
+          "isTopGroup": true,
+          "triggerUuid": "da9c338bba2303d048e636df3a2da2d5",
+          "changedAt": "2025-11-19T22:10:19.220Z"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-20T07:31:33.823Z",
+      "createdAt": "2025-11-20T07:31:33.823Z",
+      "role": "workflow:owner",
+      "workflowId": "cTeahTByAqToiDAY",
+      "projectId": "HkjiorTsa82BndL3"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-20T07:31:33.823Z",
+  "versionId": "38b48376-dd16-4bd8-a601-475e5339b58d"
+}
