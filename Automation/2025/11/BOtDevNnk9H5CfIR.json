@@ -1,0 +1,246 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "Get All Issues",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get All Teams",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Teams": {
+      "main": [
+        [
+          {
+            "node": "Find Configured Team ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Configured Team ID": {
+      "main": [
+        [
+          {
+            "node": "Get All Cycles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Cycles": {
+      "main": [
+        [
+          {
+            "node": "Find Configured Cycle ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Configured Cycle ID": {
+      "main": [
+        [
+          {
+            "node": "Filter Issues by Cycle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-20T17:22:36.191Z",
+  "id": "BOtDevNnk9H5CfIR",
+  "isArchived": false,
+  "meta": null,
+  "name": "Filter Linear Issues by Configured Team and Cycle",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "id": "e46813ff-7edb-4a38-b403-46ecb66fb369",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "teamName",
+              "value": "mappa",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "cycleName",
+              "value": "<__PLACEHOLDER_VALUE__Cycle name to filter__>",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "8ca23efe-6893-4eb5-8735-586aff63b241",
+      "name": "Workflow Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "id": "354f34ea-a0a8-4450-857c-822d5c3cf957",
+      "name": "Get All Issues",
+      "type": "n8n-nodes-base.linear",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linear.app/graphql",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "linearApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"query\": \"query { teams { nodes { id name } } }\"\n}",
+        "options": {}
+      },
+      "id": "8dfaee2a-c7b4-40c6-b1f2-86cded67241d",
+      "name": "Get All Teams",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        0,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const teamName = $('Workflow Configuration').first().json.teamName;\nconst teams = $input.item.json.data.teams.nodes;\nconst team = teams.find(t => t.name === teamName);\n\nif (!team) {\n  throw new Error(`Team '${teamName}' not found`);\n}\n\nreturn {\n  json: {\n    teamId: team.id,\n    teamName: team.name\n  }\n};"
+      },
+      "id": "51c62565-e718-4b33-bd17-c6ffc5d67014",
+      "name": "Find Configured Team ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linear.app/graphql",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "linearApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"query($teamId: String!) { cycles(filter: { team: { id: { eq: $teamId } } }) { nodes { id name number } } }\",\n  \"variables\": {\n    \"teamId\": \"={{ $json.teamId }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "b5321a81-c356-483d-bacf-1edee79e4dc4",
+      "name": "Get All Cycles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const cycleName = $('Workflow Configuration').first().json.cycleName;\nconst cycles = $input.item.json.data.cycles.nodes;\nconst cycle = cycles.find(c => c.name === cycleName);\n\nif (!cycle) {\n  throw new Error(`Cycle '${cycleName}' not found`);\n}\n\nreturn {\n  json: {\n    cycleId: cycle.id,\n    cycleName: cycle.name\n  }\n};"
+      },
+      "id": "2511f4a5-7f30-440d-b7cc-1b3cd1c2f6c5",
+      "name": "Find Configured Cycle ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const cycleId = $input.item.json.cycleId;\nconst allIssues = $('Get All Issues').all();\nconst filteredIssues = allIssues.filter(item => item.json.cycle?.id === cycleId);\nreturn filteredIssues;"
+      },
+      "id": "147e4787-dd29-4350-9fcc-f635e76cf422",
+      "name": "Filter Issues by Cycle",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        192
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-20T17:22:36.191Z",
+      "createdAt": "2025-11-20T17:22:36.191Z",
+      "role": "workflow:owner",
+      "workflowId": "BOtDevNnk9H5CfIR",
+      "projectId": "wc1Sxw5ieho7N29o"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-20T17:25:24.780Z",
+  "versionId": "ebc0dfd3-5be8-4486-aee4-76c542e72e83"
+}
