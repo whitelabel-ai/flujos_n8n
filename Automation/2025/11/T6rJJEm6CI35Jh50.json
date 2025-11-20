@@ -195,18 +195,12 @@
       "main": [
         [
           {
-            "node": "reply_message",
+            "node": "Create an event",
             "type": "main",
             "index": 0
           }
         ],
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Execution Data": {
@@ -262,6 +256,11 @@
             "index": 0
           }
         ]
+      ]
+    },
+    "Create an event": {
+      "main": [
+        []
       ]
     }
   },
@@ -332,7 +331,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        2336,
+        2544,
         -1264
       ],
       "id": "acef65d5-5585-4d85-a9ad-d6dabf2544d5",
@@ -361,7 +360,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2112,
+        2320,
         -1264
       ],
       "id": "65035f13-0f85-4278-b553-892970d50dc9",
@@ -435,7 +434,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        3232,
+        3440,
         -1248
       ],
       "id": "52476607-e5a0-4fde-8301-15549b476600",
@@ -510,7 +509,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        3424,
+        3632,
         -1296
       ],
       "name": "Call Agente Transaccional",
@@ -577,7 +576,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        2992,
+        3200,
         -1280
       ],
       "id": "3bc67bb4-14fd-4754-9e93-6c73db19d8d1",
@@ -606,7 +605,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2768,
+        2976,
         -1280
       ],
       "id": "083ae250-f5f8-48ff-ac63-6f6b62f30da7",
@@ -883,7 +882,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1888,
+        2096,
         -1264
       ],
       "id": "27871635-f3b0-4ffb-bfb1-157400ef7e45",
@@ -914,7 +913,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2544,
+        2752,
         -1280
       ],
       "id": "8e7dbee1-0584-432c-923f-9fb4d2c4c224",
@@ -935,7 +934,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        320,
+        80,
         -1168
       ],
       "id": "a03671ca-ff02-497b-b993-3e2ba9ae3b97",
@@ -979,7 +978,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1232,
+        1440,
         -1248
       ],
       "id": "ecc938de-0bb8-4f84-bcf5-a586069504db",
@@ -1032,7 +1031,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        528,
+        288,
         -1168
       ],
       "id": "d0c8274b-ea62-4a57-9878-e1809c3e6627",
@@ -1043,7 +1042,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        912,
+        1120,
         -1056
       ],
       "id": "48ea0fa8-53bc-40e0-99bf-5151d2ba7ed0",
@@ -1071,7 +1070,7 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1.1,
       "position": [
-        1504,
+        1712,
         -1248
       ],
       "id": "ff534a3f-b390-4903-8363-cf597dd62247",
@@ -1154,7 +1153,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        832,
+        1040,
         -1248
       ],
       "id": "67b0d5f1-22b4-4034-bf79-3b1edcb68e62",
@@ -1182,11 +1181,41 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        1024,
+        1232,
         -1248
       ],
       "id": "6a3cfa8c-95de-4373-9a9f-d1f950bc8231",
       "name": "Get Variables"
+    },
+    {
+      "parameters": {
+        "eventName": "message_received",
+        "distinctId": "={{ $json.body.conversation.messages[0].sender.phone_number }}",
+        "additionalFields": {
+          "propertiesUi": {
+            "propertyValues": [
+              {
+                "key": "$set",
+                "value": "={{\n  {\n    \"name\": $json.body.sender.name,\n    \"email\": $json.body.sender.email,\n    \"phone\": $json.body.sender.phone_number,\n    \"channel\": $json.body.conversation.channel,\n    \"moneda\": $json.body.sender.custom_attributes.moneda,\n    \"plan\": $json.body.sender.custom_attributes.subscription_status\n  }\n}}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.postHog",
+      "typeVersion": 1,
+      "position": [
+        688,
+        -1456
+      ],
+      "id": "43042e44-503b-4f4f-a858-2ab4d860dc4b",
+      "name": "Create an event",
+      "credentials": {
+        "postHogApi": {
+          "id": "3tqsdb2YmcTBKiaa",
+          "name": "PostHog account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1630,6 +1659,202 @@
           ]
         }
       }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+            "content-length": "5254",
+            "accept": "application/json",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "6312933d0ba6",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "account": {
+              "id": 3,
+              "name": "Mony"
+            },
+            "additional_attributes": {},
+            "content_attributes": {},
+            "content_type": "text",
+            "content": "hola",
+            "conversation": {
+              "additional_attributes": {
+                "chat_id": 176878701,
+                "business_connection_id": null
+              },
+              "can_reply": true,
+              "channel": "Channel::Telegram",
+              "contact_inbox": {
+                "id": 1063,
+                "contact_id": 394,
+                "inbox_id": 11,
+                "source_id": "176878701",
+                "created_at": "2025-11-11T02:15:54.667Z",
+                "updated_at": "2025-11-11T13:02:05.721Z",
+                "hmac_verified": false,
+                "pubsub_token": "tt54JS8esJK3gXD5Kf3TN9i9"
+              },
+              "id": 867,
+              "inbox_id": 11,
+              "messages": [
+                {
+                  "id": 23379,
+                  "content": "hola",
+                  "account_id": 3,
+                  "inbox_id": 11,
+                  "conversation_id": 867,
+                  "message_type": 0,
+                  "created_at": 1763670230,
+                  "updated_at": "2025-11-20T20:23:50.783Z",
+                  "private": false,
+                  "status": "sent",
+                  "source_id": "313",
+                  "content_type": "text",
+                  "content_attributes": {},
+                  "sender_type": "Contact",
+                  "sender_id": 394,
+                  "external_source_ids": {},
+                  "additional_attributes": {},
+                  "processed_message_content": "hola",
+                  "sentiment": {},
+                  "conversation": {
+                    "assignee_id": null,
+                    "unread_count": 1,
+                    "last_activity_at": 1763670230,
+                    "contact_inbox": {
+                      "source_id": "176878701"
+                    }
+                  },
+                  "sender": {
+                    "additional_attributes": {
+                      "username": "AndresCorralCOL",
+                      "created_at_ip": "38.199.29.38",
+                      "language_code": "es",
+                      "avatar_url_hash": "84c01cd21ae7d2bf68c852631980c237f2fb34306878478f2b592e331d8f0fe8",
+                      "last_avatar_sync_at": "2025-11-11T18:19:23Z",
+                      "social_telegram_user_id": 176878701,
+                      "social_telegram_user_name": "AndresCorralCOL"
+                    },
+                    "custom_attributes": {
+                      "moneda": "COP",
+                      "signup_date": "2025-08-24T05:55:59.164Z",
+                      "subscription_status": "pro_empresarial"
+                    },
+                    "email": "andresco70@gmail.com",
+                    "id": 394,
+                    "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
+                    "name": "Andrés Corral",
+                    "phone_number": "+573045809637",
+                    "thumbnail": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbmtEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--880e5f504d998b85e57792a514d6b59a8723b30c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--84ff7bcaac62c8780904fc8d3b3f74bf82108c47/file_2.jpg",
+                    "blocked": false,
+                    "type": "contact"
+                  }
+                }
+              ],
+              "labels": [
+                "registrado",
+                "pro"
+              ],
+              "meta": {
+                "sender": {
+                  "additional_attributes": {
+                    "username": "AndresCorralCOL",
+                    "created_at_ip": "38.199.29.38",
+                    "language_code": "es",
+                    "avatar_url_hash": "84c01cd21ae7d2bf68c852631980c237f2fb34306878478f2b592e331d8f0fe8",
+                    "last_avatar_sync_at": "2025-11-11T18:19:23Z",
+                    "social_telegram_user_id": 176878701,
+                    "social_telegram_user_name": "AndresCorralCOL"
+                  },
+                  "custom_attributes": {
+                    "moneda": "COP",
+                    "signup_date": "2025-08-24T05:55:59.164Z",
+                    "subscription_status": "pro_empresarial"
+                  },
+                  "email": "andresco70@gmail.com",
+                  "id": 394,
+                  "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
+                  "name": "Andrés Corral",
+                  "phone_number": "+573045809637",
+                  "thumbnail": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbmtEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--880e5f504d998b85e57792a514d6b59a8723b30c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--84ff7bcaac62c8780904fc8d3b3f74bf82108c47/file_2.jpg",
+                  "blocked": false,
+                  "type": "contact"
+                },
+                "assignee": null,
+                "team": null,
+                "hmac_verified": false
+              },
+              "status": "pending",
+              "custom_attributes": {},
+              "snoozed_until": null,
+              "unread_count": 1,
+              "first_reply_created_at": null,
+              "priority": null,
+              "waiting_since": 1763395541,
+              "agent_last_seen_at": 1763572727,
+              "contact_last_seen_at": 0,
+              "last_activity_at": 1763670230,
+              "timestamp": 1763670230,
+              "created_at": 1763395541,
+              "updated_at": 1763670230.7849698,
+              "applied_sla": null,
+              "sla_events": [],
+              "sla_policy_id": null
+            },
+            "created_at": "2025-11-20T20:23:50.783Z",
+            "id": 23379,
+            "inbox": {
+              "id": 11,
+              "name": "mony_dev_bot"
+            },
+            "message_type": "incoming",
+            "private": false,
+            "sender": {
+              "account": {
+                "id": 3,
+                "name": "Mony"
+              },
+              "additional_attributes": {
+                "username": "AndresCorralCOL",
+                "created_at_ip": "38.199.29.38",
+                "language_code": "es",
+                "avatar_url_hash": "84c01cd21ae7d2bf68c852631980c237f2fb34306878478f2b592e331d8f0fe8",
+                "last_avatar_sync_at": "2025-11-11T18:19:23Z",
+                "social_telegram_user_id": 176878701,
+                "social_telegram_user_name": "AndresCorralCOL"
+              },
+              "avatar": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbmtEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--880e5f504d998b85e57792a514d6b59a8723b30c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--84ff7bcaac62c8780904fc8d3b3f74bf82108c47/file_2.jpg",
+              "custom_attributes": {
+                "moneda": "COP",
+                "signup_date": "2025-08-24T05:55:59.164Z",
+                "subscription_status": "pro_empresarial"
+              },
+              "email": "andresco70@gmail.com",
+              "id": 394,
+              "identifier": "626feafb-d6bc-48e0-922a-83e6787c7ae7",
+              "name": "Andrés Corral",
+              "phone_number": "+573045809637",
+              "thumbnail": "https://crm.whitelabel.lat/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbmtEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--880e5f504d998b85e57792a514d6b59a8723b30c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--84ff7bcaac62c8780904fc8d3b3f74bf82108c47/file_2.jpg",
+              "blocked": false
+            },
+            "source_id": "313",
+            "event": "message_created"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook/mony-dev",
+          "executionMode": "production"
+        }
+      }
     ]
   },
   "repo_name": "flujos_n8n",
@@ -1663,6 +1888,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-16T05:11:37.299Z",
-  "versionId": "93657831-8a75-4a6f-a429-23573bda6825"
+  "updatedAt": "2025-11-20T20:54:22.282Z",
+  "versionId": "8ee9a4b2-5545-4385-95e0-d1f7e9ade98f"
 }
