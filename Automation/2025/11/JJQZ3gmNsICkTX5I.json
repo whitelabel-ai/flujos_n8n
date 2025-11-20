@@ -1,0 +1,673 @@
+{
+  "active": false,
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Leer Hoja con URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "convertir a Json para parcear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Hoja con URL": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Pendientes": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Origen": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "convertir a Json para parcear": {
+      "main": [
+        [
+          {
+            "node": "Mapear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mapear": {
+      "main": [
+        [
+          {
+            "node": "Añadir en db_historicos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Añadir en db_historicos": {
+      "main": [
+        [
+          {
+            "node": "Update Origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-20T14:31:29.478Z",
+  "id": "JJQZ3gmNsICkTX5I",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Extraccion PDF → Historicos",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "71e3fdfc-e126-40c2-ab99-cee45139781f",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -768,
+        80
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ef9b648d-a945-4e1c-a1e0-7dd33827f29d",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE",
+          "mode": "list",
+          "cachedResultName": "Base_Datos_Mantenimientos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1258571547,
+          "mode": "list",
+          "cachedResultName": "Indice_PDFs",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit#gid=1258571547"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estado_Extraccion": "Ejecutado",
+            "ID_Registro": "={{ $('Leer Hoja con URL').item.json.ID_Registro }}"
+          },
+          "matchingColumns": [
+            "ID_Registro"
+          ],
+          "schema": [
+            {
+              "id": "ID_Registro",
+              "displayName": "ID_Registro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Archivo",
+              "displayName": "Nombre_Archivo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente",
+              "displayName": "Cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "URL_PDF",
+              "displayName": "URL_PDF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID_Archivo",
+              "displayName": "ID_Archivo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Estado_Extraccion",
+              "displayName": "Estado_Extraccion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "7a47dc16-d485-4372-bee4-b8310cd19aec",
+      "name": "Update Origen",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1792,
+        16
+      ],
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "text": "Analiza el documento PDF adjunto y devuelve exclusivamente un único objeto JSON válido y bien formado, sin texto adicional antes o después.\n\nLa estructura del JSON debe ser:\n\n{\n  \"fecha_servicio\": \"\",\n  \"tipo_servicio\": \"\",\n  \"razon_social\": \"\",\n  \"equipo\": \"\",\n  \"serial_equipo\": \"\",\n  \"tecnico_responsable\": \"\",\n  \"Informacion sobre el servicio\": \"\",\n  \"observaciones\": \"\",\n \"tecnico_responsable\": \"\",\n  \"url_pdf\": \"\"\n}\n\nInstrucciones detalladas de extracción:\n\n1. \"fecha_servicio\":\n   - Identifica la fecha en que se realizó el mantenimiento.\n   - Convierte la fecha al formato DD-MM-AAAA.\n   - Si hay múltiples fechas, selecciona la que corresponda directamente al servicio realizado, no a la impresión, firma, ni otros documentos.\n\n2. \"tipo_servicio\":\n   - Determina el tipo de servicio: mantenimiento preventivo, correctivo, general, etc.\n   - Si el tipo no aparece explícito, infiere la categoría a partir del contenido.\n\n3. \"razon_social\":\n   - Extrae el nombre del cliente, compañía o entidad donde se efectuó el mantenimiento.\n\n4. \"equipo\":\n   - Extrae el tipo o modelo del equipo (ejemplo: Cassette, Mini Split, AMNC18GTA2, LG).\n\n5. \"serial_equipo\":\n   - Extrae y devuelve exactamente el número de serie del equipo.\n   - No modifiques, formatees ni recortes el número.\n\n6. \"tecnico_responsable\":\n   - DEBES identificar el nombre del  TÉCNICO  .\n \n7. \"checklist_items\":\n   - Extrae la informacion de las acciones del servicio realizado escritas por el técnico sobre el trabajo realizado.\n   - Debe ser texto plano, sin comentarios adicionales ni interpretación..\n\n8. \"observaciones\":\n   - Extrae las observaciones escritas por el técnico sobre el trabajo realizado.\n   - Debe ser texto plano, sin comentarios adicionales ni interpretación.\n\n9. \"url_pdf\":\n   - Devuelve la URL original del PDF si fue proporcionada como contexto externo al documento.\n   - Si la URL no aparece en el contenido del PDF, pero tú la recibiste como input, inclúyela sin alterarla.\n\nReglas obligatorias:\n- Devuelve exclusivamente un objeto JSON válido y bien formado.\n- No incluyas explicaciones, comentarios ni texto adicional fuera del JSON.\n- Respeta exactamente los nombres de los campos.\n- Si algún dato no existe, devuélvelo como \"\" o [] según corresponda.\n",
+        "inputType": "binary",
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        576,
+        16
+      ],
+      "id": "996c7a16-08da-4977-9118-37d4e1992495",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xCrv1gBV3pJitThp",
+          "name": "Varios Whitelabel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE",
+          "mode": "list",
+          "cachedResultName": "Base_Datos_Mantenimientos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1258571547,
+          "mode": "list",
+          "cachedResultName": "Indice_PDFs",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit#gid=1258571547"
+        },
+        "options": {}
+      },
+      "id": "3e2a0da3-03f6-4193-a9f5-f3337fa0d884",
+      "name": "Leer Hoja con URL",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        -560,
+        80
+      ],
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b09b56db-1903-4445-bd6f-5b39800c36fa",
+              "leftValue": "={{ $json.Estado_Extraccion }}",
+              "rightValue": "Pendiente",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f6606914-cad0-45af-845b-34fcaaf9e4fa",
+      "name": "Filtrar Pendientes",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -352,
+        80
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.URL_PDF }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        288,
+        16
+      ],
+      "id": "ebb09acc-6961-42c7-971e-99cca6064abd",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "kPkSeRbSxQ9qwSQq",
+          "name": "Google Drive account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- Function node para extraer JSON desde Gemini ---\n// Este código detecta correctamente el JSON en:\n// json.candidates[0].content.parts[0].text   (estructura real que tienes)\n// y en otras rutas secundarias por compatibilidad.\n\nconst item = items[0];\n\nlet content;\n\n// 1) Ruta REAL de Gemini (la que aparece en tu screenshot)\ntry {\n  content = item.json.candidates[0].content.parts[0].text;\n} catch (e) {}\n\n// 2) Rutas alternativas por compatibilidad\nif (!content && item.json.text) {\n  content = item.json.text;\n}\nif (!content && item.json.output) {\n  content = item.json.output;\n}\nif (!content && item.json.content) {\n  content = item.json.content;\n}\n\n// -> Si todavía no encuentra texto, lanzar error\nif (!content) {\n  throw new Error(\n    \"No se encontró contenido de texto en la respuesta de Gemini. Revisa la salida del nodo Analyze Document.\"\n  );\n}\n\n// 3) Buscar la sección del JSON dentro del texto (entre { y })\nconst first = content.indexOf(\"{\");\nconst last = content.lastIndexOf(\"}\");\n\nif (first === -1 || last === -1) {\n  throw new Error(\n    \"La respuesta de Gemini no contiene un objeto JSON válido. Contenido encontrado:\\n\" +\n      content\n  );\n}\n\nconst jsonText = content.slice(first, last + 1);\n\n// 4) Parsear el JSON\nlet parsed;\ntry {\n  parsed = JSON.parse(jsonText);\n} catch (err) {\n  throw new Error(\n    \"Error al parsear el JSON devuelto por Gemini: \" +\n      err.message +\n      \"\\nContenido detectado:\\n\" +\n      jsonText\n  );\n}\n\n// 5) Devolver resultado final\nreturn [{ json: parsed }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        16
+      ],
+      "id": "d564f954-e7fd-41cf-9b36-393a6c4cad40",
+      "name": "convertir a Json para parcear"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e011e08f-e850-475b-84a1-425c591b58ac",
+              "name": "fecha_servicio",
+              "value": "={{ $json.fecha_servicio }}",
+              "type": "string"
+            },
+            {
+              "id": "46d84bc5-4b90-45b9-916d-f39d3e2094e6",
+              "name": "tipo_servicio",
+              "value": "={{ $json.tipo_servicio }}",
+              "type": "string"
+            },
+            {
+              "id": "64c88fb0-5d0d-412b-a949-7510464f39f4",
+              "name": "razon_social",
+              "value": "={{ $json.razon_social }}",
+              "type": "string"
+            },
+            {
+              "id": "b61e8110-367f-41f8-bf60-5f74df8a2306",
+              "name": "equipo",
+              "value": "={{ $json.equipo }}",
+              "type": "string"
+            },
+            {
+              "id": "e8e07e9c-8a4e-4be4-9aec-d4dd95c04df5",
+              "name": "serial equipo",
+              "value": "={{ $json.serial_equipo }}",
+              "type": "string"
+            },
+            {
+              "id": "35938dff-bba4-4792-b043-c00fe411017d",
+              "name": "id_equipo",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "4b28d593-7614-4d72-8bf9-8932ed420a3f",
+              "name": "informacion_servicio",
+              "value": "={{ $json['Informacion sobre el servicio'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a8ffffad-7ab1-429f-90ea-46b80aa2b07a",
+              "name": "observaciones",
+              "value": "={{ $json.observaciones }}",
+              "type": "string"
+            },
+            {
+              "id": "1156f32b-f10b-4f41-a878-605be5719b1e",
+              "name": "tecnico_responsable",
+              "value": "={{ $json.tecnico_responsable }}",
+              "type": "string"
+            },
+            {
+              "id": "6cf5c218-166c-48f5-a588-c80bee05f3fd",
+              "name": "url_pdf",
+              "value": "={{ $('Download file').item.json.URL_PDF }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bcbe9633-2cd0-47e6-bc0a-9d60616800cd",
+      "name": "Mapear",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1248,
+        16
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1SxOvcKejC1JtKivbCtu6Ap4I-abcAybQtRhLXkkxohE",
+          "mode": "list",
+          "cachedResultName": "db_historicos_mantenimientos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SxOvcKejC1JtKivbCtu6Ap4I-abcAybQtRhLXkkxohE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "db_historicos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SxOvcKejC1JtKivbCtu6Ap4I-abcAybQtRhLXkkxohE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "fecha_servicio": "={{ $json.fecha_servicio }}",
+            "tipo_servicio": "={{ $json.tipo_servicio }}",
+            "razon_social": "={{ $json.razon_social }}",
+            "equipo": "={{ $json.equipo }}",
+            "serial_equipo": "={{ $json['serial equipo'] }}",
+            "tecnico_responsable": "={{ $json.tecnico_responsable }}",
+            "observaciones": "={{ $json.observaciones }}",
+            "Informacion_ servicio": "={{ $json.informacion_servicio }}",
+            "url_pdf": "={{ $json.url_pdf }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "fecha_servicio",
+              "displayName": "fecha_servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tipo_servicio",
+              "displayName": "tipo_servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "razon_social",
+              "displayName": "razon_social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "equipo",
+              "displayName": "equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "serial_equipo",
+              "displayName": "serial_equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_equipo",
+              "displayName": "id_equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Informacion_ servicio",
+              "displayName": "Informacion_ servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "observaciones",
+              "displayName": "observaciones",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tecnico_responsable",
+              "displayName": "tecnico_responsable",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "url_pdf",
+              "displayName": "url_pdf",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "b5c93531-0bdc-4092-be74-79be303491dc",
+      "name": "Añadir en db_historicos",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1504,
+        16
+      ],
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        288
+      ],
+      "id": "049bb23c-713a-4718-bba2-78ba12727186",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-20T14:31:29.478Z",
+      "createdAt": "2025-11-20T14:31:29.478Z",
+      "role": "workflow:owner",
+      "workflowId": "JJQZ3gmNsICkTX5I",
+      "projectId": "73zSRVHGJwFSDWts"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-20T22:11:45.311Z",
+  "versionId": "099b4b9b-d0b7-40f7-9dc6-fda915f3d79d"
+}
