@@ -5,25 +5,81 @@
       "main": [
         [
           {
-            "node": "Read URLs Sheet",
+            "node": "Leer Hoja con URL",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Read URLs Sheet": {
+    "Split In Batches": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download PDF": {
       "main": [
         [
           {
-            "node": "Filter Pendientes",
+            "node": "Analyze document",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Filter Pendientes": {
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Output": {
+      "main": [
+        [
+          {
+            "node": "Append Destino",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Destino": {
+      "main": [
+        [
+          {
+            "node": "Update Origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Hoja con URL": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Pendientes": {
       "main": [
         [
           {
@@ -32,6 +88,33 @@
             "index": 0
           }
         ],
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Prepare Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Origen": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
         [
           {
             "node": "Download PDF",
@@ -45,7 +128,9 @@
   "createdAt": "2025-11-19T02:06:14.254Z",
   "id": "prXCR7inWJ4Liq4J",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Extraccion PDF → Historicos",
   "nodes": [
     {
@@ -54,54 +139,10 @@
       "name": "Manual Trigger",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        16,
-        -16
+        32,
+        -96
       ],
       "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
-        },
-        "sheetName": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
-        }
-      },
-      "id": "0eb2f2f0-2c3e-4d62-b13d-b52bb662c60f",
-      "name": "Read URLs Sheet",
-      "type": "n8n-nodes-base.googleSheets",
-      "position": [
-        240,
-        -16
-      ],
-      "typeVersion": 4.7
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json[\"Estado_Extraccion\"] }}",
-              "operation": "equal",
-              "value2": "Pendiente"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "e1d3d4a3-63bb-4c2c-87ef-e42b1217475a",
-      "name": "Filter Pendientes",
-      "type": "n8n-nodes-base.if",
-      "position": [
-        480,
-        -16
-      ],
-      "typeVersion": 2.2
     },
     {
       "parameters": {
@@ -111,8 +152,8 @@
       "name": "Split In Batches",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        704,
-        -128
+        800,
+        -176
       ],
       "typeVersion": 3
     },
@@ -125,33 +166,103 @@
       "name": "Download PDF",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        704,
-        80
+        1296,
+        -160
       ],
       "typeVersion": 4.3
     },
     {
-      "parameters": {},
-      "id": "51b443ec-645d-41aa-99cc-1e9d48d8de6a",
-      "name": "Gemini Analyze Document",
-      "type": "n8n-nodes-base.aiGoogleGemini",
-      "position": [
-        1200,
-        -16
-      ],
-      "typeVersion": 1,
-      "credentials": {}
-    },
-    {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed2fe809-5ac7-4286-b865-f0ee7e5054c9",
+              "name": "id",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "e011e08f-e850-475b-84a1-425c591b58ac",
+              "name": "fecha_servicio",
+              "value": false,
+              "type": "string"
+            },
+            {
+              "id": "46d84bc5-4b90-45b9-916d-f39d3e2094e6",
+              "name": "tipo_servicio",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "64c88fb0-5d0d-412b-a949-7510464f39f4",
+              "name": "razon_social",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "b61e8110-367f-41f8-bf60-5f74df8a2306",
+              "name": "equipo",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "e8e07e9c-8a4e-4be4-9aec-d4dd95c04df5",
+              "name": "serial equipo",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "35938dff-bba4-4792-b043-c00fe411017d",
+              "name": "id_equipo",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "0b2ad3ec-653f-47df-b068-e8cc73e8972c",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "1156f32b-f10b-4f41-a878-605be5719b1e",
+              "name": "tecnico_responsable",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "4e7526fb-5e78-4e5c-bc31-6ad1afc78c2e",
+              "name": "checklist_items",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "a8ffffad-7ab1-429f-90ea-46b80aa2b07a",
+              "name": "observaciones",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "717b403f-8ee5-40c6-844b-94638d3b8983",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "6cf5c218-166c-48f5-a588-c80bee05f3fd",
+              "name": "url_pdf",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
         "options": {}
       },
       "id": "c55aacbc-6d85-4b5d-a831-8b60c2e78c19",
       "name": "Prepare Output",
       "type": "n8n-nodes-base.set",
       "position": [
-        1456,
-        -16
+        2016,
+        -160
       ],
       "typeVersion": 3.4
     },
@@ -160,46 +271,378 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
+          "value": "1SxOvcKejC1JtKivbCtu6Ap4I-abcAybQtRhLXkkxohE",
           "mode": "list",
-          "value": ""
+          "cachedResultName": "db_historicos_mantenimientos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SxOvcKejC1JtKivbCtu6Ap4I-abcAybQtRhLXkkxohE/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
+          "value": "gid=0",
           "mode": "list",
-          "value": ""
-        }
+          "cachedResultName": "db_historicos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SxOvcKejC1JtKivbCtu6Ap4I-abcAybQtRhLXkkxohE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fecha_servicio",
+              "displayName": "fecha_servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tipo_servicio",
+              "displayName": "tipo_servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "razon_social",
+              "displayName": "razon_social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "equipo",
+              "displayName": "equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "serial_equipo",
+              "displayName": "serial_equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id_equipo",
+              "displayName": "id_equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tecnico_responsable",
+              "displayName": "tecnico_responsable",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "checklist_items",
+              "displayName": "checklist_items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "observaciones",
+              "displayName": "observaciones",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
       },
       "id": "f43823a2-b34a-4684-81e9-438d6ccb122c",
       "name": "Append Destino",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1696,
-        -16
+        2208,
+        -128
       ],
-      "typeVersion": 4.7
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
     },
     {
       "parameters": {
         "operation": "update",
         "documentId": {
           "__rl": true,
+          "value": "1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE",
           "mode": "list",
-          "value": ""
+          "cachedResultName": "Base_Datos_Mantenimientos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
+          "value": 1258571547,
           "mode": "list",
-          "value": ""
-        }
+          "cachedResultName": "Indice_PDFs",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit#gid=1258571547"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estado_Extraccion": "ejecutado"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID_Registro",
+              "displayName": "ID_Registro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nombre_Archivo",
+              "displayName": "Nombre_Archivo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cliente",
+              "displayName": "Cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "URL_PDF",
+              "displayName": "URL_PDF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID_Archivo",
+              "displayName": "ID_Archivo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado_Extraccion",
+              "displayName": "Estado_Extraccion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
       },
       "id": "a95f2cae-4e23-40d0-a5d2-2dff741d1f70",
       "name": "Update Origen",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1952,
-        -16
+        2400,
+        -128
       ],
-      "typeVersion": 4.7
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-pro",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-pro"
+        },
+        "text": "Eres un asistente experto en análisis documental. \nTu tarea es:\n\n1. Revisar el documento que recibas (puede estar en cualquier idioma).\n2. Transcribir el contenido completo en español (si ya está en español, mantenlo igual).\n3. Generar una breve descripción (3–5 líneas) que resuma el propósito y contenido principal del documento.\n\nNo incluyas notas adicionales ni explicaciones, entrega únicamente la transcripción en español y la breve descripción solicitada.",
+        "documentUrls": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        -160
+      ],
+      "id": "a609efdc-fdce-4df2-ad2c-1eb389640142",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE",
+          "mode": "list",
+          "cachedResultName": "Base_Datos_Mantenimientos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1258571547,
+          "mode": "list",
+          "cachedResultName": "Indice_PDFs",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QOdzQPM0luU1AElzzDkUI-ijR8pctORc_MI6svG_RbE/edit#gid=1258571547"
+        },
+        "options": {}
+      },
+      "id": "0eb2f2f0-2c3e-4d62-b13d-b52bb662c60f",
+      "name": "Leer Hoja con URL",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        240,
+        -96
+      ],
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CM7JsKen8ouMDNPD",
+          "name": "hola@whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b09b56db-1903-4445-bd6f-5b39800c36fa",
+              "leftValue": "={{ $json.Estado_Extraccion }}",
+              "rightValue": "Pendiente",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e1d3d4a3-63bb-4c2c-87ef-e42b1217475a",
+      "name": "Filtrar Pendientes",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        448,
+        -96
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Function node: Parse Gemini text output into JSON fields\n// Ajusta las rutas si tu nodo Gemini devuelve en otra propiedad.\n\nconst item = items[0];\n\n// 1) intenta varias rutas comunes donde Gemini puede dejar el texto\nlet content = undefined;\n\nif (item.json && item.json.output) content = item.json.output; // posible\nif (!content && item.json && item.json.text) content = item.json.text;\nif (!content && item.json && item.json.choices && item.json.choices[0]) {\n  // OpenAI-like structure\n  content = item.json.choices[0].message?.content || item.json.choices[0].text;\n}\n\n// 2) Si viene como binary (caso raro), no lo manejamos aquí\nif (!content) {\n  throw new Error('No se encontró contenido de texto en la respuesta de Gemini. Revisa la salida del nodo Gemini.');\n}\n\n// 3) A veces viene con prefijos; extraemos el primer { ... } JSON que encontremos\nconst firstBrace = content.indexOf('{');\nconst lastBrace = content.lastIndexOf('}');\nif (firstBrace === -1 || lastBrace === -1) {\n  throw new Error('No se detectó un JSON válido en la respuesta de Gemini.');\n}\nconst jsonText = content.substring(firstBrace, lastBrace + 1);\n\n// 4) Parsear\nlet parsed;\ntry {\n  parsed = JSON.parse(jsonText);\n} catch (err) {\n  throw new Error('Error parsing JSON from Gemini: ' + err.message + '\\nContenido:' + jsonText);\n}\n\n// 5) Devuelve el JSON parseado, y preserva el binary (pdf) para nodos siguientes\nreturn [{ json: parsed, binary: item.binary }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        -160
+      ],
+      "id": "63cba83e-f03a-42f5-9a48-db9a6937de62",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1072,
+        -160
+      ],
+      "id": "c91180dd-6890-4279-9c38-8d27f3e3ac94",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "bV3e7zJSx0u6mwvx",
+          "name": "Google Drive account 2"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -221,6 +664,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-19T02:06:14.254Z",
-  "versionId": "5e8bbb04-94d7-4466-a16b-f3a29021e34a"
+  "updatedAt": "2025-11-20T15:33:55.708Z",
+  "versionId": "71b09efa-7cd2-473e-b8dc-7c8fb0037479"
 }
