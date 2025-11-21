@@ -59,94 +59,6 @@
         ]
       ]
     },
-    "delet user": {
-      "main": [
-        [
-          {
-            "node": "onboarding delete",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "onboarding delete": {
-      "main": [
-        [
-          {
-            "node": "transaction delete",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "transaction delete": {
-      "main": [
-        [
-          {
-            "node": "push_message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "onboarding delete1": {
-      "main": [
-        [
-          {
-            "node": "transaction delete1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "transaction delete1": {
-      "main": [
-        [
-          {
-            "node": "push_message1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "delete number",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "delete number": {
-      "main": [
-        [
-          {
-            "node": "onboarding delete1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Users": {
-      "main": [
-        [
-          {
-            "node": "delet user",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "get-profile-by-phone": {
       "main": [
         [
@@ -195,12 +107,18 @@
       "main": [
         [
           {
-            "node": "Create an event",
+            "node": "reply_message",
             "type": "main",
             "index": 0
           }
         ],
-        []
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Execution Data": {
@@ -331,8 +249,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        2544,
-        -1264
+        1872,
+        -1080
       ],
       "id": "acef65d5-5585-4d85-a9ad-d6dabf2544d5",
       "name": "Switch"
@@ -360,8 +278,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2320,
-        -1264
+        1648,
+        -1080
       ],
       "id": "65035f13-0f85-4278-b553-892970d50dc9",
       "name": "data"
@@ -434,8 +352,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        3440,
-        -1248
+        2768,
+        -984
       ],
       "id": "52476607-e5a0-4fde-8301-15549b476600",
       "name": "Call Onboarding Register"
@@ -509,8 +427,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        3632,
-        -1296
+        2768,
+        -1200
       ],
       "name": "Call Agente Transaccional",
       "id": "e433b8ae-7030-452b-9f31-783012512b3b"
@@ -576,8 +494,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        3200,
-        -1280
+        2544,
+        -1152
       ],
       "id": "3bc67bb4-14fd-4754-9e93-6c73db19d8d1",
       "name": "meta"
@@ -605,255 +523,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2976,
-        -1280
+        2320,
+        -1152
       ],
       "id": "083ae250-f5f8-48ff-ac63-6f6b62f30da7",
       "name": "data1"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\nALTER TABLE transacciones \nALTER COLUMN id SET DEFAULT uuid_generate_v4();\n\n-- Suscripciones Usuario\nALTER TABLE suscripciones_usuario\nALTER COLUMN id SET DEFAULT uuid_generate_v4();\n\n-- Metas de Ahorro\nALTER TABLE metas_ahorro\nALTER COLUMN id SET DEFAULT uuid_generate_v4();",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        368,
-        -848
-      ],
-      "id": "27ecaee8-1c6a-491b-8189-987787b380b9",
-      "name": "crear UUI postgres",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "WITH datos_usuario AS (\n  SELECT \n    id,\n    numero_whatsapp\n  FROM usuarios\n  WHERE id = 'a18605bf-c5de-47fe-bf58-ca7d98a91a5d'\n),\nborrado AS (\n  -- 1️⃣ Borrar logs de anuncios\n  DELETE FROM logs_vistas_anuncios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_recordatorios AS (\n  DELETE FROM recordatorios \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_metas AS (\n  DELETE FROM metas_ahorro \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_usuario AS (\n  DELETE FROM suscripciones_usuario \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_suscripciones_mony AS (\n  DELETE FROM suscripciones_mony \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_transacciones AS (\n  DELETE FROM transacciones \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_categorias AS (\n  DELETE FROM categorias \n  WHERE id_usuario = (SELECT id FROM datos_usuario)\n),\nborrado_usuario AS (\n  DELETE FROM usuarios \n  WHERE id = (SELECT id FROM datos_usuario)\n)\nSELECT \n  true AS success,\n  id,\n  numero_whatsapp\nFROM datos_usuario;\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        592,
-        -624
-      ],
-      "id": "70cf043a-3f3a-4a5c-9b1a-2b59dfea78d9",
-      "name": "delet user",
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=chat_history_mony_{{ $json.numero_whatsapp.replace('+','') }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        816,
-        -624
-      ],
-      "id": "289a577a-2883-4959-a059-a529bd539e58",
-      "name": "onboarding delete",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=MONY_chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        1040,
-        -624
-      ],
-      "id": "287f0e76-9266-4c7f-9941-c9695c34ccc1",
-      "name": "transaction delete",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        1264,
-        -624
-      ],
-      "id": "ca7e7e46-f474-4cab-9da4-fd8a0aaa2f5f",
-      "name": "push_message",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=chat_history_mony_{{ $json.numero_whatsapp.replace('+','') }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        816,
-        -400
-      ],
-      "id": "dc73cefa-ac60-4621-b410-121ceb7d2ea1",
-      "name": "onboarding delete1",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=MONY_chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        1040,
-        -400
-      ],
-      "id": "ab7a5610-e518-4efd-9442-b8ffba45c1e6",
-      "name": "transaction delete1",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=chat_id_{{ $json.numero_whatsapp.replace('+','') }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        1264,
-        -400
-      ],
-      "id": "026f1a77-1141-4ddf-9340-49aec062fa3a",
-      "name": "push_message1",
-      "credentials": {
-        "redis": {
-          "id": "yzvE00xFtVHtaoZ1",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        368,
-        -400
-      ],
-      "id": "60eacca9-1f17-459f-b81d-efe798eac374",
-      "name": "When clicking ‘Execute workflow’"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "43859a53-b296-4aa4-8453-a3eabec83f0a",
-              "name": "numero_whatsapp",
-              "value": "=573045809637",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        592,
-        -400
-      ],
-      "id": "31d3a996-412c-423a-b880-8bf42212a6f4",
-      "name": "delete number"
-    },
-    {
-      "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "usuarios",
-          "mode": "list",
-          "cachedResultName": "usuarios"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        368,
-        -624
-      ],
-      "id": "bf2c0e13-8f80-4e43-bf10-a134a02a2741",
-      "name": "Users",
-      "executeOnce": true,
-      "credentials": {
-        "postgres": {
-          "id": "3BmLjpi7AvK0Sx6n",
-          "name": "MONY_DB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## DELETE USER\n",
-        "height": 384,
-        "width": 1104
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        320,
-        -624
-      ],
-      "id": "b7c031d0-2134-4905-92b8-8048d184e635",
-      "name": "Sticky Note"
     },
     {
       "parameters": {
@@ -882,8 +556,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2096,
-        -1264
+        1424,
+        -1080
       ],
       "id": "27871635-f3b0-4ffb-bfb1-157400ef7e45",
       "name": "get-profile-by-phone",
@@ -913,8 +587,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2752,
-        -1280
+        2096,
+        -1152
       ],
       "id": "8e7dbee1-0584-432c-923f-9fb4d2c4c224",
       "name": "get_saving_goals",
@@ -935,7 +609,7 @@
       "typeVersion": 2.1,
       "position": [
         80,
-        -1168
+        -984
       ],
       "id": "a03671ca-ff02-497b-b993-3e2ba9ae3b97",
       "name": "Webhook",
@@ -978,8 +652,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1440,
-        -1248
+        976,
+        -1080
       ],
       "id": "ecc938de-0bb8-4f84-bcf5-a586069504db",
       "name": "WhatsApp Trigger"
@@ -1031,8 +705,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        288,
-        -1168
+        304,
+        -984
       ],
       "id": "d0c8274b-ea62-4a57-9878-e1809c3e6627",
       "name": "If"
@@ -1042,8 +716,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1120,
-        -1056
+        528,
+        -888
       ],
       "id": "48ea0fa8-53bc-40e0-99bf-5151d2ba7ed0",
       "name": "No Operation, do nothing"
@@ -1070,8 +744,8 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1.1,
       "position": [
-        1712,
-        -1248
+        1200,
+        -1080
       ],
       "id": "ff534a3f-b390-4903-8363-cf597dd62247",
       "name": "Execution Data"
@@ -1093,7 +767,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1488,
+        80,
         -1648
       ],
       "id": "37792cb5-451a-4b19-a6ea-409fda9764f3",
@@ -1107,7 +781,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1696,
+        304,
         -1648
       ],
       "id": "8697780e-91cb-4625-847f-a29774d08030",
@@ -1140,7 +814,7 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        1904,
+        528,
         -1648
       ],
       "id": "6d3c31f1-6a07-4aff-8431-e0bad307ccc7",
@@ -1153,8 +827,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1040,
-        -1248
+        528,
+        -1080
       ],
       "id": "67b0d5f1-22b4-4034-bf79-3b1edcb68e62",
       "name": "reply_message"
@@ -1181,8 +855,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        1232,
-        -1248
+        752,
+        -1080
       ],
       "id": "6a3cfa8c-95de-4373-9a9f-d1f950bc8231",
       "name": "Get Variables"
@@ -1205,8 +879,8 @@
       "type": "n8n-nodes-base.postHog",
       "typeVersion": 1,
       "position": [
-        688,
-        -1456
+        80,
+        -1424
       ],
       "id": "43042e44-503b-4f4f-a858-2ab4d860dc4b",
       "name": "Create an event",
@@ -1888,6 +1562,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-20T20:54:22.282Z",
-  "versionId": "8ee9a4b2-5545-4385-95e0-d1f7e9ade98f"
+  "updatedAt": "2025-11-21T03:23:58.554Z",
+  "versionId": "ed990f10-63cb-44f6-abf2-2670fc63607b"
 }
