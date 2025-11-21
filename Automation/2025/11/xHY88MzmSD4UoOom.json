@@ -5,11 +5,60 @@
       "main": [
         [
           {
-            "node": "Get many rows",
+            "node": "get mantenimiento",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "get sedes": {
+      "main": [
+        [
+          {
+            "node": "get client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get equipos": {
+      "main": [
+        [
+          {
+            "node": "get sedes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get mantenimiento": {
+      "main": [
+        [
+          {
+            "node": "get equipos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get client": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
       ]
     }
   },
@@ -36,10 +85,86 @@
       "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "getAll",
-        "projectId": "psvqelib8ua87ly",
-        "table": "mi1tzhj7r32fhmq",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
         "options": {
-          "where": "(fecha_prox_mantenimiento,gte,2025-11-11)~and(fecha_prox_mantenimiento,lte,2025-11-30)"
+          "where": "=(client_id,like,{{$json.client_id.trim()}})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        832,
+        0
+      ],
+      "id": "5ab68454-b7f2-42d2-b503-b9c4d35dcbe6",
+      "name": "get client",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mwq5ww7arsq1lzg",
+        "options": {
+          "where": "=(sede_id,like,{{ $json.sede_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        640,
+        0
+      ],
+      "id": "d12afdbc-e3b2-4043-8960-6468b0951469",
+      "name": "get sedes",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mjdctrqix3ttqsq",
+        "options": {
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        432,
+        0
+      ],
+      "id": "4a3066e2-8067-49cc-8de0-6af2af9ad4aa",
+      "name": "get equipos",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "limit": 100,
+        "options": {
+          "where": "(proximos_mantenimientos,gte,2025-11-11)~and(proximos_mantenimientos,lte,2025-12-30)"
         }
       },
       "type": "n8n-nodes-base.nocoDb",
@@ -49,13 +174,54 @@
         0
       ],
       "id": "f057ad11-03e2-4465-aab2-4d77703a77a3",
-      "name": "Get many rows",
+      "name": "get mantenimiento",
       "credentials": {
         "nocoDbApiToken": {
           "id": "PngKKQ0D2nKSCDu8",
           "name": "Tool Acondicionados SAS"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "64693bd9-9314-413a-86e2-35b9cc5e65dc",
+              "name": "Id",
+              "value": "={{ $('get client').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "60a86a37-960d-4848-b85e-1181ed8cbc59",
+              "name": "sedes",
+              "value": "={{ $('get sedes').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "ca67dff9-8e9c-4f33-9340-efa3f999d67a",
+              "name": "=equipos",
+              "value": "={{ $('get equipos').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "8521ee1c-3b76-4528-b199-04248b817808",
+              "name": "mantenimiento",
+              "value": "={{ $('get equipos').item.json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "bd26ba00-09b5-4395-98f7-c5638a200c78",
+      "name": "Edit Fields"
     }
   ],
   "pinData": {},
@@ -77,6 +243,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-11T21:07:40.336Z",
-  "versionId": "ae094e34-d4ac-4553-a3fc-53ddee379761"
+  "updatedAt": "2025-11-21T04:20:12.427Z",
+  "versionId": "f6204b5e-5cc7-4e21-a3d7-37eece5100e0"
 }
