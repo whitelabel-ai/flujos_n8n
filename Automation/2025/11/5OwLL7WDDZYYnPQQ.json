@@ -1,11 +1,6 @@
 {
   "active": false,
   "connections": {
-    "Every 15 Minutes": {
-      "main": [
-        []
-      ]
-    },
     "Workflow Configuration": {
       "main": [
         [
@@ -83,26 +78,6 @@
   "nodes": [
     {
       "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "minutes"
-            }
-          ]
-        }
-      },
-      "id": "20ae5a9c-83cf-486d-af46-c9a5df2bac47",
-      "name": "Every 15 Minutes",
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        368,
-        -112
-      ],
-      "disabled": true
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -133,7 +108,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        544,
+        528,
         128
       ]
     },
@@ -151,7 +126,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        768,
+        752,
         128
       ],
       "credentials": {
@@ -163,7 +138,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const now = new Date();\nconst readyPosts = $input.all().filter(item => {\n  // Combina Fecha y Hora a formato de fecha completa\n  const fecha = item.json[\"Fecha y Hora\"];\n  const hora = item.json[\"time\"];\n  const scheduledDateTime = new Date(`${fecha}T${hora}`);\n\n  return scheduledDateTime <= now;\n});\n\nreturn readyPosts;\n"
+        "jsCode": "const now = new Date();\nconst readyPosts = $input.all().filter(item => {\n  const fecha = item.json[\"Fecha\"];\n  const hora = item.json[\"Hora\"];\n  const scheduledDateTime = new Date(`${fecha}T${hora}`);\n  console.log({now, fecha, hora, scheduledDateTime, diff: scheduledDateTime - now});\n  return scheduledDateTime <= now;\n});\nreturn readyPosts;\n"
       },
       "id": "71409b30-29d3-47bf-a3c4-c50cc0eec19a",
       "name": "Filter Posts Ready to Publish",
@@ -203,7 +178,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1216,
+        1200,
         128
       ]
     },
@@ -220,7 +195,7 @@
       "type": "n8n-nodes-base.linkedIn",
       "typeVersion": 1,
       "position": [
-        1440,
+        1424,
         128
       ],
       "credentials": {
@@ -244,7 +219,7 @@
             },
             {
               "fieldName": "id",
-              "fieldValue": "={{ $json.id }}"
+              "fieldValue": "={{ $('Get Approved Posts').item.json.Id }}"
             }
           ]
         }
@@ -254,7 +229,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        1664,
+        1648,
         128
       ],
       "credentials": {
@@ -295,6 +270,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-20T21:55:28.898Z",
-  "versionId": "a40003d8-4737-4227-94c1-9ad200b1f938"
+  "updatedAt": "2025-11-21T22:19:45.290Z",
+  "versionId": "59aa9621-b28c-4aef-9e3d-b95f0892442e"
 }
