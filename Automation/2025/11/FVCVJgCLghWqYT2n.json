@@ -1,0 +1,885 @@
+{
+  "active": false,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Set Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Input": {
+      "main": [
+        [
+          {
+            "node": "Switch: cliente_por_nombre?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch: sedes_por_cliente?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch: equipos_por_sede?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch: equipos_por_cliente?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch: historicos_por_equipo?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch: historicos_por_cliente?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch: proximos_mantenimientos_por_cliente?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: cliente_por_nombre?": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET clientes like",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "clientes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback not_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: sedes_por_cliente?": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET clientes like",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "clientes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback not_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: equipos_por_sede?": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET sedes by name like",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback not_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: equipos_por_cliente?": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET clientes like",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback not_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: historicos_por_equipo?": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET historicos by equipo_id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback not_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: historicos_por_cliente?": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET clientes like",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback not_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: proximos_mantenimientos_por_cliente?": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET clientes like",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback not_found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET clientes like": {
+      "main": [
+        [
+          {
+            "node": "Normalize clientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET sedes by client_id": {
+      "main": [
+        [
+          {
+            "node": "Normalize sedes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET sedes by name like": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET equipos by sede_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET equipos by sede_id": {
+      "main": [
+        [
+          {
+            "node": "Normalize equipos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET equipos by client (via sedes)": {
+      "main": [
+        [
+          {
+            "node": "Normalize equipos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET historicos by equipo_id": {
+      "main": [
+        [
+          {
+            "node": "Normalize historicos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET cronograma by equipo_id": {
+      "main": [
+        [
+          {
+            "node": "Normalize cronograma",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize historicos": {
+      "main": [
+        [
+          {
+            "node": "Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize cronograma": {
+      "main": [
+        [
+          {
+            "node": "Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback not_found": {
+      "main": [
+        [
+          {
+            "node": "Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clientes": {
+      "main": [
+        [
+          {
+            "node": "Normalize clientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-21T00:44:23.595Z",
+  "id": "FVCVJgCLghWqYT2n",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "consultaNocoDB",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        -1408,
+        336
+      ],
+      "id": "b1d44405-5040-4497-88ff-97aa408771f4"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "consulta_type",
+              "value": "={{ $json[\"consulta_type\"] || $items()[0].json.consulta_type || '' }}"
+            },
+            {
+              "name": "query_text",
+              "value": "={{ $json[\"query_text\"] || $items()[0].json.query_text || '' }}"
+            },
+            {
+              "name": "db_diagram_url",
+              "value": "/mnt/data/Acondicionando SAS DB (1).pdf"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -1104,
+        336
+      ],
+      "id": "2f88fa54-1cf6-4dd5-ac16-7929cd1a6c36"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"consulta_type\"]}}",
+              "value2": "cliente_por_nombre"
+            }
+          ]
+        }
+      },
+      "name": "Switch: cliente_por_nombre?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -448
+      ],
+      "id": "f433099e-43bb-49ce-b06f-297f177f9ef1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"consulta_type\"]}}",
+              "value2": "sedes_por_cliente"
+            }
+          ]
+        }
+      },
+      "name": "Switch: sedes_por_cliente?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -192
+      ],
+      "id": "bba80888-12dc-4fe9-be08-1528246cae18"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"consulta_type\"]}}",
+              "value2": "equipos_por_sede"
+            }
+          ]
+        }
+      },
+      "name": "Switch: equipos_por_sede?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        48
+      ],
+      "id": "635ed359-aca1-45aa-8282-aeec4dab19a1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"consulta_type\"]}}",
+              "value2": "equipos_por_cliente"
+            }
+          ]
+        }
+      },
+      "name": "Switch: equipos_por_cliente?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        288
+      ],
+      "id": "55e71a04-3fca-49dc-8949-4ba46bd5e601"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"consulta_type\"]}}",
+              "value2": "historicos_por_equipo"
+            }
+          ]
+        }
+      },
+      "name": "Switch: historicos_por_equipo?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        512
+      ],
+      "id": "e5ceffa8-7e89-4859-94ad-7132f8444c88"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"consulta_type\"]}}",
+              "value2": "historicos_por_cliente"
+            }
+          ]
+        }
+      },
+      "name": "Switch: historicos_por_cliente?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        816
+      ],
+      "id": "0010f76c-81ac-414e-905c-85ae72aa3ebc"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"consulta_type\"]}}",
+              "value2": "proximos_mantenimientos_por_cliente"
+            }
+          ]
+        }
+      },
+      "name": "Switch: proximos_mantenimientos_por_cliente?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        1056
+      ],
+      "id": "625fb122-946e-4799-af53-a97dd3889078"
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/db_clientes/records",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "xc-token",
+              "value": "57UZ9yuOPniThk386gtiEELr7j3JRqND56mAbbZ1"
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "filter",
+              "value": "razon_social,like,%{{$json.query_text}}%"
+            },
+            {
+              "name": "limit",
+              "value": "50"
+            }
+          ]
+        }
+      },
+      "name": "HTTP GET clientes like",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -480
+      ],
+      "id": "e1ea7762-c496-457c-a0de-8e4b9e5b7c1f",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "functionCode": "/* Normaliza respuesta de clientes */\nconst res = items[0].json;\nconst records = res.list || res.items || res.data || [];\nconst data = records.map(r => ({\n  id: r.client_id || r.id || r.clientId || r._id || null,\n  razon_social: r.razon_social || r.nombre || r.name || \"\",\n  telefono: r.telefono_contacto || r.phone || \"\",\n  persona_encargada: r.persona_encargada || r.contact || \"\",\n  direccion: r.direccion || \"\"\n}));\nreturn [{ json: { status: data.length? 'ok':'not_found', meta: { consulta_tipo: 'cliente_por_nombre', query: $json.query_text }, data, count: data.length } }];"
+      },
+      "name": "Normalize clientes",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        -480
+      ],
+      "id": "db434c69-2fe1-424d-a357-c6bb5d3eec61"
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/db_sedes/records",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "xc-token",
+              "value": "57UZ9yuOPniThk386gtiEELr7j3JRqND56mAbbZ1"
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "filter",
+              "value": "client_id,eq,{{$json.client_id}}"
+            },
+            {
+              "name": "limit",
+              "value": "200"
+            }
+          ]
+        }
+      },
+      "name": "HTTP GET sedes by client_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        528,
+        -192
+      ],
+      "id": "6c65b3b6-12aa-4b0d-bf69-d22cfbfeedbe"
+    },
+    {
+      "parameters": {
+        "functionCode": "/* Normaliza respuesta sedes */\nconst res = items[0].json;\nconst records = res.list || res.items || res.data || [];\nconst data = records.map(r => ({\n  id: r.sede_id || r.id || null,\n  nombre_sede: r.nombre_sede || r.name || \"\",\n  persona_encargada: r.persona_encargada || r.contact || \"\",\n  telefono: r.telefono_contacto || r.phone || \"\",\n  direccion: r.direccion || \"\"\n}));\nreturn [{ json: { status: data.length? 'ok':'not_found', meta: { consulta_tipo: 'sedes_por_cliente', query: $json.query_text }, data, count: data.length } }];"
+      },
+      "name": "Normalize sedes",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        -192
+      ],
+      "id": "7d86d8b7-ccc8-4884-9db0-91dd90c82436"
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/db_sedes/records",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "xc-token",
+              "value": "57UZ9yuOPniThk386gtiEELr7j3JRqND56mAbbZ1"
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "filter",
+              "value": "nombre_sede,like,%{{$json.query_text}}%"
+            },
+            {
+              "name": "limit",
+              "value": "50"
+            }
+          ]
+        }
+      },
+      "name": "HTTP GET sedes by name like",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        528,
+        32
+      ],
+      "id": "06eaefbb-7842-476d-9129-ef4ec45d9250"
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/db_equipos/records",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "xc-token",
+              "value": "57UZ9yuOPniThk386gtiEELr7j3JRqND56mAbbZ1"
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "filter",
+              "value": "sede_id,eq,{{$json.sede_id}}"
+            },
+            {
+              "name": "limit",
+              "value": "200"
+            }
+          ]
+        }
+      },
+      "name": "HTTP GET equipos by sede_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        896,
+        32
+      ],
+      "id": "4e232514-b94a-46d5-abf5-88e439850588"
+    },
+    {
+      "parameters": {
+        "functionCode": "/* Normaliza equipos */\nconst res = items[0].json;\nconst records = res.list || res.items || res.data || [];\nconst data = records.map(r => ({\n  id_equipo: r.equipo_id || r.id || null,\n  sede_id: r.sede_id || null,\n  ubicacion: r.ubicacion_equipo || r.ubicacion || \"\",\n  tipo_equipo: r.tipo_equipo || r.type || \"\",\n  marca: r.marca || \"\",\n  modelo: r.modelo || \"\",\n  serial: r.serial || \"\",\n  capacidad_toneladas: r.capacidad_toneladas || \"\",\n  refrigerante: r.refrigerante || \"\",\n  voltaje: r.voltaje || \"\",\n  periodicidad: r.periodicidad || \"\"\n}));\nreturn [{ json: { status: data.length? 'ok':'not_found', meta: { consulta_tipo: 'equipos_por_sede', query: $json.query_text }, data, count: data.length } }];"
+      },
+      "name": "Normalize equipos",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        272
+      ],
+      "id": "3cb8058a-2fe8-4cb4-b03a-ceda660ea530"
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/db_equipos/records",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "xc-token",
+              "value": "57UZ9yuOPniThk386gtiEELr7j3JRqND56mAbbZ1"
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "filter",
+              "value": "sede_id,eq,{{$json.sede_id}}"
+            },
+            {
+              "name": "limit",
+              "value": "200"
+            }
+          ]
+        }
+      },
+      "name": "HTTP GET equipos by client (via sedes)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        528,
+        272
+      ],
+      "id": "c86ba14f-b2b8-4506-920d-f0fd077e3124"
+    },
+    {
+      "parameters": {
+        "functionCode": "/* Normaliza historicos */\nconst res = items[0].json;\nconst records = res.list || res.items || res.data || [];\nconst data = records.map(r => ({\n  serv_id: r.serv_id || r.id || null,\n  equipo_id: r.equipo_id || null,\n  fecha_servicio: r.Fecha_servicio || r.fecha_servicio || r.fecha || \"\",\n  tipo_servicio: r.tipo_servicio || \"\",\n  razon_social: r.razon_social || \"\",\n  equipo: r.equipo || \"\",\n  serial_equipo: r.serial_equipo || r.serial || \"\",\n  informacion_equipo: r.informacion_equipo || \"\",\n  observaciones: r.observaciones || \"\",\n  tecnico_responsable: r.tecnico_responsable || r.tecnico || \"\",\n  url_pdf: r.url_pdf || r.url || \"\"\n}));\nreturn [{ json: { status: data.length? 'ok':'not_found', meta: { consulta_tipo: 'historicos_por_equipo', query: $json.query_text }, data, count: data.length } }];"
+      },
+      "name": "Normalize historicos",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        496
+      ],
+      "id": "cebe1745-81f4-4596-816b-b1daafbf64ac"
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/historicos_mantenimientos/records",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "xc-token",
+              "value": "57UZ9yuOPniThk386gtiEELr7j3JRqND56mAbbZ1"
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "filter",
+              "value": "equipo_id,eq,{{$json.query_text}}"
+            },
+            {
+              "name": "limit",
+              "value": "200"
+            }
+          ]
+        }
+      },
+      "name": "HTTP GET historicos by equipo_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        528,
+        496
+      ],
+      "id": "93cc942c-267c-4c08-9606-dd7baa8c78e0"
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.whitelabel.lat/api/v2/tables/programacion_proximos_mantenimientos/records",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "xc-token",
+              "value": "57UZ9yuOPniThk386gtiEELr7j3JRqND56mAbbZ1"
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "filter",
+              "value": "equipo_id,eq,{{$json.query_text}}"
+            },
+            {
+              "name": "limit",
+              "value": "200"
+            }
+          ]
+        }
+      },
+      "name": "HTTP GET cronograma by equipo_id",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        512,
+        720
+      ],
+      "id": "37d8541f-329f-4e56-a16b-b56d5bce0ee8"
+    },
+    {
+      "parameters": {
+        "functionCode": "/* Normalize cronograma */\nconst res = items[0].json;\nconst records = res.list || res.items || res.data || [];\nconst data = records.map(r => ({\n  equipo_id: r.equipo_id || null,\n  fecha_ultimo_mantenimiento: r.fecha_ultimo_mantenimiento || r.fecha_ultimo || \"\",\n  fecha_prox_mantenimiento: r.fecha_prox_mantenimiento || r.fecha_prox || \"\",\n  periodicidad_tipo: r.periodicidad_tipo || r.periodicidad || \"\"\n}));\nreturn [{ json: { status: data.length? 'ok':'not_found', meta: { consulta_tipo: 'cronograma', query: $json.query_text }, data, count: data.length } }];"
+      },
+      "name": "Normalize cronograma",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        896,
+        720
+      ],
+      "id": "49c2c97e-d778-42fa-815d-1dcf8afc10cf"
+    },
+    {
+      "parameters": {
+        "functionCode": "/* Fallback - devuelve not_found si ningun switch aplicó */\nreturn [{ json: { status: 'not_found', meta: { consulta_tipo: $json.consulta_type || 'unknown', query: $json.query_text || '' }, data: [], count: 0 } }];"
+      },
+      "name": "Fallback not_found",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        560,
+        1040
+      ],
+      "id": "391585b7-05eb-4708-9a5a-3f9f2c58f1c3"
+    },
+    {
+      "parameters": {
+        "functionCode": "/* Final normalizer - passthrough\n   Este nodo espera recibir como input el objeto JSON estandar (status/meta/data/count)\n   y lo retorna como salida del subworkflow. */\nreturn items.map(i => ({ json: i.json }));"
+      },
+      "name": "Final Output",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        720
+      ],
+      "id": "3bd75d6b-544f-4f87-8ac0-bf94d466d642"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "psvqelib8ua87ly",
+        "table": "miesc7wjregj42j",
+        "returnAll": true,
+        "options": {
+          "where": "=(razon_social,like,{{ $json.razon_social }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        544,
+        -672
+      ],
+      "id": "9d359aa0-10f1-491d-b28b-fedb17ccaa64",
+      "name": "clientes",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "consulta_type": "cliente_por_nombre",
+          "query_text": "Algia"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-21T00:44:23.595Z",
+      "createdAt": "2025-11-21T00:44:23.595Z",
+      "role": "workflow:owner",
+      "workflowId": "FVCVJgCLghWqYT2n",
+      "projectId": "73zSRVHGJwFSDWts"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-21T03:25:27.469Z",
+  "versionId": "4509ba7b-b6e8-428c-bcd6-250d7f023a57"
+}
