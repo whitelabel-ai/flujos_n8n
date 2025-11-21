@@ -1,17 +1,6 @@
 {
   "active": false,
   "connections": {
-    "Google Sheets Trigger": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
@@ -27,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Create a row",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -37,6 +26,28 @@
     "Create a row": {
       "main": [
         []
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -58,27 +69,15 @@
           "fieldValues": [
             {
               "fieldName": "Idea",
-              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Idea }}"
-            },
-            {
-              "fieldName": "Perfil",
-              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Autor }}"
+              "fieldValue": "={{ $json.idea }}"
             },
             {
               "fieldName": "Contenido Linkedin",
-              "fieldValue": "={{ $json.output }}"
+              "fieldValue": "={{ $json.contenido_LinkedIn }}"
             },
             {
-              "fieldName": "Fecha y Hora",
-              "fieldValue": "={{ $('Google Sheets Trigger').item.json['Fecha y hora'] }}"
-            },
-            {
-              "fieldName": "Categoria",
-              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Categoria }}"
-            },
-            {
-              "fieldName": "Prioridad",
-              "fieldValue": "={{ $('Google Sheets Trigger').item.json.Prioridad }}"
+              "fieldName": "status",
+              "fieldValue": "Pending"
             }
           ]
         }
@@ -86,8 +85,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        240,
-        496
+        -2512,
+        624
       ],
       "id": "babdd335-ee11-464b-b16d-1dd46bcf5963",
       "name": "Create a row",
@@ -100,58 +99,17 @@
     },
     {
       "parameters": {
-        "pollTimes": {
-          "item": [
-            {
-              "mode": "everyMinute"
-            }
-          ]
-        },
-        "documentId": {
-          "__rl": true,
-          "value": "1XxuTAy50zNgOL020Oduf3WGnTmCo-CJ7cUYqYuRSKfg",
-          "mode": "list",
-          "cachedResultName": "Sheets Linkedin",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XxuTAy50zNgOL020Oduf3WGnTmCo-CJ7cUYqYuRSKfg/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet Idea",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XxuTAy50zNgOL020Oduf3WGnTmCo-CJ7cUYqYuRSKfg/edit#gid=0"
-        },
-        "event": "rowAdded",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheetsTrigger",
-      "typeVersion": 1,
-      "position": [
-        -304,
-        496
-      ],
-      "id": "fd1b0d7c-a862-49e9-9987-36d890922c0b",
-      "name": "Google Sheets Trigger",
-      "credentials": {
-        "googleSheetsTriggerOAuth2Api": {
-          "id": "u3deCik31FamwyAF",
-          "name": "Google Sheets Trigger account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
         "promptType": "define",
-        "text": "=Eres un experto en marketing digital.\nGenera un post para LinkedIn a partir de la siguiente idea.\n\nIdea: {{$json[\"Idea\"]}}\nAutor: {{$json[\"Autor\"]}}\nCategoría: {{$json[\"Categoria\"]}}\nPrioridad: {{$json[\"Prioridad\"]}}\n\nDevuelve solo el texto del post, sin explicación adicional.\n",
+        "text": "=Extrae del mensaje los siguientes campos y responde en formato JSON: { \"idea\": \"...\", \"autor\": \"...\", \"fecha\": \"...\", \"hora\": \"...\" }\n{{ $json.message.text }}",
         "options": {
-          "systemMessage": "=Eres un experto en marketing digital.\nGenera un post para LinkedIn a partir de la siguiente idea.\n\nIdea: {{$json[\"Idea\"]}}\nAutor: {{$json[\"Autor\"]}}\nCategoría: {{$json[\"Categoria\"]}}\nPrioridad: {{$json[\"Prioridad\"]}}\n\nDevuelve solo el texto del post, sin explicación adicional.\n"
+          "systemMessage": ""
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        -80,
-        496
+        -3088,
+        624
       ],
       "id": "bdcda101-5a1d-4d67-85d8-99409830c126",
       "name": "AI Agent"
@@ -163,8 +121,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -16,
-        720
+        -3016,
+        848
       ],
       "id": "cc03fce0-2418-4352-b24c-7c3aeecc16b6",
       "name": "Google Gemini Chat Model",
@@ -174,6 +132,42 @@
           "name": "automation.whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3312,
+        624
+      ],
+      "id": "4fe12fa1-200d-425c-8457-6cccc40c1563",
+      "name": "Telegram Trigger",
+      "webhookId": "44afc123-087c-4246-9f90-7d4d894d8c0f",
+      "credentials": {
+        "telegramApi": {
+          "id": "HlgJfleYDrocTlQZ",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const idea = `Desbloquea el Potencial: Cómo la Automatización Transforma tu Negocio`;\nconst autor = `andresco70@gmail.com`;\nconst fecha = `21/11/2025`;\nconst hora = `13:30`;\nconst perfil = `andresco70@gmail.com`;\nconst contenido_LinkedIn = `💡✨Desbloquea el Potencial: Cómo la Automatización Transforma tu Negocio✨💡... etc`;\n\n// Retorna un array de objetos para n8n (se requiere mínimo un objeto)\nreturn [\n  {\n    idea,\n    contenido_LinkedIn\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2736,
+        624
+      ],
+      "id": "49621e29-2959-4e6b-b83f-d767ca08d393",
+      "name": "Code in JavaScript"
     }
   ],
   "pinData": {},
@@ -194,7 +188,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-11-20T22:24:47.100Z",
-  "versionId": "4660aeef-c297-4964-8a2f-5c799c6b9101"
+  "triggerCount": 1,
+  "updatedAt": "2025-11-21T22:26:43.512Z",
+  "versionId": "bf1c9331-9c5d-4368-a1c2-7d25e48bb8f8"
 }
