@@ -485,13 +485,7 @@
     },
     "AI Agent with Langfuse": {
       "main": [
-        [
-          {
-            "node": "Parseador",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Google Gemini Chat Model1": {
@@ -675,6 +669,17 @@
           {
             "node": "AI Agent with Langfuse",
             "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Get a prompt",
+            "type": "main",
             "index": 0
           }
         ]
@@ -2534,7 +2539,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $('Data').item.json.message }}\n",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
         "langfuseMetadata": {},
         "options": {
           "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}}"
@@ -2549,9 +2554,9 @@
       "id": "9ce87f55-c61c-4222-9f53-726e9d3f2339",
       "name": "AI Agent with Langfuse",
       "credentials": {
-        "langfuseApi": {
-          "id": "c3MA6hsFGoNXNs8O",
-          "name": "acondionando SAS"
+        "langfuseCustomApi": {
+          "id": "5PshkmpJJDG70NwX",
+          "name": "Acondicionando Ai Agent"
         }
       }
     },
@@ -2576,8 +2581,6 @@
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Data').item.json.user_id }}",
         "sessionTTL": 500000,
         "contextWindowLength": 25
       },
@@ -2660,7 +2663,7 @@
           "value": "c1LB7anqKcnE41cH",
           "mode": "list",
           "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
-          "cachedResultName": "Get Data Base"
+          "cachedResultName": "Acondicionados SAS — Get all client info"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -2949,7 +2952,7 @@
           "value": "c1LB7anqKcnE41cH",
           "mode": "list",
           "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
-          "cachedResultName": "Get Data Base"
+          "cachedResultName": "Acondicionados SAS — Get all client info"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -3003,44 +3006,35 @@
     },
     {
       "parameters": {
-        "description": "llama esta herramienta cuando te pidan infomacion sobre las fechas de mantenimiento de los equipos",
+        "description": "llama esta tool cuando necesites consultar los mantenimientos en un rango de fechas inicio y fin, en formato año-mes-dia",
         "workflowId": {
           "__rl": true,
-          "value": "c1LB7anqKcnE41cH",
+          "value": "RYyRHvbAlLTCtebr",
           "mode": "list",
-          "cachedResultUrl": "/workflow/c1LB7anqKcnE41cH",
-          "cachedResultName": "Get Data Base"
+          "cachedResultUrl": "/workflow/RYyRHvbAlLTCtebr",
+          "cachedResultName": "Acondicionados SAS — get mantenimientos"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "servicio_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('servicio_id', ``, 'string') }}"
+            "Fecha inicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha_inicio', `Fecha de inicio de consulta de mantenimientos (formato yyyy-mm-dd)`, 'string') }}",
+            "Fecha Fin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha_Fin', `Fecha fin de consulta de mantenimientos (formato yyyy-mm-dd)`, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
             {
-              "id": "razon_social",
-              "displayName": "razon_social",
+              "id": "Fecha inicio",
+              "displayName": "Fecha inicio",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
               "type": "string",
-              "removed": true
+              "removed": false
             },
             {
-              "id": "equipo_id",
-              "displayName": "equipo_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": true
-            },
-            {
-              "id": "servicio_id",
-              "displayName": "servicio_id",
+              "id": "Fecha Fin",
+              "displayName": "Fecha Fin",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3130,6 +3124,20 @@
       ],
       "id": "fef431a6-20b5-4ab6-bb06-18a87febc2a5",
       "name": "Call 'Get Data Base'"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        5568,
+        -32
+      ],
+      "id": "02b79153-494b-4f64-b3a8-732f2efe5f7c",
+      "name": "When chat message received",
+      "webhookId": "424d8054-1d18-4b3c-9a52-ffca58cca8f6"
     }
   ],
   "pinData": {},
@@ -3144,11 +3152,11 @@
   },
   "shared": [
     {
-      "updatedAt": "2025-10-31T01:43:05.573Z",
-      "createdAt": "2025-10-31T01:43:05.573Z",
+      "updatedAt": "2025-11-21T03:27:02.200Z",
+      "createdAt": "2025-11-21T03:27:02.200Z",
       "role": "workflow:owner",
       "workflowId": "BoCJVwCmbFhDx9rI",
-      "projectId": "nfeOgNZ0Q89hgHph"
+      "projectId": "73zSRVHGJwFSDWts"
     }
   ],
   "staticData": null,
@@ -3160,7 +3168,7 @@
       "name": "Plantilla"
     }
   ],
-  "triggerCount": 1,
-  "updatedAt": "2025-11-15T06:03:10.647Z",
-  "versionId": "02f6f3f8-3675-42ee-b436-d4e48def9934"
+  "triggerCount": 2,
+  "updatedAt": "2025-11-21T05:50:02.773Z",
+  "versionId": "11dcb6e8-29c5-40f7-8a9e-96cc60d165da"
 }
