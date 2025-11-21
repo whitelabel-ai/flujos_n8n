@@ -1,0 +1,365 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "get mantenimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get client": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get sedes": {
+      "main": [
+        [
+          {
+            "node": "get client",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Remove Duplicates2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get equipos": {
+      "main": [
+        [
+          {
+            "node": "get sedes",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "get mantenimiento": {
+      "main": [
+        [
+          {
+            "node": "get equipos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clientes": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "clientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-21T03:39:11.212Z",
+  "id": "RYyRHvbAlLTCtebr",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "get mantenimientos",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "returnAll": true,
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "field": "proximos_mantenimientos"
+              }
+            ]
+          },
+          "where": "=(proximos_mantenimientos,gte,{{ $json['Fecha inicio'] }})~and(proximos_mantenimientos,lte,{{ $json['Fecha Fin'] }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -64,
+        176
+      ],
+      "id": "472054c1-2e70-4c55-b53b-340b8dcc6bcf",
+      "name": "get mantenimiento",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Fecha inicio"
+            },
+            {
+              "name": "Fecha Fin"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -288,
+        176
+      ],
+      "id": "a74a2c11-3586-4aff-a513-10b12ae24205",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "options": {
+          "where": "=(client_id,like,{{$json.client_id.trim()}})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        608,
+        -64
+      ],
+      "id": "ca93aedd-98ea-40ec-9614-8d31cf0c709f",
+      "name": "get client",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mwq5ww7arsq1lzg",
+        "options": {
+          "where": "=(sede_id,like,{{ $json.sede_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        384,
+        32
+      ],
+      "id": "29b53bff-96ee-4fc9-a9cb-0fc781605c5d",
+      "name": "get sedes",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mjdctrqix3ttqsq",
+        "options": {
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        160,
+        104
+      ],
+      "id": "91227c6c-cb8e-41bc-ba22-c32537e9caf3",
+      "name": "get equipos",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combineBySql",
+        "numberInputs": 4,
+        "query": "SELECT\n  -- Cliente\n  c.client_id              AS cliente_id,\n  c.Id                     AS cliente_row_id,\n  c.tipo_documento,\n  c.razon_social,\n  c.telefono_contaco,\n  c.persona_encargada,\n  c.direccion              AS direccion_cliente,\n\n  -- Sede\n  s.sede_id                AS sede_id,\n  s.nombre_sede,\n  s.direccion              AS direccion_sede,\n  s.ciudad                 AS sede_ciudad,\n\n  -- Equipo\n  e.equipo_id              AS equipo_id,\n  e.sede_id                AS equipo_sede_id,\n  e.[ubicación_equipo]     AS ubicacion_equipo,\n  e.tipo_equipo,\n  e.marca,\n  e.modelo,\n  e.serial,\n  e.[capacidad en toneladas] AS capacidad_toneladas,\n  e.refrigerante,\n  e.voltaje,\n  e.Periocidad             AS periocidad_equipo,\n\n  -- Mantenimiento\n  m.Id                     AS mantenimiento_row_id,\n  m.periocidad_tipo,\n  m.ultimo_mantenimiento,\n  m.proximos_mantenimientos,\n  m.estado,\n  m.notas\n\nFROM input1 AS c\nLEFT JOIN input2 AS s\n  ON s.client_id = c.client_id          -- cliente → sedes\nLEFT JOIN input3 AS e\n  ON e.sede_id = s.sede_id              -- sedes → equipos\nLEFT JOIN input4 AS m\n  ON m.equipo_id = e.equipo_id          -- equipos → mantenimientos\n\nORDER BY\n  c.client_id,\n  s.sede_id,\n  e.equipo_id,\n  m.proximos_mantenimientos;\n",
+        "options": {
+          "emptyQueryResult": "empty"
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1056,
+        168
+      ],
+      "id": "07528167-dbf9-48c3-9cbf-7942cd1c4d7c",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Clientes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        200
+      ],
+      "id": "1ef394c5-ca66-4d88-abd0-5e95889217b9",
+      "name": "clientes"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Entrada: items planos (salida del Merge / SQL)\n// Objetivo: 1 item por cliente, con estructura:\n// {\n//   cliente: { ...datos cliente... },\n//   sedes: [\n//     {\n//       sede_id,\n//       nombre_sede,\n//       direccion,\n//       equipos: [\n//         {\n//           equipo_id,\n//           ...datos equipo...,\n//           mantenimientos: [ ... ]\n//         }\n//       ]\n//     }\n//   ]\n// }\n\nconst rows = items.map(item => item.json);\n\n// Usamos un diccionario por cliente_id\nconst clientesMap = {};\n\nfor (const row of rows) {\n  const clienteId = row.cliente_id;\n  if (!clienteId) continue;\n\n  // ------ NIVEL CLIENTE ------\n  if (!clientesMap[clienteId]) {\n    clientesMap[clienteId] = {\n      cliente: {\n        cliente_id: row.cliente_id,\n        tipo_documento: row.tipo_documento,\n        razon_social: row.razon_social,\n        telefono_contaco: row.telefono_contaco,\n        persona_encargada: row.persona_encargada,\n        direccion: row.direccion_cliente,\n      },\n      sedes: []\n    };\n  }\n\n  const clienteObj = clientesMap[clienteId];\n\n  // ------ NIVEL SEDE ------\n  let sede = null;\n  if (row.sede_id) {\n    sede = clienteObj.sedes.find(s => s.sede_id === row.sede_id);\n\n    if (!sede) {\n      sede = {\n        sede_id: row.sede_id,\n        nombre_sede: row.nombre_sede,\n        direccion: row.direccion_sede,\n        // si más adelante quieres campos específicos de la sede, los agregas aquí\n        equipos: []\n      };\n      clienteObj.sedes.push(sede);\n    }\n  }\n\n  // ------ NIVEL EQUIPO ------\n  let equipo = null;\n  if (sede && row.equipo_id) {\n    equipo = sede.equipos.find(e => e.equipo_id === row.equipo_id);\n\n    if (!equipo) {\n      equipo = {\n        equipo_id: row.equipo_id,\n        ubicacion_equipo: row.ubicacion_equipo,\n        tipo_equipo: row.tipo_equipo,\n        marca: row.marca,\n        modelo: row.modelo,\n        serial: row.serial,\n        capacidad_toneladas: row.capacidad_toneladas,\n        refrigerante: row.refrigerante,\n        voltaje: row.voltaje,\n        periocidad_equipo: row.periocidad_equipo,\n        mantenimientos: []\n      };\n      sede.equipos.push(equipo);\n    }\n  }\n\n  // ------ NIVEL MANTENIMIENTO ------\n  if (equipo && (row.ultimo_mantenimiento || row.proximos_mantenimientos || row.periocidad_tipo)) {\n    // Evitar duplicados: comparamos por combinación de campos clave\n    const yaExiste = equipo.mantenimientos.some(m =>\n      m.ultimo_mantenimiento === row.ultimo_mantenimiento &&\n      m.proximos_mantenimientos === row.proximos_mantenimientos &&\n      m.periocidad_tipo === row.periocidad_tipo\n    );\n\n    if (!yaExiste) {\n      equipo.mantenimientos.push({\n        mantenimiento_id: row.mantenimiento_row_id,\n        periocidad_tipo: row.periocidad_tipo,\n        ultimo_mantenimiento: row.ultimo_mantenimiento,\n        proximos_mantenimientos: row.proximos_mantenimientos,\n        estado: row.estado,\n        notas: row.notas\n      });\n    }\n  }\n}\n\n// Convertimos el mapa en items de n8n: 1 item por cliente\nconst salida = Object.values(clientesMap).map(obj => ({ json: obj }));\nreturn salida;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        200
+      ],
+      "id": "e4f6179f-1973-4dd0-a5ca-ecfa56bc3fb5",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        832,
+        -64
+      ],
+      "id": "de005e42-fd0b-49f9-b19a-d538680b84ab",
+      "name": "Remove Duplicates1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        832,
+        128
+      ],
+      "id": "14f63b68-d7d1-42a8-9293-169b53636195",
+      "name": "Remove Duplicates2"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Fecha inicio": "2025-12-01",
+          "Fecha Fin": "2025-12-15"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-21T03:39:11.212Z",
+      "createdAt": "2025-11-21T03:39:11.212Z",
+      "role": "workflow:owner",
+      "workflowId": "RYyRHvbAlLTCtebr",
+      "projectId": "73zSRVHGJwFSDWts"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-21T05:32:13.103Z",
+  "versionId": "5991acf2-c065-415b-85f2-16f42a6e2fb5"
+}
