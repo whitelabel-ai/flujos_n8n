@@ -1,5 +1,1738 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-15T06:11:40.860Z",
+    "createdAt": "2025-11-15T06:11:40.860Z",
+    "versionId": "3309ac28-0b52-47c9-a610-2293cabfee54",
+    "workflowId": "zJwCFMqgZ3rV1Tl2",
+    "nodes": [
+      {
+        "parameters": {
+          "url": "={{ $('Table Name').item.json.url }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1072,
+          -608
+        ],
+        "id": "c72ffa12-fa84-4752-9df7-d05fca0c227f",
+        "name": "HTTP Request2"
+      },
+      {
+        "parameters": {
+          "jsCode": "// --- CONFIGURACIÓN ---\n// Se usa el módulo 'url', que está permitido en n8n, para manejar las URLs.\nconst urlModule = require('url');\n\nconst MAIN_DOMAIN = String($('Table Name').first().json.dominio || '').trim();\nconst BASE_URL = String($('Table Name').first().json.url || '').trim();\nconst tableName = $('Table Name').first().json.tableName\nconst chat = $('Table Name').first().json.chat\n\nif (!MAIN_DOMAIN || !BASE_URL.startsWith('http')) {\n  throw new Error(`MAIN_DOMAIN (\"${MAIN_DOMAIN}\") o BASE_URL (\"${BASE_URL}\") son inválidos.`);\n}\n\n// --------------------\n\nconst htmlString = $input.first().json.data;\n\nconst cleanText = (text) => {\n  if (!text || typeof text !== 'string') return '';\n  let clean = text.replace(/<[^>]+>/g, '');\n  return clean.replace(/\\s+/g, ' ').trim();\n};\n\nconst plainText = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n')\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)<\\/a>/gis;\n\nconst excludeExtensions = [\n    '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.pdf', '.doc',\n    '.docx', '.xls', '.xlsx', '.zip', '.rar', '.csv', '.woff2', '.ttf'\n];\n\n// --- PROCESAMIENTO CON EL MÓDULO 'url' ---\nconst matches = [...htmlString.matchAll(urlRegex)];\n\nconst allLinks = matches.map(([_, href, text]) => {\n  if (!href) return null;\n  // Usamos url.resolve(base, ruta) en lugar de new URL(ruta, base)\n  const absoluteUrl = urlModule.resolve(BASE_URL, href.trim());\n  return {\n    nombre: cleanText(text),\n    url: absoluteUrl.split('#')[0],\n  };\n});\n\nconst filteredLinks = allLinks.filter(link => {\n  if (!link || !link.url || !link.nombre || link.url === BASE_URL) {\n    return false;\n  }\n  const lowerUrl = link.url.toLowerCase();\n  const path = lowerUrl.split('?')[0];\n\n  if (lowerUrl.startsWith('mailto:') || lowerUrl.startsWith('tel:') || excludeExtensions.some(ext => path.endsWith(ext))) {\n    return false;\n  }\n  \n  // Usamos url.parse() para obtener las partes de la URL, como el hostname\n  const parsedUrl = urlModule.parse(link.url);\n  return parsedUrl.hostname && parsedUrl.hostname.endsWith(MAIN_DOMAIN);\n});\n\nconst uniqueUrls = Array.from(new Map(filteredLinks.map(item => [item.url, item])).values());\n\nreturn [{\n  json: {\n    MAIN_DOMAIN,\n    BASE_URL,\n    tableName: tableName,\n    chat: chat,\n    total_matches: matches.length,\n    urls_encontradas: uniqueUrls.length,\n    urls: uniqueUrls,\n    contenido: plainText\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1296,
+          -608
+        ],
+        "id": "b41efa80-12bc-4c33-a1d8-bb91afe43920",
+        "name": "Code2"
+      },
+      {
+        "parameters": {
+          "jsCode": "/*\n  Este nodo prepara todo para empezar.\n  Crea un 'estado' inicial que se pasará a través del flujo.\n*/\n\nconst startUrl = $('Table Name').first().json.url;\nconst urls = $input.first().json.urls.map((url) => {\n  return `${url.url}`\n})\n\nconst initialState = {\n  // La lista de URLs que faltan por visitar (nuestra cola de trabajo)\n  urls_to_visit: [startUrl, ...urls],\n  \n  // Un array de URLs que ya hemos procesado para no repetirlas\n  visited_urls: [], // <-- ESTE ES EL CAMBIO MÁS IMPORTANTE\n  \n  // Aquí guardaremos todo el contenido que extraigamos\n  all_content: [],\n\n  // La URL que estamos procesando en la iteración actual\n  current_url: null\n};\n\nreturn initialState;"
+        },
+        "name": "1. Initialize State1",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1744,
+          -736
+        ],
+        "id": "fc921187-c6e6-461e-86c9-511bd3223d96"
+      },
+      {
+        "parameters": {
+          "jsCode": "/*\n  Este nodo actúa como el gestor de la cola.\n  1. Toma la siguiente URL de la lista 'urls_to_visit'.\n  2. La elimina de la cola.\n  3. La añade a la lista 'visited_urls' para no volver a procesarla.\n  4. Pasa la URL actual al siguiente nodo para la petición HTTP.\n*/\n\nconst state = $input.first().json;\n\n// Sacamos la primera URL de la cola de trabajo\nconst nextUrl = state.urls_to_visit.shift();\n\n// La añadimos al registro de visitadas (usando .push() para el array)\nstate.visited_urls.push(nextUrl);\n\n// La establecemos como la URL actual para esta iteración\nstate.current_url = nextUrl;\n\nreturn state;\n"
+        },
+        "name": "3. Get Next URL from Queue1",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1968,
+          -736
+        ],
+        "id": "55a7c213-7205-4fea-a5cb-16a20459cb0f"
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.current_url }}",
+          "options": {
+            "response": {}
+          }
+        },
+        "name": "4. HTTP Request1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2192,
+          -928
+        ],
+        "id": "812cde99-5b00-4f22-a1b9-da0ca9cc2b1c"
+      },
+      {
+        "parameters": {
+          "jsCode": "// ✅ Importamos el módulo 'url', que está permitido en n8n, para manejar las URLs.\nconst urlModule = require('url');\n\n// --- CONFIGURACIÓN ---\nconst MAIN_DOMAIN = String($('Table Name').first().json.dominio || '').trim();\nconst BASE_URL = String($('Table Name').first().json.url || '').trim();\nconst tableName = $('Table Name').first().json.tableName\nconst chat = $('Table Name').first().json.chat\n\nif (!MAIN_DOMAIN || !BASE_URL.startsWith('http')) {\n  throw new Error(`MAIN_DOMAIN (\"${MAIN_DOMAIN}\") o BASE_URL (\"${BASE_URL}\") son inválidos.`);\n}\n\n// --- ESTADO Y DATOS DE ENTRADA ---\nconst state = $(\"3. Get Next URL from Queue1\").first().json;\nconst htmlString = $input.first().json.data;\n\nif (!htmlString) {\n    return [{ json: state }]; // Si no hay HTML, devolvemos el estado sin cambios\n}\n\nconst visitedUrlsSet = new Set(state.visited_urls || []);\n\n// --- LIMPIEZA DEL CONTENIDO ---\nconst plainText = htmlString\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, '')\n  .replace(/<header[\\s\\S]*?<\\/header>/gi, '')\n  .replace(/<footer[\\s\\S]*?<\\/footer>/gi, '')\n  .replace(/<svg[\\s\\S]*?<\\/svg>/gi, '')\n  .replace(/<[^>]+>/g, '\\n')\n  .replace(/\\n\\s*\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\nstate.all_content.push({\n  source: state.current_url,\n  content: plainText,\n});\n\n\n// --- EXTRACCIÓN Y FILTRADO DE NUEVOS ENLACES ---\nconst urlRegex = /<a[^>]*href=[\"']([^\"']+)[\"'][^>]*>/gi;\nconst matches = [...htmlString.matchAll(urlRegex)];\nconst excludeExtensions = ['.jpg', '.png', '.gif', '.zip', '.pdf', '.svg', '.ico', '.webp'];\nconst newLinksSet = new Set();\n\nconst normalizeUrl = (urlString) => {\n  if (!urlString) return null;\n  const parsedUrl = urlModule.parse(urlString);\n  parsedUrl.hash = null;\n  if (parsedUrl.pathname && parsedUrl.pathname !== '/' && parsedUrl.pathname.endsWith('/')) {\n      parsedUrl.pathname = parsedUrl.pathname.slice(0, -1);\n  }\n  return urlModule.format(parsedUrl);\n};\n\nfor (const [, href] of matches) {\n  if (!href) continue;\n  const fullUrl = urlModule.resolve(state.current_url, href.trim());\n  const normalized = normalizeUrl(fullUrl);\n  \n  if (\n    normalized &&\n    normalized.startsWith(BASE_URL) &&\n    !excludeExtensions.some(ext => normalized.toLowerCase().endsWith(ext)) &&\n    !visitedUrlsSet.has(normalized)\n  ) {\n    newLinksSet.add(normalized);\n  }\n}\n\n// --- ACTUALIZACIÓN DEL ESTADO ---\nconst combinedUrls = [...new Set([...state.urls_to_visit, ...newLinksSet])];\nstate.urls_to_visit = combinedUrls.filter(url => !visitedUrlsSet.has(url));\nstate.visited_urls = Array.from(visitedUrlsSet);\n\n// --- SALIDA CON CONTADORES ---\n// En lugar de devolver solo el estado, devolvemos un objeto JSON que incluye\n// el estado (para que el bucle siga funcionando) y las nuevas cuentas.\nconst finalJsonOutput = {\n\n  // Añadimos las cuentas de esta ejecución\n  debug_info: {\n    MAIN_DOMAIN: MAIN_DOMAIN,\n    tableName: tableName,\n    chat: chat,\n    page_processed: state.current_url,\n    \n    total_matches_on_page: matches.length,\n    new_urls_found_on_page: newLinksSet.size,\n    total_urls_in_queue: state.urls_to_visit.length,\n    total_urls_visited: state.visited_urls.length\n  },\n    ...state // Mantenemos todas las propiedades del estado (urls_to_visit, etc.)\n  \n};\n\nreturn [{ json: finalJsonOutput }];"
+        },
+        "name": "5. Extract Content & Find New Links1",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2416,
+          -928
+        ],
+        "id": "88efe2a7-82be-4bf7-953a-f9efb8586ca6"
+      },
+      {
+        "parameters": {
+          "jsCode": "const state = $('5. Extract Content & Find New Links1').first().json;\nconst tableName = $('data').first().json.tableName;\nconst chatID = $('data').first().json.chat.id;\nconst name = $('data').first().json.chat.first_name;\n\n// Condición de salida: Si ya no hay URLs para visitar, el proceso ha terminado.\n// Pasamos el estado final con todo el contenido acumulado.\nif (state.urls_to_visit.length === 0 && state.all_content?.length > 0) {\n  const finalState = {\n    ...state,\n    tableName,\n    chatID,\n    name\n  };\n  return [{ json: finalState }];\n}\n\n// Condición de bucle: Si todavía hay URLs para visitar.\n// Creamos una copia del estado para no modificar el original directamente.\nconst stateForNextPage = { ...state };\n\n// ✅ Limpiamos el array 'all_content', dejándolo vacío para la siguiente iteración.\nstateForNextPage.all_content = [];\n\n// Devolvemos el estado modificado.\nreturn [{ json: stateForNextPage }];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3392,
+          -928
+        ],
+        "id": "6a315a35-014e-4f44-977c-1e1c56d3f85c",
+        "name": "Code4"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "def5c467-e949-4660-91b4-10221e4f6329",
+        "name": "Recursive Character Text Splitter",
+        "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+        "typeVersion": 1,
+        "position": [
+          3088,
+          -496
+        ]
+      },
+      {
+        "parameters": {
+          "jsonMode": "expressionData",
+          "jsonData": "={{ $json.Content }}",
+          "options": {
+            "metadata": {
+              "metadataValues": [
+                {
+                  "name": "file_id",
+                  "value": "={{ $json.Url }}"
+                }
+              ]
+            }
+          }
+        },
+        "id": "f30fcda5-c22d-43b0-adef-241a413d8e3a",
+        "name": "Default Data Loader1",
+        "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+        "typeVersion": 1,
+        "position": [
+          2992,
+          -704
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $json.urls_to_visit.length }}",
+                "operation": "larger"
+              }
+            ]
+          }
+        },
+        "name": "2. Is Queue Empty?1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          3616,
+          -736
+        ],
+        "id": "daac1730-7b8b-4c8a-8b86-ab671cc5f69c"
+      },
+      {
+        "parameters": {
+          "mode": "insert",
+          "tableName": "={{ $json.tableName }}",
+          "options": {
+            "columnNames": {
+              "values": {
+                "contentColumnName": "content"
+              }
+            }
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+        "typeVersion": 1.3,
+        "position": [
+          2880,
+          -928
+        ],
+        "id": "750f37d9-bddb-4c97-8437-22bb188c9112",
+        "name": "Postgres PGVector Store",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "CREATE TABLE {{ $('Table Name').item.json.tableName }}_metadata (\n    id TEXT PRIMARY KEY,\n    title TEXT,\n    url TEXT,\n    created_at TIMESTAMP DEFAULT NOW(),\n    schema TEXT\n);",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.5,
+        "position": [
+          -288,
+          -608
+        ],
+        "id": "e0a16c98-35e7-4833-a7aa-5f9aaa5ed169",
+        "name": "Create Document Metadata Table",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "CREATE TABLE {{ $('Table Name').item.json.tableName }}_rows (\n    id SERIAL PRIMARY KEY,\n    dataset_id TEXT REFERENCES {{ $('Table Name').item.json.tableName }}_metadata(id),\n    row_data JSONB  -- Store the actual row data\n);",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.5,
+        "position": [
+          288,
+          -608
+        ],
+        "id": "aae807cb-7ffe-48ea-b3ec-b06b3e9caf5e",
+        "name": "Create Document Rows Table (for Tabular Data)",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "-- Enable the pgvector extension to work with embedding vectors\n--create extension vector; --Ya esta activo\n\n-- Create a table to store your documents\ncreate table {{ $('Table Name').item.json.tableName }} (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(3072) -- 1536 works for OpenAI embeddings, change if needed, 3072 -> google\n);\n\n-- Create a function to search for documents\ncreate function match_{{ $('Table Name').item.json.tableName }}(\n  query_embedding vector(3072),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $$\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - ({{ $('Table Name').item.json.tableName }}.embedding <=> query_embedding) as similarity\n  from {{ $json.tableName }}\n  where metadata @> filter\n  order by {{ $('Table Name').item.json.tableName }}.embedding <=> query_embedding\n  limit match_count;\nend;\n$$;",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.5,
+        "position": [
+          -512,
+          -608
+        ],
+        "id": "65412e9e-8670-4d92-abdc-92db00643381",
+        "name": "Create Documents Table and Match Function",
+        "alwaysOutputData": false,
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "2b5fa507-cd73-4fd9-a388-dafb81269682",
+                "name": "message",
+                "value": "={{ $json.message.text }}",
+                "type": "string"
+              },
+              {
+                "id": "4abdbb12-2f86-4a2f-a650-45b3851ebd92",
+                "name": "url",
+                "value": "={{ $json.message.text.extractUrl() }}",
+                "type": "string"
+              },
+              {
+                "id": "3d52f064-9de8-4c9c-990e-eed393ff6a03",
+                "name": "dominio",
+                "value": "={{ \n  $json.message.text.extractUrl()\n    .replace(/^https?:\\/\\//, '')  // Elimina http:// o https://\n    .replace(\n      /^(docs?|api|www|app|developer|stage|test|ui|dev|sandbox|qa|staging|preprod|demo|account|support|blog|status|static|cdn|assets|media|mail|chat|shop|store|pay|billing|v\\d+|rest|graphql|us|eu|asia|latam|mx|es|fr|de|m)\\./i, \n      ''\n    )  // Elimina subdominios comunes\n    .split('/')[0]  // Toma solo el dominio principal\n}}",
+                "type": "string"
+              },
+              {
+                "id": "6664e1ae-a67e-4267-90be-2d26ddbcab24",
+                "name": "chat",
+                "value": "={{ $json.message.chat }}",
+                "type": "object"
+              },
+              {
+                "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
+                "name": "=tableName",
+                "value": "={{ $json.message.text.extractUrl().extractDomain().replace(/^https?:\\/\\//, '')  // Elimina http:// o https://\n    .replace(\n      /^(docs?|api|www|app|developer|stage|test|ui|dev|sandbox|qa|staging|preprod|demo|account|support|blog|status|static|cdn|assets|media|mail|chat|shop|store|pay|billing|v\\d+|rest|graphql|us|eu|asia|latam|mx|es|fr|de|m)\\./i, \n      ''\n    ).split('.')[0] }}_doc",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -1360,
+          -704
+        ],
+        "id": "4d03b177-9ab9-4645-a02f-b9a8ae62710f",
+        "name": "Table Name"
+      },
+      {
+        "parameters": {
+          "operation": "upsert",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "={{ $('Table Name').item.json.tableName }}_metadata",
+            "mode": "name"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "id": "={{ $('Table Name').item.json.url }}",
+              "url": "={{ $('Table Name').item.json.url }}",
+              "title": "={{ $('Table Name').item.json.tableName }}"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": true,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "title",
+                "displayName": "title",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "url",
+                "displayName": "url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "created_at",
+                "displayName": "created_at",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "schema",
+                "displayName": "schema",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.5,
+        "position": [
+          848,
+          -608
+        ],
+        "id": "0294309e-940b-4e1c-8a21-df3e10c4beb5",
+        "name": "Insert Document Metadata",
+        "executeOnce": true,
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -1808,
+          -816
+        ],
+        "id": "c0391082-ada3-409f-b96e-45bca27dc723",
+        "name": "Telegram Trigger",
+        "webhookId": "ce32e5c3-6eab-4e57-a34d-c42cde4f3313",
+        "credentials": {
+          "telegramApi": {
+            "id": "FIiJSwG1ECFORj7f",
+            "name": "Documentagent"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT EXISTS (\n  SELECT FROM information_schema.tables \n  WHERE table_schema = 'public' \n    AND table_name = '{{ $json.tableName }}'\n);\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          -1136,
+          -704
+        ],
+        "id": "f78a13bd-ecc2-4175-b924-64f4a3c3e337",
+        "name": "search Table name",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "7051fee8-02e2-4f0c-8d5a-f3bd091eca69",
+                "leftValue": "={{ $json.exists }}",
+                "rightValue": "true",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -832,
+          -704
+        ],
+        "id": "7d38dfee-ada5-4214-b0ee-90241ffd1f79",
+        "name": "Table exist"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "8f54308d-2a32-49ba-aebd-ec9144ac453d",
+                "leftValue": "={{ $json.message.text.extractUrl() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notExists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -1584,
+          -816
+        ],
+        "id": "6e34e829-8155-4ffa-8324-1cc55d795107",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chatID }}",
+          "text": "=✨📚 *¡Tu documentación ya está lista!* 🚀\n\nHola 👋, buenas noticias: hemos cargado correctamente la documentación que solicitaste: *{{ $json.tableName.split(\"_\")[0] }}*.\nAhora puedes consultarla directamente aquí 🧠💬\n\n🔍 Solo escribe tus preguntas como:\n\n* ¿Cómo se configura el modo oscuro? *\n* Muéstrame un ejemplo de autenticación *\n* ¿Qué errores comunes hay? *\n\nEstamos listos para ayudarte a explorarla con facilidad y precisión 🤓📖\n\nSi necesitas otra documentación, también puedes compartirnos el enlace oficial para agregarla.\n\n¡Vamos a por ello! 💡🙌",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          3840,
+          -736
+        ],
+        "id": "0e79920b-ae10-4a44-a5f2-de90fdceb779",
+        "name": "Send a text message",
+        "webhookId": "a391d488-652d-4e4e-a215-32b1006a1e8a",
+        "credentials": {
+          "telegramApi": {
+            "id": "FIiJSwG1ECFORj7f",
+            "name": "Documentagent"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "0e884815-856f-49f7-91f1-67980c2c4e95",
+                "name": "prompt.user",
+                "value": "=user_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\n\ntableName: {{ $('Table Name').item.json.tableName }},\n\nmessage: {{ $('Table Name').item.json.message.replace(/https?:\\/\\/(?:www\\.)?([^\\/\\s]+)/g, '$1').replace(/\\.com|\\.org|\\.io|\\.dev|\\.net|\\.co/gi, '').replace(/\\/.*/g, '').replace('enlace','').replace('url','') }}\n",
+                "type": "string"
+              },
+              {
+                "id": "c6d4f18b-bc68-4a86-8d05-be94948607e4",
+                "name": "prompt.system",
+                "value": "=  Eres un agente experto en documentación técnica. Tu misión es asistir a desarrolladores y usuarios técnicos a consultar, buscar y entender documentación sobre tecnologías específicas, frameworks, librerías, herramientas o estructuras personalizadas.\n\n  Puedes acceder a:\n  - Una base de vectores (PGVector) con fragmentos de documentación, organizados en tablas. Cada tabla representa una documentación distinta.\n  - Una herramienta searchTableName que te permite buscar los nombres de todas las tablas disponibles para determinar qué documentaciones están cargadas.\n\n  Tu objetivo es ayudar al usuario a encontrar y explorar documentación almacenada en el sistema, de forma conversacional y precisa.\n\n  --- 🧠 Flujo general de razonamiento ---\n\n  1. Si el usuario ya mencionó la tecnología o documentación (por ejemplo, \"Tailwind\", \"NextAuth\", \"Stripe API\") y sabes qué tabla contiene esa documentación, puedes usar directamente la herramienta `PGVector Retrieval`.\n\n  2. Si **no conoces aún el `tableName`**:\n     - Ejecuta la herramienta `searchTableName` para obtener todos los nombres de tablas disponibles.\n     - Analiza los nombres y asócialos con las palabras clave que el usuario mencionó.\n     - Si encuentras una tabla relevante, guarda ese nombre como `tableName` y úsalo para la herramienta PGVector.\n     - Si no hay coincidencias, informa al usuario que no tienes esa documentación y solicita el enlace a la **documentación oficial** (no el sitio principal, sino la URL de la documentación técnica).\n\n  3. Mantén el contexto:\n     - Si el usuario ya está consultando una documentación, no preguntes otra vez qué documentación desea.\n     - Usa `tableName` activamente mientras esté en contexto.\n     - Si el usuario cambia de tema o tecnología, analiza y reinicia el flujo según corresponda.\n\n  4. Puedes responder preguntas específicas sobre secciones de la documentación (como instalación, configuración, autenticación, errores comunes, ejemplos, etc.) basándote en los fragmentos obtenidos por PGVector.\n\n  5. Si el usuario solicita documentación que **aún no está cargada**, responde amablemente:\n     - \"Actualmente no contamos con documentación sobre [tecnología mencionada].\"\n     - Pide que proporcione la URL directa de la documentación técnica para poder agregarla al sistema.\n     - Informa que una vez cargada, podrá consultarla aquí.\n\n  --- 🧰 Instrucciones de uso de herramientas ---\n\n  Tool: **searchTableName**\n  - Uso: Cuando el `tableName` aún no ha sido identificado.\n  - No requiere parámetros.\n  - Devuelve una lista de todas las tablas disponibles.\n  - Acción esperada: Analiza los nombres y determina cuál coincide mejor con el término o tecnología mencionada por el usuario.\n  - Guarda el nombre de la tabla como `tableName`.\n\n  Tool: **PGVector Retrieval (As Tool for AI Agent)**\n  - Uso: Solo cuando ya tienes definido un `tableName`.\n  - Parámetros:\n    - `tableName`: nombre exacto de la tabla donde está almacenada la documentación.\n  - El texto actual del usuario se utiliza automáticamente como `query` semántico para buscar en la documentación.\n  - Solo debes pasar el `tableName`. No es necesario pasar el query.\n  - Por ejemplo:\n    - Usuario: \"¿Cómo configuro dark mode en Tailwind?\"\n    - Acción: Si `tableName = tailwindcss`, llama a PGVector con ese nombre.\n\n  --- 🔁 Ejemplos de interacción ---\n\n  Usuario: \"¿Tienen documentación de Tailwind?\"\n  🔹 Acción: Llama a `searchTableName`, encuentra la tabla `tailwindcss`, guarda como `tableName`, y luego usa PGVector con ese tableName.\n\n  Usuario: \"Muéstrame cómo configurar autenticación en NextAuth\"\n  🔹 Acción: Verifica si ya estás trabajando con la documentación de `nextauth`. Si no, usa `searchTableName`, encuentra `nextauth`, y luego consulta esa tabla en PGVector.\n\n  Usuario: \"¿Tienen algo de Supabase?\"\n  🔹 Acción: Si `searchTableName` no devuelve ninguna tabla relevante, responde que no hay documentación cargada. Pide la URL directa de la documentación oficial.\n\n  Usuario: \"¿Qué dice sobre los breakpoints?\"\n  🔹 Acción: Si el `tableName` actual es `tailwindcss`, usa PGVector con ese nombre y deja que la pregunta fluya como query.\n\n  --- ✅ Reglas finales ---\n\n  - Nunca llames PGVector sin un `tableName`.\n  - Nunca pidas al usuario el nombre de la tabla, solo analiza o busca con `searchTableName`.\n  - Si no encuentras tabla coincidente, guía amablemente al usuario para enviar la URL de la documentación oficial.\n  - Siempre responde con claridad y sin tecnicismos innecesarios.\n  - Mantén la conversación centrada en ayudar a explorar la documentación cargada.\n\n--- 🔁 Encadenamiento de herramientas\n\nAntes de responder al usuario:\n\n- Si necesitas identificar el `tableName`, **primero ejecuta `searchTableName`**.\n- Luego analiza los resultados, guarda el `tableName`, y sin responder aún...\n- **Ejecuta directamente `PGVector Retrieval` con ese `tableName`.**\n- Solo después de haber ejecutado todas las herramientas necesarias, responde con el contenido solicitado.\n- No respondas con frases como: “Voy a buscar...”, “Consultando...”, “Usaré la herramienta...”.\n- Solo responde con resultados útiles y directos, como fragmentos de documentación o respuestas concretas.\n\nIMPORTANTE, para enviar palabras en negrita solo usa un *, ejemplo: *palabra en negrita*, y no puede haber un * sin su cierre *, \npara listas nunca usar *, solo usar - para listas. ",
+                "type": "string"
+              },
+              {
+                "id": "53b226aa-338f-450c-bec6-76cb73091a6b",
+                "name": "table_name",
+                "value": "={{ $('Table Name').item.json.tableName }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -512,
+          -960
+        ],
+        "id": "5957dbb9-7ef6-46ce-8f82-1b91aa28bb27",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "81371960-eb65-47dd-8ae1-cf6258075725",
+                "name": "prompt.user",
+                "value": "=\nuser_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\n\nmessage: {{ $('Telegram Trigger').item.json.message.text }}\n\n",
+                "type": "string"
+              },
+              {
+                "id": "ff0a80e2-8914-4d97-bc7c-8eec215b1597",
+                "name": "prompt.system",
+                "value": "=### 👤 *Identidad del Agente*\n\nActúa como un *Asistente Técnico Experto y Mentor Empático*. Tu nombre es *DocuHelper*. No eres solo un motor de búsqueda; eres un guía amigable y paciente. Tu misión principal es ayudar a los usuarios, especialmente a los desarrolladores, a comprender y aplicar la documentación técnica. Tu mayor satisfacción es cuando un usuario te dice: '*¡Ah, ahora lo entiendo\\!*'.\n\n### 🎯 *Principios Fundamentales*\n\n1.  *Enseñar, no solo informar*: No te limites a entregar un fragmento de código. Explica *por qué* funciona, los conceptos clave detrás de él y las mejores prácticas. Si un usuario no entiende algo, explícalo con analogías o de una forma más sencilla.\n2.  *La fuente interna, la tool 'PGVector Store' es la Verdad Absoluta*: La documentación en la base de datos vectorial es tu única fuente de confianza para responder. Siempre debes buscar en ella primero y basar tu respuesta en lo que encuentres.\n3.  *Enriquecer cuando sea necesario*: Si la información del RAG es correcta pero insuficiente para una respuesta completa (ej. falta un ejemplo de código), puedes usar `webSearch` para realizar busquedas en internet, encontrar información complementaria, siempre priorizando la documentación oficial.\n4.  *Si no existe, solicítalo*: Tu objetivo es hacer crecer la base de conocimiento. Si una documentación no está en el RAG, ('PGVector Store') tu única acción es informar al usuario y solicitarle el enlace a la documentación oficial para poder agregarla. *No intentes responder la pregunta usando la web*.\n5.  *Guía Proactiva*: Anticípate a las necesidades del usuario. Si pregunta por la instalación, es probable que el siguiente paso sea la configuración. Ofrécele esa información si la tienes.\n6.  *Formato Impecable*: Cada respuesta debe ser clara, bien estructurada y lista para enviar por Telegram sin errores.\n\n-----\n\n### 🧰 *Tools Disponibles*\n\n  * `searchTableName`:\n\n      - *Propósito*: Verificar si una documentación específica *existe* en el RAG.\n      - *Cuándo usarla*: Al inicio de una conversación o cuando el usuario cambia de tema, y no conoces el `table_name`.\n      - *Salida*: Una lista de nombres de tablas de documentación disponibles.\n\n  * `PGVector Store`:\n\n      - *Propósito*: Extraer información *confiable y detallada* de una documentación que ya está en el RAG.\n      - *Cuándo usarla*: *Únicamente* cuando `searchTableName` ha confirmado la existencia de la documentación y ya tienes el `table_name`.\n      - nunca responda al usuario sin antes consultar esta tool\n\n  * `webSearch`:\n\n      - *Propósito*: Buscar en internet, *Complementar* la información obtenida del `PGVector Store` cuando esta es insuficiente para dar una respuesta completa y de alta calidad.\n      - *Cuándo usarla*: *Solo después* de haber usado `PGVector Store` y determinar que la respuesta puede ser mejorada con detalles específicos (como ejemplos de código o parámetros de configuración que falten). *Nunca usar si la documentación no existe en el RAG*.\n      - *Parámetro*: `query` (una búsqueda muy específica para encontrar el dato que falta, ej: 'ejemplo de hook `useEffect` en Next.js 14 app router').\n      - no digas que la vas a usar tal herramienta, solo actua y da la mejor respuesta al usuario, para que quede satisfecho.\n\n-----\n\n### 🧠 *Flujo de Razonamiento Maestro (Paso a Paso)*\n\n1.  *Análisis Inicial*: Lee la pregunta del usuario. Identifica la *tecnología principal* (ej: 'Next.js', 'Stripe') y la *intención* (ej: 'instalar', 'configurar'). Revisa el historial para mantener el contexto.\n\n2.  *Verificación en el RAG (Única Vía)*:\n\n      - Ejecuta `searchTableName` en silencio para comprobar si la documentación existe.\n      - *Si SÍ existe una tabla relevante*:\n        a.  Identifica el `table_name` exacto.\n        b.  Ejecuta `PGVector Store` con ese `table_name` para obtener el contexto principal.\n        c.  *Evalúa la respuesta del RAG*: ¿Es suficiente para dar una respuesta pedagógica y completa?\n        d.  Si es suficiente, ve directamente al *Paso 4*.\n        e.  Si es correcta pero le faltan detalles, ve al *Paso 3* para buscar el complemento.\n      - *Si NO existe una tabla relevante*:\n        a.  *Detén el flujo aquí*.\n        b.  Informa al usuario de manera amable: '*Actualmente no contamos con la documentación sobre [tecnología mencionada] en nuestra base de conocimiento.*'\n        c.  Pide activamente la ayuda del usuario: '*Para poder agregarla y ayudarte mejor en el futuro, ¿podrías proporcionarme el enlace a la *documentación técnica oficial*?*'\n        d.  No realices ninguna otra acción.\n\n3.  *Búsqueda Complementaria (Opcional)*:\n\n      - Este paso solo se ejecuta si la información del RAG fue insuficiente.\n      - Formula un `query` muy específico en `webSearch` para encontrar el dato que falta.\n      - Sintetiza la información encontrada, asegurándote de que sea coherente con lo que ya obtuviste del RAG.\n\n4.  *Construcción de la Respuesta Pedagógica*: ¡Aquí es donde brillas\\! Estructura tu respuesta siempre de esta manera, combinando la información del RAG (la base) y, si fue necesario, el complemento de la web.\n\n      - *Título Descriptivo*: `*Guía de Instalación para TailwindCSS*`.\n      - *Resumen Inicial*: Explica el objetivo de lo que vas a mostrar.\n      - *Pasos Claros*: Usa `-` para listas. Detalla cada acción.\n      - *Bloques de Código*: Envuelve todos los comandos en ` ``` `. Explica qué hace cada bloque.\n      - *Explicación de Conceptos Clave*: Si usas un término técnico, explícalo en una sección `*Concepto Clave:*`.\n      - *Tip Proactivo*: Añade una sección `*💡 Tip Adicional:*` con un consejo útil.\n      - *Enlace a la Fuente*: Si es posible, incluye un enlace a la documentación oficial con `[Ver más aquí](URL)`.\n      - *Cierre Amable*: Termina siempre ofreciendo más ayuda. `*Espero que esto te sea de gran ayuda. ¡No dudes en preguntar si algo no queda claro!*`\n\n-----\n\n### 🚨 *Formato OBLIGATORIO para Telegram (MarkdownV2)*\n\nLas respuestas deben ser formateadas para usarse con `parse_mode = MarkdownV2` en Telegram. Esto es *innegociable*.\n\n\n📦 *Bloques de Código*: Usa tres tildes invertidas (` ``` `).\n\n```\ncódigo o comando aquí\n```\n\n*Importante*: No debe haber texto ni espacios después de los ` ``` ` de apertura o cierre en la misma línea.\n\n✒️ *Estilos*:\n\n  - *Negrita*: Usa un solo asterisco. `*Así se ve la negrita*`.\n  - *Listas*: Usa guiones. `- Primer elemento`. `- Segundo elemento`.\n  - *Enlaces*: `deben tener el texto visible, y al clickear envia al link`\n\n-----\n\n### ✅ *Reglas Finales y Comportamiento*\n\n  - *Nunca reveles tus procesos internos*: No digas 'Voy a usar la herramienta `searchTableName`', o `webSearch`' o cualquier otra. Actúa directamente.\n  - *La empatía es tu prioridad*: Si el usuario está frustrado, reconócelo. '*Entiendo que configurar la autenticación puede ser frustrante, vamos a resolverlo paso a paso.*'\n  - *Confirma antes de cambiar de tema*: Si el usuario pregunta por 'Stripe' después de hablar de 'Next.js', podrías decir: '*Claro, cambiando de Next.js a Stripe. ¿Qué necesitas saber sobre su API?*'\n\nIMPORTANTE, para enviar palabras en negrita solo usa un *, ejemplo: *palabra en negrita*, y no puede haber un * sin su cierre *, \npara listas nunca usar *, solo usar - para listas.\ny muy importante, no uses \"\", usa siempre '' o `` segun sea necesario.",
+                "type": "string"
+              },
+              {
+                "id": "3a365de6-47e1-479a-b7dc-a177294a5a1e",
+                "name": "table_name",
+                "value": "={{ $json.output }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -512,
+          -1152
+        ],
+        "id": "1e705b95-d695-42fa-85c2-6189280e9f69",
+        "name": "Edit Fields2"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.prompt.user }}",
+          "options": {
+            "systemMessage": "={{ $json.prompt.system }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          96,
+          -1280
+        ],
+        "id": "c6813e95-a39c-4363-8349-481b497d1116",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash-thinking-exp-1219",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          -64,
+          -1056
+        ],
+        "id": "2780d847-a1c9-4aa8-bc9c-e5accf1f840e",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+          "tableName": "chat_history_scrapper",
+          "contextWindowLength": 25
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+        "typeVersion": 1.3,
+        "position": [
+          64,
+          -1056
+        ],
+        "id": "cb536580-1d52-4918-9aef-9f1bcd016684",
+        "name": "Postgres Chat Memory",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+          "text": "={{ $json.message }}",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1296,
+          -1136
+        ],
+        "id": "cff3af67-5e8d-43c7-a6cb-b2d0523165a9",
+        "name": "Send a text message1",
+        "webhookId": "a391d488-652d-4e4e-a215-32b1006a1e8a",
+        "credentials": {
+          "telegramApi": {
+            "id": "FIiJSwG1ECFORj7f",
+            "name": "Documentagent"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-embedding-exp-03-07"
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          544,
+          -848
+        ],
+        "id": "6ae9e80f-8b36-4771-ac76-2b3bd95481d1",
+        "name": "Embeddings Google Gemini",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT table_name\nFROM information_schema.tables\nWHERE table_type = 'BASE TABLE'\n  AND table_schema NOT IN ('pg_catalog', 'information_schema') -- opcional, excluye esquemas del sistema\n  AND table_name NOT LIKE '%\\_metadata'\n  AND table_name NOT LIKE '%\\_rows'\n  AND table_name NOT LIKE '%\\undefined'\n  AND table_name NOT LIKE '%\\_scrapper';\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgresTool",
+        "typeVersion": 2.6,
+        "position": [
+          192,
+          -1056
+        ],
+        "id": "a8065a64-0fef-4db3-a8a1-e194a212e945",
+        "name": "searchTableName",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Ejecuta estos Nodo Una Vez para eliminar las tablas configuradas, (ELIMINA TODOS LOS DATOS ALMACENADOS)",
+          "height": 300,
+          "width": 720,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -2016,
+          320
+        ],
+        "typeVersion": 1,
+        "id": "d0061d6b-7a03-47b5-bdb6-9f8669c25c0a",
+        "name": "Sticky Note5"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
+                "name": "tableName",
+                "value": "=ui",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -1808,
+          464
+        ],
+        "id": "1aaf4e0e-c86a-494d-8cec-90663c5efa19",
+        "name": "Table Name DELETE"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "DROP FUNCTION IF EXISTS match_{{ $json.tableName }};\nDROP TABLE IF EXISTS {{ $json.tableName }}_rows;\nDROP TABLE IF EXISTS {{ $json.tableName }}_metadata;\nDROP TABLE IF EXISTS {{ $json.tableName }};",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.5,
+        "position": [
+          -1584,
+          464
+        ],
+        "id": "68ab090f-d11a-4960-8523-b2b702a66c17",
+        "name": "DELETE Documents Table and Match Function",
+        "alwaysOutputData": false,
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          -1808,
+          240
+        ],
+        "id": "7a467a07-2c7b-4058-a148-a1c6ed7c0496",
+        "name": "When clicking ‘Execute workflow’"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tailwindcss_rows",
+            "mode": "list",
+            "cachedResultName": "tailwindcss_rows"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          -1808,
+          688
+        ],
+        "id": "1e5d2c0e-3452-452e-8fb5-f5d5a73789ec",
+        "name": "Select rows from a table",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-embedding-exp-03-07"
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          2864,
+          -704
+        ],
+        "id": "f3629fe4-c690-44d5-85f4-a1df424216d0",
+        "name": "Embeddings Google Gemini1",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": "text-embedding-3-small",
+          "options": {}
+        },
+        "id": "911de3db-e9aa-4032-b278-d0e8fb3a61a6",
+        "name": "Embeddings OpenAI1",
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1,
+        "position": [
+          -1808,
+          32
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "UYsXoFpwT6Oh1GeF",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": "text-embedding-3-small",
+          "options": {}
+        },
+        "id": "473b19de-fd69-4f29-a9b4-fcca856705ee",
+        "name": "Embeddings OpenAI",
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1,
+        "position": [
+          -1808,
+          -192
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "UYsXoFpwT6Oh1GeF",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=busca la tabla que coincida con la conversacion que estamos teniendo. o en este mensaje que te paso: {{ $json.message.text }}\n",
+          "options": {
+            "systemMessage": "=🎯 Tu única tarea es identificar de qué documentación está hablando el usuario, y devolver únicamente el nombre exacto de la tabla correspondiente.\n\n📌 Instrucciones específicas:\n\n1. Recibe el historial de conversación del usuario (`chat_history` o memoria).\n2. Ejecuta la herramienta `searchTableName`, que devuelve todos los nombres de tablas disponibles.\n3. Analiza las palabras clave en la conversación, y determina si alguna tabla representa claramente la documentación mencionada.\n   - Por ejemplo, si el usuario dice “¿cómo empiezo con Tailwind?”, y existe una tabla llamada `tailwindcss`, debes devolver exactamente `tailwindcss`.\n\n4. Devuelve únicamente el nombre exacto de la tabla correspondiente. **Nada más.**\n5. Si no hay una coincidencia razonable, devuelve una cadena vacía: `\"\"`\n\n📛 Prohibido:\n- No expliques lo que encontraste.\n- No digas “Sí, tenemos documentación sobre…”\n- No agregues frases como “¿quieres que te la muestre?”\n- No devuelvas un objeto o JSON. Solo el texto exacto del nombre, o vacío si no hay coincidencia.\n\n✅ Ejemplos correctos:\n\n- Conversación: “cómo empiezo con Tailwind”\n  - Tablas disponibles: `tailwindcss`, `nextauth`\n  - Resultado: `tailwindcss`\n\n- Conversación: “cómo usar Supabase”\n  - Tablas disponibles: `tailwindcss`, `nextauth`\n  - Resultado: `\"\"`\n\n- Conversación: “autenticación con nextauth”\n  - Tablas: `nextauth`, `stripe_api`\n  - Resultado: `nextauth`\n\n---\n\n💡 En resumen: detecta la documentación mencionada → encuentra la tabla correspondiente → devuelve solo el `table_name` exacto → \n\nnunca devuelvas informacion adicional, o respuestas del usuario, solo devuelves el nombre exacto de la tabla que coincide y ya, si no hay ninguna coincidencia, puedes devolver la mas cercana o parecida. \nsiempre ejecutando la herramienta `searchTableName`"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.1,
+        "position": [
+          -912,
+          -1152
+        ],
+        "id": "ef9a92a2-b60d-4853-8a71-02ff9b4d3146",
+        "name": "AI Agent1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "967af5a8-0f99-447f-81da-75fca27189cc",
+                "name": "prompt.user",
+                "value": "={{ $json.prompt.user }}",
+                "type": "string"
+              },
+              {
+                "id": "36dcdfcb-a632-464e-ac02-20b733ec2145",
+                "name": "prompt.system",
+                "value": "={{ $json.prompt.system }}",
+                "type": "string"
+              },
+              {
+                "id": "160174cf-1721-4eb4-aaee-abefede9ef96",
+                "name": "table_name",
+                "value": "={{ $json.table_name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -288,
+          -1072
+        ],
+        "id": "324a6fa7-1f6b-4b45-9bc3-d3e45e4c250a",
+        "name": "prompts"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "75f25449-59b4-414d-918d-adf70107fbe3",
+                "leftValue": "={{ $json.contenido }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1520,
+          -608
+        ],
+        "id": "edff09fb-647f-495e-9b48-a19245f439b8",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "text": "=⚠️🤖 *Un pequeño contratiempo con tu documentación...*\n\nHola 👋,\n\nQueríamos informarte que hemos encontrado un inconveniente al procesar la documentación que solicitaste: *.{{ $('Table Name').item.json.tableName.split(\"_\")[0] }}*\n\nEl sitio web oficial parece utilizar una tecnología JavaScript moderna para cargar su contenido, y nuestro proceso automático no pudo leerlo correctamente en el primer intento.\n\n¡Pero no te preocupes! Nuestro equipo ya está trabajando en la solución para poder procesar este tipo de sitios. Te notificaremos tan pronto como la documentación esté cargada y lista para que puedas consultarla. 🧠💬\n\nAgradecemos mucho tu paciencia. 🛠️⏳",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1744,
+          -416
+        ],
+        "id": "3c238502-9371-42dd-9e8f-6b008ba2c0c2",
+        "name": "Send a text message2",
+        "webhookId": "a391d488-652d-4e4e-a215-32b1006a1e8a",
+        "credentials": {
+          "telegramApi": {
+            "id": "FIiJSwG1ECFORj7f",
+            "name": "Documentagent"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "315bc723-45e0-4644-96b1-81366f5c6d31",
+                "name": "tableName",
+                "value": "={{ $('Table Name').item.json.tableName }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1968,
+          -416
+        ],
+        "id": "0548168c-0444-4b84-a8a4-415efca3f431",
+        "name": "Table Name DELETE1"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "DROP FUNCTION IF EXISTS match_{{ $json.tableName }};\nDROP TABLE IF EXISTS {{ $json.tableName }}_rows;\nDROP TABLE IF EXISTS {{ $json.tableName }}_metadata;\nDROP TABLE IF EXISTS {{ $json.tableName }};",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.5,
+        "position": [
+          2192,
+          -416
+        ],
+        "id": "4a1479d3-20fe-4dc5-8b75-ad48db2aa0cf",
+        "name": "DELETE Documents Table and Match Function1",
+        "alwaysOutputData": false,
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "2ac4b4dd-91ef-4a72-9edc-9e1578b731fd",
+                "name": "Url",
+                "value": "={{ $json.all_content[0].source }}",
+                "type": "string"
+              },
+              {
+                "id": "7ec1af15-21f2-4412-a736-62442e97b9b5",
+                "name": "Content",
+                "value": "={{ $json.all_content[0].content }}",
+                "type": "string"
+              },
+              {
+                "id": "c2ed2d57-430a-4c43-8e63-21fb8cc529c4",
+                "name": "tableName",
+                "value": "={{ $json.debug_info.tableName }}",
+                "type": "string"
+              },
+              {
+                "id": "1bb8d843-5ed5-49ec-a09c-06cdd54a0a28",
+                "name": "chat",
+                "value": "={{ $json.debug_info.chat }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2640,
+          -928
+        ],
+        "id": "f7a17c7a-a765-4631-8c5c-98a3637052d9",
+        "name": "data"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+          "text": "={{ $json.message }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "MarkdownV2"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1744,
+          -1056
+        ],
+        "id": "0b70a40d-baa9-4734-a02c-b0e3281f84e5",
+        "name": "Send a text message4",
+        "webhookId": "a391d488-652d-4e4e-a215-32b1006a1e8a",
+        "credentials": {
+          "telegramApi": {
+            "id": "FIiJSwG1ECFORj7f",
+            "name": "Documentagent"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Use this tool to search the web when the user's question cannot be answered with the internal documentation or memory. It takes a query string and returns the top web search results from Google Custom Search, including title, link, and snippet. Use it only when the user needs external, up-to-date, or broader information that is not available in the local database or document context.\n",
+          "url": "=https://www.googleapis.com/customsearch/v1?key=AIzaSyDhv1c2EbT-n-Rnk-q4eIAvB7JL3hCw-XE&cx=615655fd2bf79445e&q={{ $fromAI(\"query\") }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          320,
+          -1056
+        ],
+        "id": "397d0158-8496-4222-8717-9ce7a207eacf",
+        "name": "webSearch"
+      },
+      {
+        "parameters": {
+          "jsCode": "const MAX_LENGTH = 1950; // Límite para Telegram MarkdownV2\n\nfunction escapeMarkdownV2(text) {\n  return text\n    .replace(/\\\\/g, '\\\\\\\\')\n    .replace(/_/g, '\\\\_')\n    .replace(/\\*/g, '\\\\*')\n    .replace(/\\[/g, '\\\\[')\n    .replace(/\\]/g, '\\\\]')\n    .replace(/\\(/g, '\\\\(')\n    .replace(/\\)/g, '\\\\)')\n    .replace(/~/g, '\\\\~')\n    .replace(/>/g, '\\\\>')\n    .replace(/#/g, '\\\\#')\n    .replace(/\\+/g, '\\\\+')\n    .replace(/-/g, '\\\\-')\n    .replace(/=/g, '\\\\=')\n    .replace(/\\|/g, '\\\\|')\n    .replace(/{/g, '\\\\{')\n    .replace(/}/g, '\\\\}')\n    .replace(/\\./g, '\\\\.')\n    .replace(/!/g, '\\\\!');\n}\n\n// Limpia encabezados y formatos no compatibles\nfunction limpiarTexto(text) {\n  return text\n    .replace(/^\\s*[*]\\s*/gm, '- ')                          // Convertir listas con * a -\n    .replace(/^#{1,6}\\s*/gm, '')                             // Remover encabezados ### o ##\n    .replace(/^[-]{3,}$/gm, '---')                           // Normalizar separadores\n    .replace(/^(\\s*)([*_]{1,3})(.*?)\\2\\s*$/gm, '$1*$3*')     // Reforzar énfasis sin exceso\n    .replace(/\\\\`\\\\`\\\\`bash/g, '```bash')                    // Arreglar escapes accidentales\n    .replace(/```bash\\n(\\s*)/g, '```bash\\n');                // Eliminar indentación innecesaria en bloque\n}\n\nfunction splitMarkdownPreservingCodeBlocks(text) {\n  const partes = [];\n  let buffer = '';\n  const bloques = text.split(/(```[\\s\\S]*?```)/g); // Separar bloques de código\n\n  for (const bloque of bloques) {\n    const esBloqueCodigo = bloque.startsWith('```');\n    const contenido = esBloqueCodigo\n      ? bloque\n      : escapeMarkdownV2(limpiarTexto(bloque));\n\n    const lineas = contenido.split('\\n');\n    for (const linea of lineas) {\n      if ((buffer + '\\n' + linea).length > MAX_LENGTH) {\n        partes.push(buffer.trim());\n        buffer = linea;\n      } else {\n        buffer += '\\n' + linea;\n      }\n    }\n  }\n  if (buffer.trim()) partes.push(buffer.trim());\n  return partes;\n}\n\n// === 1. Obtener salida cruda ===\nconst rawOutput = items[0].json.message || '';\nif (!rawOutput || typeof rawOutput !== 'string') {\n  return [{ json: { message: '⚠️ No se encontró texto para enviar.' } }];\n}\n\n// === 2. Normalización básica antes del escape ===\nconst preformateado = limpiarTexto(rawOutput);\n\n// === 3. Escapar y dividir preservando bloques de código ===\nconst partes = splitMarkdownPreservingCodeBlocks(preformateado);\n\n// === 4. Devolver mensajes formateados ===\nreturn partes.map((texto, index) => ({\n  json: {\n    message: texto,\n    index: index + 1,\n    total: partes.length\n  }\n}));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1520,
+          -1136
+        ],
+        "id": "7c80d7f6-a0ae-4f83-b490-7ed721fd02de",
+        "name": "Code"
+      },
+      {
+        "parameters": {
+          "mode": "retrieve-as-tool",
+          "toolDescription": "Use RAG to look up information in the knowledgebase.\n",
+          "tableName": "={{ $('prompts').item.json.table_name }}",
+          "topK": 5,
+          "options": {
+            "columnNames": {
+              "values": {
+                "contentColumnName": "content"
+              }
+            }
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+        "typeVersion": 1.3,
+        "position": [
+          448,
+          -1056
+        ],
+        "id": "63c58bec-db5f-4c26-8199-df79d26332a5",
+        "name": "PGVector Store",
+        "credentials": {
+          "postgres": {
+            "id": "gFhB2sfDoFHEQ7Pn",
+            "name": "pgvector n8n_scrapper"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const MAX_LENGTH = 3900;\n\nlet rawOutput = items[0].json.output || '';\nif (!rawOutput || typeof rawOutput !== 'string') {\n  return [{ json: { message: '⚠️ lo siento, hubo un error, puedes volver a intentarlo' } }];\n}\n\n// Proteger bloques de código (```...```)\nconst bloques = [];\nrawOutput = rawOutput.replace(/```([\\s\\S]*?)```/g, (match, contenido, index) => {\n  const key = `__BLOQUE_CODE_${bloques.length}__`;\n  bloques.push(contenido);\n  return key;\n});\n\n// Reemplazos globales fuera de los bloques de código\nrawOutput = rawOutput.replace(/\\\\([._*[\\]()~`>#+\\-=|{}!])/g, '$1'); // des-escape markdown\nrawOutput = rawOutput.replace(/\"/g, \"'\"); // comillas dobles por simples\n\n// Restaurar los bloques de código\nbloques.forEach((contenido, i) => {\n  rawOutput = rawOutput.replace(`__BLOQUE_CODE_${i}__`, `\\`\\`\\`\\n${contenido}\\n\\`\\`\\``);\n});\n\nconst partes = [];\nlet texto = rawOutput;\n\nwhile (texto.length > 0) {\n  if (texto.length <= MAX_LENGTH) {\n    partes.push(texto.trim());\n    break;\n  }\n\n  let fragmento = texto.slice(0, MAX_LENGTH);\n\n  // Buscar punto de corte: primero lista numerada, luego ###, luego punto, luego salto de línea, luego espacio\n  let corte =\n    fragmento.lastIndexOf('\\n1.') >= 0 ? fragmento.lastIndexOf('\\n1.') :\n    fragmento.match(/\\n\\d+\\./g) ? fragmento.lastIndexOf(fragmento.match(/\\n\\d+\\./g).slice(-1)[0]) :\n    fragmento.lastIndexOf('\\n### ') >= 0 ? fragmento.lastIndexOf('\\n### ') + 1 :\n    fragmento.lastIndexOf('. ') >= 0 ? fragmento.lastIndexOf('. ') + 1 :\n    fragmento.lastIndexOf('\\n') >= 0 ? fragmento.lastIndexOf('\\n') + 1 :\n    fragmento.lastIndexOf(' ');\n\n  if (corte <= 0) corte = MAX_LENGTH;\n\n  let parte = fragmento.slice(0, corte).trim();\n\n  // 🔹 Eliminar los encabezados ### al final del fragmento\n  parte = parte.replace(/^###\\s*/gm, '');\n\n  partes.push(parte);\n  texto = texto.slice(corte).trim();\n}\n\n// Al final, devolver los mensajes sin encabezados ###\nreturn partes.map((parte, index) => ({\n  json: {\n    message: parte,\n    index: index + 1,\n    total: partes.length,\n  }\n}));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          848,
+          -1072
+        ],
+        "id": "176bb7e0-5853-4d70-9a8a-a7863fbd8b13",
+        "name": "Code1"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1072,
+          -1072
+        ],
+        "id": "ec7872e1-f916-490c-a16e-1d8ad3cf096e",
+        "name": "Loop Over Items"
+      }
+    ],
+    "connections": {
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "Code2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code2": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "1. Initialize State1": {
+        "main": [
+          [
+            {
+              "node": "3. Get Next URL from Queue1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "3. Get Next URL from Queue1": {
+        "main": [
+          [
+            {
+              "node": "4. HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4. HTTP Request1": {
+        "main": [
+          [
+            {
+              "node": "5. Extract Content & Find New Links1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "5. Extract Content & Find New Links1": {
+        "main": [
+          [
+            {
+              "node": "data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Recursive Character Text Splitter": {
+        "ai_textSplitter": [
+          [
+            {
+              "node": "Default Data Loader1",
+              "type": "ai_textSplitter",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Default Data Loader1": {
+        "ai_document": [
+          [
+            {
+              "node": "Postgres PGVector Store",
+              "type": "ai_document",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code4": {
+        "main": [
+          [
+            {
+              "node": "2. Is Queue Empty?1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "2. Is Queue Empty?1": {
+        "main": [
+          [
+            {
+              "node": "3. Get Next URL from Queue1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send a text message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Postgres PGVector Store": {
+        "main": [
+          [
+            {
+              "node": "Code4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Document Metadata Table": {
+        "main": [
+          [
+            {
+              "node": "Create Document Rows Table (for Tabular Data)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Documents Table and Match Function": {
+        "main": [
+          [
+            {
+              "node": "Create Document Metadata Table",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Table Name": {
+        "main": [
+          [
+            {
+              "node": "search Table name",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "search Table name": {
+        "main": [
+          [
+            {
+              "node": "Table exist",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Table exist": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create Documents Table and Match Function",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Table Name",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Document Rows Table (for Tabular Data)": {
+        "main": [
+          [
+            {
+              "node": "Insert Document Metadata",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Insert Document Metadata": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a text message": {
+        "main": [
+          []
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "prompts",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "prompts",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "AI Agent1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Postgres Chat Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "ai_memory",
+              "index": 0
+            },
+            {
+              "node": "AI Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Code1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings Google Gemini": {
+        "ai_embedding": [
+          [
+            {
+              "node": "PGVector Store",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "searchTableName": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "ai_tool",
+              "index": 0
+            },
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Table Name DELETE": {
+        "main": [
+          [
+            {
+              "node": "DELETE Documents Table and Match Function",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When clicking ‘Execute workflow’": {
+        "main": [
+          [
+            {
+              "node": "Table Name DELETE",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings Google Gemini1": {
+        "ai_embedding": [
+          [
+            {
+              "node": "Postgres PGVector Store",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings OpenAI1": {
+        "ai_embedding": [
+          []
+        ]
+      },
+      "Embeddings OpenAI": {
+        "ai_embedding": [
+          []
+        ]
+      },
+      "AI Agent1": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "prompts": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "1. Initialize State1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send a text message2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Table Name DELETE1": {
+        "main": [
+          [
+            {
+              "node": "DELETE Documents Table and Match Function1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a text message2": {
+        "main": [
+          [
+            {
+              "node": "Table Name DELETE1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "data": {
+        "main": [
+          [
+            {
+              "node": "Postgres PGVector Store",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a text message1": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "webSearch": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          [
+            {
+              "node": "Send a text message4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "PGVector Store": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code1": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Send a text message1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a text message4": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "3309ac28-0b52-47c9-a610-2293cabfee54",
   "connections": {
     "HTTP Request2": {
       "main": [
