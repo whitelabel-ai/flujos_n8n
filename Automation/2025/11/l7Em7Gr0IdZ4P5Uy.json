@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Google Gemini Chat Model": {
       "ai_languageModel": [
@@ -85,7 +87,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -2512,
+        -2544,
         624
       ],
       "id": "babdd335-ee11-464b-b16d-1dd46bcf5963",
@@ -100,15 +102,15 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Extrae del mensaje los siguientes campos y responde en formato JSON: { \"idea\": \"...\", \"autor\": \"...\", \"fecha\": \"...\", \"hora\": \"...\" }\n{{ $json.message.text }}",
+        "text": "=Actúa como un creador de contenido profesional de LinkedIn especializado en automatización. Escribe directamente un post extenso (mínimo 200 palabras) listo para publicar en LinkedIn, dirigido a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta o reto, incluye consejos concretos, conclusión inspiradora y hashtags relevantes al final. No incluyas ningún encabezado, formato JSON, comillas ni instrucciones técnicas. Solo el texto del post.\n",
         "options": {
-          "systemMessage": ""
+          "systemMessage": "=\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        -3088,
+        -3120,
         624
       ],
       "id": "bdcda101-5a1d-4d67-85d8-99409830c126",
@@ -121,7 +123,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -3016,
+        -3056,
         848
       ],
       "id": "cc03fce0-2418-4352-b24c-7c3aeecc16b6",
@@ -143,7 +145,7 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -3312,
+        -3344,
         624
       ],
       "id": "4fe12fa1-200d-425c-8457-6cccc40c1563",
@@ -158,12 +160,12 @@
     },
     {
       "parameters": {
-        "jsCode": "const idea = `Desbloquea el Potencial: Cómo la Automatización Transforma tu Negocio`;\nconst autor = `andresco70@gmail.com`;\nconst fecha = `21/11/2025`;\nconst hora = `13:30`;\nconst perfil = `andresco70@gmail.com`;\nconst contenido_LinkedIn = `💡✨Desbloquea el Potencial: Cómo la Automatización Transforma tu Negocio✨💡... etc`;\n\n// Retorna un array de objetos para n8n (se requiere mínimo un objeto)\nreturn [\n  {\n    idea,\n    contenido_LinkedIn\n  }\n];\n"
+        "jsCode": "const bruto = $json[\"output\"];\n\n// Elimina todo lo que está antes del primer bloque de \"---\" o de la primera línea vacía tras el JSON\nlet soloTexto = bruto;\n\n// Si detecta bloque JSON dentro del texto:\n// Busca la primera ocurrencia de \"---\" y toma el texto de ahí en adelante\nconst delimitador = '---';\nconst idxDelim = soloTexto.indexOf(delimitador);\nif (idxDelim !== -1) {\n  soloTexto = soloTexto.substring(idxDelim + delimitador.length).trim();\n}\n\n// Si queda encabezado o líneas vacías, las elimina\nsoloTexto = soloTexto.replace(/^\\s+/, '');\n\n// Variables fijas\nconst idea = 'Idea para LinkedIn (automático)';\nconst contenido_LinkedIn = soloTexto;\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\nreturn [{\n  idea,\n  contenido_LinkedIn,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2736,
+        -2768,
         624
       ],
       "id": "49621e29-2959-4e6b-b83f-d767ca08d393",
@@ -189,6 +191,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-11-21T22:26:43.512Z",
-  "versionId": "bf1c9331-9c5d-4368-a1c2-7d25e48bb8f8"
+  "updatedAt": "2025-11-22T17:56:45.769Z",
+  "versionId": "1c73c303-fc91-46e7-9c0b-23de2046b9e5"
 }
