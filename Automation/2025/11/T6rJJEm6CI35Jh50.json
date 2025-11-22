@@ -1,5 +1,900 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-21T03:23:58.559Z",
+    "createdAt": "2025-11-21T03:23:58.559Z",
+    "versionId": "ed990f10-63cb-44f6-abf2-2670fc63607b",
+    "workflowId": "T6rJJEm6CI35Jh50",
+    "nodes": [
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.existe }}",
+                      "rightValue": "true",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "9c38cf88-8498-4e41-b8b6-9c9bf0465b55"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Registrado"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "d20501b2-6c3d-42b4-9617-995adf90e423",
+                      "leftValue": "={{ $json.existe }}",
+                      "rightValue": "false",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Sin Registrar"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          1872,
+          -1080
+        ],
+        "id": "acef65d5-5585-4d85-a9ad-d6dabf2544d5",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "90dc24fa-85a0-4b98-ad7f-a0f2ab094722",
+                "name": "existe",
+                "value": "={{ $json.existe }}",
+                "type": "string"
+              },
+              {
+                "id": "70bf3769-05a5-4f09-9ead-f39029fc7167",
+                "name": "usuario_data",
+                "value": "={{ $json.user_data }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1648,
+          -1080
+        ],
+        "id": "65035f13-0f85-4278-b553-892970d50dc9",
+        "name": "data"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "7udG9O5kmPeeOaXL",
+            "mode": "list",
+            "cachedResultName": "Onboarding"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}",
+              "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
+              "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
+              "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+              "usuario_data": "={{ $('data').item.json.usuario_data }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "metadata",
+                "displayName": "metadata",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "contacts",
+                "displayName": "contacts",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "messages",
+                "displayName": "messages",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "field",
+                "displayName": "field",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "usuario_data",
+                "displayName": "usuario_data",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          2768,
+          -984
+        ],
+        "id": "52476607-e5a0-4fde-8301-15549b476600",
+        "name": "Call Onboarding Register"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "WE1bVt3r1GoX2Dif",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/WE1bVt3r1GoX2Dif",
+            "cachedResultName": "Agente Transaccional"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "metadata": "={{ $('WhatsApp Trigger').item.json.metadata }}",
+              "contacts": "={{ $('WhatsApp Trigger').item.json.contacts }}",
+              "messages": "={{ $('WhatsApp Trigger').item.json.messages }}",
+              "field": "={{ $('WhatsApp Trigger').item.json.field }}",
+              "usuario_data": "={{ $json.usuario_data }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "metadata",
+                "displayName": "metadata",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "contacts",
+                "displayName": "contacts",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "messages",
+                "displayName": "messages",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "field",
+                "displayName": "field",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "usuario_data",
+                "displayName": "usuario_data",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          2768,
+          -1200
+        ],
+        "name": "Call Agente Transaccional",
+        "id": "e433b8ae-7030-452b-9f31-783012512b3b"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.meta }}",
+                      "rightValue": "true",
+                      "operator": {
+                        "type": "array",
+                        "operation": "notEmpty",
+                        "singleValue": true
+                      },
+                      "id": "9c38cf88-8498-4e41-b8b6-9c9bf0465b55"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "meta registrada"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "d20501b2-6c3d-42b4-9617-995adf90e423",
+                      "leftValue": "={{ $json.meta }}",
+                      "rightValue": "false",
+                      "operator": {
+                        "type": "array",
+                        "operation": "empty",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Sin Registrar"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          2544,
+          -1152
+        ],
+        "id": "3bc67bb4-14fd-4754-9e93-6c73db19d8d1",
+        "name": "meta"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "90dc24fa-85a0-4b98-ad7f-a0f2ab094722",
+                "name": "meta",
+                "value": "={{ $json.metas }}",
+                "type": "array"
+              },
+              {
+                "id": "70bf3769-05a5-4f09-9ead-f39029fc7167",
+                "name": "usuario_data",
+                "value": "={{ $('data').item.json.usuario_data }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2320,
+          -1152
+        ],
+        "id": "083ae250-f5f8-48ff-ac63-6f6b62f30da7",
+        "name": "data1"
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.metadata.Base_Url }}/api/v1/users/profile-by-phone",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "phone",
+                "value": "={{ $json.messages[0].from }}"
+              },
+              {
+                "name": "includeCategories",
+                "value": "false"
+              },
+              {
+                "name": "includeSuscripcionesMony",
+                "value": "false"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1424,
+          -1080
+        ],
+        "id": "27871635-f3b0-4ffb-bfb1-157400ef7e45",
+        "name": "get-profile-by-phone",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "VvugYsKO6X1LCmbE",
+            "name": "Mony"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $('WhatsApp Trigger').item.json.metadata.Base_Url }}/api/v1/saving-goals",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "x-user-id",
+                "value": "={{ $json.usuario_data.id }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2096,
+          -1152
+        ],
+        "id": "8e7dbee1-0584-432c-923f-9fb4d2c4c224",
+        "name": "get_saving_goals",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "VvugYsKO6X1LCmbE",
+            "name": "Mony"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "mony-dev",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          80,
+          -984
+        ],
+        "id": "a03671ca-ff02-497b-b993-3e2ba9ae3b97",
+        "name": "Webhook",
+        "webhookId": "65b44bcd-175b-4d48-a70e-8fbf58605135"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "24753cf1-0e65-46ba-8117-cafa44f119a0",
+                "name": "metadata",
+                "value": "={\n\"account_id\": \"{{ $('reply_message').item.json.body.account.id }}\",\n\"conversation_id\": \n\"{{ $('reply_message').item.json.body.conversation.messages[0].conversation_id }}\",\n\"channel\": \"{{ $('reply_message').item.json.body.conversation.channel }}\",\n\"Base_Url\": \"{{ $json.Base_Url }}\"\n}",
+                "type": "object"
+              },
+              {
+                "id": "e6ac796a-86cf-4dce-a3f3-1f3b8ea8e180",
+                "name": "contacts",
+                "value": "=[{\n\"profile\": \n{\n\"name\": \n\"{{ $('reply_message').item.json.body.conversation.meta.sender.name.replace('\\n', ' ').split(' ')[0] }}\"\n},\n\"wa_id\": \n\"{{ $('reply_message').item.json.body.conversation.messages[0].conversation.contact_inbox.source_id }}\"\n}]",
+                "type": "array"
+              },
+              {
+                "id": "fe4740db-2480-4726-a9ff-e74b454ce8e0",
+                "name": "messages",
+                "value": "= [{ \"from\":  \"{{ $('reply_message').item.json.body.conversation.meta.sender.phone_number }}\", \"id\":  \"{{ $('reply_message').item.json.body.conversation.messages[0].id }}\", \"timestamp\":  \"{{ $('reply_message').item.json.body.conversation.messages[0].created_at }}\",\n\"text\":  { \"body\":  {{ JSON.stringify($('reply_message').item.json.body.conversation.messages[0].content) }}, \"reply_message\": {{ JSON.stringify($('reply_message').item.json.body.reply_message.content) }} },\n\"file\":  { \"body\":  \"{{ $('reply_message').item.json.body.conversation.messages[0].attachments[0].data_url }}\", \"transcribed_text\": \"{{ $('reply_message').item.json.body.attachments[0].transcribed_text }}\" },\n\"type\":  \"{{ $('reply_message').item.json.body.attachments?.[0]?.file_type || $('reply_message').item.json.body.conversation.messages?.[0]?.content_type }}\" }]",
+                "type": "array"
+              },
+              {
+                "id": "8bf1bf21-59a9-4c92-8e31-7e20a7cae8d4",
+                "name": "field",
+                "value": "={{ $('reply_message').item.json.body.conversation.labels }}",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {
+            "ignoreConversionErrors": false
+          }
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          976,
+          -1080
+        ],
+        "id": "ecc938de-0bb8-4f84-bcf5-a586069504db",
+        "name": "WhatsApp Trigger"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "abaa9de2-4388-46df-9440-7c458be2669a",
+                "leftValue": "={{ $json.body.message_type }}",
+                "rightValue": "incoming",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "2b50ffbe-a3c8-4299-b6f3-86f9f79de33b",
+                "leftValue": "={{ $json.body.conversation.labels }}",
+                "rightValue": "=apagar-agente",
+                "operator": {
+                  "type": "array",
+                  "operation": "notContains",
+                  "rightType": "any"
+                }
+              },
+              {
+                "id": "899cff65-f00c-430b-9ef7-9fcf0d8f7cdb",
+                "leftValue": "={{ $json.body.conversation.channel }}",
+                "rightValue": "Channel::Telegram",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          304,
+          -984
+        ],
+        "id": "d0c8274b-ea62-4a57-9878-e1809c3e6627",
+        "name": "If"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          528,
+          -888
+        ],
+        "id": "48ea0fa8-53bc-40e0-99bf-5151d2ba7ed0",
+        "name": "No Operation, do nothing"
+      },
+      {
+        "parameters": {
+          "dataToSave": {
+            "values": [
+              {
+                "key": "name",
+                "value": "={{ $json.contacts[0].profile.name }}"
+              },
+              {
+                "key": "phone",
+                "value": "={{ $json.messages[0].from }}"
+              },
+              {
+                "key": "message",
+                "value": "={{ $json.messages[0].text.body }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executionData",
+        "typeVersion": 1.1,
+        "position": [
+          1200,
+          -1080
+        ],
+        "id": "ff534a3f-b390-4903-8363-cf597dd62247",
+        "name": "Execution Data"
+      },
+      {
+        "parameters": {
+          "url": "=https://crm.whitelabel.lat/api/v1/accounts/3/conversations/{{ $json.body.conversation.messages[0].conversation_id }}/messages?before={{ $json.body.content_attributes.in_reply_to+1 }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "api_access_token",
+                "value": "uuWT9PNsY83ucax7HeqBEUSi"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          80,
+          -1648
+        ],
+        "id": "37792cb5-451a-4b19-a6ea-409fda9764f3",
+        "name": "get_conversation"
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "payload",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          304,
+          -1648
+        ],
+        "id": "8697780e-91cb-4625-847f-a29774d08030",
+        "name": "Split Out"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "57660469-ae83-4222-ba37-03bb07029537",
+                "leftValue": "={{ $json.id }}",
+                "rightValue": "={{ $('Repli?').item.json.body.content_attributes.in_reply_to }}",
+                "operator": {
+                  "type": "number",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          528,
+          -1648
+        ],
+        "id": "6d3c31f1-6a07-4aff-8431-e0bad307ccc7",
+        "name": "Filter"
+      },
+      {
+        "parameters": {
+          "jsCode": "const ACCOUNT_ID = $input.first().json.body.account.id;\nconst BASE_URL = `https://crm.whitelabel.lat/api/v1/accounts/${ACCOUNT_ID}`;\nconst TOKEN = \"uuWT9PNsY83ucax7HeqBEUSi\";\n\n// Tomamos el evento entrante\nconst input = $input.first().json;\nconst conversationId = input.body.conversation.id;\nconst replyToId = input.body.content_attributes?.in_reply_to;\n\nasync function getMessage(conversationId, messageId) {\n  const url = `${BASE_URL}/conversations/${conversationId}/messages?before=${messageId + 1}`;\n\n  const response = await this.helpers.httpRequest({\n    method: \"GET\",\n    url,\n    headers: {\n      \"api_access_token\": TOKEN,\n      \"Content-Type\": \"application/json\",\n    },\n    json: true,\n  });\n\n  const messages = response.payload || [];\n  if (!Array.isArray(messages) || messages.length === 0) {\n    return null;\n  }\n\n  return messages.find(m => m.id === messageId) || null;\n}\n\nlet replyMessage = null;\n\nif (replyToId) {\n  replyMessage = await getMessage(conversationId, replyToId);\n}\n\n// Clonamos el input para no perder el formato original\nconst output = JSON.parse(JSON.stringify(input));\n\n// Si existe un reply, lo agregamos dentro del body\nif (replyMessage) {\n  output.body.reply_message = replyMessage;\n} else {\n  // Si no hay reply, mantenemos la estructura pero con content null\n  output.body.reply_message = { content: null };\n}\n\nreturn [ { json: output } ];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          528,
+          -1080
+        ],
+        "id": "67b0d5f1-22b4-4034-bf79-3b1edcb68e62",
+        "name": "reply_message"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "RYUYwuQqDvBRusUe",
+            "mode": "list",
+            "cachedResultName": "mony",
+            "cachedResultUrl": "/projects/pTVxuWoodsfUV8Xe/datatables/RYUYwuQqDvBRusUe"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "channel",
+                "keyValue": "={{ $json.body.conversation.channel }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          752,
+          -1080
+        ],
+        "id": "6a3cfa8c-95de-4373-9a9f-d1f950bc8231",
+        "name": "Get Variables"
+      },
+      {
+        "parameters": {
+          "eventName": "message_received",
+          "distinctId": "={{ $json.body.conversation.messages[0].sender.phone_number }}",
+          "additionalFields": {
+            "propertiesUi": {
+              "propertyValues": [
+                {
+                  "key": "$set",
+                  "value": "={{\n  {\n    \"name\": $json.body.sender.name,\n    \"email\": $json.body.sender.email,\n    \"phone\": $json.body.sender.phone_number,\n    \"channel\": $json.body.conversation.channel,\n    \"moneda\": $json.body.sender.custom_attributes.moneda,\n    \"plan\": $json.body.sender.custom_attributes.subscription_status\n  }\n}}"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.postHog",
+        "typeVersion": 1,
+        "position": [
+          80,
+          -1424
+        ],
+        "id": "43042e44-503b-4f4f-a858-2ab4d860dc4b",
+        "name": "Create an event",
+        "credentials": {
+          "postHogApi": {
+            "id": "3tqsdb2YmcTBKiaa",
+            "name": "PostHog account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "get_saving_goals",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Call Onboarding Register",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "data": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "meta": {
+        "main": [
+          [
+            {
+              "node": "Call Agente Transaccional",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Call Onboarding Register",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "data1": {
+        "main": [
+          [
+            {
+              "node": "meta",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "get-profile-by-phone": {
+        "main": [
+          [
+            {
+              "node": "data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "get_saving_goals": {
+        "main": [
+          [
+            {
+              "node": "data1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "WhatsApp Trigger": {
+        "main": [
+          [
+            {
+              "node": "Execution Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "reply_message",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execution Data": {
+        "main": [
+          [
+            {
+              "node": "get-profile-by-phone",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "get_conversation": {
+        "main": [
+          [
+            {
+              "node": "Split Out",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Out": {
+        "main": [
+          [
+            {
+              "node": "Filter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "reply_message": {
+        "main": [
+          [
+            {
+              "node": "Get Variables",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Variables": {
+        "main": [
+          [
+            {
+              "node": "WhatsApp Trigger",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an event": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "n8n whitelabel",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "ed990f10-63cb-44f6-abf2-2670fc63607b",
   "connections": {
     "Switch": {
       "main": [
