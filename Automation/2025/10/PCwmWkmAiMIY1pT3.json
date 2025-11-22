@@ -1,5 +1,335 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-16T02:13:18.317Z",
+    "createdAt": "2025-11-16T02:13:18.317Z",
+    "versionId": "32050cae-85e0-460f-859b-2917ade5d751",
+    "workflowId": "PCwmWkmAiMIY1pT3",
+    "nodes": [
+      {
+        "parameters": {
+          "promptName": "Mia",
+          "label": "latest",
+          "requestOptions": {}
+        },
+        "type": "@langfuse/n8n-nodes-langfuse.langfuse",
+        "typeVersion": 1,
+        "position": [
+          2592,
+          32
+        ],
+        "id": "3b0dffac-965d-49fc-8149-8f3287f130db",
+        "name": "Get a prompt1",
+        "credentials": {
+          "langfuseApi": {
+            "id": "5DdeK0hWANhT5Y5a",
+            "name": "Mia"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "mia",
+          "responseMode": "responseNode",
+          "options": {
+            "binaryPropertyName": "data"
+          }
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          2368,
+          32
+        ],
+        "id": "1235a5f3-311b-4ae4-b0c5-68fd19a02462",
+        "name": "Webhook",
+        "webhookId": "37501844-15e8-4ea9-b3c8-183b5e913b52"
+      },
+      {
+        "parameters": {
+          "respondWith": "allIncomingItems",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.4,
+        "position": [
+          3952,
+          32
+        ],
+        "id": "831c63c0-17e1-467d-bd6e-fac63aebcd03",
+        "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('Webhook').item.json.body.message }}",
+          "langfuseMetadata": {
+            "sessionId": "=TEST {{ $('Webhook').item.json.body.platform }}",
+            "userId": "=UI  {{ $('Webhook').item.json.body.username }}"
+          },
+          "options": {
+            "systemMessage": "={{ $json.prompt }}"
+          }
+        },
+        "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
+        "typeVersion": 2,
+        "position": [
+          2848,
+          32
+        ],
+        "id": "a6340688-30fb-4d0a-ba06-53636026806b",
+        "name": "Mia",
+        "credentials": {
+          "langfuseCustomApi": {
+            "id": "yrl2b8Hp9nPFYRGg",
+            "name": "Langfuse account 3"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          2816,
+          256
+        ],
+        "id": "1c4cf140-5f1d-4484-ae0d-73df972e8cbf",
+        "name": "Gemini",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "xCrv1gBV3pJitThp",
+            "name": "Varios Whitelabel"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+        "typeVersion": 1.5,
+        "position": [
+          2368,
+          1104
+        ],
+        "id": "5198f5af-4ca6-40d4-8843-95387dc1126b",
+        "name": "Memory",
+        "credentials": {
+          "redis": {
+            "id": "yzvE00xFtVHtaoZ1",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+        "typeVersion": 1.5,
+        "position": [
+          2912,
+          464
+        ],
+        "id": "bdbe911c-2b96-4952-8c7b-371f31abe91e",
+        "name": "memory",
+        "credentials": {
+          "redis": {
+            "id": "yzvE00xFtVHtaoZ1",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          3280,
+          464
+        ],
+        "id": "91d838fb-9b8e-421a-aca9-731f15524e8a",
+        "name": "gemini",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "xCrv1gBV3pJitThp",
+            "name": "Varios Whitelabel"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "oAuth2",
+          "operation": "getAll",
+          "returnAll": true
+        },
+        "type": "n8n-nodes-base.linearTool",
+        "typeVersion": 1.1,
+        "position": [
+          3056,
+          256
+        ],
+        "id": "aecd2604-d77e-475b-a733-c821732265ec",
+        "name": "Get Tasks",
+        "credentials": {
+          "linearOAuth2Api": {
+            "id": "4nrQ9uoT78aaGSgD",
+            "name": "Linear account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
+        },
+        "id": "a8912f89-2994-4694-81c3-952a6e1d73b3",
+        "name": "Zep",
+        "type": "@n8n/n8n-nodes-langchain.memoryZep",
+        "position": [
+          2368,
+          464
+        ],
+        "typeVersion": 1.3,
+        "credentials": {
+          "zepApi": {
+            "id": "0YRafV7HZBQTj6TN",
+            "name": "Zep Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('Webhook').item.json.body.metadata.conversation_id }}"
+        },
+        "id": "2b14ef95-b686-436b-a777-cff4e921d1d6",
+        "name": "Zep1",
+        "type": "@n8n/n8n-nodes-langchain.memoryZep",
+        "position": [
+          2944,
+          256
+        ],
+        "typeVersion": 1.3,
+        "credentials": {
+          "zepApi": {
+            "id": "0YRafV7HZBQTj6TN",
+            "name": "Zep Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.postHogTool",
+        "typeVersion": 1,
+        "position": [
+          3248,
+          240
+        ],
+        "id": "f9dde189-d2f2-435e-ac6a-42748e2f2fe3",
+        "name": "Create an event in PostHog",
+        "disabled": true
+      }
+    ],
+    "connections": {
+      "Get a prompt1": {
+        "main": [
+          [
+            {
+              "node": "Mia",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Get a prompt1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Mia",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "gemini": {
+        "ai_languageModel": [
+          []
+        ]
+      },
+      "Get Tasks": {
+        "ai_tool": [
+          [
+            {
+              "node": "Mia",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Zep1": {
+        "ai_memory": [
+          [
+            {
+              "node": "Mia",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Mia": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an event in PostHog": {
+        "ai_tool": [
+          [
+            {
+              "node": "Mia",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "n8n whitelabel",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "32050cae-85e0-460f-859b-2917ade5d751",
   "connections": {
     "Get a prompt1": {
       "main": [
