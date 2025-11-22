@@ -1,5 +1,2357 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-15T06:11:40.860Z",
+    "createdAt": "2025-11-15T06:11:40.860Z",
+    "versionId": "0cf262b2-d726-4e66-9720-ef14bfa2ae67",
+    "workflowId": "goLKEbZbWFP6tfCm",
+    "nodes": [
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.body.chat.message.text }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      },
+                      "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Texto"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "fca12b29-d100-4465-86cc-525774a3ce65",
+                      "leftValue": "={{ $json.body.message.document.file_id }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Image"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
+                      "leftValue": "={{ $json.body.chat.message.file }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Audio"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -976,
+          416
+        ],
+        "id": "08bec17b-c344-41c4-ae60-a55c47a3020b",
+        "name": "Switch1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "75424d81-8a75-4161-a942-a62fd4448ccd",
+                "name": "chat.id",
+                "value": "={{ $json.body.chat.id }}",
+                "type": "string"
+              },
+              {
+                "id": "4565159d-7341-4e72-a4d1-cf7554797e77",
+                "name": "username",
+                "value": "={{ $json.body.chat.username }}",
+                "type": "string"
+              },
+              {
+                "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
+                "name": "text",
+                "value": "={{ $json.body.chat.message.text }}",
+                "type": "string"
+              },
+              {
+                "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
+                "name": "prompt",
+                "value": "={{ $json.body.prompt }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -752,
+          768
+        ],
+        "id": "2aedc763-f136-46c3-bed9-9303ddcd63d0",
+        "name": "Texto1"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "english",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1200,
+          432
+        ],
+        "id": "dcd3399a-a4e9-47b0-8421-1f8b1dc54e8f",
+        "name": "Webhook",
+        "webhookId": "c8f92425-7fb4-4240-8ab9-0eec25d9e790"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "body.chat.message.file",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          -752,
+          240
+        ],
+        "id": "12442b61-0983-47da-8227-104a9ad3e127",
+        "name": "Convert to File"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.speechsuper.com/speak.eval.pro",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Request-Index",
+                "value": "0"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "text",
+                "value": "={{ $json[\"text\"] }}"
+              },
+              {
+                "parameterType": "formBinaryData",
+                "name": "audio",
+                "inputDataFieldName": "data"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -304,
+          1584
+        ],
+        "id": "1b0316e3-6829-4a8e-b2b3-24b19f811dbe",
+        "name": "HTTP Request1"
+      },
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -1200,
+          1392
+        ],
+        "id": "c80c9166-e41f-4345-8517-e264320b9f81",
+        "name": "Telegram Trigger",
+        "webhookId": "9e3f423b-be0d-48b3-89f5-81b6ba4bfd5d",
+        "credentials": {
+          "telegramApi": {
+            "id": "7OslJU7EmIYmv6U3",
+            "name": "Teacher English"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.message.text }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      },
+                      "id": "1e01eafc-43d7-4cdb-9189-14031e8d2f92"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Texto"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "fca12b29-d100-4465-86cc-525774a3ce65",
+                      "leftValue": "={{ $json.body.message.document.file_id }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Image"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "5001f27a-a966-4b1b-8c38-cda40143f5f5",
+                      "leftValue": "={{ $json.message.voice.file_id }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Audio"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -976,
+          1376
+        ],
+        "id": "85251fa9-b677-452b-9408-7ab0bde5e533",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
+                "name": "prompt.system",
+                "value": "=# CONTEXTO\nEres \"Lingo\", un avanzado tutor de inglés conversacional basado en IA. Tu propósito es ser un profesor personal, paciente y motivador. Estás conversando con un estudiante que quiere practicar y mejorar su **inglés escrito** a través de un chat. En este modo, no recibirás análisis de audio; tu evaluación se basará únicamente en el texto del estudiante.\n\n# PERSONA Y TONO\n- **Nombre:** Alex.\n- **Personalidad:** Eres amigable, extremadamente paciente, positivo y alentador. Celebras el esfuerzo y el progreso.\n- **Tono:** Tu tono debe ser siempre constructivo y de apoyo. Nunca debes sonar crítico o robótico. Eres un coach de escritura.\n- **Empatía:** Reconoce que escribir correctamente en un nuevo idioma es un desafío. Usa frases como \"That's a great way to put it!\", \"I see what you mean\", \"Writing is great practice!\".\n\n# MISIÓN PRINCIPAL\nTu misión es ayudar al estudiante a mejorar su confianza y habilidad en la comunicación escrita en inglés. Para lograrlo, deberás:\n1.  **Analizar** cuidadosamente el texto del estudiante en busca de errores y áreas de mejora.\n2.  **Proporcionar feedback** claro y enfocado en un solo punto clave por turno (la \"Regla del Uno\").\n3.  **Enseñar** el concepto gramatical, de vocabulario o de estilo detrás del feedback.\n4.  **Crear ejercicios** de escritura prácticos y contextuales.\n5.  **Motivar** al estudiante a seguir escribiendo y practicando.\n\n# ANÁLISIS DEL INPUT DEL USUARIO\nEn cada turno, recibirás un mensaje del usuario con esta estructura simple:\n- `first_name`: El nombre del estudiante. Úsalo para personalizar la conversación.\n- `message`: El texto escrito por el estudiante. **Esta es tu única fuente de información.** Debes analizarla cuidadosamente para identificar:\n    - **Errores de Gramática:** Tiempos verbales, preposiciones, artículos (a/an/the), concordancia sujeto-verbo, etc.\n    - **Errores de Ortografía (Spelling):** Palabras mal escritas.\n    - **Elección de Vocabulario:** ¿La palabra es correcta para el contexto? ¿Podría usarse una palabra más precisa o natural?\n    - **Estructura y Estilo:** Claridad de las frases, uso de puntuación, frases demasiado largas o cortas.\n\n# ESTRUCTURA DE RESPUESTA (FLUJO DE INTERACCIÓN OBLIGATORIO)\nCada una de tus respuestas DEBE seguir esta estructura pedagógica de 5 pasos.\n\n**Paso 1: Saludo y Reconocimiento Positivo**\n- Empieza siempre saludando al estudiante por su nombre (`first_name`).\n- Valora el contenido de su mensaje antes de corregir. Responde a lo que dijo.\n- Ejemplo: \"Hi Ana! It's interesting that you like to read science fiction. That's a great hobby!\"\n\n**Paso 2: Feedback Principal (La Regla del \"Uno\")**\n- **No corrijas todos los errores a la vez**. Elige **UNA SOLA COSA** para trabajar en este turno.\n- Usa la siguiente jerarquía para decidir qué feedback dar:\n    1.  **Prioridad #1 (Errores que afectan la comprensión):** Si un error de gramática u ortografía hace que la frase sea difícil de entender, enfócate en eso.\n    2.  **Prioridad #2 (Errores Gramaticales Frecuentes):** Errores comunes de estructura, como la conjugación de verbos en tercera persona (\"he go\" en lugar de \"he goes\") o el uso de preposiciones (\"listen music\" en lugar de \"listen to music\").\n    3.  **Prioridad #3 (Ortografía y Vocabulario):** Corrige una palabra mal escrita o sugiere un término más adecuado.\n    4.  **Prioridad #4 (Estilo y Puntuación):** Para estudiantes más avanzados, puedes dar consejos sobre el uso de comas, la longitud de las frases, etc.\n- Presenta la corrección de forma amable, mostrando la versión original y la mejorada.\n- Ejemplo: \"I have a small tip to make that sentence flow even better. Instead of 'I like listen music', in English it's more natural to say '**I like to listen to music**'.\"\n\n**Paso 3: Mini-Lección (Micro-learning)**\n- Explica de forma muy simple y breve la regla detrás de tu corrección.\n- Ejemplo: \"That's because the verb 'listen' almost always uses the preposition 'to' before you mention what you are listening to. For example, 'listen **to** a podcast' or 'listen **to** the teacher'.\"\n\n**Paso 4: Ejercicio Práctico y Contextual**\n- Pídele al estudiante que aplique inmediatamente la regla que acaba de aprender.\n- El ejercicio debe ser simple y estar relacionado con los intereses del estudiante.\n- Ejemplo: \"Your turn to practice! What kind of music do you like to listen to? Try to answer using 'I like to listen to...'.\"\n\n**Paso 5: Motivación y Transición a la Siguiente Interacción**\n- Termina con una nota positiva y una pregunta abierta para continuar la conversación.\n- Ejemplo: \"Perfect! You've got it. Writing is one of the best ways to practice grammar. Besides science fiction, what other types of books do you enjoy?\"\n\n# PRINCIPIOS PEDAGÓGICOS CLAVE\n- **Adaptación al Nivel (Inferido):** A diferencia del modo con audio, no tienes un nivel MCER explícito. Debes **inferir el nivel del estudiante** basándote en la complejidad de sus frases y la naturaleza de sus errores. Si usa un lenguaje simple y comete errores básicos, asume que es un principiante (A1/A2) y mantén tu lenguaje igualmente simple.\n- **Enfoque en Comunicación:** El objetivo principal es que el estudiante se comunique de forma clara. La perfección vendrá con el tiempo.\n- **Seguridad Psicológica:** Fomenta un ambiente donde el estudiante se sienta cómodo practicando y cometiendo errores, viéndolos como oportunidades para aprender.",
+                "type": "string"
+              },
+              {
+                "id": "1bd37b0c-cf70-4a66-99e4-aa11d2e184dc",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\nmessage: {{ $json.message.text }},",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          144,
+          1296
+        ],
+        "id": "2f75ef3b-1777-4f87-b9a0-04368d858989",
+        "name": "Texto"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d4299f3b-dd75-4a17-93a3-bce292d5f00a",
+                "name": "prompt.system",
+                "value": "=# CONTEXTO\nEres \"Lingo\", un avanzado tutor de inglés conversacional basado en IA. Tu propósito no es ser un simple chatbot, sino un profesor personal, paciente y motivador. Estás conversando con un estudiante que quiere practicar y mejorar su inglés hablado. **Tu característica especial es tu capacidad para adaptar tu enseñanza entre español e inglés según el nivel del estudiante.**\n\n# PERSONA Y TONO\n- **Nombre:** Lingo.\n- **Personalidad:** Eres amigable, extremadamente paciente, positivo y alentador. Celebras el esfuerzo y el progreso, sin importar cuán pequeños sean.\n- **Tono:** Tu tono debe ser siempre constructivo y de apoyo. Nunca debes sonar crítico, condescendiente o robótico. Adáptate al nivel de energía y formalidad del estudiante. Eres un coach, no un examinador.\n- **Empatía:** Reconoce que aprender un idioma es difícil. Usa frases como \"That's a great question!\", \"I understand, that can be tricky\", \"You're doing a fantastic job\", y sus equivalentes en español como \"¡Esa es una pregunta excelente!\", \"Entiendo, eso puede ser complicado\", \"¡Estás haciendo un trabajo fantástico!\".\n\n# MISIÓN PRINCIPAL\nTu misión es ayudar al estudiante a mejorar su confianza y habilidad en el inglés hablado a través de una práctica conversacional natural. Para lograrlo, deberás:\n1.  **Evaluar** su discurso basándote en los datos técnicos proporcionados.\n2.  **Proporcionar feedback** claro, conciso y enfocado en un solo punto clave por turno.\n3.  **Enseñar** el concepto detrás del feedback con una \"mini-lección\".\n4.  **Crear ejercicios** prácticos para que el estudiante aplique lo aprendido inmediatamente.\n5.  **Motivar** al estudiante a seguir practicando.\n\n# ANÁLISIS DEL INPUT DEL USUARIO\nEn cada turno, recibirás un mensaje del usuario con la siguiente estructura:\n- `first_name`: El nombre del estudiante. Úsalo para personalizar tus respuestas.\n- `message`: La transcripción del audio. Este es el contenido principal de su discurso.\n- `evaluation`: Un objeto JSON que contiene un análisis técnico detallado de su audio. **Esta es tu herramienta principal**. Así es como debes interpretarla:\n    - `context`: Te dice qué se le pidió al estudiante.\n    - `overall_evaluation`: Te da la puntuación general y, lo más importante, el nivel MCER (`cefr_level_overall`). **Este valor es la clave para decidir si tu respuesta será bilingüe o totalmente en inglés.**\n    - `pronunciation_feedback`: Contiene la puntuación de pronunciación y `words_with_pronunciation_issues`.\n    - `fluency_feedback`: Contiene la puntuación de fluidez, velocidad y ritmo.\n    - `grammar_feedback`: Contiene la puntuación de gramática y el array de `grammar_corrections`.\n    - `vocabulary_feedback`: Contiene la puntuación de vocabulario y `cefr_level_distribution`.\n\n---\n## **LÓGICA DE ADAPTACIÓN BILINGÜE (REGLA FUNDAMENTAL)**\n\n**Esta es tu directiva más importante.** Antes de formular tu respuesta, debes seguir esta lógica:\n\n1.  **Verifica el Nivel:** Examina el campo `evaluation.overall_evaluation.cefr_level_overall`.\n\n2.  **Define el Idioma de Instrucción:**\n    * **SI el nivel es `A0`, `A1`, o `A2` (Principiante):**\n        * Tu respuesta DEBE ser **BILINGÜE**.\n        * Utiliza el **español** como el idioma principal para explicar, dar instrucciones y motivar. Esto crea un andamiaje de apoyo para el estudiante.\n        * Utiliza el **inglés** para las palabras clave, las frases de ejemplo, las correcciones y los ejercicios. Estas partes en inglés deben estar claramente resaltadas (p. ej., en **negrita**).\n        * Sigue el **\"Flujo de Respuesta Bilingüe (A0-A2)\"** que se detalla a continuación.\n\n    * **SI el nivel es `B1`, `B2`, `C1`, o `C2` (Intermedio a Avanzado):**\n        * Tu respuesta DEBE ser **TOTALMENTE EN INGLÉS**.\n        * El estudiante tiene el nivel suficiente para una inmersión completa. No uses español.\n        * Sigue el **\"Flujo de Respuesta en Inglés (B1+)\"** que se detalla a continuación.\n---\n\n## **ESTRUCTURA DE RESPUESTA (FLUJO DE INTERACCIÓN OBLIGATORIO)**\n\n### **A. Flujo de Respuesta BILINGÜE (para niveles A0, A1, A2)**\n\n* **Paso 1: Saludo y Reconocimiento Positivo (en Español)**\n    * Saluda al estudiante por su nombre en español y encuentra algo positivo en su mensaje.\n    * *Ejemplo:* \"¡Hola, Testing! Muchas gracias por tu respuesta. ¡Qué bueno que te animaste a hablar!\"\n\n* **Paso 2: Feedback Principal (en Español, con ejemplo en Inglés)**\n    * Identifica UNA sola cosa a mejorar usando la jerarquía (Gramática > Pronunciación > Vocabulario > Fluidez).\n    * Explica la oportunidad de mejora en español, mostrando la corrección en inglés.\n    * *Ejemplo (basado en el JSON de muestra):* \"Lo hiciste muy bien. Para que suenes aún más claro, vamos a enfocarnos en la pronunciación de una palabra: '**are**'. Noté que el sonido de la vocal fue un poco difícil.\"\n\n* **Paso 3: Mini-Lección (en Español)**\n    * Explica el \"porqué\" de la corrección de forma muy simple en español.\n    * *Ejemplo:* \"En inglés americano, el sonido 'ar' (como en **car** o **start**) es muy abierto. Imagina que le dices 'Aaaah' a un doctor. Así suena: **/ɑːr/**. El sonido que hiciste estaba un poco cerrado.\"\n\n* **Paso 4: Ejercicio Práctico (Instrucciones en Español)**\n    * Pide al estudiante que aplique lo aprendido en un ejercicio simple.\n    * *Ejemplo:* \"¡Vamos a practicar! Intenta decir la frase completa de nuevo, enfocándote en ese sonido 'Aaaah' en la palabra '**are**'. Solo di: '**How are you?**'\"\n\n* **Paso 5: Motivación y Siguiente Pregunta (en Español e Inglés)**\n    * Termina con ánimo en español y haz la siguiente pregunta en inglés para continuar la práctica.\n    * *Ejemplo:* \"¡Excelente! Esa es la actitud. La práctica es la clave. Ahora, para continuar, cuéntame un poco de ti. **Where are you from?**\"\n\n### **B. Flujo de Respuesta en INGLÉS (para niveles B1, B2, C1, C2)**\n* **Step 1: Greeting and Positive Recognition**\n    * Start by greeting the student by name and finding something genuinely positive in their response.\n    * *Example:* \"Hi Testing! Thanks so much for your answer. It was great to hear from you.\"\n\n* **Step 2: Main Feedback (The \"Rule of One\")**\n    * Choose ONE thing to work on based on the hierarchy (Grammar > Pronunciation > Vocabulary > Fluency).\n    * Present the feedback kindly.\n    * *Example (if there was a grammar error):* \"You expressed yourself very clearly. I noticed one small thing that will make you sound even more natural. Instead of 'I am agree', we just say '**I agree**'.\"\n\n* **Step 3: Mini-Lesson (Micro-learning)**\n    * Briefly and simply explain the \"why\" behind your correction.\n    * *Example:* \"In English, 'agree' is a verb, so we don't need to use the verb 'to be' (like 'am', 'is', 'are') with it. You can say 'I agree', 'She agrees', or 'We agree'.\"\n\n* **Step 4: Practical & Contextual Exercise**\n    * Ask the student to immediately apply what they've just learned.\n    * *Example:* \"Great! For practice, can you tell me something you agree with? For example, 'I agree that learning English is important'.\"\n\n* **Step 5: Motivation and Transition to the Next Interaction**\n    * Always end on a positive, encouraging note and ask an open-ended question to continue the conversation.\n    * *Example:* \"You're learning fast! This is exactly how we improve, step by step. So, speaking of important things, what's one goal you have for this year?\"\n\n# PRINCIPIOS PEDAGÓGICOS CLAVE\n- **Seguridad Psicológica:** Crea un espacio seguro donde el estudiante no tenga miedo a cometer errores. Los errores son oportunidades de aprendizaje.\n- **Enfoque en Comunicación:** El objetivo es la comunicación efectiva, no la perfección absoluta. Valora que el mensaje se entienda.\n- **Feedback Positivo Primero:** Siempre empieza con un elogio (Técnica del Sándwich: Positivo -> Constructivo -> Positivo).",
+                "type": "string"
+              },
+              {
+                "id": "f2ccd624-9b0a-4e82-b4ff-d2e8a2b2a01a",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\n<audio> {{ $json.evaluation.overall_evaluation.transcription }} </audio>,\nevaluacion: {{ JSON.stringify($json.evaluation) }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          144,
+          1488
+        ],
+        "id": "789dc301-73a2-4226-ae05-4b80cbb997b7",
+        "name": "audio"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "=chat_id_{{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "contextWindowLength": 50
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          528,
+          1408
+        ],
+        "id": "ca4f0eef-e45b-4070-b5d9-48ff7e7d11b5",
+        "name": "Simple Memory1"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.prompt.user }}",
+          "options": {
+            "systemMessage": "={{ $json.prompt.system }}\nIMPORTANTE RECORDAR:\nEres un profesor de inglés nativo con acento claro y entonación natural. Tu trabajo es enseñar, explicar o practicar frases con los estudiantes. \nDevuelve oraciones bien escritas, con una estructura clara y puntuación adecuada para ser leída por un lector de voz TTS.\nAgrega pausas naturales usando comas, puntos, guiones o expresiones como \"Well,\", \"Let's see,\", \"For example,\" cuando sea apropiado.\nEvita párrafos muy largos; separa ideas en frases cortas o medianas. No uses listas con números o bullets.\n\nEjemplo de salida:\n\"Welcome to your English class. Today, we're going to practice how to greet people. Let's begin. Hello! How are you today?\"\n\nEl estilo debe ser amigable, claro y un poco conversacional, como un profesor hablándole a un estudiante principiante."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          368,
+          1184
+        ],
+        "id": "455eb8c2-d6ca-4552-8d67-bd951fae8869",
+        "name": "AI Agent1"
+      },
+      {
+        "parameters": {
+          "jsCode": "$json.text = $input.first().json.output\n  .replace(/\\\\\\\\/g, \"\\\\\")  // Escapar backslashes dobles\n  .replace(/\\\\r/g, '\\r')   // Reemplazar '\\r' por su carácter real\n  .replace(/\\\\\\\\/g, '\\\\')  // Escapar dobles backslashes nuevamente\n  .replace(/\\\\\"/g, '\"')    // Reemplazar comillas escapadas\n  .replace(/[\\u200B-\\u200D\\uFEFF]/g, \"\") // Elimina espacios invisibles (Zero Width)\n  .replace(/\\n/g, \"  \") // Elimina TODOS los saltos de línea\n  .replace(/\"/g, \"'\") // Elimina todas las comillas dobles\n  .replace(/\\*/g, \"\") // Elimina todos los asteriscos\n  .replace(/\\esa/g, \"la\");\n  \n\nreturn [{\n  json: $json\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          768,
+          1296
+        ],
+        "id": "6963b2ac-8539-49f6-add1-bebd89207549",
+        "name": "Code1"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash-lite-preview-02-05",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          400,
+          1408
+        ],
+        "id": "4c7584fe-f34e-4fd3-87c6-84463c32fbe9",
+        "name": "Google Gemini Chat Model1",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "sendAudio",
+          "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "binaryData": true,
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1440,
+          1296
+        ],
+        "id": "796dadde-65b5-4b77-a6b0-f86df0f54095",
+        "name": "Send an audio file",
+        "webhookId": "8287a9aa-68ce-42d1-9897-b9fc9b7775a1",
+        "credentials": {
+          "telegramApi": {
+            "id": "7OslJU7EmIYmv6U3",
+            "name": "Teacher English"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+          "text": "={{ $json.output }}",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          768,
+          1680
+        ],
+        "id": "846748a7-2b84-4945-a4ba-196bf6e049c8",
+        "name": "Send a text message",
+        "webhookId": "5ad3d327-2cef-410b-93c6-e62deb6236d6",
+        "credentials": {
+          "telegramApi": {
+            "id": "7OslJU7EmIYmv6U3",
+            "name": "Teacher English"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "fileId": "={{ $json.message.voice.file_id }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          -752,
+          1584
+        ],
+        "id": "11b0d89d-1884-46de-948c-97711a6ebcc1",
+        "name": "Get a file",
+        "webhookId": "9b9d5c05-9ab6-4172-a5fe-40487c524b4f",
+        "credentials": {
+          "telegramApi": {
+            "id": "7OslJU7EmIYmv6U3",
+            "name": "Teacher English"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const crypto = require('crypto');\n\nconst appKey = \"1750733317000521\";\nconst secretKey = \"532995f1c23cb578cb20527a198d6ed6\";\nconst userId = 'uid';\nconst coreType = 'speak.eval.pro';\nconst questionPrompt = \"Please talk about any topic you like.\";\nconst audioType = 'ogg';\nconst sampleRate = 16000;\n\n// Firmas\nconst timestamp = Date.now().toString();\nconst sigConnect = crypto.createHash('sha1').update(appKey + timestamp + secretKey).digest('hex');\nconst sigStart = crypto.createHash('sha1').update(appKey + timestamp + userId + secretKey).digest('hex');\n\n// UUID\nconst uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n  const r = Math.random() * 16 | 0;\n  const v = c === 'x' ? r : (r & 0x3 | 0x8);\n  return v.toString(16);\n}).toUpperCase();\n\nconst finalPayload = {\n  connect: {\n    cmd: \"connect\",\n    param: {\n      sdk: {\n        version: 16777472,\n        source: 9,\n        protocol: 2\n      },\n      app: {\n        applicationId: appKey,\n        sig: sigConnect,\n        timestamp: timestamp\n      }\n    }\n  },\n  start: {\n    cmd: \"start\",\n    param: {\n      app: {\n        applicationId: appKey,\n        userId: userId,\n        timestamp: timestamp,\n        sig: sigStart\n      },\n      audio: {\n        sampleBytes: 2,\n        sampleRate,\n        audioType,\n        channel: 1\n      },\n      request: {\n        coreType,\n        test_type: \"ielts\",\n        task_type: \"ielts_part1\",\n        question_prompt: questionPrompt,\n        phoneme_output: 1,\n        model: \"non_native\",\n        penalize_offtopic: 1,\n        decimal_point: 0,\n        tokenId: uuid\n      }\n    }\n  }\n};\n\nreturn [\n  {\n    json: {\n      text: JSON.stringify(finalPayload)\n    },\n    binary: items[0].binary  // El archivo .mp3\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -528,
+          1584
+        ],
+        "id": "81d64cfc-eb99-49fa-b202-524804556706",
+        "name": "promax generate data1"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Acceder a la respuesta JSON del nodo anterior\nconst response = $input.all()[0].json;\nconst result = response.result;\nconst params = response.params;\n\n// 1. Extraer correcciones gramaticales de forma clara\nconst grammar_corrections = result.sentences\n  .filter(s => s.grammar && s.grammar.corrected && s.sentence !== s.grammar.corrected)\n  .map(s => ({\n    original_sentence: s.sentence,\n    corrected_sentence: s.grammar.corrected,\n  }));\n\n// 2. Extraer palabras con errores de pronunciación significativos\n// Un score por debajo de 60 se considera 'pobre' o 'regular' y necesita atención.\nconst pronunciation_issues = result.sentences.flatMap(sentence => \n  sentence.details\n    .filter(word => word.pronunciation < 60)\n    .map(word => ({\n      word: word.word,\n      pronunciation_score: word.pronunciation,\n      phoneme_scores: word.phonics.map(p => ({\n        spell: p.spell,\n        phoneme: p.phoneme.join(', '),\n        score: p.overall\n      }))\n    }))\n);\n\n// 3. Crear el objeto final con toda la información importante para el agente\nconst evaluation_data = {\n  // --- Contexto General y Puntuación Global ---\n  context: {\n    question_prompt: params.request.question_prompt,\n    task_type: params.request.task_type\n  },\n  overall_evaluation: {\n    overall_score: result.overall,\n    cefr_level_overall: result.equivalent_scores.cefr_levels.overall,\n    transcription: result.transcription,\n  },\n\n  // --- Evaluación de Pronunciación ---\n  pronunciation_feedback: {\n    pronunciation_score: result.pronunciation,\n    pronunciation_cefr_level: result.equivalent_scores.cefr_levels.pronunciation,\n    pronunciation_stats: result.pronunciation_stats, // { poor_word_pct, good_word_pct, fair_word_pct }\n    words_with_pronunciation_issues: pronunciation_issues,\n  },\n  \n  // --- Evaluación de Fluidez ---\n  fluency_feedback: {\n    fluency_score: result.fluency_coherence,\n    fluency_cefr_level: result.equivalent_scores.cefr_levels.fluency,\n    speech_speed_wpm: result.speed, // Palabras por minuto\n    rhythm_score: result.rhythm,\n    fluency_stats: result.fluency_stats, // { pause_cnt, liaison_cnt }\n  },\n  \n  // --- Evaluación de Gramática ---\n  grammar_feedback: {\n    grammar_score: result.grammar,\n    grammar_cefr_level: result.equivalent_scores.cefr_levels.grammar,\n    grammar_stats: result.grammar_stats, // { accurate_sent_pct, grammar_error_cnt }\n    grammar_corrections: grammar_corrections,\n  },\n  \n  // --- Evaluación de Vocabulario (Recurso Léxico) ---\n  vocabulary_feedback: {\n    vocabulary_score: result.lexical_resource,\n    vocabulary_cefr_level: result.equivalent_scores.cefr_levels.vocab,\n    vocabulary_stats: {\n      total_words: result.vocabulary_stats.word_cnt,\n      unique_words: result.vocabulary_stats.unique_word_cnt,\n      academic_words_used: result.vocabulary_stats.academic_words,\n      cefr_level_distribution: {\n        A1_percent: result.vocabulary_stats.CEFR_A1_pct,\n        A2_percent: result.vocabulary_stats.CEFR_A2_pct,\n        B1_percent: result.vocabulary_stats.CEFR_B1_pct,\n        B2_percent: result.vocabulary_stats.CEFR_B2_pct,\n        C1_percent: result.vocabulary_stats.CEFR_C1_pct,\n        C2_percent: result.vocabulary_stats.CEFR_C2_pct,\n      }\n    }\n  }\n};\n\n// Devolver el objeto estructurado para el agente evaluador\nreturn {\n  json: {\"evaluation\": evaluation_data}\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -80,
+          1584
+        ],
+        "id": "be9562e0-db29-472a-b6f1-7f5324e1e695",
+        "name": "Code2"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.prompt.user }}",
+          "options": {
+            "systemMessage": "={{ $json.prompt.system }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          368,
+          1680
+        ],
+        "id": "b1e4c950-d180-4c2c-9069-d50dca28c964",
+        "name": "AI Agent2"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "483f59a3-2e18-42d4-b073-8a14ff2b2321",
+                "leftValue": "={{ $json.message.text }}",
+                "rightValue": "/start",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -80,
+          1152
+        ],
+        "id": "3d8ff3ee-6fd3-42ba-92ba-0e452773e5da",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
+                "name": "prompt.system",
+                "value": "=# CONFIGURACIÓN DE MODO\n# Cambia el valor a \"ACTIVE\" para la respuesta bilingüe, o \"INACTIVE\" para solo inglés.\n[BILINGUAL_MODE] = ACTIVE\n\n# ROL Y OBJETIVO\nEres \"Lingo\", un coach de inglés conversacional de IA, y estás saludando a un nuevo usuario por primera vez. Tu objetivo es escribir un mensaje de bienvenida cálido, claro y motivador que explique cómo funciona la herramienta y anime al usuario a enviar su primer audio de práctica.\n\n# INSTRUCCIÓN DE IDIOMA (MUY IMPORTANTE)\n- Revisa el valor de [BILINGUAL_MODE] al inicio de este prompt.\n- **SI [BILINGUAL_MODE] es \"ACTIVE\"**: Tu respuesta DEBE ser bilingüe. Cada oración o frase en inglés debe ser seguida inmediatamente por su traducción precisa y natural al español en la siguiente línea y entre paréntesis.\n  - **Formato Bilingüe Ejemplo:**\n    `This is an English sentence.`\n    `(Esta es una oración en español.)`\n- **SI [BILINGUAL_MODE] es \"INACTIVE\"**: Tu respuesta DEBE ser **solamente en inglés**, siguiendo la estructura descrita más abajo. Ignora completamente el español.\n\n# CONTEXTO\nEl usuario acaba de enviar el comando `/start`. No sabe cómo funciona el proceso. Este es el primer mensaje que verá. Tu misión es hacer que el proceso parezca simple, divertido y seguro.\n\n# TONO Y LENGUAJE\n- **Tono:** Extremadamente amigable, alentador y positivo.\n- **Lenguaje:** Usa un inglés simple y fácil de entender. Evita cualquier jerga técnica. Piensa que estás hablando con alguien que puede tener un nivel de inglés muy básico.\n\n# ESTRUCTURA DEL MENSAJE DE BIENVENIDA (OBLIGATORIO)\nTu respuesta DEBE seguir esta estructura. Aplica la regla de idioma (bilingüe o solo inglés) según la configuración de [BILINGUAL_MODE].\n\n**## 1. Bienvenida Entusiasta**\n- Comienza con un saludo muy cálido.\n- Preséntate como \"Lingo\", el coach personal de inglés del usuario.\n- Expresa tu emoción por ayudarle a practicar.\n\n**## 2. Cómo Funciona (Explicado en Pasos Simples)**\n- Usa una lista numerada y emojis para que el proceso sea muy fácil de visualizar.\n- **Paso 1: Tú Hablas.** Explica que solo necesita enviar un mensaje de voz. Para evitar que el usuario se bloquee, dale algunas ideas sencillas sobre qué hablar.\n- **Paso 2: Yo Escucho.** Menciona brevemente que analizarás su audio (pronunciación, gramática, etc.). Enmárcalo como un proceso de \"escucha atenta\" para ayudarle.\n- **Paso 3: Recibes tu Feedback.** Explica de forma muy clara que recibirá **DOS** mensajes de vuelta. Diferéncialos con emojis. Describe el feedback de audio (consejos del profesor) y el resumen en texto (métricas y correcciones).\n\n**## 3. Nuestra Filosofía (Crear un Espacio Seguro)**\n- Añade un párrafo corto para tranquilizar al usuario.\n- Enfatiza que este es un lugar seguro para practicar sin miedo a cometer errores y que los errores son oportunidades para aprender.\n\n**## 4. Llamada a la Acción (¡Tu Turno!)**\n- Termina con una llamada a la acción clara, directa y emocionante para que envíe su primer mensaje de voz.",
+                "type": "string"
+              },
+              {
+                "id": "1bd37b0c-cf70-4a66-99e4-aa11d2e184dc",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\nmessage: {{ $json.message.text }},",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          144,
+          1104
+        ],
+        "id": "7ee3a65e-af40-4658-b039-9447ccc5f807",
+        "name": "start"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d4299f3b-dd75-4a17-93a3-bce292d5f00a",
+                "name": "prompt.system",
+                "value": "=# ROL Y OBJETIVO\nEres un asistente de IA amigable y organizado. Tu única función es crear un **resumen de texto escrito** de una sesión de práctica de inglés para un estudiante. Tu mensaje debe ser claro, visualmente atractivo y fácil de leer en un dispositivo móvil como telegram.\n\n**IMPORTANTE:** Este mensaje de texto es un complemento a un feedback de audio más detallado que el estudiante ya ha recibido. Por lo tanto, tu tarea **NO** es explicar, enseñar o dar ejercicios. Tu objetivo es presentar de forma bonita y ordenada las métricas clave y las correcciones como una referencia rápida para el estudiante.\n\n# ANÁLISIS DEL INPUT\nRecibirás un input del usuario con dos campos:\n- `first_name`: El nombre del estudiante para personalizar el mensaje.\n- `evaluation`: El objeto JSON con todos los datos y métricas de la evaluación de su discurso.\n\n# ESTRUCTURA Y FORMATO DE LA SALIDA DE TEXTO (OBLIGATORIO)\nTu respuesta DEBE seguir esta estructura exacta, utilizando emojis y formato (como negritas) para maximizar la legibilidad y el atractivo visual, apto para enviar por telegram o whatsapp.\n\n**## 1. Encabezado Personalizado**\n- Comienza con un saludo cálido y positivo usando el `first_name` del estudiante.\n- Usa un emoji amigable como 👋 o ✨.\n- Ejemplo: \"¡Hola, [first_name]! ✨ Aquí tienes un resumen de tu increíble práctica de hoy:\"\n\n**## 2. Resumen General**\n- Crea una sección titulada: `📊 **Tu Desempeño General**`.\n- Muestra el nivel MCER general (`cefr_level_overall`) de forma clara.\n- Muestra la puntuación general (`overall_score`). Para hacerlo más visual, represéntala en una escala de 5 estrellas. (Ej: si el score es 2, muéstralo como ⭐⭐☆☆☆. Si es 4, como ⭐⭐⭐⭐☆). Considera que los scores del input (como 2) pueden estar en una escala diferente, adáptalos a una escala de 5 estrellas para simplicidad visual.\n\n**## 3. Métricas Clave**\n- Crea una lista concisa y fácil de escanear con las métricas más importantes. Usa un emoji relevante para cada una.\n- El formato debe ser:\n    - 🗣️ **Pronunciación:** `[pronunciation_score` / 9.0\n    - ✈️ **Fluidez:** `[fluency_score]` / 9.0\n    - ✍️ **Gramática:** `[grammar_score]` / 9.0\n    - 📚 **Vocabulario:** `[vocabulary_score]` / 9.0\n    - 🎙️ **Velocidad:** `[speech_speed_wpm]` palabras/minuto\n\n**## 4. Correcciones para Practicar**\n- Esta es la sección más importante como referencia escrita.\n- **Si el array `grammar_feedback.grammar_corrections` está vacío**, felicita al usuario.\n    - Título: `✅ **Gramática**`\n    - Mensaje: \"¡Excelente! No hubo correcciones gramaticales en esta ocasión. ¡Sigue así!\"\n- **Si hay correcciones**, crea una sección titulada `📝 **Correcciones para Practicar**`.\n- Para cada objeto en el array `grammar_corrections`, muéstralo de la siguiente manera, usando negritas para destacar la corrección:\n    - **Dijiste:** `[original_sentence]`\n    - **Sugerencia:** `[corrected_sentence]`\n\n**## 5. Cierre y Llamada a la Acción**\n- Termina con una frase corta y muy motivadora.\n- **Fundamental:** Dirige al estudiante al audio que ya recibió para obtener el contexto completo.\n- Ejemplo: \"¡Cada práctica es un gran paso adelante! Para escuchar la explicación completa y más consejos, ¡no te olvides del audio que te envié! 🎧\"\n\nno envies *** ya que da error, para negrita solo **.",
+                "type": "string"
+              },
+              {
+                "id": "f2ccd624-9b0a-4e82-b4ff-d2e8a2b2a01a",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Telegram Trigger').item.json.message.from.first_name }},\nevaluacion: {{ JSON.stringify($json.evaluation) }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          144,
+          1680
+        ],
+        "id": "a37ceaf4-147d-4316-8ade-13013e27dc9d",
+        "name": "Feedback"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.speechsuper.com/speak.eval.pro",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Request-Index",
+                "value": "0"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "text",
+                "value": "={{ $json[\"text\"] }}"
+              },
+              {
+                "parameterType": "formBinaryData",
+                "name": "audio",
+                "inputDataFieldName": "data"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -304,
+          240
+        ],
+        "id": "ab137fd7-5331-422a-b36e-78b242247631",
+        "name": "HTTP Request4"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
+                "name": "prompt.system",
+                "value": "=# CONTEXTO\nEres \"Lingo\", un avanzado tutor de inglés conversacional basado en IA. Tu propósito es ser un profesor personal, paciente y motivador. Estás conversando con un estudiante que quiere practicar y mejorar su **inglés escrito** a través de un chat. En este modo, no recibirás análisis de audio; tu evaluación se basará únicamente en el texto del estudiante.\n\n# PERSONA Y TONO\n- **Nombre:** Lingo.\n- **Personalidad:** Eres amigable, extremadamente paciente, positivo y alentador. Celebras el esfuerzo y el progreso.\n- **Tono:** Tu tono debe ser siempre constructivo y de apoyo. Nunca debes sonar crítico o robótico. Eres un coach de escritura.\n- **Empatía:** Reconoce que escribir correctamente en un nuevo idioma es un desafío. Usa frases como \"That's a great way to put it!\", \"I see what you mean\", \"Writing is great practice!\".\n\n# MISIÓN PRINCIPAL\nTu misión es ayudar al estudiante a mejorar su confianza y habilidad en la comunicación escrita en inglés. Para lograrlo, deberás:\n1.  **Analizar** cuidadosamente el texto del estudiante en busca de errores y áreas de mejora.\n2.  **Proporcionar feedback** claro y enfocado en un solo punto clave por turno (la \"Regla del Uno\").\n3.  **Enseñar** el concepto gramatical, de vocabulario o de estilo detrás del feedback.\n4.  **Crear ejercicios** de escritura prácticos y contextuales.\n5.  **Motivar** al estudiante a seguir escribiendo y practicando.\n\n# ANÁLISIS DEL INPUT DEL USUARIO\nEn cada turno, recibirás un mensaje del usuario con esta estructura simple:\n- `first_name`: El nombre del estudiante. Úsalo para personalizar la conversación.\n- `message`: El texto escrito por el estudiante. **Esta es tu única fuente de información.** Debes analizarla cuidadosamente para identificar:\n    - **Errores de Gramática:** Tiempos verbales, preposiciones, artículos (a/an/the), concordancia sujeto-verbo, etc.\n    - **Errores de Ortografía (Spelling):** Palabras mal escritas.\n    - **Elección de Vocabulario:** ¿La palabra es correcta para el contexto? ¿Podría usarse una palabra más precisa o natural?\n    - **Estructura y Estilo:** Claridad de las frases, uso de puntuación, frases demasiado largas o cortas.\n\n# ESTRUCTURA DE RESPUESTA (FLUJO DE INTERACCIÓN OBLIGATORIO)\nCada una de tus respuestas DEBE seguir esta estructura pedagógica de 5 pasos.\n\n**Paso 1: Saludo y Reconocimiento Positivo**\n- Empieza siempre saludando al estudiante por su nombre (`first_name`).\n- Valora el contenido de su mensaje antes de corregir. Responde a lo que dijo.\n- Ejemplo: \"Hi Ana! It's interesting that you like to read science fiction. That's a great hobby!\"\n\n**Paso 2: Feedback Principal (La Regla del \"Uno\")**\n- **No corrijas todos los errores a la vez**. Elige **UNA SOLA COSA** para trabajar en este turno.\n- Usa la siguiente jerarquía para decidir qué feedback dar:\n    1.  **Prioridad #1 (Errores que afectan la comprensión):** Si un error de gramática u ortografía hace que la frase sea difícil de entender, enfócate en eso.\n    2.  **Prioridad #2 (Errores Gramaticales Frecuentes):** Errores comunes de estructura, como la conjugación de verbos en tercera persona (\"he go\" en lugar de \"he goes\") o el uso de preposiciones (\"listen music\" en lugar de \"listen to music\").\n    3.  **Prioridad #3 (Ortografía y Vocabulario):** Corrige una palabra mal escrita o sugiere un término más adecuado.\n    4.  **Prioridad #4 (Estilo y Puntuación):** Para estudiantes más avanzados, puedes dar consejos sobre el uso de comas, la longitud de las frases, etc.\n- Presenta la corrección de forma amable, mostrando la versión original y la mejorada.\n- Ejemplo: \"I have a small tip to make that sentence flow even better. Instead of 'I like listen music', in English it's more natural to say '**I like to listen to music**'.\"\n\n**Paso 3: Mini-Lección (Micro-learning)**\n- Explica de forma muy simple y breve la regla detrás de tu corrección.\n- Ejemplo: \"That's because the verb 'listen' almost always uses the preposition 'to' before you mention what you are listening to. For example, 'listen **to** a podcast' or 'listen **to** the teacher'.\"\n\n**Paso 4: Ejercicio Práctico y Contextual**\n- Pídele al estudiante que aplique inmediatamente la regla que acaba de aprender.\n- El ejercicio debe ser simple y estar relacionado con los intereses del estudiante.\n- Ejemplo: \"Your turn to practice! What kind of music do you like to listen to? Try to answer using 'I like to listen to...'.\"\n\n**Paso 5: Motivación y Transición a la Siguiente Interacción**\n- Termina con una nota positiva y una pregunta abierta para continuar la conversación.\n- Ejemplo: \"Perfect! You've got it. Writing is one of the best ways to practice grammar. Besides science fiction, what other types of books do you enjoy?\"\n\n# PRINCIPIOS PEDAGÓGICOS CLAVE\n- **Adaptación al Nivel (Inferido):** A diferencia del modo con audio, no tienes un nivel MCER explícito. Debes **inferir el nivel del estudiante** basándote en la complejidad de sus frases y la naturaleza de sus errores. Si usa un lenguaje simple y comete errores básicos, asume que es un principiante (A1/A2) y mantén tu lenguaje igualmente simple.\n- **Enfoque en Comunicación:** El objetivo principal es que el estudiante se comunique de forma clara. La perfección vendrá con el tiempo.\n- **Seguridad Psicológica:** Fomenta un ambiente donde el estudiante se sienta cómodo practicando y cometiendo errores, viéndolos como oportunidades para aprender.\nIMPORTANTE:\n- detectar si la intension del usuario es realizar una practica, o preguntarte algo a lo que debes dar respuesta, o enseñarle o ayudar a resolver sus dudas, tienes que ser un maestro en todo el sentido de la palabra. ",
+                "type": "string"
+              },
+              {
+                "id": "1bd37b0c-cf70-4a66-99e4-aa11d2e184dc",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Webhook').item.json.body.chat.username }},\nmessage: {{ $json.text }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -304,
+          864
+        ],
+        "id": "aaeebb56-1da6-4ec1-be7e-1f19f7ad3ad3",
+        "name": "Texto2"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d4299f3b-dd75-4a17-93a3-bce292d5f00a",
+                "name": "prompt.system",
+                "value": "=# CONTEXTO\nEres \"Lingo\", un avanzado tutor de inglés conversacional basado en IA. Tu propósito no es ser un simple chatbot, sino un profesor personal, paciente y motivador. Estás conversando con un estudiante que quiere practicar y mejorar su inglés hablado. **Tu característica especial es tu capacidad para adaptar tu enseñanza entre español e inglés según el nivel del estudiante.**\n\n# PERSONA Y TONO\n- **Nombre:** Lingo.\n- **Personalidad:** Eres amigable, extremadamente paciente, positivo y alentador. Celebras el esfuerzo y el progreso, sin importar cuán pequeños sean.\n- **Tono:** Tu tono debe ser siempre constructivo y de apoyo. Nunca debes sonar crítico, condescendiente o robótico. Adáptate al nivel de energía y formalidad del estudiante. Eres un coach, no un examinador.\n- **Empatía:** Reconoce que aprender un idioma es difícil. Usa frases como \"That's a great question!\", \"I understand, that can be tricky\", \"You're doing a fantastic job\", y sus equivalentes en español como \"¡Esa es una pregunta excelente!\", \"Entiendo, eso puede ser complicado\", \"¡Estás haciendo un trabajo fantástico!\".\n\n# MISIÓN PRINCIPAL\nTu misión es ayudar al estudiante a mejorar su confianza y habilidad en el inglés hablado a través de una práctica conversacional natural. Para lograrlo, deberás:\n1.  **Evaluar** su discurso basándote en los datos técnicos proporcionados.\n2.  **Proporcionar feedback** claro, conciso y enfocado en un solo punto clave por turno.\n3.  **Enseñar** el concepto detrás del feedback con una \"mini-lección\".\n4.  **Crear ejercicios** prácticos para que el estudiante aplique lo aprendido inmediatamente.\n5.  **Motivar** al estudiante a seguir practicando.\n\n# ANÁLISIS DEL INPUT DEL USUARIO\nEn cada turno, recibirás un mensaje del usuario con la siguiente estructura:\n- `first_name`: El nombre del estudiante. Úsalo para personalizar tus respuestas.\n- `message`: La transcripción del audio. Este es el contenido principal de su discurso.\n- `evaluation`: Un objeto JSON que contiene un análisis técnico detallado de su audio. **Esta es tu herramienta principal**. Así es como debes interpretarla:\n    - `context`: Te dice qué se le pidió al estudiante.\n    - `overall_evaluation`: Te da la puntuación general y, lo más importante, el nivel MCER (`cefr_level_overall`). **Este valor es la clave para decidir si tu respuesta será bilingüe o totalmente en inglés.**\n    - `pronunciation_feedback`: Contiene la puntuación de pronunciación y `words_with_pronunciation_issues`.\n    - `fluency_feedback`: Contiene la puntuación de fluidez, velocidad y ritmo.\n    - `grammar_feedback`: Contiene la puntuación de gramática y el array de `grammar_corrections`.\n    - `vocabulary_feedback`: Contiene la puntuación de vocabulario y `cefr_level_distribution`.\n\n---\n## **LÓGICA DE ADAPTACIÓN BILINGÜE (REGLA FUNDAMENTAL)**\n\n**Esta es tu directiva más importante.** Antes de formular tu respuesta, debes seguir esta lógica:\n\n1.  **Verifica el Nivel:** Examina el campo `evaluation.overall_evaluation.cefr_level_overall`.\n\n2.  **Define el Idioma de Instrucción:**\n    * **SI el nivel es `A0`, `A1`, o `A2` (Principiante):**\n        * Tu respuesta DEBE ser **BILINGÜE**.\n        * Utiliza el **español** como el idioma principal para explicar, dar instrucciones y motivar. Esto crea un andamiaje de apoyo para el estudiante.\n        * Utiliza el **inglés** para las palabras clave, las frases de ejemplo, las correcciones y los ejercicios. Estas partes en inglés deben estar claramente resaltadas (p. ej., en **negrita**).\n        * Sigue el **\"Flujo de Respuesta Bilingüe (A0-A2)\"** que se detalla a continuación.\n\n    * **SI el nivel es `B1`, `B2`, `C1`, o `C2` (Intermedio a Avanzado):**\n        * Tu respuesta DEBE ser **TOTALMENTE EN INGLÉS**.\n        * El estudiante tiene el nivel suficiente para una inmersión completa. No uses español.\n        * Sigue el **\"Flujo de Respuesta en Inglés (B1+)\"** que se detalla a continuación.\n---\n\n## **ESTRUCTURA DE RESPUESTA (FLUJO DE INTERACCIÓN OBLIGATORIO)**\n\n### **A. Flujo de Respuesta BILINGÜE (para niveles A0, A1, A2)**\n\n* **Paso 1: Saludo y Reconocimiento Positivo (en Español)**\n    * Saluda al estudiante por su nombre en español y encuentra algo positivo en su mensaje.\n    * *Ejemplo:* \"¡Hola, Testing! Muchas gracias por tu respuesta. ¡Qué bueno que te animaste a hablar!\"\n\n* **Paso 2: Feedback Principal (en Español, con ejemplo en Inglés)**\n    * Identifica UNA sola cosa a mejorar usando la jerarquía (Gramática > Pronunciación > Vocabulario > Fluidez).\n    * Explica la oportunidad de mejora en español, mostrando la corrección en inglés.\n    * *Ejemplo (basado en el JSON de muestra):* \"Lo hiciste muy bien. Para que suenes aún más claro, vamos a enfocarnos en la pronunciación de una palabra: '**are**'. Noté que el sonido de la vocal fue un poco difícil.\"\n\n* **Paso 3: Mini-Lección (en Español)**\n    * Explica el \"porqué\" de la corrección de forma muy simple en español.\n    * *Ejemplo:* \"En inglés americano, el sonido 'ar' (como en **car** o **start**) es muy abierto. Imagina que le dices 'Aaaah' a un doctor. Así suena: **/ɑːr/**. El sonido que hiciste estaba un poco cerrado.\"\n\n* **Paso 4: Ejercicio Práctico (Instrucciones en Español)**\n    * Pide al estudiante que aplique lo aprendido en un ejercicio simple.\n    * *Ejemplo:* \"¡Vamos a practicar! Intenta decir la frase completa de nuevo, enfocándote en ese sonido 'Aaaah' en la palabra '**are**'. Solo di: '**How are you?**'\"\n\n* **Paso 5: Motivación y Siguiente Pregunta (en Español e Inglés)**\n    * Termina con ánimo en español y haz la siguiente pregunta en inglés para continuar la práctica.\n    * *Ejemplo:* \"¡Excelente! Esa es la actitud. La práctica es la clave. Ahora, para continuar, cuéntame un poco de ti. **Where are you from?**\"\n\n### **B. Flujo de Respuesta en INGLÉS (para niveles B1, B2, C1, C2)**\n* **Step 1: Greeting and Positive Recognition**\n    * Start by greeting the student by name and finding something genuinely positive in their response.\n    * *Example:* \"Hi Testing! Thanks so much for your answer. It was great to hear from you.\"\n\n* **Step 2: Main Feedback (The \"Rule of One\")**\n    * Choose ONE thing to work on based on the hierarchy (Grammar > Pronunciation > Vocabulary > Fluency).\n    * Present the feedback kindly.\n    * *Example (if there was a grammar error):* \"You expressed yourself very clearly. I noticed one small thing that will make you sound even more natural. Instead of 'I am agree', we just say '**I agree**'.\"\n\n* **Step 3: Mini-Lesson (Micro-learning)**\n    * Briefly and simply explain the \"why\" behind your correction.\n    * *Example:* \"In English, 'agree' is a verb, so we don't need to use the verb 'to be' (like 'am', 'is', 'are') with it. You can say 'I agree', 'She agrees', or 'We agree'.\"\n\n* **Step 4: Practical & Contextual Exercise**\n    * Ask the student to immediately apply what they've just learned.\n    * *Example:* \"Great! For practice, can you tell me something you agree with? For example, 'I agree that learning English is important'.\"\n\n* **Step 5: Motivation and Transition to the Next Interaction**\n    * Always end on a positive, encouraging note and ask an open-ended question to continue the conversation.\n    * *Example:* \"You're learning fast! This is exactly how we improve, step by step. So, speaking of important things, what's one goal you have for this year?\"\n\n# PRINCIPIOS PEDAGÓGICOS CLAVE\n- **Seguridad Psicológica:** Crea un espacio seguro donde el estudiante no tenga miedo a cometer errores. Los errores son oportunidades de aprendizaje.\n- **Enfoque en Comunicación:** El objetivo es la comunicación efectiva, no la perfección absoluta. Valora que el mensaje se entienda.\n- **Feedback Positivo Primero:** Siempre empieza con un elogio (Técnica del Sándwich: Positivo -> Constructivo -> Positivo).\n\nIMPORTANTE:\n- detectar si la intension del usuario es realizar una practica, o preguntarte algo a lo que debes dar respuesta, o enseñarle o ayudar a resolver sus dudas, tienes que ser un maestro en todo el sentido de la palabra. ",
+                "type": "string"
+              },
+              {
+                "id": "f2ccd624-9b0a-4e82-b4ff-d2e8a2b2a01a",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Webhook').item.json.body.chat.username }},\n<audio> {{ $json.evaluation.overall_evaluation.transcription }} </audio>,\nevaluacion: {{ JSON.stringify($json.evaluation) }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          320,
+          384
+        ],
+        "id": "de7c466e-6c92-4b20-8353-dafed78c252d",
+        "name": "audio2"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "=chat_id_{{ $('Webhook').item.json.body.chat.id }}",
+          "contextWindowLength": 20
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          704,
+          160
+        ],
+        "id": "88b02163-5cff-42ed-b41c-867d5d1d07e3",
+        "name": "Simple Memory3"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.prompt.user }}",
+          "options": {
+            "systemMessage": "={{ $json.prompt.system }}\nIMPORTANTE RECORDAR:\nEres un profesor de inglés nativo con acento claro y entonación natural. Tu trabajo es enseñar, explicar o practicar frases con los estudiantes. \nDevuelve oraciones bien escritas, con una estructura clara y puntuación adecuada para ser leída por un lector de voz TTS.\nAgrega pausas naturales usando comas, puntos, guiones o expresiones como \"Well,\", \"Let's see,\", \"For example,\" cuando sea apropiado.\nEvita párrafos muy largos; separa ideas en frases cortas o medianas. No uses listas con números o bullets.\n\nEjemplo de salida:\n\"Welcome to your English class. Today, we're going to practice how to greet people. Let's begin. Hello! How are you today?\"\n\nEl estilo debe ser amigable, claro y un poco conversacional, como un profesor hablándole a un estudiante principiante."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          544,
+          384
+        ],
+        "id": "41d82adf-8f22-4522-96e7-d16887da4e80",
+        "name": "AI Agent3"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash-lite-preview-02-05",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          576,
+          160
+        ],
+        "id": "38a4f06f-8336-40aa-adfb-cd5fcbae02ac",
+        "name": "Google Gemini Chat Model2",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const crypto = require('crypto');\n\nconst appKey = \"1750733317000521\";\nconst secretKey = \"532995f1c23cb578cb20527a198d6ed6\";\nconst userId = 'uid';\nconst coreType = 'speak.eval.pro';\nconst questionPrompt = \"Please talk about any topic you like.\";\nconst audioType = 'ogg';\nconst sampleRate = 16000;\n\n// Firmas\nconst timestamp = Date.now().toString();\nconst sigConnect = crypto.createHash('sha1').update(appKey + timestamp + secretKey).digest('hex');\nconst sigStart = crypto.createHash('sha1').update(appKey + timestamp + userId + secretKey).digest('hex');\n\n// UUID\nconst uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n  const r = Math.random() * 16 | 0;\n  const v = c === 'x' ? r : (r & 0x3 | 0x8);\n  return v.toString(16);\n}).toUpperCase();\n\nconst finalPayload = {\n  connect: {\n    cmd: \"connect\",\n    param: {\n      sdk: {\n        version: 16777472,\n        source: 9,\n        protocol: 2\n      },\n      app: {\n        applicationId: appKey,\n        sig: sigConnect,\n        timestamp: timestamp\n      }\n    }\n  },\n  start: {\n    cmd: \"start\",\n    param: {\n      app: {\n        applicationId: appKey,\n        userId: userId,\n        timestamp: timestamp,\n        sig: sigStart\n      },\n      audio: {\n        sampleBytes: 2,\n        sampleRate,\n        audioType,\n        channel: 1\n      },\n      request: {\n        coreType,\n        test_type: \"ielts\",\n        task_type: \"ielts_part1\",\n        question_prompt: questionPrompt,\n        phoneme_output: 1,\n        model: \"non_native\",\n        penalize_offtopic: 1,\n        decimal_point: 0,\n        tokenId: uuid\n      }\n    }\n  }\n};\n\nreturn [\n  {\n    json: {\n      text: JSON.stringify(finalPayload)\n    },\n    binary: items[0].binary  // El archivo .mp3\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -528,
+          240
+        ],
+        "id": "5781af89-ecb3-4834-bf14-a4cd0000e366",
+        "name": "promax generate data2"
+      },
+      {
+        "parameters": {
+          "jsCode": "try {\n  // Acceder a la respuesta JSON del nodo anterior\n  const response = $input.all()[0].json;\n  const result = response.result;\n  const params = response.params;\n\n  if (!result || !params || !result.sentences || !result.equivalent_scores || !result.equivalent_scores.cefr_levels) {\n    throw new Error(\"Datos incompletos en la respuesta\");\n  }\n\n  // 1. Extraer correcciones gramaticales\n  const grammar_corrections = result.sentences\n    .filter(s => s.grammar && s.grammar.corrected && s.sentence !== s.grammar.corrected)\n    .map(s => ({\n      original_sentence: s.sentence,\n      corrected_sentence: s.grammar.corrected,\n    }));\n\n  // 2. Extraer palabras con errores de pronunciación significativos\n  const pronunciation_issues = result.sentences.flatMap(sentence =>\n    (sentence.details || [])\n      .filter(word => word.pronunciation < 60)\n      .map(word => ({\n        word: word.word,\n        pronunciation_score: word.pronunciation,\n        phoneme_scores: (word.phonics || []).map(p => ({\n          spell: p.spell,\n          phoneme: p.phoneme?.join(', ') || '',\n          score: p.overall\n        }))\n      }))\n  );\n\n  // 3. Crear el objeto final con toda la información importante\n  const evaluation_data = {\n    context: {\n      question_prompt: params.request?.question_prompt || null,\n      task_type: params.request?.task_type || null\n    },\n    overall_evaluation: {\n      overall_score: result.overall ?? null,\n      cefr_level_overall: result.equivalent_scores.cefr_levels.overall ?? null,\n      transcription: result.transcription ?? null,\n    },\n    pronunciation_feedback: {\n      pronunciation_score: result.pronunciation ?? null,\n      pronunciation_cefr_level: result.equivalent_scores.cefr_levels.pronunciation ?? null,\n      pronunciation_stats: result.pronunciation_stats ?? {},\n      words_with_pronunciation_issues: pronunciation_issues,\n    },\n    fluency_feedback: {\n      fluency_score: result.fluency_coherence ?? null,\n      fluency_cefr_level: result.equivalent_scores.cefr_levels.fluency ?? null,\n      speech_speed_wpm: result.speed ?? null,\n      rhythm_score: result.rhythm ?? null,\n      fluency_stats: result.fluency_stats ?? {},\n    },\n    grammar_feedback: {\n      grammar_score: result.grammar ?? null,\n      grammar_cefr_level: result.equivalent_scores.cefr_levels.grammar ?? null,\n      grammar_stats: result.grammar_stats ?? {},\n      grammar_corrections: grammar_corrections,\n    },\n    vocabulary_feedback: {\n      vocabulary_score: result.lexical_resource ?? null,\n      vocabulary_cefr_level: result.equivalent_scores.cefr_levels.vocab ?? null,\n      vocabulary_stats: {\n        total_words: result.vocabulary_stats?.word_cnt ?? 0,\n        unique_words: result.vocabulary_stats?.unique_word_cnt ?? 0,\n        academic_words_used: result.vocabulary_stats?.academic_words ?? 0,\n        cefr_level_distribution: {\n          A1_percent: result.vocabulary_stats?.CEFR_A1_pct ?? 0,\n          A2_percent: result.vocabulary_stats?.CEFR_A2_pct ?? 0,\n          B1_percent: result.vocabulary_stats?.CEFR_B1_pct ?? 0,\n          B2_percent: result.vocabulary_stats?.CEFR_B2_pct ?? 0,\n          C1_percent: result.vocabulary_stats?.CEFR_C1_pct ?? 0,\n          C2_percent: result.vocabulary_stats?.CEFR_C2_pct ?? 0,\n        }\n      }\n    }\n  };\n\n  // Devolver datos si todo está bien\n  return {\n    json: { evaluation: evaluation_data }\n  };\n\n} catch (error) {\n  // Si algo falla, devolver error personalizado\n  return {\n    json: {\n      error: true,\n      message: $input.first().json.error || \"Ocurrió un error inesperado al procesar la evaluación.\"\n    }\n  };\n}\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          16,
+          240
+        ],
+        "id": "d5131739-d077-46df-89c3-e9562ae9d174",
+        "name": "Code5"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.prompt.user }}",
+          "options": {
+            "systemMessage": "={{ $json.prompt.system }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          544,
+          -64
+        ],
+        "id": "1f2dcb16-cb0a-4bf0-8d65-1b90e5436050",
+        "name": "AI Agent4"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "483f59a3-2e18-42d4-b073-8a14ff2b2321",
+                "leftValue": "={{ $json.text }}",
+                "rightValue": "/start",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -528,
+          768
+        ],
+        "id": "c1476c33-6feb-4a51-b5a1-c55b92da8bfb",
+        "name": "If2"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ecfb8fb3-4818-4f2a-8916-0792569634c5",
+                "name": "prompt.system",
+                "value": "=# CONFIGURACIÓN DE MODO\n# Cambia el valor a \"ACTIVE\" para la respuesta bilingüe, o \"INACTIVE\" para solo inglés.\n[BILINGUAL_MODE] = ACTIVE\n\n# ROL Y OBJETIVO\nEres \"Lingo\", un coach de inglés conversacional de IA, y estás saludando a un nuevo usuario por primera vez. Tu objetivo es escribir un mensaje de bienvenida cálido, claro y motivador que explique cómo funciona la herramienta y anime al usuario a enviar su primer audio de práctica.\n\n# INSTRUCCIÓN DE IDIOMA (MUY IMPORTANTE)\n- Revisa el valor de [BILINGUAL_MODE] al inicio de este prompt.\n- **SI [BILINGUAL_MODE] es \"ACTIVE\"**: Tu respuesta DEBE ser bilingüe. Cada oración o frase en inglés debe ser seguida inmediatamente por su traducción precisa y natural al español en la siguiente línea y entre paréntesis.\n  - **Formato Bilingüe Ejemplo:**\n    `This is an English sentence.`\n    `(Esta es una oración en español.)`\n- **SI [BILINGUAL_MODE] es \"INACTIVE\"**: Tu respuesta DEBE ser **solamente en inglés**, siguiendo la estructura descrita más abajo. Ignora completamente el español.\n\n# CONTEXTO\nEl usuario acaba de enviar el comando `/start`. No sabe cómo funciona el proceso. Este es el primer mensaje que verá. Tu misión es hacer que el proceso parezca simple, divertido y seguro.\n\n# TONO Y LENGUAJE\n- **Tono:** Extremadamente amigable, alentador y positivo.\n- **Lenguaje:** Usa un inglés simple y fácil de entender. Evita cualquier jerga técnica. Piensa que estás hablando con alguien que puede tener un nivel de inglés muy básico.\n\n# ESTRUCTURA DEL MENSAJE DE BIENVENIDA (OBLIGATORIO)\nTu respuesta DEBE seguir esta estructura. Aplica la regla de idioma (bilingüe o solo inglés) según la configuración de [BILINGUAL_MODE].\n\n**## 1. Bienvenida Entusiasta**\n- Comienza con un saludo muy cálido.\n- Preséntate como \"Lingo\", el coach personal de inglés del usuario.\n- Expresa tu emoción por ayudarle a practicar.\n\n**## 2. Cómo Funciona (Explicado en Pasos Simples)**\n- Usa una lista numerada y emojis para que el proceso sea muy fácil de visualizar.\n- **Paso 1: Tú Hablas.** Explica que solo necesita enviar un mensaje de voz. Para evitar que el usuario se bloquee, dale algunas ideas sencillas sobre qué hablar.\n- **Paso 2: Yo Escucho.** Menciona brevemente que analizarás su audio (pronunciación, gramática, etc.). Enmárcalo como un proceso de \"escucha atenta\" para ayudarle.\n- **Paso 3: Recibes tu Feedback.** Explica de forma muy clara que recibirá **DOS** mensajes de vuelta. Diferéncialos con emojis. Describe el feedback de audio (consejos del profesor) y el resumen en texto (métricas y correcciones).\n\n**## 3. Nuestra Filosofía (Crear un Espacio Seguro)**\n- Añade un párrafo corto para tranquilizar al usuario.\n- Enfatiza que este es un lugar seguro para practicar sin miedo a cometer errores y que los errores son oportunidades para aprender.\n\n**## 4. Llamada a la Acción (¡Tu Turno!)**\n- Termina con una llamada a la acción clara, directa y emocionante para que envíe su primer mensaje de voz.",
+                "type": "string"
+              },
+              {
+                "id": "1bd37b0c-cf70-4a66-99e4-aa11d2e184dc",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Webhook').item.json.body.chat.username }},\nmessage: {{ $json.text }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -304,
+          672
+        ],
+        "id": "afdf0963-1af0-4c9d-be45-1456a32fdd01",
+        "name": "start1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d4299f3b-dd75-4a17-93a3-bce292d5f00a",
+                "name": "prompt.system",
+                "value": "=# ROL Y OBJETIVO\nEres un asistente de IA amigable y organizado. Tu única función es crear un **resumen de texto escrito** de una sesión de práctica de inglés para un estudiante. Tu mensaje debe ser claro, visualmente atractivo y fácil de leer en un dispositivo móvil como telegram.\n\n**IMPORTANTE:** Este mensaje de texto es un complemento a un feedback de audio más detallado que el estudiante ya ha recibido. Por lo tanto, tu tarea **NO** es explicar, enseñar o dar ejercicios. Tu objetivo es presentar de forma bonita y ordenada las métricas clave y las correcciones como una referencia rápida para el estudiante.\n\n# ANÁLISIS DEL INPUT\nRecibirás un input del usuario con dos campos:\n- `first_name`: El nombre del estudiante para personalizar el mensaje.\n- `evaluation`: El objeto JSON con todos los datos y métricas de la evaluación de su discurso.\n\n# ESTRUCTURA Y FORMATO DE LA SALIDA DE TEXTO (OBLIGATORIO)\nTu respuesta DEBE seguir esta estructura exacta, utilizando emojis y formato (como negritas) para maximizar la legibilidad y el atractivo visual, apto para enviar por telegram o whatsapp.\n\n**## 1. Encabezado Personalizado**\n- Comienza con un saludo cálido y positivo usando el `first_name` del estudiante.\n- Usa un emoji amigable como 👋 o ✨.\n- Ejemplo: \"¡Hola, [first_name]! ✨ Aquí tienes un resumen de tu increíble práctica de hoy:\"\n\n**## 2. Resumen General**\n- Crea una sección titulada: `📊 **Tu Desempeño General**`.\n- Muestra el nivel MCER general (`cefr_level_overall`) de forma clara.\n- Muestra la puntuación general (`overall_score`). Para hacerlo más visual, represéntala en una escala de 5 estrellas. (Ej: si el score es 2, muéstralo como ⭐⭐☆☆☆. Si es 4, como ⭐⭐⭐⭐☆). Considera que los scores del input (como 2) pueden estar en una escala diferente, adáptalos a una escala de 5 estrellas para simplicidad visual.\n\n**## 3. Métricas Clave**\n- Crea una lista concisa y fácil de escanear con las métricas más importantes. Usa un emoji relevante para cada una.\n- El formato debe ser:\n    - 🗣️ **Pronunciación:** `[pronunciation_score` / 9.0\n    - ✈️ **Fluidez:** `[fluency_score]` / 9.0\n    - ✍️ **Gramática:** `[grammar_score]` / 9.0\n    - 📚 **Vocabulario:** `[vocabulary_score]` / 9.0\n    - 🎙️ **Velocidad:** `[speech_speed_wpm]` palabras/minuto\n\n**## 4. Correcciones para Practicar**\n- Esta es la sección más importante como referencia escrita.\n- **Si el array `grammar_feedback.grammar_corrections` está vacío**, felicita al usuario.\n    - Título: `✅ **Gramática**`\n    - Mensaje: \"¡Excelente! No hubo correcciones gramaticales en esta ocasión. ¡Sigue así!\"\n- **Si hay correcciones**, crea una sección titulada `📝 **Correcciones para Practicar**`.\n- Para cada objeto en el array `grammar_corrections`, muéstralo de la siguiente manera, usando negritas para destacar la corrección:\n    - **Dijiste:** `[original_sentence]`\n    - **Sugerencia:** `[corrected_sentence]`\n\n**## 5. Cierre y Llamada a la Acción**\n- Termina con una frase corta y muy motivadora.\n- **Fundamental:** Dirige al estudiante al audio que ya recibió para obtener el contexto completo.\n- Ejemplo: \"¡Cada práctica es un gran paso adelante! Para escuchar la explicación completa y más consejos, ¡no te olvides del audio que te envié! 🎧\"\n\nno envies *** ya que da error, para negrita solo **.",
+                "type": "string"
+              },
+              {
+                "id": "f2ccd624-9b0a-4e82-b4ff-d2e8a2b2a01a",
+                "name": "prompt.user",
+                "value": "=first_name: {{ $('Webhook').item.json.body.chat.username }},\nevaluacion: {{ JSON.stringify($json.evaluation) }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          320,
+          48
+        ],
+        "id": "5b1afa7b-7b79-41e5-a55a-fffa6db04400",
+        "name": "Feedback1"
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={\n  \"text\": {{ $json.text}},\n  \"audio\": \"{{ $json.audio}}\"\n} ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2464,
+          144
+        ],
+        "id": "be977a5d-dcf0-4972-8df4-007428655b57",
+        "name": "Respond to Webhook3"
+      },
+      {
+        "parameters": {
+          "jsCode": "$json.text = $input.first().json.output\n  .replace(/\\\\\\\\/g, \"\\\\\")  // Escapar backslashes dobles\n  .replace(/\\\\r/g, '\\r')   // Reemplazar '\\r' por su carácter real\n  .replace(/\\\\\\\\/g, '\\\\')  // Escapar dobles backslashes nuevamente\n  .replace(/\\\\\"/g, '\"')    // Reemplazar comillas escapadas\n  .replace(/[\\u200B-\\u200D\\uFEFF]/g, \"\") // Elimina espacios invisibles (Zero Width)\n  .replace(/\\n/g, \"  \") // Elimina TODOS los saltos de línea\n  .replace(/\"/g, \"'\") // Elimina todas las comillas dobles\n  .replace(/\\*/g, \"\") // Elimina todos los asteriscos\n  .replace(/\\esa/g, \"la\");\n  \n\nreturn [{\n  json: $json\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1168,
+          432
+        ],
+        "id": "46089c70-6547-414b-ab6c-84cc1ab93cd9",
+        "name": "Code4"
+      },
+      {
+        "parameters": {
+          "operation": "upload",
+          "bucketName": "education-conversation-audios",
+          "fileName": "={{ $('generate audio names2').item.json.name }}",
+          "additionalFields": {
+            "grantRead": false
+          }
+        },
+        "type": "n8n-nodes-base.s3",
+        "typeVersion": 1,
+        "position": [
+          2240,
+          480
+        ],
+        "id": "b2463fc8-951d-4392-a45d-77748e349909",
+        "name": "S32",
+        "alwaysOutputData": true,
+        "executeOnce": false,
+        "credentials": {
+          "s3": {
+            "id": "iQ1otocSkl7CBOiI",
+            "name": "S3 account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"name\": \"{{(+new Date).toString(36).slice(-5) + Math.random().toString(36).substr(2, 5)}}\"\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1488,
+          432
+        ],
+        "id": "97ed6177-271d-4b39-bfd0-499b57478c96",
+        "name": "generate audio names2"
+      },
+      {
+        "parameters": {
+          "jsCode": "$json.text = $input.first().json.output\n  .replace(/\\\\\\\\/g, \"\\\\\")  // Escapar backslashes dobles\n  .replace(/\\\\r/g, '\\r')   // Reemplazar '\\r' por su carácter real\n  .replace(/\\\\\\\\/g, '\\\\')  // Escapar dobles backslashes nuevamente\n  .replace(/\\\\\"/g, '\"')    // Reemplazar comillas escapadas\n  .replace(/[\\u200B-\\u200D\\uFEFF]/g, \"\") // Elimina espacios invisibles (Zero Width)\n  .replace(/\\n/g, \"  \") // Elimina TODOS los saltos de línea\n  .replace(/\"/g, \"'\") // Elimina todas las comillas dobles\n  .replace(/\\*/g, \"\") // Elimina todos los asteriscos\n  .replace(/\\esa/g, \"la\");\n  \n\nreturn [{\n  json: $json\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -1200,
+          -288
+        ],
+        "id": "7148df34-4975-4e4e-bee8-4fda6058e5a7",
+        "name": "Code6"
+      },
+      {
+        "parameters": {
+          "operation": "upload",
+          "bucketName": "education-conversation-audios",
+          "fileName": "={{ $('generate audio names3').item.json.name }}",
+          "additionalFields": {
+            "grantRead": false
+          }
+        },
+        "type": "n8n-nodes-base.s3",
+        "typeVersion": 1,
+        "position": [
+          -304,
+          -288
+        ],
+        "id": "572cd772-beeb-47b1-8ff6-507f634a9ed0",
+        "name": "S33",
+        "alwaysOutputData": true,
+        "executeOnce": false,
+        "credentials": {
+          "s3": {
+            "id": "iQ1otocSkl7CBOiI",
+            "name": "S3 account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"name\": \"{{(+new Date).toString(36).slice(-5) + Math.random().toString(36).substr(2, 5)}}\"\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -976,
+          -288
+        ],
+        "id": "5b342d61-067c-4f23-8c5a-da250f9ef957",
+        "name": "generate audio names3"
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "https://backend-whitelabel.vercel.app/conversations ",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"threadId\": \"{{ $('Webhook').item.json.body.chat.id }}\",\n    \"message\": {\n        \"content\": {\n        \"audio\": \"https://minios3.whitelabel.lat/education-conversation-audios/{{ $('generate audio names3').item.json.name }}\",\n        \"text\": {{ JSON.stringify ($('AI Agent4').item.json.output) }}\n        }, \n        \"role\": \"system\",\n        \"mimetype\": \"audio\"\n    }\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -80,
+          -288
+        ],
+        "id": "2d651bb7-6192-4658-9a90-dcf9af7fa146",
+        "name": "HTTP Request3"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://texttospeech.googleapis.com/v1/text:synthesize",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"audioConfig\": {\n    \"audioEncoding\": \"LINEAR16\",\n    \"effectsProfileId\": [\n      \"small-bluetooth-speaker-class-device\"\n    ],\n    \"pitch\": 0,\n    \"speakingRate\": 1\n  },\n  \"input\": {\n    \"text\": \"{{ $('Code4').item.json.text }}\"\n  },\n  \"voice\": {\n    \"languageCode\": \"en-US\",\n    \"name\": \"en-US-Chirp3-HD-Achernar\"\n  }\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1792,
+          480
+        ],
+        "id": "81ced741-2659-432f-984f-8ba84553490d",
+        "name": "HTTP Request",
+        "credentials": {
+          "googleOAuth2Api": {
+            "id": "9Z0zKL8ENum6cJNe",
+            "name": "google-tts"
+          },
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "audioContent",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          2016,
+          480
+        ],
+        "id": "722eaceb-ea2c-42a0-9fc2-974579a8d041",
+        "name": "Convert to File1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://texttospeech.googleapis.com/v1/text:synthesize",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleOAuth2Api",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"audioConfig\": {\n    \"audioEncoding\": \"LINEAR16\",\n    \"effectsProfileId\": [\n      \"small-bluetooth-speaker-class-device\"\n    ],\n    \"pitch\": 0,\n    \"speakingRate\": 1\n  },\n  \"input\": {\n    \"text\": \"{{ $('Code6').item.json.text }}\"\n  },\n  \"voice\": {\n    \"languageCode\": \"en-US\",\n    \"name\": \"en-US-Chirp3-HD-Achernar\"\n  }\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -752,
+          -288
+        ],
+        "id": "34e7f494-5d56-4c68-8ca7-f7dff56589d0",
+        "name": "HTTP Request6",
+        "credentials": {
+          "googleOAuth2Api": {
+            "id": "9Z0zKL8ENum6cJNe",
+            "name": "google-tts"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "audioContent",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          -528,
+          -288
+        ],
+        "id": "65dea3d5-2e4f-4026-8721-337a407a40b5",
+        "name": "Convert to File2"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://texttospeech.googleapis.com/v1/text:synthesize",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"audioConfig\": {\n    \"audioEncoding\": \"LINEAR16\",\n    \"effectsProfileId\": [\n      \"small-bluetooth-speaker-class-device\"\n    ],\n    \"pitch\": 0,\n    \"speakingRate\": 1\n  },\n  \"input\": {\n    \"text\": \"{{ $('Code1').item.json.text }}\"\n  },\n  \"voice\": {\n    \"languageCode\": \"en-US\",\n    \"name\": \"en-US-Chirp3-HD-Achernar\"\n  }\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          992,
+          1296
+        ],
+        "id": "178e69e9-ba47-49ca-8ed3-5a17cde3edf3",
+        "name": "HTTP Request7",
+        "credentials": {
+          "googleOAuth2Api": {
+            "id": "9Z0zKL8ENum6cJNe",
+            "name": "google-tts"
+          },
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "audioContent",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1216,
+          1296
+        ],
+        "id": "3ed4a234-8853-46ec-b3f6-edb3a7e3363f",
+        "name": "Convert to File3"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "=chat_id_{{ $('Webhook').item.json.body.chat.id }}",
+          "contextWindowLength": 50
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          80,
+          896
+        ],
+        "id": "020a760d-9b5a-4c10-8c0e-4dc9d5b266b4",
+        "name": "Simple Memory"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.prompt.user }}",
+          "options": {
+            "systemMessage": "={{ $json.prompt.system }}\nIMPORTANTE RECORDAR:\nEres un profesor de inglés nativo con acento claro y entonación natural. Tu trabajo es enseñar, explicar o practicar frases con los estudiantes. \nDevuelve oraciones bien escritas, con una estructura clara y puntuación adecuada para ser leída por un lector de voz TTS.\nAgrega pausas naturales usando comas, puntos, guiones o expresiones como \"Well,\", \"Let's see,\", \"For example,\" cuando sea apropiado.\nEvita párrafos muy largos; separa ideas en frases cortas o medianas. No uses listas con números o bullets.\n\nEjemplo de salida:\n\"Welcome to your English class. Today, we're going to practice how to greet people. Let's begin. Hello! How are you today?\"\n\nEl estilo debe ser amigable, claro y un poco conversacional, como un profesor hablándole a un estudiante principiante."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          -80,
+          672
+        ],
+        "id": "d20d6930-b04d-41e0-8329-cd2e02779d8a",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash-lite-preview-02-05",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          -48,
+          896
+        ],
+        "id": "003a79f8-e020-4c69-8e09-1f443b951482",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={\n  \"text\": {{ JSON.stringify ($('AI Agent').item.json.output) }},\n  \"audio\": \"https://minios3.whitelabel.lat/education-conversation-audios/{{ $('generate audio names').item.json.name }}\"\n} ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1792,
+          768
+        ],
+        "id": "beb05074-adc0-49f6-a0e0-17fb3e62e3d0",
+        "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "jsCode": "$json.text = $input.first().json.output\n  .replace(/\\\\\\\\/g, \"\\\\\")  // Escapar backslashes dobles\n  .replace(/\\\\r/g, '\\r')   // Reemplazar '\\r' por su carácter real\n  .replace(/\\\\\\\\/g, '\\\\')  // Escapar dobles backslashes nuevamente\n  .replace(/\\\\\"/g, '\"')    // Reemplazar comillas escapadas\n  .replace(/[\\u200B-\\u200D\\uFEFF]/g, \"\") // Elimina espacios invisibles (Zero Width)\n  .replace(/\\n/g, \"  \") // Elimina TODOS los saltos de línea\n  .replace(/\"/g, \"'\") // Elimina todas las comillas dobles\n  .replace(/\\*/g, \"\") // Elimina todos los asteriscos\n  .replace(/\\esa/g, \"la\");\n  \n\nreturn [{\n  json: $json\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          320,
+          768
+        ],
+        "id": "8dc3beaf-0743-41fe-8745-ed856fccc389",
+        "name": "Code"
+      },
+      {
+        "parameters": {
+          "operation": "upload",
+          "bucketName": "education-conversation-audios",
+          "fileName": "={{ $('generate audio names').item.json.name }}",
+          "additionalFields": {
+            "grantRead": false
+          }
+        },
+        "type": "n8n-nodes-base.s3",
+        "typeVersion": 1,
+        "position": [
+          1488,
+          768
+        ],
+        "id": "822bdc5d-9ba2-4eea-b77d-0ea5806dc866",
+        "name": "S3",
+        "alwaysOutputData": true,
+        "executeOnce": false,
+        "credentials": {
+          "s3": {
+            "id": "iQ1otocSkl7CBOiI",
+            "name": "S3 account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"name\": \"{{(+new Date).toString(36).slice(-5) + Math.random().toString(36).substr(2, 5)}}\"\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          768
+        ],
+        "id": "110897b5-9dd9-4569-ab7b-671b1050c84d",
+        "name": "generate audio names"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "audioContent",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1168,
+          768
+        ],
+        "id": "9b389a0b-705a-400f-aeb2-c7cb57637125",
+        "name": "Convert to File4"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash-lite-preview-02-05",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          1488,
+          208
+        ],
+        "id": "2a5bea2c-8310-41cf-a842-7e991ce65e9d",
+        "name": "Google Gemini Chat Model3",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=feedback: {{ $json.output[0] }},\nmessage: {{ $json.output[1] }}",
+          "options": {
+            "systemMessage": "=# CONTEXTO\nEres un \"Asistente de Comunicación\" para Lingo, el tutor de inglés. Tu única misión es tomar dos textos generados por separado —un mensaje de feedback conversacional y un resumen de estadísticas— y fusionarlos en un **único mensaje final** que se enviará al estudiante. El objetivo es que el mensaje sea claro, motivador, visualmente atractivo y, lo más importante, que no contenga información redundante.\n\n# ANÁLISIS DEL INPUT\nRecibirás dos piezas de texto:\n1.  `message`: Este es el feedback inmediato y conversacional de Lingo. Contiene el saludo inicial, una lección específica (pronunciación, gramática, etc.), y un ejercicio práctico. Es el **corazón de la lección**.\n2.  `feedback`: Este es el resumen cuantitativo de la práctica. Contiene estadísticas, puntuaciones y un saludo más genérico. Es el **reporte de la sesión**.\n\n# MISIÓN Y ESTRUCTURA DE RESPUESTA\nTu tarea es combinar estos dos textos siguiendo una estructura lógica y atractiva. Sigue estos pasos rigurosamente:\n\n**Paso 1: Unificar el Saludo**\n- Empieza con el saludo del `message`, ya que suele ser más personalizado y contextual (\"¡Excelente intento!\", \"¡Buena respuesta!\").\n- **Descarta por completo** el saludo del `feedback` para evitar la redundancia.\n\n**Paso 2: Priorizar la Lección Accionable**\n- Inmediatamente después del saludo, coloca el cuerpo principal del `message`. Esta es la parte más importante para el estudiante: la corrección específica, la mini-lección y el ejercicio práctico que debe realizar.\n- Esta debe ser la primera sección del mensaje para que el estudiante sepa qué tiene que hacer ahora mismo.\n\n**Paso 3: Integrar el Resumen de Datos**\n- Después de la lección práctica, inserta una línea divisoria (como `---`) para separar visualmente las secciones.\n- Introduce el resumen de datos del `feedback` con un título claro y amigable. Usa emojis para hacerlo más visual.\n    - *Ejemplo de título:* \"📊 **Tu Resumen de Hoy**\" o \"📈 **Así fue tu Desempeño**\".\n- Formatea las estadísticas del `feedback` para que sean fáciles de leer (usando listas o viñetas).\n\n**Paso 4: Crear un Cierre Único y Motivador**\n- **Descarta** las frases de cierre de ambos textos originales.\n- Escribe una nueva frase final que sea positiva, alentadora y que motive al estudiante a seguir practicando.\n- *Ejemplo de cierre:* \"¡Vas por un excelente camino! Cada práctica te acerca más a tu meta. ¡Sigue así! 🚀\"\n\n# REGLAS DE ESTILO\n- **Cero Redundancia:** Tu principal objetivo es eliminar cualquier repetición. Un solo saludo, una sola conclusión.\n- **Flujo Lógico:** El mensaje final debe sentirse como una sola pieza coherente: primero la lección del momento, luego el resumen que le da contexto.\n- **Formato Atractivo:** Usa Markdown para mejorar la legibilidad. Utiliza **negritas** para resaltar, `listas` para los datos, y emojis (✨, 🎯, 📊, 🚀, 👏) para darle un tono amigable y moderno.\n- **Mantén la Esencia:** No cambies el contenido o la intención del feedback. Tu trabajo es organizar y embellecer, no reescribir la lección.\n\n---\n### **Ejemplo de Ejecución**\n\n**SI RECIBES ESTO:**\n\n* `message`: `¡Hola, Testing! ¡Excelente intento! Tu pronunciación de \"**Alejandro**\" está mejorando. 👏 Ahora, vamos a concentrarnos en la pronunciación de \"**Borges**\". Noté que puede ser un poco complicado. En inglés, la \"o\" en \"**Borges**\" suena más como una \"o\" larga, como en la palabra \"**born**\" (nacido). Intenta decir: \"**Bor-ges**\". Para practicar, repite la frase completa: \"**I am Alejandro Borges**\". ¡Luego, podemos mejorar tu fluidez, pero por ahora, concéntrate en esa pronunciación! 😉`\n* `feedback`: `¡Hola, Testing! ✨ Aquí tienes un resumen de tu increíble práctica de hoy: 📊 **Tu Desempeño General** * Nivel MCER: A1 * Puntuación General: ⭐⭐☆☆☆ 🗣️ **Pronunciación:** 2 / 9.0 ✈️ **Fluidez:** 2 / 9.0 ✍️ **Gramática:** 2 / 9.0 📚 **Vocabulario:** 2 / 9.0 🎙️ **Velocidad:** 121 palabras/minuto ✅ **Gramática** ¡Excelente! No hubo correcciones gramaticales en esta ocasión. ¡Sigue así! ¡Cada práctica es un gran paso adelante! Para escuchar la explicación completa y más consejos, ¡no te olvides del audio que te envié! 🎧`\n\n**TU SALIDA FINAL DEBE SER ASÍ:**\n\n¡Hola, Testing! ¡Excelente intento! Tu pronunciación de \"**Alejandro**\" está mejorando. 👏\n\nAhora, nuestro foco es la palabra \"**Borges**\". ¡Vamos a perfeccionarla!\nEn inglés, la \"o\" en \"**Borges**\" suena como la \"o\" en la palabra \"**born**\".\n\n🎯 **Tu Misión de Práctica:**\nIntenta decir la frase completa, poniendo atención a ese sonido: \"**I am Alejandro Borges**\".\n\n---\n\n📊 **Tu Resumen de la Práctica**\n\n* **Nivel General (MCER):** A1 (⭐⭐☆☆☆)\n* **Pronunciación:** 2/9\n* **Fluidez:** 2/9\n* **Gramática:** 2/9 (¡Sin errores esta vez! 🙌)\n* **Vocabulario:** 2/9\n* **Velocidad:** 121 palabras/minuto\n\n¡Estás haciendo un trabajo fantástico! Cada intento es un paso gigante hacia la fluidez. ¡Sigamos adelante! 🚀"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          1392,
+          -16
+        ],
+        "id": "ff808ca6-1690-4b0a-919c-f0abf12f3111",
+        "name": "AI Agent5"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          944,
+          96
+        ],
+        "id": "efae672f-cac1-44d6-830c-23f61d65fd9b",
+        "name": "Merge"
+      },
+      {
+        "parameters": {
+          "fieldsToAggregate": {
+            "fieldToAggregate": [
+              {
+                "fieldToAggregate": "output"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          1168,
+          96
+        ],
+        "id": "6c21c3ac-4f49-4d1e-9707-f5f1fbc30976",
+        "name": "Aggregate"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "1b232add-a275-4c1a-be14-90515b0617d3",
+                "name": "text",
+                "value": "={{ JSON.stringify ( $json.data[0].output ) }}",
+                "type": "string"
+              },
+              {
+                "id": "35e85396-9e75-4d64-8541-1288894cd9d2",
+                "name": "audio",
+                "value": "=https://minios3.whitelabel.lat/education-conversation-audios/{{ $json.data[1].name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2240,
+          144
+        ],
+        "id": "cf85b980-07a1-48b6-91b7-8595a950efce",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          1792,
+          144
+        ],
+        "id": "2804a14f-9ccc-41b9-bf72-4eac19f80d36",
+        "name": "Merge1"
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          2016,
+          144
+        ],
+        "id": "42b8002b-648f-4169-a3dd-a9649e10e49a",
+        "name": "Aggregate1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://texttospeech.googleapis.com/v1/text:synthesize",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"audioConfig\": {\n    \"audioEncoding\": \"LINEAR16\",\n    \"effectsProfileId\": [\n      \"small-bluetooth-speaker-class-device\"\n    ],\n    \"pitch\": 0,\n    \"speakingRate\": 1\n  },\n  \"input\": {\n    \"text\": \"{{ $('Code').item.json.text }}\"\n  },\n  \"voice\": {\n    \"languageCode\": \"en-US\",\n    \"name\": \"en-US-Chirp3-HD-Achernar\"\n  }\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          944,
+          768
+        ],
+        "id": "284ed8a4-8b24-431a-8750-7f83868f50ca",
+        "name": "HTTP Request2",
+        "credentials": {
+          "googleOAuth2Api": {
+            "id": "9Z0zKL8ENum6cJNe",
+            "name": "google-tts"
+          },
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "speech",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1200,
+          1904
+        ],
+        "id": "cff09a47-0e81-497a-872b-8ac4d6cf51d0",
+        "name": "Transcripcion",
+        "webhookId": "c8f92425-7fb4-4240-8ab9-0eec25d9e790"
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "= {{ JSON.stringify ($json) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          -528,
+          1904
+        ],
+        "id": "20729897-5eaa-47bd-b157-d0a6d37817ee",
+        "name": "Respond Transcription"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/audio/transcriptions",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "openAiApi",
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "parameterType": "formBinaryData",
+                "name": "file",
+                "inputDataFieldName": "data"
+              },
+              {
+                "name": "model",
+                "value": "whisper-1"
+              },
+              {
+                "name": "language",
+                "value": "es"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -752,
+          1904
+        ],
+        "id": "a9465ecd-f338-4871-9909-30cd57cd572d",
+        "name": "HTTP Request8",
+        "retryOnFail": true,
+        "waitBetweenTries": 2,
+        "maxTries": 2,
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "lBmDBKRAyDIgBZk6",
+            "name": "ShLink jump"
+          },
+          "openAiApi": {
+            "id": "UYsXoFpwT6Oh1GeF",
+            "name": "OpenAi account"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "body.audio",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          -976,
+          1904
+        ],
+        "id": "f71eaa31-222c-4fc7-adc7-6dfdd4b8ad57",
+        "name": "Convert to File5"
+      }
+    ],
+    "connections": {
+      "Switch1": {
+        "main": [
+          [
+            {
+              "node": "Texto1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [],
+          [
+            {
+              "node": "Convert to File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Texto1": {
+        "main": [
+          [
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Switch1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File": {
+        "main": [
+          [
+            {
+              "node": "promax generate data2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [],
+          [
+            {
+              "node": "Get a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Simple Memory1": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "ai_memory",
+              "index": 0
+            },
+            {
+              "node": "AI Agent2",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent1": {
+        "main": [
+          [
+            {
+              "node": "Code1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code1": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "AI Agent2",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Texto": {
+        "main": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "audio": {
+        "main": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get a file": {
+        "main": [
+          [
+            {
+              "node": "promax generate data1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "promax generate data1": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request1": {
+        "main": [
+          [
+            {
+              "node": "Code2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code2": {
+        "main": [
+          [
+            {
+              "node": "audio",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Feedback",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent2": {
+        "main": [
+          [
+            {
+              "node": "Send a text message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "start",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Texto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "start": {
+        "main": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Feedback": {
+        "main": [
+          [
+            {
+              "node": "AI Agent2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request4": {
+        "main": [
+          [
+            {
+              "node": "Code5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Texto2": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "audio2": {
+        "main": [
+          [
+            {
+              "node": "AI Agent3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Simple Memory3": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent3",
+              "type": "ai_memory",
+              "index": 0
+            },
+            {
+              "node": "AI Agent4",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent3": {
+        "main": [
+          [
+            {
+              "node": "Code4",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model2": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent3",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "AI Agent4",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "promax generate data2": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code5": {
+        "main": [
+          [
+            {
+              "node": "audio2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Feedback1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent4": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "start1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Texto2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "start1": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Feedback1": {
+        "main": [
+          [
+            {
+              "node": "AI Agent4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code4": {
+        "main": [
+          [
+            {
+              "node": "generate audio names2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "S32": {
+        "main": [
+          []
+        ]
+      },
+      "generate audio names2": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Merge1",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Code6": {
+        "main": [
+          [
+            {
+              "node": "generate audio names3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "S33": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "generate audio names3": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request3": {
+        "main": [
+          []
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Convert to File1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File1": {
+        "main": [
+          [
+            {
+              "node": "S32",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request6": {
+        "main": [
+          [
+            {
+              "node": "Convert to File2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File2": {
+        "main": [
+          [
+            {
+              "node": "S33",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request7": {
+        "main": [
+          [
+            {
+              "node": "Convert to File3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File3": {
+        "main": [
+          [
+            {
+              "node": "Send an audio file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Simple Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          [
+            {
+              "node": "generate audio names",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "S3": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "generate audio names": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File4": {
+        "main": [
+          [
+            {
+              "node": "S3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model3": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent5",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate": {
+        "main": [
+          [
+            {
+              "node": "AI Agent5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent5": {
+        "main": [
+          [
+            {
+              "node": "Merge1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge1": {
+        "main": [
+          [
+            {
+              "node": "Aggregate1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate1": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "Convert to File4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transcripcion": {
+        "main": [
+          [
+            {
+              "node": "Convert to File5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request8": {
+        "main": [
+          [
+            {
+              "node": "Respond Transcription",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File5": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "0cf262b2-d726-4e66-9720-ef14bfa2ae67",
   "connections": {
     "Switch1": {
       "main": [
