@@ -1,22 +1,13 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Error Trigger": {
       "main": [
         [
           {
             "node": "Create Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Message": {
-      "main": [
-        [
-          {
-            "node": "alertas por workflow",
             "type": "main",
             "index": 0
           }
@@ -52,6 +43,17 @@
           }
         ]
       ]
+    },
+    "Create Message": {
+      "main": [
+        [
+          {
+            "node": "alertas por workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-05-13T20:14:46.089Z",
@@ -75,35 +77,6 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "fb1efe51-a4e5-4434-9537-b328d6e291cd",
-              "name": "message",
-              "value": "=se produjo un error en el flujo de trabajo: {{ $json.workflow.name }}\nUrl de la Ejecución: {{ $json.execution.url.replace(\"webhook\", \"automation\") }}\nError: {{ $json.execution.error.message }}\nUltimo nodo ejecutado: {{ $json.execution.lastNodeExecuted }}",
-              "type": "string"
-            },
-            {
-              "id": "71386d4a-f4c9-43a7-a5f3-fcf9540abb62",
-              "name": "asunto",
-              "value": "=Se produjo un error en el flujo: {{ $json.workflow.name }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        224,
-        32
-      ],
-      "id": "0c8b1f30-fbfc-43df-9be6-13b3291e3bbf",
-      "name": "Create Message"
-    },
-    {
-      "parameters": {
         "chatId": "1469588614",
         "text": "={{ $json.message }}",
         "additionalFields": {}
@@ -112,7 +85,7 @@
       "typeVersion": 1.2,
       "position": [
         912,
-        0
+        32
       ],
       "id": "32a0c4fc-7127-400d-8547-deea0592b660",
       "name": "Telegram",
@@ -288,6 +261,71 @@
           "name": "Valeia-Estarter"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "71386d4a-f4c9-43a7-a5f3-fcf9540abb62",
+              "name": "asunto",
+              "value": "=Se produjo un error en el flujo: {{ $json.workflow.name }}",
+              "type": "string"
+            },
+            {
+              "id": "fb1efe51-a4e5-4434-9537-b328d6e291cd",
+              "name": "message",
+              "value": "=🚨 *Alerta de error en n8n*\n\nSe produjo un error en el flujo de trabajo:\n*{{ $json.workflow.name }}*\n\n🔗 *Ejecución:*\n{{ $json.execution.url.replace(\"webhook\", \"automation\") }}\n\n❌ *Error detectado:*\n{{ $json.execution.error.message }}\n\n🧩 *Último nodo ejecutado:*\n{{ $json.execution.lastNodeExecuted }}",
+              "type": "string"
+            },
+            {
+              "id": "2a554633-4c96-4bda-a3d4-a0d3fc79c9f8",
+              "name": "workflow.name",
+              "value": "={{ $json.workflow.name }}",
+              "type": "string"
+            },
+            {
+              "id": "c1d3b7a8-d58d-4130-9004-5db430b89d94",
+              "name": "error.message",
+              "value": "={{ $json.execution.error.message }}",
+              "type": "string"
+            },
+            {
+              "id": "30736e3d-45ff-4155-a663-6a3aa0f90236",
+              "name": "execution.id",
+              "value": "={{ $json.execution.id }}",
+              "type": "number"
+            },
+            {
+              "id": "574bb774-16d6-4ffd-8062-be0d044f6b86",
+              "name": "execution.url",
+              "value": "={{ $json.execution.url }}",
+              "type": "string"
+            },
+            {
+              "id": "a0c6c9e7-74df-4014-917b-b67fa6dafa94",
+              "name": "execution.retryOf",
+              "value": "={{ $json.execution.retryOf }}",
+              "type": "string"
+            },
+            {
+              "id": "cf3ced11-3d86-4547-9ca1-377a3121b793",
+              "name": "execution.lastNodeExecuted",
+              "value": "={{ $json.execution.lastNodeExecuted }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        32
+      ],
+      "id": "e68b1058-81d6-4e56-a685-b31a98237135",
+      "name": "Create Message"
     }
   ],
   "pinData": {},
@@ -295,7 +333,9 @@
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "any",
+    "availableInMCP": false
   },
   "shared": [
     {
@@ -309,6 +349,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-15T07:42:23.671Z",
-  "versionId": "f40e762f-aaf5-4df8-a50d-59d5b6c08603"
+  "updatedAt": "2025-11-22T14:44:53.590Z",
+  "versionId": "3fe5735d-a8ba-4f56-ba5d-b451e249ef67"
 }
