@@ -1,5 +1,1587 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-15T06:35:59.352Z",
+    "createdAt": "2025-11-15T06:35:59.352Z",
+    "versionId": "673eb01f-a85e-49ef-8e82-cdbdc11bc114",
+    "workflowId": "xeU7Xcxy2mHCbjrW",
+    "nodes": [
+      {
+        "parameters": {
+          "pollTimes": {
+            "item": [
+              {
+                "mode": "everyMinute"
+              }
+            ]
+          },
+          "simple": false,
+          "filters": {
+            "q": "to:(proyectos@whitelabel.lat)",
+            "readStatus": "unread"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmailTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -384,
+          -160
+        ],
+        "id": "ad94b2eb-3864-4e1f-8cad-2ea9ebdddf01",
+        "name": "Gmail Trigger",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "No30HHponDPtNWfb",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "4d3ca1fe-99b0-44c6-988e-9337de9866f1",
+                "name": "threadId",
+                "value": "={{ $json.threadId }}",
+                "type": "string"
+              },
+              {
+                "id": "cdd17f63-27b2-4320-83c1-36a3972edb65",
+                "name": "remitente",
+                "value": "={{ $json.from.value[0].name }}",
+                "type": "string"
+              },
+              {
+                "id": "734f7938-1d6e-4a60-9cef-cc6dc492b9b2",
+                "name": "email",
+                "value": "={{ $json.from.value[0].address }}",
+                "type": "string"
+              },
+              {
+                "id": "690ccbb1-9ad2-4e99-87b9-04104f3a09a5",
+                "name": "asunto",
+                "value": "={{ $json.subject }}",
+                "type": "string"
+              },
+              {
+                "id": "0d16be62-ac5d-479f-832d-6a43adeeb2a0",
+                "name": "mensaje",
+                "value": "={{ $json.text }}",
+                "type": "string"
+              },
+              {
+                "id": "128a062c-e372-4126-82a9-ea2a2850c7b4",
+                "name": "date",
+                "value": "={{ $json.date }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -176,
+          -160
+        ],
+        "id": "12075fdb-d216-418c-a42b-ca930efefbc1",
+        "name": "Data"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Nuevo requerimiento recibido:\n\nFrom: {{ $json.remitente }}\nSubject: {{ $json.asunto }}\n\nTexto del requerimiento:\n{{ $json.mensaje }}\nResumen del requerimiento:\n{{ $json.resumen }}\n\nPor favor, genera las preguntas necesarias clasificadas por categoría y relevancia.",
+          "options": {
+            "systemMessage": "=Actúas como un analista senior de producto digital con experiencia en discovery técnico, definición de requerimientos y cotización de soluciones tecnológicas a medida.\n\nTu tarea es analizar requerimientos enviados por clientes y generar un conjunto de preguntas clave que eliminen ambigüedades (gaps), supuestos erróneos (sesgos) y permitan comprender con claridad el alcance funcional y técnico del proyecto.\n\nEstas preguntas tienen como propósito ayudar al equipo a:\n- Aclarar el objetivo real del requerimiento.\n- Identificar riesgos ocultos o dependencias no mencionadas.\n- Estimar tiempo y costos de forma precisa.\n- Construir una solución viable, escalable y cotizable.\n\n### Reglas:\n1. Clasifica las preguntas en las siguientes categorías:\n   - `Funcional`: lógica del negocio, comportamiento esperado, flujos.\n   - `Técnica`: arquitectura, almacenamiento, infraestructura, APIs.\n   - `Volumen de datos`: frecuencia, escalabilidad, cantidad de usuarios o registros.\n   - `Canales`: medios de interacción, características por canal.\n   - `Integraciones`: sistemas externos, CRMs, bases de datos, servicios terceros.\n   - `Soporte`: mantenimiento, monitoreo, continuidad operativa.\n   - `Otros`: cualquier aspecto no cubierto por las anteriores.\n   \n2. Para cada pregunta, asigna un campo `relevancia`, con uno de estos valores:\n   - `alta`: imprescindible para cotizar correctamente.\n   - `media`: útil, pero no crítica.\n   - `baja`: complementaria o exploratoria.\n\n3. Sé específico, claro y breve en las preguntas. Evita ambigüedades.\n\n4. No repitas ni expliques. Tu salida debe ser directamente un JSON estructurado así:\n\n```json\n[\n  {\n    \"categoria\": \"Funcional\",\n    \"pregunta\": \"¿Cuál es el comportamiento esperado del agente si el cliente no responde en 24 horas?\",\n    \"relevancia\": \"alta\"\n  },\n  {\n    \"categoria\": \"Canales\",\n    \"pregunta\": \"¿Los mensajes de WhatsApp serán automatizados o escritos por un operador humano?\",\n    \"relevancia\": \"alta\"\n  },\n  ...\n]\n````\n\nNo incluyas encabezados, contexto, ni explicaciones. Solo entrega el JSON con las preguntas, listo para ser usado en una herramienta de documentación como Notion."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          2832,
+          -656
+        ],
+        "id": "aa962bfa-1cdf-48d4-9dfd-5e7b286f3e7b",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          128,
+          -48
+        ],
+        "id": "024700fa-1c62-49ff-83dc-925c62eb5de0",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obtener el texto plano del agente\nconst raw = items[0].json.output;\n\n// Intentar extraer el JSON entre los delimitadores ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\n// Si no encuentra un bloque válido, intentar parsear como JSON directo\nconst cleanJsonString = match ? match[1] : raw;\n\n// Intentar parsear el contenido\nlet parsed;\ntry {\n  parsed = JSON.parse(cleanJsonString);\n} catch (error) {\n  throw new Error(\"No se pudo parsear el JSON: \" + error.message);\n}\n\n// Verificamos que sea un array\nif (!Array.isArray(parsed)) {\n  throw new Error(\"El JSON parseado no es un array.\");\n}\n\n// Devolvemos cada objeto como item independiente\nreturn parsed.map(obj => ({ json: obj }));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -400,
+          -928
+        ],
+        "id": "cb9eeb66-fc68-4eeb-b260-f7b8c53e99af",
+        "name": "Code"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=\n Analiza el siguiente correo y responde en **formato JSON válido** con los siguientes campos:\n\n * `tipo`: uno de `\"nuevo_requerimiento\"`, `\"respuesta\"`, `\"no_relevante\"`\n * `cliente`: nombre del remitente si se puede identificar\n * `proyecto`: nombre del proyecto si se puede inferir a partir del asunto o contenido\n * `necesita_aclaracion`: `true` si el mensaje es ambiguo o no tiene suficiente contexto para continuar, `false` en caso contrario\n * `mensaje`: el contenido completo recibido, **limpio y legible**, con estructura clara, sin errores de formato, sin saltos innecesarios, listo para pegar en Notion o un documento profesional. Puedes usar formato tipo Markdown simple si mejora la claridad (por ejemplo, listas, subtítulos, negrilla).\n * `resumen`: un resumen claro del mensaje en **máximo 20 palabras**\n\n Limpia el mensaje recibido: elimina saltos de línea innecesarios, corrige errores de espaciado, codificación o signos mal escritos. Mantén la información clara, con buena estructura visual.\n\n No hagas suposiciones si la información no está clara.\n\n ---\n\n **Correo recibido:**\n Remitente: {{ $json[\"remitente\"] }}\n Email: {{ $json[\"email\"] }}\n Asunto: {{ $json[\"asunto\"] }}\n Mensaje: {{ $json[\"mensaje\"] }}",
+          "options": {
+            "systemMessage": "=Eres un analista experto en pre-venta. Vas a clasificar correos recibidos para identificar si contienen un requerimiento de proyecto, una respuesta a un requerimiento anterior, o si no son relevantes para cotización. \nTu salida debe ser un JSON válido. \nNo hagas suposiciones si no tienes suficiente información."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          48,
+          -256
+        ],
+        "id": "a8fa0d4c-8425-456e-a8b8-17e456a96791",
+        "name": "AI Agent1"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Suponiendo que estás trabajando con una entrada tipo JSON del nodo anterior:\nconst raw = items[0].json.output;\n\n// Extraemos el bloque que está entre las etiquetas ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n\nif (!match) {\n  throw new Error(\"No se encontró un bloque JSON válido.\");\n}\n\nconst cleanJsonString = match[1];\nconst parsed = JSON.parse(cleanJsonString);\n\n// Devolver como nuevo item\nreturn [{ json: parsed }];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          400,
+          -160
+        ],
+        "id": "764499bf-1ef3-4f78-9e51-f68ecae7f99d",
+        "name": "Clean Json"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.tipo }}",
+                      "rightValue": "nuevo_requerimiento",
+                      "operator": {
+                        "type": "string",
+                        "operation": "contains"
+                      },
+                      "id": "576af6df-1ab4-4dbb-a5b3-364e5a029e41"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "nuevo requerimiento"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "c57ccc1f-ec6d-44b6-b192-f844674e5390",
+                      "leftValue": "={{ $json.tipo }}",
+                      "rightValue": "respuesta",
+                      "operator": {
+                        "type": "string",
+                        "operation": "contains"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "respuesta"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "0bc6e44a-e62e-499b-ade2-33ffda489c00",
+                      "leftValue": "={{ $json.tipo }}",
+                      "rightValue": "no_relevante",
+                      "operator": {
+                        "type": "string",
+                        "operation": "contains"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "no relevante"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          624,
+          -160
+        ],
+        "id": "cbe321ec-147e-4d3f-9e6e-20aeea6a2db2",
+        "name": "Switch"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          848,
+          -112
+        ],
+        "id": "2ba57301-da90-48cb-853c-4c623e5f149a",
+        "name": "No Operation, do nothing1"
+      },
+      {
+        "parameters": {
+          "operation": "search",
+          "text": "={{ $json.cliente }}",
+          "returnAll": true,
+          "simple": false,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          848,
+          -304
+        ],
+        "id": "5b554d39-8b02-4814-8432-57fb444285ee",
+        "name": "Search Client",
+        "alwaysOutputData": true,
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "pageId": {
+            "__rl": true,
+            "value": "https://www.notion.so/Clientes-Proyectos-21c3741c09ed80d889b0e52241fab462",
+            "mode": "url"
+          },
+          "title": "={{ $('Switch').item.json.cliente }}",
+          "simple": false,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          1280,
+          -208
+        ],
+        "id": "15960830-dff4-4ccb-9e76-afd01c8609af",
+        "name": "Create Client",
+        "alwaysOutputData": true,
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "search",
+          "text": "={{ $('Switch').item.json.proyecto }}",
+          "limit": 1,
+          "simple": false,
+          "options": {
+            "filter": {
+              "filters": {
+                "value": "page"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          1280,
+          -416
+        ],
+        "id": "c860b0db-1a7e-4966-a53e-75fc2a7d5c15",
+        "name": "Search Projet",
+        "alwaysOutputData": true,
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "pageId": {
+            "__rl": true,
+            "value": "={{ $('If Client').item.json.url }}",
+            "mode": "url"
+          },
+          "title": "={{ $('Switch').item.json.proyecto }}",
+          "simple": false,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          1728,
+          -304
+        ],
+        "id": "f3da975e-1227-4ecf-ba21-df92b2b887dc",
+        "name": "Create Projet",
+        "alwaysOutputData": true,
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "cda0a524-7fdd-4501-aa8a-68376d87684c",
+                "leftValue": "={{ $json.properties.title.title[0].text.content }}",
+                "rightValue": "={{ $('Switch').item.json.cliente }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1072,
+          -304
+        ],
+        "id": "aca443c7-3d20-409c-bb65-66381097677e",
+        "name": "If Client"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "cda0a524-7fdd-4501-aa8a-68376d87684c",
+                "leftValue": "={{ $json.properties.title.title[0].text.content }}",
+                "rightValue": "={{ $('Switch').item.json.proyecto }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1504,
+          -416
+        ],
+        "id": "371286aa-4339-4c0b-b77a-67d3918c443d",
+        "name": "If Projet"
+      },
+      {
+        "parameters": {
+          "pageId": {
+            "__rl": true,
+            "value": "={{ $('Create Projet').item.json.url }}",
+            "mode": "url"
+          },
+          "title": "=📩 Requerimientos",
+          "simple": false,
+          "blockUi": {
+            "blockValues": [
+              {
+                "type": "heading_2",
+                "textContent": "={{ $('Switch').item.json.proyecto }}"
+              },
+              {
+                "textContent": "={{ $('Clean Json').item.json.mensaje.slice(0, 1800) }}"
+              },
+              {
+                "textContent": "={{ $('Clean Json').item.json.mensaje.length > 1800 ? $('Clean Json').item.json.mensaje.slice(1800, 3600) : '' }}"
+              },
+              {
+                "textContent": "={{ $('Clean Json').item.json.mensaje.length > 3600 ? $('Clean Json').item.json.mensaje.slice(3600, 5400) : '' }}"
+              },
+              {
+                "textContent": "={{ $('Clean Json').item.json.mensaje.length > 5400 ? $('Clean Json').item.json.mensaje.slice(5400, 7200) : '' }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          1952,
+          -304
+        ],
+        "id": "7b90daf0-1dc3-44a5-8623-ac9913d82c16",
+        "name": "create Requirements",
+        "alwaysOutputData": true,
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          2912,
+          -448
+        ],
+        "id": "a001975e-b7e4-47d1-ac2b-5c1d48daeccf",
+        "name": "Google Gemini Chat Model1",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "jQiccHfpS9BFKE4C",
+            "name": "automation.whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "82c3e28b-77df-4ec0-be47-f18fea159b2a",
+                "name": "url-Ask",
+                "value": "={{ $json.url }}",
+                "type": "string"
+              },
+              {
+                "id": "5288a14e-f54e-46a3-bd7a-5a79e4731681",
+                "name": "page_id",
+                "value": "={{ $json.id }}",
+                "type": "string"
+              },
+              {
+                "id": "095ab03c-23e7-488c-88ee-1e34515fdab8",
+                "name": "cliente",
+                "value": "={{ $('Clean Json').item.json.cliente }}",
+                "type": "string"
+              },
+              {
+                "id": "2ff4b779-987d-4112-8324-92aa45bc1065",
+                "name": "proyecto",
+                "value": "={{ $('Clean Json').item.json.proyecto }}",
+                "type": "string"
+              },
+              {
+                "id": "3653fc58-70b8-41c8-8d8b-2e333dd0fd9e",
+                "name": "remitente",
+                "value": "={{ $('Data').item.json.remitente }}",
+                "type": "string"
+              },
+              {
+                "id": "d1b76be4-97a7-467c-b367-519c9ae511a5",
+                "name": "email",
+                "value": "={{ $('Data').item.json.email }}",
+                "type": "string"
+              },
+              {
+                "id": "0342f252-874a-4cf1-a18c-2dc333a0b130",
+                "name": "asunto",
+                "value": "={{ $('Data').item.json.asunto }}",
+                "type": "string"
+              },
+              {
+                "id": "136ac074-8b70-4e2d-9155-e6fd5c042464",
+                "name": "mensaje",
+                "value": "={{ $('Clean Json').item.json.mensaje }}",
+                "type": "string"
+              },
+              {
+                "id": "3c58e5b2-c23f-4765-99e5-3e81529f5112",
+                "name": "resumen",
+                "value": "={{ $('Clean Json').item.json.resumen }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2608,
+          -416
+        ],
+        "id": "c76e215f-bd46-4955-8528-bcc668cd32bb",
+        "name": "Data Projets"
+      },
+      {
+        "parameters": {
+          "pageId": {
+            "__rl": true,
+            "value": "={{ $json.url}}",
+            "mode": "url"
+          },
+          "title": "=📄 Preguntas aclaratorias",
+          "simple": false,
+          "blockUi": {
+            "blockValues": [
+              {
+                "richText": true,
+                "text": {
+                  "text": [
+                    {
+                      "text": "Estado: ",
+                      "annotationUi": {
+                        "bold": true,
+                        "italic": true,
+                        "color": "green"
+                      }
+                    },
+                    {
+                      "text": "Por revisar",
+                      "annotationUi": {
+                        "color": "default"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "richText": true,
+                "text": {
+                  "text": [
+                    {
+                      "text": "🧑‍💼 Por favor, revisa las preguntas, edita o responde si es necesario, y cambia el texto arriba a 'Estado: Revisado o Contestado' cuando termines.",
+                      "annotationUi": {
+                        "color": "gray"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          2384,
+          -416
+        ],
+        "id": "6f091273-9fdc-487f-b492-d9fcc2483fe2",
+        "name": "create ask",
+        "alwaysOutputData": true,
+        "executeOnce": true,
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obtener el texto plano del agente\nconst raw = items[0].json.output;\n\n// Extraer el JSON entre los delimitadores ```json y ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\nconst cleanJsonString = match ? match[1] : raw;\n\n// Parsear el contenido\nlet parsedQuestions;\ntry {\n  parsedQuestions = JSON.parse(cleanJsonString);\n} catch (error) {\n  throw new Error(\"No se pudo parsear el JSON: \" + error.message);\n}\n\n// Verificar que sea un array\nif (!Array.isArray(parsedQuestions)) {\n  throw new Error(\"El JSON parseado no es un array.\");\n}\n\n// Organizar por relevancia y luego por categoría\nconst organizedData = {\n  alta: {},\n  media: {},\n  baja: {}\n};\n  \n// Agrupar preguntas\nparsedQuestions.forEach(question => {\n  const relevancia = question.relevancia.toLowerCase();\n  const categoria = question.categoria;\n  \n  if (!organizedData[relevancia][categoria]) {\n    organizedData[relevancia][categoria] = [];\n  }\n  \n  organizedData[relevancia][categoria].push(question.pregunta);\n});\n\n// Crear la estructura para Notion\nconst notionPayload = {\n  children: [] // Aquí irán todos los bloques\n};\n\n\n// Función para añadir un heading\nconst addHeading = (text, level = 2) => {\n  notionPayload.children.push({\n    object: \"block\",\n    type: `heading_${level}`,\n    [`heading_${level}`]: {\n      rich_text: [{\n        type: \"text\",\n        text: { content: text },\n        annotations: { bold: true }\n      }],\n      color: \"default\"\n    }\n  });\n};\n\n// Función para añadir un toggle\nconst addToggle = (title, items) => {\n  notionPayload.children.push({\n    object: \"block\",\n    type: \"toggle\",\n    toggle: {\n      rich_text: [{\n        type: \"text\",\n        text: { content: title },\n        annotations: { bold: true }\n      }],\n      children: items.map(item => ({\n        object: \"block\",\n        type: \"paragraph\",\n        paragraph: {\n          rich_text: [{\n            type: \"text\",\n            text: { content: item }\n          }],\n          color: \"default\"\n        }\n      }))\n    }\n  });\n};\n\nconst proyecto = $('Data Projets').first().json.proyecto;\n// Añadir título principal\naddHeading(`📋 Preguntas del ${proyecto}`, 1);  \n\n// Añadir sección de Alta Relevancia\nif (Object.keys(organizedData.alta).length > 0) {\n  addHeading(\"🔴 Alta Relevancia\", 2);\n  \n  for (const [categoria, preguntas] of Object.entries(organizedData.alta)) {\n    addToggle(`📌 ${categoria} (${preguntas.length} preguntas)`, preguntas);\n  }\n}\n\n// Añadir sección de Media Relevancia\nif (Object.keys(organizedData.media).length > 0) {\n  addHeading(\"🟡 Media Relevancia\", 2);\n  \n  for (const [categoria, preguntas] of Object.entries(organizedData.media)) {\n    addToggle(`📝 ${categoria} (${preguntas.length} preguntas)`, preguntas);\n  }\n}\n\n// Añadir sección de Baja Relevancia\nif (Object.keys(organizedData.baja).length > 0) {\n  addHeading(\"🔵 Baja Relevancia\", 2);\n  \n  for (const [categoria, preguntas] of Object.entries(organizedData.baja)) {\n    addToggle(`ℹ️ ${categoria} (${preguntas.length} preguntas)`, preguntas);\n  }\n}\n\nreturn [{\n  json: notionPayload\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3408,
+          -656
+        ],
+        "id": "c1920478-c0c4-40e2-9450-cdedaafa87f7",
+        "name": "Code1"
+      },
+      {
+        "parameters": {
+          "method": "PATCH",
+          "url": "=https://api.notion.com/v1/blocks/{{ $('Data Projets').item.json.page_id }}/children",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "notionApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"children\": {{JSON.stringify($json.children)}}\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3632,
+          -656
+        ],
+        "id": "dbddc886-1952-490d-8bc5-00e6841e9034",
+        "name": "HTTP Request",
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "markAsRead",
+          "messageId": "={{ $('Gmail Trigger').item.json.threadId }}"
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          3840,
+          -656
+        ],
+        "id": "ae91a6fd-f7a7-4151-8819-8a4c299aba26",
+        "name": "Mark a message as read",
+        "webhookId": "9bef87db-c738-468f-b5fb-5cfce6263f37",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "No30HHponDPtNWfb",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "databasePage",
+          "databaseId": {
+            "__rl": true,
+            "value": "21c3741c-09ed-809d-b8e4-c2b8a54316a5",
+            "mode": "list",
+            "cachedResultName": "Clientes - Proyectos",
+            "cachedResultUrl": "https://www.notion.so/21c3741c09ed809db8e4c2b8a54316a5"
+          },
+          "title": "={{ $('Clean Json').item.json.cliente }}",
+          "propertiesUi": {
+            "propertyValues": [
+              {
+                "key": "Cliente|title",
+                "title": "={{ $('Clean Json').item.json.cliente }}"
+              },
+              {
+                "key": "Empresa|rich_text",
+                "textContent": "={{ $('Data').item.json.email.split('@')[1].split('.')[0].replace('gmail', 'Personal') }}"
+              },
+              {
+                "key": "Correo|email",
+                "emailValue": "={{ $('Data').item.json.email }}"
+              },
+              {
+                "key": "Notas|rich_text",
+                "textContent": "={{ $('Clean Json').item.json.resumen }}"
+              },
+              {
+                "key": "Último contacto|date",
+                "date": "={{ $('Gmail Trigger').item.json.date }}"
+              },
+              {
+                "key": "Estado actual|select",
+                "selectValue": "=Preguntas Generadas"
+              },
+              {
+                "key": "Proyecto|rich_text",
+                "textContent": "={{ $json.proyecto }}"
+              },
+              {
+                "key": "Preguntas aclaratorias|url",
+                "ignoreIfEmpty": true,
+                "urlValue": "={{ $json['url-Ask'] }}"
+              },
+              {
+                "key": "threadId|rich_text",
+                "textContent": "={{ $('Data').item.json.threadId }}"
+              }
+            ]
+          },
+          "options": {
+            "iconType": "emoji",
+            "icon": "💼"
+          }
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          2896,
+          -256
+        ],
+        "id": "88eedb06-ba74-44b0-8ed9-97b67ebc7a8f",
+        "name": "Create a database page",
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "pollTimes": {
+            "item": [
+              {
+                "mode": "everyHour"
+              }
+            ]
+          },
+          "event": "pagedUpdatedInDatabase",
+          "databaseId": {
+            "__rl": true,
+            "value": "",
+            "mode": "id"
+          }
+        },
+        "type": "n8n-nodes-base.notionTrigger",
+        "typeVersion": 1,
+        "position": [
+          -400,
+          304
+        ],
+        "id": "965321e4-dccb-41bc-9f6c-cb25bd639c80",
+        "name": "Notion Trigger",
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json[\"Estado actual\"] }}",
+                      "rightValue": "Preguntas Generadas",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "1a0086b1-dd61-4fe3-a0c8-783dbe7f259a"
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "268d0644-c01f-4a45-9724-5d7cdb8af21b",
+                      "leftValue": "={{ $json[\"Estado actual\"] }}",
+                      "rightValue": "Preguntas Confirmadas",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -176,
+          304
+        ],
+        "id": "d8c40eda-829c-47d3-9181-30b1f22f16e2",
+        "name": "Switch1"
+      },
+      {
+        "parameters": {
+          "resource": "block",
+          "operation": "getAll",
+          "blockId": {
+            "__rl": true,
+            "value": "={{ $json[\"Preguntas aclaratorias\"] }}",
+            "mode": "url"
+          },
+          "returnAll": true,
+          "fetchNestedBlocks": true
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          48,
+          400
+        ],
+        "id": "48d2a2af-48e1-4c77-a8cb-4623dd55557c",
+        "name": "Get many child blocks",
+        "credentials": {
+          "notionApi": {
+            "id": "jWWM1rTAyxYomO7Y",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Get data from previous Notion Trigger node\nconst notionData = $('Notion Trigger').first().json;\n\nif (!notionData) {\n  throw new Error('No data received from Notion Trigger node');\n}\n\nconst projectName = notionData.Proyecto || 'Proyecto sin nombre';\nconst companyName = notionData.Empresa || 'Empresa no especificada';\nconst clientEmail = notionData.Correo || '';\nconst clientName = notionData.Cliente || 'Cliente';\nconst questionsLink = notionData['Preguntas aclaratorias'] || '';\nconst currentStatus = notionData['Estado actual'] || 'Estado no especificado';\nconst logoUrl = notionData['Logo'] || '';\n\n// Bloques de preguntas\nconst blocks = $input.all()?.flatMap(item => item.json) || [];\n\nlet emailContent = '';\nlet sectionTitle = '';\nlet inToggle = false;\nlet toggleId = '';\nlet questionNumber = 1;\n\nif (blocks && blocks.length > 0) {\n  for (const block of blocks) {\n    if (!block.content) continue;\n\n    if (block.type === 'heading_1') {\n      emailContent += `<h2 style=\"color: #2c3e50; margin-top: 30px;\">${block.content}</h2>`;\n    } else if (block.type === 'heading_2') {\n      sectionTitle = block.content;\n      questionNumber = 1;\n      emailContent += `\n        <div style=\"margin-top: 25px;\">\n          <h3 style=\"color: #1f3b57; border-bottom: 1px solid #ccc; padding-bottom: 5px;\">📌 ${sectionTitle}</h3>\n        </div>\n      `;\n    } else if (block.type === 'toggle') {\n      inToggle = true;\n      toggleId = block.id;\n    } else if (inToggle && block.parent?.type === 'block_id') {\n      emailContent += `\n        <div style=\"margin: 20px 0; padding: 16px 20px; background: #f0f8ff; border-left: 4px solid #3498db; border-radius: 8px;\">\n          <p style=\"margin: 0 0 8px; font-weight: 500; color: #1f3b57;\">\n            ${questionNumber}. ${block.content}\n          </p>\n          <div style=\"border: 1px dashed #3498db; background: #ffffff; padding: 12px; border-radius: 6px; margin-top: 10px;\">\n            <p style=\"color: #888; margin: 0;\">\n              ✍️ <i>Responde debajo de esta línea:</i>\n            </p>\n            <p style=\"color: #3498db;\"><br><br><br></p>\n          </div>\n        </div>\n      `;\n      questionNumber++;\n    } else if (inToggle && (!block.parent || block.parent?.type !== 'block_id')) {\n      inToggle = false;\n      toggleId = '';\n    }\n  }\n\n  if (inToggle) {\n    inToggle = false;\n    toggleId = '';\n  }\n} else {\n  emailContent += `<p style=\"color: #e74c3c;\">No se encontraron preguntas en la página de Notion.</p>`;\n}\n\n\n// HTML final\nconst htmlEmail = `\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>${projectName} - ${companyName}</title>\n  <style>\n    body {\n      font-family: 'Segoe UI', sans-serif;\n      background: #f4f6f8;\n      padding: 0;\n      margin: 0;\n    }\n    .container {\n      max-width: 800px;\n      margin: auto;\n      background: #ffffff;\n      padding: 30px;\n      border-radius: 12px;\n      box-shadow: 0 5px 20px rgba(0,0,0,0.08);\n    }\n    .header {\n      text-align: center;\n      margin-bottom: 20px;\n    }\n    .header img {\n      max-height: 60px;\n      margin-bottom: 10px;\n    }\n    .header h1 {\n      margin: 0;\n      font-size: 24px;\n      color: #1f3b57;\n    }\n    .instructions {\n      background: #eaf4ff;\n      border-left: 4px solid #3498db;\n      padding: 15px;\n      border-radius: 8px;\n      color: #2c3e50;\n      margin-top: 10px;\n      margin-bottom: 30px;\n    }\n    .instructions p {\n      margin: 8px 0 0 0;\n      font-size: 14px;\n    }\n    .meta {\n      background-color: #f1f3f5;\n      padding: 15px;\n      border-radius: 8px;\n      font-size: 14px;\n      margin-bottom: 25px;\n    }\n    .meta div {\n      margin-bottom: 6px;\n    }\n    .meta span {\n      font-weight: bold;\n      color: #2c3e50;\n    }\n    .footer {\n      text-align: center;\n      font-size: 12px;\n      color: #7f8c8d;\n      margin-top: 30px;\n    }\n    a {\n      color: #3498db;\n      text-decoration: none;\n    }\n    .cta-button {\n      margin-top: 40px;\n      text-align: center;\n    }\n    .cta-button a {\n      background-color: #3498db;\n      color: white;\n      padding: 12px 24px;\n      border-radius: 6px;\n      text-decoration: none;\n      font-weight: 500;\n      display: inline-block;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      ${logoUrl ? `<img src=\"${logoUrl}\" alt=\"Logo de ${companyName}\"/>` : ''}\n      <h1>${projectName}</h1>\n    </div>\n\n    <div class=\"instructions\">\n      <strong>📩 ¿Cómo responder?</strong>\n      <p>\n        Haz clic en <strong>“Responder”</strong> a este correo y escribe tus respuestas justo debajo de cada pregunta.<br>\n        No es necesario adjuntar ningún archivo. ¡Gracias por tu colaboración! 🙌\n      </p>\n    </div>\n\n    <div class=\"meta\">\n      <div><span>Cliente:</span> ${clientName}</div>\n      <div><span>Empresa:</span> ${companyName}</div>\n      <div><span>Estado actual:</span> ${currentStatus}</div>\n      ${questionsLink ? `<div><span>Ver en Notion:</span> <a href=\"${questionsLink}\" target=\"_blank\">Enlace</a></div>` : ''}\n    </div>\n\n    ${emailContent}\n\n    ${questionsLink ? `\n      <div class=\"cta-button\">\n        <p style=\"color: #7f8c8d;\">¿Prefieres responder desde un formulario?</p>\n        <a href=\"${questionsLink}\" target=\"_blank\">Completar formulario en línea</a>\n      </div>\n    ` : ''}\n\n    <div class=\"footer\">\n      <p>Este mensaje fue generado automáticamente el ${new Date().toLocaleString()}.</p>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn [{\n  json: {\n    messageID: $('Notion Trigger').first().json.threadId,\n    subject: `${projectName} - Preguntas para completar`,\n    html: htmlEmail,\n    text: `Resumen de preguntas para ${projectName}. Por favor responde desde el modo HTML.`,\n    to: clientEmail,\n    cc: \"\",\n    bcc: \"\"\n  }\n}];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          272,
+          400
+        ],
+        "id": "79ae6655-3609-4a41-8327-e16b3cf36256",
+        "name": "Code2"
+      },
+      {
+        "parameters": {
+          "operation": "reply",
+          "messageId": "={{ $json.messageID }}",
+          "message": "={{ $json.html }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          480,
+          400
+        ],
+        "id": "dd77a6dc-64f6-442f-9c5d-309ef4aeab6e",
+        "name": "Reply to a message",
+        "webhookId": "37a3ea6f-4281-45c1-971b-df2066736730",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "No30HHponDPtNWfb",
+            "name": "hola@whitelabel.lat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7c023734-4a21-48ca-bf08-f54c3e9d74af",
+                "name": "url",
+                "value": "={{ $json.url }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2160,
+          -512
+        ],
+        "id": "d7e43286-130f-4304-896b-ddbf996641cb",
+        "name": "projetUrl"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7c023734-4a21-48ca-bf08-f54c3e9d74af",
+                "name": "url",
+                "value": "={{ $('Create Projet').item.json.url }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2160,
+          -304
+        ],
+        "id": "0f461988-90dd-4aac-9abe-6202171f376c",
+        "name": "projetUrl1"
+      },
+      {
+        "parameters": {
+          "jsCode": "const raw = items[0].json.output;\n\n// Extrae el contenido dentro de ```json ... ```\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/);\nif (!match) {\n  throw new Error(\"No se encontró un bloque JSON válido.\");\n}\n\nconst parsed = JSON.parse(match[1]);\n\n// Devuelve cada pregunta como un item separado\nreturn parsed.map(pregunta => ({ json: pregunta }));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3280,
+          -464
+        ],
+        "id": "1605fd98-a6de-40af-8570-a4c5e83a3d87",
+        "name": "Code3"
+      },
+      {
+        "parameters": {
+          "jsCode": "const LIMITE = 3500; // Límite seguro para texto en Telegram\nconst notion = $('create ask').first().json.url; // URL de Notion\n\n// Agrupamos primero por relevancia y categoría\nconst agrupado = {};\n\nfor (const item of items) {\n  const { relevancia, categoria, pregunta } = item.json;\n\n  if (!agrupado[relevancia]) agrupado[relevancia] = {};\n  if (!agrupado[relevancia][categoria]) agrupado[relevancia][categoria] = [];\n\n  agrupado[relevancia][categoria].push(pregunta);\n}\n\n// Creamos los mensajes\nconst mensajes = [];\n\nfor (const relevancia of Object.keys(agrupado)) {\n  const categorias = agrupado[relevancia];\n\n  for (const categoria of Object.keys(categorias)) {\n    const preguntas = categorias[categoria];\n\n    let bloque = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n`;\n    let acumulado = bloque;\n\n    for (const pregunta of preguntas) {\n      const linea = `- ${pregunta}\\n\\n`;\n\n      if ((acumulado + linea).length > LIMITE) {\n        mensajes.push({ json: { mensaje: acumulado.trim() } });\n\n        // Comenzamos un nuevo mensaje con el encabezado de categoría\n        acumulado = `📌 *Relevancia: ${relevancia}*\\n🔸 *${categoria}*\\n${linea}`;\n      } else {\n        acumulado += linea;\n      }\n    }\n\n    if (acumulado.trim() !== '') {\n      mensajes.push({ json: { mensaje: acumulado.trim() } });\n    }\n  }\n}\n\nconst dbClientes = 'https://www.notion.so/21c3741c09ed809db8e4c2b8a54316a5?v=21c3741c09ed8085899d000c4233e593';\n\nmensajes.push({\n  json: {\n    mensaje: `✅ *Todas las preguntas han sido agrupadas correctamente.*\\n\\n📄 Puedes verlas también en Notion:\\n${notion}\\n\\n🗃️ Base de datos de clientes:\\n${dbClientes}`,\n  },\n});\n\n\nreturn mensajes;\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3504,
+          -464
+        ],
+        "id": "8dc8f017-82e3-45d8-a4cd-8dcb9954aabf",
+        "name": "Code4"
+      },
+      {
+        "parameters": {
+          "chatId": "176878701",
+          "text": "={{ $json.mensaje }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          4800,
+          -640
+        ],
+        "id": "f66a365b-3bb5-4846-94c1-2a9c3445c943",
+        "name": "Send a text message",
+        "webhookId": "c377705c-affc-464e-9e42-149a01309835",
+        "credentials": {
+          "telegramApi": {
+            "id": "1rKPuRdAUVGVrAiW",
+            "name": "Cotizations"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -400,
+          672
+        ],
+        "id": "3fbddb40-caaa-4e57-b20b-0beda867b3f7",
+        "name": "Telegram Trigger",
+        "webhookId": "0d20b8f4-86ae-4a86-9fc8-60a9afbd0d9c",
+        "credentials": {
+          "telegramApi": {
+            "id": "1rKPuRdAUVGVrAiW",
+            "name": "Cotizations"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "amount": 2
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          4592,
+          -640
+        ],
+        "id": "7ae84efb-b1e2-4bb1-81b4-63d3ec7a0b76",
+        "name": "Wait",
+        "webhookId": "2589b0bf-9a06-4193-b952-91a69bb4923f"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          48,
+          208
+        ],
+        "id": "1ddb9b4c-3299-4ef1-98fa-5943174afeae",
+        "name": "No Operation, do nothing"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          3728,
+          -464
+        ],
+        "id": "2c8319b2-1204-42fc-85aa-8ce3de06471a",
+        "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "operation": "sendAndWait",
+          "chatId": "176878701",
+          "message": "={{ $json.mensaje }}",
+          "responseType": "customForm",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Aprobación",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "✅ Aprobado"
+                    },
+                    {
+                      "option": "❌ Cambios sugeridos"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Comentarios o cambios sugeridos",
+                "fieldType": "textarea",
+                "placeholder": "Ej. Cambiar enfoque de la segunda pregunta o agregar una sobre seguimiento..."
+              }
+            ]
+          },
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          4080,
+          -448
+        ],
+        "id": "18529ea8-16ba-4254-9f9e-ccd1f10849d8",
+        "name": "Send message and wait for response",
+        "webhookId": "898e4bf8-0b0e-4754-96f2-e85648df665b",
+        "credentials": {
+          "telegramApi": {
+            "id": "1rKPuRdAUVGVrAiW",
+            "name": "Cotizations"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "1b85d132-b40a-4d13-a433-12b467ccb140",
+                "leftValue": "",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          4304,
+          -448
+        ],
+        "id": "fb78ebc5-8984-4895-a96b-b1aa1f70ce8a",
+        "name": "If"
+      }
+    ],
+    "connections": {
+      "Gmail Trigger": {
+        "main": [
+          [
+            {
+              "node": "Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Data": {
+        "main": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Code3",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Code1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent1": {
+        "main": [
+          [
+            {
+              "node": "Clean Json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Clean Json": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Search Client",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [],
+          [
+            {
+              "node": "No Operation, do nothing1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Search Client": {
+        "main": [
+          [
+            {
+              "node": "If Client",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Search Projet": {
+        "main": [
+          [
+            {
+              "node": "If Projet",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Client": {
+        "main": [
+          [
+            {
+              "node": "Search Projet",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create Client",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Projet": {
+        "main": [
+          [
+            {
+              "node": "projetUrl",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create Projet",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Client": {
+        "main": [
+          [
+            {
+              "node": "If Client",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Projet": {
+        "main": [
+          [
+            {
+              "node": "create Requirements",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Data Projets": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Create a database page",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          []
+        ]
+      },
+      "create ask": {
+        "main": [
+          [
+            {
+              "node": "Data Projets",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code1": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Mark a message as read",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "create Requirements": {
+        "main": [
+          [
+            {
+              "node": "projetUrl1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Notion Trigger": {
+        "main": [
+          [
+            {
+              "node": "Switch1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch1": {
+        "main": [
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Get many child blocks",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many child blocks": {
+        "main": [
+          [
+            {
+              "node": "Code2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code2": {
+        "main": [
+          [
+            {
+              "node": "Reply to a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "projetUrl": {
+        "main": [
+          [
+            {
+              "node": "create ask",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "projetUrl1": {
+        "main": [
+          [
+            {
+              "node": "create ask",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code3": {
+        "main": [
+          [
+            {
+              "node": "Code4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code4": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Telegram Trigger": {
+        "main": [
+          []
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Send a text message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send message and wait for response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send message and wait for response": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "n8n whitelabel",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "673eb01f-a85e-49ef-8e82-cdbdc11bc114",
   "connections": {
     "Gmail Trigger": {
       "main": [
