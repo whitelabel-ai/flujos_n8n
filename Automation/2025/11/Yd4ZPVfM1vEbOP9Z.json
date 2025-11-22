@@ -1,0 +1,461 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Validar NIT": {
+      "main": [
+        [
+          {
+            "node": "buscar si ya existe el NIT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RESPONSE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREAR CLIENTE1": {
+      "main": [
+        [
+          {
+            "node": "response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Validar NIT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar si ya existe el NIT": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "response failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CREAR CLIENTE1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-22T15:47:28.249Z",
+  "id": "Yd4ZPVfM1vEbOP9Z",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "registrar_cliente",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.cliente_id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "b22a1f2f-225d-456d-ba45-71e8bd84d860",
+      "name": "Validar NIT",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "=client_id",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.cliente_id }}"
+            },
+            {
+              "fieldName": "=razon_social",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.razon_social }}"
+            },
+            {
+              "fieldName": "=telefono_contacto",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.telefono_contacto }}"
+            },
+            {
+              "fieldName": "persona_encargada",
+              "fieldValue": "={{ $('Edit Fields').item.json.persona_encargada }}"
+            },
+            {
+              "fieldName": "direccion_principal",
+              "fieldValue": "={{ $('Edit Fields').item.json.direccion_principal }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        784,
+        624
+      ],
+      "id": "30afde42-69c6-477b-a8c7-ddf579be82b6",
+      "name": "CREAR CLIENTE1",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "tipo_registro"
+            },
+            {
+              "name": "cliente_id",
+              "type": "number"
+            },
+            {
+              "name": "tipo_documento"
+            },
+            {
+              "name": "razon_social"
+            },
+            {
+              "name": "telefono_contacto",
+              "type": "number"
+            },
+            {
+              "name": "persona_encargada"
+            },
+            {
+              "name": "direccion_principal"
+            },
+            {
+              "name": "message"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -640,
+        528
+      ],
+      "id": "96a42e58-a040-4978-af8a-48eed21400c7",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9add1b52-e351-4bb3-91b5-4b65959d7344",
+              "name": "tipo_registro",
+              "value": "={{ $json.tipo_registro }}",
+              "type": "string"
+            },
+            {
+              "id": "3772b988-562b-4718-bd2f-4b7486307d2c",
+              "name": "cliente_id",
+              "value": "={{ $json.cliente_id }}",
+              "type": "string"
+            },
+            {
+              "id": "d9dc68b7-256e-4b48-8021-c5acd4b6a9f8",
+              "name": "razon_social",
+              "value": "={{ $json.razon_social }}",
+              "type": "string"
+            },
+            {
+              "id": "41c5c7c9-98c8-4c75-9fba-95aa768b8b7d",
+              "name": "telefono_contacto",
+              "value": "={{ $json.telefono_contacto }}",
+              "type": "string"
+            },
+            {
+              "id": "a08ae7ba-e543-4e9d-944e-c6efe761ad3f",
+              "name": "persona_encargada",
+              "value": "={{ $json.persona_encargada }}",
+              "type": "string"
+            },
+            {
+              "id": "18f60e1f-b41f-46a3-bd79-fc7b5b080d79",
+              "name": "direccion_principal",
+              "value": "={{ $json.direccion_principal }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        528
+      ],
+      "id": "90adbaa4-4379-4b8b-a691-6be499ad1130",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "returnAll": true,
+        "options": {
+          "where": "=(client_id,like,{{ $json.cliente_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        112,
+        512
+      ],
+      "id": "b0b60007-3c49-4907-9cb2-89666de13b95",
+      "name": "buscar si ya existe el NIT",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d216fd2c-0bac-4b2d-ac6b-63de813cc955",
+              "leftValue": "={{ $json.razon_social }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        544,
+        512
+      ],
+      "id": "0d0e7da9-56c1-4ace-ad17-98ba7f141efb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "55f39207-d49e-4a3b-949f-578cc2245070",
+              "name": "razon_social",
+              "value": "={{ $json.razon_social }}",
+              "type": "string"
+            },
+            {
+              "id": "a9b2c34e-acdd-4533-9146-d45748944bb9",
+              "name": "telefono_contacto",
+              "value": "={{ $json.telefono_contacto }}",
+              "type": "string"
+            },
+            {
+              "id": "7e9cbc22-8042-49f3-938b-f868a920f322",
+              "name": "persona_encargada",
+              "value": "={{ $json.persona_encargada }}",
+              "type": "string"
+            },
+            {
+              "id": "d122e83c-0c45-4f23-bf5b-367d028cf36d",
+              "name": "direccion_principal",
+              "value": "={{ $json.direccion_principal }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        512
+      ],
+      "id": "8def705a-421a-4b5e-9560-b22fbbeb22e5",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc61b81b-a101-411b-afd6-8e7d409acc71",
+              "name": "mensaje ",
+              "value": "=tu peticion a sido resuelta, se ha registrado un nuevo cliente en la base de datos con id {{ $json.client_id }} razon social: {{ $json.razon_social }}. Ya puedes registrar sedes, equipos y cronograma de mantenimientos para este cliente.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1008,
+        624
+      ],
+      "id": "503a7017-cc68-44d0-ad3f-1868233e1679",
+      "name": "response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5de2bfa0-9b04-4848-86de-e05a4e4ba465",
+              "name": "mensaje",
+              "value": "=Vaya!!! Parece que este Nit ya existe en nuestra base de datos y pertenece al cliente:  {{ $json.razon_social }}, persona encargada: {{ $json.persona_encargada }}, telefono de contacto.{{ $json.telefono_contacto }}. No podemos realizar un doble registro. Por favor verifica el Nit.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        288
+      ],
+      "id": "0e83552e-21e6-40f2-bc11-a7a40049cbbd",
+      "name": "response failed"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a262ba7e-d10a-4df3-8f2c-10ebd9d93ac3",
+              "name": "cliente_id",
+              "value": "Lo siento, no he podido procesar tu solicitud, proporciona un NIT numerico, sin comas, tildes, letras o guiones",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        784
+      ],
+      "id": "040dc2c6-e136-46e4-bbb0-42148b1d7821",
+      "name": "RESPONSE"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-22T15:47:28.249Z",
+      "createdAt": "2025-11-22T15:47:28.249Z",
+      "role": "workflow:owner",
+      "workflowId": "Yd4ZPVfM1vEbOP9Z",
+      "projectId": "73zSRVHGJwFSDWts"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-22T20:20:43.708Z",
+  "versionId": "e71b8058-9c5f-4f18-92c2-f009f1fec024"
+}
