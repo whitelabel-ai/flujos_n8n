@@ -1,5 +1,186 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-18T23:10:39.848Z",
+    "createdAt": "2025-11-18T23:10:39.848Z",
+    "versionId": "af4ab223-ec50-4974-a048-e28947e3a8bf",
+    "workflowId": "oWWVUIzJDOTfViEA",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "basicinfo",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "d111ceb8-7696-44ff-9703-f414cf3ec0c4",
+        "name": "Receive Document Content",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -272,
+          -16
+        ],
+        "webhookId": "b83e0ca2-c56f-4bf7-a1e7-0346197e8d49"
+      },
+      {
+        "parameters": {
+          "model": "text-embedding-3-large",
+          "options": {}
+        },
+        "id": "78834d86-f166-4a80-8342-61007bd5a400",
+        "name": "OpenAI Embeddings",
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          -16,
+          192
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "izRAHrW2LMxYF5JG",
+            "name": "OpenAi account 3"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "textSplittingMode": "custom",
+          "options": {}
+        },
+        "id": "703422da-6238-44b1-8514-249458915cf7",
+        "name": "Document Loader",
+        "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+        "typeVersion": 1.1,
+        "position": [
+          144,
+          192
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "4fb9ba44-79f0-4cf9-9db1-3739f4bd3b11",
+        "name": "Text Splitter",
+        "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+        "typeVersion": 1,
+        "position": [
+          144,
+          352
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "{\n  \"message\": \"Document successfully embedded\",\n  \"status\": \"success\"\n}",
+          "options": {}
+        },
+        "id": "5f0b0dec-81a5-4f38-8eba-530d6ded0d50",
+        "name": "Send Confirmation",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [
+          896,
+          -16
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "insert",
+          "pineconeIndex": {
+            "__rl": true,
+            "value": "={{ $json.body.pineconeIndex }}",
+            "mode": "id"
+          },
+          "embeddingBatchSize": 500,
+          "options": {
+            "pineconeNamespace": "={{ $json.body.pineconeNamespace }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+        "typeVersion": 1.3,
+        "position": [
+          160,
+          -16
+        ],
+        "id": "201e6679-ed3a-410e-b1da-fe95687bbc7d",
+        "name": "Pinecone Vector Store",
+        "credentials": {
+          "pineconeApi": {
+            "id": "tCmUrd48LCli0V4p",
+            "name": "Quality Consultant"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Receive Document Content": {
+        "main": [
+          [
+            {
+              "node": "Pinecone Vector Store",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Embeddings": {
+        "ai_embedding": [
+          [
+            {
+              "node": "Pinecone Vector Store",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Document Loader": {
+        "ai_document": [
+          [
+            {
+              "node": "Pinecone Vector Store",
+              "type": "ai_document",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Text Splitter": {
+        "ai_textSplitter": [
+          [
+            {
+              "node": "Document Loader",
+              "type": "ai_textSplitter",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Confirmation": {
+        "main": [
+          []
+        ]
+      },
+      "Pinecone Vector Store": {
+        "main": [
+          [
+            {
+              "node": "Send Confirmation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "n8n whitelabel",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "af4ab223-ec50-4974-a048-e28947e3a8bf",
   "connections": {
     "Receive Document Content": {
       "main": [
