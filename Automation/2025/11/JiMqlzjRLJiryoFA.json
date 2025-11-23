@@ -3,17 +3,6 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "CREAR CLIENTE1": {
-      "main": [
-        [
-          {
-            "node": "response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When Executed by Another Workflow": {
       "main": [
         [
@@ -29,168 +18,7 @@
       "main": [
         [
           {
-            "node": "buscar si ya existe el NIT",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "buscar si ya existe el NIT": {
-      "main": [
-        [
-          {
-            "node": "cliente existe?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validar nit_cliente": {
-      "main": [
-        [
-          {
-            "node": "Buscar cliente por nit1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Falta NIT (Respuesta)1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Sede duplicada?": {
-      "main": [
-        [
-          {
-            "node": "Sede ya existe",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Obtener Ultima sede_id",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Cliente existe?1": {
-      "main": [
-        [
-          {
-            "node": "Cliente NO existe",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        []
-      ]
-    },
-    "Buscar cliente por nit1": {
-      "main": [
-        [
-          {
-            "node": "¿Cliente existe?1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Buscar sede duplicada": {
-      "main": [
-        [
-          {
-            "node": "¿Sede duplicada?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener Ultima sede_id": {
-      "main": [
-        [
-          {
-            "node": "Generar consecutivo sedeXXX",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Generar consecutivo sedeXXX": {
-      "main": [
-        [
-          {
-            "node": "crear sede",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "crear sede": {
-      "main": [
-        [
-          {
-            "node": "Respuesta Creado1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "cliente existe?": {
-      "main": [
-        [
-          {
-            "node": "Obtener consecutivo Ultima sede_id",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "CLIENTE NO EXISTE",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "response failed",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "CREAR CLIENTE1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener consecutivo Ultima sede_id": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
+            "node": "buscar si ya existe sede",
             "type": "main",
             "index": 0
           }
@@ -201,7 +29,87 @@
       "main": [
         [
           {
-            "node": "crear sede1",
+            "node": "Registrar Nuevo Equipo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar si ya existe sede": {
+      "main": [
+        [
+          {
+            "node": "sede existe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sede existe?": {
+      "main": [
+        [
+          {
+            "node": "buscar si ya existe serial ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "sede NO existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener consecutivo equipo_id": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Nuevo Equipo": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar si ya existe serial ": {
+      "main": [
+        [
+          {
+            "node": "serial existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "serial existe": {
+      "main": [
+        [
+          {
+            "node": "mensaje: serial ya existe",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obtener consecutivo equipo_id",
             "type": "main",
             "index": 0
           }
@@ -219,76 +127,42 @@
   "nodes": [
     {
       "parameters": {
-        "authentication": "nocoDbApiToken",
-        "operation": "create",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "m58lt3zk9pd4acn",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldName": "=client_id",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.cliente_id }}"
-            },
-            {
-              "fieldName": "=razon_social",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.razon_social }}"
-            },
-            {
-              "fieldName": "=telefono_contacto",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.telefono_contacto }}"
-            },
-            {
-              "fieldName": "persona_encargada",
-              "fieldValue": "={{ $('Edit Fields').item.json.persona_encargada }}"
-            },
-            {
-              "fieldName": "direccion_principal",
-              "fieldValue": "={{ $('Edit Fields').item.json.direccion_principal }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        1424,
-        496
-      ],
-      "id": "2ae6319b-f84a-4462-a698-281651523bcc",
-      "name": "CREAR CLIENTE1",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
-    },
-    {
-      "parameters": {
         "workflowInputs": {
           "values": [
             {
               "name": "tipo_registro"
             },
             {
-              "name": "cliente_id",
+              "name": "sede_id",
               "type": "number"
             },
             {
-              "name": "nombre_sede"
+              "name": "ubicacion_equipo"
             },
             {
-              "name": "telefono_contacto",
+              "name": "tipo_equipo",
               "type": "number"
             },
             {
-              "name": "persona_encargada"
+              "name": "marca"
             },
             {
-              "name": "direccion_sede"
+              "name": "modelo"
             },
             {
-              "name": "message"
+              "name": "serial"
+            },
+            {
+              "name": "refrigante"
+            },
+            {
+              "name": "capacidad_toneladas"
+            },
+            {
+              "name": "voltaje"
+            },
+            {
+              "name": "periocidad_tipo"
             }
           ]
         }
@@ -296,7 +170,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -704,
+        -752,
         528
       ],
       "id": "dea7e80b-474b-4e2c-8998-8e27ee745d56",
@@ -314,32 +188,50 @@
             },
             {
               "id": "3772b988-562b-4718-bd2f-4b7486307d2c",
-              "name": "cliente_id",
-              "value": "={{ $json.cliente_id }}",
+              "name": "sede_id",
+              "value": "={{ $json.sede_id }}",
               "type": "string"
             },
             {
               "id": "d9dc68b7-256e-4b48-8021-c5acd4b6a9f8",
-              "name": "nombre_sede",
-              "value": "={{ $json.nombre_sede }}",
+              "name": "ubicacion_equipo",
+              "value": "={{ $json.ubicacion_equipo }}",
               "type": "string"
             },
             {
               "id": "41c5c7c9-98c8-4c75-9fba-95aa768b8b7d",
-              "name": "telefono_contacto",
-              "value": "={{ $json.telefono_contacto }}",
+              "name": "tipo_equipo",
+              "value": "={{ $json.tipo_equipo }}",
               "type": "string"
             },
             {
               "id": "a08ae7ba-e543-4e9d-944e-c6efe761ad3f",
-              "name": "persona_encargada",
-              "value": "={{ $json.persona_encargada }}",
+              "name": "marca",
+              "value": "={{ $json.marca }}",
               "type": "string"
             },
             {
               "id": "18f60e1f-b41f-46a3-bd79-fc7b5b080d79",
-              "name": "direccion_sede",
-              "value": "={{ $json.direccion_sede }}",
+              "name": "modelo",
+              "value": "={{ $json.modelo }}",
+              "type": "string"
+            },
+            {
+              "id": "1f4f4f0d-1528-4d0a-80fe-618091b41749",
+              "name": "serial",
+              "value": "={{ $json.serial }}",
+              "type": "string"
+            },
+            {
+              "id": "49e95b4f-c4ea-431f-b9ed-e7cdd3d8adf8",
+              "name": "refrigante",
+              "value": "={{ $json.refrigante }}",
+              "type": "string"
+            },
+            {
+              "id": "9a6e504d-b99d-4a59-bf3e-621b7a58341b",
+              "name": "voltaje",
+              "value": "={{ $json.periocidad_tipo }}",
               "type": "string"
             }
           ]
@@ -349,7 +241,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -448,
+        -560,
         528
       ],
       "id": "99178b01-4755-4733-b538-b832404e7608",
@@ -357,23 +249,36 @@
     },
     {
       "parameters": {
+        "jsCode": "const last = $input.first().json.equipo_id || \"eq000\";\nconst num = parseInt(last.replace(\"eq\", \"\")) + 1;\nconst padded = String(num).padStart(3, \"0\");\nreturn [{ id_equipo: `eq${padded}` }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        528
+      ],
+      "id": "3c320093-e8d4-443b-904b-383ff68fc2f1",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "getAll",
         "projectId": "pt2jl7502mka8xd",
-        "table": "m58lt3zk9pd4acn",
+        "table": "mwq5ww7arsq1lzg",
         "returnAll": true,
         "options": {
-          "where": "=(client_id,like,{{ $json.cliente_id }})"
+          "where": "=(sede_id,like,{{ $json.sede_id }})"
         }
       },
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -224,
+        -336,
         528
       ],
       "id": "c6930175-4c08-46b8-890d-f8a31fa937a1",
-      "name": "buscar si ya existe el NIT",
+      "name": "buscar si ya existe sede",
       "alwaysOutputData": true,
       "credentials": {
         "nocoDbApiToken": {
@@ -382,265 +287,6 @@
         }
       },
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "dc61b81b-a101-411b-afd6-8e7d409acc71",
-              "name": "mensaje ",
-              "value": "=tu peticion a sido resuelta, se ha registrado un nuevo cliente en la base de datos con id {{ $json.client_id }} razon social: {{ $json.razon_social }}. ahora debemos registrar las  sedes, los equipos y cronograma de mantenimientos para este cliente.",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1648,
-        496
-      ],
-      "id": "e09553c5-fe15-4fcf-aa23-664ef2012410",
-      "name": "response"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "5de2bfa0-9b04-4848-86de-e05a4e4ba465",
-              "name": "mensaje",
-              "value": "=Vaya!!! Parece que este Nit ya existe en nuestra base de datos y pertenece al cliente:  {{ $json.razon_social }}, persona encargada: {{ $json.persona_encargada }}, telefono de contacto.{{ $json.telefono_contacto }}. No podemos realizar un doble registro. Por favor verifica el Nit.",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1520,
-        160
-      ],
-      "id": "a055a127-dc7b-4ad7-966f-9689446f86f5",
-      "name": "response failed"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{$json.payload.nit_cliente}}",
-              "operation": "isEmpty"
-            }
-          ]
-        }
-      },
-      "id": "10a91970-a658-4f88-87cf-3f30ba71d743",
-      "name": "Validar nit_cliente",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -912,
-        1616
-      ]
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "48dec25b-00c8-4e98-8fe6-219eba5fec8d",
-      "name": "Cliente NO existe",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1,
-      "position": [
-        -64,
-        1408
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{$json.data.length}}",
-              "operation": "larger"
-            }
-          ]
-        }
-      },
-      "id": "ee1bddb7-90b9-4b2d-b658-15fdae7052e5",
-      "name": "¿Sede duplicada?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        256,
-        1616
-      ]
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "817e0645-7a87-44db-b864-7c69b69fd139",
-      "name": "Sede ya existe",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1,
-      "position": [
-        560,
-        1408
-      ]
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "c1b0e468-1a8c-44ed-8232-89487341996e",
-      "name": "Falta NIT (Respuesta)1",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1,
-      "position": [
-        -704,
-        1792
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{$json.data.length}}",
-              "operation": "equal"
-            }
-          ]
-        }
-      },
-      "id": "b09115e9-4986-4fee-8831-ab3416418a32",
-      "name": "¿Cliente existe?1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -384,
-        1600
-      ]
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "1afa1f9b-1dbb-4268-8d4b-f0bc42bc17d3",
-      "name": "Respuesta Creado1",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1,
-      "position": [
-        1264,
-        1632
-      ]
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "m58lt3zk9pd4acn",
-        "id": "=nit = {{$json.payload.nit}}"
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        -624,
-        1600
-      ],
-      "id": "228df9f7-df8c-4597-8679-4f32d1064ba4",
-      "name": "Buscar cliente por nit1",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "m58lt3zk9pd4acn",
-        "id": "=nit = {{$json.payload.nit}}"
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        -16,
-        1616
-      ],
-      "id": "b79e0f2e-bfc2-4bd3-b562-143229289a26",
-      "name": "Buscar sede duplicada",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "mwq5ww7arsq1lzg",
-        "id": "=nit = {{$json.payload.nit}}"
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        544,
-        1632
-      ],
-      "id": "0a413c70-07f2-489f-85a1-5c68cf7d4727",
-      "name": "Obtener Ultima sede_id",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "functionCode": "const last = $json.data[0]?.sede_id || \"sede000\";\nconst num = parseInt(last.replace(\"sede\", \"\")) + 1;\nconst padded = String(num).padStart(3, \"0\");\nreturn [{ sede_id: `sede${padded}` }];"
-      },
-      "id": "895148e3-6afe-4911-a9bf-4db4fe70352d",
-      "name": "Generar consecutivo sedeXXX",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        784,
-        1632
-      ]
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "mwq5ww7arsq1lzg",
-        "id": "=nit = {{$json.payload.nit}}"
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        1024,
-        1632
-      ],
-      "id": "a01893e6-c5e6-4f09-9c48-4c274f044d14",
-      "name": "crear sede",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
     },
     {
       "parameters": {
@@ -654,83 +300,26 @@
         }
       },
       "id": "29a07640-2c6a-4f3e-9783-1b1fb3c2024e",
-      "name": "cliente existe?",
+      "name": "sede existe?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        16,
+        -112,
         528
       ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "d216fd2c-0bac-4b2d-ac6b-63de813cc955",
-              "leftValue": "={{ $json.razon_social }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        1184,
-        384
-      ],
-      "id": "164f6a80-670c-46ed-99b8-030f2977e631",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a262ba7e-d10a-4df3-8f2c-10ebd9d93ac3",
-              "name": "cliente_id",
-              "value": "Lo siento, no he podido procesar tu solicitud. Este cliente aún no existe en nuestra base de datos; debes crearlo primero para poder asignar una sede.",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        240,
-        768
-      ],
-      "id": "cb348c7e-1029-4778-885f-cc37950ef18d",
-      "name": "CLIENTE NO EXISTE"
     },
     {
       "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "getAll",
         "projectId": "pt2jl7502mka8xd",
-        "table": "mwq5ww7arsq1lzg",
+        "table": "mjdctrqix3ttqsq",
         "limit": 1,
         "options": {
           "sort": {
             "property": [
               {
-                "field": "sede_id",
+                "field": "equipo_id",
                 "direction": "desc"
               }
             ]
@@ -740,11 +329,11 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        288,
-        512
+        560,
+        528
       ],
       "id": "d13f7bc8-672d-41d8-9c46-7e0c95a3bfb1",
-      "name": "Obtener consecutivo Ultima sede_id",
+      "name": "Obtener consecutivo equipo_id",
       "alwaysOutputData": true,
       "credentials": {
         "nocoDbApiToken": {
@@ -756,39 +345,74 @@
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a262ba7e-d10a-4df3-8f2c-10ebd9d93ac3",
+              "name": "cliente_id",
+              "value": "El cliente no cuenta con una sede registrada para asociar el equipo. Debes crear la sede antes de continuar. ¿Deseas proceder con el registro de la sede ahora?",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        752
+      ],
+      "id": "cb348c7e-1029-4778-885f-cc37950ef18d",
+      "name": "sede NO existe"
+    },
+    {
+      "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "create",
         "projectId": "pt2jl7502mka8xd",
-        "table": "mwq5ww7arsq1lzg",
+        "table": "mjdctrqix3ttqsq",
         "fieldsUi": {
           "fieldValues": [
             {
-              "fieldName": "sede_id",
-              "fieldValue": "={{ $json.sede_id }}"
+              "fieldName": "equipo_id",
+              "fieldValue": "={{ $json.id_equipo }}"
             },
             {
-              "fieldName": "client_id",
-              "fieldValue": "={{ $('Edit Fields').item.json.cliente_id }}"
+              "fieldName": "=sede_id",
+              "fieldValue": "={{ $('buscar si ya existe sede').item.json.sede_id }}"
             },
             {
-              "fieldName": "=nombre_sede",
-              "fieldValue": "={{ $('Edit Fields').item.json.nombre_sede }}"
+              "fieldName": "ubicacion_equipo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.ubicacion_equipo }}"
             },
             {
-              "fieldName": "telefono_contacto",
-              "fieldValue": "={{ $('Edit Fields').item.json.telefono_contacto }}"
+              "fieldName": "tipo_equipo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.tipo_equipo }}"
             },
             {
-              "fieldName": "persona_encargada",
-              "fieldValue": "={{ $('Edit Fields').item.json.persona_encargada }}"
+              "fieldName": "marca",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.marca }}"
             },
             {
-              "fieldName": "direccion_sede",
-              "fieldValue": "={{ $('Edit Fields').item.json.direccion_sede }}"
+              "fieldName": "=modelo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.modelo }}"
             },
             {
-              "fieldName": "telefono_contacto",
-              "fieldValue": "={{ $('Edit Fields').item.json.telefono_contacto }}"
+              "fieldName": "serial",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.serial }}"
+            },
+            {
+              "fieldName": "refrigerante",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.refrigante }}"
+            },
+            {
+              "fieldName": "capacidad_toneladas",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.voltaje }}"
+            },
+            {
+              "fieldName": "periocidad_tipo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.periocidad_tipo }}"
             }
           ]
         }
@@ -796,11 +420,11 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        768,
-        512
+        992,
+        528
       ],
       "id": "fe643ee8-dc7d-4cae-90d1-46a6d2951d36",
-      "name": "crear sede1",
+      "name": "Registrar Nuevo Equipo",
       "credentials": {
         "nocoDbApiToken": {
           "id": "PngKKQ0D2nKSCDu8",
@@ -810,33 +434,100 @@
     },
     {
       "parameters": {
-        "jsCode": "const last =$input.first().json.sede_id ;\nconst num = parseInt(last.replace(\"sede\", \"\")) + 1;\nconst padded = String(num).padStart(3, \"0\");\nreturn [{ sede_id: `sede${padded}` }];"
+        "assignments": {
+          "assignments": [
+            {
+              "id": "486b0a59-492a-4113-adb6-5f9ce596280c",
+              "name": "mensaje",
+              "value": "=El equipo {{ $json.marca }} {{ $json.tipo_equipo }} serial {{ $json.serial }} a sido registrado exitosamente en la base de datos con el id {{ $json.equipo_id }} y ha sido asignado a la {{ $json.sede_id }}. ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        528,
+        1248,
+        528
+      ],
+      "id": "f11776fc-6a72-4632-a6d4-1f49ca4738d0",
+      "name": "Response"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mjdctrqix3ttqsq",
+        "returnAll": true,
+        "options": {
+          "where": "=(serial,like,{{ $('When Executed by Another Workflow').item.json.serial }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        112,
         512
       ],
-      "id": "3c320093-e8d4-443b-904b-383ff68fc2f1",
-      "name": "Code in JavaScript"
+      "id": "73fbfd3e-13b2-448e-b517-2d55404c7f2c",
+      "name": "buscar si ya existe serial ",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.serial }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "e167fff0-d312-4596-869e-9debbd4228fe",
+      "name": "serial existe",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        304,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3bf645ad-53cf-4d97-9178-d919b2099034",
+              "name": "mensaje",
+              "value": "=el serial  {{ $json.serial }} pertenece al equipo {{ $json.marca }} {{ $json.tipo_equipo }} modelo {{ $json.modelo }} ya registrado en nuestra base de datos con el id {{ $json.equipo_id }}. ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        304
+      ],
+      "id": "904892f4-a4b6-4001-9526-ddd118e800f0",
+      "name": "mensaje: serial ya existe"
     }
   ],
-  "pinData": {
-    "When Executed by Another Workflow": [
-      {
-        "json": {
-          "tipo_registro": "sede",
-          "cliente_id": "58965478",
-          "nombre_sede": "Sede Administrativa Norte",
-          "telefono_contacto": "+57 601 745 8989",
-          "persona_encargada": "Carlos Rodríguez",
-          "direccion_sede": "Autopista Norte # 123-45, Bogotá",
-          "message": "Quiero registrar la Sede Administrativa Norte en Bogotá, dirección Autopista Norte 123-45, el encargado es Carlos Rodríguez cel 6017458989."
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -855,6 +546,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-22T22:32:45.868Z",
-  "versionId": "781f081e-219a-48e7-8f36-f11db1f86e93"
+  "updatedAt": "2025-11-23T03:29:52.278Z",
+  "versionId": "d6b1d636-8b9d-45d5-9f0d-aca2ee163d1c"
 }
