@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-11-22T22:28:36.859Z",
-    "createdAt": "2025-11-22T22:28:36.859Z",
-    "versionId": "025648cc-c0cf-49f7-988a-7a497e7e8eda",
+    "updatedAt": "2025-11-23T03:57:24.726Z",
+    "createdAt": "2025-11-23T03:57:24.726Z",
+    "versionId": "2bd15cac-e153-4370-bd31-eab016b60d42",
     "workflowId": "BoCJVwCmbFhDx9rI",
     "nodes": [
       {
@@ -858,7 +858,7 @@
       },
       {
         "parameters": {
-          "amount": 3
+          "amount": 6
         },
         "type": "n8n-nodes-base.wait",
         "typeVersion": 1.1,
@@ -1846,8 +1846,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          9376,
-          3088
+          9312,
+          2976
         ],
         "id": "66c41455-b522-42ab-9bd7-fcb56d46b49b",
         "name": "Google Gemini Chat Model1",
@@ -1868,8 +1868,8 @@
         "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
         "typeVersion": 1.5,
         "position": [
-          9504,
-          3088
+          9344,
+          3120
         ],
         "id": "e6741c7e-7654-451e-a691-b839a4ac3b47",
         "name": "Redis Chat Memory1",
@@ -1992,8 +1992,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          9632,
-          3088
+          9440,
+          3264
         ],
         "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
         "name": "consultar_cliente"
@@ -2279,8 +2279,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          9760,
-          3088
+          9632,
+          3264
         ],
         "id": "c20f7974-9613-4e10-a261-abcbab913cb4",
         "name": "consultar_equipos"
@@ -2331,8 +2331,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          9888,
-          3088
+          9808,
+          3264
         ],
         "id": "c222a22b-2758-469c-b10f-b186713baf2e",
         "name": "cronograma_mantenimientos"
@@ -2457,8 +2457,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          10144,
-          3088
+          9488,
+          3408
         ],
         "id": "5ab6d948-cf8d-4795-b367-43d8a0c95e75",
         "name": "registrar_clientes"
@@ -2566,11 +2566,172 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          10320,
-          3088
+          9680,
+          3408
         ],
         "id": "6b730e6d-6d20-48e3-b64e-5d529b4ceb95",
         "name": "registrar_sedes"
+      },
+      {
+        "parameters": {
+          "descriptionType": "manual",
+          "toolDescription": "llama a esta tool cuando en el promt  sea: VALIDACION_DE_ROLES_ACTIVA = true",
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "vUBjHXJ0OOjw4pAc",
+            "mode": "list",
+            "cachedResultName": "validacion_roles",
+            "cachedResultUrl": "/projects/73zSRVHGJwFSDWts/datatables/vUBjHXJ0OOjw4pAc"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "No_whatsapp",
+                "keyValue": "={{ $('ChatwootData').item.json.phone_number }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.dataTableTool",
+        "typeVersion": 1,
+        "position": [
+          10048,
+          3264
+        ],
+        "id": "80b95918-2d92-47df-9dd8-8112a8cdf0fb",
+        "name": "Consultar_roles"
+      },
+      {
+        "parameters": {
+          "description": "Utiliza esta herramienta para registrar un equipo de una sede existente. Solicita: tipo_registro (siempre \"equipo\"), sede_id, ubicacion del equipo, tipo, marca, modelo, serial, refrigerante, capacidad, voltaje, periocidad, haz preguntas de confirmacion  antes de registrar.",
+          "workflowId": {
+            "__rl": true,
+            "value": "JiMqlzjRLJiryoFA",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/JiMqlzjRLJiryoFA",
+            "cachedResultName": "Acondicionados SAS — registrar_equipos"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "sede_id": 0,
+              "tipo_equipo": 0
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "tipo_registro",
+                "displayName": "tipo_registro",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "sede_id",
+                "displayName": "sede_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number"
+              },
+              {
+                "id": "ubicacion_equipo",
+                "displayName": "ubicacion_equipo",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "tipo_equipo",
+                "displayName": "tipo_equipo",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number"
+              },
+              {
+                "id": "marca",
+                "displayName": "marca",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "modelo",
+                "displayName": "modelo",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "serial",
+                "displayName": "serial",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "refrigante",
+                "displayName": "refrigante",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "capacidad_toneladas",
+                "displayName": "capacidad_toneladas",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "voltaje",
+                "displayName": "voltaje",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "periocidad_tipo",
+                "displayName": "periocidad_tipo",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          9904,
+          3408
+        ],
+        "id": "fb71dfc9-04b0-4b97-9e9a-3ef55b91aee0",
+        "name": "registrar_equipos"
       }
     ],
     "connections": {
@@ -3263,13 +3424,35 @@
             }
           ]
         ]
+      },
+      "Consultar_roles": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent with Langfuse",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "registrar_equipos": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent with Langfuse",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "n8n whitelabel",
     "name": null,
     "description": null
   },
-  "activeVersionId": "025648cc-c0cf-49f7-988a-7a497e7e8eda",
+  "activeVersionId": "2bd15cac-e153-4370-bd31-eab016b60d42",
   "connections": {
     "Data": {
       "main": [
@@ -3951,6 +4134,28 @@
       ]
     },
     "registrar_sedes": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar_roles": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with Langfuse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "registrar_equipos": {
       "ai_tool": [
         [
           {
@@ -4822,7 +5027,7 @@
     },
     {
       "parameters": {
-        "amount": 3
+        "amount": 6
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
@@ -5810,8 +6015,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        9376,
-        3088
+        9312,
+        2976
       ],
       "id": "66c41455-b522-42ab-9bd7-fcb56d46b49b",
       "name": "Google Gemini Chat Model1",
@@ -5832,8 +6037,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        9504,
-        3088
+        9344,
+        3120
       ],
       "id": "e6741c7e-7654-451e-a691-b839a4ac3b47",
       "name": "Redis Chat Memory1",
@@ -5956,8 +6161,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        9632,
-        3088
+        9440,
+        3264
       ],
       "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
       "name": "consultar_cliente"
@@ -6243,8 +6448,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        9760,
-        3088
+        9632,
+        3264
       ],
       "id": "c20f7974-9613-4e10-a261-abcbab913cb4",
       "name": "consultar_equipos"
@@ -6295,8 +6500,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        9888,
-        3088
+        9808,
+        3264
       ],
       "id": "c222a22b-2758-469c-b10f-b186713baf2e",
       "name": "cronograma_mantenimientos"
@@ -6421,8 +6626,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        10144,
-        3088
+        9488,
+        3408
       ],
       "id": "5ab6d948-cf8d-4795-b367-43d8a0c95e75",
       "name": "registrar_clientes"
@@ -6530,11 +6735,172 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        10320,
-        3088
+        9680,
+        3408
       ],
       "id": "6b730e6d-6d20-48e3-b64e-5d529b4ceb95",
       "name": "registrar_sedes"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "llama a esta tool cuando en el promt  sea: VALIDACION_DE_ROLES_ACTIVA = true",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "vUBjHXJ0OOjw4pAc",
+          "mode": "list",
+          "cachedResultName": "validacion_roles",
+          "cachedResultUrl": "/projects/73zSRVHGJwFSDWts/datatables/vUBjHXJ0OOjw4pAc"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "No_whatsapp",
+              "keyValue": "={{ $('ChatwootData').item.json.phone_number }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        10048,
+        3264
+      ],
+      "id": "80b95918-2d92-47df-9dd8-8112a8cdf0fb",
+      "name": "Consultar_roles"
+    },
+    {
+      "parameters": {
+        "description": "Utiliza esta herramienta para registrar un equipo de una sede existente. Solicita: tipo_registro (siempre \"equipo\"), sede_id, ubicacion del equipo, tipo, marca, modelo, serial, refrigerante, capacidad, voltaje, periocidad, haz preguntas de confirmacion  antes de registrar.",
+        "workflowId": {
+          "__rl": true,
+          "value": "JiMqlzjRLJiryoFA",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/JiMqlzjRLJiryoFA",
+          "cachedResultName": "Acondicionados SAS — registrar_equipos"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "sede_id": 0,
+            "tipo_equipo": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "tipo_registro",
+              "displayName": "tipo_registro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "sede_id",
+              "displayName": "sede_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "ubicacion_equipo",
+              "displayName": "ubicacion_equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "tipo_equipo",
+              "displayName": "tipo_equipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "marca",
+              "displayName": "marca",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "modelo",
+              "displayName": "modelo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "serial",
+              "displayName": "serial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "refrigante",
+              "displayName": "refrigante",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "capacidad_toneladas",
+              "displayName": "capacidad_toneladas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "voltaje",
+              "displayName": "voltaje",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "periocidad_tipo",
+              "displayName": "periocidad_tipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        9904,
+        3408
+      ],
+      "id": "fb71dfc9-04b0-4b97-9e9a-3ef55b91aee0",
+      "name": "registrar_equipos"
     }
   ],
   "pinData": {},
@@ -6566,6 +6932,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-22T22:28:36.871Z",
-  "versionId": "025648cc-c0cf-49f7-988a-7a497e7e8eda"
+  "updatedAt": "2025-11-23T03:57:24.735Z",
+  "versionId": "2bd15cac-e153-4370-bd31-eab016b60d42"
 }
