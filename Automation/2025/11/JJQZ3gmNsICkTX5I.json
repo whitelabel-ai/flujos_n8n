@@ -7,7 +7,7 @@
       "main": [
         [
           {
-            "node": "Leer Hoja con URL",
+            "node": "Upload file",
             "type": "main",
             "index": 0
           }
@@ -120,6 +120,22 @@
           }
         ]
       ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Leer Hoja con URL",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-11-20T14:31:29.478Z",
@@ -136,7 +152,7 @@
       "name": "Manual Trigger",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -768,
+        -1184,
         80
       ],
       "typeVersion": 1
@@ -149,7 +165,7 @@
       "name": "Split In Batches",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        0,
+        208,
         0
       ],
       "typeVersion": 3
@@ -261,7 +277,7 @@
       "name": "Update Origen",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1792,
+        2000,
         16
       ],
       "typeVersion": 4.7,
@@ -289,7 +305,7 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        576,
+        784,
         16
       ],
       "id": "996c7a16-08da-4977-9118-37d4e1992495",
@@ -323,7 +339,7 @@
       "name": "Leer Hoja con URL",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -560,
+        -352,
         80
       ],
       "typeVersion": 4.7,
@@ -332,7 +348,8 @@
           "id": "CM7JsKen8ouMDNPD",
           "name": "hola@whitelabel.lat"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -362,7 +379,7 @@
       "name": "Filtrar Pendientes",
       "type": "n8n-nodes-base.if",
       "position": [
-        -352,
+        -144,
         80
       ],
       "typeVersion": 2.2
@@ -380,7 +397,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        288,
+        496,
         16
       ],
       "id": "ebb09acc-6961-42c7-971e-99cca6064abd",
@@ -399,7 +416,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        896,
+        1104,
         16
       ],
       "id": "d564f954-e7fd-41cf-9b36-393a6c4cad40",
@@ -471,7 +488,7 @@
       "name": "Mapear",
       "type": "n8n-nodes-base.set",
       "position": [
-        1248,
+        1456,
         16
       ],
       "typeVersion": 3.4
@@ -623,7 +640,7 @@
       "name": "Añadir en db_historicos",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1504,
+        1712,
         16
       ],
       "typeVersion": 4.7,
@@ -639,11 +656,60 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -48,
+        160,
         288
       ],
       "id": "049bb23c-713a-4718-bba2-78ba12727186",
       "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -800,
+        80
+      ],
+      "id": "8bf93a31-cf60-44b8-bdeb-9f54e39d53e0",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "kPkSeRbSxQ9qwSQq",
+          "name": "Google Drive account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.3,
+      "position": [
+        -592,
+        80
+      ],
+      "id": "a6910a38-ab5a-47bc-95fe-90040744ba6d",
+      "name": "Form",
+      "webhookId": "6ba0d2c9-e2dd-446b-9735-5dd5db51cf56"
     }
   ],
   "pinData": {},
@@ -665,6 +731,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-20T22:39:49.700Z",
-  "versionId": "bf99f61a-31bd-4298-940f-02750193bdc5"
+  "updatedAt": "2025-11-23T02:16:57.421Z",
+  "versionId": "76c4c07e-7774-4a38-921d-28aeff2e1cfe"
 }
