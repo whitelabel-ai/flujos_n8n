@@ -1,0 +1,550 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "buscar si ya existe sede",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Registrar Nuevo Equipo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar si ya existe sede": {
+      "main": [
+        [
+          {
+            "node": "sede existe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sede existe?": {
+      "main": [
+        [
+          {
+            "node": "buscar si ya existe serial ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "sede NO existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener consecutivo equipo_id": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Nuevo Equipo": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar si ya existe serial ": {
+      "main": [
+        [
+          {
+            "node": "serial existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "serial existe": {
+      "main": [
+        [
+          {
+            "node": "mensaje: serial ya existe",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obtener consecutivo equipo_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-23T02:02:05.996Z",
+  "id": "53iuoicidfW5wYIs",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "registrar_cronograma_mantenimientos",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "tipo_registro"
+            },
+            {
+              "name": "equipo_id"
+            },
+            {
+              "name": "ubicacion_equipo"
+            },
+            {
+              "name": "tipo_equipo",
+              "type": "number"
+            },
+            {
+              "name": "marca"
+            },
+            {
+              "name": "modelo"
+            },
+            {
+              "name": "serial"
+            },
+            {
+              "name": "refrigante"
+            },
+            {
+              "name": "capacidad_toneladas"
+            },
+            {
+              "name": "voltaje"
+            },
+            {
+              "name": "periocidad_tipo"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -752,
+        528
+      ],
+      "id": "2b36ab40-8366-432a-a3b0-411a5579ac45",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9add1b52-e351-4bb3-91b5-4b65959d7344",
+              "name": "tipo_registro",
+              "value": "={{ $json.tipo_registro }}",
+              "type": "string"
+            },
+            {
+              "id": "3772b988-562b-4718-bd2f-4b7486307d2c",
+              "name": "sede_id",
+              "value": "={{ $json.sede_id }}",
+              "type": "string"
+            },
+            {
+              "id": "d9dc68b7-256e-4b48-8021-c5acd4b6a9f8",
+              "name": "ubicacion_equipo",
+              "value": "={{ $json.ubicacion_equipo }}",
+              "type": "string"
+            },
+            {
+              "id": "41c5c7c9-98c8-4c75-9fba-95aa768b8b7d",
+              "name": "tipo_equipo",
+              "value": "={{ $json.tipo_equipo }}",
+              "type": "string"
+            },
+            {
+              "id": "a08ae7ba-e543-4e9d-944e-c6efe761ad3f",
+              "name": "marca",
+              "value": "={{ $json.marca }}",
+              "type": "string"
+            },
+            {
+              "id": "18f60e1f-b41f-46a3-bd79-fc7b5b080d79",
+              "name": "modelo",
+              "value": "={{ $json.modelo }}",
+              "type": "string"
+            },
+            {
+              "id": "1f4f4f0d-1528-4d0a-80fe-618091b41749",
+              "name": "serial",
+              "value": "={{ $json.serial }}",
+              "type": "string"
+            },
+            {
+              "id": "49e95b4f-c4ea-431f-b9ed-e7cdd3d8adf8",
+              "name": "refrigante",
+              "value": "={{ $json.refrigante }}",
+              "type": "string"
+            },
+            {
+              "id": "9a6e504d-b99d-4a59-bf3e-621b7a58341b",
+              "name": "voltaje",
+              "value": "={{ $json.periocidad_tipo }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -544,
+        528
+      ],
+      "id": "90c14761-f704-4a03-8c39-6f97a25a4b51",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const last = $input.first().json.equipo_id || \"eq000\";\nconst num = parseInt(last.replace(\"eq\", \"\")) + 1;\nconst padded = String(num).padStart(3, \"0\");\nreturn [{ id_equipo: `eq${padded}` }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        528
+      ],
+      "id": "87567697-befd-4dc2-b70f-80b29b567562",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mwq5ww7arsq1lzg",
+        "returnAll": true,
+        "options": {
+          "where": "=(sede_id,like,{{ $json.sede_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -336,
+        528
+      ],
+      "id": "851db371-d77b-4be1-9033-3e22b5e5cf20",
+      "name": "buscar si ya existe sede",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.client_id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "9ffa47e9-71c4-4438-938a-0fe9d3ea9ea9",
+      "name": "sede existe?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mjdctrqix3ttqsq",
+        "limit": 1,
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "field": "equipo_id",
+                "direction": "desc"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        560,
+        528
+      ],
+      "id": "00078ed3-1929-4113-acbf-a37d333dabcf",
+      "name": "Obtener consecutivo equipo_id",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a262ba7e-d10a-4df3-8f2c-10ebd9d93ac3",
+              "name": "cliente_id",
+              "value": "El cliente no cuenta con una sede registrada para asociar el equipo. Debes crear la sede antes de continuar. ¿Deseas proceder con el registro de la sede ahora?",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        752
+      ],
+      "id": "c5aef143-5863-4077-b765-69e3d3061e01",
+      "name": "sede NO existe"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mjdctrqix3ttqsq",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "equipo_id",
+              "fieldValue": "={{ $json.id_equipo }}"
+            },
+            {
+              "fieldName": "=sede_id",
+              "fieldValue": "={{ $('buscar si ya existe sede').item.json.sede_id }}"
+            },
+            {
+              "fieldName": "ubicacion_equipo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.ubicacion_equipo }}"
+            },
+            {
+              "fieldName": "tipo_equipo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.tipo_equipo }}"
+            },
+            {
+              "fieldName": "marca",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.marca }}"
+            },
+            {
+              "fieldName": "=modelo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.modelo }}"
+            },
+            {
+              "fieldName": "serial",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.serial }}"
+            },
+            {
+              "fieldName": "refrigerante",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.refrigante }}"
+            },
+            {
+              "fieldName": "capacidad_toneladas",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.voltaje }}"
+            },
+            {
+              "fieldName": "periocidad_tipo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.periocidad_tipo }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        992,
+        528
+      ],
+      "id": "d7fda3c8-3edc-40f1-801a-750b9ec1ca6d",
+      "name": "Registrar Nuevo Equipo",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "486b0a59-492a-4113-adb6-5f9ce596280c",
+              "name": "mensaje",
+              "value": "=El equipo {{ $json.marca }} {{ $json.tipo_equipo }} serial {{ $json.serial }} a sido registrado exitosamente en la base de datos con el id {{ $json.equipo_id }} y ha sido asignado a la {{ $json.sede_id }}. ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1248,
+        528
+      ],
+      "id": "3a3dca77-1ad8-45bf-b660-601903203ce6",
+      "name": "Response"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mjdctrqix3ttqsq",
+        "returnAll": true,
+        "options": {
+          "where": "=(serial,like,{{ $('When Executed by Another Workflow').item.json.serial }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        112,
+        512
+      ],
+      "id": "9ba0ba0e-cfad-438d-a6fd-791b5e5f2339",
+      "name": "buscar si ya existe serial ",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.serial }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "4aef1d86-49f4-42be-92cb-d735dbbcfa35",
+      "name": "serial existe",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        304,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3bf645ad-53cf-4d97-9178-d919b2099034",
+              "name": "mensaje",
+              "value": "=el serial  {{ $json.serial }} pertenece al equipo {{ $json.marca }} {{ $json.tipo_equipo }} modelo {{ $json.modelo }} ya registrado en nuestra base de datos con el id {{ $json.equipo_id }}. ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        304
+      ],
+      "id": "f1a9723d-20c0-4f32-9f0c-9e892edf960e",
+      "name": "mensaje: serial ya existe"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-23T02:02:05.996Z",
+      "createdAt": "2025-11-23T02:02:05.996Z",
+      "role": "workflow:owner",
+      "workflowId": "53iuoicidfW5wYIs",
+      "projectId": "73zSRVHGJwFSDWts"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-23T03:57:14.565Z",
+  "versionId": "47a38f76-3a9b-4d0e-8a70-281aaaf6e1ac"
+}
