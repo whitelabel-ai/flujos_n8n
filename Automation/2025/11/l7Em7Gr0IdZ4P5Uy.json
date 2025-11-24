@@ -3,53 +3,83 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "Google Gemini Chat Model": {
+    "JS Para Post Linkedin": {
+      "main": [
+        [
+          {
+            "node": "Tabla Post Linkedin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JS Para Post Blog": {
+      "main": [
+        [
+          {
+            "node": "Tabla Post Blog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabla Post Linkedin": {
+      "main": [
+        []
+      ]
+    },
+    "Péticion Post o Blog": {
+      "main": [
+        [
+          {
+            "node": "Generador de Idea",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generador de Idea": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cerebro": {
       "ai_languageModel": [
         [
           {
-            "node": "AI Agent",
+            "node": "Generador de Idea",
             "type": "ai_languageModel",
             "index": 0
           }
         ]
       ]
     },
-    "AI Agent": {
+    "Switch": {
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "JS Para Post Linkedin",
             "type": "main",
             "index": 0
           }
-        ]
-      ]
-    },
-    "Create a row": {
-      "main": [
+        ],
+        [
+          {
+            "node": "JS Para Post Blog",
+            "type": "main",
+            "index": 0
+          }
+        ],
         []
-      ]
-    },
-    "Telegram Trigger": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "Create a row",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     }
   },
@@ -61,6 +91,32 @@
   },
   "name": "Linkedin Post Generation",
   "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const bruto = $json[\"output\"];\n\n// Elimina todo lo que está antes del primer bloque de \"---\" o de la primera línea vacía tras el JSON\nlet soloTexto = bruto;\n\n// Si detecta bloque JSON dentro del texto:\n// Busca la primera ocurrencia de \"---\" y toma el texto de ahí en adelante\nconst delimitador = '---';\nconst idxDelim = soloTexto.indexOf(delimitador);\nif (idxDelim !== -1) {\n  soloTexto = soloTexto.substring(idxDelim + delimitador.length).trim();\n}\n\n// Si queda encabezado o líneas vacías, las elimina\nsoloTexto = soloTexto.replace(/^\\s+/, '');\n\n// Variables fijas\nconst idea = 'Idea para LinkedIn (automático)';\nconst contenido_LinkedIn = soloTexto;\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\nreturn [{\n  idea,\n  contenido_LinkedIn,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2544,
+        448
+      ],
+      "id": "49621e29-2959-4e6b-b83f-d767ca08d393",
+      "name": "JS Para Post Linkedin"
+    },
+    {
+      "parameters": {
+        "jsCode": "const bruto = $json[\"output\"];\n\n// Limpieza básica igual que para el post\nlet soloTexto = bruto;\nconst delimitador = '__';\nconst idxDelim = soloTexto.indexOf(delimitador);\nif (idxDelim !== -1) {\n  soloTexto = soloTexto.substring(idxDelim + delimitador.length).trim();\n}\nsoloTexto = soloTexto.replace(/^\\s+/, '');\n\n// Genera título automático tomando la primera frase/línea del texto, si no tienes otro campo\nconst titulo = soloTexto.split('\\n')[0].trim() || \"Blog generado automáticamente\";\n\n// Si tu tabla NocoDB para blog tiene campo de tags o etiquetas, puedes generarlas:\nconst palabrasClave = soloTexto\n  .replace(/[.,;:\\n]/g, ' ')\n  .split(' ')\n  .filter(w => w.length > 5)        // Palabras con más de 5 letras\n  .slice(0,5);                      // Selecciona las primeras 5\nconst tags = palabrasClave.join(', ');\n\n// Resumen automático: recorta a 350 caracteres, terminando en la última palabra completa\nlet resumen = soloTexto.substring(0, 350);\nconst ultimoEspacio = resumen.lastIndexOf(' ');\nif (ultimoEspacio > 0) resumen = resumen.substring(0, ultimoEspacio) + '...';\n\n// Guarda el registro para NocoDB (ajusta los campos a tu tabla real)\nreturn {\n  Title: titulo,\n  'Blog Post': soloTexto,      // Texto completo\n  Fecha: '24-11-2025',         // O usa fecha dinámica si prefieres\n  Hora: '15:47',\n  Status: 'Published',         // O Pending si va por revisión\n  Tags: tags,\n  Summary: resumen\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2544,
+        640
+      ],
+      "id": "da3ed30c-edd8-4faf-bdff-17283bffd895",
+      "name": "JS Para Post Blog"
+    },
     {
       "parameters": {
         "authentication": "nocoDbApiToken",
@@ -87,11 +143,11 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -2544,
-        624
+        -2320,
+        448
       ],
       "id": "babdd335-ee11-464b-b16d-1dd46bcf5963",
-      "name": "Create a row",
+      "name": "Tabla Post Linkedin",
       "credentials": {
         "nocoDbApiToken": {
           "id": "od6Ytt9qSUlGVvJb",
@@ -101,37 +157,23 @@
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=Actúa como un creador de contenido profesional de LinkedIn especializado en automatización. Escribe directamente un post extenso (mínimo 200 palabras) listo para publicar en LinkedIn, dirigido a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta o reto, incluye consejos concretos, conclusión inspiradora y hashtags relevantes al final. No incluyas ningún encabezado, formato JSON, comillas ni instrucciones técnicas. Solo el texto del post.\n",
-        "options": {
-          "systemMessage": "=\n"
-        }
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pbyzm06qhp068f6",
+        "table": "md53wc0y8c1g2c3"
       },
-      "type": "@n8n/n8n-nodes-langchain.agent",
+      "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -3120,
-        624
+        -2320,
+        640
       ],
-      "id": "bdcda101-5a1d-4d67-85d8-99409830c126",
-      "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        -3056,
-        848
-      ],
-      "id": "cc03fce0-2418-4352-b24c-7c3aeecc16b6",
-      "name": "Google Gemini Chat Model",
+      "id": "a92a3391-2434-4301-87c8-f497a127b078",
+      "name": "Tabla Post Blog",
       "credentials": {
-        "googlePalmApi": {
-          "id": "jQiccHfpS9BFKE4C",
-          "name": "automation.whitelabel.lat"
+        "nocoDbApiToken": {
+          "id": "od6Ytt9qSUlGVvJb",
+          "name": "NocoDB Token account"
         }
       }
     },
@@ -146,10 +188,10 @@
       "typeVersion": 1.2,
       "position": [
         -3344,
-        624
+        544
       ],
       "id": "4fe12fa1-200d-425c-8457-6cccc40c1563",
-      "name": "Telegram Trigger",
+      "name": "Péticion Post o Blog",
       "webhookId": "44afc123-087c-4246-9f90-7d4d894d8c0f",
       "credentials": {
         "telegramApi": {
@@ -160,16 +202,101 @@
     },
     {
       "parameters": {
-        "jsCode": "const bruto = $json[\"output\"];\n\n// Elimina todo lo que está antes del primer bloque de \"---\" o de la primera línea vacía tras el JSON\nlet soloTexto = bruto;\n\n// Si detecta bloque JSON dentro del texto:\n// Busca la primera ocurrencia de \"---\" y toma el texto de ahí en adelante\nconst delimitador = '---';\nconst idxDelim = soloTexto.indexOf(delimitador);\nif (idxDelim !== -1) {\n  soloTexto = soloTexto.substring(idxDelim + delimitador.length).trim();\n}\n\n// Si queda encabezado o líneas vacías, las elimina\nsoloTexto = soloTexto.replace(/^\\s+/, '');\n\n// Variables fijas\nconst idea = 'Idea para LinkedIn (automático)';\nconst contenido_LinkedIn = soloTexto;\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\nreturn [{\n  idea,\n  contenido_LinkedIn,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];\n"
+        "promptType": "define",
+        "text": "=Actúa como un creador de contenido profesional especializado en automatización, productividad y tecnología. Escribe directamente dos textos separados:\n\nPrimero, genera un post extenso para LinkedIn (mínimo 200 palabras, máximo 3000 caracteres), dirigido a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta o reto, incluye consejos concretos, conclusión inspiradora y hashtags relevantes al final. No incluyas encabezados, formato JSON, comillas ni instrucciones técnicas. Solo el texto del post.\n\nSegundo, genera una entrada de blog extensa (mínimo 300 palabras, sin límite de caracteres), también dirigida a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta provocadora o reto actual, aporta consejos prácticos y ejemplos reales, desarrolla el tema con profundidad y termina con una conclusión inspiradora y hashtags relevantes. No incluyas encabezados, formato JSON, comillas ni instrucciones técnicas; solo el texto completo y natural.",
+        "options": {
+          "systemMessage": "=\n"
+        }
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -3120,
+        544
+      ],
+      "id": "bdcda101-5a1d-4d67-85d8-99409830c126",
+      "name": "Generador de Idea"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -3048,
+        768
+      ],
+      "id": "cc03fce0-2418-4352-b24c-7c3aeecc16b6",
+      "name": "Cerebro",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jQiccHfpS9BFKE4C",
+          "name": "automation.whitelabel.lat"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "d2059200-4f58-4776-8a29-b17d32a04e3f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4a478130-b726-43b7-a769-ac5b67c53aec",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
       "position": [
         -2768,
-        624
+        544
       ],
-      "id": "49621e29-2959-4e6b-b83f-d767ca08d393",
-      "name": "Code in JavaScript"
+      "id": "ea65d74c-12b3-4517-b921-61a86f64b14d",
+      "name": "Switch"
     }
   ],
   "pinData": {},
@@ -191,6 +318,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-11-22T17:56:45.769Z",
-  "versionId": "1c73c303-fc91-46e7-9c0b-23de2046b9e5"
+  "updatedAt": "2025-11-24T22:31:57.120Z",
+  "versionId": "6e7c15c9-a10e-4f4a-b1dd-dfe7051d9db0"
 }
