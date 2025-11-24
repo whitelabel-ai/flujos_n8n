@@ -18,7 +18,7 @@
       "main": [
         [
           {
-            "node": "buscar si ya existe sede",
+            "node": "buscar si equipo ya existe en db_equipos",
             "type": "main",
             "index": 0
           }
@@ -30,35 +30,6 @@
         [
           {
             "node": "Registrar Nuevo Equipo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "buscar si ya existe sede": {
-      "main": [
-        [
-          {
-            "node": "sede existe?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "sede existe?": {
-      "main": [
-        [
-          {
-            "node": "buscar si ya existe serial ",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "sede NO existe",
             "type": "main",
             "index": 0
           }
@@ -87,18 +58,47 @@
         ]
       ]
     },
-    "buscar si ya existe serial ": {
+    "buscar si equipo ya existe en db_equipos": {
       "main": [
         [
           {
-            "node": "serial existe",
+            "node": "equipo existe?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "serial existe": {
+    "equipo existe?": {
+      "main": [
+        [
+          {
+            "node": "buscar equipo en db_cronograma",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "sede NO existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar equipo en db_cronograma": {
+      "main": [
+        [
+          {
+            "node": "equipo existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "equipo existe": {
       "main": [
         [
           {
@@ -136,32 +136,16 @@
               "name": "equipo_id"
             },
             {
-              "name": "ubicacion_equipo"
+              "name": "inicio_o_ultimo_mantenimiento"
             },
             {
-              "name": "tipo_equipo",
-              "type": "number"
+              "name": "proximos_mantenimientos"
             },
             {
-              "name": "marca"
+              "name": "estado"
             },
             {
-              "name": "modelo"
-            },
-            {
-              "name": "serial"
-            },
-            {
-              "name": "refrigante"
-            },
-            {
-              "name": "capacidad_toneladas"
-            },
-            {
-              "name": "voltaje"
-            },
-            {
-              "name": "periocidad_tipo"
+              "name": "notas"
             }
           ]
         }
@@ -169,7 +153,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -752,
+        -896,
         528
       ],
       "id": "2b36ab40-8366-432a-a3b0-411a5579ac45",
@@ -187,50 +171,26 @@
             },
             {
               "id": "3772b988-562b-4718-bd2f-4b7486307d2c",
-              "name": "sede_id",
-              "value": "={{ $json.sede_id }}",
+              "name": "equipo_id",
+              "value": "={{ $json.inicio_o_ultimo_mantenimiento }}",
               "type": "string"
             },
             {
               "id": "d9dc68b7-256e-4b48-8021-c5acd4b6a9f8",
-              "name": "ubicacion_equipo",
-              "value": "={{ $json.ubicacion_equipo }}",
+              "name": "proximos_mantenimientos",
+              "value": "={{ $json.proximos_mantenimientos }}",
               "type": "string"
             },
             {
               "id": "41c5c7c9-98c8-4c75-9fba-95aa768b8b7d",
-              "name": "tipo_equipo",
-              "value": "={{ $json.tipo_equipo }}",
+              "name": "estado",
+              "value": "={{ $json.estado }}",
               "type": "string"
             },
             {
               "id": "a08ae7ba-e543-4e9d-944e-c6efe761ad3f",
-              "name": "marca",
-              "value": "={{ $json.marca }}",
-              "type": "string"
-            },
-            {
-              "id": "18f60e1f-b41f-46a3-bd79-fc7b5b080d79",
-              "name": "modelo",
-              "value": "={{ $json.modelo }}",
-              "type": "string"
-            },
-            {
-              "id": "1f4f4f0d-1528-4d0a-80fe-618091b41749",
-              "name": "serial",
-              "value": "={{ $json.serial }}",
-              "type": "string"
-            },
-            {
-              "id": "49e95b4f-c4ea-431f-b9ed-e7cdd3d8adf8",
-              "name": "refrigante",
-              "value": "={{ $json.refrigante }}",
-              "type": "string"
-            },
-            {
-              "id": "9a6e504d-b99d-4a59-bf3e-621b7a58341b",
-              "name": "voltaje",
-              "value": "={{ $json.periocidad_tipo }}",
+              "name": "notas",
+              "value": "={{ $json.notas }}",
               "type": "string"
             }
           ]
@@ -240,7 +200,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -544,
+        -672,
         528
       ],
       "id": "90c14761-f704-4a03-8c39-6f97a25a4b51",
@@ -258,54 +218,6 @@
       ],
       "id": "87567697-befd-4dc2-b70f-80b29b567562",
       "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "operation": "getAll",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "mwq5ww7arsq1lzg",
-        "returnAll": true,
-        "options": {
-          "where": "=(sede_id,like,{{ $json.sede_id }})"
-        }
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        -336,
-        528
-      ],
-      "id": "851db371-d77b-4be1-9033-3e22b5e5cf20",
-      "name": "buscar si ya existe sede",
-      "alwaysOutputData": true,
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.client_id }}",
-              "operation": "isNotEmpty"
-            }
-          ]
-        }
-      },
-      "id": "9ffa47e9-71c4-4438-938a-0fe9d3ea9ea9",
-      "name": "sede existe?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -112,
-        528
-      ]
     },
     {
       "parameters": {
@@ -379,7 +291,7 @@
             },
             {
               "fieldName": "=sede_id",
-              "fieldValue": "={{ $('buscar si ya existe sede').item.json.sede_id }}"
+              "fieldValue": "={{ $('buscar si equipo ya existe en db_equipos').item.json.sede_id }}"
             },
             {
               "fieldName": "ubicacion_equipo",
@@ -456,6 +368,77 @@
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3bf645ad-53cf-4d97-9178-d919b2099034",
+              "name": "mensaje",
+              "value": "=el serial  {{ $json.serial }} pertenece al equipo {{ $json.marca }} {{ $json.tipo_equipo }} modelo {{ $json.modelo }} ya registrado en nuestra base de datos con el id {{ $json.equipo_id }}. ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        304
+      ],
+      "id": "f1a9723d-20c0-4f32-9f0c-9e892edf960e",
+      "name": "mensaje: serial ya existe"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mwq5ww7arsq1lzg",
+        "returnAll": true,
+        "options": {
+          "where": "=(sede_id,like,{{ $json.sede_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -432,
+        528
+      ],
+      "id": "851db371-d77b-4be1-9033-3e22b5e5cf20",
+      "name": "buscar si equipo ya existe en db_equipos",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.client_id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "9ffa47e9-71c4-4438-938a-0fe9d3ea9ea9",
+      "name": "equipo existe?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        528
+      ]
+    },
+    {
+      "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "getAll",
         "projectId": "pt2jl7502mka8xd",
@@ -468,11 +451,11 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        112,
+        96,
         512
       ],
       "id": "9ba0ba0e-cfad-438d-a6fd-791b5e5f2339",
-      "name": "buscar si ya existe serial ",
+      "name": "buscar equipo en db_cronograma",
       "alwaysOutputData": true,
       "credentials": {
         "nocoDbApiToken": {
@@ -494,39 +477,29 @@
         }
       },
       "id": "4aef1d86-49f4-42be-92cb-d735dbbcfa35",
-      "name": "serial existe",
+      "name": "equipo existe",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
         304,
         512
       ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "3bf645ad-53cf-4d97-9178-d919b2099034",
-              "name": "mensaje",
-              "value": "=el serial  {{ $json.serial }} pertenece al equipo {{ $json.marca }} {{ $json.tipo_equipo }} modelo {{ $json.modelo }} ya registrado en nuestra base de datos con el id {{ $json.equipo_id }}. ",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        560,
-        304
-      ],
-      "id": "f1a9723d-20c0-4f32-9f0c-9e892edf960e",
-      "name": "mensaje: serial ya existe"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "tipo_registro": "cronograma_mantenimiento",
+          "equipo_id": "eq301",
+          "inicio_o_ultimo_mantenimiento": "2023-11-15",
+          "proximos_mantenimientos": "2024-02-15",
+          "estado": "Pendiente",
+          "notas": "Revisión de niveles de aceite y cambio de filtros."
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -545,6 +518,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-23T03:57:14.565Z",
-  "versionId": "47a38f76-3a9b-4d0e-8a70-281aaaf6e1ac"
+  "updatedAt": "2025-11-24T18:38:04.746Z",
+  "versionId": "eedae4c6-9fa2-4115-8e1f-7e44e63822ca"
 }
