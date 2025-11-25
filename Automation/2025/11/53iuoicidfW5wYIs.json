@@ -25,39 +25,6 @@
         ]
       ]
     },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "Registrar Nuevo Equipo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener consecutivo equipo_id": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Registrar Nuevo Equipo": {
-      "main": [
-        [
-          {
-            "node": "Response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "buscar si equipo ya existe en db_equipos": {
       "main": [
         [
@@ -80,7 +47,7 @@
         ],
         [
           {
-            "node": "sede NO existe",
+            "node": "Mensaje: equipo NO existe",
             "type": "main",
             "index": 0
           }
@@ -102,14 +69,127 @@
       "main": [
         [
           {
-            "node": "mensaje: serial ya existe",
+            "node": "mensaje: este equipo ya cuenta con un cronograma1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Obtener consecutivo equipo_id",
+            "node": "crear nuevo cronograma",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar proximos_mantenimientos": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validar fecha inicio_ultimo mantenimiento": {
+      "main": [
+        [
+          {
+            "node": "tiene fecha inicial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "crear nuevo cronograma": {
+      "main": [
+        [
+          {
+            "node": "Verificar proximos_mantenimientos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tiene periocidad?": {
+      "main": [
+        [
+          {
+            "node": "validar fecha inicio_ultimo mantenimiento",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tiene fecha inicial": {
+      "main": [
+        [
+          {
+            "node": "mensaje: este equipo ya cuenta con un cronograma",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "crear fecha de mantenimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "crear fecha de mantenimiento": {
+      "main": [
+        [
+          {
+            "node": "Verificar proximos_mantenimientos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar proximos_mantenimientos1": {
+      "main": [
+        [
+          {
+            "node": "Response1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validar si tiene periciodad": {
+      "main": [
+        [
+          {
+            "node": "tiene periocidad?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row": {
+      "main": [
+        [
+          {
+            "node": "validar fecha inicio_ultimo mantenimiento",
             "type": "main",
             "index": 0
           }
@@ -123,7 +203,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "registrar_cronograma_mantenimientos",
+  "name": "registrar_cronograma",
   "nodes": [
     {
       "parameters": {
@@ -136,7 +216,11 @@
               "name": "equipo_id"
             },
             {
-              "name": "inicio_o_ultimo_mantenimiento"
+              "name": "periocidad_tipo"
+            },
+            {
+              "name": "inicio_o_ultimo_mantenimiento",
+              "type": "number"
             },
             {
               "name": "proximos_mantenimientos"
@@ -153,7 +237,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -896,
+        -1040,
         528
       ],
       "id": "2b36ab40-8366-432a-a3b0-411a5579ac45",
@@ -172,17 +256,29 @@
             {
               "id": "3772b988-562b-4718-bd2f-4b7486307d2c",
               "name": "equipo_id",
-              "value": "={{ $json.inicio_o_ultimo_mantenimiento }}",
+              "value": "={{ $json.equipo_id }}",
               "type": "string"
             },
             {
               "id": "d9dc68b7-256e-4b48-8021-c5acd4b6a9f8",
+              "name": "periocidad_tipo",
+              "value": "={{ $json.periocidad_tipo }}",
+              "type": "string"
+            },
+            {
+              "id": "41c5c7c9-98c8-4c75-9fba-95aa768b8b7d",
+              "name": "inicio_o_ultimo_mantenimiento",
+              "value": "={{ $json.inicio_o_ultimo_mantenimiento }}",
+              "type": "string"
+            },
+            {
+              "id": "cd4ea17d-cb1d-44b4-8925-2c40fb2909e3",
               "name": "proximos_mantenimientos",
               "value": "={{ $json.proximos_mantenimientos }}",
               "type": "string"
             },
             {
-              "id": "41c5c7c9-98c8-4c75-9fba-95aa768b8b7d",
+              "id": "12ab9baa-8251-409f-9bb5-bf988983c6b9",
               "name": "estado",
               "value": "={{ $json.estado }}",
               "type": "string"
@@ -200,148 +296,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -672,
+        -752,
         528
       ],
       "id": "90c14761-f704-4a03-8c39-6f97a25a4b51",
       "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "jsCode": "const last = $input.first().json.equipo_id || \"eq000\";\nconst num = parseInt(last.replace(\"eq\", \"\")) + 1;\nconst padded = String(num).padStart(3, \"0\");\nreturn [{ id_equipo: `eq${padded}` }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        784,
-        528
-      ],
-      "id": "87567697-befd-4dc2-b70f-80b29b567562",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "operation": "getAll",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "mjdctrqix3ttqsq",
-        "limit": 1,
-        "options": {
-          "sort": {
-            "property": [
-              {
-                "field": "equipo_id",
-                "direction": "desc"
-              }
-            ]
-          }
-        }
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        560,
-        528
-      ],
-      "id": "00078ed3-1929-4113-acbf-a37d333dabcf",
-      "name": "Obtener consecutivo equipo_id",
-      "alwaysOutputData": true,
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a262ba7e-d10a-4df3-8f2c-10ebd9d93ac3",
-              "name": "cliente_id",
-              "value": "El cliente no cuenta con una sede registrada para asociar el equipo. Debes crear la sede antes de continuar. ¿Deseas proceder con el registro de la sede ahora?",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        112,
-        752
-      ],
-      "id": "c5aef143-5863-4077-b765-69e3d3061e01",
-      "name": "sede NO existe"
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "operation": "create",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "mjdctrqix3ttqsq",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldName": "equipo_id",
-              "fieldValue": "={{ $json.id_equipo }}"
-            },
-            {
-              "fieldName": "=sede_id",
-              "fieldValue": "={{ $('buscar si equipo ya existe en db_equipos').item.json.sede_id }}"
-            },
-            {
-              "fieldName": "ubicacion_equipo",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.ubicacion_equipo }}"
-            },
-            {
-              "fieldName": "tipo_equipo",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.tipo_equipo }}"
-            },
-            {
-              "fieldName": "marca",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.marca }}"
-            },
-            {
-              "fieldName": "=modelo",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.modelo }}"
-            },
-            {
-              "fieldName": "serial",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.serial }}"
-            },
-            {
-              "fieldName": "refrigerante",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.refrigante }}"
-            },
-            {
-              "fieldName": "capacidad_toneladas",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.voltaje }}"
-            },
-            {
-              "fieldName": "periocidad_tipo",
-              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.periocidad_tipo }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        992,
-        528
-      ],
-      "id": "d7fda3c8-3edc-40f1-801a-750b9ec1ca6d",
-      "name": "Registrar Nuevo Equipo",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
     },
     {
       "parameters": {
@@ -350,7 +309,7 @@
             {
               "id": "486b0a59-492a-4113-adb6-5f9ce596280c",
               "name": "mensaje",
-              "value": "=El equipo {{ $json.marca }} {{ $json.tipo_equipo }} serial {{ $json.serial }} a sido registrado exitosamente en la base de datos con el id {{ $json.equipo_id }} y ha sido asignado a la {{ $json.sede_id }}. ",
+              "value": "=Eureka!!!, Se ha registrado el cronograma de mantenimiento para el equipo {{ $json.equipo_id }}.  La fecha de mantenimiento esta programada para el dia  {{ $json.inicio_o_ultimo_mantenimiento }}. Segun su periocidad  {{ $json.periocidad_tipo }}, el proximo mantenimiento debera ser el {{ $json.proximos_mantenimientos }}.",
               "type": "string"
             }
           ]
@@ -360,7 +319,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1248,
+        1200,
         528
       ],
       "id": "3a3dca77-1ad8-45bf-b660-601903203ce6",
@@ -368,36 +327,13 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "3bf645ad-53cf-4d97-9178-d919b2099034",
-              "name": "mensaje",
-              "value": "=el serial  {{ $json.serial }} pertenece al equipo {{ $json.marca }} {{ $json.tipo_equipo }} modelo {{ $json.modelo }} ya registrado en nuestra base de datos con el id {{ $json.equipo_id }}. ",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        560,
-        304
-      ],
-      "id": "f1a9723d-20c0-4f32-9f0c-9e892edf960e",
-      "name": "mensaje: serial ya existe"
-    },
-    {
-      "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "getAll",
         "projectId": "pt2jl7502mka8xd",
-        "table": "mwq5ww7arsq1lzg",
+        "table": "mjdctrqix3ttqsq",
         "returnAll": true,
         "options": {
-          "where": "=(sede_id,like,{{ $json.sede_id }})"
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})"
         }
       },
       "type": "n8n-nodes-base.nocoDb",
@@ -422,7 +358,7 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.client_id }}",
+              "value1": "={{ $json.equipo_id }}",
               "operation": "isNotEmpty"
             }
           ]
@@ -433,7 +369,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -192,
+        -176,
         528
       ]
     },
@@ -442,10 +378,13 @@
         "authentication": "nocoDbApiToken",
         "operation": "getAll",
         "projectId": "pt2jl7502mka8xd",
-        "table": "mjdctrqix3ttqsq",
+        "table": "mgxqs7y4myuzrbg",
         "returnAll": true,
         "options": {
-          "where": "=(serial,like,{{ $('When Executed by Another Workflow').item.json.serial }})"
+          "fields": [
+            []
+          ],
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})"
         }
       },
       "type": "n8n-nodes-base.nocoDb",
@@ -470,7 +409,7 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.serial }}",
+              "value1": "={{ $json.equipo_id }}",
               "operation": "isNotEmpty"
             }
           ]
@@ -484,22 +423,393 @@
         304,
         512
       ]
-    }
-  ],
-  "pinData": {
-    "When Executed by Another Workflow": [
-      {
-        "json": {
-          "tipo_registro": "cronograma_mantenimiento",
-          "equipo_id": "eq301",
-          "inicio_o_ultimo_mantenimiento": "2023-11-15",
-          "proximos_mantenimientos": "2024-02-15",
-          "estado": "Pendiente",
-          "notas": "Revisión de niveles de aceite y cambio de filtros."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a262ba7e-d10a-4df3-8f2c-10ebd9d93ac3",
+              "name": "equipo_id",
+              "value": "=el equipo {{ $('Edit Fields').item.json.equipo_id }} no se encuentra registrado en la base de datos. Débes registrarlo primero para añadir un cronograma.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        800
+      ],
+      "id": "c5aef143-5863-4077-b765-69e3d3061e01",
+      "name": "Mensaje: equipo NO existe"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3bf645ad-53cf-4d97-9178-d919b2099034",
+              "name": "mensaje",
+              "value": "=Este equipo ya cuenta con un cronograma de mantenimiento.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1952,
+        -256
+      ],
+      "id": "f1a9723d-20c0-4f32-9f0c-9e892edf960e",
+      "name": "mensaje: este equipo ya cuenta con un cronograma",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "options": {
+          "where": "=(equipo_id,eq,{{ $json.equipo_id }})~and(inicio_o_ultimo_mantenimiento,{{ $json.inicio_o_ultimo_mantenimiento }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1360,
+        -96
+      ],
+      "id": "15be66fb-8ee9-4ff5-abd3-707d00a346bb",
+      "name": "validar fecha inicio_ultimo mantenimiento",
+      "alwaysOutputData": false,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "options": {
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})\n"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        864,
+        528
+      ],
+      "id": "d7fda3c8-3edc-40f1-801a-750b9ec1ca6d",
+      "name": "Verificar proximos_mantenimientos",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
         }
       }
-    ]
-  },
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "=equipo_id",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.equipo_id }}"
+            },
+            {
+              "fieldName": "periocidad_tipo",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.periocidad_tipo }}"
+            },
+            {
+              "fieldName": "inicio_o_ultimo_mantenimiento",
+              "fieldValue": "={{ DateTime.fromFormat($('When Executed by Another Workflow').item.json.inicio_o_ultimo_mantenimiento, 'dd/MM/yyyy').toISODate() }}"
+            },
+            {
+              "fieldName": "estado",
+              "fieldValue": "={{ $('Edit Fields').item.json.estado }}"
+            },
+            {
+              "fieldName": "notas",
+              "fieldValue": "={{ $('Edit Fields').item.json.notas }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        576,
+        528
+      ],
+      "id": "28dc0dc3-a4d8-45fa-8c65-4287d5a97d07",
+      "name": "crear nuevo cronograma",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "inicio_o_ultimo_mantenimiento",
+              "fieldValue": "={{ DateTime.fromFormat($('When Executed by Another Workflow').item.json.inicio_o_ultimo_mantenimiento, 'dd/MM/yyyy').toISODate() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1856,
+        -80
+      ],
+      "id": "e4a73897-df1a-4ad2-aef6-3fa9f79abeda",
+      "name": "crear fecha de mantenimiento",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ed814175-6f54-460f-a3a9-2f1c85b3bdc6",
+              "leftValue": "={{ $json.periocidad_tipo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        -80
+      ],
+      "id": "60aff327-387f-4601-9bf0-3f98d2bb5dfc",
+      "name": "tiene periocidad?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ed814175-6f54-460f-a3a9-2f1c85b3bdc6",
+              "leftValue": "={{ $json.periocidad_tipo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1616,
+        -96
+      ],
+      "id": "f996d76c-577b-484b-8113-1f751b5a2ae4",
+      "name": "tiene fecha inicial",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "options": {
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})\n"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        2080,
+        -80
+      ],
+      "id": "cd3a53b8-a4ff-4204-a7a5-e8c16a013381",
+      "name": "Verificar proximos_mantenimientos1",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "486b0a59-492a-4113-adb6-5f9ce596280c",
+              "name": "mensaje",
+              "value": "=Eureka!!!, Se ha registrado el cronograma de mantenimiento para el equipo {{ $json.equipo_id }}.  La fecha de mantenimiento esta programada para el dia  {{ $json.inicio_o_ultimo_mantenimiento }}. Segun su periocidad  {{ $json.periocidad_tipo }}, el proximo mantenimiento debera ser el {{ $json.proximos_mantenimientos }}.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2288,
+        -80
+      ],
+      "id": "91029021-e65f-4d87-be48-abfb5c14703e",
+      "name": "Response1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "returnAll": true,
+        "options": {
+          "fields": [],
+          "where": "=(equipo_id,like,{{ $json.equipo_id }})~and(periocidad_tipo,like,{{ $json.periocidad_tipo }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        560,
+        -80
+      ],
+      "id": "1b6fbdc0-b4ed-43a1-8edf-36f67f6fae9f",
+      "name": "validar si tiene periciodad",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "=equipo_id",
+              "fieldValue": "={{ $('buscar equipo en db_cronograma').item.json.equipo_id }}"
+            },
+            {
+              "fieldName": "periocidad_tipo",
+              "fieldValue": "={{ $('Edit Fields').item.json.periocidad_tipo }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1072,
+        48
+      ],
+      "id": "2bb99300-6132-465e-ac87-328b995d284d",
+      "name": "Update a row",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3bf645ad-53cf-4d97-9178-d919b2099034",
+              "name": "mensaje",
+              "value": "=Este equipo ya cuenta con un cronograma de mantenimiento.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        272
+      ],
+      "id": "ee910689-d14f-48dc-a95b-bf135aee4152",
+      "name": "mensaje: este equipo ya cuenta con un cronograma1"
+    }
+  ],
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -518,6 +828,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-24T18:38:04.746Z",
-  "versionId": "eedae4c6-9fa2-4115-8e1f-7e44e63822ca"
+  "updatedAt": "2025-11-25T02:20:50.434Z",
+  "versionId": "8167c78e-b61b-4bff-8ac4-44bf61dbe7d7"
 }
