@@ -51,7 +51,7 @@
       "main": [
         [
           {
-            "node": "response1",
+            "node": "Get many rows",
             "type": "main",
             "index": 0
           }
@@ -80,7 +80,88 @@
       "main": [
         [
           {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "response1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
             "node": "crear sede1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Check Loop Attempts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Loop Attempts": {
+      "main": [
+        [
+          {
+            "node": "Attempts < 3?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attempts < 3?": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Max Retries Reached",
             "type": "main",
             "index": 0
           }
@@ -129,8 +210,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -704,
-        528
+        -3488,
+        576
       ],
       "id": "465ae357-c543-47ee-9c98-3270abd4ccb1",
       "name": "When Executed by Another Workflow"
@@ -182,8 +263,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -448,
-        528
+        -3264,
+        576
       ],
       "id": "3f444f06-9296-485b-b0c4-c7f61cb808e2",
       "name": "Edit Fields"
@@ -202,8 +283,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -224,
-        528
+        -3040,
+        576
       ],
       "id": "04b077de-5553-466d-929d-72930c31f0cc",
       "name": "buscar si ya existe el NIT",
@@ -237,8 +318,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        288,
-        512
+        -2592,
+        480
       ],
       "id": "dd8d0460-863c-44e9-b296-244317d59fa5",
       "name": "Obtener consecutivo Ultima sede_id",
@@ -289,8 +370,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        768,
-        512
+        -1856,
+        400
       ],
       "id": "5c02b18a-6a76-427b-9fa3-2d9682484d60",
       "name": "crear sede1",
@@ -318,8 +399,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        240,
-        768
+        -2592,
+        672
       ],
       "id": "7d7b35cb-5125-4740-8db0-2792f61853ef",
       "name": "Mensaje: Cliente no existe en la BD"
@@ -341,8 +422,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        976,
-        512
+        -1024,
+        304
       ],
       "id": "e7e08db1-e18f-44b6-ba8d-f3459252b349",
       "name": "response1"
@@ -363,8 +444,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        16,
-        528
+        -2816,
+        576
       ]
     },
     {
@@ -374,14 +455,184 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        528,
-        512
+        -2368,
+        480
       ],
       "id": "9b509a85-963f-465b-9d9e-96bee01149db",
       "name": "+1 al consecutivo"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b4fc038-f57d-44d1-9428-49a5ca34e092",
+              "leftValue": "={{ $json.sede_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1248,
+        400
+      ],
+      "id": "50f62411-273c-4ee0-818b-508f02d12670",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": true
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2144,
+        480
+      ],
+      "id": "4ad830d9-dfa7-4764-aebe-471921c74ebf",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mwq5ww7arsq1lzg",
+        "options": {
+          "where": "=(sede_id,like,{{ $json.sede_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -1552,
+        400
+      ],
+      "id": "c8979191-8ae6-4d75-a2ca-fd5aec7828ae",
+      "name": "Get many rows",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c55adbf3-0520-4ce3-bc50-9daf168ab4da",
+              "name": "sede_id",
+              "value": "={{ $('crear sede1').item.json.sede_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1024,
+        496
+      ],
+      "id": "8e07d58a-5376-4781-be81-ff829ba82750",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {},
+      "id": "8c9818c5-af43-4a0a-bcc7-e55a22906a86",
+      "name": "Max Retries Reached",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        576
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const currentItem = $input.first().json;\nconst attempts = (currentItem.loopAttempts || 0) + 1;\n\nreturn [{ \n  ...currentItem,\n  loopAttempts: attempts \n}];"
+      },
+      "id": "15392681-689b-4283-9ca5-c890384453c7",
+      "name": "Check Loop Attempts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -800,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $json.loopAttempts }}",
+              "rightValue": 3,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "30a21fc2-4afa-46a9-bccb-f5b4e5ce0058",
+      "name": "Attempts < 3?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -576,
+        576
+      ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "tipo_registro": "sede",
+          "cliente_id": 11112234,
+          "nombre_sede": "Sede Armenia",
+          "telefono_contacto": 3132156987,
+          "persona_encargada": "Daniel Velandia",
+          "direccion_sede": "Carrera Cuarta número 78-90",
+          "message": "Registro de nueva sede para Alfonso Lozano"
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -400,6 +651,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-24T16:47:07.801Z",
-  "versionId": "5cc57346-2b01-4a71-876c-29524b696fe6"
+  "updatedAt": "2025-11-25T06:40:46.947Z",
+  "versionId": "a519f7c6-1df1-4772-b34f-8564191637c0"
 }
