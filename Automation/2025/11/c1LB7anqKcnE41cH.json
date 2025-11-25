@@ -57,17 +57,6 @@
           }
         ]
       ]
-    },
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "Get_mantenimientos1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "createdAt": "2025-11-04T16:44:51.496Z",
@@ -100,10 +89,9 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -608,
+        -768,
         1552
-      ],
-      "disabled": true
+      ]
     },
     {
       "parameters": {
@@ -119,7 +107,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -208,
+        -144,
         1552
       ],
       "id": "45b903cf-71ba-4c9f-845a-29e0f6aef89f",
@@ -141,13 +129,13 @@
         "table": "m58lt3zk9pd4acn",
         "returnAll": true,
         "options": {
-          "where": "=(razon_social,like,{{ $json.razon_social }})"
+          "where": "=(razon_social_unaccent,like,%{{ $json.razon_social.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\").toUpperCase() }}%)"
         }
       },
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -384,
+        -432,
         1552
       ],
       "id": "3441dce8-e0c0-48ff-8b2c-a04d712b8e51",
@@ -175,17 +163,19 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -32,
+        112,
         1552
       ],
       "id": "24739313-0863-41e8-995f-6bea4c375c02",
       "name": "Get_equipos",
+      "alwaysOutputData": true,
       "credentials": {
         "nocoDbApiToken": {
           "id": "PngKKQ0D2nKSCDu8",
           "name": "Tool Acondicionados SAS"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -201,42 +191,19 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        160,
+        368,
         1552
       ],
       "id": "d70050d1-9306-478c-86ca-0d2f6ab59c4d",
       "name": "Get_mantenimientos",
+      "alwaysOutputData": true,
       "credentials": {
         "nocoDbApiToken": {
           "id": "PngKKQ0D2nKSCDu8",
           "name": "Tool Acondicionados SAS"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "operation": "getAll",
-        "projectId": "pt2jl7502mka8xd",
-        "table": "mgxqs7y4myuzrbg",
-        "options": {
-          "where": "(proximos_mantenimientos,gte,2025-11-20)~and (proximos_mantenimientos,lte,2025-11-30)"
         }
       },
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 3,
-      "position": [
-        -400,
-        1328
-      ],
-      "id": "bac8a2b7-77c7-4d5f-b85f-ac79c643ca98",
-      "name": "Get_mantenimientos1",
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "PngKKQ0D2nKSCDu8",
-          "name": "Tool Acondicionados SAS"
-        }
-      }
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -273,36 +240,14 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        368,
+        576,
         1552
       ],
       "id": "532ccc0f-0397-4966-a1e1-6af90c62ba69",
       "name": "Edit Fields"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -608,
-        1328
-      ],
-      "id": "8c3f958f-31b4-44c4-ac3f-df506b62fb49",
-      "name": "When clicking ‘Execute workflow’"
     }
   ],
-  "pinData": {
-    "Start": [
-      {
-        "json": {
-          "razon_social": "confiar",
-          "equipo_id": null,
-          "servicio_id": null,
-          "mes_mantenimientos": "12/2025"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -325,6 +270,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-22T01:52:11.770Z",
-  "versionId": "240aceba-fd74-4143-8419-b2c8ab980242"
+  "updatedAt": "2025-11-25T04:44:18.139Z",
+  "versionId": "3953f0e3-a3f2-49f8-8c40-fb8e59f90d61"
 }
