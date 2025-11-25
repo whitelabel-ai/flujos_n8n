@@ -45,7 +45,7 @@
       "main": [
         [
           {
-            "node": "Switch",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -81,6 +81,17 @@
         ],
         []
       ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-11-18T15:04:41.900Z",
@@ -98,8 +109,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2544,
-        448
+        -2320,
+        416
       ],
       "id": "49621e29-2959-4e6b-b83f-d767ca08d393",
       "name": "JS Para Post Linkedin"
@@ -111,8 +122,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2544,
-        640
+        -2320,
+        608
       ],
       "id": "da3ed30c-edd8-4faf-bdff-17283bffd895",
       "name": "JS Para Post Blog"
@@ -143,8 +154,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -2320,
-        448
+        -2096,
+        416
       ],
       "id": "babdd335-ee11-464b-b16d-1dd46bcf5963",
       "name": "Tabla Post Linkedin",
@@ -165,8 +176,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -2320,
-        640
+        -2096,
+        608
       ],
       "id": "a92a3391-2434-4301-87c8-f497a127b078",
       "name": "Tabla Post Blog",
@@ -188,7 +199,7 @@
       "typeVersion": 1.2,
       "position": [
         -3344,
-        544
+        512
       ],
       "id": "4fe12fa1-200d-425c-8457-6cccc40c1563",
       "name": "Péticion Post o Blog",
@@ -203,7 +214,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Actúa como un creador de contenido profesional especializado en automatización, productividad y tecnología. Escribe directamente dos textos separados:\n\nPrimero, genera un post extenso para LinkedIn (mínimo 200 palabras, máximo 3000 caracteres), dirigido a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta o reto, incluye consejos concretos, conclusión inspiradora y hashtags relevantes al final. No incluyas encabezados, formato JSON, comillas ni instrucciones técnicas. Solo el texto del post.\n\nSegundo, genera una entrada de blog extensa (mínimo 300 palabras, sin límite de caracteres), también dirigida a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta provocadora o reto actual, aporta consejos prácticos y ejemplos reales, desarrolla el tema con profundidad y termina con una conclusión inspiradora y hashtags relevantes. No incluyas encabezados, formato JSON, comillas ni instrucciones técnicas; solo el texto completo y natural.",
+        "text": "=Actúa como un creador de contenido profesional especializado en automatización, productividad y tecnología. Escribe directamente dos textos separados:\n\nPrimero, genera un post extenso para LinkedIn (mínimo 200 palabras, máximo 3000 caracteres), dirigido a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta o reto, incluye consejos concretos, conclusión inspiradora y hashtags relevantes al final. No incluyas encabezados, formato JSON, comillas ni instrucciones técnicas. Solo el texto del post.\n\nSegundo, genera una entrada de blog extensa (mínimo 300 palabras, sin límite de caracteres), también dirigida a ingenieros, empresarios y entusiastas digitales. Comienza con una pregunta provocadora o reto actual, aporta consejos prácticos y ejemplos reales, desarrolla el tema con profundidad y termina con una conclusión inspiradora y hashtags relevantes. No incluyas encabezados, formato JSON, comillas ni instrucciones técnicas; solo el texto completo y natural.\n\n“Genera una idea de contenido para publicar. Devuelve la respuesta en formato JSON con dos campos:\n\n'tipo' (puede ser 'linkedin' o 'blog') según cuál consideres más adecuado para el contenido generado.\n\n tine\n'contenido' con la idea desarrollada.\n\nEjemplo de respuesta:\n{'tipo': 'linkedin', 'contenido': '¿Cuántas horas dedicaste hoy a tus objetivos?'}\n\nO\n{'tipo': 'blog', 'contenido': 'Estrategias avanzadas para optimizar tu productividad diaria.'}”\n\n",
         "options": {
           "systemMessage": "=\n"
         }
@@ -212,7 +223,7 @@
       "typeVersion": 3,
       "position": [
         -3120,
-        544
+        512
       ],
       "id": "bdcda101-5a1d-4d67-85d8-99409830c126",
       "name": "Generador de Idea"
@@ -224,8 +235,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -3048,
-        768
+        -3120,
+        736
       ],
       "id": "cc03fce0-2418-4352-b24c-7c3aeecc16b6",
       "name": "Cerebro",
@@ -250,8 +261,8 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "",
-                    "rightValue": "",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "={{ $('Generador de Idea').item.json.output }}",
                     "operator": {
                       "type": "string",
                       "operation": "equals"
@@ -273,12 +284,11 @@
                 "conditions": [
                   {
                     "id": "4a478130-b726-43b7-a769-ac5b67c53aec",
-                    "leftValue": "",
-                    "rightValue": "",
+                    "leftValue": "={{ $json.tipo }}",
+                    "rightValue": "={{ $('Generador de Idea').item.json.output }}",
                     "operator": {
                       "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
+                      "operation": "equals"
                     }
                   }
                 ],
@@ -292,11 +302,24 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        -2768,
-        544
+        -2544,
+        512
       ],
       "id": "ea65d74c-12b3-4517-b921-61a86f64b14d",
       "name": "Switch"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Asume que el texto generado llega como $json.output\nconst raw = $json.output || $json.text || '';\n\n// Intentar extraer tipo y contenido si el texto contiene \"tipo:xxx | ...\"\nconst match = raw.match(/tipo:(\\w+)\\s*\\|\\s*(.+)/i);\n\nlet tipo, contenido;\n\nif (match) {\n  tipo = match[1].trim().toLowerCase(); // linkedin o blog\n  contenido = match[2].trim();\n} else {\n  // Si no encuentra tipo, pon por defecto linkedin (puedes decidir tú)\n  tipo = 'linkedin';\n  contenido = raw;\n}\n\n// Variables fijas\nconst idea = tipo === 'linkedin'\n  ? 'Idea para LinkedIn (automático)'\n  : 'Idea para Blog (automático)';\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\n// Output para el Switch y tablas\nreturn [{\n  idea,\n  tipo,\n  contenido,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2768,
+        512
+      ],
+      "id": "374ba7e4-f0b5-4a30-8316-fdeab9f69c04",
+      "name": "Code in JavaScript"
     }
   ],
   "pinData": {},
@@ -318,6 +341,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-11-24T22:31:57.120Z",
-  "versionId": "6e7c15c9-a10e-4f4a-b1dd-dfe7051d9db0"
+  "updatedAt": "2025-11-25T17:17:31.203Z",
+  "versionId": "215490c0-76e5-4059-8848-828ff5d5cf06"
 }
