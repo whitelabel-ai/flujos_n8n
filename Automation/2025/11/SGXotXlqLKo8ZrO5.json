@@ -1,0 +1,275 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "Get Approved Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Approved Posts": {
+      "main": [
+        [
+          {
+            "node": "Filter Posts Ready to Publish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Posts Ready to Publish": {
+      "main": [
+        [
+          {
+            "node": "Check If Posts Found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check If Posts Found": {
+      "main": [
+        [
+          {
+            "node": "Publish to LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publish to LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "Update Post Status to Published",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-25T20:05:28.773Z",
+  "id": "SGXotXlqLKo8ZrO5",
+  "isArchived": false,
+  "meta": null,
+  "name": "Scheduled Blog Publisher from NocoDB",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "nocoDbTableId",
+              "value": "mfpu4n1rjjsiyyk",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "statusApproved",
+              "value": "approved",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "statusPublished",
+              "value": "published",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "226992da-9ab5-44f1-8b01-0e7528ab1e3c",
+      "name": "Workflow Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pbyzm06qhp068f6",
+        "table": "={{ $json.nocoDbTableId }}",
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "833bfbfa-f337-4b45-9be3-5f42aea08276",
+      "name": "Get Approved Posts",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        -320
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "od6Ytt9qSUlGVvJb",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst readyPosts = $input.all().filter(item => {\n  const fecha = item.json[\"Fecha\"];\n  const hora = item.json[\"Hora\"];\n  const scheduledDateTime = new Date(`${fecha}T${hora}`);\n  console.log({now, fecha, hora, scheduledDateTime, diff: scheduledDateTime - now});\n  return scheduledDateTime <= now;\n});\nreturn readyPosts;\n"
+      },
+      "id": "f56cddf8-614d-4db3-ac34-86a24f4f0ef9",
+      "name": "Filter Posts Ready to Publish",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a4b280b2-0b58-41d6-8162-193b1505d6d3",
+      "name": "Check If Posts Found",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1552,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "person": "M-MPEA1I9X",
+        "text": "={{ $json['Contenido Linkedin'] }}",
+        "additionalFields": {
+          "visibility": "PUBLIC"
+        }
+      },
+      "id": "fdf5d65d-44f5-49c0-8efe-418c96e7e4f9",
+      "name": "Publish to LinkedIn",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        1776,
+        -320
+      ],
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "RKvVkjNC6vSbF76O",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pbyzm06qhp068f6",
+        "table": "={{ $('Workflow Configuration').first().json.nocoDbTableId }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "status",
+              "fieldValue": "=Published"
+            },
+            {
+              "fieldName": "id",
+              "fieldValue": "={{ $('Get Approved Posts').item.json.Id }}"
+            }
+          ]
+        }
+      },
+      "id": "f02b8980-bd83-4b32-a4b3-7c2354a68318",
+      "name": "Update Post Status to Published",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        2000,
+        -320
+      ],
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "od6Ytt9qSUlGVvJb",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -320
+      ],
+      "id": "000f4b10-deea-4036-ac21-a5bac63782e8",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-25T20:05:28.773Z",
+      "createdAt": "2025-11-25T20:05:28.773Z",
+      "role": "workflow:owner",
+      "workflowId": "SGXotXlqLKo8ZrO5",
+      "projectId": "s48f8ZkY9UxLCxeQ"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-25T20:05:37.556Z",
+  "versionId": "e7d38a9f-05de-4d2e-b36f-ff4d4d3d66b8"
+}
