@@ -1,0 +1,820 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Buscar cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar cliente": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update cliente_id (No.documento)": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "update cliente_id (No.documento)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "update tipo_documento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "update razon_Social",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "update telefono_contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "update persona_encargada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "update direccion_principal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update razon_Social": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update tipo_documento": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-26T14:35:21.642Z",
+  "id": "4gNVLkMhKK9EQJgp",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Update_equipos",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "tipo_registro"
+            },
+            {
+              "name": "cliente_id",
+              "type": "number"
+            },
+            {
+              "name": "tipo_documento"
+            },
+            {
+              "name": "razon_social"
+            },
+            {
+              "name": "telefono_contacto",
+              "type": "number"
+            },
+            {
+              "name": "persona_encargada"
+            },
+            {
+              "name": "direccion_principal"
+            },
+            {
+              "name": "message"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1696,
+        752
+      ],
+      "id": "c045843f-b041-4ea5-bb72-6d16d24bae5e",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst searchTerm = $input.first().json.razon_social\n\nreturn items.filter(item => {\n  const nombre = $input.first().json.razon_social.toLowerCase();\n  const palabrasBusqueda = searchTerm.toLowerCase().trim().split(/\\s+/); // divide por espacios\n\n  // Verifica que TODAS las palabras de búsqueda estén en el nombre\n  return palabrasBusqueda.every(palabra => nombre.includes(palabra));\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1456,
+        752
+      ],
+      "id": "0589b95b-d648-4e6a-a310-ef5951f38991",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bfcc153a-ac4d-4e78-b815-62ead8b9dea4",
+              "name": "Id",
+              "value": "={{ $json.Id }}",
+              "type": "number"
+            },
+            {
+              "id": "ca3bc265-1813-45f2-85a9-29f5f8986679",
+              "name": "client_id",
+              "value": "={{ $('When Executed by Another Workflow').item.json.cliente_id }}",
+              "type": "string"
+            },
+            {
+              "id": "344433b6-3996-499d-9892-cc53d3e3bc4c",
+              "name": "tipo_documento",
+              "value": "={{ $('When Executed by Another Workflow').item.json.tipo_documento }}",
+              "type": "string"
+            },
+            {
+              "id": "c100ca53-d897-47c4-acd2-8ac164895cb1",
+              "name": "razon_social",
+              "value": "={{ $('When Executed by Another Workflow').item.json.razon_social }}",
+              "type": "string"
+            },
+            {
+              "id": "c90964cc-e307-4902-9795-bcbe330feb9c",
+              "name": "telefono_contacto",
+              "value": "={{ $('When Executed by Another Workflow').item.json.telefono_contacto }}",
+              "type": "string"
+            },
+            {
+              "id": "a31bfa76-16df-4425-a421-5bc91b6b6e60",
+              "name": "persona_encargada",
+              "value": "={{ $json.persona_encargada }}",
+              "type": "string"
+            },
+            {
+              "id": "f99b537e-5743-413c-9870-0e09122d5e7d",
+              "name": "direccion_principal",
+              "value": "={{ $('When Executed by Another Workflow').item.json.direccion_principal }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1024,
+        752
+      ],
+      "id": "25aab27e-4d72-47f3-b0a4-97f2e39ab86b",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "returnAll": true,
+        "options": {
+          "where": "=(razon_social_unaccent,like,%{{ $json.razon_social.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\").toUpperCase() }}%)"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -1232,
+        752
+      ],
+      "id": "6afe9c51-e5d1-4818-ac8b-9224cefe5ca9",
+      "name": "Buscar cliente",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $('Edit Fields2').item.json.Id }}"
+            },
+            {
+              "fieldName": "tipo_documento",
+              "fieldValue": "={{ $('Edit Fields2').item.json.tipo_documento }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -176,
+        400
+      ],
+      "id": "7b33dd0f-c807-4a0b-9d31-499505dd500d",
+      "name": "update tipo_documento",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $json.Id }}"
+            },
+            {
+              "fieldName": "razon_social",
+              "fieldValue": "={{ $json.razon_social }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -176,
+        576
+      ],
+      "id": "10264880-651b-4e3e-b2a2-e74217aba23c",
+      "name": "update razon_Social",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $json.Id }}"
+            },
+            {
+              "fieldName": "telefono_contacto",
+              "fieldValue": "={{ $json.telefono_contacto }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -176,
+        800
+      ],
+      "id": "20082ca9-0a7c-4076-bb91-77f1d0ec9d9d",
+      "name": "update telefono_contacto",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $json.Id }}"
+            },
+            {
+              "fieldName": "persona_encargada",
+              "fieldValue": "={{ $json.persona_encargada }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -160,
+        1008
+      ],
+      "id": "005a3e67-06f0-4f6d-8fb2-53fbbfe53965",
+      "name": "update persona_encargada",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $json.Id }}"
+            },
+            {
+              "fieldName": "direccion_principal",
+              "fieldValue": "={{ $json.direccion_principal }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -160,
+        1216
+      ],
+      "id": "3b462e82-7bed-4668-9382-6dbfe43e992f",
+      "name": "update direccion_principal",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $('Buscar cliente').item.json.Id }}"
+            },
+            {
+              "fieldName": "=client_id",
+              "fieldValue": "={{ $('Edit Fields2').item.json.client_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -176,
+        192
+      ],
+      "id": "56e5d518-f893-4516-8772-5f70a379e9c2",
+      "name": "update cliente_id (No.documento)",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        192
+      ],
+      "id": "72a215a2-a1bc-4a18-90bc-bc59f7e8530b",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "02e77bc6-5215-4111-9f8d-cd1a79c7b049",
+              "leftValue": "={{ $json.client_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -576,
+        208
+      ],
+      "id": "d83b8b3b-1773-4ba9-9c0f-970d1888d2c3",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "02e77bc6-5215-4111-9f8d-cd1a79c7b049",
+              "leftValue": "={{ $json.tipo_documento }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -576,
+        416
+      ],
+      "id": "1f899deb-6a0d-4633-b98d-31fe3b93ef21",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "02e77bc6-5215-4111-9f8d-cd1a79c7b049",
+              "leftValue": "={{ $json.razon_social }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -576,
+        592
+      ],
+      "id": "a2e4bc56-1e4d-4465-a781-911b0ad08b72",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "02e77bc6-5215-4111-9f8d-cd1a79c7b049",
+              "leftValue": "={{ $json.telefono_contacto }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -560,
+        816
+      ],
+      "id": "24d835b5-d7a6-415b-b348-40dc084375bf",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "02e77bc6-5215-4111-9f8d-cd1a79c7b049",
+              "leftValue": "={{ $json.persona_encargada }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        1024
+      ],
+      "id": "b68491fa-2975-455c-8a77-ef1843550a5f",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "02e77bc6-5215-4111-9f8d-cd1a79c7b049",
+              "leftValue": "={{ $json.direccion_principal }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -528,
+        1232
+      ],
+      "id": "3ab25be5-585e-4950-b24a-74b2fe00f12a",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "80ac930a-f863-4ae0-a71b-3af7368c11bc",
+              "name": "razon_social",
+              "value": "=se ha actualizado la razon social del cliente a {{ $json.razon_social }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        576
+      ],
+      "id": "6fbb5eb5-bb23-4a04-8104-3007a77b6e7d",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        400
+      ],
+      "id": "51e39e59-2c5a-4c06-86c8-f7b039688787",
+      "name": "Edit Fields3"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "tipo_registro": "cliente",
+          "cliente_id": null,
+          "tipo_documento": null,
+          "razon_social": "Paola Viracachá",
+          "telefono_contacto": "3132156369",
+          "persona_encargada": null,
+          "direccion_principal": "Torre 5, apartamento 102, Urbanización Villamaita",
+          "message": null
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-26T14:35:21.642Z",
+      "createdAt": "2025-11-26T14:35:21.642Z",
+      "role": "workflow:owner",
+      "workflowId": "4gNVLkMhKK9EQJgp",
+      "projectId": "73zSRVHGJwFSDWts"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-26T14:35:21.642Z",
+  "versionId": "cdf2a4fd-3621-4d0d-9e40-2517c42ebe7d"
+}
