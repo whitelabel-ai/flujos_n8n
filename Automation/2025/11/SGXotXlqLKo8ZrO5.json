@@ -40,18 +40,7 @@
       "main": [
         [
           {
-            "node": "Publish to LinkedIn",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Publish to LinkedIn": {
-      "main": [
-        [
-          {
-            "node": "Update Post Status to Published",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -63,6 +52,33 @@
         [
           {
             "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Post Status to Published": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Update Post Status to Published",
             "type": "main",
             "index": 0
           }
@@ -109,7 +125,7 @@
       "typeVersion": 3.4,
       "position": [
         880,
-        -320
+        -336
       ]
     },
     {
@@ -127,7 +143,7 @@
       "typeVersion": 3,
       "position": [
         1104,
-        -320
+        -336
       ],
       "credentials": {
         "nocoDbApiToken": {
@@ -146,7 +162,7 @@
       "typeVersion": 2,
       "position": [
         1328,
-        -320
+        -336
       ]
     },
     {
@@ -179,31 +195,8 @@
       "typeVersion": 2.2,
       "position": [
         1552,
-        -320
+        -336
       ]
-    },
-    {
-      "parameters": {
-        "person": "M-MPEA1I9X",
-        "text": "={{ $json['Contenido Linkedin'] }}",
-        "additionalFields": {
-          "visibility": "PUBLIC"
-        }
-      },
-      "id": "fdf5d65d-44f5-49c0-8efe-418c96e7e4f9",
-      "name": "Publish to LinkedIn",
-      "type": "n8n-nodes-base.linkedIn",
-      "typeVersion": 1,
-      "position": [
-        1776,
-        -320
-      ],
-      "credentials": {
-        "linkedInOAuth2Api": {
-          "id": "RKvVkjNC6vSbF76O",
-          "name": "LinkedIn account"
-        }
-      }
     },
     {
       "parameters": {
@@ -229,8 +222,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        2000,
-        -320
+        2224,
+        -336
       ],
       "credentials": {
         "nocoDbApiToken": {
@@ -245,10 +238,38 @@
       "typeVersion": 1,
       "position": [
         656,
-        -320
+        -336
       ],
       "id": "000f4b10-deea-4036-ac21-a5bac63782e8",
       "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1776,
+        -336
+      ],
+      "id": "c7a3ac02-e0d6-469c-944f-597f522a74e4",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2000,
+        -336
+      ],
+      "id": "92bf1f18-e2d7-497f-a872-f4fe533c837c",
+      "name": "HTTP Request1"
     }
   ],
   "pinData": {},
@@ -270,6 +291,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-25T20:05:37.556Z",
-  "versionId": "e7d38a9f-05de-4d2e-b36f-ff4d4d3d66b8"
+  "updatedAt": "2025-11-26T17:04:33.527Z",
+  "versionId": "6b9a3e57-de9f-410f-b357-8fb7bbd9695a"
 }
