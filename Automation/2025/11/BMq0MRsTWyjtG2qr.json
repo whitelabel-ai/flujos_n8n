@@ -1,0 +1,739 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert HTML content to PDF",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "initData",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatwootData": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chatwoot": {
+      "main": [
+        [
+          {
+            "node": "env",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "env": {
+      "main": [
+        [
+          {
+            "node": "ChatwootData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "initData": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert HTML content to PDF": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-26T04:38:51.482Z",
+  "id": "BMq0MRsTWyjtG2qr",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "test file crm",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "conversion",
+        "htmlContent": "=<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Formato de Mantenimiento Acondicionando S.A.S</title>\n  <style>\n    * {\n      box-sizing: border-box;\n    }\n    body {\n      margin: 0;\n      padding: 20px;\n      background: #e5f1f6;\n      font-family: \"Segoe UI\", Arial, sans-serif;\n      color: #12323f;\n    }\n    .page {\n      max-width: 900px;\n      margin: 0 auto;\n      background: #ffffff;\n      border-radius: 10px;\n      padding: 26px 32px 32px;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);\n      border-top: 8px solid #00a5c9;\n    }\n    .doc-header {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin-bottom: 18px;\n    }\n    .logo-area {\n      display: flex;\n      align-items: center;\n      gap: 14px;\n    }\n    .logo-circle {\n      width: 56px;\n      height: 56px;\n      border-radius: 50%;\n      background: radial-gradient(circle at 30% 30%, #01e0ff, #008aad);\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 10px;\n      color: #ffffff;\n      font-weight: 600;\n      text-transform: uppercase;\n    }\n    .company {\n      line-height: 1.2;\n    }\n    .company-name {\n      font-size: 20px;\n      font-weight: 800;\n      letter-spacing: 0.08em;\n      color: #007693;\n    }\n    .company-tagline {\n      font-size: 11px;\n      text-transform: uppercase;\n      letter-spacing: 0.14em;\n      color: #4a7c8a;\n    }\n    .header-right {\n      text-align: right;\n      font-size: 12px;\n    }\n    .header-right .label {\n      font-size: 10px;\n      letter-spacing: 0.12em;\n      text-transform: uppercase;\n      color: #4a7c8a;\n    }\n    .header-right .date-box {\n      margin-top: 4px;\n      padding: 6px 10px;\n      border-radius: 6px;\n      border: 1px solid #b3dce8;\n      display: inline-block;\n      font-weight: 600;\n      letter-spacing: 0.08em;\n      background: #f5fcff;\n    }\n\n    .chip-row {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin: 12px 0 20px;\n      gap: 10px;\n      flex-wrap: wrap;\n    }\n    .chips {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 6px;\n    }\n    .chip {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.09em;\n      padding: 4px 10px;\n      border-radius: 999px;\n      border: 1px solid #9ad7e5;\n      background: #f4fcff;\n      color: #24606f;\n      display: inline-flex;\n      align-items: center;\n      gap: 4px;\n    }\n    .chip span.check {\n      min-width: 10px;\n      text-align: center;\n      font-weight: 700;\n      color: #007693;\n    }\n\n    .section {\n      border-radius: 8px;\n      border: 1px solid #c5e0ec;\n      margin-bottom: 12px;\n      overflow: hidden;\n    }\n    .section-header {\n      background: linear-gradient(90deg, #00a5c9, #00c4e3);\n      color: #ffffff;\n      padding: 6px 12px;\n      font-size: 11px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n    }\n    .section-body {\n      padding: 10px 12px 12px;\n      font-size: 12px;\n    }\n\n    .fields-row {\n      display: flex;\n      gap: 12px;\n      margin-bottom: 6px;\n      flex-wrap: wrap;\n    }\n    .field {\n      flex: 1;\n      min-width: 180px;\n    }\n    .field-label {\n      font-size: 10px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n      margin-bottom: 1px;\n    }\n    .field-value {\n      border-bottom: 1px solid #cde3ee;\n      min-height: 18px;\n      padding: 1px 4px 3px;\n      border-radius: 3px;\n      background: #f7fcff;\n      color: #12323f;\n      display: flex;\n      align-items: center;\n    }\n\n    .two-columns {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(0, 1fr));\n      gap: 16px;\n    }\n\n    .checklist {\n      list-style: none;\n      padding: 0;\n      margin: 4px 0;\n    }\n    .checklist li {\n      display: flex;\n      align-items: flex-start;\n      gap: 6px;\n      font-size: 11px;\n      margin-bottom: 3px;\n    }\n    .checklist .check {\n      width: 16px;\n      height: 16px;\n      border-radius: 4px;\n      border: 1px solid #b0d7e3;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 11px;\n      font-weight: 700;\n      color: #007693;\n      background: #f5fcff;\n      flex-shrink: 0;\n    }\n    .checklist .label {\n      flex: 1;\n      color: #23424f;\n    }\n\n    .multiline {\n      border-radius: 6px;\n      border: 1px solid #cde3ee;\n      background: #f7fcff;\n      padding: 6px 8px;\n      min-height: 60px;\n      white-space: pre-wrap;\n      font-size: 12px;\n    }\n\n    .conditions-table {\n      width: 100%;\n      border-collapse: collapse;\n      font-size: 11px;\n    }\n    .conditions-table th,\n    .conditions-table td {\n      padding: 4px 6px;\n      border-bottom: 1px solid #e0edf3;\n    }\n    .conditions-table th {\n      text-align: left;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      font-size: 10px;\n      color: #4a7c8a;\n    }\n    .conditions-table .value-cell {\n      border-bottom: 1px solid #cde3ee;\n      background: #f7fcff;\n      border-radius: 3px;\n      min-height: 18px;\n    }\n    .conditions-table .value-inner {\n      padding: 2px 4px 3px;\n    }\n\n    .footer {\n      margin-top: 18px;\n      border-top: 1px solid #cde3ee;\n      padding-top: 10px;\n      font-size: 10px;\n      color: #456774;\n    }\n\n    .signatures {\n      display: grid;\n      grid-template-columns: repeat(3, minmax(0, 1fr));\n      gap: 12px;\n      margin-top: 18px;\n      text-align: center;\n      font-size: 11px;\n    }\n    .signature-box {\n      padding-top: 50px;\n      border-top: 1px solid #cde3ee;\n      position: relative;\n    }\n    .signature-name {\n      font-weight: 600;\n      color: #12323f;\n      margin-bottom: 2px;\n    }\n    .signature-role {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n    }\n    .signature-image {\n      position: absolute;\n      left: 50%;\n      top: 8px;\n      transform: translateX(-50%);\n      max-height: 40px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"page\">\n    <!-- ENCABEZADO -->\n    <div class=\"doc-header\">\n      <div class=\"logo-area\">\n        <div class=\"logo-circle\">\n          <!-- Si quieres logo, cambia esto por una imagen -->\n          LOGO\n          <!--\n          <img src=\"{{ $json.logo_url}}\" alt=\"Logo\" style=\"width:100%;height:100%;border-radius:50%;object-fit:cover;\" />\n          -->\n        </div>\n        <div class=\"company\">\n          <div class=\"company-name\">ACONDICIONANDO S.A.S</div>\n          <div class=\"company-tagline\">\n            Aire acondicionado · Ventilación · Mantenimiento\n          </div>\n        </div>\n      </div>\n      <div class=\"header-right\">\n        <div class=\"label\">Fecha</div>\n        <div class=\"date-box\">{{ $json.fecha_servicio}}</div>\n      </div>\n    </div>\n\n    <!-- TIPO DE SERVICIO -->\n    <div class=\"chip-row\">\n      <div class=\"chips\">\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_mantenimiento}}</span>\n          <span>Mantenimiento</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_llamada}}</span>\n          <span>Llamada por servicio</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_reparacion}}</span>\n          <span>Reparación</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_instalacion}}</span>\n          <span>Instalación</span>\n        </div>\n      </div>\n      <div style=\"font-size:11px;color:#4a7c8a;\">\n        N° orden / consecutivo: <span style=\"font-weight:600;color:#12323f;\">{{ $json.numero_orden}}</span>\n      </div>\n    </div>\n\n    <!-- DATOS DEL CLIENTE -->\n    <div class=\"section\">\n      <div class=\"section-header\">Datos del cliente</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Cliente</div>\n            <div class=\"field-value\">{{ $json.cliente_nombre}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Sucursal</div>\n            <div class=\"field-value\">{{ $json.cliente_sucursal}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación</div>\n            <div class=\"field-value\">{{ $json.cliente_ubicacion}}</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Teléfono</div>\n            <div class=\"field-value\">{{ $json.cliente_telefono}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Correo electrónico</div>\n            <div class=\"field-value\">{{ $json.cliente_email}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Contacto</div>\n            <div class=\"field-value\">{{ $json.cliente_contacto}}</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- DESCRIPCIÓN DE LOS EQUIPOS -->\n    <div class=\"section\">\n      <div class=\"section-header\">Descripción de los equipos</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Tipo de equipo</div>\n            <div class=\"field-value\">{{ $json.equipo_tipo}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Marca</div>\n            <div class=\"field-value\">{{ $json.equipo_marca}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Capacidad</div>\n            <div class=\"field-value\">{{ $json.equipo_capacidad}}</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Modelo</div>\n            <div class=\"field-value\">{{ $json.equipo_modelo}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Serie</div>\n            <div class=\"field-value\">{{ $json.equipo_serie}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Placa / Activo</div>\n            <div class=\"field-value\">{{ $json.equipo_placa}}</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación física del equipo</div>\n            <div class=\"field-value\">{{ $json.equipo_ubicacion_fisica}}</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- ACTIVIDADES REALIZADAS (CHECKLIST) -->\n    <div class=\"section\">\n      <div class=\"section-header\">Actividades de mantenimiento</div>\n      <div class=\"section-body two-columns\">\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_filtros}}</span>\n              <span class=\"label\">Revisión y limpieza de filtros</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_limpieza_evaporador}}</span>\n              <span class=\"label\">Limpieza de serpentines / evaporador</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_limpieza_bandeja_drenaje}}</span>\n              <span class=\"label\">Limpieza bandeja y línea de drenaje</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_terminales}}</span>\n              <span class=\"label\">Revisión y ajuste de terminales eléctricos</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_aislamiento}}</span>\n              <span class=\"label\">Revisión de aislamiento en tuberías</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_controles}}</span>\n              <span class=\"label\">Verificación de controles y termostato</span>\n            </li>\n          </ul>\n        </div>\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">{{ $json.chk_limpieza_condensador}}</span>\n              <span class=\"label\">Limpieza unidad condensadora</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_ventiladores}}</span>\n              <span class=\"label\">Inspección de ventiladores y rodamientos</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_fugas}}</span>\n              <span class=\"label\">Revisión de posibles fugas de refrigerante</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_presiones}}</span>\n              <span class=\"label\">Verificación de presiones de operación</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_cableado}}</span>\n              <span class=\"label\">Inspección de cableado y protecciones</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_otras_actividades}}</span>\n              <span class=\"label\">Otras actividades de mantenimiento</span>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n\n    <!-- INFORMACIÓN SOBRE EL SERVICIO -->\n    <div class=\"section\">\n      <div class=\"section-header\">Información sobre el servicio</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Daño reportado por el cliente</div>\n            <div class=\"multiline\">{{ $json.danio_reportado}}</div>\n          </div>\n        </div>\n\n        <div class=\"fields-row\" style=\"margin-top:8px;\">\n          <div class=\"field\">\n            <div class=\"field-label\">Descripción del servicio realizado</div>\n            <div class=\"multiline\">{{ $json.descripcion_servicio}}</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- CONDICIONES DE OPERACIÓN -->\n    <div class=\"section\">\n      <div class=\"section-header\">Condiciones de operación</div>\n      <div class=\"section-body\">\n        <table class=\"conditions-table\">\n          <tr>\n            <th colspan=\"2\">Parámetros generales</th>\n            <th colspan=\"2\">Lecturas eléctricas y térmicas</th>\n          </tr>\n          <tr>\n            <td>Refrigerante</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.tipo_refrigerante}}</div>\n            </td>\n            <td>Amperaje compresor</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.amperaje_compresor}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Tensión de alimentación</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.tension_alimentacion}}</div>\n            </td>\n            <td>Amperaje unidad interior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.amperaje_unidad_interior}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de succión</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.presion_succion}}</div>\n            </td>\n            <td>Amperaje unidad exterior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.amperaje_unidad_exterior}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de descarga</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.presion_descarga}}</div>\n            </td>\n            <td>Temperatura ambiente</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.temperatura_ambiente}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Capacidad nominal (BTU / TR)</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.capacidad_nominal}}</div>\n            </td>\n            <td>Temperatura de suministro</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.temperatura_suministro}}</div>\n            </td>\n          </tr>\n        </table>\n      </div>\n    </div>\n\n    <!-- OBSERVACIONES Y RECOMENDACIONES -->\n    <div class=\"section\">\n      <div class=\"section-header\">Observaciones y recomendaciones</div>\n      <div class=\"section-body\">\n        <div class=\"multiline\">{{ $json.observaciones_recomendaciones}}</div>\n      </div>\n    </div>\n\n    <!-- FIRMAS -->\n    <div class=\"signatures\">\n      <div class=\"signature-box\">\n        <!-- Si usas firma digital:\n        <img class=\"signature-image\" src=\"{{ $json.firma_cliente_url}}\" alt=\"Firma cliente\" />\n        -->\n        <div class=\"signature-name\">{{ $json.nombre_cliente_firma}}</div>\n        <div class=\"signature-role\">Firma cliente</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"{{ $json.firma_tecnico_url}}\" alt=\"Firma técnico\" /> -->\n        <div class=\"signature-name\">{{ $json.nombre_tecnico}}</div>\n        <div class=\"signature-role\">Firma técnico</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"{{ $json.firma_gerente_url}}\" alt=\"Firma gerente técnico\" /> -->\n        <div class=\"signature-name\">{{ $json.nombre_gerente_tecnico}}</div>\n        <div class=\"signature-role\">Firma gerente técnico</div>\n      </div>\n    </div>\n\n    <!-- PIE DE PÁGINA -->\n    <div class=\"footer\">\n      ACONDICIONANDO S.A.S · Parque Industrial Manzana 11 Casa 12\n      · Sector D · Pereira<br />\n      Correo: acondicionandosas@gmail.com · Tel: 316 610 9591 – 317 680 1633\n    </div>\n  </div>\n</body>\n</html>\n",
+        "conversionOptions": {
+          "paper_size": "a4"
+        }
+      },
+      "type": "@pdfgeneratorapi/n8n-nodes-pdf-generator-api.pdfGeneratorApi",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -16
+      ],
+      "id": "cfb75927-a0ef-44ac-89fe-563ef701ec7a",
+      "name": "Convert HTML content to PDF",
+      "credentials": {
+        "pdfGeneratorApi": {
+          "id": "QYtBDphpoSiXWSa4",
+          "name": "hola@whitelabel.lat"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f3e453ce-8da8-4259-b776-758729df047f",
+              "name": "cliente_nombre",
+              "value": "Pedro",
+              "type": "string"
+            },
+            {
+              "id": "7e6b23b5-5bcc-43af-9e61-74ef31797ffb",
+              "name": "cliente_sucursal",
+              "value": "edificio test",
+              "type": "string"
+            },
+            {
+              "id": "3c87d1c6-b190-4919-b4d3-dc2f2e2030f7",
+              "name": "cliente_ubicacion",
+              "value": "Villavicencio",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        -16
+      ],
+      "id": "405c4d09-6a66-4333-a00a-cb5e5559c393",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "abaa9de2-4388-46df-9440-7c458be2669a",
+              "leftValue": "={{ $json.receptor }}",
+              "rightValue": "incoming",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "2b50ffbe-a3c8-4299-b6f3-86f9f79de33b",
+              "leftValue": "={{ $json.tags }}",
+              "rightValue": "=apagar-agente",
+              "operator": {
+                "type": "array",
+                "operation": "notContains",
+                "rightType": "any"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -224,
+        80
+      ],
+      "id": "3eeb7bc3-2f94-4355-b902-66d0ed9e4480",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        176
+      ],
+      "id": "257f5f6d-8ae8-455b-b68c-1769d765c954",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
+              "name": "nombre",
+              "value": "={{ $('chatwoot').item.json.body.conversation.meta.sender.name.split(\" \")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "82031891-32ae-4442-b883-fad57ad08c79",
+              "name": "phone_number",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].sender.phone_number.replace('+','') }}",
+              "type": "string"
+            },
+            {
+              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
+              "name": "mensaje",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].content }}",
+              "type": "string"
+            },
+            {
+              "id": "01193a9d-40ea-48b1-96f1-592105684644",
+              "name": "tipo_mensaje",
+              "value": "={{ $('chatwoot').item.json.body.attachments?.[0]?.file_type || $('chatwoot').item.json.body.conversation.messages?.[0]?.content_type }}",
+              "type": "string"
+            },
+            {
+              "id": "c6b5261d-a252-4328-af15-9699dfc5ba2b",
+              "name": "receptor",
+              "value": "={{ $('chatwoot').item.json.body.message_type }}",
+              "type": "string"
+            },
+            {
+              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
+              "name": "tags",
+              "value": "={{ $('chatwoot').item.json.body.conversation.labels }}",
+              "type": "array"
+            },
+            {
+              "id": "2189dde7-a49e-4226-be25-22f3e62caf99",
+              "name": "conversation_id",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].conversation_id }}",
+              "type": "string"
+            },
+            {
+              "id": "c8242d40-84d3-4c64-adcc-d15b8de57a9a",
+              "name": "account_id",
+              "value": "={{ $('chatwoot').item.json.body.account.id }}",
+              "type": "number"
+            },
+            {
+              "id": "aad140bb-399a-46df-b78b-98aa0a9fd6e8",
+              "name": "data_url",
+              "value": "={{ $('chatwoot').item.json.body.attachments[0].data_url }}",
+              "type": "string"
+            },
+            {
+              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
+              "name": "api_access_token",
+              "value": "={{ $json.api_access_token }}",
+              "type": "string"
+            },
+            {
+              "id": "0d13abaf-bcd9-4d8f-b8bb-511b45ee9909",
+              "name": "body.conversation.messages[0].inbox_id",
+              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].inbox_id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -448,
+        80
+      ],
+      "id": "f8d8a0bc-f95b-447f-b4f2-ef0b7342f57d",
+      "name": "ChatwootData"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatwood_onboarding_estarter",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -896,
+        80
+      ],
+      "id": "1c0d353b-a930-44e6-b759-9a25a35bfc2c",
+      "name": "chatwoot",
+      "webhookId": "e5c97b17-19ee-406e-9dcf-3cdcde1945ec"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5276d674-1b57-4af7-88f3-5f9616e64cc3",
+              "name": "nombre",
+              "value": "={{ $json.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "92d97526-26b7-461c-b7ec-7cd13074512e",
+              "name": "phone_number",
+              "value": "={{ $json.phone_number }}",
+              "type": "string"
+            },
+            {
+              "id": "0605a012-1740-4b13-8e7f-57e156ad2fbe",
+              "name": "mensaje",
+              "value": "={{ $json.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "5060779d-87fc-49af-9212-c7972aae9ff0",
+              "name": "tipo_mensaje",
+              "value": "={{ $json.tipo_mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "358f4697-0d6f-4184-bfbd-31ff4f2e2ac2",
+              "name": "tags",
+              "value": "={{ $json.tags }}",
+              "type": "string"
+            },
+            {
+              "id": "d7bd017f-435b-4c5c-89ba-77b2bdd3d56d",
+              "name": "account_id",
+              "value": "={{ $json.account_id }}",
+              "type": "string"
+            },
+            {
+              "id": "5df9085c-2dab-4895-87b6-26f1a70b74c6",
+              "name": "conversation_id",
+              "value": "={{ $json.conversation_id }}",
+              "type": "string"
+            },
+            {
+              "id": "3b0ab472-eb47-486f-87b8-92fe29a4f764",
+              "name": "data_url",
+              "value": "={{ $json.data_url }}",
+              "type": "string"
+            },
+            {
+              "id": "6843c5fe-3e47-4cfc-9076-dc347074cfba",
+              "name": "api_access_token",
+              "value": "={{ $('ChatwootData').item.json.api_access_token }}",
+              "type": "string"
+            },
+            {
+              "id": "ed3cd62e-2096-4e8e-a455-f7fcadba5130",
+              "name": "body.conversation.messages[0].inbox_id",
+              "value": "={{ $('ChatwootData').item.json.body.conversation.messages[0].inbox_id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "eee93fc7-1bd6-412b-94ba-b09fa804033f",
+      "name": "initData"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
+              "name": "api_access_token",
+              "value": "Z77edxokEbMJdTe1UgtfNr34",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -672,
+        80
+      ],
+      "id": "91092a0e-9218-4dc6-b7fc-e210612b3725",
+      "name": "env"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "response",
+        "options": {
+          "fileName": "={{ $json.filename }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        656,
+        -16
+      ],
+      "id": "162c11a3-0a00-47d7-be9e-5af09d54708f",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message_type",
+              "value": "outgoing"
+            },
+            {
+              "name": "private",
+              "value": "false"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachments[]",
+              "inputDataFieldName": "=data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        -16
+      ],
+      "id": "c95d191b-a3fc-40cc-8cc0-fd01d7f8e7d4",
+      "name": "HTTP Request6",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ijWOk4uGRwt4GzN5",
+          "name": "Valeia - Hablaya"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Formato de Mantenimiento Acondicionando S.A.S</title>\n  <style>\n    * {\n      box-sizing: border-box;\n    }\n    body {\n      margin: 0;\n      padding: 20px;\n      background: #e5f1f6;\n      font-family: \"Segoe UI\", Arial, sans-serif;\n      color: #12323f;\n    }\n    .page {\n      max-width: 900px;\n      margin: 0 auto;\n      background: #ffffff;\n      border-radius: 10px;\n      padding: 26px 32px 32px;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);\n      border-top: 8px solid #00a5c9;\n    }\n    .doc-header {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin-bottom: 18px;\n    }\n    .logo-area {\n      display: flex;\n      align-items: center;\n      gap: 14px;\n    }\n    .logo-circle {\n      width: 56px;\n      height: 56px;\n      border-radius: 50%;\n      background: radial-gradient(circle at 30% 30%, #01e0ff, #008aad);\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 10px;\n      color: #ffffff;\n      font-weight: 600;\n      text-transform: uppercase;\n    }\n    .company {\n      line-height: 1.2;\n    }\n    .company-name {\n      font-size: 20px;\n      font-weight: 800;\n      letter-spacing: 0.08em;\n      color: #007693;\n    }\n    .company-tagline {\n      font-size: 11px;\n      text-transform: uppercase;\n      letter-spacing: 0.14em;\n      color: #4a7c8a;\n    }\n    .header-right {\n      text-align: right;\n      font-size: 12px;\n    }\n    .header-right .label {\n      font-size: 10px;\n      letter-spacing: 0.12em;\n      text-transform: uppercase;\n      color: #4a7c8a;\n    }\n    .header-right .date-box {\n      margin-top: 4px;\n      padding: 6px 10px;\n      border-radius: 6px;\n      border: 1px solid #b3dce8;\n      display: inline-block;\n      font-weight: 600;\n      letter-spacing: 0.08em;\n      background: #f5fcff;\n    }\n\n    .chip-row {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin: 12px 0 20px;\n      gap: 10px;\n      flex-wrap: wrap;\n    }\n    .chips {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 6px;\n    }\n    .chip {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.09em;\n      padding: 4px 10px;\n      border-radius: 999px;\n      border: 1px solid #9ad7e5;\n      background: #f4fcff;\n      color: #24606f;\n      display: inline-flex;\n      align-items: center;\n      gap: 4px;\n    }\n    .chip span.check {\n      min-width: 10px;\n      text-align: center;\n      font-weight: 700;\n      color: #007693;\n    }\n\n    .section {\n      border-radius: 8px;\n      border: 1px solid #c5e0ec;\n      margin-bottom: 12px;\n      overflow: hidden;\n    }\n    .section-header {\n      background: linear-gradient(90deg, #00a5c9, #00c4e3);\n      color: #ffffff;\n      padding: 6px 12px;\n      font-size: 11px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n    }\n    .section-body {\n      padding: 10px 12px 12px;\n      font-size: 12px;\n    }\n\n    .fields-row {\n      display: flex;\n      gap: 12px;\n      margin-bottom: 6px;\n      flex-wrap: wrap;\n    }\n    .field {\n      flex: 1;\n      min-width: 180px;\n    }\n    .field-label {\n      font-size: 10px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n      margin-bottom: 1px;\n    }\n    .field-value {\n      border-bottom: 1px solid #cde3ee;\n      min-height: 18px;\n      padding: 1px 4px 3px;\n      border-radius: 3px;\n      background: #f7fcff;\n      color: #12323f;\n      display: flex;\n      align-items: center;\n    }\n\n    .two-columns {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(0, 1fr));\n      gap: 16px;\n    }\n\n    .checklist {\n      list-style: none;\n      padding: 0;\n      margin: 4px 0;\n    }\n    .checklist li {\n      display: flex;\n      align-items: flex-start;\n      gap: 6px;\n      font-size: 11px;\n      margin-bottom: 3px;\n    }\n    .checklist .check {\n      width: 16px;\n      height: 16px;\n      border-radius: 4px;\n      border: 1px solid #b0d7e3;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 11px;\n      font-weight: 700;\n      color: #007693;\n      background: #f5fcff;\n      flex-shrink: 0;\n    }\n    .checklist .label {\n      flex: 1;\n      color: #23424f;\n    }\n\n    .multiline {\n      border-radius: 6px;\n      border: 1px solid #cde3ee;\n      background: #f7fcff;\n      padding: 6px 8px;\n      min-height: 60px;\n      white-space: pre-wrap;\n      font-size: 12px;\n    }\n\n    .conditions-table {\n      width: 100%;\n      border-collapse: collapse;\n      font-size: 11px;\n    }\n    .conditions-table th,\n    .conditions-table td {\n      padding: 4px 6px;\n      border-bottom: 1px solid #e0edf3;\n    }\n    .conditions-table th {\n      text-align: left;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      font-size: 10px;\n      color: #4a7c8a;\n    }\n    .conditions-table .value-cell {\n      border-bottom: 1px solid #cde3ee;\n      background: #f7fcff;\n      border-radius: 3px;\n      min-height: 18px;\n    }\n    .conditions-table .value-inner {\n      padding: 2px 4px 3px;\n    }\n\n    .footer {\n      margin-top: 18px;\n      border-top: 1px solid #cde3ee;\n      padding-top: 10px;\n      font-size: 10px;\n      color: #456774;\n    }\n\n    .signatures {\n      display: grid;\n      grid-template-columns: repeat(3, minmax(0, 1fr));\n      gap: 12px;\n      margin-top: 18px;\n      text-align: center;\n      font-size: 11px;\n    }\n    .signature-box {\n      padding-top: 50px;\n      border-top: 1px solid #cde3ee;\n      position: relative;\n    }\n    .signature-name {\n      font-weight: 600;\n      color: #12323f;\n      margin-bottom: 2px;\n    }\n    .signature-role {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n    }\n    .signature-image {\n      position: absolute;\n      left: 50%;\n      top: 8px;\n      transform: translateX(-50%);\n      max-height: 40px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"page\">\n    <!-- ENCABEZADO -->\n    <div class=\"doc-header\">\n      <div class=\"logo-area\">\n        <div class=\"logo-circle\">\n          <!-- Si quieres logo, cambia esto por una imagen -->\n          LOGO\n          <!--\n          <img src=\"NaN\" alt=\"Logo\" style=\"width:100%;height:100%;border-radius:50%;object-fit:cover;\" />\n          -->\n        </div>\n        <div class=\"company\">\n          <div class=\"company-name\">ACONDICIONANDO S.A.S</div>\n          <div class=\"company-tagline\">\n            Aire acondicionado · Ventilación · Mantenimiento\n          </div>\n        </div>\n      </div>\n      <div class=\"header-right\">\n        <div class=\"label\">Fecha</div>\n        <div class=\"date-box\">NaN</div>\n      </div>\n    </div>\n\n    <!-- TIPO DE SERVICIO -->\n    <div class=\"chip-row\">\n      <div class=\"chips\">\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Mantenimiento</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Llamada por servicio</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Reparación</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Instalación</span>\n        </div>\n      </div>\n      <div style=\"font-size:11px;color:#4a7c8a;\">\n        N° orden / consecutivo: <span style=\"font-weight:600;color:#12323f;\">NaN</span>\n      </div>\n    </div>\n\n    <!-- DATOS DEL CLIENTE -->\n    <div class=\"section\">\n      <div class=\"section-header\">Datos del cliente</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Cliente</div>\n            <div class=\"field-value\">Pedro</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Sucursal</div>\n            <div class=\"field-value\">edificio test</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación</div>\n            <div class=\"field-value\">Villavicencio</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Teléfono</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Correo electrónico</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Contacto</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- DESCRIPCIÓN DE LOS EQUIPOS -->\n    <div class=\"section\">\n      <div class=\"section-header\">Descripción de los equipos</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Tipo de equipo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Marca</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Capacidad</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Modelo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Serie</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Placa / Activo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación física del equipo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- ACTIVIDADES REALIZADAS (CHECKLIST) -->\n    <div class=\"section\">\n      <div class=\"section-header\">Actividades de mantenimiento</div>\n      <div class=\"section-body two-columns\">\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión y limpieza de filtros</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Limpieza de serpentines / evaporador</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Limpieza bandeja y línea de drenaje</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión y ajuste de terminales eléctricos</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión de aislamiento en tuberías</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Verificación de controles y termostato</span>\n            </li>\n          </ul>\n        </div>\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Limpieza unidad condensadora</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Inspección de ventiladores y rodamientos</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión de posibles fugas de refrigerante</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Verificación de presiones de operación</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Inspección de cableado y protecciones</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Otras actividades de mantenimiento</span>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n\n    <!-- INFORMACIÓN SOBRE EL SERVICIO -->\n    <div class=\"section\">\n      <div class=\"section-header\">Información sobre el servicio</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Daño reportado por el cliente</div>\n            <div class=\"multiline\">NaN</div>\n          </div>\n        </div>\n\n        <div class=\"fields-row\" style=\"margin-top:8px;\">\n          <div class=\"field\">\n            <div class=\"field-label\">Descripción del servicio realizado</div>\n            <div class=\"multiline\">NaN</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- CONDICIONES DE OPERACIÓN -->\n    <div class=\"section\">\n      <div class=\"section-header\">Condiciones de operación</div>\n      <div class=\"section-body\">\n        <table class=\"conditions-table\">\n          <tr>\n            <th colspan=\"2\">Parámetros generales</th>\n            <th colspan=\"2\">Lecturas eléctricas y térmicas</th>\n          </tr>\n          <tr>\n            <td>Refrigerante</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Amperaje compresor</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Tensión de alimentación</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Amperaje unidad interior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de succión</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Amperaje unidad exterior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de descarga</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Temperatura ambiente</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Capacidad nominal (BTU / TR)</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Temperatura de suministro</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n        </table>\n      </div>\n    </div>\n\n    <!-- OBSERVACIONES Y RECOMENDACIONES -->\n    <div class=\"section\">\n      <div class=\"section-header\">Observaciones y recomendaciones</div>\n      <div class=\"section-body\">\n        <div class=\"multiline\">NaN</div>\n      </div>\n    </div>\n\n    <!-- FIRMAS -->\n    <div class=\"signatures\">\n      <div class=\"signature-box\">\n        <!-- Si usas firma digital:\n        <img class=\"signature-image\" src=\"NaN\" alt=\"Firma cliente\" />\n        -->\n        <div class=\"signature-name\">Daniel Lopez</div>\n        <div class=\"signature-role\">Firma cliente</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"NaN\" alt=\"Firma técnico\" /> -->\n        <div class=\"signature-name\">Camilo Palma</div>\n        <div class=\"signature-role\">Firma técnico</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"NaN\" alt=\"Firma gerente técnico\" /> -->\n        <div class=\"signature-name\">Pedro Rodriguez</div>\n        <div class=\"signature-role\">Firma gerente técnico</div>\n      </div>\n    </div>\n\n    <!-- PIE DE PÁGINA -->\n    <div class=\"footer\">\n      ACONDICIONANDO S.A.S · Parque Industrial Manzana 11 Casa 12\n      · Sector D · Pereira<br />\n      Correo: acondicionandosas@gmail.com · Tel: 316 610 9591 – 317 680 1633\n    </div>\n  </div>\n</body>\n</html>\n"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        608,
+        208
+      ],
+      "id": "f7ca2036-7213-4e47-801e-3cd303f97040",
+      "name": "HTML",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "56f83d42-e25f-40c6-9b1f-c6dbd6109e50",
+              "name": "document",
+              "value": "=<!DOCTYPE html> <html lang=\"es\"> <head>   <meta charset=\"UTF-8\" />   <title>Formato de Mantenimiento Acondicionando S.A.S</title>   <style>     * {       box-sizing: border-box;     }     body {       margin: 0;       padding: 20px;       background: #e5f1f6;       font-family: \"Segoe UI\", Arial, sans-serif;       color: #12323f;     }     .page {       max-width: 900px;       margin: 0 auto;       background: #ffffff;       border-radius: 10px;       padding: 26px 32px 32px;       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);       border-top: 8px solid #00a5c9;     }     .doc-header {       display: flex;       justify-content: space-between;       align-items: center;       margin-bottom: 18px;     }     .logo-area {       display: flex;       align-items: center;       gap: 14px;     }     .logo-circle {       width: 56px;       height: 56px;       border-radius: 50%;       background: radial-gradient(circle at 30% 30%, #01e0ff, #008aad);       display: flex;       align-items: center;       justify-content: center;       font-size: 10px;       color: #ffffff;       font-weight: 600;       text-transform: uppercase;     }     .company {       line-height: 1.2;     }     .company-name {       font-size: 20px;       font-weight: 800;       letter-spacing: 0.08em;       color: #007693;     }     .company-tagline {       font-size: 11px;       text-transform: uppercase;       letter-spacing: 0.14em;       color: #4a7c8a;     }     .header-right {       text-align: right;       font-size: 12px;     }     .header-right .label {       font-size: 10px;       letter-spacing: 0.12em;       text-transform: uppercase;       color: #4a7c8a;     }     .header-right .date-box {       margin-top: 4px;       padding: 6px 10px;       border-radius: 6px;       border: 1px solid #b3dce8;       display: inline-block;       font-weight: 600;       letter-spacing: 0.08em;       background: #f5fcff;     }      .chip-row {       display: flex;       justify-content: space-between;       align-items: center;       margin: 12px 0 20px;       gap: 10px;       flex-wrap: wrap;     }     .chips {       display: flex;       flex-wrap: wrap;       gap: 6px;     }     .chip {       font-size: 10px;       text-transform: uppercase;       letter-spacing: 0.09em;       padding: 4px 10px;       border-radius: 999px;       border: 1px solid #9ad7e5;       background: #f4fcff;       color: #24606f;       display: inline-flex;       align-items: center;       gap: 4px;     }     .chip span.check {       min-width: 10px;       text-align: center;       font-weight: 700;       color: #007693;     }      .section {       border-radius: 8px;       border: 1px solid #c5e0ec;       margin-bottom: 12px;       overflow: hidden;     }     .section-header {       background: linear-gradient(90deg, #00a5c9, #00c4e3);       color: #ffffff;       padding: 6px 12px;       font-size: 11px;       font-weight: 700;       text-transform: uppercase;       letter-spacing: 0.12em;     }     .section-body {       padding: 10px 12px 12px;       font-size: 12px;     }      .fields-row {       display: flex;       gap: 12px;       margin-bottom: 6px;       flex-wrap: wrap;     }     .field {       flex: 1;       min-width: 180px;     }     .field-label {       font-size: 10px;       font-weight: 700;       text-transform: uppercase;       letter-spacing: 0.12em;       color: #4a7c8a;       margin-bottom: 1px;     }     .field-value {       border-bottom: 1px solid #cde3ee;       min-height: 18px;       padding: 1px 4px 3px;       border-radius: 3px;       background: #f7fcff;       color: #12323f;       display: flex;       align-items: center;     }      .two-columns {       display: grid;       grid-template-columns: repeat(2, minmax(0, 1fr));       gap: 16px;     }      .checklist {       list-style: none;       padding: 0;       margin: 4px 0;     }     .checklist li {       display: flex;       align-items: flex-start;       gap: 6px;       font-size: 11px;       margin-bottom: 3px;     }     .checklist .check {       width: 16px;       height: 16px;       border-radius: 4px;       border: 1px solid #b0d7e3;       display: inline-flex;       align-items: center;       justify-content: center;       font-size: 11px;       font-weight: 700;       color: #007693;       background: #f5fcff;       flex-shrink: 0;     }     .checklist .label {       flex: 1;       color: #23424f;     }      .multiline {       border-radius: 6px;       border: 1px solid #cde3ee;       background: #f7fcff;       padding: 6px 8px;       min-height: 60px;       white-space: pre-wrap;       font-size: 12px;     }      .conditions-table {       width: 100%;       border-collapse: collapse;       font-size: 11px;     }     .conditions-table th,     .conditions-table td {       padding: 4px 6px;       border-bottom: 1px solid #e0edf3;     }     .conditions-table th {       text-align: left;       text-transform: uppercase;       letter-spacing: 0.12em;       font-size: 10px;       color: #4a7c8a;     }     .conditions-table .value-cell {       border-bottom: 1px solid #cde3ee;       background: #f7fcff;       border-radius: 3px;       min-height: 18px;     }     .conditions-table .value-inner {       padding: 2px 4px 3px;     }      .footer {       margin-top: 18px;       border-top: 1px solid #cde3ee;       padding-top: 10px;       font-size: 10px;       color: #456774;     }      .signatures {       display: grid;       grid-template-columns: repeat(3, minmax(0, 1fr));       gap: 12px;       margin-top: 18px;       text-align: center;       font-size: 11px;     }     .signature-box {       padding-top: 50px;       border-top: 1px solid #cde3ee;       position: relative;     }     .signature-name {       font-weight: 600;       color: #12323f;       margin-bottom: 2px;     }     .signature-role {       font-size: 10px;       text-transform: uppercase;       letter-spacing: 0.12em;       color: #4a7c8a;     }     .signature-image {       position: absolute;       left: 50%;       top: 8px;       transform: translateX(-50%);       max-height: 40px;     }   </style> </head> <body>   <div class=\"page\">     <!-- ENCABEZADO -->     <div class=\"doc-header\">       <div class=\"logo-area\">         <div class=\"logo-circle\">           <!-- Si quieres logo, cambia esto por una imagen -->           LOGO           <!--           <img src=\"{{ +$json.logo_url}}\" alt=\"Logo\" style=\"width:100%;height:100%;border-radius:50%;object-fit:cover;\" />           -->         </div>         <div class=\"company\">           <div class=\"company-name\">ACONDICIONANDO S.A.S</div>           <div class=\"company-tagline\">             Aire acondicionado · Ventilación · Mantenimiento           </div>         </div>       </div>       <div class=\"header-right\">         <div class=\"label\">Fecha</div>         <div class=\"date-box\">{{ +$json.fecha_servicio}}</div>       </div>     </div>      <!-- TIPO DE SERVICIO -->     <div class=\"chip-row\">       <div class=\"chips\">         <div class=\"chip\">           <span class=\"check\">{{ +$json.serv_mantenimiento}}</span>           <span>Mantenimiento</span>         </div>         <div class=\"chip\">           <span class=\"check\">{{ +$json.serv_llamada}}</span>           <span>Llamada por servicio</span>         </div>         <div class=\"chip\">           <span class=\"check\">{{ +$json.serv_reparacion}}</span>           <span>Reparación</span>         </div>         <div class=\"chip\">           <span class=\"check\">{{ +$json.serv_instalacion}}</span>           <span>Instalación</span>         </div>       </div>       <div style=\"font-size:11px;color:#4a7c8a;\">         N° orden / consecutivo: <span style=\"font-weight:600;color:#12323f;\">{{ +$json.numero_orden}}</span>       </div>     </div>      <!-- DATOS DEL CLIENTE -->     <div class=\"section\">       <div class=\"section-header\">Datos del cliente</div>       <div class=\"section-body\">         <div class=\"fields-row\">           <div class=\"field\">             <div class=\"field-label\">Cliente</div>             <div class=\"field-value\">{{ $json.cliente_nombre}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Sucursal</div>             <div class=\"field-value\">{{ $json.cliente_sucursal}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Ubicación</div>             <div class=\"field-value\">{{ $json.cliente_ubicacion}}</div>           </div>         </div>         <div class=\"fields-row\">           <div class=\"field\">             <div class=\"field-label\">Teléfono</div>             <div class=\"field-value\">{{ +$json.cliente_telefono}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Correo electrónico</div>             <div class=\"field-value\">{{ +$json.cliente_email}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Contacto</div>             <div class=\"field-value\">{{ +$json.cliente_contacto}}</div>           </div>         </div>       </div>     </div>      <!-- DESCRIPCIÓN DE LOS EQUIPOS -->     <div class=\"section\">       <div class=\"section-header\">Descripción de los equipos</div>       <div class=\"section-body\">         <div class=\"fields-row\">           <div class=\"field\">             <div class=\"field-label\">Tipo de equipo</div>             <div class=\"field-value\">{{ +$json.equipo_tipo}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Marca</div>             <div class=\"field-value\">{{ +$json.equipo_marca}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Capacidad</div>             <div class=\"field-value\">{{ +$json.equipo_capacidad}}</div>           </div>         </div>         <div class=\"fields-row\">           <div class=\"field\">             <div class=\"field-label\">Modelo</div>             <div class=\"field-value\">{{ +$json.equipo_modelo}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Serie</div>             <div class=\"field-value\">{{ +$json.equipo_serie}}</div>           </div>           <div class=\"field\">             <div class=\"field-label\">Placa / Activo</div>             <div class=\"field-value\">{{ +$json.equipo_placa}}</div>           </div>         </div>         <div class=\"fields-row\">           <div class=\"field\">             <div class=\"field-label\">Ubicación física del equipo</div>             <div class=\"field-value\">{{ +$json.equipo_ubicacion_fisica}}</div>           </div>         </div>       </div>     </div>      <!-- ACTIVIDADES REALIZADAS (CHECKLIST) -->     <div class=\"section\">       <div class=\"section-header\">Actividades de mantenimiento</div>       <div class=\"section-body two-columns\">         <div>           <ul class=\"checklist\">             <li>               <span class=\"check\">{{ +$json.chk_revision_filtros}}</span>               <span class=\"label\">Revisión y limpieza de filtros</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_limpieza_evaporador}}</span>               <span class=\"label\">Limpieza de serpentines / evaporador</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_limpieza_bandeja_drenaje}}</span>               <span class=\"label\">Limpieza bandeja y línea de drenaje</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_revision_terminales}}</span>               <span class=\"label\">Revisión y ajuste de terminales eléctricos</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_revision_aislamiento}}</span>               <span class=\"label\">Revisión de aislamiento en tuberías</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_revision_controles}}</span>               <span class=\"label\">Verificación de controles y termostato</span>             </li>           </ul>         </div>         <div>           <ul class=\"checklist\">             <li>               <span class=\"check\">{{ +$json.chk_limpieza_condensador}}</span>               <span class=\"label\">Limpieza unidad condensadora</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_revision_ventiladores}}</span>               <span class=\"label\">Inspección de ventiladores y rodamientos</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_revision_fugas}}</span>               <span class=\"label\">Revisión de posibles fugas de refrigerante</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_revision_presiones}}</span>               <span class=\"label\">Verificación de presiones de operación</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_revision_cableado}}</span>               <span class=\"label\">Inspección de cableado y protecciones</span>             </li>             <li>               <span class=\"check\">{{ +$json.chk_otras_actividades}}</span>               <span class=\"label\">Otras actividades de mantenimiento</span>             </li>           </ul>         </div>       </div>     </div>      <!-- INFORMACIÓN SOBRE EL SERVICIO -->     <div class=\"section\">       <div class=\"section-header\">Información sobre el servicio</div>       <div class=\"section-body\">         <div class=\"fields-row\">           <div class=\"field\">             <div class=\"field-label\">Daño reportado por el cliente</div>             <div class=\"multiline\">{{ +$json.danio_reportado}}</div>           </div>         </div>          <div class=\"fields-row\" style=\"margin-top:8px;\">           <div class=\"field\">             <div class=\"field-label\">Descripción del servicio realizado</div>             <div class=\"multiline\">{{ +$json.descripcion_servicio}}</div>           </div>         </div>       </div>     </div>      <!-- CONDICIONES DE OPERACIÓN -->     <div class=\"section\">       <div class=\"section-header\">Condiciones de operación</div>       <div class=\"section-body\">         <table class=\"conditions-table\">           <tr>             <th colspan=\"2\">Parámetros generales</th>             <th colspan=\"2\">Lecturas eléctricas y térmicas</th>           </tr>           <tr>             <td>Refrigerante</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.tipo_refrigerante}}</div>             </td>             <td>Amperaje compresor</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.amperaje_compresor}}</div>             </td>           </tr>           <tr>             <td>Tensión de alimentación</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.tension_alimentacion}}</div>             </td>             <td>Amperaje unidad interior</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.amperaje_unidad_interior}}</div>             </td>           </tr>           <tr>             <td>Presión de succión</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.presion_succion}}</div>             </td>             <td>Amperaje unidad exterior</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.amperaje_unidad_exterior}}</div>             </td>           </tr>           <tr>             <td>Presión de descarga</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.presion_descarga}}</div>             </td>             <td>Temperatura ambiente</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.temperatura_ambiente}}</div>             </td>           </tr>           <tr>             <td>Capacidad nominal (BTU / TR)</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.capacidad_nominal}}</div>             </td>             <td>Temperatura de suministro</td>             <td class=\"value-cell\">               <div class=\"value-inner\">{{ +$json.temperatura_suministro}}</div>             </td>           </tr>         </table>       </div>     </div>      <!-- OBSERVACIONES Y RECOMENDACIONES -->     <div class=\"section\">       <div class=\"section-header\">Observaciones y recomendaciones</div>       <div class=\"section-body\">         <div class=\"multiline\">{{ +$json.observaciones_recomendaciones}}</div>       </div>     </div>      <!-- FIRMAS -->     <div class=\"signatures\">       <div class=\"signature-box\">         <!-- Si usas firma digital:         <img class=\"signature-image\" src=\"{{ +$json.firma_cliente_url}}\" alt=\"Firma cliente\" />         -->         <div class=\"signature-name\">{{ +$json.nombre_cliente_firma}}</div>         <div class=\"signature-role\">Firma cliente</div>       </div>       <div class=\"signature-box\">         <!-- <img class=\"signature-image\" src=\"{{ +$json.firma_tecnico_url}}\" alt=\"Firma técnico\" /> -->         <div class=\"signature-name\">{{ +$json.nombre_tecnico}}</div>         <div class=\"signature-role\">Firma técnico</div>       </div>       <div class=\"signature-box\">         <!-- <img class=\"signature-image\" src=\"{{ +$json.firma_gerente_url}}\" alt=\"Firma gerente técnico\" /> -->         <div class=\"signature-name\">{{ +$json.nombre_gerente_tecnico}}</div>         <div class=\"signature-role\">Firma gerente técnico</div>       </div>     </div>      <!-- PIE DE PÁGINA -->     <div class=\"footer\">       ACONDICIONANDO S.A.S · Parque Industrial Manzana 11 Casa 12       · Sector D · Pereira<br />       Correo: acondicionandosas@gmail.com · Tel: 316 610 9591 – 317 680 1633     </div>   </div> </body> </html>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        176
+      ],
+      "id": "fad07f68-54bb-4711-9d90-75a55ebe6be5",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {
+    "chatwoot": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.whitelabel.lat",
+            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+            "content-length": "3145",
+            "accept": "application/json",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "content-type": "application/json",
+            "x-forwarded-for": "54.82.14.220",
+            "x-forwarded-host": "automation.whitelabel.lat",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "4f3b0c84f963",
+            "x-real-ip": "54.82.14.220"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "account": {
+              "id": 2,
+              "name": "Valeia"
+            },
+            "additional_attributes": {},
+            "content_attributes": {},
+            "content_type": "text",
+            "content": null,
+            "conversation": {
+              "additional_attributes": {},
+              "can_reply": true,
+              "channel": "Channel::Whatsapp",
+              "contact_inbox": {
+                "id": 413,
+                "contact_id": 413,
+                "inbox_id": 1,
+                "source_id": "573005792037",
+                "created_at": "2025-09-15T14:41:38.106Z",
+                "updated_at": "2025-09-15T14:41:38.106Z",
+                "hmac_verified": false,
+                "pubsub_token": "3kpr7dZg2qJGk5prvkymTLf7"
+              },
+              "id": 3,
+              "inbox_id": 1,
+              "messages": [
+                {
+                  "id": 9192,
+                  "content": null,
+                  "account_id": 2,
+                  "inbox_id": 1,
+                  "conversation_id": 1,
+                  "message_type": 0,
+                  "created_at": 1757962056,
+                  "updated_at": "2025-09-15T18:47:36.293Z",
+                  "private": false,
+                  "status": "sent",
+                  "source_id": "wamid.HBgMNTczMDA1NzkyMDM3FQIAEhggQUMzMzJDMzM3OEE1RkQyOUFDMUMyQ0RDMjUzQjJBRTMA",
+                  "content_type": "text",
+                  "content_attributes": {},
+                  "sender_type": "Contact",
+                  "sender_id": 413,
+                  "external_source_ids": {},
+                  "additional_attributes": {},
+                  "processed_message_content": null,
+                  "sentiment": {},
+                  "conversation": {
+                    "assignee_id": null,
+                    "unread_count": 1,
+                    "last_activity_at": 1757962056,
+                    "contact_inbox": {
+                      "source_id": "573005792037"
+                    }
+                  },
+                  "attachments": [
+                    {
+                      "id": 790,
+                      "message_id": 9192,
+                      "file_type": "audio",
+                      "account_id": 2,
+                      "extension": null,
+                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb29CIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--60c4467c22b5b2fa52ebfc68b4d3a82a82b69b4c/File.ogg",
+                      "thumb_url": "",
+                      "file_size": 14208,
+                      "width": null,
+                      "height": null,
+                      "transcribed_text": ""
+                    }
+                  ],
+                  "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": null,
+                    "id": 413,
+                    "identifier": null,
+                    "name": "Daniel lopez charry",
+                    "phone_number": "+573228854498",
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                  }
+                }
+              ],
+              "labels": [],
+              "meta": {
+                "sender": {
+                  "additional_attributes": {},
+                  "custom_attributes": {},
+                  "email": null,
+                  "id": 413,
+                  "identifier": null,
+                  "name": "Daniel lopez charry",
+                  "phone_number": "+573005792037",
+                  "thumbnail": "",
+                  "blocked": false,
+                  "type": "contact"
+                },
+                "assignee": null,
+                "team": null,
+                "hmac_verified": false
+              },
+              "status": "pending",
+              "custom_attributes": {},
+              "snoozed_until": null,
+              "unread_count": 1,
+              "first_reply_created_at": null,
+              "priority": null,
+              "waiting_since": 1757947298,
+              "agent_last_seen_at": 1757961647,
+              "contact_last_seen_at": 0,
+              "last_activity_at": 1757962056,
+              "timestamp": 1757962056,
+              "created_at": 1757947298,
+              "updated_at": 1757962056.2952733
+            },
+            "created_at": "2025-09-15T18:47:36.293Z",
+            "id": 9192,
+            "inbox": {
+              "id": 1,
+              "name": "Valeia-Whatsapp"
+            },
+            "message_type": "incoming",
+            "private": false,
+            "sender": {
+              "account": {
+                "id": 2,
+                "name": "Valeia"
+              },
+              "additional_attributes": {},
+              "avatar": "",
+              "custom_attributes": {},
+              "email": null,
+              "id": 413,
+              "identifier": null,
+              "name": "Daniel lopez charry",
+              "phone_number": "+573005792037",
+              "thumbnail": "",
+              "blocked": false
+            },
+            "source_id": "wamid.HBgMNTczMDA1NzkyMDM3FQIAEhggQUMzMzJDMzM3OEE1RkQyOUFDMUMyQ0RDMjUzQjJBRTMA",
+            "attachments": [
+              {
+                "id": 790,
+                "message_id": 9192,
+                "file_type": "audio",
+                "account_id": 2,
+                "extension": null,
+                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb29CIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--60c4467c22b5b2fa52ebfc68b4d3a82a82b69b4c/File.ogg",
+                "thumb_url": "",
+                "file_size": 14208,
+                "width": null,
+                "height": null,
+                "transcribed_text": ""
+              }
+            ],
+            "event": "message_created"
+          },
+          "webhookUrl": "https://automation.whitelabel.lat/webhook/valeia-chatwoot",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-26T04:38:51.482Z",
+      "createdAt": "2025-11-26T04:38:51.482Z",
+      "role": "workflow:owner",
+      "workflowId": "BMq0MRsTWyjtG2qr",
+      "projectId": "jOPTDk8NtR0eZIqG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-26T15:31:58.288Z",
+  "versionId": "3fe12ac6-c509-45fd-bf51-ee9e4e07edc8"
+}
