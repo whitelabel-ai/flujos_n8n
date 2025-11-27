@@ -45,7 +45,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "JS Para Switch",
             "type": "main",
             "index": 0
           }
@@ -63,15 +63,19 @@
         ]
       ]
     },
-    "Switch": {
+    "JS Para Switch": {
       "main": [
         [
           {
-            "node": "JS Para Post Linkedin",
+            "node": "Terminal de Eleccion",
             "type": "main",
             "index": 0
           }
-        ],
+        ]
+      ]
+    },
+    "Terminal de Eleccion": {
+      "main": [
         [
           {
             "node": "JS Para Post Blog",
@@ -79,18 +83,14 @@
             "index": 0
           }
         ],
-        []
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
         [
           {
-            "node": "Switch",
+            "node": "JS Para Post Linkedin",
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        []
       ]
     }
   },
@@ -104,13 +104,13 @@
   "nodes": [
     {
       "parameters": {
-        "jsCode": "const bruto = $json[\"output\"];\n\n// Elimina todo lo que está antes del primer bloque de \"---\" o de la primera línea vacía tras el JSON\nlet soloTexto = bruto;\n\n// Si detecta bloque JSON dentro del texto:\n// Busca la primera ocurrencia de \"---\" y toma el texto de ahí en adelante\nconst delimitador = '---';\nconst idxDelim = soloTexto.indexOf(delimitador);\nif (idxDelim !== -1) {\n  soloTexto = soloTexto.substring(idxDelim + delimitador.length).trim();\n}\n\n// Si queda encabezado o líneas vacías, las elimina\nsoloTexto = soloTexto.replace(/^\\s+/, '');\n\n// Variables fijas\nconst idea = 'Idea para LinkedIn (automático)';\nconst contenido_LinkedIn = soloTexto;\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\nreturn [{\n  idea,\n  contenido_LinkedIn,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];"
+        "jsCode": "const bruto = $('Generador de Idea').first().json.output || '';   // o el nombre real del campo\n\n\n// Elimina todo lo que está antes del primer bloque de \"---\" o de la primera línea vacía tras el JSON\nlet soloTexto = bruto;\n\n// Si detecta bloque JSON dentro del texto:\n// Busca la primera ocurrencia de \"---\" y toma el texto de ahí en adelante\nconst delimitador = '---';\nconst idxDelim = soloTexto.indexOf(delimitador);\nif (idxDelim !== -1) {\n  soloTexto = soloTexto.substring(idxDelim + delimitador.length).trim();\n}\n\n// Si queda encabezado o líneas vacías, las elimina\nsoloTexto = soloTexto.replace(/^\\s+/, '');\n\n// Variables fijas\nconst idea = 'Idea para LinkedIn (automático)';\nconst contenido_LinkedIn = soloTexto;\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\nreturn [{\n  idea,\n  contenido_LinkedIn,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         -2320,
-        416
+        480
       ],
       "id": "49621e29-2959-4e6b-b83f-d767ca08d393",
       "name": "JS Para Post Linkedin"
@@ -123,7 +123,7 @@
       "typeVersion": 2,
       "position": [
         -2320,
-        608
+        288
       ],
       "id": "da3ed30c-edd8-4faf-bdff-17283bffd895",
       "name": "JS Para Post Blog"
@@ -155,7 +155,7 @@
       "typeVersion": 3,
       "position": [
         -2096,
-        416
+        480
       ],
       "id": "babdd335-ee11-464b-b16d-1dd46bcf5963",
       "name": "Tabla Post Linkedin",
@@ -177,7 +177,7 @@
       "typeVersion": 3,
       "position": [
         -2096,
-        608
+        288
       ],
       "id": "a92a3391-2434-4301-87c8-f497a127b078",
       "name": "Tabla Post Blog",
@@ -199,7 +199,7 @@
       "typeVersion": 1.2,
       "position": [
         -3344,
-        512
+        384
       ],
       "id": "4fe12fa1-200d-425c-8457-6cccc40c1563",
       "name": "Péticion Post o Blog",
@@ -223,7 +223,7 @@
       "typeVersion": 3,
       "position": [
         -3120,
-        512
+        384
       ],
       "id": "bdcda101-5a1d-4d67-85d8-99409830c126",
       "name": "Generador de Idea"
@@ -235,8 +235,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -3120,
-        736
+        -3048,
+        608
       ],
       "id": "cc03fce0-2418-4352-b24c-7c3aeecc16b6",
       "name": "Cerebro",
@@ -246,6 +246,19 @@
           "name": "automation.whitelabel.lat"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Asume que el texto generado llega como $json.output\nconst raw = $json.output || $json.text || '';\n\n// Intentar extraer tipo y contenido si el texto contiene \"tipo:xxx | ...\"\nconst match = raw.match(/tipo:(\\w+)\\s*\\|\\s*(.+)/i);\n\nlet tipo, contenido;\n\nif (match) {\n  tipo = match[1].trim().toLowerCase(); // linkedin o blog\n  contenido = match[2].trim();\n} else {\n  // Si no encuentra tipo, pon por defecto linkedin (puedes decidir tú)\n  tipo = 'linkedin';\n  contenido = raw;\n}\n\n// Variables fijas\nconst idea = tipo === 'linkedin'\n  ? 'Idea para LinkedIn (automático)'\n  : 'Idea para Blog (automático)';\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\n// Output para el Switch y tablas\nreturn [{\n  idea,\n  tipo,\n  contenido,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2768,
+        384
+      ],
+      "id": "374ba7e4-f0b5-4a30-8316-fdeab9f69c04",
+      "name": "JS Para Switch"
     },
     {
       "parameters": {
@@ -262,7 +275,7 @@
                 "conditions": [
                   {
                     "leftValue": "={{ $json.tipo }}",
-                    "rightValue": "={{ $('Generador de Idea').item.json.output }}",
+                    "rightValue": "=blog",
                     "operator": {
                       "type": "string",
                       "operation": "equals"
@@ -285,7 +298,7 @@
                   {
                     "id": "4a478130-b726-43b7-a769-ac5b67c53aec",
                     "leftValue": "={{ $json.tipo }}",
-                    "rightValue": "={{ $('Generador de Idea').item.json.output }}",
+                    "rightValue": "=linkedin",
                     "operator": {
                       "type": "string",
                       "operation": "equals"
@@ -303,23 +316,10 @@
       "typeVersion": 3.3,
       "position": [
         -2544,
-        512
+        384
       ],
       "id": "ea65d74c-12b3-4517-b921-61a86f64b14d",
-      "name": "Switch"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Asume que el texto generado llega como $json.output\nconst raw = $json.output || $json.text || '';\n\n// Intentar extraer tipo y contenido si el texto contiene \"tipo:xxx | ...\"\nconst match = raw.match(/tipo:(\\w+)\\s*\\|\\s*(.+)/i);\n\nlet tipo, contenido;\n\nif (match) {\n  tipo = match[1].trim().toLowerCase(); // linkedin o blog\n  contenido = match[2].trim();\n} else {\n  // Si no encuentra tipo, pon por defecto linkedin (puedes decidir tú)\n  tipo = 'linkedin';\n  contenido = raw;\n}\n\n// Variables fijas\nconst idea = tipo === 'linkedin'\n  ? 'Idea para LinkedIn (automático)'\n  : 'Idea para Blog (automático)';\nconst autor = 'andresco70@gmail.com';\nconst fecha = '21/11/2025';\nconst hora = '13:30';\nconst perfil = 'andresco70@gmail.com';\n\n// Output para el Switch y tablas\nreturn [{\n  idea,\n  tipo,\n  contenido,\n  autor,\n  fecha,\n  hora,\n  perfil\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -2768,
-        512
-      ],
-      "id": "374ba7e4-f0b5-4a30-8316-fdeab9f69c04",
-      "name": "Code in JavaScript"
+      "name": "Terminal de Eleccion"
     }
   ],
   "pinData": {},
@@ -341,6 +341,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-11-25T17:17:31.203Z",
-  "versionId": "215490c0-76e5-4059-8848-828ff5d5cf06"
+  "updatedAt": "2025-11-27T15:57:31.625Z",
+  "versionId": "ee720bca-0f06-46f9-974f-470652b1636f"
 }
