@@ -7,7 +7,7 @@
       "main": [
         [
           {
-            "node": "Get_client",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -57,6 +57,79 @@
           }
         ]
       ]
+    },
+    "Get_Sede1": {
+      "main": [
+        [
+          {
+            "node": "Get_equipos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_client1": {
+      "main": [
+        [
+          {
+            "node": "info_client_clean",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_equipos1": {
+      "main": [
+        [
+          {
+            "node": "Get_mantenimientos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_mantenimientos1": {
+      "main": [
+        [
+          {
+            "node": "response_query_tecnico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get_client1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get_client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "info_client_clean": {
+      "main": [
+        [
+          {
+            "node": "Get_Sede1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-11-04T16:44:51.496Z",
@@ -69,6 +142,9 @@
       "parameters": {
         "workflowInputs": {
           "values": [
+            {
+              "name": "rol_usuario"
+            },
             {
               "name": "razon_social"
             },
@@ -89,8 +165,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -768,
-        1552
+        -1120,
+        1408
       ]
     },
     {
@@ -245,9 +321,237 @@
       ],
       "id": "532ccc0f-0397-4966-a1e1-6af90c62ba69",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mwq5ww7arsq1lzg",
+        "returnAll": true,
+        "options": {
+          "where": "=(client_id,eq,{{ $json.client_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        32,
+        1216
+      ],
+      "id": "5b80fd1c-d328-4c73-861e-7e28518b2c5e",
+      "name": "Get_Sede1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "m58lt3zk9pd4acn",
+        "returnAll": true,
+        "options": {
+          "where": "=(razon_social_unaccent,like,%{{ $json.razon_social.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\").toUpperCase() }}%)"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -416,
+        1216
+      ],
+      "id": "424505f5-636c-4778-b393-85a28980a3e8",
+      "name": "Get_client1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mjdctrqix3ttqsq",
+        "returnAll": true,
+        "options": {
+          "where": "=(sede_id,eq,{{ $json.sede_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        288,
+        1216
+      ],
+      "id": "924c453a-dde6-4533-a42b-6eab692ad40d",
+      "name": "Get_equipos1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mgxqs7y4myuzrbg",
+        "returnAll": true,
+        "options": {
+          "where": "=(equipo_id,eq,{{ $json.equipo_id }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        544,
+        1216
+      ],
+      "id": "13dbdfaa-2993-45e5-8eb3-b443f8877669",
+      "name": "Get_mantenimientos1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "63fbfcaa-8c5e-42f8-993e-5f052557b344",
+              "leftValue": "={{ $json.rol }}",
+              "rightValue": "=Tecnico",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        1408
+      ],
+      "id": "ec45c8df-badb-4f12-b474-7e48aba530ee",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ebee730-683f-4a7b-8b7a-c14d6a927d7c",
+              "name": "razon_social",
+              "value": "={{ $json.razon_social }}",
+              "type": "string"
+            },
+            {
+              "id": "4fff03de-725e-4115-9896-2a5d4b7a92c4",
+              "name": "direccion_principal",
+              "value": "={{ $json.direccion_principal }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        1216
+      ],
+      "id": "31c36979-888b-4b96-b66b-0d313d9c28d0",
+      "name": "info_client_clean"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2ee0c3ff-d15c-4880-adf6-7a93a5a4b11b",
+              "name": "client_info",
+              "value": "={{ $('info_client_clean').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "3874b7c6-4dc4-4269-b81e-bd3883d2874e",
+              "name": "sedes",
+              "value": "={{ $('Get_Sede1').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "1d25a867-ea6d-48cc-9c99-26a7fb25dd81",
+              "name": "equipos",
+              "value": "={{ $('Get_equipos1').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "a5e9122e-f1e3-4522-a270-1476e0f86832",
+              "name": "prox_mantenimientos",
+              "value": "={{ $json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        1216
+      ],
+      "id": "26cefadc-bc74-47f4-87dd-f6bf73380422",
+      "name": "response_query_tecnico"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "rol": "Tecnico",
+          "razon_social": "Francisco de paula",
+          "equipo_id": null,
+          "servicio_id": null,
+          "mes_mantenimientos": null
+        }
+      }
+    ]
+  },
   "repo_name": "flujos_n8n",
   "repo_owner": "whitelabel-ai",
   "repo_path": "Automation/",
@@ -270,6 +574,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-26T14:34:26.105Z",
-  "versionId": "3953f0e3-a3f2-49f8-8c40-fb8e59f90d61"
+  "updatedAt": "2025-11-28T02:31:44.686Z",
+  "versionId": "baf71944-fab3-42f0-8278-85feb1a0fe76"
 }
