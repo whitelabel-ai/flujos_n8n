@@ -3,62 +3,6 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "If": {
-      "main": [
-        [
-          {
-            "node": "initData",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "ChatwootData": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "chatwoot": {
-      "main": [
-        [
-          {
-            "node": "env",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "env": {
-      "main": [
-        [
-          {
-            "node": "ChatwootData",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "initData": {
-      "main": [
-        []
-      ]
-    },
     "Convert to File": {
       "main": [
         [
@@ -92,22 +36,22 @@
         ]
       ]
     },
-    "When Executed by Another Workflow": {
+    "Edit Fields": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "template",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields": {
+    "initData": {
       "main": [
         [
           {
-            "node": "template",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
@@ -125,260 +69,6 @@
   "nodes": [
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "abaa9de2-4388-46df-9440-7c458be2669a",
-              "leftValue": "={{ $json.receptor }}",
-              "rightValue": "incoming",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            },
-            {
-              "id": "2b50ffbe-a3c8-4299-b6f3-86f9f79de33b",
-              "leftValue": "={{ $json.tags }}",
-              "rightValue": "=apagar-agente",
-              "operator": {
-                "type": "array",
-                "operation": "notContains",
-                "rightType": "any"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -224,
-        80
-      ],
-      "id": "3eeb7bc3-2f94-4355-b902-66d0ed9e4480",
-      "name": "If"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        0,
-        176
-      ],
-      "id": "257f5f6d-8ae8-455b-b68c-1769d765c954",
-      "name": "No Operation, do nothing"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9f69a465-0cc7-43dd-97d7-aaee90bacbe3",
-              "name": "nombre",
-              "value": "={{ $('chatwoot').item.json.body.conversation.meta.sender.name.split(\" \")[0] }}",
-              "type": "string"
-            },
-            {
-              "id": "82031891-32ae-4442-b883-fad57ad08c79",
-              "name": "phone_number",
-              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].sender.phone_number.replace('+','') }}",
-              "type": "string"
-            },
-            {
-              "id": "8c4da55a-b196-497b-a9ef-c0ce734b8847",
-              "name": "mensaje",
-              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].content }}",
-              "type": "string"
-            },
-            {
-              "id": "01193a9d-40ea-48b1-96f1-592105684644",
-              "name": "tipo_mensaje",
-              "value": "={{ $('chatwoot').item.json.body.attachments?.[0]?.file_type || $('chatwoot').item.json.body.conversation.messages?.[0]?.content_type }}",
-              "type": "string"
-            },
-            {
-              "id": "c6b5261d-a252-4328-af15-9699dfc5ba2b",
-              "name": "receptor",
-              "value": "={{ $('chatwoot').item.json.body.message_type }}",
-              "type": "string"
-            },
-            {
-              "id": "8a4d2988-720e-46c1-9927-90f62d5ddd72",
-              "name": "tags",
-              "value": "={{ $('chatwoot').item.json.body.conversation.labels }}",
-              "type": "array"
-            },
-            {
-              "id": "2189dde7-a49e-4226-be25-22f3e62caf99",
-              "name": "conversation_id",
-              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].conversation_id }}",
-              "type": "string"
-            },
-            {
-              "id": "c8242d40-84d3-4c64-adcc-d15b8de57a9a",
-              "name": "account_id",
-              "value": "={{ $('chatwoot').item.json.body.account.id }}",
-              "type": "number"
-            },
-            {
-              "id": "aad140bb-399a-46df-b78b-98aa0a9fd6e8",
-              "name": "data_url",
-              "value": "={{ $('chatwoot').item.json.body.attachments[0].data_url }}",
-              "type": "string"
-            },
-            {
-              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
-              "name": "api_access_token",
-              "value": "={{ $json.api_access_token }}",
-              "type": "string"
-            },
-            {
-              "id": "0d13abaf-bcd9-4d8f-b8bb-511b45ee9909",
-              "name": "body.conversation.messages[0].inbox_id",
-              "value": "={{ $('chatwoot').item.json.body.conversation.messages[0].inbox_id }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -448,
-        80
-      ],
-      "id": "f8d8a0bc-f95b-447f-b4f2-ef0b7342f57d",
-      "name": "ChatwootData"
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "chatwood_onboarding_estarter",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        -896,
-        80
-      ],
-      "id": "1c0d353b-a930-44e6-b759-9a25a35bfc2c",
-      "name": "chatwoot",
-      "webhookId": "e5c97b17-19ee-406e-9dcf-3cdcde1945ec"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "5276d674-1b57-4af7-88f3-5f9616e64cc3",
-              "name": "nombre",
-              "value": "={{ $json.nombre }}",
-              "type": "string"
-            },
-            {
-              "id": "92d97526-26b7-461c-b7ec-7cd13074512e",
-              "name": "phone_number",
-              "value": "={{ $json.phone_number }}",
-              "type": "string"
-            },
-            {
-              "id": "0605a012-1740-4b13-8e7f-57e156ad2fbe",
-              "name": "mensaje",
-              "value": "={{ $json.mensaje }}",
-              "type": "string"
-            },
-            {
-              "id": "5060779d-87fc-49af-9212-c7972aae9ff0",
-              "name": "tipo_mensaje",
-              "value": "={{ $json.tipo_mensaje }}",
-              "type": "string"
-            },
-            {
-              "id": "358f4697-0d6f-4184-bfbd-31ff4f2e2ac2",
-              "name": "tags",
-              "value": "={{ $json.tags }}",
-              "type": "string"
-            },
-            {
-              "id": "d7bd017f-435b-4c5c-89ba-77b2bdd3d56d",
-              "name": "account_id",
-              "value": "={{ $json.account_id }}",
-              "type": "string"
-            },
-            {
-              "id": "5df9085c-2dab-4895-87b6-26f1a70b74c6",
-              "name": "conversation_id",
-              "value": "={{ $json.conversation_id }}",
-              "type": "string"
-            },
-            {
-              "id": "3b0ab472-eb47-486f-87b8-92fe29a4f764",
-              "name": "data_url",
-              "value": "={{ $json.data_url }}",
-              "type": "string"
-            },
-            {
-              "id": "6843c5fe-3e47-4cfc-9076-dc347074cfba",
-              "name": "api_access_token",
-              "value": "={{ $('ChatwootData').item.json.api_access_token }}",
-              "type": "string"
-            },
-            {
-              "id": "ed3cd62e-2096-4e8e-a455-f7fcadba5130",
-              "name": "body.conversation.messages[0].inbox_id",
-              "value": "={{ $('ChatwootData').item.json.body.conversation.messages[0].inbox_id }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        0,
-        -16
-      ],
-      "id": "eee93fc7-1bd6-412b-94ba-b09fa804033f",
-      "name": "initData"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "7d6c4435-2ae7-4716-a211-c8d9898dcd48",
-              "name": "api_access_token",
-              "value": "Z77edxokEbMJdTe1UgtfNr34",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -672,
-        80
-      ],
-      "id": "91092a0e-9218-4dc6-b7fc-e210612b3725",
-      "name": "env"
-    },
-    {
-      "parameters": {
         "operation": "toBinary",
         "sourceProperty": "data.base64",
         "options": {
@@ -389,8 +79,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1120,
-        -16
+        688,
+        -208
       ],
       "id": "162c11a3-0a00-47d7-be9e-5af09d54708f",
       "name": "Convert to File"
@@ -425,8 +115,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1376,
-        -16
+        912,
+        -208
       ],
       "id": "c95d191b-a3fc-40cc-8cc0-fd01d7f8e7d4",
       "name": "HTTP Request6",
@@ -444,8 +134,8 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        608,
-        208
+        672,
+        -32
       ],
       "id": "f7ca2036-7213-4e47-801e-3cd303f97040",
       "name": "HTML",
@@ -474,8 +164,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        688,
-        -16
+        240,
+        -208
       ],
       "id": "fad07f68-54bb-4711-9d90-75a55ebe6be5",
       "name": "template"
@@ -512,8 +202,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        896,
-        -16
+        464,
+        -208
       ],
       "id": "e8560716-7cba-40d7-971f-5fb8c0db8afc",
       "name": "htmlToPdf",
@@ -523,20 +213,6 @@
           "name": "Mony"
         }
       }
-    },
-    {
-      "parameters": {
-        "inputSource": "jsonExample",
-        "jsonExample": "{\n  \"fecha_servicio\": \"\",\n  \"numero_orden\": \"\",\n\n  \"serv_mantenimiento\": \"\",\n  \"serv_llamada\": \"\",\n  \"serv_reparacion\": \"\",\n  \"serv_instalacion\": \"\",\n\n  \"cliente_nombre\": \"\",\n  \"cliente_sucursal\": \"\",\n  \"cliente_ubicacion\": \"\",\n  \"cliente_telefono\": \"\",\n  \"cliente_email\": \"\",\n  \"cliente_contacto\": \"\",\n\n  \"equipo_tipo\": \"\",\n  \"equipo_marca\": \"\",\n  \"equipo_capacidad\": \"\",\n  \"equipo_modelo\": \"\",\n  \"equipo_serie\": \"\",\n  \"equipo_placa\": \"\",\n  \"equipo_ubicacion_fisica\": \"\",\n\n  \"chk_revision_filtros\": \"X\",\n  \"chk_limpieza_evaporador\": \"\",\n  \"chk_limpieza_bandeja_drenaje\": \"\",\n  \"chk_revision_terminales\": \"\",\n  \"chk_revision_aislamiento\": \"\",\n  \"chk_revision_controles\": \"\",\n  \"chk_limpieza_condensador\": \"\",\n  \"chk_revision_ventiladores\": \"\",\n  \"chk_revision_fugas\": \"\",\n  \"chk_revision_presiones\": \"\",\n  \"chk_revision_cableado\": \"\",\n  \"chk_otras_actividades\": \"\",\n\n  \"danio_reportado\": \"\",\n  \"descripcion_servicio\": \"\",\n\n  \"tipo_refrigerante\": \"\",\n  \"tension_alimentacion\": \"\",\n  \"presion_succion\": \"\",\n  \"presion_descarga\": \"\",\n  \"capacidad_nominal\": \"\",\n  \"amperaje_compresor\": \"\",\n  \"amperaje_unidad_interior\": \"\",\n  \"amperaje_unidad_exterior\": \"\",\n  \"temperatura_ambiente\": \"\",\n  \"temperatura_suministro\": \"\",\n\n  \"observaciones_recomendaciones\": \"\",\n\n  \"nombre_cliente_firma\": \"\",\n  \"nombre_tecnico\": \"\",\n  \"nombre_gerente_tecnico\": \"\",\n\n  \"logo_url\": \"\",\n  \"firma_cliente_url\": \"\",\n  \"firma_tecnico_url\": \"\",\n  \"firma_gerente_url\": \"\"\n}\n"
-      },
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1.1,
-      "position": [
-        -208,
-        -192
-      ],
-      "id": "2e1dd7b5-a277-4451-ad88-9abd989691d2",
-      "name": "When Executed by Another Workflow"
     },
     {
       "parameters": {
@@ -556,198 +232,33 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        0,
-        -192
+        16,
+        -208
       ],
       "id": "c33d5dad-1e3c-4e51-bb08-fe7ac99cf101",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"account_id\":\"\",\n  \"conversation_id\":\"\",\n  \"fecha_servicio\": \"\",\n  \"numero_orden\": \"\",\n\n  \"serv_mantenimiento\": \"\",\n  \"serv_llamada\": \"\",\n  \"serv_reparacion\": \"\",\n  \"serv_instalacion\": \"\",\n\n  \"cliente_nombre\": \"\",\n  \"cliente_sucursal\": \"\",\n  \"cliente_ubicacion\": \"\",\n  \"cliente_telefono\": \"\",\n  \"cliente_email\": \"\",\n  \"cliente_contacto\": \"\",\n\n  \"equipo_tipo\": \"\",\n  \"equipo_marca\": \"\",\n  \"equipo_capacidad\": \"\",\n  \"equipo_modelo\": \"\",\n  \"equipo_serie\": \"\",\n  \"equipo_placa\": \"\",\n  \"equipo_ubicacion_fisica\": \"\",\n\n  \"chk_revision_filtros\": \"X\",\n  \"chk_limpieza_evaporador\": \"\",\n  \"chk_limpieza_bandeja_drenaje\": \"\",\n  \"chk_revision_terminales\": \"\",\n  \"chk_revision_aislamiento\": \"\",\n  \"chk_revision_controles\": \"\",\n  \"chk_limpieza_condensador\": \"\",\n  \"chk_revision_ventiladores\": \"\",\n  \"chk_revision_fugas\": \"\",\n  \"chk_revision_presiones\": \"\",\n  \"chk_revision_cableado\": \"\",\n  \"chk_otras_actividades\": \"\",\n\n  \"danio_reportado\": \"\",\n  \"descripcion_servicio\": \"\",\n\n  \"tipo_refrigerante\": \"\",\n  \"tension_alimentacion\": \"\",\n  \"presion_succion\": \"\",\n  \"presion_descarga\": \"\",\n  \"capacidad_nominal\": \"\",\n  \"amperaje_compresor\": \"\",\n  \"amperaje_unidad_interior\": \"\",\n  \"amperaje_unidad_exterior\": \"\",\n  \"temperatura_ambiente\": \"\",\n  \"temperatura_suministro\": \"\",\n\n  \"observaciones_recomendaciones\": \"\",\n\n  \"nombre_cliente_firma\": \"\",\n  \"nombre_tecnico\": \"\",\n  \"nombre_gerente_tecnico\": \"\",\n\n  \"logo_url\": \"\",\n  \"firma_cliente_url\": \"\",\n  \"firma_tecnico_url\": \"\",\n  \"firma_gerente_url\": \"\"\n}\n"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -208,
+        -208
+      ],
+      "id": "2e1dd7b5-a277-4451-ad88-9abd989691d2",
+      "name": "initData"
     }
   ],
   "pinData": {
-    "chatwoot": [
+    "initData": [
       {
         "json": {
-          "headers": {
-            "host": "automation.whitelabel.lat",
-            "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "3145",
-            "accept": "application/json",
-            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-            "content-type": "application/json",
-            "x-forwarded-for": "54.82.14.220",
-            "x-forwarded-host": "automation.whitelabel.lat",
-            "x-forwarded-port": "443",
-            "x-forwarded-proto": "https",
-            "x-forwarded-server": "4f3b0c84f963",
-            "x-real-ip": "54.82.14.220"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "account": {
-              "id": 2,
-              "name": "Valeia"
-            },
-            "additional_attributes": {},
-            "content_attributes": {},
-            "content_type": "text",
-            "content": null,
-            "conversation": {
-              "additional_attributes": {},
-              "can_reply": true,
-              "channel": "Channel::Whatsapp",
-              "contact_inbox": {
-                "id": 413,
-                "contact_id": 413,
-                "inbox_id": 1,
-                "source_id": "573005792037",
-                "created_at": "2025-09-15T14:41:38.106Z",
-                "updated_at": "2025-09-15T14:41:38.106Z",
-                "hmac_verified": false,
-                "pubsub_token": "3kpr7dZg2qJGk5prvkymTLf7"
-              },
-              "id": 3,
-              "inbox_id": 1,
-              "messages": [
-                {
-                  "id": 9192,
-                  "content": null,
-                  "account_id": 2,
-                  "inbox_id": 1,
-                  "conversation_id": 1,
-                  "message_type": 0,
-                  "created_at": 1757962056,
-                  "updated_at": "2025-09-15T18:47:36.293Z",
-                  "private": false,
-                  "status": "sent",
-                  "source_id": "wamid.HBgMNTczMDA1NzkyMDM3FQIAEhggQUMzMzJDMzM3OEE1RkQyOUFDMUMyQ0RDMjUzQjJBRTMA",
-                  "content_type": "text",
-                  "content_attributes": {},
-                  "sender_type": "Contact",
-                  "sender_id": 413,
-                  "external_source_ids": {},
-                  "additional_attributes": {},
-                  "processed_message_content": null,
-                  "sentiment": {},
-                  "conversation": {
-                    "assignee_id": null,
-                    "unread_count": 1,
-                    "last_activity_at": 1757962056,
-                    "contact_inbox": {
-                      "source_id": "573005792037"
-                    }
-                  },
-                  "attachments": [
-                    {
-                      "id": 790,
-                      "message_id": 9192,
-                      "file_type": "audio",
-                      "account_id": 2,
-                      "extension": null,
-                      "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb29CIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--60c4467c22b5b2fa52ebfc68b4d3a82a82b69b4c/File.ogg",
-                      "thumb_url": "",
-                      "file_size": 14208,
-                      "width": null,
-                      "height": null,
-                      "transcribed_text": ""
-                    }
-                  ],
-                  "sender": {
-                    "additional_attributes": {},
-                    "custom_attributes": {},
-                    "email": null,
-                    "id": 413,
-                    "identifier": null,
-                    "name": "Daniel lopez charry",
-                    "phone_number": "+573228854498",
-                    "thumbnail": "",
-                    "blocked": false,
-                    "type": "contact"
-                  }
-                }
-              ],
-              "labels": [],
-              "meta": {
-                "sender": {
-                  "additional_attributes": {},
-                  "custom_attributes": {},
-                  "email": null,
-                  "id": 413,
-                  "identifier": null,
-                  "name": "Daniel lopez charry",
-                  "phone_number": "+573005792037",
-                  "thumbnail": "",
-                  "blocked": false,
-                  "type": "contact"
-                },
-                "assignee": null,
-                "team": null,
-                "hmac_verified": false
-              },
-              "status": "pending",
-              "custom_attributes": {},
-              "snoozed_until": null,
-              "unread_count": 1,
-              "first_reply_created_at": null,
-              "priority": null,
-              "waiting_since": 1757947298,
-              "agent_last_seen_at": 1757961647,
-              "contact_last_seen_at": 0,
-              "last_activity_at": 1757962056,
-              "timestamp": 1757962056,
-              "created_at": 1757947298,
-              "updated_at": 1757962056.2952733
-            },
-            "created_at": "2025-09-15T18:47:36.293Z",
-            "id": 9192,
-            "inbox": {
-              "id": 1,
-              "name": "Valeia-Whatsapp"
-            },
-            "message_type": "incoming",
-            "private": false,
-            "sender": {
-              "account": {
-                "id": 2,
-                "name": "Valeia"
-              },
-              "additional_attributes": {},
-              "avatar": "",
-              "custom_attributes": {},
-              "email": null,
-              "id": 413,
-              "identifier": null,
-              "name": "Daniel lopez charry",
-              "phone_number": "+573005792037",
-              "thumbnail": "",
-              "blocked": false
-            },
-            "source_id": "wamid.HBgMNTczMDA1NzkyMDM3FQIAEhggQUMzMzJDMzM3OEE1RkQyOUFDMUMyQ0RDMjUzQjJBRTMA",
-            "attachments": [
-              {
-                "id": 790,
-                "message_id": 9192,
-                "file_type": "audio",
-                "account_id": 2,
-                "extension": null,
-                "data_url": "https://crm.whitelabel.lat/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb29CIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--60c4467c22b5b2fa52ebfc68b4d3a82a82b69b4c/File.ogg",
-                "thumb_url": "",
-                "file_size": 14208,
-                "width": null,
-                "height": null,
-                "transcribed_text": ""
-              }
-            ],
-            "event": "message_created"
-          },
-          "webhookUrl": "https://automation.whitelabel.lat/webhook/valeia-chatwoot",
-          "executionMode": "production"
-        }
-      }
-    ],
-    "When Executed by Another Workflow": [
-      {
-        "json": {
+          "account_id": "",
+          "conversation_id": "",
           "fecha_servicio": "2025-11-27",
           "numero_orden": "001",
           "serv_mantenimiento": "✔",
@@ -821,6 +332,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-27T22:05:21.591Z",
-  "versionId": "98d1040a-a066-4b1a-b3ef-22d7585c1d71"
+  "updatedAt": "2025-11-28T05:25:37.479Z",
+  "versionId": "49502d73-423f-42e4-924d-90135254f0af"
 }
