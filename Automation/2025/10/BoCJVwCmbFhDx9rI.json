@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-11-25T04:08:16.503Z",
-    "createdAt": "2025-11-25T04:08:16.503Z",
-    "versionId": "bf2599b7-9585-4a76-8fc5-9dfd5358a5ce",
+    "updatedAt": "2025-11-28T02:35:30.356Z",
+    "createdAt": "2025-11-28T02:35:30.356Z",
+    "versionId": "f085cacd-8b29-4d04-8b45-35895b436568",
     "workflowId": "BoCJVwCmbFhDx9rI",
     "nodes": [
       {
@@ -1803,8 +1803,8 @@
         "type": "@langfuse/n8n-nodes-langfuse.langfuse",
         "typeVersion": 1,
         "position": [
-          9152,
-          2864
+          9184,
+          2816
         ],
         "id": "c5b61467-ed25-46c1-958f-2294d84cbd53",
         "name": "Get a prompt",
@@ -1821,7 +1821,7 @@
           "text": "=mensaje_usuario: {{ $('Data').item.json.message }}, \nNombre_usuario: {{ $json.nombre }}\nrol_usuario: {{ $json.rol }}\nNo_whatsapp: {{ $json.No_whatsapp }}\nPermisos_usuario: {{ $json.permisos }}\nRestricciones: {{ $json.Restricciones }}",
           "langfuseMetadata": {},
           "options": {
-            "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}} , siempre pide confirmacion y verificacion de la informacion suministrada por el usuario antes de ejecutar una tool de registro.\n\n"
+            "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}} , siempre verifica el rol_usuario y los permisos para ese rol, pide confirmacion y verificacion de la informacion suministrada por el usuario antes de ejecutar tools de registro, actualizacion o eliminacion\n\n"
           }
         },
         "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
@@ -1938,7 +1938,7 @@
       },
       {
         "parameters": {
-          "description": "Llama a esta herramienta cuando el usuario solicite informacion de la base de datos. \n",
+          "description": "Llama a esta herramienta cuando el usuario solicite informacion de la base de datos.  \n",
           "workflowId": {
             "__rl": true,
             "value": "c1LB7anqKcnE41cH",
@@ -1949,12 +1949,23 @@
           "workflowInputs": {
             "mappingMode": "defineBelow",
             "value": {
-              "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `razon social del clente`, 'string') }}"
+              "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `razon social del clente`, 'string') }}",
+              "rol_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('rol_usuario', `Superadmin, Admin,tecnico`, 'string') }}"
             },
             "matchingColumns": [
               "razon_social"
             ],
             "schema": [
+              {
+                "id": "rol_usuario",
+                "displayName": "rol_usuario",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
               {
                 "id": "razon_social",
                 "displayName": "razon_social",
@@ -1983,6 +1994,16 @@
                 "canBeUsedToMatch": true,
                 "type": "string",
                 "removed": true
+              },
+              {
+                "id": "mes_mantenimientos",
+                "displayName": "mes_mantenimientos",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
               }
             ],
             "attemptToConvertTypes": false,
@@ -1992,7 +2013,7 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          9744,
+          9728,
           3104
         ],
         "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
@@ -2731,6 +2752,9 @@
               {
                 "keyName": "No_whatsapp",
                 "keyValue": "={{ $('Data').item.json.WhatsApp }}"
+              },
+              {
+                "keyName": "rol"
               }
             ]
           }
@@ -2739,7 +2763,7 @@
         "typeVersion": 1,
         "position": [
           9376,
-          2864
+          2816
         ],
         "id": "50003911-a108-42c2-8ccd-33be96180285",
         "name": "Get row(s)"
@@ -3697,7 +3721,7 @@
     "name": null,
     "description": null
   },
-  "activeVersionId": "bf2599b7-9585-4a76-8fc5-9dfd5358a5ce",
+  "activeVersionId": "f085cacd-8b29-4d04-8b45-35895b436568",
   "connections": {
     "Data": {
       "main": [
@@ -6250,8 +6274,8 @@
       "type": "@langfuse/n8n-nodes-langfuse.langfuse",
       "typeVersion": 1,
       "position": [
-        9152,
-        2864
+        9184,
+        2816
       ],
       "id": "c5b61467-ed25-46c1-958f-2294d84cbd53",
       "name": "Get a prompt",
@@ -6268,7 +6292,7 @@
         "text": "=mensaje_usuario: {{ $('Data').item.json.message }}, \nNombre_usuario: {{ $json.nombre }}\nrol_usuario: {{ $json.rol }}\nNo_whatsapp: {{ $json.No_whatsapp }}\nPermisos_usuario: {{ $json.permisos }}\nRestricciones: {{ $json.Restricciones }}",
         "langfuseMetadata": {},
         "options": {
-          "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}} , siempre pide confirmacion y verificacion de la informacion suministrada por el usuario antes de ejecutar una tool de registro.\n\n"
+          "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}} , siempre verifica el rol_usuario y los permisos para ese rol, pide confirmacion y verificacion de la informacion suministrada por el usuario antes de ejecutar tools de registro, actualizacion o eliminacion\n\n"
         }
       },
       "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
@@ -6385,7 +6409,7 @@
     },
     {
       "parameters": {
-        "description": "Llama a esta herramienta cuando el usuario solicite informacion de la base de datos. \n",
+        "description": "Llama a esta herramienta cuando el usuario solicite informacion de la base de datos.  \n",
         "workflowId": {
           "__rl": true,
           "value": "c1LB7anqKcnE41cH",
@@ -6396,12 +6420,23 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `razon social del clente`, 'string') }}"
+            "razon_social": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('razon_social', `razon social del clente`, 'string') }}",
+            "rol_usuario": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('rol_usuario', `Superadmin, Admin,tecnico`, 'string') }}"
           },
           "matchingColumns": [
             "razon_social"
           ],
           "schema": [
+            {
+              "id": "rol_usuario",
+              "displayName": "rol_usuario",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
             {
               "id": "razon_social",
               "displayName": "razon_social",
@@ -6430,6 +6465,16 @@
               "canBeUsedToMatch": true,
               "type": "string",
               "removed": true
+            },
+            {
+              "id": "mes_mantenimientos",
+              "displayName": "mes_mantenimientos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -6439,7 +6484,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        9744,
+        9728,
         3104
       ],
       "id": "ff7cb57e-78cc-4710-8939-9948c40c73f9",
@@ -7178,6 +7223,9 @@
             {
               "keyName": "No_whatsapp",
               "keyValue": "={{ $('Data').item.json.WhatsApp }}"
+            },
+            {
+              "keyName": "rol"
             }
           ]
         }
@@ -7186,7 +7234,7 @@
       "typeVersion": 1,
       "position": [
         9376,
-        2864
+        2816
       ],
       "id": "50003911-a108-42c2-8ccd-33be96180285",
       "name": "Get row(s)"
@@ -7582,6 +7630,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-25T04:08:16.515Z",
-  "versionId": "bf2599b7-9585-4a76-8fc5-9dfd5358a5ce"
+  "updatedAt": "2025-11-28T02:35:30.366Z",
+  "versionId": "f085cacd-8b29-4d04-8b45-35895b436568"
 }
