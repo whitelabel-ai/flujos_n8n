@@ -1,0 +1,323 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "template": {
+      "main": [
+        [
+          {
+            "node": "htmlToPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "htmlToPdf": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "initData": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-28T05:28:06.123Z",
+  "id": "PuvtMHRGr1LEWNik",
+  "isArchived": true,
+  "meta": null,
+  "name": "generate pdf",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data.base64",
+        "options": {
+          "fileName": "={{ $json.data.filename }}",
+          "mimeType": "={{ $json.data.mimeType }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        784,
+        144
+      ],
+      "id": "c3786b80-3561-4775-8823-d0c3f65a1bf7",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://crm.whitelabel.lat/api/v1/accounts/{{ $('initData').item.json.account_id }}/conversations/{{ $('initData').item.json.conversation_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message_type",
+              "value": "outgoing"
+            },
+            {
+              "name": "private",
+              "value": "false"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachments[]",
+              "inputDataFieldName": "=data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1008,
+        144
+      ],
+      "id": "b0ebd508-e83d-4e6c-b81a-93a5fd1a9805",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Formato de Mantenimiento Acondicionando S.A.S</title>\n  <style>\n    * {\n      box-sizing: border-box;\n    }\n    body {\n      margin: 0;\n      padding: 20px;\n      background: #e5f1f6;\n      font-family: \"Segoe UI\", Arial, sans-serif;\n      color: #12323f;\n    }\n    .page {\n      max-width: 900px;\n      margin: 0 auto;\n      background: #ffffff;\n      border-radius: 10px;\n      padding: 26px 32px 32px;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);\n      border-top: 8px solid #00a5c9;\n    }\n    .doc-header {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin-bottom: 18px;\n    }\n    .logo-area {\n      display: flex;\n      align-items: center;\n      gap: 14px;\n    }\n    .logo-circle {\n      width: 56px;\n      height: 56px;\n      border-radius: 50%;\n      background: radial-gradient(circle at 30% 30%, #01e0ff, #008aad);\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 10px;\n      color: #ffffff;\n      font-weight: 600;\n      text-transform: uppercase;\n    }\n    .company {\n      line-height: 1.2;\n    }\n    .company-name {\n      font-size: 20px;\n      font-weight: 800;\n      letter-spacing: 0.08em;\n      color: #007693;\n    }\n    .company-tagline {\n      font-size: 11px;\n      text-transform: uppercase;\n      letter-spacing: 0.14em;\n      color: #4a7c8a;\n    }\n    .header-right {\n      text-align: right;\n      font-size: 12px;\n    }\n    .header-right .label {\n      font-size: 10px;\n      letter-spacing: 0.12em;\n      text-transform: uppercase;\n      color: #4a7c8a;\n    }\n    .header-right .date-box {\n      margin-top: 4px;\n      padding: 6px 10px;\n      border-radius: 6px;\n      border: 1px solid #b3dce8;\n      display: inline-block;\n      font-weight: 600;\n      letter-spacing: 0.08em;\n      background: #f5fcff;\n    }\n\n    .chip-row {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin: 12px 0 20px;\n      gap: 10px;\n      flex-wrap: wrap;\n    }\n    .chips {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 6px;\n    }\n    .chip {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.09em;\n      padding: 4px 10px;\n      border-radius: 999px;\n      border: 1px solid #9ad7e5;\n      background: #f4fcff;\n      color: #24606f;\n      display: inline-flex;\n      align-items: center;\n      gap: 4px;\n    }\n    .chip span.check {\n      min-width: 10px;\n      text-align: center;\n      font-weight: 700;\n      color: #007693;\n    }\n\n    .section {\n      border-radius: 8px;\n      border: 1px solid #c5e0ec;\n      margin-bottom: 12px;\n      overflow: hidden;\n    }\n    .section-header {\n      background: linear-gradient(90deg, #00a5c9, #00c4e3);\n      color: #ffffff;\n      padding: 6px 12px;\n      font-size: 11px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n    }\n    .section-body {\n      padding: 10px 12px 12px;\n      font-size: 12px;\n    }\n\n    .fields-row {\n      display: flex;\n      gap: 12px;\n      margin-bottom: 6px;\n      flex-wrap: wrap;\n    }\n    .field {\n      flex: 1;\n      min-width: 180px;\n    }\n    .field-label {\n      font-size: 10px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n      margin-bottom: 1px;\n    }\n    .field-value {\n      border-bottom: 1px solid #cde3ee;\n      min-height: 18px;\n      padding: 1px 4px 3px;\n      border-radius: 3px;\n      background: #f7fcff;\n      color: #12323f;\n      display: flex;\n      align-items: center;\n    }\n\n    .two-columns {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(0, 1fr));\n      gap: 16px;\n    }\n\n    .checklist {\n      list-style: none;\n      padding: 0;\n      margin: 4px 0;\n    }\n    .checklist li {\n      display: flex;\n      align-items: flex-start;\n      gap: 6px;\n      font-size: 11px;\n      margin-bottom: 3px;\n    }\n    .checklist .check {\n      width: 16px;\n      height: 16px;\n      border-radius: 4px;\n      border: 1px solid #b0d7e3;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 11px;\n      font-weight: 700;\n      color: #007693;\n      background: #f5fcff;\n      flex-shrink: 0;\n    }\n    .checklist .label {\n      flex: 1;\n      color: #23424f;\n    }\n\n    .multiline {\n      border-radius: 6px;\n      border: 1px solid #cde3ee;\n      background: #f7fcff;\n      padding: 6px 8px;\n      min-height: 60px;\n      white-space: pre-wrap;\n      font-size: 12px;\n    }\n\n    .conditions-table {\n      width: 100%;\n      border-collapse: collapse;\n      font-size: 11px;\n    }\n    .conditions-table th,\n    .conditions-table td {\n      padding: 4px 6px;\n      border-bottom: 1px solid #e0edf3;\n    }\n    .conditions-table th {\n      text-align: left;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      font-size: 10px;\n      color: #4a7c8a;\n    }\n    .conditions-table .value-cell {\n      border-bottom: 1px solid #cde3ee;\n      background: #f7fcff;\n      border-radius: 3px;\n      min-height: 18px;\n    }\n    .conditions-table .value-inner {\n      padding: 2px 4px 3px;\n    }\n\n    .footer {\n      margin-top: 18px;\n      border-top: 1px solid #cde3ee;\n      padding-top: 10px;\n      font-size: 10px;\n      color: #456774;\n    }\n\n    .signatures {\n      display: grid;\n      grid-template-columns: repeat(3, minmax(0, 1fr));\n      gap: 12px;\n      margin-top: 18px;\n      text-align: center;\n      font-size: 11px;\n    }\n    .signature-box {\n      padding-top: 50px;\n      border-top: 1px solid #cde3ee;\n      position: relative;\n    }\n    .signature-name {\n      font-weight: 600;\n      color: #12323f;\n      margin-bottom: 2px;\n    }\n    .signature-role {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n    }\n    .signature-image {\n      position: absolute;\n      left: 50%;\n      top: 8px;\n      transform: translateX(-50%);\n      max-height: 40px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"page\">\n    <!-- ENCABEZADO -->\n    <div class=\"doc-header\">\n      <div class=\"logo-area\">\n        <div class=\"logo-circle\">\n          <!-- Si quieres logo, cambia esto por una imagen -->\n          LOGO\n          <!--\n          <img src=\"NaN\" alt=\"Logo\" style=\"width:100%;height:100%;border-radius:50%;object-fit:cover;\" />\n          -->\n        </div>\n        <div class=\"company\">\n          <div class=\"company-name\">ACONDICIONANDO S.A.S</div>\n          <div class=\"company-tagline\">\n            Aire acondicionado · Ventilación · Mantenimiento\n          </div>\n        </div>\n      </div>\n      <div class=\"header-right\">\n        <div class=\"label\">Fecha</div>\n        <div class=\"date-box\">NaN</div>\n      </div>\n    </div>\n\n    <!-- TIPO DE SERVICIO -->\n    <div class=\"chip-row\">\n      <div class=\"chips\">\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Mantenimiento</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Llamada por servicio</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Reparación</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">NaN</span>\n          <span>Instalación</span>\n        </div>\n      </div>\n      <div style=\"font-size:11px;color:#4a7c8a;\">\n        N° orden / consecutivo: <span style=\"font-weight:600;color:#12323f;\">NaN</span>\n      </div>\n    </div>\n\n    <!-- DATOS DEL CLIENTE -->\n    <div class=\"section\">\n      <div class=\"section-header\">Datos del cliente</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Cliente</div>\n            <div class=\"field-value\">Pedro</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Sucursal</div>\n            <div class=\"field-value\">edificio test</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación</div>\n            <div class=\"field-value\">Villavicencio</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Teléfono</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Correo electrónico</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Contacto</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- DESCRIPCIÓN DE LOS EQUIPOS -->\n    <div class=\"section\">\n      <div class=\"section-header\">Descripción de los equipos</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Tipo de equipo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Marca</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Capacidad</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Modelo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Serie</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Placa / Activo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación física del equipo</div>\n            <div class=\"field-value\">NaN</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- ACTIVIDADES REALIZADAS (CHECKLIST) -->\n    <div class=\"section\">\n      <div class=\"section-header\">Actividades de mantenimiento</div>\n      <div class=\"section-body two-columns\">\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión y limpieza de filtros</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Limpieza de serpentines / evaporador</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Limpieza bandeja y línea de drenaje</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión y ajuste de terminales eléctricos</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión de aislamiento en tuberías</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Verificación de controles y termostato</span>\n            </li>\n          </ul>\n        </div>\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Limpieza unidad condensadora</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Inspección de ventiladores y rodamientos</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Revisión de posibles fugas de refrigerante</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Verificación de presiones de operación</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Inspección de cableado y protecciones</span>\n            </li>\n            <li>\n              <span class=\"check\">NaN</span>\n              <span class=\"label\">Otras actividades de mantenimiento</span>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n\n    <!-- INFORMACIÓN SOBRE EL SERVICIO -->\n    <div class=\"section\">\n      <div class=\"section-header\">Información sobre el servicio</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Daño reportado por el cliente</div>\n            <div class=\"multiline\">NaN</div>\n          </div>\n        </div>\n\n        <div class=\"fields-row\" style=\"margin-top:8px;\">\n          <div class=\"field\">\n            <div class=\"field-label\">Descripción del servicio realizado</div>\n            <div class=\"multiline\">NaN</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- CONDICIONES DE OPERACIÓN -->\n    <div class=\"section\">\n      <div class=\"section-header\">Condiciones de operación</div>\n      <div class=\"section-body\">\n        <table class=\"conditions-table\">\n          <tr>\n            <th colspan=\"2\">Parámetros generales</th>\n            <th colspan=\"2\">Lecturas eléctricas y térmicas</th>\n          </tr>\n          <tr>\n            <td>Refrigerante</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Amperaje compresor</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Tensión de alimentación</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Amperaje unidad interior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de succión</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Amperaje unidad exterior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de descarga</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Temperatura ambiente</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Capacidad nominal (BTU / TR)</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n            <td>Temperatura de suministro</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">NaN</div>\n            </td>\n          </tr>\n        </table>\n      </div>\n    </div>\n\n    <!-- OBSERVACIONES Y RECOMENDACIONES -->\n    <div class=\"section\">\n      <div class=\"section-header\">Observaciones y recomendaciones</div>\n      <div class=\"section-body\">\n        <div class=\"multiline\">NaN</div>\n      </div>\n    </div>\n\n    <!-- FIRMAS -->\n    <div class=\"signatures\">\n      <div class=\"signature-box\">\n        <!-- Si usas firma digital:\n        <img class=\"signature-image\" src=\"NaN\" alt=\"Firma cliente\" />\n        -->\n        <div class=\"signature-name\">Daniel Lopez</div>\n        <div class=\"signature-role\">Firma cliente</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"NaN\" alt=\"Firma técnico\" /> -->\n        <div class=\"signature-name\">Camilo Palma</div>\n        <div class=\"signature-role\">Firma técnico</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"NaN\" alt=\"Firma gerente técnico\" /> -->\n        <div class=\"signature-name\">Pedro Rodriguez</div>\n        <div class=\"signature-role\">Firma gerente técnico</div>\n      </div>\n    </div>\n\n    <!-- PIE DE PÁGINA -->\n    <div class=\"footer\">\n      ACONDICIONANDO S.A.S · Parque Industrial Manzana 11 Casa 12\n      · Sector D · Pereira<br />\n      Correo: acondicionandosas@gmail.com · Tel: 316 610 9591 – 317 680 1633\n    </div>\n  </div>\n</body>\n</html>\n"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        320
+      ],
+      "id": "eab835f0-11d5-43c4-9cbf-e289be8243a7",
+      "name": "HTML",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a8547cd2-f222-4657-98fe-6f631175e5a5",
+              "name": "variables",
+              "value": "={{ $json }}",
+              "type": "object"
+            },
+            {
+              "id": "56f83d42-e25f-40c6-9b1f-c6dbd6109e50",
+              "name": "template",
+              "value": "=<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Formato de Mantenimiento Acondicionando S.A.S</title>\n  <style>\n    * {\n      box-sizing: border-box;\n    }\n    body {\n      margin: 0;\n      padding: 20px;\n      background: #e5f1f6;\n      font-family: \"Segoe UI\", Arial, sans-serif;\n      color: #12323f;\n    }\n    .page {\n      max-width: 900px;\n      margin: 0 auto;\n      background: #ffffff;\n      border-radius: 10px;\n      padding: 26px 32px 32px;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);\n      border-top: 8px solid #00a5c9;\n    }\n    .doc-header {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin-bottom: 18px;\n    }\n    .logo-area {\n      display: flex;\n      align-items: center;\n      gap: 14px;\n    }\n    .logo-circle {\n      width: 56px;\n      height: 56px;\n      border-radius: 50%;\n      background: radial-gradient(circle at 30% 30%, #01e0ff, #008aad);\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 10px;\n      color: #ffffff;\n      font-weight: 600;\n      text-transform: uppercase;\n    }\n    .company {\n      line-height: 1.2;\n    }\n    .company-name {\n      font-size: 20px;\n      font-weight: 800;\n      letter-spacing: 0.08em;\n      color: #007693;\n    }\n    .company-tagline {\n      font-size: 11px;\n      text-transform: uppercase;\n      letter-spacing: 0.14em;\n      color: #4a7c8a;\n    }\n    .header-right {\n      text-align: right;\n      font-size: 12px;\n    }\n    .header-right .label {\n      font-size: 10px;\n      letter-spacing: 0.12em;\n      text-transform: uppercase;\n      color: #4a7c8a;\n    }\n    .header-right .date-box {\n      margin-top: 4px;\n      padding: 6px 10px;\n      border-radius: 6px;\n      border: 1px solid #b3dce8;\n      display: inline-block;\n      font-weight: 600;\n      letter-spacing: 0.08em;\n      background: #f5fcff;\n    }\n\n    .chip-row {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin: 12px 0 20px;\n      gap: 10px;\n      flex-wrap: wrap;\n    }\n    .chips {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 6px;\n    }\n    .chip {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.09em;\n      padding: 4px 10px;\n      border-radius: 999px;\n      border: 1px solid #9ad7e5;\n      background: #f4fcff;\n      color: #24606f;\n      display: inline-flex;\n      align-items: center;\n      gap: 4px;\n    }\n    .chip span.check {\n      min-width: 10px;\n      text-align: center;\n      font-weight: 700;\n      color: #007693;\n    }\n\n    .section {\n      border-radius: 8px;\n      border: 1px solid #c5e0ec;\n      margin-bottom: 12px;\n      overflow: hidden;\n    }\n    .section-header {\n      background: linear-gradient(90deg, #00a5c9, #00c4e3);\n      color: #ffffff;\n      padding: 6px 12px;\n      font-size: 11px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n    }\n    .section-body {\n      padding: 10px 12px 12px;\n      font-size: 12px;\n    }\n\n    .fields-row {\n      display: flex;\n      gap: 12px;\n      margin-bottom: 6px;\n      flex-wrap: wrap;\n    }\n    .field {\n      flex: 1;\n      min-width: 180px;\n    }\n    .field-label {\n      font-size: 10px;\n      font-weight: 700;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n      margin-bottom: 1px;\n    }\n    .field-value {\n      border-bottom: 1px solid #cde3ee;\n      min-height: 18px;\n      padding: 1px 4px 3px;\n      border-radius: 3px;\n      background: #f7fcff;\n      color: #12323f;\n      display: flex;\n      align-items: center;\n    }\n\n    .two-columns {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(0, 1fr));\n      gap: 16px;\n    }\n\n    .checklist {\n      list-style: none;\n      padding: 0;\n      margin: 4px 0;\n    }\n    .checklist li {\n      display: flex;\n      align-items: flex-start;\n      gap: 6px;\n      font-size: 11px;\n      margin-bottom: 3px;\n    }\n    .checklist .check {\n      width: 16px;\n      height: 16px;\n      border-radius: 4px;\n      border: 1px solid #b0d7e3;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 11px;\n      font-weight: 700;\n      color: #007693;\n      background: #f5fcff;\n      flex-shrink: 0;\n    }\n    .checklist .label {\n      flex: 1;\n      color: #23424f;\n    }\n\n    .multiline {\n      border-radius: 6px;\n      border: 1px solid #cde3ee;\n      background: #f7fcff;\n      padding: 6px 8px;\n      min-height: 60px;\n      white-space: pre-wrap;\n      font-size: 12px;\n    }\n\n    .conditions-table {\n      width: 100%;\n      border-collapse: collapse;\n      font-size: 11px;\n    }\n    .conditions-table th,\n    .conditions-table td {\n      padding: 4px 6px;\n      border-bottom: 1px solid #e0edf3;\n    }\n    .conditions-table th {\n      text-align: left;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      font-size: 10px;\n      color: #4a7c8a;\n    }\n    .conditions-table .value-cell {\n      border-bottom: 1px solid #cde3ee;\n      background: #f7fcff;\n      border-radius: 3px;\n      min-height: 18px;\n    }\n    .conditions-table .value-inner {\n      padding: 2px 4px 3px;\n    }\n\n    .footer {\n      margin-top: 18px;\n      border-top: 1px solid #cde3ee;\n      padding-top: 10px;\n      font-size: 10px;\n      color: #456774;\n    }\n\n    .signatures {\n      display: grid;\n      grid-template-columns: repeat(3, minmax(0, 1fr));\n      gap: 12px;\n      margin-top: 18px;\n      text-align: center;\n      font-size: 11px;\n    }\n    .signature-box {\n      padding-top: 50px;\n      border-top: 1px solid #cde3ee;\n      position: relative;\n    }\n    .signature-name {\n      font-weight: 600;\n      color: #12323f;\n      margin-bottom: 2px;\n    }\n    .signature-role {\n      font-size: 10px;\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n      color: #4a7c8a;\n    }\n    .signature-image {\n      position: absolute;\n      left: 50%;\n      top: 8px;\n      transform: translateX(-50%);\n      max-height: 40px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"page\">\n    <!-- ENCABEZADO -->\n    <div class=\"doc-header\">\n      <div class=\"logo-area\">\n        <div class=\"logo-circle\">\n          <!-- Si quieres logo, cambia esto por una imagen -->\n          LOGO\n          <!--\n          <img src=\"{{ $json.logo_url}}\" alt=\"Logo\" style=\"width:100%;height:100%;border-radius:50%;object-fit:cover;\" />\n          -->\n        </div>\n        <div class=\"company\">\n          <div class=\"company-name\">ACONDICIONANDO S.A.S</div>\n          <div class=\"company-tagline\">\n            Aire acondicionado · Ventilación · Mantenimiento\n          </div>\n        </div>\n      </div>\n      <div class=\"header-right\">\n        <div class=\"label\">Fecha</div>\n        <div class=\"date-box\">{{ $json.fecha_servicio}}</div>\n      </div>\n    </div>\n\n    <!-- TIPO DE SERVICIO -->\n    <div class=\"chip-row\">\n      <div class=\"chips\">\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_mantenimiento}}</span>\n          <span>Mantenimiento</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_llamada}}</span>\n          <span>Llamada por servicio</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_reparacion}}</span>\n          <span>Reparación</span>\n        </div>\n        <div class=\"chip\">\n          <span class=\"check\">{{ $json.serv_instalacion}}</span>\n          <span>Instalación</span>\n        </div>\n      </div>\n      <div style=\"font-size:11px;color:#4a7c8a;\">\n        N° orden / consecutivo: <span style=\"font-weight:600;color:#12323f;\">{{ $json.numero_orden}}</span>\n      </div>\n    </div>\n\n    <!-- DATOS DEL CLIENTE -->\n    <div class=\"section\">\n      <div class=\"section-header\">Datos del cliente</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Cliente</div>\n            <div class=\"field-value\">{{ $json.cliente_nombre}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Sucursal</div>\n            <div class=\"field-value\">{{ $json.cliente_sucursal}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación</div>\n            <div class=\"field-value\">{{ $json.cliente_ubicacion}}</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Teléfono</div>\n            <div class=\"field-value\">{{ $json.cliente_telefono}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Correo electrónico</div>\n            <div class=\"field-value\">{{ $json.cliente_email}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Contacto</div>\n            <div class=\"field-value\">{{ $json.cliente_contacto}}</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- DESCRIPCIÓN DE LOS EQUIPOS -->\n    <div class=\"section\">\n      <div class=\"section-header\">Descripción de los equipos</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Tipo de equipo</div>\n            <div class=\"field-value\">{{ $json.equipo_tipo}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Marca</div>\n            <div class=\"field-value\">{{ $json.equipo_marca}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Capacidad</div>\n            <div class=\"field-value\">{{ $json.equipo_capacidad}}</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Modelo</div>\n            <div class=\"field-value\">{{ $json.equipo_modelo}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Serie</div>\n            <div class=\"field-value\">{{ $json.equipo_serie}}</div>\n          </div>\n          <div class=\"field\">\n            <div class=\"field-label\">Placa / Activo</div>\n            <div class=\"field-value\">{{ $json.equipo_placa}}</div>\n          </div>\n        </div>\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Ubicación física del equipo</div>\n            <div class=\"field-value\">{{ $json.equipo_ubicacion_fisica}}</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- ACTIVIDADES REALIZADAS (CHECKLIST) -->\n    <div class=\"section\">\n      <div class=\"section-header\">Actividades de mantenimiento</div>\n      <div class=\"section-body two-columns\">\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_filtros}}</span>\n              <span class=\"label\">Revisión y limpieza de filtros</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_limpieza_evaporador}}</span>\n              <span class=\"label\">Limpieza de serpentines / evaporador</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_limpieza_bandeja_drenaje}}</span>\n              <span class=\"label\">Limpieza bandeja y línea de drenaje</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_terminales}}</span>\n              <span class=\"label\">Revisión y ajuste de terminales eléctricos</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_aislamiento}}</span>\n              <span class=\"label\">Revisión de aislamiento en tuberías</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_controles}}</span>\n              <span class=\"label\">Verificación de controles y termostato</span>\n            </li>\n          </ul>\n        </div>\n        <div>\n          <ul class=\"checklist\">\n            <li>\n              <span class=\"check\">{{ $json.chk_limpieza_condensador}}</span>\n              <span class=\"label\">Limpieza unidad condensadora</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_ventiladores}}</span>\n              <span class=\"label\">Inspección de ventiladores y rodamientos</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_fugas}}</span>\n              <span class=\"label\">Revisión de posibles fugas de refrigerante</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_presiones}}</span>\n              <span class=\"label\">Verificación de presiones de operación</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_revision_cableado}}</span>\n              <span class=\"label\">Inspección de cableado y protecciones</span>\n            </li>\n            <li>\n              <span class=\"check\">{{ $json.chk_otras_actividades}}</span>\n              <span class=\"label\">Otras actividades de mantenimiento</span>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n\n    <!-- INFORMACIÓN SOBRE EL SERVICIO -->\n    <div class=\"section\">\n      <div class=\"section-header\">Información sobre el servicio</div>\n      <div class=\"section-body\">\n        <div class=\"fields-row\">\n          <div class=\"field\">\n            <div class=\"field-label\">Daño reportado por el cliente</div>\n            <div class=\"multiline\">{{ $json.danio_reportado}}</div>\n          </div>\n        </div>\n\n        <div class=\"fields-row\" style=\"margin-top:8px;\">\n          <div class=\"field\">\n            <div class=\"field-label\">Descripción del servicio realizado</div>\n            <div class=\"multiline\">{{ $json.descripcion_servicio}}</div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <!-- CONDICIONES DE OPERACIÓN -->\n    <div class=\"section\">\n      <div class=\"section-header\">Condiciones de operación</div>\n      <div class=\"section-body\">\n        <table class=\"conditions-table\">\n          <tr>\n            <th colspan=\"2\">Parámetros generales</th>\n            <th colspan=\"2\">Lecturas eléctricas y térmicas</th>\n          </tr>\n          <tr>\n            <td>Refrigerante</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.tipo_refrigerante}}</div>\n            </td>\n            <td>Amperaje compresor</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.amperaje_compresor}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Tensión de alimentación</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.tension_alimentacion}}</div>\n            </td>\n            <td>Amperaje unidad interior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.amperaje_unidad_interior}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de succión</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.presion_succion}}</div>\n            </td>\n            <td>Amperaje unidad exterior</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.amperaje_unidad_exterior}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Presión de descarga</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.presion_descarga}}</div>\n            </td>\n            <td>Temperatura ambiente</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.temperatura_ambiente}}</div>\n            </td>\n          </tr>\n          <tr>\n            <td>Capacidad nominal (BTU / TR)</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.capacidad_nominal}}</div>\n            </td>\n            <td>Temperatura de suministro</td>\n            <td class=\"value-cell\">\n              <div class=\"value-inner\">{{ $json.temperatura_suministro}}</div>\n            </td>\n          </tr>\n        </table>\n      </div>\n    </div>\n\n    <!-- OBSERVACIONES Y RECOMENDACIONES -->\n    <div class=\"section\">\n      <div class=\"section-header\">Observaciones y recomendaciones</div>\n      <div class=\"section-body\">\n        <div class=\"multiline\">{{ $json.observaciones_recomendaciones}}</div>\n      </div>\n    </div>\n\n    <!-- FIRMAS -->\n    <div class=\"signatures\">\n      <div class=\"signature-box\">\n        <!-- Si usas firma digital:\n        <img class=\"signature-image\" src=\"{{ $json.firma_cliente_url}}\" alt=\"Firma cliente\" />\n        -->\n        <div class=\"signature-name\">{{ $json.nombre_cliente_firma}}</div>\n        <div class=\"signature-role\">Firma cliente</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"{{ $json.firma_tecnico_url}}\" alt=\"Firma técnico\" /> -->\n        <div class=\"signature-name\">{{ $json.nombre_tecnico}}</div>\n        <div class=\"signature-role\">Firma técnico</div>\n      </div>\n      <div class=\"signature-box\">\n        <!-- <img class=\"signature-image\" src=\"{{ $json.firma_gerente_url}}\" alt=\"Firma gerente técnico\" /> -->\n        <div class=\"signature-name\">{{ $json.nombre_gerente_tecnico}}</div>\n        <div class=\"signature-role\">Firma gerente técnico</div>\n      </div>\n    </div>\n\n    <!-- PIE DE PÁGINA -->\n    <div class=\"footer\">\n      ACONDICIONANDO S.A.S · Parque Industrial Manzana 11 Casa 12\n      · Sector D · Pereira<br />\n      Correo: acondicionandosas@gmail.com · Tel: 316 610 9591 – 317 680 1633\n    </div>\n  </div>\n</body>\n</html>\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        336,
+        144
+      ],
+      "id": "4009ceb2-6909-4dca-9cff-3755fd2e2d71",
+      "name": "template"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mony-dev.whitelabel.lat/api/v1/pdf-reports/html-to-pdf",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "html",
+              "value": "={{ $json.template }}"
+            },
+            {
+              "name": "filename",
+              "value": "={{ $json.variables.cliente_nombre }}-eq001-{{ $now.format('yyyy-MM-dd') }}"
+            },
+            {
+              "name": "pageFormat",
+              "value": "A4"
+            },
+            {
+              "name": "orientation",
+              "value": "portrait"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        560,
+        144
+      ],
+      "id": "4b837ef2-dcfc-4357-9559-dc49258b8bff",
+      "name": "htmlToPdf"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f56b4dc2-93dc-49ee-9a8e-ad3addf79296",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        144
+      ],
+      "id": "ff99b7fe-83b9-4abb-b063-6b6e2f14dd0f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"account_id\":\"\",\n  \"conversation_id\":\"\",\n  \"fecha_servicio\": \"\",\n  \"numero_orden\": \"\",\n\n  \"serv_mantenimiento\": \"\",\n  \"serv_llamada\": \"\",\n  \"serv_reparacion\": \"\",\n  \"serv_instalacion\": \"\",\n\n  \"cliente_nombre\": \"\",\n  \"cliente_sucursal\": \"\",\n  \"cliente_ubicacion\": \"\",\n  \"cliente_telefono\": \"\",\n  \"cliente_email\": \"\",\n  \"cliente_contacto\": \"\",\n\n  \"equipo_tipo\": \"\",\n  \"equipo_marca\": \"\",\n  \"equipo_capacidad\": \"\",\n  \"equipo_modelo\": \"\",\n  \"equipo_serie\": \"\",\n  \"equipo_placa\": \"\",\n  \"equipo_ubicacion_fisica\": \"\",\n\n  \"chk_revision_filtros\": \"X\",\n  \"chk_limpieza_evaporador\": \"\",\n  \"chk_limpieza_bandeja_drenaje\": \"\",\n  \"chk_revision_terminales\": \"\",\n  \"chk_revision_aislamiento\": \"\",\n  \"chk_revision_controles\": \"\",\n  \"chk_limpieza_condensador\": \"\",\n  \"chk_revision_ventiladores\": \"\",\n  \"chk_revision_fugas\": \"\",\n  \"chk_revision_presiones\": \"\",\n  \"chk_revision_cableado\": \"\",\n  \"chk_otras_actividades\": \"\",\n\n  \"danio_reportado\": \"\",\n  \"descripcion_servicio\": \"\",\n\n  \"tipo_refrigerante\": \"\",\n  \"tension_alimentacion\": \"\",\n  \"presion_succion\": \"\",\n  \"presion_descarga\": \"\",\n  \"capacidad_nominal\": \"\",\n  \"amperaje_compresor\": \"\",\n  \"amperaje_unidad_interior\": \"\",\n  \"amperaje_unidad_exterior\": \"\",\n  \"temperatura_ambiente\": \"\",\n  \"temperatura_suministro\": \"\",\n\n  \"observaciones_recomendaciones\": \"\",\n\n  \"nombre_cliente_firma\": \"\",\n  \"nombre_tecnico\": \"\",\n  \"nombre_gerente_tecnico\": \"\",\n\n  \"logo_url\": \"\",\n  \"firma_cliente_url\": \"\",\n  \"firma_tecnico_url\": \"\",\n  \"firma_gerente_url\": \"\"\n}\n"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -112,
+        144
+      ],
+      "id": "8985d919-5dc7-4be3-9561-865ae14c6895",
+      "name": "initData"
+    }
+  ],
+  "pinData": {
+    "initData": [
+      {
+        "json": {
+          "account_id": "",
+          "conversation_id": "",
+          "fecha_servicio": "2025-11-27",
+          "numero_orden": "001",
+          "serv_mantenimiento": "✔",
+          "serv_llamada": null,
+          "serv_reparacion": null,
+          "serv_instalacion": null,
+          "cliente_nombre": "Pedro Rodriguez",
+          "cliente_sucursal": "Valle Mio",
+          "cliente_ubicacion": "Cali",
+          "cliente_telefono": "+573228854498",
+          "cliente_email": null,
+          "cliente_contacto": null,
+          "equipo_tipo": null,
+          "equipo_marca": null,
+          "equipo_capacidad": null,
+          "equipo_modelo": null,
+          "equipo_serie": null,
+          "equipo_placa": null,
+          "equipo_ubicacion_fisica": "Sala Principal",
+          "chk_revision_filtros": "✔",
+          "chk_limpieza_evaporador": null,
+          "chk_limpieza_bandeja_drenaje": null,
+          "chk_revision_terminales": "✔",
+          "chk_revision_aislamiento": null,
+          "chk_revision_controles": null,
+          "chk_limpieza_condensador": "✔",
+          "chk_revision_ventiladores": null,
+          "chk_revision_fugas": null,
+          "chk_revision_presiones": null,
+          "chk_revision_cableado": "✔",
+          "chk_otras_actividades": null,
+          "danio_reportado": null,
+          "descripcion_servicio": null,
+          "tipo_refrigerante": null,
+          "tension_alimentacion": null,
+          "presion_succion": null,
+          "presion_descarga": null,
+          "capacidad_nominal": null,
+          "amperaje_compresor": null,
+          "amperaje_unidad_interior": null,
+          "amperaje_unidad_exterior": null,
+          "temperatura_ambiente": null,
+          "temperatura_suministro": null,
+          "observaciones_recomendaciones": null,
+          "nombre_cliente_firma": "Pedro Rodriguez",
+          "nombre_tecnico": null,
+          "nombre_gerente_tecnico": null,
+          "logo_url": "https://scontent-bog2-1.xx.fbcdn.net/v/t39.30808-6/480484791_663165776240250_7620822571848283408_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=9kA0DS4TH5YQ7kNvwE52Cwe&_nc_oc=AdmanuQq7UeWmKbbYrxdRF7mdC1D6alW1weBgMHeT0q6j_XpCuMU3cgj8O-3HGjkA_DQfpzkP-xackM_uDISUUzW&_nc_zt=23&_nc_ht=scontent-bog2-1.xx&_nc_gid=chRZt4u7b2WaGaPIFmmiuA&oh=00_AfisWUFmzss64a74PO_75epTnQNFl0HXMYov-6w9IgznNA&oe=692E9679",
+          "firma_cliente_url": null,
+          "firma_tecnico_url": null,
+          "firma_gerente_url": null
+        }
+      }
+    ]
+  },
+  "repo_name": "flujos_n8n",
+  "repo_owner": "whitelabel-ai",
+  "repo_path": "Automation/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-28T05:28:06.123Z",
+      "createdAt": "2025-11-28T05:28:06.123Z",
+      "role": "workflow:owner",
+      "workflowId": "PuvtMHRGr1LEWNik",
+      "projectId": "73zSRVHGJwFSDWts"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-28T05:28:39.965Z",
+  "versionId": "16ca0338-48de-4fce-b689-e586bcac0183"
+}
