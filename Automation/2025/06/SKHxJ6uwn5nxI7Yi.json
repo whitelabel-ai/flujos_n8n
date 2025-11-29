@@ -1,250 +1,7 @@
 {
-  "active": true,
-  "activeVersion": {
-    "updatedAt": "2025-11-15T06:11:40.860Z",
-    "createdAt": "2025-11-15T06:11:40.860Z",
-    "versionId": "51f0fd38-f994-429b-9207-7eff20337b0f",
-    "workflowId": "SKHxJ6uwn5nxI7Yi",
-    "nodes": [
-      {
-        "parameters": {
-          "updates": [
-            "message"
-          ],
-          "additionalFields": {
-            "download": true
-          }
-        },
-        "type": "n8n-nodes-base.telegramTrigger",
-        "typeVersion": 1.1,
-        "position": [
-          -780,
-          180
-        ],
-        "id": "1d4cf096-27f1-4ecc-930c-3037655cab3d",
-        "name": "Telegram Trigger",
-        "webhookId": "d41e24c8-b148-40c1-8a67-7b9d08e2d7e8",
-        "credentials": {
-          "telegramApi": {
-            "id": "UYLu84YrLuqvAdMv",
-            "name": "Trancriptor Agent"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "resource": "file",
-          "fileId": "={{ $json.message.voice.file_id }}"
-        },
-        "type": "n8n-nodes-base.telegram",
-        "typeVersion": 1.2,
-        "position": [
-          -620,
-          180
-        ],
-        "id": "817fb5d0-5295-4ec3-99a8-294f3cd62e17",
-        "name": "Telegram2",
-        "webhookId": "82e2e760-7d7e-4588-9ab9-5abb13635da7",
-        "credentials": {
-          "telegramApi": {
-            "id": "UYLu84YrLuqvAdMv",
-            "name": "Trancriptor Agent"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "https://api.openai.com/v1/audio/transcriptions",
-          "authentication": "predefinedCredentialType",
-          "nodeCredentialType": "openAiApi",
-          "sendBody": true,
-          "contentType": "multipart-form-data",
-          "bodyParameters": {
-            "parameters": [
-              {
-                "name": "model",
-                "value": "whisper-1"
-              },
-              {
-                "parameterType": "formBinaryData",
-                "name": "file",
-                "inputDataFieldName": "data"
-              },
-              {
-                "name": "languaje",
-                "value": "es"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.2,
-        "position": [
-          -420,
-          180
-        ],
-        "id": "5c8c72c2-5983-4c54-aab5-50f5be796466",
-        "name": "HTTP Request",
-        "credentials": {
-          "openAiApi": {
-            "id": "UYsXoFpwT6Oh1GeF",
-            "name": "OpenAi account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "assignments": {
-            "assignments": [
-              {
-                "id": "d3d777d7-9802-4251-822b-e9c4d8bf3424",
-                "name": "Resumen",
-                "value": "={{ $json.text }}",
-                "type": "string"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          -220,
-          180
-        ],
-        "id": "b976d117-d8e2-438a-b058-bf5baef9415e",
-        "name": "audio"
-      },
-      {
-        "parameters": {
-          "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-          "text": "={{ $json.Resumen }}",
-          "additionalFields": {
-            "appendAttribution": false
-          }
-        },
-        "type": "n8n-nodes-base.telegram",
-        "typeVersion": 1.2,
-        "position": [
-          300,
-          180
-        ],
-        "id": "4f2eb307-67f3-4fc7-b7f0-d19225c8a8ad",
-        "name": "Telegram",
-        "webhookId": "bd507924-6679-482c-abe7-97eecd6cd80e",
-        "credentials": {
-          "telegramApi": {
-            "id": "UYLu84YrLuqvAdMv",
-            "name": "Trancriptor Agent"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "operation": "update",
-          "documentURL": "https://docs.google.com/document/d/1ZxfrYYrp6u8sGzi0ytfEBZTFhRPuU9Rm_vcZ2YkBb1c/edit?tab=t.0",
-          "actionsUi": {
-            "actionFields": [
-              {
-                "action": "insert",
-                "text": "=Quien:  {{ $('Telegram Trigger').item.json.message.from.first_name }}\n\nIdea: {{ $json.Resumen }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.googleDocs",
-        "typeVersion": 2,
-        "position": [
-          220,
-          0
-        ],
-        "id": "116df336-17b5-44e1-aa6a-9b961d232ebf",
-        "name": "Google Docs",
-        "disabled": true
-      },
-      {
-        "parameters": {
-          "jsCode": "const maxLength = 4000;\nconst result = [];\n\nfor (const item of items) {\n  const resumen = item.json.Resumen;\n\n  if (typeof resumen === 'string' && resumen.length > maxLength) {\n    // Dividir en partes de 4000 caracteres\n    for (let i = 0; i < resumen.length; i += maxLength) {\n      result.push({\n        json: {\n          ...item.json,\n          Resumen: resumen.slice(i, i + maxLength)\n        }\n      });\n    }\n  } else {\n    // Si no excede el límite, dejar igual\n    result.push(item);\n  }\n}\n\nreturn result;\n"
-        },
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          0,
-          180
-        ],
-        "id": "343d82d2-f302-4cd7-a5f0-51250e094a49",
-        "name": "Code"
-      }
-    ],
-    "connections": {
-      "Telegram2": {
-        "main": [
-          [
-            {
-              "node": "HTTP Request",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "HTTP Request": {
-        "main": [
-          [
-            {
-              "node": "audio",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Telegram Trigger": {
-        "main": [
-          [
-            {
-              "node": "Telegram2",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "audio": {
-        "main": [
-          [
-            {
-              "node": "Google Docs",
-              "type": "main",
-              "index": 0
-            },
-            {
-              "node": "Code",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Code": {
-        "main": [
-          [
-            {
-              "node": "Telegram",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      }
-    },
-    "authors": "system migration",
-    "name": null,
-    "description": null
-  },
-  "activeVersionId": "51f0fd38-f994-429b-9207-7eff20337b0f",
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Telegram2": {
       "main": [
@@ -272,7 +29,7 @@
       "main": [
         [
           {
-            "node": "Telegram2",
+            "node": "Create an event",
             "type": "main",
             "index": 0
           }
@@ -325,8 +82,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.1,
       "position": [
-        -780,
-        180
+        -880,
+        192
       ],
       "id": "1d4cf096-27f1-4ecc-930c-3037655cab3d",
       "name": "Telegram Trigger",
@@ -341,13 +98,14 @@
     {
       "parameters": {
         "resource": "file",
-        "fileId": "={{ $json.message.voice.file_id }}"
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -620,
-        180
+        -624,
+        192
       ],
       "id": "817fb5d0-5295-4ec3-99a8-294f3cd62e17",
       "name": "Telegram2",
@@ -389,8 +147,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -420,
-        180
+        -416,
+        192
       ],
       "id": "5c8c72c2-5983-4c54-aab5-50f5be796466",
       "name": "HTTP Request",
@@ -418,8 +176,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -220,
-        180
+        -224,
+        192
       ],
       "id": "b976d117-d8e2-438a-b058-bf5baef9415e",
       "name": "audio"
@@ -435,8 +193,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        300,
-        180
+        304,
+        192
       ],
       "id": "4f2eb307-67f3-4fc7-b7f0-d19225c8a8ad",
       "name": "Telegram",
@@ -464,7 +222,7 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        220,
+        224,
         0
       ],
       "id": "116df336-17b5-44e1-aa6a-9b961d232ebf",
@@ -479,10 +237,23 @@
       "typeVersion": 2,
       "position": [
         0,
-        180
+        192
       ],
       "id": "343d82d2-f302-4cd7-a5f0-51250e094a49",
       "name": "Code"
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.postHog",
+      "typeVersion": 1,
+      "position": [
+        -592,
+        48
+      ],
+      "id": "3b017ff2-e382-46ef-b75e-b5828a83581f",
+      "name": "Create an event"
     }
   ],
   "pinData": {},
@@ -504,6 +275,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-24T03:38:18.116Z",
-  "versionId": "51f0fd38-f994-429b-9207-7eff20337b0f"
+  "updatedAt": "2025-11-29T15:41:51.186Z",
+  "versionId": "6e00308d-6593-47d4-b28f-d48d65122469"
 }
