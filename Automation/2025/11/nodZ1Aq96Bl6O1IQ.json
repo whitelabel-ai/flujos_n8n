@@ -10,6 +10,11 @@
             "node": "HTTP Request6",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -250,7 +255,7 @@
     {
       "parameters": {
         "inputSource": "jsonExample",
-        "jsonExample": "{\n  \"account_id\":\"\",\n  \"conversation_id\":\"\",\n  \"fecha_servicio\": \"\",\n\n  \"serv_mantenimiento\": \"\",\n  \"serv_llamada\": \"\",\n  \"serv_reparacion\": \"\",\n  \"serv_instalacion\": \"\",\n\n  \"cliente_nombre\": \"\",\n  \"cliente_sucursal\": \"\",\n  \"cliente_ubicacion\": \"\",\n  \"cliente_telefono\": \"\",\n  \"cliente_email\": \"\",\n  \"cliente_contacto\": \"\",\n\n  \"equipo_id\": \"\",\n  \n\n  \"chk_revision_filtros\": \"X\",\n  \"chk_limpieza_evaporador\": \"\",\n  \"chk_limpieza_bandeja_drenaje\": \"\",\n  \"chk_revision_terminales\": \"\",\n  \"chk_revision_aislamiento\": \"\",\n  \"chk_revision_controles\": \"\",\n  \"chk_limpieza_condensador\": \"\",\n  \"chk_revision_ventiladores\": \"\",\n  \"chk_revision_fugas\": \"\",\n  \"chk_revision_presiones\": \"\",\n  \"chk_revision_cableado\": \"\",\n  \"chk_otras_actividades\": \"\",\n\n  \"danio_reportado\": \"\",\n  \"descripcion_servicio\": \"\",\n\n  \"tension_alimentacion\": \"\",\n  \"presion_succion\": \"\",\n  \"presion_descarga\": \"\",\n  \"capacidad_nominal\": \"\",\n  \"amperaje_compresor\": \"\",\n  \"amperaje_unidad_interior\": \"\",\n  \"amperaje_unidad_exterior\": \"\",\n  \"temperatura_ambiente\": \"\",\n  \"temperatura_suministro\": \"\",\n\n  \"observaciones_recomendaciones\": \"\",\n\n  \"nombre_cliente_firma\": \"\",\n  \"nombre_tecnico\": \"\",\n  \"nombre_gerente_tecnico\": \"\",\n\n  \"firma_cliente_url\": \"\",\n  \"firma_tecnico_url\": \"\",\n  \"firma_gerente_url\": \"\"\n}\n"
+        "jsonExample": "{\n  \"account_id\":\"\",\n  \"conversation_id\":\"\",\n  \"fecha_servicio\": \"\",\n\n  \"serv_mantenimiento\": \"\",\n  \"serv_llamada\": \"\",\n  \"serv_reparacion\": \"\",\n  \"serv_instalacion\": \"\",\n\n  \"cliente_nombre\": \"\",\n  \"cliente_sucursal\": \"\",\n  \"cliente_ubicacion\": \"\",\n  \"cliente_telefono\": \"\",\n  \"cliente_email\": \"\",\n  \"cliente_contacto\": \"\",\n  \"cliente_razon_social\": \"\",\n\n  \"equipo_id\": \"\",\n  \n\n  \"chk_revision_filtros\": \"X\",\n  \"chk_limpieza_evaporador\": \"\",\n  \"chk_limpieza_bandeja_drenaje\": \"\",\n  \"chk_revision_terminales\": \"\",\n  \"chk_revision_aislamiento\": \"\",\n  \"chk_revision_controles\": \"\",\n  \"chk_limpieza_condensador\": \"\",\n  \"chk_revision_ventiladores\": \"\",\n  \"chk_revision_fugas\": \"\",\n  \"chk_revision_presiones\": \"\",\n  \"chk_revision_cableado\": \"\",\n  \"chk_otras_actividades\": \"\",\n\n  \"danio_reportado\": \"\",\n  \"descripcion_servicio\": \"\",\n\n  \"tension_alimentacion\": \"\",\n  \"presion_succion\": \"\",\n  \"presion_descarga\": \"\",\n  \"capacidad_nominal\": \"\",\n  \"amperaje_compresor\": \"\",\n  \"amperaje_unidad_interior\": \"\",\n  \"amperaje_unidad_exterior\": \"\",\n  \"temperatura_ambiente\": \"\",\n  \"temperatura_suministro\": \"\",\n\n  \"observaciones_recomendaciones\": \"\",\n\n  \"nombre_cliente_firma\": \"\",\n  \"nombre_tecnico\": \"\",\n  \"nombre_gerente_tecnico\": \"\",\n\n  \"firma_cliente_url\": \"\",\n  \"firma_tecnico_url\": \"\",\n  \"firma_gerente_url\": \"\"\n}\n"
       },
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
@@ -280,7 +285,7 @@
             {
               "id": "a61526e7-111e-4f7e-9814-2a9d60cf6eda",
               "name": "fecha_servicio",
-              "value": "{{ $('initData').item.json.fecha_servicio }}",
+              "value": "={{ $('initData').item.json.fecha_servicio }}",
               "type": "string"
             },
             {
@@ -292,7 +297,7 @@
             {
               "id": "49f2a702-274c-4506-842e-2697a1b91642",
               "name": "serv_llamada",
-              "value": "={{ $('initData').item.json.serv_llamada }}",
+              "value": "=ok",
               "type": "string"
             },
             {
@@ -560,12 +565,6 @@
               "type": "string"
             },
             {
-              "id": "82935d7d-f01d-4ce6-b2e1-df7bf1fbc7d8",
-              "name": "logo_url",
-              "value": "={{ $('initData').item.json.logo_url }}",
-              "type": "string"
-            },
-            {
               "id": "916e5af5-88da-46c6-8f0a-dab1ddaacc28",
               "name": "firma_cliente_url",
               "value": "={{ $('initData').item.json.firma_cliente_url }}",
@@ -581,6 +580,18 @@
               "id": "89f77ed7-ff3a-4397-9c6c-0939d47175b1",
               "name": "firma_gerente_url",
               "value": "={{ $('initData').item.json.firma_gerente_url }}",
+              "type": "string"
+            },
+            {
+              "id": "82935d7d-f01d-4ce6-b2e1-df7bf1fbc7d8",
+              "name": "logo_url",
+              "value": "=https://scontent-bog2-1.xx.fbcdn.net/v/t39.30808-6/480484791_663165776240250_7620822571848283408_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=9kA0DS4TH5YQ7kNvwENYPW6&_nc_oc=AdlHKGAdjbSGJDc-X79Hx0azBZ38Tn96r02y0DPro5gGybtUkoWtYJ5Eo4vAGvFK11s&_nc_zt=23&_nc_ht=scontent-bog2-1.xx&_nc_gid=FddVop_fvcqj2oVuXH81GA&oh=00_Afjat2OxU1CjaT-41nwnuAIvxR0jGw0sKXTMCdrFdt0L4g&oe=692F06F9",
+              "type": "string"
+            },
+            {
+              "id": "036cc57d-19de-4eea-b7e6-40b7d9f03d55",
+              "name": "cliente_razon_social",
+              "value": "={{ $('initData').item.json.cliente_razon_social }}",
               "type": "string"
             }
           ]
@@ -668,6 +679,77 @@
       ],
       "id": "34351847-f6af-4b77-ac4b-cab8a41a387f",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pt2jl7502mka8xd",
+        "table": "mn9y1jj1tp341fh",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Serv_id",
+              "fieldValue": "={{ $('env').item.json.numero_orden }}"
+            },
+            {
+              "fieldName": "=equipo_id",
+              "fieldValue": "={{ $('initData').item.json.equipo_id }}"
+            },
+            {
+              "fieldName": "fecha_servicio",
+              "fieldValue": "={{ $('env').item.json.fecha_servicio }}"
+            },
+            {
+              "fieldName": "tipo_servicio",
+              "fieldValue": "={{ \n  ['serv_llamada', 'serv_reparacion', 'serv_instalacion']\n    .map(k => $('env').item.json[k])\n    .find(v => v !== null && v !== '') \n}}"
+            },
+            {
+              "fieldName": "razon_social",
+              "fieldValue": "={{ $('env').item.json.cliente_razon_social }}"
+            },
+            {
+              "fieldName": "equipo",
+              "fieldValue": "={{ $('env').item.json.equipo_modelo }}"
+            },
+            {
+              "fieldName": "serial_equipo",
+              "fieldValue": "={{ $('env').item.json.equipo_serie }}"
+            },
+            {
+              "fieldName": "Informacion_ servicio",
+              "fieldValue": "={{ $('env').item.json.descripcion_servicio }}"
+            },
+            {
+              "fieldName": "observaciones",
+              "fieldValue": "={{ $('env').item.json.observaciones_recomendaciones }}"
+            },
+            {
+              "fieldName": "tecnico_responsable",
+              "fieldValue": "={{ $('env').item.json.nombre_tecnico }}"
+            },
+            {
+              "fieldName": "pdf",
+              "binaryData": true,
+              "binaryProperty": "data"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        -32
+      ],
+      "id": "cd78c4ff-17a3-42f0-887e-d400a11588ab",
+      "name": "Create a row",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "PngKKQ0D2nKSCDu8",
+          "name": "Tool Acondicionados SAS"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -689,6 +771,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-28T06:00:58.792Z",
-  "versionId": "24e3285d-01d2-4afe-8ac2-ce4706aae324"
+  "updatedAt": "2025-11-28T22:34:16.476Z",
+  "versionId": "a863ed19-b447-4a1e-b499-d5e5a6d163af"
 }
