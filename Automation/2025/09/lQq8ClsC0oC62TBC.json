@@ -1,124 +1,7 @@
 {
-  "active": true,
-  "activeVersion": {
-    "updatedAt": "2025-11-15T06:11:40.860Z",
-    "createdAt": "2025-11-15T06:11:40.860Z",
-    "versionId": "47f2158f-f796-475f-b83c-03993b57f976",
-    "workflowId": "lQq8ClsC0oC62TBC",
-    "nodes": [
-      {
-        "parameters": {
-          "httpMethod": "POST",
-          "path": "semillero",
-          "responseMode": "responseNode",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.webhook",
-        "typeVersion": 2.1,
-        "position": [
-          -96,
-          -48
-        ],
-        "id": "b31dba29-cef2-4c95-bdda-0925f2d3ab9a",
-        "name": "Webhook",
-        "webhookId": "c10f0f69-62d4-4a92-bf08-de3e274dc321"
-      },
-      {
-        "parameters": {
-          "promptType": "define",
-          "text": "=mensage: {{ $json.body.message }}",
-          "options": {
-            "systemMessage": "=responde lo que te pidan con un tono muy recochero, eres el asistente de semillero\n\n {{ $json.body.timestamp }}"
-          }
-        },
-        "type": "@n8n/n8n-nodes-langchain.agent",
-        "typeVersion": 2.2,
-        "position": [
-          224,
-          -48
-        ],
-        "id": "878808c8-cebb-438c-b136-1ca3c5d4821b",
-        "name": "AI Agent"
-      },
-      {
-        "parameters": {
-          "options": {}
-        },
-        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-        "typeVersion": 1,
-        "position": [
-          208,
-          208
-        ],
-        "id": "913cf530-6f77-4313-8841-bfc3b3969502",
-        "name": "Google Gemini Chat Model",
-        "credentials": {
-          "googlePalmApi": {
-            "id": "jQiccHfpS9BFKE4C",
-            "name": "automation.whitelabel.lat"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "respondWith": "allIncomingItems",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.respondToWebhook",
-        "typeVersion": 1.4,
-        "position": [
-          656,
-          -48
-        ],
-        "id": "f4d20fa0-b2ee-4828-bbed-3378172442cf",
-        "name": "Respond to Webhook"
-      }
-    ],
-    "connections": {
-      "Webhook": {
-        "main": [
-          [
-            {
-              "node": "AI Agent",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Google Gemini Chat Model": {
-        "ai_languageModel": [
-          [
-            {
-              "node": "AI Agent",
-              "type": "ai_languageModel",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "AI Agent": {
-        "main": [
-          [
-            {
-              "node": "Respond to Webhook",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Respond to Webhook": {
-        "main": [
-          []
-        ]
-      }
-    },
-    "authors": "system migration",
-    "name": null,
-    "description": null
-  },
-  "activeVersionId": "47f2158f-f796-475f-b83c-03993b57f976",
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Webhook": {
       "main": [
@@ -161,7 +44,7 @@
   },
   "createdAt": "2025-09-02T00:32:46.661Z",
   "id": "lQq8ClsC0oC62TBC",
-  "isArchived": false,
+  "isArchived": true,
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -293,6 +176,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-02T00:51:11.862Z",
-  "versionId": "47f2158f-f796-475f-b83c-03993b57f976"
+  "updatedAt": "2025-11-30T20:12:40.669Z",
+  "versionId": "3ee6aa0b-f9c6-4fec-957f-cd3bbf4d7ad2"
 }
