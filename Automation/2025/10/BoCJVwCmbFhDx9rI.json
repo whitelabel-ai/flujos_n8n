@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-11-28T02:35:30.356Z",
-    "createdAt": "2025-11-28T02:35:30.356Z",
-    "versionId": "f085cacd-8b29-4d04-8b45-35895b436568",
+    "updatedAt": "2025-11-30T13:44:22.080Z",
+    "createdAt": "2025-11-30T13:44:22.080Z",
+    "versionId": "dfb4c30a-c2a5-44b7-a9e3-db81c52a3c7c",
     "workflowId": "BoCJVwCmbFhDx9rI",
     "nodes": [
       {
@@ -1803,8 +1803,8 @@
         "type": "@langfuse/n8n-nodes-langfuse.langfuse",
         "typeVersion": 1,
         "position": [
-          9184,
-          2816
+          9312,
+          2800
         ],
         "id": "c5b61467-ed25-46c1-958f-2294d84cbd53",
         "name": "Get a prompt",
@@ -1821,7 +1821,7 @@
           "text": "=mensaje_usuario: {{ $('Data').item.json.message }}, \nNombre_usuario: {{ $json.nombre }}\nrol_usuario: {{ $json.rol }}\nNo_whatsapp: {{ $json.No_whatsapp }}\nPermisos_usuario: {{ $json.permisos }}\nRestricciones: {{ $json.Restricciones }}",
           "langfuseMetadata": {},
           "options": {
-            "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}} , siempre verifica el rol_usuario y los permisos para ese rol, pide confirmacion y verificacion de la informacion suministrada por el usuario antes de ejecutar tools de registro, actualizacion o eliminacion\n\n"
+            "systemMessage": "=Hoy es {{$now}} {{ $('Get a prompt').item.json.prompt }}"
           }
         },
         "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
@@ -2592,14 +2592,14 @@
         "typeVersion": 2.2,
         "position": [
           10336,
-          3104
+          3120
         ],
         "id": "6b730e6d-6d20-48e3-b64e-5d529b4ceb95",
         "name": "registrar_sedes"
       },
       {
         "parameters": {
-          "description": "Utiliza esta herramienta para registrar un equipo de una sede existente. Solicita: tipo_registro (siempre \"equipo\"), sede_id, ubicacion del equipo, tipo, marca, modelo, serial, refrigerante, capacidad, voltaje, periocidad, haz preguntas de confirmacion  antes de registrar.",
+          "description": "Utiliza esta herramienta para registrar un equipo de una sede existente. Solicita: tipo_registro (siempre \"equipo\"), sede_id, ubicacion del equipo, tipo, marca, modelo, serial, refrigerante, capacidad, voltaje, periocidad, haz preguntas de confirmacion  antes de registrar. cualquier rol Puede registrar equipos",
           "workflowId": {
             "__rl": true,
             "value": "JiMqlzjRLJiryoFA",
@@ -2752,9 +2752,6 @@
               {
                 "keyName": "No_whatsapp",
                 "keyValue": "={{ $('Data').item.json.WhatsApp }}"
-              },
-              {
-                "keyName": "rol"
               }
             ]
           }
@@ -2762,8 +2759,8 @@
         "type": "n8n-nodes-base.dataTable",
         "typeVersion": 1,
         "position": [
-          9376,
-          2816
+          9632,
+          2800
         ],
         "id": "50003911-a108-42c2-8ccd-33be96180285",
         "name": "Get row(s)"
@@ -3721,7 +3718,7 @@
     "name": null,
     "description": null
   },
-  "activeVersionId": "f085cacd-8b29-4d04-8b45-35895b436568",
+  "activeVersionId": "dfb4c30a-c2a5-44b7-a9e3-db81c52a3c7c",
   "connections": {
     "Data": {
       "main": [
@@ -6274,8 +6271,8 @@
       "type": "@langfuse/n8n-nodes-langfuse.langfuse",
       "typeVersion": 1,
       "position": [
-        9184,
-        2816
+        9312,
+        2800
       ],
       "id": "c5b61467-ed25-46c1-958f-2294d84cbd53",
       "name": "Get a prompt",
@@ -6292,7 +6289,7 @@
         "text": "=mensaje_usuario: {{ $('Data').item.json.message }}, \nNombre_usuario: {{ $json.nombre }}\nrol_usuario: {{ $json.rol }}\nNo_whatsapp: {{ $json.No_whatsapp }}\nPermisos_usuario: {{ $json.permisos }}\nRestricciones: {{ $json.Restricciones }}",
         "langfuseMetadata": {},
         "options": {
-          "systemMessage": "={{ $json.prompt }} la fecha actual es {{$now}} , siempre verifica el rol_usuario y los permisos para ese rol, pide confirmacion y verificacion de la informacion suministrada por el usuario antes de ejecutar tools de registro, actualizacion o eliminacion\n\n"
+          "systemMessage": "=Hoy es {{$now}} {{ $('Get a prompt').item.json.prompt }}"
         }
       },
       "type": "n8n-nodes-ai-agent-langfuse.agentWithLangfuse",
@@ -7063,14 +7060,14 @@
       "typeVersion": 2.2,
       "position": [
         10336,
-        3104
+        3120
       ],
       "id": "6b730e6d-6d20-48e3-b64e-5d529b4ceb95",
       "name": "registrar_sedes"
     },
     {
       "parameters": {
-        "description": "Utiliza esta herramienta para registrar un equipo de una sede existente. Solicita: tipo_registro (siempre \"equipo\"), sede_id, ubicacion del equipo, tipo, marca, modelo, serial, refrigerante, capacidad, voltaje, periocidad, haz preguntas de confirmacion  antes de registrar.",
+        "description": "Utiliza esta herramienta para registrar un equipo de una sede existente. Solicita: tipo_registro (siempre \"equipo\"), sede_id, ubicacion del equipo, tipo, marca, modelo, serial, refrigerante, capacidad, voltaje, periocidad, haz preguntas de confirmacion  antes de registrar. cualquier rol Puede registrar equipos",
         "workflowId": {
           "__rl": true,
           "value": "JiMqlzjRLJiryoFA",
@@ -7223,9 +7220,6 @@
             {
               "keyName": "No_whatsapp",
               "keyValue": "={{ $('Data').item.json.WhatsApp }}"
-            },
-            {
-              "keyName": "rol"
             }
           ]
         }
@@ -7233,8 +7227,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        9376,
-        2816
+        9632,
+        2800
       ],
       "id": "50003911-a108-42c2-8ccd-33be96180285",
       "name": "Get row(s)"
@@ -7448,7 +7442,7 @@
           "headers": {
             "host": "automation.whitelabel.lat",
             "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
-            "content-length": "3328",
+            "content-length": "3338",
             "accept": "application/json",
             "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "content-type": "application/json",
@@ -7456,7 +7450,7 @@
             "x-forwarded-host": "automation.whitelabel.lat",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
-            "x-forwarded-server": "6312933d0ba6",
+            "x-forwarded-server": "74e6991e3c4a",
             "x-real-ip": "172.18.0.1"
           },
           "params": {},
@@ -7469,60 +7463,60 @@
             "additional_attributes": {},
             "content_attributes": {},
             "content_type": "text",
-            "content": "Unica",
+            "content": "Hola Mocca que más pues",
             "conversation": {
               "additional_attributes": {},
               "can_reply": true,
               "channel": "Channel::Whatsapp",
               "contact_inbox": {
-                "id": 1017,
-                "contact_id": 1012,
+                "id": 250,
+                "contact_id": 250,
                 "inbox_id": 4,
-                "source_id": "573054797716",
-                "created_at": "2025-11-04T15:18:12.235Z",
-                "updated_at": "2025-11-04T15:18:12.235Z",
+                "source_id": "573008564836",
+                "created_at": "2025-08-27T23:17:01.490Z",
+                "updated_at": "2025-08-27T23:17:01.490Z",
                 "hmac_verified": false,
-                "pubsub_token": "jW1qy7Es7esi4m47AaPRvCkQ"
+                "pubsub_token": "s9m2kYMSHhNh9og6xQnjwZSa"
               },
-              "id": 4,
+              "id": 1,
               "inbox_id": 4,
               "messages": [
                 {
-                  "id": 24386,
-                  "content": "Unica",
+                  "id": 25600,
+                  "content": "Hola Mocca que más pues",
                   "account_id": 4,
                   "inbox_id": 4,
-                  "conversation_id": 4,
+                  "conversation_id": 1,
                   "message_type": 0,
-                  "created_at": 1764001753,
-                  "updated_at": "2025-11-24T16:29:13.502Z",
+                  "created_at": 1764462388,
+                  "updated_at": "2025-11-30T00:26:28.711Z",
                   "private": false,
                   "status": "sent",
-                  "source_id": "wamid.HBgMNTczMDU0Nzk3NzE2FQIAEhgUM0E2QzRDQjVCREUzMzVEQTk1OEUA",
+                  "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhggQUNDQjUxMDU5MzVDMDE2RDhDQUVFMDdENjU3Q0M2NjQA",
                   "content_type": "text",
                   "content_attributes": {},
                   "sender_type": "Contact",
-                  "sender_id": 1012,
+                  "sender_id": 250,
                   "external_source_ids": {},
                   "additional_attributes": {},
-                  "processed_message_content": "Unica",
+                  "processed_message_content": "Hola Mocca que más pues",
                   "sentiment": {},
                   "conversation": {
                     "assignee_id": 7,
-                    "unread_count": 1,
-                    "last_activity_at": 1764001753,
+                    "unread_count": 10,
+                    "last_activity_at": 1764462388,
                     "contact_inbox": {
-                      "source_id": "573054797716"
+                      "source_id": "573008564836"
                     }
                   },
                   "sender": {
                     "additional_attributes": {},
                     "custom_attributes": {},
                     "email": null,
-                    "id": 1012,
+                    "id": 250,
                     "identifier": null,
-                    "name": "Laura Valentina Medina ☪️",
-                    "phone_number": "+573054797716",
+                    "name": "🙂",
+                    "phone_number": "+573008564836",
                     "thumbnail": "",
                     "blocked": false,
                     "type": "contact"
@@ -7535,10 +7529,10 @@
                   "additional_attributes": {},
                   "custom_attributes": {},
                   "email": null,
-                  "id": 1012,
+                  "id": 250,
                   "identifier": null,
-                  "name": "Laura Valentina Medina ☪️",
-                  "phone_number": "+573054797716",
+                  "name": "🙂",
+                  "phone_number": "+573008564836",
                   "thumbnail": "",
                   "blocked": false,
                   "type": "contact"
@@ -7558,19 +7552,19 @@
               "status": "open",
               "custom_attributes": {},
               "snoozed_until": null,
-              "unread_count": 1,
-              "first_reply_created_at": "2025-11-04T15:18:56.806Z",
+              "unread_count": 10,
+              "first_reply_created_at": "2025-08-27T23:19:19.626Z",
               "priority": null,
-              "waiting_since": 1764001753,
-              "agent_last_seen_at": 1764001726,
+              "waiting_since": 1764462388,
+              "agent_last_seen_at": 1764114185,
               "contact_last_seen_at": 0,
-              "last_activity_at": 1764001753,
-              "timestamp": 1764001753,
-              "created_at": 1762269492,
-              "updated_at": 1764001753.524044
+              "last_activity_at": 1764462388,
+              "timestamp": 1764462388,
+              "created_at": 1756336621,
+              "updated_at": 1764462388.736151
             },
-            "created_at": "2025-11-24T16:29:13.502Z",
-            "id": 24386,
+            "created_at": "2025-11-30T00:26:28.711Z",
+            "id": 25600,
             "inbox": {
               "id": 4,
               "name": "Estarter"
@@ -7586,14 +7580,14 @@
               "avatar": "",
               "custom_attributes": {},
               "email": null,
-              "id": 1012,
+              "id": 250,
               "identifier": null,
-              "name": "Laura Valentina Medina ☪️",
-              "phone_number": "+573054797716",
+              "name": "🙂",
+              "phone_number": "+573008564836",
               "thumbnail": "",
               "blocked": false
             },
-            "source_id": "wamid.HBgMNTczMDU0Nzk3NzE2FQIAEhgUM0E2QzRDQjVCREUzMzVEQTk1OEUA",
+            "source_id": "wamid.HBgMNTczMDA4NTY0ODM2FQIAEhggQUNDQjUxMDU5MzVDMDE2RDhDQUVFMDdENjU3Q0M2NjQA",
             "event": "message_created"
           },
           "webhookUrl": "https://automation.whitelabel.lat/webhook/chatwood_onboarding_estarter",
@@ -7630,6 +7624,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-11-28T02:35:30.366Z",
-  "versionId": "f085cacd-8b29-4d04-8b45-35895b436568"
+  "updatedAt": "2025-11-30T13:44:22.101Z",
+  "versionId": "dfb4c30a-c2a5-44b7-a9e3-db81c52a3c7c"
 }
