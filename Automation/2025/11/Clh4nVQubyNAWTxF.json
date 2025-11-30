@@ -111,19 +111,8 @@
       "ai_languageModel": [
         [
           {
-            "node": "Agente de Puntuación y Clasificación Vanguardista2",
+            "node": "Genera resumen de informe",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Agente de Puntuación y Clasificación Vanguardista2": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
             "index": 0
           }
         ]
@@ -138,7 +127,7 @@
             "index": 0
           },
           {
-            "node": "Agente de Puntuación y Clasificación Vanguardista2",
+            "node": "Genera resumen de informe",
             "type": "main",
             "index": 0
           }
@@ -188,12 +177,25 @@
           }
         ]
       ]
+    },
+    "Genera resumen de informe": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-11-25T19:57:15.956Z",
   "id": "Clh4nVQubyNAWTxF",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Informe",
   "nodes": [
     {
@@ -252,7 +254,7 @@
       "typeVersion": 1.1,
       "position": [
         -2000,
-        208
+        160
       ],
       "id": "c5231fdd-ae62-4ad1-a5ed-509721352c01",
       "name": "When Executed by Another Workflow"
@@ -295,7 +297,7 @@
       "typeVersion": 3.4,
       "position": [
         -1776,
-        208
+        160
       ],
       "id": "08685ef1-9277-447c-ba7a-7ebc93f6a7a9",
       "name": "preguntas"
@@ -322,14 +324,14 @@
       "typeVersion": 4.7,
       "position": [
         -2000,
-        688
+        624
       ],
       "id": "a6b7cea5-1304-46d9-ac1f-8b32efd0d5a9",
       "name": "Get row(s) in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "GhtZjST9NZFsV5Iv",
-          "name": "Google Sheets account 3"
+          "name": "admin@vanguardistas.co"
         }
       },
       "disabled": true
@@ -343,7 +345,7 @@
       "typeVersion": 1,
       "position": [
         -1776,
-        688
+        624
       ],
       "id": "78921ad9-18c5-4095-9acc-1debeb5ce2ab",
       "name": "Aggregate"
@@ -354,7 +356,7 @@
       "typeVersion": 3.2,
       "position": [
         -1328,
-        208
+        160
       ],
       "id": "f7e99574-4afc-4c8e-a487-c1bf28ffe956",
       "name": "Merge"
@@ -367,11 +369,17 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -800,
-        448
+        -816,
+        384
       ],
       "id": "5264726b-2633-4965-8e05-302ccf56941a",
-      "name": "Google Gemini Chat Model"
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "gE2cuTXah5b8HLuX",
+          "name": "Qubra"
+        }
+      }
     },
     {
       "parameters": {
@@ -385,7 +393,7 @@
       "typeVersion": 2.2,
       "position": [
         -880,
-        208
+        160
       ],
       "id": "02759418-427f-40b9-b422-0e2855b64b91",
       "name": "Agente de Puntuación y Clasificación Vanguardista",
@@ -400,11 +408,17 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -544,
-        432
+        -528,
+        384
       ],
       "id": "5a758916-3328-46e9-a581-196917b71919",
-      "name": "Google Gemini Chat Model1"
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "gE2cuTXah5b8HLuX",
+          "name": "Qubra"
+        }
+      }
     },
     {
       "parameters": {
@@ -414,7 +428,7 @@
       "typeVersion": 2,
       "position": [
         -1104,
-        208
+        160
       ],
       "id": "b1cf6430-129c-4dc0-85d8-45e6a72bb717",
       "name": "data"
@@ -427,7 +441,7 @@
       "typeVersion": 2,
       "position": [
         -1552,
-        688
+        624
       ],
       "id": "8a3009ab-970a-4dac-8562-09402135c571",
       "name": "merge"
@@ -440,30 +454,17 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        240,
-        432
+        -112,
+        528
       ],
       "id": "296c4e96-44c6-4ba7-9674-22315041c954",
-      "name": "Google Gemini Chat Model2"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=\"User_data\" \"{{ JSON.stringify($('data').item.json.userData) }}\", \n\"Diagnostico completo\": \"{{ $json.output }}\"",
-        "options": {
-          "systemMessage": "=#### \\# Rol y Objetivo\n\nEres un **Sintetizador de Contenidos Estratégicos** de *Vanguardistas*. Tu especialidad es destilar la esencia de informes de diagnóstico complejos y convertirlos en resúmenes claros, potentes y de alto impacto. No eres un simple acortador de texto; eres un editor experto que sabe identificar y resaltar la información más crucial sin perder el tono, el mensaje ni la personalización.\n\nTu objetivo es recibir un informe de diagnóstico completo y personalizado en formato Markdown y generar una **versión resumida**, también en Markdown, que sea perfecta para mostrar en una landing page. Este resumen debe ser un \"aperitivo\" que demuestre valor inmediato y motive al usuario a esperar con interés el informe completo que recibirá por correo.\n\n-----\n\n#### \\# Tono y Estilo del Resumen\n\n  - **Conciso y Directo:** Usa frases cortas y potentes. Elimina cualquier texto de relleno o párrafos largos.\n  - **Altamente Escaneable:** La estructura debe ser impecable, utilizando títulos, negritas y, sobre todo, listas con viñetas (`-` o `*`) para que el usuario pueda captar las ideas principales en segundos.\n  - **Impactante y Valioso:** Aunque sea breve, debe mantener el tono empático y estratégico de Vanguardistas, haciendo que el usuario sienta que ha recibido un análisis real y valioso.\n  - **Jerárquico:** Usa la jerarquía de Markdown (`##`, `###`, `**`) para organizar la información de manera lógica y visualmente clara.\n\n-----\n\n#### \\# Proceso Lógico Detallado (Paso a Paso)\n\nAl recibir el informe completo, seguirás rigurosamente este proceso de síntesis por secciones:\n\n1.  **Título y Saludo:**\n\n      - Mantén el saludo personalizado. `¡Hola, [Nombre]!`\n      - Crea un nuevo título principal conciso. Por ejemplo: `## Tu Diagnóstico Vanguardista en Resumen`.\n\n2.  **Síntesis de la Sección \"Retratar\":**\n\n      - Lee la introducción completa.\n      - Destila la idea central en **una o dos frases máximo**. Captura la metáfora principal (ej. \"motor con el freno de mano\") y la validación empática del estado actual del negocio.\n\n3.  **Síntesis de la Sección \"Descomponer\" (Análisis):**\n\n      - Esta es la sección más importante del resumen.\n      - Crea un subtítulo como `### Los Fragmentos de Oportunidad en tu Negocio:`.\n      - Transforma los párrafos de análisis de las tres áreas en una **lista de viñetas clara y directa**. Cada viñeta debe resumir el problema central de cada área.\n      - **Ejemplo:**\n          - **Marketing:** Tu crecimiento actual depende del \"boca a boca\", lo que limita tu alcance y predictibilidad.\n          - **Experiencia del Cliente:** Tus procesos manuales, aunque cercanos, consumen tu tiempo y frenan tu capacidad para escalar.\n          - **Presencia Digital:** Tu visibilidad online es baja, lo que te impide atraer clientes de forma automática y constante.\n\n4.  **Síntesis de la Sección \"Reinterpretar\" (Plan de Acción):**\n\n      - Crea un subtítulo como `### Tus Primeros Pasos Hacia la Transformación:`.\n      - De nuevo, utiliza una **lista de viñetas**.\n      - Para cada una de las tres áreas, extrae la **\"Acción Concreta\" más importante y accionable** del informe completo. Sé muy específico.\n      - **Ejemplo:**\n          - **Marketing:** Crear un \"Gancho de Valor\" simple (como una mini-guía o descuento) para capturar contactos de forma proactiva.\n          - **Procesos:** Automatizar respuestas a preguntas frecuentes en WhatsApp Business para liberar tu tiempo.\n          - **Tecnología:** Desarrollar una \"Web Esencial\" enfocada en un único objetivo: que los clientes te contacten.\n\n5.  **Síntesis del Cierre:**\n\n      - Resume la \"Métrica de Éxito\" en una sola frase clave. Ejemplo: `**Tu Métrica Clave para empezar:** Nuevos Clientes Potenciales (Leads).`\n      - Crea un cierre final que gestione las expectativas. Debe ser una llamada a la acción clara que invite a revisar el correo electrónico.\n\n-----\n\n#### \\# Reglas y Directrices Estrictas\n\n✅ **CONSERVA LA ESTRUCTURA:** El resumen debe mantener visiblemente las secciones clave del informe original (Análisis, Plan de Acción, etc.).\n✅ **MANTÉN LA PERSONALIZACIÓN:** Usa siempre el nombre del usuario y cualquier dato personalizado que esté en el informe original. El resumen no debe sentirse genérico.\n✅ **PRIORIZA LAS LISTAS:** Usa viñetas siempre que sea posible para hacer la información digerible.\n✅ **SÉ FIEL AL MENSAJE:** No cambies el significado, el diagnóstico ni las recomendaciones. Tu trabajo es **condensar**, no reinterpretar.\n\n❌ **NO escribas párrafos largos.** Si una idea toma más de dos líneas, probablemente deba ser una viñeta.\n❌ **NO elimines la esencia empática.** Aunque sea corto, debe sonar como Vanguardistas.\n❌ **NO seas ambiguo.** Las acciones y los problemas deben ser cristalinos.\n❌ **Tu salida debe ser únicamente el resumen en Markdown.** Sin comentarios adicionales.\n"
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "gE2cuTXah5b8HLuX",
+          "name": "Qubra"
         }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
-      "position": [
-        160,
-        192
-      ],
-      "id": "f0741210-e6ca-472e-9e7a-dc532f4ef143",
-      "name": "Agente de Puntuación y Clasificación Vanguardista2",
-      "retryOnFail": true,
-      "waitBetweenTries": 2000
+      }
     },
     {
       "parameters": {
@@ -482,8 +483,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        528,
-        192
+        176,
+        304
       ],
       "id": "cf067f71-246e-4c5c-a1a7-1ea4b21399d7",
       "name": "Edit Fields"
@@ -499,8 +500,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -544,
-        208
+        -528,
+        160
       ],
       "id": "62368c62-5189-42de-a5f9-203fa9401135",
       "name": "Redactor Estratégico",
@@ -515,7 +516,7 @@
       "typeVersion": 2,
       "position": [
         -1552,
-        320
+        256
       ],
       "id": "3203df6b-093f-428e-b991-673e7cac63b3",
       "name": "Code"
@@ -528,7 +529,7 @@
       "typeVersion": 2,
       "position": [
         -1552,
-        112
+        64
       ],
       "id": "c1116498-b002-42a8-82ac-6c0b2928ab23",
       "name": "Code1"
@@ -549,7 +550,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        0,
+        -112,
         0
       ],
       "id": "e7f13c19-bd8f-4c03-b35a-00c7a8c12d5f",
@@ -661,16 +662,6 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": false
-            },
-            {
-              "id": "Interacción Gofest",
-              "displayName": "Interacción Gofest",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -681,7 +672,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        272,
+        176,
         0
       ],
       "id": "193d0077-24e8-439a-a628-5587b793dc53",
@@ -712,8 +703,8 @@
       "type": "n8n-nodes-base.gmailTool",
       "typeVersion": 2.1,
       "position": [
-        -384,
-        432
+        -400,
+        384
       ],
       "id": "000c65e8-a313-4056-9f84-a353f50246fe",
       "name": "Send a message in Gmail",
@@ -724,28 +715,28 @@
           "name": "admin@vanguardistas.co"
         }
       }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\"User_data\" \"{{ JSON.stringify($('data').item.json.userData) }}\", \n\"Diagnostico completo\": \"{{ $json.output }}\"",
+        "options": {
+          "systemMessage": "=#### \\# Rol y Objetivo\n\nEres un **Sintetizador de Contenidos Estratégicos** de *Vanguardistas*. Tu especialidad es destilar la esencia de informes de diagnóstico complejos y convertirlos en resúmenes claros, potentes y de alto impacto. No eres un simple acortador de texto; eres un editor experto que sabe identificar y resaltar la información más crucial sin perder el tono, el mensaje ni la personalización.\n\nTu objetivo es recibir un informe de diagnóstico completo y personalizado en formato Markdown y generar una **versión resumida**, también en Markdown, que sea perfecta para mostrar en una landing page. Este resumen debe ser un \"aperitivo\" que demuestre valor inmediato y motive al usuario a esperar con interés el informe completo que recibirá por correo.\n\n-----\n\n#### \\# Tono y Estilo del Resumen\n\n  - **Conciso y Directo:** Usa frases cortas y potentes. Elimina cualquier texto de relleno o párrafos largos.\n  - **Altamente Escaneable:** La estructura debe ser impecable, utilizando títulos, negritas y, sobre todo, listas con viñetas (`-` o `*`) para que el usuario pueda captar las ideas principales en segundos.\n  - **Impactante y Valioso:** Aunque sea breve, debe mantener el tono empático y estratégico de Vanguardistas, haciendo que el usuario sienta que ha recibido un análisis real y valioso.\n  - **Jerárquico:** Usa la jerarquía de Markdown (`##`, `###`, `**`) para organizar la información de manera lógica y visualmente clara.\n\n-----\n\n#### \\# Proceso Lógico Detallado (Paso a Paso)\n\nAl recibir el informe completo, seguirás rigurosamente este proceso de síntesis por secciones:\n\n1.  **Título y Saludo:**\n\n      - Mantén el saludo personalizado. `¡Hola, [Nombre]!`\n      - Crea un nuevo título principal conciso. Por ejemplo: `## Tu Diagnóstico Vanguardista en Resumen`.\n\n2.  **Síntesis de la Sección \"Retratar\":**\n\n      - Lee la introducción completa.\n      - Destila la idea central en **una o dos frases máximo**. Captura la metáfora principal (ej. \"motor con el freno de mano\") y la validación empática del estado actual del negocio.\n\n3.  **Síntesis de la Sección \"Descomponer\" (Análisis):**\n\n      - Esta es la sección más importante del resumen.\n      - Crea un subtítulo como `### Los Fragmentos de Oportunidad en tu Negocio:`.\n      - Transforma los párrafos de análisis de las tres áreas en una **lista de viñetas clara y directa**. Cada viñeta debe resumir el problema central de cada área.\n      - **Ejemplo:**\n          - **Marketing:** Tu crecimiento actual depende del \"boca a boca\", lo que limita tu alcance y predictibilidad.\n          - **Experiencia del Cliente:** Tus procesos manuales, aunque cercanos, consumen tu tiempo y frenan tu capacidad para escalar.\n          - **Presencia Digital:** Tu visibilidad online es baja, lo que te impide atraer clientes de forma automática y constante.\n\n4.  **Síntesis de la Sección \"Reinterpretar\" (Plan de Acción):**\n\n      - Crea un subtítulo como `### Tus Primeros Pasos Hacia la Transformación:`.\n      - De nuevo, utiliza una **lista de viñetas**.\n      - Para cada una de las tres áreas, extrae la **\"Acción Concreta\" más importante y accionable** del informe completo. Sé muy específico.\n      - **Ejemplo:**\n          - **Marketing:** Crear un \"Gancho de Valor\" simple (como una mini-guía o descuento) para capturar contactos de forma proactiva.\n          - **Procesos:** Automatizar respuestas a preguntas frecuentes en WhatsApp Business para liberar tu tiempo.\n          - **Tecnología:** Desarrollar una \"Web Esencial\" enfocada en un único objetivo: que los clientes te contacten.\n\n5.  **Síntesis del Cierre:**\n\n      - Resume la \"Métrica de Éxito\" en una sola frase clave. Ejemplo: `**Tu Métrica Clave para empezar:** Nuevos Clientes Potenciales (Leads).`\n      - Crea un cierre final que gestione las expectativas. Debe ser una llamada a la acción clara que invite a revisar el correo electrónico.\n\n-----\n\n#### \\# Reglas y Directrices Estrictas\n\n✅ **CONSERVA LA ESTRUCTURA:** El resumen debe mantener visiblemente las secciones clave del informe original (Análisis, Plan de Acción, etc.).\n✅ **MANTÉN LA PERSONALIZACIÓN:** Usa siempre el nombre del usuario y cualquier dato personalizado que esté en el informe original. El resumen no debe sentirse genérico.\n✅ **PRIORIZA LAS LISTAS:** Usa viñetas siempre que sea posible para hacer la información digerible.\n✅ **SÉ FIEL AL MENSAJE:** No cambies el significado, el diagnóstico ni las recomendaciones. Tu trabajo es **condensar**, no reinterpretar.\n\n❌ **NO escribas párrafos largos.** Si una idea toma más de dos líneas, probablemente deba ser una viñeta.\n❌ **NO elimines la esencia empática.** Aunque sea corto, debe sonar como Vanguardistas.\n❌ **NO seas ambiguo.** Las acciones y los problemas deben ser cristalinos.\n❌ **Tu salida debe ser únicamente el resumen en Markdown.** Sin comentarios adicionales.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        304
+      ],
+      "id": "f0741210-e6ca-472e-9e7a-dc532f4ef143",
+      "name": "Genera resumen de informe",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000
     }
   ],
   "pinData": {
-    "When Executed by Another Workflow": [
-      {
-        "json": {
-          "user_name": "Ricardo",
-          "user_email": "Bagua.shop.co@gmail.com",
-          "user_empresa": "Bagua",
-          "¿Qué es lo que te inspira a trabajar cada día?": "Es el emprendimiento que tenemos con mi esposa , un sueño",
-          "¿Qué vendes y a qué sector te diriges?": "Vendo morrales 100% impermeables, le vendo a viajeros y aventureros",
-          "¿Qué emociones quieres que tu marca transmita a tus clientes?": "Seguridad , aventura , calidad",
-          "¿Cuál es el principal problema que enfrentas con respecto a tus ventas hoy?": "Hacemos mucha pauta publicitaria que lleva a nuestra tienda en shipofy",
-          "¿Hasta qué punto conoces a profundidad a tu cliente ideal y el problema específico que tu marca/empresa resuelve para ellos?": "Este es u. Producto muevo que muchos necesitan para sus aventuras pero no saben muchos que existen",
-          "¿Cómo describirías la experiencia que tus clientes viven al interactuar con tu marca?": "Un morral con el que se puedan meter al agua win miedo",
-          "¿Qué tan visible eres a nivel digital?": "Pues tenemos visitas por la pauta pero no nos hemos podido posicionar en google",
-          "¿Qué objetivo refleja mejor lo que quieres lograr con tu marca a nivel digital?": "Una marca referente en accesorios outdoor",
-          "¿Cuáles son los recursos existentes que cuentas actualmente para mejorar tu presencia digital?": "Dinero , somo piblicistas , tiempo",
-          "Cuando mires atrás, ¿qué te hará sentir que este proceso ha sido un éxito para tu negocio?": "Que me de tips y consejos para mejorar las ventas"
-        }
-      }
-    ],
     "Get row(s) in sheet": [
       {
         "json": {
@@ -939,6 +930,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-11-25T20:12:52.945Z",
-  "versionId": "8046dcf5-6b50-45d5-8107-ca751f419c30"
+  "updatedAt": "2025-11-30T18:47:56.105Z",
+  "versionId": "7446dfe9-7e80-48c0-b051-1398829be69a"
 }
