@@ -1,5 +1,208 @@
 {
-  "active": false,
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-12T23:29:06.714Z",
+    "createdAt": "2026-01-12T23:29:06.714Z",
+    "versionId": "88c52a19-b839-455c-85b9-2b66658c9839",
+    "workflowId": "FLF6PYPoSbhxOeCz",
+    "nodes": [
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+        "typeVersion": 1.3,
+        "position": [
+          260,
+          0
+        ],
+        "id": "eb9032c8-7c90-47b4-9cce-7621c72f83fd",
+        "name": "Question and Answer Chain",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1,
+        "position": [
+          200,
+          220
+        ],
+        "id": "92faca8e-e083-43a7-8846-212807db9dae",
+        "name": "OpenAI Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "n0YNBr6r2ZQqJ11H",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+        "typeVersion": 1,
+        "position": [
+          380,
+          220
+        ],
+        "id": "8a436a67-7b0c-4000-9833-f5ded36ada6c",
+        "name": "Vector Store Retriever"
+      },
+      {
+        "parameters": {
+          "pineconeIndex": {
+            "__rl": true,
+            "value": "rag-n8n",
+            "mode": "list",
+            "cachedResultName": "rag-n8n"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+        "typeVersion": 1,
+        "position": [
+          300,
+          420
+        ],
+        "id": "4a045935-2b12-4e1a-bc0f-af7e0fdad3fa",
+        "name": "Pinecone Vector Store1",
+        "credentials": {
+          "pineconeApi": {
+            "id": "wU5pmUBrwYAvBJ34",
+            "name": "PineconeApi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1.1,
+        "position": [
+          300,
+          600
+        ],
+        "id": "aeb25a3a-d22c-4ac3-9057-e1df126a8187",
+        "name": "Embeddings OpenAI1",
+        "credentials": {
+          "openAiApi": {
+            "id": "n0YNBr6r2ZQqJ11H",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          -20,
+          0
+        ],
+        "id": "fff1fe8e-7992-4ca8-babe-1a14ffe8fdb6",
+        "name": "Execute Workflow Trigger"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "dd56e7d2-f812-4619-bed7-d99c74d77440",
+                "name": "response",
+                "value": "={{ $json.response.text }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          696,
+          0
+        ],
+        "id": "f99380d2-985f-41ce-9fc8-036327a98d61",
+        "name": "response_ok"
+      }
+    ],
+    "connections": {
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Question and Answer Chain",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Vector Store Retriever": {
+        "ai_retriever": [
+          [
+            {
+              "node": "Question and Answer Chain",
+              "type": "ai_retriever",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pinecone Vector Store1": {
+        "ai_vectorStore": [
+          [
+            {
+              "node": "Vector Store Retriever",
+              "type": "ai_vectorStore",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings OpenAI1": {
+        "ai_embedding": [
+          [
+            {
+              "node": "Pinecone Vector Store1",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Question and Answer Chain",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Question and Answer Chain": {
+        "main": [
+          [
+            {
+              "node": "response_ok",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "88c52a19-b839-455c-85b9-2b66658c9839",
   "connections": {
     "OpenAI Chat Model": {
       "ai_languageModel": [
@@ -208,8 +411,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-03-17T15:46:44.901Z",
       "updatedAt": "2025-03-17T15:46:44.901Z",
+      "createdAt": "2025-03-17T15:46:44.901Z",
       "role": "workflow:owner",
       "workflowId": "FLF6PYPoSbhxOeCz",
       "projectId": "Bf7Kd5nHC0OQcw6b"
@@ -218,8 +421,8 @@
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-04-02T21:00:25.027Z",
       "updatedAt": "2025-04-02T21:00:25.027Z",
+      "createdAt": "2025-04-02T21:00:25.027Z",
       "id": "4Z9BlXLNysnGHcBB",
       "name": "Produccion"
     }
