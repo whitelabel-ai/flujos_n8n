@@ -1,5 +1,629 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-12T23:29:06.714Z",
+    "createdAt": "2026-01-12T23:29:06.714Z",
+    "versionId": "9a541839-62b5-4b88-8146-cd16cc73219b",
+    "workflowId": "qsI0yotlG67tEVjt",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "minutes",
+                "minutesInterval": 2
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -1480,
+          560
+        ],
+        "id": "0734ab90-135e-46c8-97f6-64c9349d6cb8",
+        "name": "Schedule Trigger1"
+      },
+      {
+        "parameters": {
+          "documentId": {
+            "__rl": true,
+            "value": "1hiUwqtRuICOd3Xu-6TkEoRh1P_jz3svWGiDk6zvKQPQ",
+            "mode": "list",
+            "cachedResultName": "Recordatorios Whatsapp",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hiUwqtRuICOd3Xu-6TkEoRh1P_jz3svWGiDk6zvKQPQ/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 2115264411,
+            "mode": "list",
+            "cachedResultName": "n8n",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hiUwqtRuICOd3Xu-6TkEoRh1P_jz3svWGiDk6zvKQPQ/edit#gid=2115264411"
+          },
+          "combineFilters": "AND",
+          "options": {}
+        },
+        "id": "9494cb33-d030-4f19-828a-705a7ca96b5c",
+        "name": "Obtener Datos Google Sheets1",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 3,
+        "position": [
+          -1260,
+          560
+        ],
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "VlwvwMWj6xOw815v",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "batchSize": "=9",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          -380,
+          185
+        ],
+        "id": "d88b9bfa-bd4a-40ca-9579-75fd257fa18c",
+        "name": "Loop Over Items3",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Nombre: {{ $json.Nombre }}\nMedicamento: {{ $json.medicamento }}, \nCantidad: {{ $json.Cantidad }}, \nHora de la toma: {{ $json[\"hora de inicio\"] }}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=Eres un **Reminder Agent**, un asistente diseñado para enviar recordatorios por WhatsApp de manera cálida y motivadora. Recibirás los datos ya extraídos en las siguientes variables:  - **Nombre:** Nombre de la persona si vez que  es necesario saludarlo con un buenos dias, tardes o noches dependiendo la hora actual\n- **Medicamento:** Nombre del medicamento.  \n- **Cantidad:** Dosis a tomar.  \n- **Hora de la toma:** Hora programada para tomar el medicamento. \n\n### **Tu tarea:**  \n1. **Genera un mensaje cordial y motivador** basado en la hora actual (`{{ new Date().toLocaleTimeString('es-CO', { timeZone: 'America/Mexico_City', hour: '2-digit', minute: '2-digit', hour12: false }) }}`) y la hora de la toma (`[Hora de la toma]`).  \n2. **Ajusta el mensaje según el tiempo restante o si ya pasó la hora:**  como por ejemplo:\n   - Si faltan *5 minutos*, di que es casi el momento.  \n   - Si faltan *1-2 minutos*, indica que es momento de prepararse.  \n   - Si la hora ha llegado, recuérdale que debe tomarlo ahora.  \n   - Si ya pasó la hora, recuérdalo con amabilidad y urgencia moderada.  \n3. **Usa emojis y frases motivadoras** para hacerlo más amigable.  \n4. **No menciones el nombre del usuario ni saludes**, ya que eso está en la plantilla de Meta.}\n5. **Solo envia el mensaje generado del recordatorio, sin mas contexto, sin adornos u otros mensajes\n---\n### **Ejemplos de salida esperada:**  \n\n#### **Caso 1 - Faltan 5 minutos:**  \n⏳ ¡Atención! En *5 minutos* es hora de tomar *[Cantidad]* de *[Medicamento]* 💊. ¡Recuerda cuidarte! 💜  \n\n#### **Caso 2 - Faltan 2 minutos:**  \n⌛ ¡Casi es momento! En *2 minutos* debes tomar *[Cantidad]* de *[Medicamento]* 💊. ¡Tu salud es prioridad! 🌟  \n\n#### **Caso 3 - Hora exacta:**  \n🔔 ¡Es hora de tu dosis! No olvides tomar *[Cantidad]* de *[Medicamento]* 💊 ahora mismo. ¡Tu bienestar te lo agradecerá! 💕  \n\n#### **Caso 4 - Ya pasó la hora:**  \n🚀 ¡No lo dejes pasar! Es momento de tomar *[Cantidad]* de *[Medicamento]* 💊 Si aún no lo hiciste, hazlo ahora para sentirte mejor. 🌿  "
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          -160,
+          60
+        ],
+        "id": "095f8ee3-a7dd-4e46-b5ed-151cb95bcd79",
+        "name": "Basic LLM Chain3"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "gpt-4o-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          -72,
+          280
+        ],
+        "id": "06df5855-a5f4-4438-b43a-0f0a9c054168",
+        "name": "OpenAI Chat Model3",
+        "credentials": {
+          "openAiApi": {
+            "id": "n0YNBr6r2ZQqJ11H",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const today = DateTime.now().setLocale(\"es\").toFormat(\"EEEE\"); // Día de hoy en español\n\n// Función para normalizar texto (remueve tildes y pone en minúsculas)\nconst normalizeText = (text) => {\n    return text\n        .normalize(\"NFD\") // Separa letras de sus tildes\n        .replace(/[\\u0300-\\u036f]/g, \"\") // Elimina los caracteres diacríticos (tildes)\n        .toLowerCase(); // Convierte todo a minúsculas\n};\n\n// Normalizamos el día de hoy para la comparación\nconst normalizedToday = normalizeText(today);\n\n// Lista de todos los días en español normalizados\nconst daysOfWeek = [\"lunes\", \"martes\", \"miercoles\", \"jueves\", \"viernes\", \"sabado\", \"domingo\"];\n\n// Obtiene los datos de entrada\nconst items = $input.all(); \n\n// Filtra los objetos donde \"frecuencia\" contiene el día de hoy o no menciona ningún día\nconst filteredItems = items.filter(item => {\n    const frecuencia = normalizeText(item.json.frecuencia); // Normaliza la frecuencia\n    \n    // Condición 1: Contiene el día de hoy en singular o plural\n    const containsToday = frecuencia.includes(normalizedToday) || frecuencia.includes(normalizedToday + \"s\");\n\n    // Condición 2: No menciona ningún día de la semana\n    const containsNoDays = !daysOfWeek.some(day => frecuencia.includes(day));\n\n    return containsToday || containsNoDays;\n});\n\nreturn filteredItems;\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -1040,
+          560
+        ],
+        "id": "11a5cc2f-ef12-4de9-9f5b-b0727a3de7f9",
+        "name": "Filtrar dia1",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.manychat.com/fb/subscriber/setCustomField",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "subscriber_id",
+                "value": "={{ $('Loop Over Items3').item.json.User_id }}"
+              },
+              {
+                "name": "field_id",
+                "value": "=12620158"
+              },
+              {
+                "name": "field_value",
+                "value": "={{ $json.text || $json.response.text}}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          216,
+          60
+        ],
+        "id": "dba80f98-86c6-4e94-b494-3179f8fdd4c5",
+        "name": "setCustomField3",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "8Fw9Aneg063bvcsJ",
+            "name": "Manychat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "batchSize": "=9",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          216,
+          660
+        ],
+        "id": "cd6d9707-65c5-48dd-82bd-b48e36e280e4",
+        "name": "Loop Over Items4",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Nombre: {{ $json.Nombre }}\nRecordatorios: {{ $json.Recordatorios.map(r => `${r.Medicamento}, ${r.Frecuencia}, ${r.Hora}, ${r.Cantidad}`).join(\"\\n\") }}\n",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=Eres un **Reminder Agent**, un asistente diseñado para enviar recordatorios por WhatsApp de manera cálida y motivadora. Recibirás los datos ya extraídos en las siguientes variables:  \n- **Nombre:** Nombre de la persona (puedes saludar con un \"Buenos días/tardes/noches\" según la hora actual).  \n- **Recordatorios:** Una lista de medicamentos con su dosis y la hora de toma programada.  \n\n### **Tu tarea:**  \n1. **Genera un mensaje cordial y motivador** basado en la hora actual (`{{ new Date().toLocaleTimeString('es-CO', { timeZone: 'America/Mexico_City', hour: '2-digit', minute: '2-digit', hour12: false }) }}`) y la hora de la toma.  \n2. **Ajusta el mensaje según el tiempo restante o si ya pasó la hora:**  \n   - Si faltan *5 minutos*, di que es casi el momento.  \n   - Si faltan *1-2 minutos*, indica que es momento de prepararse.  \n   - Si la hora ha llegado, recuérdale que debe tomarlo ahora.  \n   - Si ya pasó la hora, recuérdalo con amabilidad y urgencia moderada.  \n3. **Enumera todos los medicamentos** en un formato claro y amigable.  \n4. **Usa emojis y frases motivadoras** para hacerlo más ameno.  \n5. **Solo envía el mensaje generado del recordatorio, sin más contexto ni adornos.**  \n\n---\n### **Ejemplo de salida esperada:**  \n\n#### **Caso 1 - Faltan 5 minutos:**  \n⏳ ¡Atención! En *5 minutos* es hora de tomar tus medicamentos:  \n💊 *Apixiban* - 1 pastilla  \n💊 *Telmisartán* - 1 pastilla  \n💊 *Ácido Acetilsalicílico* - 1 pastilla  \n💊 *Senósidos AB* - 2 pastillas  \n¡Recuerda cuidarte! 💜  \n\n#### **Caso 2 - Hora exacta:**  \n🔔 ¡Es hora de tu dosis! No olvides tomar:  \n💊 *Apixiban* - 1 pastilla  \n💊 *Telmisartán* - 1 pastilla  \n💊 *Ácido Acetilsalicílico* - 1 pastilla  \n💊 *Senósidos AB* - 2 pastillas  \n¡Tu bienestar es lo más importante! 🌿  \n\n#### **Caso 3 - Ya pasó la hora:**  \n🚀 ¡No lo dejes pasar! Si aún no lo hiciste, recuerda tomar:  \n💊 *Apixiban* - 1 pastilla  \n💊 *Telmisartán* - 1 pastilla  \n💊 *Ácido Acetilsalicílico* - 1 pastilla  \n💊 *Senósidos AB* - 2 pastillas  \nCuida tu salud. ¡Hazlo ahora! 🌟  \n"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          436,
+          535
+        ],
+        "id": "d41caac9-83e1-4c80-a8e1-c2cb13331572",
+        "name": "Basic LLM Chain4"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "gpt-4o-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          524,
+          755
+        ],
+        "id": "f8b05a88-c730-4c22-ad44-f12289d41952",
+        "name": "OpenAI Chat Model4",
+        "credentials": {
+          "openAiApi": {
+            "id": "n0YNBr6r2ZQqJ11H",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.manychat.com/fb/subscriber/setCustomField",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "subscriber_id",
+                "value": "={{ $('Loop Over Items4').item.json.User_id }}"
+              },
+              {
+                "name": "field_id",
+                "value": "=12620158"
+              },
+              {
+                "name": "field_value",
+                "value": "={{ $json.text || $json.response.text}}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          812,
+          535
+        ],
+        "id": "c1d4e240-3037-44f9-999d-cc64314f6466",
+        "name": "setCustomField4",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "8Fw9Aneg063bvcsJ",
+            "name": "Manychat"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "52a2f24e-9445-41dd-a6f4-d093e6e61f65",
+                "leftValue": "={{ $json.User_id }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "number",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -380,
+          760
+        ],
+        "id": "c75e15a4-9b45-46a7-ac62-1bb85345a07c",
+        "name": "If"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          -82,
+          860
+        ],
+        "id": "2204025f-d1e9-4c4b-b71b-e3308a3062b0",
+        "name": "No Operation, do nothing2"
+      },
+      {
+        "parameters": {
+          "amount": 1
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          514,
+          185
+        ],
+        "id": "a16ba46f-4728-495f-b07d-ae3f7620b0a4",
+        "name": "Wait6",
+        "webhookId": "4a960d6e-ba3b-4878-b5e8-b8e86a24bc1d"
+      },
+      {
+        "parameters": {
+          "amount": 1
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1032,
+          660
+        ],
+        "id": "ea2176a8-313d-4813-8204-d9b4600c4bf7",
+        "name": "Wait7",
+        "webhookId": "90f339df-5534-4e2d-9021-5ace8c365955"
+      },
+      {
+        "parameters": {
+          "jsCode": "const datosFiltrados = $input.all();\nconst conteoUsuarios = {};\n\n// Contar cuántos recordatorios tiene cada usuario\ndatosFiltrados.forEach(item => {\n    const usuario = item.json.User_id;\n    conteoUsuarios[usuario] = (conteoUsuarios[usuario] || 0) + 1;\n});\n\n// Filtrar solo los usuarios que tienen exactamente 1 recordatorio\nconst resultado = datosFiltrados.filter(item => {\n    const usuario = item.json.User_id;\n    return conteoUsuarios[usuario] === 1; // Solo pasa si tiene un único recordatorio\n});\n\nreturn resultado.map(item => ({ json: item.json }));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -600,
+          185
+        ],
+        "id": "0ddc429d-9cff-45ed-91b3-fe7bc9269f54",
+        "name": "con Unico Recordatorio"
+      },
+      {
+        "parameters": {
+          "jsCode": "const datosFiltrados = $input.all();\nconst conteoUsuarios = {};\n\n// Contar cuántos recordatorios tiene cada usuario\ndatosFiltrados.forEach(item => {\n    const usuario = item.json.User_id;\n    conteoUsuarios[usuario] = (conteoUsuarios[usuario] || 0) + 1;\n});\n\n// Filtrar solo los usuarios que tienen más de 1 recordatorio\nconst resultado = datosFiltrados.filter(item => {\n    const usuario = item.json.User_id;\n    return conteoUsuarios[usuario] > 1; // Solo pasa si tiene más de un recordatorio\n});\n\nreturn resultado.map(item => ({ json: item.json }));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -600,
+          760
+        ],
+        "id": "89807786-d5bb-4461-9380-07a9ea963667",
+        "name": "usuarios con varios recordatorios"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obtener la hora actual en formato HH:mm\nconst ahora = DateTime.now().setZone(\"America/Mexico_City\").toFormat('HH:mm');\n\n\n// Calcular la hora máxima sumando 10 minutos\nconst maxHora = DateTime.now().plus({ minutes: 2 }).setZone(\"America/Mexico_City\").toFormat('HH:mm');\n\n\n// Obtener los datos de entrada\nconst items = $input.all();\n\n// Filtrar los datos que estén en el rango de tiempo permitido\nconst datosFiltrados = items.filter(item => {\n    const horaItem = DateTime.fromFormat(item.json[\"hora de inicio\"], 'HH:mm');\n    return horaItem >= DateTime.fromFormat(ahora, 'HH:mm') && horaItem < DateTime.fromFormat(maxHora, 'HH:mm');\n});\n\n// Retornar los datos filtrados\nreturn datosFiltrados.map(item => ({ json: item.json }));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -820,
+          560
+        ],
+        "id": "6ef78ae7-6407-4880-bac5-024d75c15399",
+        "name": "Calcula ahora + 2 minutos",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "jsCode": "const datosFiltrados = $input.all();\nconst agrupados = {};\n\n// Agrupar los datos por User_id\ndatosFiltrados.forEach(item => {\n    const usuario = item.json.User_id;\n\n    if (!agrupados[usuario]) {\n        agrupados[usuario] = {\n            User_id: usuario,\n            Nombre: item.json.Nombre,\n            Recordatorios: []\n        };\n    }\n\n    // Agregar cada medicamento con su información asociada\n    agrupados[usuario].Recordatorios.push({\n        Medicamento: item.json.medicamento,\n        Frecuencia: item.json.frecuencia,\n        Hora: item.json[\"hora de inicio\"],\n        Cantidad: item.json.Cantidad\n    });\n});\n\n// Convertir el objeto en un array de objetos\nconst resultado = Object.values(agrupados);\n\nreturn resultado.map(item => ({ json: item }));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -82,
+          660
+        ],
+        "id": "074e5439-f2d8-477a-871a-318a0677b474",
+        "name": "agrupa recordatorios por usuario"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger1": {
+        "main": [
+          [
+            {
+              "node": "Obtener Datos Google Sheets1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Datos Google Sheets1": {
+        "main": [
+          [
+            {
+              "node": "Filtrar dia1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items3": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Basic LLM Chain3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain3": {
+        "main": [
+          [
+            {
+              "node": "setCustomField3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model3": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain3",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filtrar dia1": {
+        "main": [
+          [
+            {
+              "node": "Calcula ahora + 2 minutos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "setCustomField3": {
+        "main": [
+          [
+            {
+              "node": "Wait6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items4": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Basic LLM Chain4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain4": {
+        "main": [
+          [
+            {
+              "node": "setCustomField4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model4": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain4",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "setCustomField4": {
+        "main": [
+          [
+            {
+              "node": "Wait7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "agrupa recordatorios por usuario",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait6": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait7": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "con Unico Recordatorio": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "usuarios con varios recordatorios": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Calcula ahora + 2 minutos": {
+        "main": [
+          [
+            {
+              "node": "con Unico Recordatorio",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "usuarios con varios recordatorios",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "agrupa recordatorios por usuario": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "9a541839-62b5-4b88-8146-cd16cc73219b",
   "connections": {
     "Schedule Trigger1": {
       "main": [
@@ -629,8 +1253,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-03-17T15:48:24.553Z",
       "updatedAt": "2025-03-17T15:48:24.553Z",
+      "createdAt": "2025-03-17T15:48:24.553Z",
       "role": "workflow:owner",
       "workflowId": "qsI0yotlG67tEVjt",
       "projectId": "Bf7Kd5nHC0OQcw6b"
@@ -646,8 +1270,8 @@
   },
   "tags": [
     {
-      "createdAt": "2025-04-02T21:00:25.027Z",
       "updatedAt": "2025-04-02T21:00:25.027Z",
+      "createdAt": "2025-04-02T21:00:25.027Z",
       "id": "4Z9BlXLNysnGHcBB",
       "name": "Produccion"
     }
