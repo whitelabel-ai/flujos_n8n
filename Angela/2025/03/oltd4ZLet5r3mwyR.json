@@ -1,5 +1,268 @@
 {
-  "active": false,
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-12T23:29:06.714Z",
+    "createdAt": "2026-01-12T23:29:06.714Z",
+    "versionId": "dc0b3bba-d735-4c31-ab3e-147e04ca069b",
+    "workflowId": "oltd4ZLet5r3mwyR",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          200,
+          200
+        ],
+        "id": "145d6da0-072b-4a05-ad01-b161e35fa985",
+        "name": "Execute Workflow Trigger"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "dd56e7d2-f812-4619-bed7-d99c74d77440",
+                "name": "",
+                "value": "={{ $json.output }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          980,
+          200
+        ],
+        "id": "c6125ec4-2178-460d-87aa-378cb6cc5f27",
+        "name": "response_ok"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Medicamento: {{ $json.chatInput }}",
+          "options": {
+            "systemMessage": "=## 💡 **Rol del Agente:**  \nEres un **especialista en cotización de medicamentos**. Tu objetivo es ayudar a los usuarios a encontrar y cotizar medicamentos con precisión, asegurando que obtengan la mejor opción disponible.  \n\n---\n\n## 💊 **Objetivo del Agente:**  \n1️⃣ **Identificar y corregir automáticamente** el nombre del medicamento si el usuario lo escribe mal.  \n2️⃣ **Consultar la herramienta \"Consultar Medicamentos\"** para obtener coincidencias exactas y mostrar solo las opciones relevantes.  \n3️⃣ **Confirmar con el usuario** el medicamento y la cantidad exacta antes de proceder con la cotización.  \n4️⃣ **Enviar la solicitud a la herramienta \"Realizar Cotización\"** y calcular el total.  \n5️⃣ **Presentar la cotización final de manera clara y estructurada, incluyendo un enlace al PDF con los detalles.**  \n\n---\n\n## 🚀 **Instrucciones para el agente**  \n\n### 🔹 **Paso 1: Interpretar la solicitud del usuario**  \n- Extrae el **nombre del medicamento** de la consulta del usuario.  \n- Si el nombre parece incorrecto, **corrígelo automáticamente** antes de hacer la búsqueda.  \n- Si el usuario no indica la cantidad, **pregunta por ella**.  \n\n\n---\n\n### 🔹 **Paso 2: Buscar el medicamento en \"Consultar Medicamentos\"**  \n- Usa la herramienta `\"Consultar Medicamentos\"` enviando el siguiente formato:  si hay mg, siempre envia ejemplo Omeprazol 20 Mg, numero, espacio Mg, M Mayuscula\n  ```json\n  {\n    \"medicamento\": \"Nombre Exacto\"\n  }\n  ```\n- Si la búsqueda devuelve coincidencias exactas, muestra **solo el medicamento exacto solicitado**.  \n  - **Ejemplo:** Si el usuario busca `\"Omeprazol 20 Mg\"` y la herramienta devuelve:  \n    ```\n    [\"Bicarbonato Sodico 1,1 G + Omeprazol 20 Mg\", \"Esomeprazol 20 Mg\", \"Omeprazol 20 Mg\"]\n    ```\n    Solo se mostrará **\"Omeprazol 20 Mg\"** y se ignorarán las demás opciones.  \n- Si no hay coincidencia exacta, muestra las opciones más similares y pregunta al usuario si desea cotizarlas.  \n\n---\n\n\n### 🔹 **Paso 3: Filtrar medicamentos con la herramienta \"Gemini\"**  \n- Envía la lista de medicamentos encontrados a la herramienta `\"Gemini\"` para obtener una versión optimizada con los medicamentos más relevantes.  \n\n### 🔹 **Paso 4: Confirmación con el usuario**  \n- Muestra los medicamentos filtrados y permite que el usuario elija el correcto.  \n- Confirma la **cantidad exacta** antes de continuar.  \n\n### 🔹 **Paso 5: Cotización con la herramienta \"Realizar Cotización\"**  \n- Para cada medicamento confirmado, usa la herramienta `\"Realizar Cotización\"` con los siguientes datos:  \n  - `\"medicamento\": \"Nombre Exacto\"`  \n  - `\"cantidad\": cantidad solicitada por el usuario`  \n- Recibe y estructura la información con:  \n  - **Nombre del medicamento**  \n  - **Cantidad total**  \n  - **Número de cajas necesarias**  \n  - **Cantidad por caja**  \n  - **Precio total**  \n\n### 🔹 **Paso 6: Presentar la cotización final**  \n- Muestra la cotización de forma clara, incluyendo:  \n  - Nombre del medicamento  \n  - Cantidad solicitada  \n  - Número de cajas  \n  - Precio total  \n  - **Enlace al PDF con la cotización**  \n\n---\n\n## ⚡️ **Consideraciones adicionales**  \n✅ **Corrección automática de errores ortográficos en nombres de medicamentos.**  \n✅ **Búsqueda precisa:** Prioriza coincidencias exactas y descarta nombres irrelevantes.  \n✅ **Interacción fluida:** Pregunta siempre antes de confirmar la cotización.  \n✅ **Formato estructurado y claro:** No agregar información innecesaria.  \n\n🔹 **Importante:**  \n- El agente **solo debe mostrar el medicamento exacto** cuando haya coincidencia en la herramienta `\"Consultar Medicamentos\"`.  \n- Si hay varias opciones, debe preguntar al usuario antes de proceder.  \n- El enlace al PDF debe ser visible y accesible en la respuesta final.  \n\n---\n\n### 🛠 **Ejemplo de flujo ideal**  \n\n#### **Usuario:**  \n*\"Quiero cotizar Omeprazol de 20 mg\"*  \n\n#### **Agente:**  \n*\"Confirmo que buscas **Omeprazol 20 Mg**. ¿Cuántas unidades necesitas?\"*  \n\n#### **Usuario:**  \n*\"Necesito 3 cajas.\"*  \n\n#### **Agente:**  \n*\"Cotización generada ✅*  \n- **Medicamento:** Omeprazol 20 Mg  \n- **Cantidad:** 3 cajas  \n- **Precio Total:** $XX.XXX  \n🔗 [Ver cotización en PDF](#)\"  \n\n"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          512,
+          200
+        ],
+        "id": "f5c1bef9-52cf-4854-91bd-daf6b5b66ce6",
+        "name": "quotation_Agent",
+        "retryOnFail": false
+      },
+      {
+        "parameters": {
+          "toolDescription": "=Usa Esta herramienta para **realizar la cotización de un medicamento** con base en la información proporcionada, devolviendo el costo total y los detalles necesarios para el cálculo de la cotización final.  \n",
+          "method": "POST",
+          "url": "http://34.230.19.139:5000/api/ia/cotizar",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"medicamentos\": [\n        {\n            \"nombre\": \"{medicamento}\",\n            \"cantidad\": {cantidad}\n        }\n    ]\n}\n",
+          "placeholderDefinitions": {
+            "values": [
+              {
+                "name": "medicamento",
+                "description": "Nombre del medicamento",
+                "type": "string"
+              },
+              {
+                "name": "cantidad",
+                "description": "Cantidad solicitada en numeros ",
+                "type": "number"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+        "typeVersion": 1.1,
+        "position": [
+          660,
+          420
+        ],
+        "id": "7bb23121-42f6-4f7a-b58b-90c063aa1693",
+        "name": "Realizar Cotizacion",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "Sh1f8N82thkh3C7c",
+            "name": "Token IA-Angela-API"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {
+            "temperature": 0
+          }
+        },
+        "id": "252671f2-8448-48f3-85c5-ac65bd8fe9dc",
+        "name": "OpenAI Chat Model1",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1,
+        "position": [
+          420,
+          420
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "n0YNBr6r2ZQqJ11H",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $json }}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          540,
+          420
+        ],
+        "id": "f8a5605a-7c6b-4598-a2a0-b984fd956850",
+        "name": "Simple Memory1"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Usa esta herramienta para **buscar medicamentos en la base de datos** para encontrar la mejor coincidencia con la solicitud del usuario, siempre pasar el nombre del medicamento a la herramienta",
+          "url": "=http://34.230.19.139:5000/api/ia/medicamentos/",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendQuery": true,
+          "parametersQuery": {
+            "values": [
+              {
+                "name": "Medicamento"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+        "typeVersion": 1.1,
+        "position": [
+          780,
+          420
+        ],
+        "id": "3a4b9caf-f406-4f36-bb5d-77e4f4601940",
+        "name": "Obtener Medicamentos",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "Sh1f8N82thkh3C7c",
+            "name": "Token IA-Angela-API"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          200,
+          560
+        ],
+        "id": "1051841b-009f-468c-be24-a2f8f767c85b",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "7B9Ztbhb2FvSX13q",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "quotation_Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "quotation_Agent": {
+        "main": [
+          [
+            {
+              "node": "response_ok",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Realizar Cotizacion": {
+        "ai_tool": [
+          [
+            {
+              "node": "quotation_Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "quotation_Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Simple Memory1": {
+        "ai_memory": [
+          [
+            {
+              "node": "quotation_Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Medicamentos": {
+        "ai_tool": [
+          [
+            {
+              "node": "quotation_Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          []
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "dc0b3bba-d735-4c31-ab3e-147e04ca069b",
   "connections": {
     "Execute Workflow Trigger": {
       "main": [
@@ -268,8 +531,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-03-17T19:27:03.012Z",
       "updatedAt": "2025-03-17T19:27:03.012Z",
+      "createdAt": "2025-03-17T19:27:03.012Z",
       "role": "workflow:owner",
       "workflowId": "oltd4ZLet5r3mwyR",
       "projectId": "Bf7Kd5nHC0OQcw6b"
@@ -278,8 +541,8 @@
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-04-02T21:00:25.027Z",
       "updatedAt": "2025-04-02T21:00:25.027Z",
+      "createdAt": "2025-04-02T21:00:25.027Z",
       "id": "4Z9BlXLNysnGHcBB",
       "name": "Produccion"
     }
